@@ -1,0 +1,97 @@
+<html><head>
+    <title>注册</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+    <script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tpl/Wap/default/rh/js/prompt.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .fa1{
+            position: absolute;
+            right: 13px;
+            top: 6px;
+            border: 1px solid #ccc;
+            background-color: red;
+            color: #fff;
+            border-radius: 5px;
+            padding: 3px 11px;
+        }
+		.ti{  
+  padding: 13px;}
+
+    </style>
+</head>
+<body>
+    <div class="space-20"></div>
+    <h1 class="logo animated fadeInDown"><img src="http://jjr2.weizhi.in/wap/img/logo.png" alt="带客通经纪人"></h1>
+    <div class="space-20"></div>
+
+<section class="account-form">
+    <div class="af-row">
+        <label for="reg_name"><i class="icon-user"></i></label>
+        <input type="text" placeholder="请输入全名" id="reg_name" value="">
+    </div>
+    <div class="af-row">
+        <label for="reg_phone"><i class="icon-phone"></i></label>
+        <input type="text" pattern="[0-9]*" placeholder="请输入手机号码" id="reg_phone" value="">
+        <span class="fa1" flag="1">发送动态密码</span>
+    </div>
+    <div class="af-row tag-code-cls" >
+        <label for="tag_code"><i class="icon-vcode"></i></label>
+        <input type="tel" id="tag_code" placeholder="输入动态密码" class="input">
+    </div>
+
+   <!-- <div class="af-row">
+        <label for="reg_type"><i class="icon-users"></i></label>
+        <select id="reg_type1" class="gray">
+            <option value="0">请选择您的身份</option>
+            <option value="GSYG" data-type="">公司员工</option><option value="WXFS" data-type="">大众经纪人</option><option value="ZJGS" data-type="company">中介公司</option><option value="DLGS" data-type="company">代理公司</option><option value="HZHB" data-type="company">合作伙伴</option><option value="OWNER" data-type="OWNER">老业主</option>        </select>
+    </div>-->
+   <!-- <div class="af-row" id="J_regShowName" >
+        <label for="reg_companyname"><i class="icon-user"></i></label>
+        <input type="text" placeholder="请输入您的身份" id="reg_companyname" value="">
+    </div>-->
+    <input type="hidden" id="tag_codes" value="">
+
+    <div class="af-row" id="J_userId" >
+        <label for="user_id"><i class="icon-user"></i></label>
+        <input type="tel" placeholder="(选填) 请输入推荐人手机号码" id="y_phone" value="">
+    </div>
+    <div class="af-row">
+        <div style="border-bottom: 1px solid #E5E5E5;">
+        <label for="reg_phone"><div class="icon-code1"><img src="tpl/Wap/default/hn/img/icon-14.png" /></div></label>
+        <input type="text"  placeholder="所在城市" class="fid1"  value="" style=" border: 0;width: 35%;"><span style="font-size: 14px;color: #2e2e2e;vertical-align: middle;">市</span><input type="text" class="fid2" placeholder="项目/门店/单位"  value="" style="  border: 0;width: 50%;">
+        </div>
+    </div>
+    <div class="af-row-reg">
+        <label class="ui-checkbox ui-checkbox-s">
+            <input type="checkbox" id="reg_rule" checked="checked" name="ra1"><a href="{weikucms::U('xie',array('token'=>$token))}" style="color:#2699fb;text-decoration:underline">我同意注册条款</a>
+        </label>
+    </div></section>
+	<div class="ti">提示: 请输入正确的姓名及电话，否则可能无法正常结佣</div>
+<aside class="account-submit">
+
+    <input type="hidden" id="cwaid" value="{weikucms::U('zhu',array('token'=>$token,'openid'=>$openid))}">
+    <input type="hidden" id="cuid" value="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}">
+    <input type="hidden" id="ruid" value="{weikucms::U('is_phone',array('token'=>$token,'openid'=>$openid))}">
+    <input type="hidden" id="submitUrl" value="">
+    <button class="ui-btn-lg ui-btn-danger" type="button" id="J_submitReg1">注册</button>
+</aside>
+
+<div class="space-50"></div>
+<!--
+<a class="account-fixed" href="/Home/Usr/login/waid/293/uid/1141259">已有帐号，请登录&nbsp;»</a>
+-->
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+</body></html>

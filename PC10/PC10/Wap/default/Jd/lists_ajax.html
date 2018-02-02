@@ -1,0 +1,34 @@
+ <foreach name="adviser" item="v">
+       <a href="{weikucms::U('Wap/Jd/adviser',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid,'state'=>$_GET['state']))}">
+        <li class="adviser" style="margin-top: 10px;position: relative; ">
+        <div class="img"><img style="height:93%;" src="{weikucms:$v.head}"></div>
+			<div style="width:60%;height:35px;margin-left:10px;float:left;">
+                <span class="name" style="position: relative; top: -5px;">
+                    {weikucms:$v.name}
+                    <!--<?php echo str_substr($v['name'],5) ?>-->
+                </span>
+                <span class="name1" style="margin-left: 5px;" >
+<?php
+for($i=0; $i<$v['xin']; $i++){
+    echo '<img style="width: 16px; height: 16px;" src="./tpl/Wap/default/common/Jd/images/star.png" />';
+}
+?>
+                </span>
+			</div>
+            <div class="bz" style="  top: 0px; position: relative; margin-left: 10px;color: #7E7C7C;margin-right: 10px;">
+                <span style="position: relative;top:-15px;margin-left: 10px;color: #9F9F9F;font-size: 13px;">{weikucms:$v.phone}</span>
+                <a class='tel'></a>
+
+            </div>
+            <div class="fl">
+                <a href="tel:{weikucms:$v.phone}" class='tel'><span class="tel1" ></span></a>
+                <a href="sms:{weikucms:$v.phone}" class='tel'><span class="tel3" ></span></a>
+                <a class='tel'><span class="shen" ></span></a>
+                <span class="praise icon-thumbs-up arrow-btn pab <if condition="$v['praisetype'] eq 1">on</if>" data="{weikucms:$v.id}">{weikucms:$v.praise}</span>
+            </div>
+            <a href="{weikucms::U('Wap/Jd/adviser',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid,'state'=>$_GET['state']))}">
+                <span class="icon_arrow"></span>
+            </a>
+		</li>
+		</a>
+        </foreach>

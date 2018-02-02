@@ -1,0 +1,258 @@
+﻿<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>ieat限购</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <style>
+        .listpic { left:21%; }
+    </style>
+
+</head>
+
+
+
+<body r='246' g='95' b='112'>
+
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="shuLine"></div>
+
+    <if condition="$_GET['t'] eq 1">
+
+    <volist name="ticketList" id="vo">
+
+     <div class="liuYanTimeLine myul" style="left:4px;"><div class="LYTime"><php>echo date('Y-m-d', strtotime($vo['add_time']));</php></div> <div class="Tcircle"> <div class="InTcircle"></div> </div> </div>
+    <div class="listbox" onClick="location.href='{weikucms::U('Ieat/detail',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id'],'ticket_id'=>$vo['ticket_id']))}'">
+
+        <img class="listpic" src="{weikucms:$vo.virtual_pic}" />
+
+
+        </div>
+
+        <div class="listtitlebox myul" style="margin-left:20%">
+
+            <div class="titlebox" >
+
+                <div style="text-align: center;" class="title  ieatXianGou"><span class="titletext">【{weikucms:$vo.cat_name}】{weikucms:$vo.ticket_name}团购价：￥{weikucms::floatval($vo['ticket_price'])}元</span></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </volist>
+
+    <elseif condition="$_GET['t'] eq 2" />
+
+        <volist name="foodList" id="vo">
+            <div style="position: relative;">
+            <div class="liuYanTimeLine myul" style="left:4px;">
+                <div class="LYTime"><php>echo date('Y-m-d', strtotime($vo['add_time']));</php></div>
+                <div class="Tcircle"> 
+                    <div class="InTcircle"></div>
+                </div>
+            </div>
+
+            <div class="listbox" onClick="location.href='{weikucms::U('Ieat/detail',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id'],'food_id'=>$vo['food_id']))}'">
+
+                <img class="listpic" src="{weikucms:$vo.food_pic1}" />
+
+                <div class="listtitlebox myul" style="margin-left:20%">
+
+                    <div class="titlebox" >
+
+                        <div style="text-align: center;" class="title  ieatXianGou"><span
+                                class="titletext"><!--【{weikucms:$vo.cat_name}】-->{weikucms:$vo.food_name}：￥{weikucms::floatval($vo['food_price'])}元</span></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+
+        </volist>
+
+    </if>
+
+</div>
+
+
+
+<div class="havbox">
+
+
+
+   <!--  <div class="hav myul" style="top:-10%">
+
+        <div data-tap="item"class="item tap opacity" style="margin-left:23%;" onClick="location.href='{weikucms::U('Ieat/ticketANDfood',array('token'=>$token,'openid'=>$openid,'t'=>1))}'" >
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e" id="qq1" >
+
+                    <div class="item-logo s f">
+
+                        团
+
+                    </div></div></div>
+
+
+
+        </div> -->
+
+
+
+        <div data-tap="item" class="item tap opacity" style="margin-left:8%;"  onClick="location.href='{weikucms::U('Ieat/ticketANDfood',array('token'=>$token,'openid'=>$openid,'t'=>2))}'" >
+<!--
+            <div class="item-logo l d">
+
+                <div class="item-logo m e" id="qq2" >
+
+
+                    <div class="item-logo s f">
+
+                        特
+
+                    </div>
+
+</div></div>
+-->
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+<script>
+
+    $(function(){
+
+        var t =  Number("{weikucms:$get['t']}");
+
+        $("#qq"+t).css({'border':'1px solid rgb(246, 95, 112)','background-color':'rgba(194,1,22,0)'});
+
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $('img.listpic').css('height',$('img.listpic:first').width() + 'px');
+
+        var range = 50;
+
+        var _srollPos = 0;
+
+        var pageNum = 2;
+
+        var totalheight = 0;
+
+        var main = $(".main");
+
+        var js = 0;
+
+        var count = "{weikucms:$count}";
+
+        $(window).scroll(function() {
+
+            var srollPos = $(window).scrollTop();
+
+            if (srollPos < _srollPos) {
+
+                return
+
+            } else {
+
+                _srollPos = srollPos
+
+            }
+
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+
+            if (($(document).height() - range) <= totalheight) {
+
+                $.ajax({
+
+                    url: "/index.php?g=Wap&m=Ieat&a=ticketANDfood&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&count=" + count,
+
+                    type: "post",
+
+                    data: "pageNum=" + pageNum,
+
+                    success: function(res) {
+
+                        if (res == 0) {
+
+                            if (js == 0) {
+
+                                $(".main").append('<article style="display:block" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多了</header></article>')
+
+                            }
+
+                            js = 1
+
+                        } else {
+
+                            main.append(res);
+                            $('img.listpic').css('height',$('img.listpic:first').width() + 'px');
+
+                            pageNum++
+
+                        }
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    });
+
+</script>
+
+</body>
+
+</html>
+

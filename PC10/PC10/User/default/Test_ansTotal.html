@@ -1,0 +1,162 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/index',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/classIndex',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试类型</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/classIndex',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >选题答案统计</a>
+            </li>
+
+            
+            <!-- 
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/addSubject',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >微测试题目管理</a>
+            </li>
+           -->
+        </ul>
+    </div>
+</div>
+<div class="cLine">
+<div class="msgWrap">
+ 	<form method="post" action="index.php?ac=vote-manage&amp;id=9878" id="info">
+ 		<input name="delall" type="hidden" value="del">
+  		<input name="wxid" type="hidden" value="gh_423dwjkewad">
+   		<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	     	<thead>
+	       		<tr>
+                    <th style="text-align:left;">编号</th>
+					<th style="text-align:left;">题目名称</th>
+					<th style="text-align:left;">选项名称</th>
+					<th style="text-align:left;">选择人数</th>
+	           </tr>
+	       </thead>
+	       <tbody>
+			<tr></tr>
+	        <volist id="list" name="subjectModel">
+	          <tr>
+                <td style="text-align:left;width:100px">{weikucms:$i}</td>
+	            <td style="text-align:left;">{weikucms:$list.subject_title}</td>
+	            <td style="text-align:left;vertical-align:top;">
+                    <table>
+                        <tr>
+                            <td>
+                                <if condition="$list['answer_a'] eq ''">&nbsp;<else/>
+                                <php>$up = explode('-',$list['answer_a']);echo $up[0];</php></if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><if condition="$list['answer_b'] eq ''">&nbsp;<else/> <php>$up = explode('-',$list['answer_b']);echo $up[0];</php></if></td>
+                        </tr>
+                        <tr>
+                            <td><if condition="$list['answer_c'] eq ''">&nbsp;<else/> <php>$up = explode('-',$list['answer_c']);echo $up[0];</php></if></td>
+                        </tr>
+                        <tr>
+                            <td><if condition="$list['answer_d'] eq ''">&nbsp;<else/> <php>$up = explode('-',$list['answer_d']);echo $up[0];</php></if></td>
+                        </tr>
+                        <tr>
+                            <td><if condition="$list['answer_e'] eq ''">&nbsp;<else/> <php>$up = explode('-',$list['answer_e']);echo $up[0];</php></if></td>
+                        </tr>
+                    </table>
+                </td>
+	            <td style="text-align:left;">
+                    <table>
+                        <tr>
+                            <td>
+                                <php>
+                                    if(strlen($list['answer_a']) <= 2){
+                                        echo "&nbsp;";
+                                    }else{
+                                        $up = explode('-',$list['answer_a']);
+                                        echo $up[1]."人";
+                                    }
+                                </php>
+                                <!-- <if condition="$list['answer_a'] eq ''">&nbsp;<else/><php>$up = explode('-',$list['answer_a']);echo $up[1]."人";</php></if> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <php>
+                                    if(strlen($list['answer_b']) <= 2){
+                                        echo "&nbsp;";
+                                    }else{
+                                        $up = explode('-',$list['answer_b']);
+                                        echo $up[1]."人";
+                                    }
+                                </php></td>
+                        </tr>
+                        <tr>
+                            <td> <php>
+                                    if(strlen($list['answer_c']) <= 2){
+                                        echo "&nbsp;";
+                                    }else{
+                                        $up = explode('-',$list['answer_c']);
+                                        echo $up[1]."人";
+                                    }
+                                </php></td>
+                        </tr>
+                        <tr>
+                            <td> <php>
+                                    if(strlen($list['answer_d']) <= 2){
+                                        echo "&nbsp;";
+                                    }else{
+                                        $up = explode('-',$list['answer_d']);
+                                        echo $up[1]."人";
+                                    }
+                                </php></td>
+                        </tr>
+                        <tr>
+                            <td> <php>
+                                    if(strlen($list['answer_e']) <= 2){
+                                        echo "&nbsp;";
+                                    }else{
+                                        $up = explode('-',$list['answer_e']);
+                                        echo $up[1]."人";
+                                    }
+                                </php></td>
+                        </tr>
+                    </table>   
+                </td>  
+	          </tr>
+	       </volist>
+	     </tbody>
+       </table>
+   </form> 
+</div> 
+<div class="cLine">
+  <div class="clr"></div>
+</div>
+</div>
+<script>
+function startOp(url){
+    if(confirm('您确定进行此次操作')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+
+</script>
+
+<include file="Public:footer"/>

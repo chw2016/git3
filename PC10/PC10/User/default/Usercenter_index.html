@@ -1,0 +1,247 @@
+<include file="Public:head"/>
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/map.js"></script>
+<script src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&v=1.1&services=true" type="text/javascript"></script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#gt_image').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#pic_image").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/index',array('token'=>$token))}" <if condition="$hover eq 1" >class="hover"</if>>用户中心设置</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/memberman',array('token'=>$token))}" <if condition="$hover eq 2" >class="hover"</if>>微信会员管理</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/salecard',array('token'=>$token))}" <if condition="$hover eq 3" >class="hover"</if>>会员优惠</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/scoreman',array('token'=>$token))}" <if condition="$hover eq 4" >class="hover"</if>>积分规则</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/userlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/notice',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>会员通知</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/shitimember',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>实体会员</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Integralshop/index',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>积分商城</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>会员中心商家基本信息设置,所有信息将会在微信端会员中心设置</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="" method="POST" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="id" id="id" value="{weikucms:$usercenterdata.id}">
+
+                <div class="control-group">
+                    <label class="control-label" for="keyword">图文标题</label>
+                    <div class="controls">
+                        <input type="text" name="title" id="title" value="{weikucms:$usercenterdata.title}" data-rule-required="true" data-rule-maxlength="50">
+                        <span>*</span>
+                        <span class="help-inline">最多只能输入50个字符</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="keyword">触发关键词</label>
+                    <div class="controls">
+                        <input type="text" name="keywords" id="keywords" value="{weikucms:$usercenterdata.keywords}" data-rule-required="true" data-rule-maxlength="20">
+                        <span>*</span>
+                        <span class="help-inline">用户在微信端输入此"关键词"将可以触发会员卡图文，最多只能输入20个字符。</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="cover">图文消息封面</label>
+                    <div class="controls">
+                        <div id="image_upload" class="">
+                            <img id="pic_image" style="max-height:50px;" src="{weikucms:$usercenterdata.picurl}" >
+                            <input type="hidden" value="{weikucms:$usercenterdata.picurl}" name="picurl" id="pic">
+                            <span class="help-inline">
+                                <button name="button" id="gt_image" class="btn btn-primary" type="button">选择封面</button>
+                                <span class="help-inline">填写图片外链地址，推荐大小为720x400</span></span></div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="control-group">
+                    <label class="control-label" for="fanslocal">商家详细地址</label>
+                    <div class="controls">
+                        <input type="text" name="address" value="{weikucms:$usercenterdata.address}" id="address" data-rule-required="true" data-rule-maxlength="50">
+                        <span class="maroon">*</span>
+                        <span class="help-inline">最多只能输入50个字符。</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="fanslocal">联系方式</label>
+                    <div class="controls">
+                        <input type="text" name="tel" id="tel" value="{weikucms:$usercenterdata.tel}" data-rule-required="true" data-rule-phone="true">
+                        <span class="maroon">*</span>
+                        <span class="help-inline">如400-010-188887</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="suggestId">经纬度</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" id="suggestId" class="input-xlarge" name="place" data-rule-required="true">
+                            <button class="btn" type="button" id="positioning">搜索</button>
+                        </div>
+
+                        <span class="maroon">注意：这个只是模糊定位，准确位置请地图上标注!</span>
+                        <div id="l-map" style="overflow: hidden; position: relative; z-index: 0; background-image: url(http://api.map.baidu.com/images/bg.png); color: rgb(0, 0, 0); text-align: left;"><div id="platform" style="overflow: visible; position: absolute; z-index: 0; left: -98px; top: 37px; cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div id="mask" class=" BMap_mask" style="position: absolute; left: 98px; top: -37px; z-index: 9; overflow: hidden; -webkit-user-select: none; width: 605px; height: 320px;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 800;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 700;"><span class="BMap_Marker BMap_noprint" unselectable="on" "="" style="position: absolute; padding: 0px; margin: 0px; border: 0px; cursor: pointer; background-image: url(http://api.map.baidu.com/images/blank.gif); width: 23px; height: 25px; left: 391px; top: 98px; z-index: -7979488; background-position: initial initial; background-repeat: initial initial;" title=""></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 600;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 500;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 400;"><span class="BMap_Marker" unselectable="on" style="position: absolute; padding: 0px; margin: 0px; border: 0px; width: 0px; height: 0px; left: 401px; top: 123px; z-index: -7979488;"><div style="position: absolute; margin: 0px; padding: 0px; width: 23px; height: 25px; left: -10px; top: -25px; overflow: hidden;"><img src="http://api.map.baidu.com/images/marker_red.png" style="border:none;left:0px; top:0px; position:absolute;"></div></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"></div></div><div style="position: absolute; z-index: -1; left: 401px; top: 123px;"><img src="http://online3.map.bdimg.com/tile/?qt=tile&amp;x=6323&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -74px; top: -213px;"><img src="http://online3.map.bdimg.com/tile/?qt=tile&amp;x=6324&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: 182px; top: 43px;"><img src="http://online2.map.bdimg.com/tile/?qt=tile&amp;x=6322&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -330px; top: -213px;"><img src="http://online2.map.bdimg.com/tile/?qt=tile&amp;x=6323&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -74px; top: 43px;"><img src="http://online4.map.bdimg.com/tile/?qt=tile&amp;x=6324&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: 182px; top: -213px;"><img src="http://online1.map.bdimg.com/tile/?qt=tile&amp;x=6322&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -330px; top: 43px;"></div></div><div id="zoomer" style="position:absolute;z-index:0;top:0px;left:0px;overflow:hidden;visibility:hidden;cursor:url(http://api.map.baidu.com/images/openhand.cur) 8 8,default"><div class="BMap_zoomer" style="top:0;left:0;"></div><div class="BMap_zoomer" style="top:0;right:0;"></div><div class="BMap_zoomer" style="bottom:0;left:0;"></div><div class="BMap_zoomer" style="bottom:0;right:0;"></div></div><div class=" anchorBL" style="height: 32px; position: absolute; z-index: 10; bottom: 0px; right: auto; top: auto; left: 1px;"><a title="到百度地图首页" target="_blank" href="http://map.baidu.com/?sr=1" style="outline: none;"><img style="border:none;width:77px;height:32px" src="http://api.map.baidu.com/images/copyright_logo.png"></a></div><div unselectable="on" class=" BMap_cpyCtrl anchorBL" style="cursor: default; white-space: nowrap; bottom: 2px; right: auto; top: auto; left: 81px; position: absolute; z-index: 10;"><span style="color: rgb(0, 0, 0); background-image: none; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-family: arial, simsun; display: inline; background-position: initial initial; background-repeat: initial initial;" _cid="1">? 2014 Baidu</span></div><div unselectable="on" class=" BMap_stdMpCtrl BMap_stdMpType0 BMap_noprint anchorTL" style="width: 52px; height: 226px; bottom: auto; right: auto; top: 10px; left: 10px; position: absolute; z-index: 1100;"><div class="BMap_stdMpPan"><div class="BMap_button BMap_panN" title="向上平移"></div><div class="BMap_button BMap_panW" title="向左平移"></div><div class="BMap_button BMap_panE" title="向右平移"></div><div class="BMap_button BMap_panS" title="向下平移"></div><div class="BMap_stdMpPanBg BMap_smcbg"></div></div><div class="BMap_stdMpZoom" style="height: 167px; width: 52px;"><div style="height: 167px; width: 37px;"><div class="BMap_button BMap_stdMpZoomIn" title="放大一级"><div class="BMap_smcbg"></div></div><div class="BMap_button BMap_stdMpZoomOut" title="缩小一级"><div class="BMap_smcbg"></div></div></div><div class="BMap_stdMpSlider" style="height: 133px;"><div class="BMap_stdMpSliderBgTop" style="height: 124px;"><div class="BMap_smcbg"></div></div><div class="BMap_stdMpSliderBgBot" style="top: 124px;"><div class="BMap_smcbg"></div></div><div class="BMap_stdMpSliderMask" title="放置到此级别"></div><div class="BMap_stdMpSliderBar" title="拖动缩放" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default; top: 22px;"><div class="BMap_smcbg"></div></div></div><div class="BMap_zlHolder"><div class="BMap_zlSt"><div class="BMap_smcbg"></div></div><div class="BMap_zlCity"><div class="BMap_smcbg"></div></div><div class="BMap_zlProv"><div class="BMap_smcbg"></div></div><div class="BMap_zlCountry"><div class="BMap_smcbg"></div></div></div></div></div><div unselectable="on" class=" BMap_scaleCtrl BMap_noprint anchorBL" style="bottom: 18px; right: auto; top: auto; left: 81px; width: 88px; position: absolute; z-index: 10;"><div class="BMap_scaleTxt" unselectable="on">500&nbsp;米</div><div class="BMap_scaleBar BMap_scaleHBar"><img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleLBar"><img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleRBar"><img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div></div><div unselectable="on" class=" BMap_omCtrl BMap_noprint anchorBR quad4" style="width: 15px; height: 15px; bottom: 0px; right: 0px; top: auto; left: auto; position: absolute; z-index: 10;"><div class="BMap_omOutFrame" style="width: 149px; height: 149px;"><div class="BMap_omInnFrame" style="bottom: auto; right: auto; top: 8px; left: 8px; width: 139px; height: 139px;"><div class="BMap_omMapContainer"></div><div class="BMap_omViewMv" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div class="BMap_omViewInnFrame"><div></div></div></div></div></div><div class="BMap_omBtn BMap_omBtnClosed" style="bottom: 0px; right: 0px; top: auto; left: auto;"></div></div></div>
+                        <div id="r-result">
+                            <input type="text" value="{weikucms:$usercenterdata.position_x}" id="lng" name="position_x">
+                            <input type="text" value="{weikucms:$usercenterdata.position_y}" id="lat" name="position_y">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+
+</div>
+<include file="Public:footer"/>
+
+
+<script type="text/javascript">
+    $(function(){
+        baidu_map();
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var title = $("#title").val();
+            var picurl = $("#pic").val();
+            var keywords = $("#keywords").val();
+            var address = $("#address").val();
+            var tel = $("#tel").val();
+            var position_x = $("#lng").val();
+            var position_y = $("#lat").val();
+
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! title){
+                notif({
+                    msg: "标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! keywords){
+                notif({
+                    msg: "关键词不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! picurl){
+                notif({
+                    msg: "封面图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! address){
+                notif({
+                    msg: "详细地址不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! tel){
+                notif({
+                    msg: "电话不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! position_x || !position_y){
+                notif({
+                    msg: "地理位置不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!id){
+                id = 0;
+            }
+
+
+            $.post("{weikucms::U('Usercenter/infoset')}",
+                    {id:id,title:title,keywords:keywords,address:address,tel:tel,picurl:picurl,
+                        position_x:position_x,position_y:position_y,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url+"&token={weikucms:$token}";
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+</div>

@@ -1,0 +1,145 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<link rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+<link rel="stylesheet" href="{weikucms::RES}/ieat/css/upload.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script type="text/javascript" src="{weikucms::RES}/ieat/js/jquery.js"> </script>
+<script type="text/javascript" src="{weikucms::RES}/ieat/js/zxxFile.js"> </script>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+          <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/virtual',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+      </ul>
+    </div>
+</div>
+</div>
+<!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以设置商家的实景图。</li>
+    </ol>
+  </div>
+  <div class="" style="width:100%;">
+<!--tab end-->
+  <div class="msgWrap">
+    <div class="demo">
+        <form id="uploadForm" action="{weikucms::U('Ieat/mall_virtual',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}" method="post" enctype="multipart/form-data">
+            <div class="upload_box">
+                <div class="upload_main">
+                    <div class="upload_choose">
+                        <input id="fileImage" style="border: 0px;line-height:23px;height:22.5px;width:15%;" type="file" size="30" name="fileselect[]" multiple  />
+                        <span id="fileDragArea" class="upload_drag_area">或者将图片拖到此处</span>
+                    </div>
+                    <div id="preview" class="upload_preview"></div>
+                </div>
+                <div class="upload_submit">
+                    <button type="button" id="fileSubmit" class="upload_submit_btn btn  btn-success">确认上传图片</button>
+                </div>
+                <div id="uploadInf" class="upload_inf"></div>
+            </div>
+        </form>
+    </div>
+  </div>
+  <div class="cLine">
+    <div class="clr"></div>
+  </div>
+</div>
+<script>
+var params = {
+    fileInput: $("#fileImage").get(0),
+    dragDrop: $("#fileDragArea").get(0),
+    upButton: $("#fileSubmit").get(0),
+    url: $("#uploadForm").attr("action"),
+    filter: function(files) {
+        var arrFiles = [];
+        for (var i = 0, file; file = files[i]; i++) {
+            if (file.type.indexOf("image") == 0) {
+                if (file.size >= 512000) {
+                    alert('您这张"'+ file.name +'"图片大小过大，应小于500k');
+                } else {
+                    arrFiles.push(file);
+                }
+            } else {
+                alert('文件"' + file.name + '"不是图片。');
+            }
+        }
+        return arrFiles;
+    },
+    onSelect: function(files) {
+        var html = '', i = 0;
+        $("#preview").html('<div class="upload_loading"></div>');
+        var funAppendImage = function() {
+            file = files[i];
+            if (file) {
+                var reader = new FileReader()
+                reader.onload = function(e) {
+                    html = html + '<div id="uploadList_'+ i +'" class="upload_append_list"><p><strong>' + file.name + '</strong>'+
+                    '<a href="javascript:" class="upload_delete" title="删除" data-index="'+ i +'">删除</a><br />' +
+                    '<img id="uploadImage_' + i + '" src="' + e.target.result + '" class="upload_image" /></p>'+
+                    '<span id="uploadProgress_' + i + '" class="upload_progress"></span>' +
+                    '</div>';
+
+                    i++;
+                    funAppendImage();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $("#preview").html(html);
+                if (html) {
+                    //删除方法
+                    $(".upload_delete").click(function() {
+                        ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
+                        return false;
+                    });
+                    //提交按钮显示
+                    $("#fileSubmit").show();
+                } else {
+                    //提交按钮隐藏
+                    $("#fileSubmit").hide();
+                }
+            }
+        };
+        funAppendImage();
+    },
+    onDelete: function(file) {
+        $("#uploadList_" + file.index).fadeOut();
+    },
+    onDragOver: function() {
+        $(this).addClass("upload_drag_hover");
+    },
+    onDragLeave: function() {
+        $(this).removeClass("upload_drag_hover");
+    },
+    onProgress: function(file, loaded, total) {
+        var eleProgress = $("#uploadProgress_" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
+        eleProgress.show().html(percent);
+    },
+    onSuccess: function(file, response) {
+        $("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
+    },
+    onFailure: function(file) {
+        $("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");
+        $("#uploadImage_" + file.index).css("opacity", 0.2);
+    },
+    onComplete: function() {
+        //提交按钮隐藏
+        $("#fileSubmit").hide();
+        //file控件value置空
+        $("#fileImage").val("");
+        $("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
+    }
+};
+ZXXFILE = $.extend(ZXXFILE, params);
+ZXXFILE.init();
+</script>
+
+<include file="Public:footer"/>

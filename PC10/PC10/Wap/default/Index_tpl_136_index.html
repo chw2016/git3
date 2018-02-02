@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/136/reset.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/136/snower.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/136/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/fontcss/font-awesome.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/136/home-62.css" media="all">
+    <script type="text/javascript" charset="utf-8" async="" src="{weikucms::RES}/136/lxb.js"></script><script type="text/javascript" async="" src="{weikucms::RES}/136/wtj.js"></script><script type="text/javascript" src="{weikucms::RES}/136/maivl.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/136/jQuery.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/136/zepto.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/136/swipe.js"></script>
+    <style type="text/css" media="screen">
+        .box { display: block !important; }
+        .list_ul .dl { display: block; float: left; width: 33%; height: 90px; }
+        .icon-collapse-top:before { content: '' !important; }
+    </style>
+    <title>{weikucms:$tpl.name}</title>
+
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="万普微盟">
+    <meta name="Description" content="万普微盟">
+    <!-- Mobile Devices Support @begin -->
+
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Mobile Devices Support @end -->
+    <script charset="utf-8" src="{weikucms::RES}/136/v.js"></script></head>
+<body onselectstart="return true;" ondragstart="return false;" youdao="bind">
+<include file="Public:audio"/> 
+<div class="body">
+    <section>
+        <!--
+幻灯片管理
+-->
+        <div style="-webkit-transform:translate3d(0,0,0);">
+            <div id="banner_box" class="box_swipe">
+                <ul style="list-style: none; transition: 500ms; -webkit-transition: 500ms;">
+                    <volist name="flash" id="so">
+                    <li>
+                        <a onclick="return false;">
+                            <img src="{weikucms:$so.img}"  style="width:100%;">
+                        </a>
+                    </li>
+                    </volist>
+
+                </ul>
+                <ol>
+                    <li class="on"></li>
+                </ol>
+            </div>
+        </div>
+        <script>
+            $(function(){
+                new Swipe(document.getElementById('banner_box'), {
+                    speed:500,
+                    auto:3000,
+                    callback: function(){
+                        var lis = $(this.element).next("ol").children();
+                        lis.removeClass("on").eq(this.index).addClass("on");
+                    }
+                });
+            });
+        </script>
+        <header>
+            <div class="snower">
+                <script type="text/javascript"></script>
+                <script type="text/javascript" src="{weikucms::RES}/136/snower.js"></script>
+            </div>
+        </header>
+        <div style="padding: 20px;">
+        <ul id="list_ul" class="list_ul">
+            <li class="box">
+                <volist name="info" id="vo">
+              <div class='dl'>
+                <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+                    <dd>
+                        <div>
+                            <span class="{weikucms:$vo.icon}"><img src="{weikucms:$vo.img}" height="63%" width="50%" style="margin-top: 10%;position: relative; left: -3px;" /></span>
+                        </div>
+                    </dd>
+                    <dt>{weikucms:$vo.name}</dt>
+                </a>
+            </div>
+                </volist>
+            </li>
+        </ul>
+    </div>
+    </section>
+</div>
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+
+<!--
+分享前控制
+-->
+
+<footer style="overflow:visible;">
+    <div class="weimob-copyright" style="padding-bottom:50px;">
+        <a href="#">{weikucms:$speeddial.copyright}</a>
+    </div>
+</footer>
+<div mark="stat_code" style="width:0px; height:0px; display:none;">
+</div>
+<script src="{weikucms::RES}/136/h.js" type="text/javascript"></script>
+
+</body>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</html>

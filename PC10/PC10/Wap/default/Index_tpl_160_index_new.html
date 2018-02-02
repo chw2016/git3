@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_160/style_1.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_160/style_2.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_160/style_3.css" media="all" />
+		 <title>{weikucms:$tpl['name']}</title>
+        
+        <!-- Mobile Devices Support @end -->
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+      <include file="Public:audio"/>   
+<link rel="stylesheet" type="text/css" href="http://293885.m.weimob.com/wm-xin-a/font-awesome.css?v=2014080523" media="all" />
+
+<div class="body">
+		<!--
+	幻灯片管理
+	-->
+	<div style="-webkit-transform:translate3d(0,0,0);">
+		<div id="banner_box" class="box_swipe">
+			<ul>
+				<volist name="flash" id="vo">
+					<li>
+												<a onclick="return false;">
+																<img src="{weikucms:$vo.img}" alt="dsf" style="width:100%;" />
+								</a>
+					</li>
+				</volist>
+									
+			</ul>
+			<ol>
+				<li class="on"></li>
+				<volist name="flash" id="vo" offset="1" >
+					<li style="margin-right:3px;"></li>
+				</volist>
+								
+							</ol>
+		</div>
+	</div>
+		<script>
+		$(function(){
+			new Swipe(document.getElementById('banner_box'), {
+				speed:500,
+				auto:3000,
+				callback: function(){
+					var lis = $(this.element).next("ol").children();
+					lis.removeClass("on").eq(this.index).addClass("on");
+				}
+			});
+		});
+	</script>
+<br/>        		<!--
+		用户分类管理
+		-->
+		<section>
+            <ul class="list_ul">
+            	<volist name="info" id="vo">
+            		 <li>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<figure>
+								<div>
+									<img src="{weikucms:$vo.img}" />
+								</div>
+								<figcaption>
+										<p>{weikucms:$vo.name}</p>
+								</figcaption>
+							</figure>
+                        </a>
+                    </li>
+            	</volist>
+                            </div>
+        </section>
+    </div>
+    <if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body>
+</html>

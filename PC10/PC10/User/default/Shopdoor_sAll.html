@@ -1,0 +1,140 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+	<div class="cLineB">
+		<h4 class="left">所有订单详情</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Shopdoor/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	<div class="clr"></div>
+</div>
+
+<style>
+
+.aaaa{
+line-height: 30px;
+width:53px;
+height: 26px;
+text-align: center;
+font-weight: bold; 
+color: #FFF; 
+font-size: 14px; 
+background: #1576ad;
+border-radius: 3px;
+box-shadow: 0 0 3px rgba(0,0,0,0.2);
+border: 1px solid #1576ad; 
+}
+
+</style>
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+<!-- 	<form method="post"  action="###" id="info" > -->
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>订单编号</th>
+                      <th style="width:300px;">订单详情</th>
+                      <th>订单价格</th>
+                      <th>下单用户</th>
+                      <th>联系方式</th>
+                      <th>下单时间</th>
+                      <th>所属门店</th>
+                      <th>是否外送</th>
+
+                      <th>送货时间</th>
+
+                      <th>订单状态</th>
+                      <th>智能打印</th>
+                      <th>删除</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                    //P($list);
+                  ?>
+                  <volist name="list" id="vo">
+                  
+                  		<tr>
+        					<td>{weikucms:$vo.id}</td>
+                  			<td>{weikucms:$vo.order_info}</td>
+                  			<td><div class="answer_text">{weikucms:$vo.order_price}</div></td>
+                  			<td>{weikucms:$vo.order_user}</td>
+                    		<td>{weikucms:$vo.order_user_phone}</td>
+                    		<td>{weikucms:$vo.order_ok_time}</td>
+                    		<td>{weikucms:$vo.username}</td>
+                            <if condition="$vo.is_waisong eq 1">
+                                <td>到店自取</td>
+                                <else/>
+                                <td>需要外送</td>
+                            </if>
+                           <td>{weikucms:$vo.sh_time}</td>
+                    		<if condition="$vo.order_status eq 0">
+                    		<td>未处理</td>
+                    		<elseif condition="$vo.order_status eq 1" />
+                    		<td>已处理</td>
+                    		<elseif condition="$vo.order_status eq 2" />
+                    		<td>已取消</td>
+                    		</if>
+                    		<form action="{weikucms::U('dy',array('order_user'=>$vo['order_user']))}" method="post" class="form" >
+                    		<input type="hidden" name="id" value="{weikucms:$vo.id}" />
+                    		<input type="hidden" name="order_info" value="<php>echo strip_tags(str_replace('&nbsp;','',$vo['order_info']));</php>" />
+                    		<input type="hidden" name="order_price" value="{weikucms:$vo.order_price}" />
+                    		<input type="hidden" name="order_user" value="{weikucms:$vo['order_user']}" />
+                    		<input type="hidden" name="order_user_phone" value="{weikucms:$vo.order_user_phone}" />
+                    		<input type="hidden" name="order_ok_time" value="{weikucms:$vo.order_ok_time}" />
+                    		<input type="hidden" name="username" value="{weikucms:$vo.username}" />
+                    		<input type="hidden" name="is_waisong" value="{weikucms:$vo.is_waisong}" />
+                    		<input type="hidden" name="order_extra_info" value="{weikucms:$vo.order_extra_info}" />
+							<input type="hidden" name="sh_time" value="{weikucms:$vo.sh_time}" />
+                    		<input type="hidden" name="order_status" value="{weikucms:$vo.order_status}" />
+                    		<input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+                    		<input type="hidden" name="order_adress" value="{weikucms:$vo.order_adress}" />
+
+
+
+
+
+                    		<td ><div class="aaaa"> 打印</div> </td>
+                    		<td ><div style="line-height: 30px; width: 53px; height: 26px; text-align: center; font-weight: bold; color: #FFF; font-size: 14px; background: #FF0D26; border-radius: 3px; box-shadow: 0 0 3px rgba(0,0,0,0.2); cursor: pointer" class="delete" data-id="{weikucms:$vo.id}">删除</div> </td>
+							</form>
+                    		<script>
+                    		    $(".aaaa").click(function(){
+                    		    	$(this).parents('td').siblings('form').submit();
+                    		    })
+                    		</script>
+                      </tr>
+                  </volist>
+                  <script type="text/javascript" charset="utf-8">
+                      $('.delete').click(function(){
+                         if(confirm('你确定要删除吗?')){
+                             var id = $(this).attr('data-id');
+                             $.post(
+                                 "{weikucms::U('delete', array('token' => $token))}",
+                                 {id:id},
+                                 function(ret){
+                                    if(ret.code == 0){
+                                        window.location.reload();
+                                    }else{
+                                        alert('删除失败');
+                                    }
+                                 }
+                             , 'json');
+                         }
+                      });
+                  </script>
+                  </tbody>
+              </table>			
+	<!-- 	</form> -->
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+<include file="Public:footer"/>

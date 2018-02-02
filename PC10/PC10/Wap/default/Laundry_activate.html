@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣服务</title>
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/page.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/touchslider.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/klass.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jsAddress.js"></script>
+</head>
+<body>
+	<!--填写激活信息-->
+	<div style="margin-top: 100px; margin-left: 90px;<if condition="$key eq 1"><else />display:none;</if>">您已经激活,请退出该页面~</div>
+	<div class="activate" style="<if condition="$key eq 1">display:none;<else /></if>">
+		<form method="post" action="javascript::void(0)">
+			<!-- 信息-->
+			<section class="section_4">
+				<div class="m_input m_input_5">
+					<label for="name">姓名</label>
+					<div class="input">
+						<input placeholder="请填写姓名" value="" id="online_login_name" name="online_login_name">
+						<input value="{weikucms:$data['token']}" id="token" name="token" type="hidden">
+						<input value="{weikucms:$d['online_openid']}" id="online_openid" name="online_openid" type="hidden">
+					</div>
+				</div>
+				<div class="m_input m_input_5">
+					<label for="mobile">手机号码</label>
+					<div class="input">
+						<input placeholder="请填写手机号码" value="" id="online_tel" name="online_tel">
+					</div>
+				</div>
+				<div class="m_input m_input_5">
+					<label for="mobile">激活密码</label>
+					<div class="input">
+						<input placeholder="请填写激活密码" value="" id="online_pwd" name="online_pwd">
+					</div>
+				</div>
+			</section>
+			<!-- /信息-->
+			<!-- 确定-->
+			<section class="section_5">
+				<div class="m_input">
+					<button type="submit" class="btn_order y_hover J_ytag" value="点击激活">点击激活</button>
+				</div>
+			</section>
+			<!-- /确定 -->
+		</form>
+	</div>
+	<!--填写激活信息-->
+	<!-- 提示 -->
+	<div id="error_tip" style="display: none" class="cod">
+		<div class="wx_mask"></div>
+		<div class="wx_confirm">
+			<div class="wx_confirm_inner">
+				<div class="wx_confirm_hd">
+					<div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+				</div>
+				<div class="wx_confirm_bd">
+					<div class="wx_confirm_btn">
+						<button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay">我知道了</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /提示 -->
+<script type="text/javascript">
+    $(function() {
+        $(".btn_order").click(function() {
+            var online_login_name = $("#online_login_name").val();
+            var online_tel = $("#online_tel").val();
+            var online_pwd = $("#online_pwd").val();
+            var online_openid = $("#online_openid").val();
+            var token = $("#token").val();
+            if (online_login_name == "") {
+                $("#error_tip").show();
+                $("#tip_div").html("请填写姓名");
+                return false;
+            }
+            if (online_tel == "") {
+                $("#tip_div").html("请填写手机号码");
+                $("#error_tip").show();
+                return false;
+            }
+            if (online_pwd == "") {
+                $("#tip_div").html("请填写激活密码");
+                $("#error_tip").show();
+                return false;
+            }
+            var url = "{weikucms::U('Laundry/activate',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url, {
+                online_openid: online_openid,
+                token: token,
+                online_login_name: online_login_name,
+                online_tel: online_tel,
+                online_pwd: online_pwd
+            },
+            function(data) {
+                if (data.status == 1) {
+                    $(".activate").fadeOut();
+                    $("#error_tip").show();
+                    $("#tip_div").html("恭喜您 ！已经成功激活了！请稍等~");
+                    setTimeout(function(){
+                        window.location.href = "{weikucms::U('Laundry/customersliquidity',array('token'=>$token,'openid'=>$openid))}";
+                    },'1000');
+                } else {
+                    $("#error_tip").show();
+                    $("#tip_div").html("糟糕！激活失败了 ！~");
+                }
+            },
+            'json');
+        });
+    });
+
+    function onclose1() {
+        $("#error_tip").hide();
+        return false;
+    }
+</script>
+</body>
+</html>

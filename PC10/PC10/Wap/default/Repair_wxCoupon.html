@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/usercenter.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/usercenter_bg.css" rel="stylesheet" type="text/css">
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+    #header,#footer{
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding: 0 8px;
+        width: 95%;
+    }
+
+    #header table, #footer table{
+        width: 100%;
+        margin: 0 auto;
+    }#footer table tr td{
+        color: red;
+        text-align: center;
+        line-height: 2em;
+        font-size: 16px;
+        cursor: pointer;
+
+    }
+    #header table tr td{
+        border: 1px solid #AAA0A0;
+        color: red;
+        text-align: center;
+        line-height: 2em;
+        font-size: 16px;
+        cursor: pointer;
+        /*box-shadow: 2px 4px 4px #aaa;*/
+        border-radius:4px;
+    }
+    .color{
+        color:#fff !important;
+        /*background: #f00;*/
+        border:1px solid #f00;
+    }.hidden{
+        display: none;
+    }#footer table tr td a{
+        display: block;
+        width: 100%;
+        color: #fff;
+        background: #f00;
+        border:1px solid #f00;
+    }#Mask{
+        display: none;
+        background: #000;
+        opacity: 0.7;
+        position: absolute;
+        z-index: 10;
+    }#if{
+        position: absolute;;
+        z-index: 20;
+        width: 40%;
+        padding: 20px;
+        border: 1px solid #dcdcdc;
+        border-radius: 5px;
+        display: none;
+        background: #fff;
+    }.sureColor{
+        color: #fff !important;
+        border:none !important;
+        background: #EE4B4B;
+        box-shadow: 2px 4px 4px #aaa;
+    }
+</style>
+<style type="text/css">
+	#bottom td a{
+		color: #fff;
+		display: block;
+		font-size: 20px;
+	}
+</style>
+<script type="text/javascript">
+    $(function(){
+    	if(document.body.scrollHeight > $(window).height()){
+    		$('#bottom').css({'width':$(window).width(),'left':0,'bottom':-(document.body.scrollHeight-$(window).height())});
+    	}else{
+    		$('#bottom').css({'width':$(window).width(),'left':0});
+    	}
+        
+    })
+</script>
+<script type="text/javascript">
+    $(function(){
+        $('#header td').bind('click' ,function(){
+            $(this).addClass('color').siblings().removeClass('color');
+            $(this).parents('#header').next().find('.publicList').eq($(this).index()).removeClass('hidden').siblings().addClass('hidden');
+        })
+        $('#absort').click(function(){
+            $('#Mask').css({'width':$(document).width(),'height':$(document).height()}).show();
+            $('#if').css({'left':($(document).width()-$('#if').outerWidth())/2,'top':($(document).height()-$('#if').outerHeight())/2}).show();
+        })
+        $('#cannel').bind('click',function(){
+             $('#Mask').fadeOut();
+              $('#if').fadeOut();
+        })
+    })
+</script>
+</head>
+
+
+
+<body>
+<div class="pageTitle" style="font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="{weikucms::U('Wap/Repair/wxCenter',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">个人中心</a>&nbsp;>>&nbsp;我的优惠券
+</div>
+<div id="header">
+    <table>
+        <tr>
+        	<td <if condition="$type eq 0">class="color"<else/></if> >
+            	<a href="index.php?g=Wap&m=Repair&a=wxCoupon&token={weikucms:$token}&openid={weikucms:$openid}" style="display:block;"<if condition="$type eq 0">class="sureColor"<else/></if>>未使用</a>
+            </td>
+            <td <if condition="$type eq 2">class="color"<else/></if> >
+            	<a href="index.php?g=Wap&m=Repair&a=wxCoupon&type=2&token={weikucms:$token}&openid={weikucms:$openid}" style="display:block;"<if condition="$type eq 2">class="sureColor"<else/></if>>已使用</a>
+            </td>
+            <td <if condition="$type eq 1">class="color"<else/></if> >
+            	<a href="index.php?g=Wap&m=Repair&a=wxCoupon&type=1&token={weikucms:$token}&openid={weikucms:$openid}" style="display:block;"<if condition="$type eq 1">class="sureColor"<else/></if>>已过期</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+<if condition="$isNull eq 1">
+	<div class="yxyyList">
+		<ul id="rtable">
+			<div class="notContentTips">
+				<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>目前还没有优惠券！</p>
+			</div>
+		</ul>
+	</div>
+<else/>
+<volist id="value" name="couponInfo">
+<div class="publicList wml100">
+    <ul>        
+        <li class="noAfter">
+            <div class="li-l">优惠券编号</div>
+            <div class="li-r">
+                {weikucms:$value.coupon_no}
+            </div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            <div class="li-r">{weikucms:$value.startime|date='Y-m-d H:i:s',###}</div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">结束时间</div>
+            <div class="li-r">{weikucms:$value.endtime|date='Y-m-d H:i:s',###}</div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">面值</div>
+            <div class="li-r">{weikucms:$value.coupon_val}</div>
+        </li>        
+    </ul>
+     
+</div>
+</volist>
+<if condition="$type eq 0">
+<div class="button clearfix">
+    <a href="javascript:void(0);" onclick="show_success_box();" style="background:#f00;border-radius:0px;" id="addyhj" class="flag gray">添加优惠券</a>
+</div>
+<else/>
+</if>
+</if>
+</div>
+
+<div style="height:60px;">
+</div>
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxhome&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="Order-index">订单</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxCenter&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="My-index">个人中心</span>
+                    </a>
+                    
+              </div>
+        </div>
+    </div>
+</footer>
+<style type="text/css">
+        .gray{
+        border-top:2px solid #ddd;
+        border-left:2px solid #ddd;
+        border-right:2px solid #888;
+        border-bottom:2px solid #888;
+    }
+    .red{
+        border-top:2px solid #888;
+        border-left:2px solid #888;
+        border-right:2px solid #ddd;
+        border-bottom:2px solid #ddd;
+    }.indexMenu a span{
+        color: #fff;
+    }
+    </style>
+    <script type="text/javascript">
+    $(function(){
+        $('.flag').mousedown(function(){
+            $(this).removeClass('gray').addClass('red');
+            $(this).children('a').css({'bottom':'2px','right':'2px'});
+        })
+        $('.flag').mouseup(function(){
+            $(this).addClass('gray').removeClass('red');
+            $(this).children('a').css({'top':'0px','left':'0px'});
+        })
+    })
+</script>
+<script type="text/javascript">
+    $(function(){
+        $('#addyhj').click(function(){
+            var wCouponCode=$('#wCouponCode').val();
+            var wbeginTme=$('#wbeginTme').val();
+            var wendTime=$('#wendTime').val();
+            var wfaceValue=$('#wfaceValue').val();
+
+             if( !wCouponCode ){
+                show_error_tip('优惠劵编号不能为空！'); 
+                return false;
+            }
+
+             if( !wbeginTme ){
+                show_error_tip('开始时间不能为空！'); 
+                return false;
+            }
+
+             if( !wendTime ){
+                show_error_tip('结束时间不能为空！'); 
+                return false;
+            }
+
+             if( !wfaceValue ){
+                show_error_tip('面值不能为空！'); 
+                return false;
+            }
+
+            var url=""
+             $.post(url,{wCouponCode:wCouponCode,wbeginTme:wbeginTme,wendTime:wendTime,wfaceValue:wfaceValue},
+            function(data){ 
+              if(data.status == 100){                   
+                  setTimeout(function(){                            
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 1 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 2 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }
+          },'json');
+        })
+    })
+</script></body></html>

@@ -1,0 +1,149 @@
+<include file="Public:head"/>
+
+        <link rel="stylesheet" href="{weikucms::RES}/ynd/css/common.css">
+        <script type="text/javascript" src="{weikucms::RES}/ynd/js/jquery-1.11.2.min.js"></script>
+
+    <style type="text/css">
+	.tab-ul{
+		text-align: center;
+		border: 1px solid #ccc;
+		width:1057px;
+	}
+	.tab-ul-li{
+		border-right:1px solid #ccc;
+		width:150px;
+		float: left;
+
+	}
+	.tab-ul-li:last-child{
+		border-right:0;
+	}
+	.tab-ul-li-title{
+		height: 50px;
+		line-height: 50px;
+		font-size: 20px;
+		border-bottom: 1px solid #ccc;
+	}
+	.tab-ul-li-text div{
+		font-size:14px;
+	}
+	.tab-ul-li-text div.on{
+		background: red;
+		color: #fff;
+	}
+        .m20{
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+    $(function(){
+    	$(".tab-ul-li-text>div").click(function(){
+    		$(this).addClass('on').siblings().removeClass('on');
+        });
+    })
+
+    $(function(){
+        $(".tab-ul-li-text").click(function(){
+           $(this).addClass('on').siblings().removeClass('on');
+
+            if(confirm("您确定要吗？")){
+                $(this).addClass('on').siblings().removeClass('on');
+                var abd= $(this).find('.on').text();
+                var qx = $(this).addClass('on').siblings().removeClass('on').text();
+                if(abd == 'A'){
+                    var a=1;
+                }else{
+                    var a=2;
+                }
+                var url = "{weikucms::U('Ynd/rerules',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url,{qx:qx,rule:a},function(rel){
+                    if(rel.status ==1){
+                        alert(rel.info);
+                    }else{
+                        alert(rel.info);
+                    }
+                },'json')
+                //msg.alert("保存成功");
+
+            }
+
+    })
+    })
+
+    </script>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+
+            <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Ynd/rerules',array('token'=>$token))}" >规则管理</a>
+            </li>
+
+
+            <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Ynd/index',array('token'=>$token))}" >返回</a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+    <div class="tab">
+    	<ul class="tab-ul">
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期天</div>
+    			<div class="tab-ul-li-text">
+    				<div class="on">A</div>
+    				<div>B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期一</div>
+    			<div class="tab-ul-li-text">
+    				<div>A</div>
+    				<div class="on">B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期二</div>
+    			<div class="tab-ul-li-text">
+    				<div>A</div>
+    				<div class="on">B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期三</div>
+    			<div class="tab-ul-li-text">
+    				<div class="on">A</div>
+    				<div>B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期四</div>
+    			<div class="tab-ul-li-text">
+    				<div>A</div>
+    				<div class="on">B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期五</div>
+    			<div class="tab-ul-li-text">
+    				<div class="on">A</div>
+    				<div>B</div>
+    			</div>
+    		</li>
+    		<li class="tab-ul-li">
+    			<div class="tab-ul-li-title">星期六</div>
+    			<div class="tab-ul-li-text">
+    				<div>A</div>
+    				<div class="on">B</div>
+    			</div>
+    		</li>
+    	</ul>
+    </div>
+    <div class="mt10 f14 m20" >
+    	说明：A:按最低放单指数优先，相同放单指数，放单时间优先的原则。B:放单时间优先的原则
+    </div>
+    </body>
+</html>

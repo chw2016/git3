@@ -1,0 +1,114 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('User/Gjlog/rzg',array('token'=>$_SESSION['token']))}" >返回首页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style type="text/css">
+    .user_content{
+        width: 99%;
+        border: 1px solid #f1f3f3;
+        border-radius: 5px;
+        padding: 10px 0;
+        margin: 3px 0;
+        font-size: 14px;
+    }
+    .user_taitle{
+        font-size: 15px;
+        font-weight: 600;
+        padding: 5px 0;
+    }
+    .ortitle{
+        display: -webkit-box;
+    }
+    .ortitleclass{
+        display: block; /* float: left; */  text-align: center;  width: 25%;
+    }
+    .fangdanlist{
+        display: block; /* float: left; */  text-align: center;  width: 22%;
+    }
+    .fangdan{
+        display: -webkit-box;
+    }
+    .btuselect{
+        border-radius: 5px;
+        background-color: #1576AD;
+        color: #FFF;
+        padding: 5px 8px;
+    }
+    .user_taitl_img{
+        width:150px;
+        height:150px;
+        float:left;
+        margin-left:20px;
+        border: 2px solid #f1f3f3;
+    }
+    .daocdehu{
+        color:#FFFFFF;
+        width:100px;
+        height:50px;
+        float:left;
+        background:#000033;
+        margin-left:20px;
+        border: 2px solid #f1f3f3;
+    }
+    .dede{
+        color:#FFFFFF;
+        width:100px;
+        height:50px;
+        float:left;
+        background:#000033;
+        margin-left:20px;
+        border: 2px solid #f1f3f3;
+    }
+
+</style>
+<!--<div style="background-color: #F0F5F5;padding: 10px 0;font-size: 13px;">用户管理 ->个人资料</div>-->
+<div>
+    <div class="user_content">
+        <div class="user_taitle">图片预览</div>
+
+    </div>
+
+			<div class='daocdehu' onclick="window.location.href =
+			'{weikucms::U('Gjlog/daodddchu',array('token'=>$token,'openid'=>$openid))}'"><center>全部导出</center></div>
+    <table border="1px">
+         <tr><th><center>图片1</center></th><th><center>图片2</center></th><th><center>图片3</center></th><th><center>图片4</center></th>
+             <th><center>图片5</center></th><th><center>图片6</center></th><th><center>上传时间</center></th><th><center>操作</center></th></tr>
+            <volist name="list" id="vo">
+            <tr>
+                <td>
+                    <img src="{weikucms:$vo.pic1}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>
+                    <img src="{weikucms:$vo.pic2}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>
+                    <img src="{weikucms:$vo.pic3}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>
+                    <img src="{weikucms:$vo.pic4}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>
+                    <img src="{weikucms:$vo.pic5}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>
+                    <img src="{weikucms:$vo.pic6}" style='width:150px; height:150px' class="user_taitl_img">
+                </td>
+                <td>{weikucms:$vo.data_tima}</td>
+                <td><div class='dede' onclick="window.location.href =
+			'{weikucms::U('Gjlog/daodddchu',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'"><center>单个导出</center></div></td>
+            </tr>
+            </volist>
+        <>
+    </table>
+
+
+

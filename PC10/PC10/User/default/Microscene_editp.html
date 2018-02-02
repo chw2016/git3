@@ -1,0 +1,237 @@
+<include file="Public:head"/>
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+<script src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&v=1.1&services=true" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/map.js"></script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#gt_image1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic1').val(),
+                    clickFn : function(url, title) {
+                        K('#pic1').val(url);
+                        $("#pic_image1").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+        // 开场图片
+        K('#gt_image2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic2').val(),
+                    clickFn : function(url, title) {
+                        K('#pic2').val(url);
+                        $("#pic_image2").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+       
+        K('#gt_image_nusic').click(function() {
+            editor.loadPlugin('insertfile', function() {
+                editor.plugin.fileDialog({
+                    fileUrl : K('#musicurl').val(),
+                    clickFn : function(url, title) {
+                        K('#musicurl').val(url);
+                        $("#audio").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>自主添加,一次填写信息</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="/MemMarket/EditMemberCoupon" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <div class="control-group">
+                    <label for="title" class="control-label">轻应用名称：</label>
+                    <div class="controls">
+                        <input type="text" name="light_app_name" id="light_app_name" value="{weikucms:$res.lightname}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label for="title" class="control-label">开始时间：</label>
+                    <div class="controls">
+                        <input type="text" name="start_date" id="start_date" value="{weikucms:$res.stime}"  onClick="WdatePicker()" class="input-large" style="width: 172px;" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">联系人：</label>
+                    <div class="controls">
+                        <input type="text" name="contact_name" id="contact_name" value="{weikucms:$res.contact}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="fanslocal">详细地址</label>
+                    <div class="controls">
+                        <input type="text" name="address" value="{weikucms:$res.address}" id="address" data-rule-required="true" data-rule-maxlength="50">
+                        <span class="maroon">*</span>
+                        <span class="help-inline">最多只能输入50个字符。</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="fanslocal">联系方式</label>
+                    <div class="controls">
+                        <input type="text" name="tel" id="tel" value="{weikucms:$res.chat_info}" data-rule-required="true" data-rule-phone="true">
+                        <span class="maroon">*</span>
+                        <span class="help-inline">如400-010-188887</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="cover">添加背景图片</label>
+                    <div class="controls">
+                        <div id="image_upload1" class="">
+                            <img id="pic_image1" style="max-height:50px;" src="{weikucms:$res.bg_url}" >
+                            <input type="hidden" value="{weikucms:$res.bg_url}" name="pic1" id="pic1">
+                            <span class="help-inline">
+                                <button name="button" id="gt_image1" class="btn btn-primary" type="button">添加背景图片</button>
+                                <span class="help-inline">填写图片外链地址，推荐大小为640x1002</span></span></div>
+
+                    </div>
+  
+                </div>
+                <!-- 开场动画 -->
+                <div class="control-group">
+                    <label class="control-label" for="cover">添加开场加载图片</label>
+                    <div class="controls">
+                        <div id="image_upload2" class="">
+                            <img id="pic_image2" style="max-height:50px;" src="{weikucms:$res.start}" >
+                            <input type="hidden" value="{weikucms:$res.start}" name="pic2" id="pic2">
+                            <span class="help-inline">
+                                <button name="button" id="gt_image2" class="btn btn-primary" type="button">添加开场图片</button>
+                                <span class="help-inline">填写图片外链地址，推荐大小为150x150</span></span></div>
+
+                    </div>
+  
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">背景音乐：</label>
+                    <div class="controls">
+                        <div id="image_upload_music" class="">
+                            <audio src="{weikucms:$res.mus_url}" loop id="audio" controls="controls" style="display:block;
+                            margin-bottom: 20px;">您的浏览器不支持该控件</audio>
+                            <input type="hidden" value="{weikucms:$res.mus_url}" name="musicurl" id="musicurl">
+                            <span class="help-inline">
+                            <button name="button" id="gt_image_nusic" class="btn btn-primary" type="button">选择背景音乐</button>
+                            <span class="help-inline">格式为mp3,大小不超过2M</span></span></div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                // alert(1);
+                //轻应用名称
+                var light_app_name = $("#light_app_name").val();
+                //开始日期
+                var start_date = $("#start_date").val();
+                //联系人
+                var contact_name = $("#contact_name").val();
+                //地址
+                var address = $("#address").val();
+                //联系方式
+                var tel = $("#tel").val();
+                // 背景图片
+                var pic1 = $("#pic1").val();
+                var pic2 = $("#pic2").val();
+               // 背景音乐
+                var musicurl = $("#musicurl").val();
+        
+                
+                // var __hash__ =  $("input[name='__hash__']").val();
+
+                if(!light_app_name){
+                    notif({
+                        msg: "轻应用名称不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!start_date){
+                    notif({
+                        msg: "开始日期不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!contact_name){
+                    notif({
+                        msg: "联系人不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!tel){
+                    notif({
+                        msg: "联系方式不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+                $.post("{weikucms::U('Microscene/psaves',array('token'=>$token,'pid'=>$pid))}",
+                        {lightname:light_app_name,stime:start_date,contact:contact_name,address:address,chat_info:tel,
+                            bg_url:pic1,start:pic2,mus_url:musicurl},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+    </script>
+
+</div>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <title>添加业主</title>
+</head>
+<body class="addAddress">
+    <div class="fixTop header headerBg">
+        <!--<div class="logo"></div>
+        <div class="title">/ 度假服务</div>-->
+        <div class="circle goBack">
+
+        </div>
+        <div class="titleRight">
+            添加信息
+        </div>
+    </div>
+    <div class="content">
+        <div class="inputBox">
+            <input type="text" class="input" id="userName" name="userName" placeholder="请填写姓名"/>
+        </div>
+        <div class="inputBox">
+            <input type="tel" class="input" id="telPhone" name="telPhone" placeholder="请填写联系方式"/>
+        </div>
+
+        <div class="inputBox">
+            <input type="text" class="input" id="addressDetail" name="addressDetail" placeholder="请填写详细地址"/>
+        </div>
+        <!--<div class="setDefaultAddress f14">
+            <span class="circle checkCircle"></span>
+            设为默认收货地址
+        </div>-->
+        <div class="submitAddAddress border-4 f18">
+            确认添加
+        </div>
+    </div>
+    <script>
+        seajs.use("helper",function(h){
+            h.area('province', 'city', 'area',true);
+            $(".submitAddAddress").submitBtn({
+                tipText : "正在添加···",
+                testData : {
+                    "#userName" : {
+                        require:"请问我怎么称呼你？",
+                        length : {
+                            min : 2
+                        }
+                    },
+                    "#telPhone" : {
+                        require : "你还没有告诉我你的手机号码哦！",
+                        type : "phone"
+                    },
+
+                    "#addressDetail" : {
+                        require : "请填写详细地址",
+                        length : {
+                            min : 4
+                        }
+                    }
+                },
+                success : function(){
+
+                    var data = {
+                        userName : $.trim($("#userName").val()),
+                        tel : $("#telPhone").val(),
+                        detailAddress : $("#addressDetail").val()
+
+                    };
+                    console.log(data)
+                },
+                error : function(text){
+                    h.tips(text);
+                }
+            })
+        })
+    </script>
+</body>
+</html>

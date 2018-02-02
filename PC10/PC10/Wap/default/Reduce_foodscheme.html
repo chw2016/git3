@@ -1,0 +1,118 @@
+<html>
+	<head>
+		<title>填写饮食方案</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/20.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">添加饮食方案</span>
+		</div> -->
+		<!-- all drink -->
+		<div class="allDrink">
+			<table>
+				<tr class="borderColor">
+					<td>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/cereal.png" width="30px" height="21px"/>
+					</td>
+					<td>早餐</td>
+					<td>
+						<input type="text" name="breakfast" id="breakfast" style="width:180px;border:none;height:20px;background-color:transparent;" placeholder="写食物名，食物之间请用'/'分开"/>
+					</td>
+					
+				</tr>
+				<tr class="borderColor">
+					<td>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/lunch.png" width="30px" height="25px"/>
+					</td>
+					<td>午餐</td>
+					<td>
+						<input type="text" name="lunch" id="lunch" style="width:180px;border:none;height:20px;background-color:transparent;" placeholder="写食物名，食物之间请用'/'分开"/>
+					</td>
+					
+				</tr>
+				<tr class="borderColor">
+					<td>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/extra.png" width="30px" height="30px"/>
+					</td>
+					<td>加餐</td>
+					<td>
+						<input type="text" name="extra" id="extra" style="width:180px;border:none;height:20px;background-color:transparent;" placeholder="写食物名，食物之间请用'/'分开"/>
+					</td>
+					
+				</tr>
+				<tr>
+					<td>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/dinner.png" width="30px" height="21px"/>
+					</td>
+					<td>晚餐</td>
+					<td>
+						<input type="text" name="dinner" id="dinner" style="width:180px;border:none;height:20px;background-color:transparent;" placeholder="写食物名，食物之间请用'/'分开"/>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
+		<!-- dates -->
+		<div class="dates" id="btn">
+			<a href="javascript:void(0)">添加方案</a>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				
+				// 调整位置
+				$('#searchbox').css({'left':($(window).width()-280)/2+'px','top':'20px'});
+				$('ol').css({'height':($(window).height()-160)+"px",'overflow':'scroll','overflow-x':'hidden'});
+				// 检测用户是否填写数据
+				$('#btn').click(function(){
+					var breakfast = $('#breakfast').val();
+					var lunch = $('#lunch').val();
+					var extra = $('#extra').val();
+					var dinner = $('#dinner').val();
+					if (!breakfast) {
+						 show_error_tip("请填写早餐食物");
+						 return false;
+					};
+					if (!lunch) {
+						 show_error_tip("请填写午餐食物");
+						 return false;
+					};
+					if (!extra) {
+						 show_error_tip("请填写加餐食物");
+						 return false;
+					};
+					if (!dinner) {
+						 show_error_tip("请填写晚餐食物");
+						 return false;
+					};
+					var url = "{weikucms::U('Wap/Reduce/foodaccept',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{breakfast:breakfast,lunch:lunch,extra:extra,dinner:dinner}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+
+				})
+				
+			})
+		</script>
+	</body>
+</html>	

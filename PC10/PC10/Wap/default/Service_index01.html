@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
+<title>万普wapwei</title>
+<meta name="Keywords" content="万普wapwei" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+</head>
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$data['id']};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+</head>
+<body>
+<!-- 未添加车型 [[-->
+<if condition=" $style eq 1">
+<div class="addVehicle center clearfix"><a href="javascript:void(0);" onClick="AddCar();">
+  <img src="{weikucms::STATICS}/wapweiui/service/images/addVehicle.png"  />添加我的车辆</a>
+  <input type="hidden" id= "token" name="token" value="{weikucms:$token}"/>
+  <input type="hidden" id= "openid" name="openid" value="{weikucms:$openid}"/>
+  <input type="hidden" id= "UID" name="UID" value="0"/>
+</div>
+<!--]] 未添加车型 -->
+<else/>
+<!-- 添加车型 [[-->
+<div class="userInfo clearfix">
+	<input type="hidden" id= "token" name="token" value="{weikucms:$token}"/>
+  	<input type="hidden" id= "openid" name="openid" value="{weikucms:$openid}"/>
+  	<input type="hidden" id= "UID" name="UID" value="{weikucms:$data['id']}"/>
+	<dl>
+        <a href="javascript:void(0);" onclick="javascript:window.location.href=&#39;index.php?g=Wap&amp;m=Service&amp;a=showInfo&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&amp;cid={weikucms:$data['id']}&#39;;">
+        	<dt>
+        		<div style="padding-left:20px;padding-top:15px;"><img src="{weikucms::STATICS}/wapweiui/service/images/addVehicle.png"></div>
+        	</dt>
+        	<dd>
+	            <h3>{weikucms:$data['car_licence']}</h3>
+	            <p>{weikucms:$data['car_models']}</p>
+	            <span style="display:none;">今日限行<em>|</em>单号</span>
+        	</dd>
+        </a>
+        <div class="user">
+	        <a href="javascript:;" onclick="javascript:window.location.href=&#39;index.php?g=Wap&amp;m=Service&amp;a=showInfo&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&amp;cid={weikucms:$data['id']}&#39;;">
+	        	<if condition="$wxusers_img eq null">
+  					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png"/>
+  				<else/>
+  					<img src="./upload/weixin_headimg/{weikucms:$wxusers_img}.png"/>
+  				</if>
+			</a>		
+		</div>
+    </dl>
+</div>
+</if>
+<!--]] 添加车型 -->
+<!-- 
+<div class="infoCount clearfix">
+    <ul>
+        <li>       
+         	<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=rulesQuery&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><ol>
+         		<img src="{weikucms::STATICS}/wapweiui/service/images/infoCount_01.png" /><p>违章查询</p>
+         	</ol></a>
+         
+        </li>
+         
+        <li>
+	        
+        	<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=appoint&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+        		<ol>
+	        		<img src="{weikucms::STATICS}/wapweiui/service/images/infoCount_02.png" /><p>保养提醒</p>
+	        	</ol>
+	        </a>
+	        
+        </li>
+        
+        <li>
+        
+        	<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=secure&amp;type=3&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+        		<ol>
+	        		<img src="{weikucms::STATICS}/wapweiui/service/images/infoCount_03.png" /><p>保险提醒</p>
+	        	</ol>
+	        </a>	        
+        </li>
+        
+        <li>
+        
+        	<a href="javascript:void(0);" url="index.php?mod=nianjian"><ol>
+	        		<img src="{weikucms::STATICS}/wapweiui/service/images/infoCount_04.png"/><p>年检提醒</p>
+	        	</ol></a>
+        
+        </li>
+        
+    </ul>
+</div>
+ -->
+<div class="post nowrap clearfix" onClick="javascript:window.location.href='index.php?g=Wap&amp;m=Service&amp;a=mynews&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}';';">
+	<img src="{weikucms::STATICS}/wapweiui/service/images/post.gif" />
+    <a href="javascript:;">暂无最新消息</a>
+</div>
+
+<div class="navigation clearfix">
+    <div class="m-3 clearfix">
+        <ul>
+        	<li>
+            	<div>
+            		<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=showInfo&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&amp;cid={weikucms:$data['id']}">
+	            		<ol>
+	            			<i>
+	            				<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png" />
+	            			</i>
+	            			<p>个人中心</p>
+	            		</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url='index.php?g=Wap&amp;m=Service&amp;a=appoint&amp;type=3&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}'>
+	            		<ol>
+	            			<i>
+	            				<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_01.png" />
+	            			</i>
+	            			<p>养修预约</p>
+	            		</ol>
+            		</a>
+            	</div>
+            </li>
+           <!--  <li>
+            	<div>
+            		<a href="javascript:void(0);" url='index.php?g=Wap&amp;m=Service&amp;a=help&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}'>
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_02.png" />
+            				</i>
+            				<p>紧急救援</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            -->
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url='index.php?g=Wap&amp;m=Service&amp;a=appraise&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}'>
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_04.png" />
+            				</i>
+            				<p>服务点评</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=complain&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/tell_01.png" />
+            				</i>
+            				<p>我要投诉</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=sign&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_03.png" />
+            				</i>
+            				<p>我要签到</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=logout&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_02.png" />
+            				</i>
+            				<p>注销</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+           <!--  <li>
+            	<div>
+            		<a href="javascript:void(0);" url='index.php?mod=baodian'>
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_04.png" />
+            				</i>
+            				<p>车主宝典</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+           -->
+        </ul>
+    </div>
+</div>
+<!--- copyright Start --->
+<div class="coyright clearfix"><div class="coyrLine"><strong>版权所有：万普微信</strong></div></div>
+<!--- copyright End --->
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_uid', UID]);
+	var timestamp = Date.parse(new Date())/1000;
+	_maq.push(['_regtime', timestamp]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+
+<script type="text/javascript">
+//添加车型
+var AddCar = function()
+{
+    window.location.href='index.php?g=Wap&m=Service&a=addCar&token='+$("#token").val()+"&openid="+$("#openid").val();
+}
+$('.infoCount a').each(function() {
+	var UID = $("#UID").val();
+	UID = parseInt(UID);
+	$(this).click(function() {
+       if (UID > 0)
+       {
+          url = $(this).attr('url');
+          window.location.href = url; 
+       }
+       else
+       {
+          show_success_tip('请先添加您的车型！');
+          setTimeout("AddCar()", 1500 );
+       }
+       return true;
+	});
+});
+
+$('.navigation a').each(function() {
+	$(this).click(function() {
+		var UID = $("#UID").val();
+		UID = parseInt(UID);
+       if (UID > 0)
+       {
+          url = $(this).attr('url');
+          window.location.href = url; 
+       }
+       else
+       {
+          show_success_tip('请先添加您的车型！');
+          setTimeout("AddCar()", 1500 );
+       }
+       return true;
+	});
+});
+
+$('.close').click(function(){
+	$('.topTip').remove();
+});
+</script>
+</body>
+</html>

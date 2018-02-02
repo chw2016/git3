@@ -1,0 +1,47 @@
+<include file="Public:head"/>
+
+
+          <div class="cLineB"><h4>编辑图文自定义内容</h4></div>
+         
+          <form method="post"   action="{weikucms::U('Liuyan/runEdit')}"  enctype="multipart/form-data" >
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              
+              <TBODY>
+			  <input type="hidden" name="uid" value="{weikucms:$uid}" />
+			  <input type="hidden" name="uptatetime" value="{weikucms:$uptatetime}" />
+			  <input type="hidden" name="token" value="{weikucms:$token}" />
+               <TR>
+                  <TH>
+                  <label for="title">用户名：</label></TH>
+                  <TD>{weikucms:$info.title} </TD>
+                </TR>
+                <TR>
+                  <TH valign="top"><label for="text">留言内容：</label></TH>
+                  <TD><textarea  class="px" id="Hfcontent"     name="text" style="width:400px;  height:100px">{weikucms:$info.text}</textarea><br /></TD>
+                </TR>
+				<input type="hidden" name="id" value="{weikucms:$info.id}" />
+                <TR>
+                  <TH valign="top"><label for="info">回复内容：</label></TH>
+                  <TD><textarea name="re" id="re" class="px"  rows="5" style="width:400px;height:180px">{weikucms:$info.re}</textarea></TD>
+                </TR>
+                <TR>
+                  <TH></TH>
+                  <TD><button type="submit" value="保存" name="sbmt" class="btn btn-primary">保存</button></TD>
+                </TR>
+
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>

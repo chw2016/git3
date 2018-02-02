@@ -1,0 +1,68 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<include file="./tpl/User/default/helper/nav_header.html"/>
+<div class="msgWrap">
+    <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+        <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <tr>
+                <th valign="top">第一张</th>
+                <td><if condition="$onepic['pic'] eq ''"><else/>
+                    <img style="display: block;"  class="indexs_img" src="{weikucms:$onepic['pic']}"></if>
+                    <a href="{weikucms::U('Image/imgaCreate', array('token' => $token,
+                        'app'=>'Hxfz',
+                        'type'=>'indexpicone',
+                        'surl'=> base64_encode(U('Hxfz/index', array('token' => $token)))
+                    ))}">
+                        <span class="ke-button-common" style="margin-left: 5px;margin-top: 10px;">上传图片</span>
+                    </a>
+                    <span style="padding: 20px; line-height: 53px;">建议图片大小为：640px * 1008px</span>
+                </td>
+            </tr>
+            <tr>
+                <th valign="top">第二张</th>
+                <td><if condition="$twopic['pic'] eq ''"><else/>
+                    <img style="display: block;"  class="indexs_img" src="{weikucms:$twopic['pic']}"></if>
+                    <a href="{weikucms::U('Image/imgaCreate', array('token' => $token,
+                        'app'=>'Hxfz',
+                        'type'=>'indextwo',
+                        'surl'=> base64_encode(U('Hxfz/index', array('token' => $token)))
+                    ))}">
+                        <span class="ke-button-common"  style="margin-left: 5px;margin-top: 10px;">上传图片</span>
+                    </a>
+                    <span style="padding: 20px; line-height: 53px;">建议图片大小为：640px * 1008px</span>
+                </td>
+            </tr>
+            <tr>
+                <th valign="top">第三张</th>
+                <td>
+                    <if condition="$therepic['pic'] eq ''">
+
+                        <else/>
+                        <img style="display: block;"  class="indexs_img" src="{weikucms:$therepic['pic']}">
+                    </if>
+                    <a href="{weikucms::U('Image/imgaCreate', array('token' => $token,
+                        'app'=>'Hxfz',
+                        'type'=>'indexthere',
+                        'surl'=> base64_encode(U('Hxfz/index', array('token' => $token)))
+                    ))}">
+                        <span class="ke-button-common"  style="margin-left: 5px;margin-top: 10px;">上传图片</span>
+                    </a>
+                    <span style="padding: 20px; line-height: 53px;">建议图片大小为：640px * 1008px</span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>

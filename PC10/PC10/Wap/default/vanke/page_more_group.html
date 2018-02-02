@@ -1,0 +1,54 @@
+<volist name="group" id="item">
+<if condition="$item['total_buy'] elt $item['tnumber'] AND $item['total_buy']">
+<div class="item">
+    <div class="circle groupInfoPeopleCircle">
+        <div class="icon f20"><span class="icon-yonghu"></span></div>
+        <div class="text"><span class="num">{weikucms:$item.tnumber}</span>人团</div>
+    </div>
+    <div class="groupInfoWrap">
+        <div class="groupInfoPeopleNum">
+            <span class="text">
+            团长:
+            </span>
+            <span class="startGroupName">
+                {weikucms:$item.userinfo.profile.nickname}
+            </span>
+            <span class="groupPeopleNow">
+                <span class="num">{weikucms:$item.total_buy}</span>/{weikucms:$item.tnumber}人
+            </span>
+        </div>
+        <div class="groupInfoDateLimit">
+            <span class="groupStartDate">
+                {weikucms:$item.add_time}
+            </span>
+            <!--
+            一
+            <span class="groupEndDate">
+            </span>
+            -->
+        </div>
+    </div>
+    <if condition="$item.status eq 0">
+    <!--
+    <a href="{weikucms::U('buy', array('gid' => $item['id'], 'id' => $item['product_id'], 'number' => $item['tnumber']))}">
+    <div class="joinMeBtn">
+        我要加入
+    </div>
+    </a>
+    -->
+    <div class="joinMeBtn">
+        已结束
+    </div>
+    <elseif condition="$item.status eq 1"/>
+    <div class="joinMeBtn on">
+        已成团
+    </div>
+    <elseif condition="$item.status eq 2"/>
+    <div class="joinMeBtn off">
+        已过期
+    </div>
+    <else />
+    </if>
+</div>
+</if>
+</volist>

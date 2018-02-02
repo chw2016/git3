@@ -1,0 +1,105 @@
+<include file="Public:head"/>
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+<script type="text/javascript">
+    $(function(){
+        var btn = $("#import_btn");
+        $("#import_btn").click(function(){
+            var v= $("#codefile").val();
+            if(!v){
+                alert('请选择防伪码文件');
+            }else{
+                $("#myform").ajaxSubmit({
+                    dataType:  'json',
+                    beforeSend: function() {
+                        btn.html("处理中..");
+                    },
+                    /*
+                     uploadProgress: function(event, position, total, percentComplete) {
+                     var percentVal = percentComplete + '%';
+                     btn.html("处理中..("+percentVal+")");
+                     },
+                     complete: function(xhr) {
+                     $(".files").html(xhr.responseText);
+                     },*/
+                    success: function(data) {
+                        btn.html(data.msg);
+                    },
+                    error:function(xhr){
+                        btn.html("处理失败");
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+<style type="text/css">
+    .importclass {
+        position: relative;
+        left: -123px;
+    }
+
+    .a_button {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #codefile {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 100px;
+        opacity: 0;
+        filter: alpha(opacity =   0);
+    }
+</style>
+
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>操作步骤:第一步：下载模板，按模板格式上传</li>
+            <li>操作步骤:第二步：点EXCEL导入</li>
+            <li>操作步骤:第三步：确定导入</li>
+            <li>操作步骤:第四步：返回会员中心查看</li>
+            <if condition="$_GET['type'] eq 1" >
+             <li><a href="<php>echo C('site_url');</php>upload/jd2.xls">模板格式下载</a></li>
+            <else/>
+            <li><a href="<php>echo C('site_url');</php>upload/jd.xls">模板格式下载</a></li>
+            </if>
+            <li>提示：导入用户时若密码为空，则默认初始密码为：“888888”</li>
+        </ol>
+    </div>
+
+    <div class="cLine">
+
+        <div class="pageNavigator">
+            <if condition="$_GET['type'] eq 1" >
+             <form id="myform" action="{weikucms::U('Usercenter/dl3')}" method="post" enctype="multipart/form-data">
+            <else/>
+            <form id="myform" action="{weikucms::U('Usercenter/dl2')}" method="post" enctype="multipart/form-data">
+             </if>
+                <a href="#" class="a_button btn btn-primary">
+                    EXCEL导入
+                    <input type="file" name="file" id="codefile" value="导入资料">
+                </a>
+            </form>
+            <button class='btn btn-success' id="import_btn">确定导入</button>
+           
+        </div>
+        <if condition="$_GET['type'] eq 1" >
+        <button class='btn btn-success' onclick='location.href="{weikucms::U('JdWz/index',get1('token',$_SESSION['token']))}"' id="">返回方案管理</button>
+        <else/>
+        <button class='btn btn-success' onclick='location.href="{weikucms::U('JdUser/index',get1('token',$_SESSION['token']))}"' id="">返回会员中心</button>
+        </if>
+        <div class="clr"></div>
+    </div>
+
+    
+
+  
+    </div>

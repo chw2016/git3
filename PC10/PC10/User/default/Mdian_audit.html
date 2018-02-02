@@ -1,0 +1,128 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+     <div class="cLineB">
+         <div class="title_tab" id="topTab">
+             <ul class="tab_navs title_tab" data-index="0">
+                 <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Fuwu/index',array('token'=>$token))}" >服务项目</a>
+                 </li>
+
+                 <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="#" style="border-bottom: 3px solid rgb(140, 124, 255);" >门店导舰</a>
+                 </li>
+                 <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Tiyan/index',array('token'=>$token))}" >免费体验</a>
+                 </li>
+                                  <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Qianggou/index',array('token'=>$token))}" >限时抢购</a>
+                 </li>
+                                  <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Zhaopin/index',array('token'=>$token))}" >加入我们</a>
+                 </li>
+                                  <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Huodong/index',array('token'=>$token))}" >最新活动</a>
+                 </li>
+                 
+                 
+                            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Ceshi/index',array('token'=>$token))}" >在线测试</a>
+                 </li>
+                 
+                                  <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Ppjs/index',array('token'=>$token))}" >品牌介绍</a>
+                 </li>
+                 
+                            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Zjjs/index',array('token'=>$token))}" >专家介绍</a>
+                 </li>
+                 
+                            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('MruZx/index',array('token'=>$token))}" >美丽资讯</a>
+                 </li>
+                 
+                            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Shi/index',array('token'=>$token))}" >导舰市区</a>
+                 </li>
+                                
+                 
+
+
+
+                
+             </ul>
+         </div>
+     </div>
+<div class="alert alert-info">
+          <button type="button" class="tips close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+        
+           
+            <li>你可以在这里管理你的门店管理信息</li>
+       
+            <li></li>
+            
+         
+          </ol>
+          <script type="text/javascript">
+            $('.tips.close').click(function(){
+               $(this).parents('.alert.alert-info').hide();
+            });
+          </script>
+        </div>
+
+<!--tab end-->
+<div class="cLine">
+<div class="pageNavigator left">
+    <a href="{weikucms::U('Mdian/index',array('token'=>$token))}" title="添加" class="btn btn-primary" ><if condition="$isDining neq 1">返回<else/></if></a>
+
+</div>
+<div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>店铺编号</th>
+            <th>店铺名称</th>
+            <th>店铺活动名称</th>
+           
+            <th>审核状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+     
+        <volist name="list" id="hostlist">
+        <tr>
+                <td>{weikucms:$hostlist.id}</td>
+                <td>{weikucms:$hostlist.aid}</td>
+                <td>{weikucms:$hostlist.dname}</td>
+           
+                <td>{weikucms:$hostlist['audit']?'已审核':'未审核'}</td>
+
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Mdian/auditsave',array('id'=>$hostlist['id'],'token'=>$token))}">审核</a>
+                    <a class="btn btn-danger btn-sm" href="{weikucms::U('Mdian/auditdelete',array('id'=>$hostlist['id'],'token'=>$token))}">取消审核</a>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Mdian/ck',array('id'=>$hostlist['id'],'token'=>$token))}">查看</a>
+                    <a class="btn btn-danger btn-sm" href="{weikucms::U('Mdian/delete',array('id'=>$hostlist['id'],'token'=>$token))}">删除</a>
+                </td>
+         </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+</div>
+<include file="Public:javascript"/>
+<include file="Public:footer"/>

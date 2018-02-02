@@ -1,0 +1,93 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+
+
+
+        <div class="cLine">
+
+            <div class="cLineB">
+                <div class="title_tab" id="topTab">
+                    <ul class="tab_navs title_tab" data-index="0">
+
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                            <a href="{weikucms::U('Works/index',array('token'=>$token))}">参赛作品管理</a>
+                        </li>
+
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                            <a href="{weikucms::U('Works/picset',array('token'=>$token,'id'=>2))}">列表页顶部图片管理</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    <div class="cLineC" style="line-height: 32px;">
+        <a href="{weikucms::U('Works/addset',array('token'=>$token))}" class="btn btn-primary">新增比赛活动</a>　
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th >比赛活动名称</th>
+                    <th >比赛活动主题</th>
+                    <th >比赛活动范围</th>
+                    <th >活动开始时间</th>
+                    <th >活动结束时间</th>
+
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <volist name="works" id="vo" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$vo.name}</td>
+                        <td>{weikucms:$vo.title}</td>
+                        <td>{weikucms:$vo.extent}</td>
+                        <td>{weikucms:$vo.starttime}</td>
+                        <td>{weikucms:$vo.endtime}</td>
+                        <td>
+                            <a href="{weikucms::U('Works/match',array('token'=>$token,'mid'=>$vo['id']))}" title="参赛作品管理" class="btn btn-success btn-sm">参赛作品管理</a>
+                            <a href="{weikucms::U('Works/addset',array('token'=>$token,'id'=>$vo['id']))}" title="修改" class="btn btn-success btn-sm">修改</a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Works/del',array('token'=>$token,'id'=>$vo['id']))}')">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+
+
+
+
+
+
+
+
+

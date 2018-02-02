@@ -1,0 +1,497 @@
+﻿<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>{weikucms:$cat_name}</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/font/style.css" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/api"></script>
+
+</head>
+
+<style>
+
+    .PicBox,.PicBox1{
+
+        width: 100%;
+
+        height: 100%;
+
+        overflow: hidden;
+
+        position: relative;
+
+    }
+
+    .PicBoxSwrap,.PicBoxSwrap1{
+
+        width: 100%;
+
+        height: 100%;
+
+    }
+
+    .Pic,.Pic1{
+
+        width: 100%;
+
+        height: 100%;
+
+        position: relative;
+
+    }
+
+    .CountPicBox,.CountPicBox1 {
+
+        position: absolute;
+
+        bottom: 0;
+
+        background-color: rgba(0,0,0,0.2);
+
+        color: #fff;
+
+        width: 100%;
+
+        text-align: center;
+
+        z-index:99999;
+
+    }
+
+    .dishInfo {
+
+        position: absolute;
+
+        right: 0%;
+
+        top: 10%;
+
+        font-family: "微软雅黑";
+
+        padding: 5%;
+
+        padding-right: 0;
+
+        width: 60%;
+
+        background-color: rgba(0,0,0,0.2);
+
+
+
+    }
+
+    .price {
+
+        color: rgb(255,199,102);
+
+        font-weight: 600;
+
+    }
+
+
+
+    .dish_name {
+
+        font-size: 20px;
+
+        color: #fff;
+
+    }
+
+
+
+    .cat_name {
+
+        color: #fff;
+
+    }
+
+    .price:before{
+
+        content:"￥";
+
+    }
+
+    .price:after{
+
+        content:"元";
+
+    }
+
+    img { max-width: 100%; }
+
+</style>
+
+
+
+<body r='0' g='195' b='255'>
+
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="main Introduce">
+
+    <div class="IntroduceBox" style="top: 5px; position: relative;">
+
+        <!-- <div class="IntroduceHead myul" from="story" onclick="requestInfo(this)">
+
+            <div class="listCircle">
+
+                <div></div>
+
+            </div>品牌故事 <span>STORY</span>
+
+        </div>
+ -->
+        <div>
+        {weikucms::htmlspecialchars_decode($story_content)}
+        </div>
+
+    </div>
+
+
+
+<!--     <div class="IntroduceBox">
+
+        <div class="IntroduceHead myul" from="address" onclick="requestInfo(this)"><div class="listCircle"><div></div></div>商家地址 <span>ADDRESS</span></div>
+
+        <div class="IntroduceContent" id="address">Content</div>
+
+    </div>
+
+
+
+    <div class="IntroduceBox">
+
+        <div class="IntroduceHead myul" from="virtual" onclick="requestInfo(this)"><div class="listCircle"><div></div></div>实景图 <span>REALMAP</span></div>
+
+        <div class="IntroduceContent" id="virtual">
+
+            <div class="PicBox">
+
+                <div class="CountPicBox">
+
+                    <span id="PicIndex">1</span>/
+
+                    <span id="PicTotal">1</span>
+
+                </div>
+
+                <div class="PicBoxSwrap myul">
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="IntroduceBox">
+
+        <div class="IntroduceHead myul" from="dish" onclick="requestInfo(this)"><div class="listCircle"><div></div></div>招牌菜 <span>SPECIALTY</span></div>
+
+        <div class="IntroduceContent">
+
+            <div class="PicBox1">
+
+                <div class="CountPicBox1"><span id="PicIndex1">1</span>/<span id="PicTotal1">1</span></div>
+
+                <div class="PicBoxSwrap1 myul" >
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div> -->
+
+
+
+</div>
+
+
+
+<div class="havbox">
+
+
+
+    <div class="hav myul" style="overflow-x: auto; overflow-y: hidden;">
+
+    <include file="./tpl/Wap/default/Ieat_home_btn.html" />
+    <!--
+        <div data-tap="item" class="item itemBtn tap opacity tapon" style="margin-left:0%;" onclick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-shophome"></span>
+
+                        <span class="smallText">商家介绍</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+
+
+        <div data-tap="item" class="item itemBtn tap opacity" style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/msgWall',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-liuyanqiang"></span>
+
+                        <span class="smallText">留言墙</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+
+
+        <div data-tap="item" class="item itemBtn tap opacity " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/investigation',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-wenjuan"></span>
+
+                        <span class="smallText">问卷调查</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+
+        <div data-tap="item" class="item itemBtn tap opacity" style="margin-left:0%;" onclick="location.href='{weikucms::U('Ieat/restaurantUnio',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-shoplist"></span>
+
+                        <span class="smallText">商家列表</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+    -->
+
+
+        <!-- <div data-tap="item" class="item tap opacity " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/act',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-youhui"></span>
+
+                        <span class="smallText">优惠活动</span>
+
+                    </div></div></div>
+
+
+
+        </div> -->
+
+
+
+
+
+    </div>
+
+
+
+</div>
+<input type="hidden" id="bEditTitle" value='1' />
+
+</body>
+
+<script>
+
+    $(function(){
+
+        var t = "{weikucms:$get['t']}";
+
+        $("#qq"+t).css({'border':'1px solid rgb(0, 195, 255)','background-color':'rgba(194,1,22,0)'});
+
+
+
+    });
+
+</script>
+
+<script>
+
+    // function requestInfo(thi){
+
+    //     if($(thi).hasClass("on")){
+
+    //         return false;
+
+    //     }
+
+    //     $(".Pic").remove();
+
+    //     $(".Pic1").remove();
+
+    //     var cat_id = "{weikucms:$get['cat_id']}";
+
+    //     var token = "{weikucms:$token}";
+
+    //     var from = $(thi).attr("from");
+
+    //     $.ajax({
+
+    //         url:"{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid))}&cat_id="+cat_id+"&from="+from,
+
+    //         dataType:"json",
+
+    //         success:function(res){
+
+    //             if(res){
+
+    //                 if(from == "story"){
+
+    //                     $(thi).next().html(res.story_content);
+
+    //                 }else if(from == "address"){
+
+    //                     // 百度地图API功能
+
+    //                     var map = new BMap.Map("address");
+
+    //                     var point = new BMap.Point(res.longitude,res.latitude);
+
+    //                     map.centerAndZoom(point,12);
+
+    //                     // 创建地址解析器实例
+
+    //                     var myGeo = new BMap.Geocoder();
+
+    //                     // 将地址解析结果显示在地图上,并调整地图视野
+
+    //                     myGeo.getPoint(res.address, function(point){
+
+    //                         if (point) {
+
+    //                             map.centerAndZoom(point, 16);
+
+    //                             map.addOverlay(new BMap.Marker(point));
+
+    //                         }
+
+    //                     }, "深圳市");
+
+    //                 }else if(from == "virtual"){
+
+    //                     var tpl = "";
+
+
+
+    //                     $(res).each(function(i,o){
+
+    //                         tpl += '<div class="Pic"><img style="width:100%;height:250px;" src="'+ res[i] +'"></div>';
+
+    //                     });
+
+    //                     $(".PicBoxSwrap").append(tpl);
+
+    //                     slider($(".PicBox"),$(".PicBoxSwrap"),$(".Pic"));
+
+    //                 }else if(from == "dish"){
+
+    //                     var tpl = "";
+
+
+
+    //                     $(res).each(function(i,o){
+
+    //                         tpl += '<div class="Pic1"><div class="dishInfo"><div class="cat_name">'+res[i].cat_name+'/招牌菜</div><div class="dish_name">'+res[i].dish_name+'</div><div class="price">'+res[i].dish_price+'</div></div><img style="width:100%;height:250px;" src="'+ res[i].dish_pic +'"></div>';
+
+    //                     });
+
+    //                     $(".PicBoxSwrap1").append(tpl);
+
+    //                     slider($(".PicBox1"),$(".PicBoxSwrap1"),$(".Pic1"));
+
+    //                 }
+
+    //             }
+
+    //         }
+
+    //     });
+
+    // }
+
+</script>
+
+<script>
+
+    Panel($(".IntroduceBox"),$(".IntroduceHead"),$(".IntroduceContent"),true);
+
+</script>
+
+</html>
+

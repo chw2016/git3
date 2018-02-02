@@ -1,0 +1,86 @@
+<include file="Public:head"/> 
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>密码修改</h4>
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>原始密码</th>
+                    <TD>
+                        <input type="password" class="px" style="width:400px;" name="old" placeholder="请输入原始密码" id="old"><br />
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>新密码</th>
+                    <TD>
+                        <input type="password" class="px" id="new" style="width:400px" name="new" placeholder="请输入新密码"/>
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>确认新密码：</th>
+                    <TD>
+                        <input type="password" class="px" id="sure" name="sure" style="width: 400px;" placeholder="请再次输入密码"/>
+                    </TD>
+                </TR>
+                <TR>
+                    <th>&nbsp;</th>
+                    <td><button type="submit" class="btn btn-primary" id="submit">保存</button></td>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div>
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    $(function() {
+        $("#submit").click(function() {
+            var old = $("#old").val();
+            var news=$("#new").val();
+            var sure = $("#sure").val();
+            if (!old) {
+                notif({
+                    msg: "原始密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!news) {
+                notif({
+                    msg: "新密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!sure) {
+                notif({
+                    msg: "确认密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(news!=sure){
+                notif({
+                    msg: "两次密码不相同",
+                    type: "warning"
+                });
+                return false;
+            }
+        })
+    })
+</script>
+<include file="Public:footer"/> 

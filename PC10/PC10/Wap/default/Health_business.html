@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css">
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css">
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+<body>
+<div class="top">
+	<div class="circleBorder">
+		<div class="homeBtn">
+			<span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span>
+		</div>
+	</div>
+</div>
+<div class="Box whiteBG">
+	<div class="BBOX">
+        <volist name="data" id="data">
+		<div class="WhiteItem myul" onclick="window.location.href='{weikucms::U('Health/bdetail',array('token'=>$token,'openid'=>$openid,'id'=>$data[id]))}'">
+			<div class="infoBox">
+				<span><?php echo mb_substr($data[title],0,10,"utf8");?></span><span class="introduce Opacity40"><?php echo mb_substr($data[text],0,30,"utf8");?></span>
+			</div>
+			<div class="GoodsBox" style="background: url('{weikucms:$data.pic}') no-repeat;background-size:contain;background-position:center middle;">
+
+			</div>
+		</div>
+        </volist>
+	</div>
+</div>
+<div class="footer yewuBox ">
+	<div class="footSliderSwrap myul">
+    	<div class="footSlider "  onclick="window.location.href='{weikucms::U('Health/business',array('token'=>$token,'openid'=>$openid,'act'=>'member'))}'">
+        	<div class="circleBox <if condition='$act eq member'>on</if>">
+            	<span class="icon-creditcard"></span>
+                <span>会员卡</span>
+            </div>
+        </div>
+        <div class="footSlider"  onclick="window.location.href='{weikucms::U('Health/business',array('token'=>$token,'openid'=>$openid,'act'=>'plans'))}'">
+        	<div class="circleBox <if condition='$act eq plans'>on</if>">
+            	<span class=" icon-users"></span>
+                <span>体检套餐</span></div>
+        </div>
+        <div class="footSlider"  onclick="window.location.href='{weikucms::U('Health/business',array('token'=>$token,'openid'=>$openid,'act'=>'teshu'))}'">
+        	<div class="circleBox <if condition='$act eq teshu'>on</if>">
+            	<span class=" icon-heart"></span>
+                <span>特色项目</span>
+            </div>
+        </div>
+    </div>    
+</div>
+</body>
+<script type="text/javascript">document.body.addEventListener("touchmove",function(o){o.stopPropagation()});</script>
+<script type="text/javascript">
+$(function(){
+	$(".footSlider").click(function(){
+		var THIS = $(this);
+		THIS.siblings().find(".circleBox").removeClass("on");
+		THIS.find(".circleBox").addClass("on")
+		})
+})
+
+myFadeIn();</script>
+</html>

@@ -1,0 +1,77 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <h4>投诉建议详情 </h4>
+            </li>
+           
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #B098FB;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('Repair/suggest',array('token'=>$token, 'type'=>0))}" <if condition="$hover5 eq 1">class="hover"</if>>返回上一层</a>
+            </li>                       
+        </ul>                
+    </div>  
+	<div class="clr"></div>
+</div>
+<div class="box-content" style="height: 500px;">
+    <div class="row-fluid app_ico_box">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td width="200px;">订单编号</td>
+                    <td>{weikucms:$suggestInfo['order_id']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">投诉时间</td>
+                    <td>{weikucms:$vo.complain_time|date='Y-m-d',###}</td>
+                </tr>
+                <if condition="$suggestInfo.saler_id neq null ">
+                	<tr>
+	                	<td width="200px;">推广人员</td>
+	                    <td>{weikucms:$suggestInfo['saler_id']}</td>
+	                </tr>
+                <else/>
+                
+                </if>
+                
+                <if condition="$suggestInfo.agent_id neq null ">
+                	<tr>
+	                	<td width="200px;">服务商</td>
+	                    <td>{weikucms:$suggestInfo['agent_id']}</td>
+	                </tr>
+                <else/>
+                
+                </if>
+                
+                <if condition="$suggestInfo.staff_id neq null ">
+                	<tr>
+	                	<td width="200px;">技师姓名</td>
+	                    <td>{weikucms:$suggestInfo['staff_id']}</td>
+	                </tr>
+                <else/>
+                
+                </if>
+                
+                <tr>
+                    <td width="200px;">投诉者姓名</td>
+                    <td>{weikucms:$suggestInfo['complain_username']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">投诉者联系电话</td>
+                    <td>{weikucms:$suggestInfo['complain_phone']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">投诉信息</td>
+                    <td>{weikucms:$suggestInfo['complain_info']}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>  
+
+<include file="Public:footer"/>

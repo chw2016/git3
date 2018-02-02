@@ -1,0 +1,83 @@
+<include file="Public:head"/>
+				<script>
+				var editor;
+				KindEditor.ready(function(K) {
+					editor = K.create('#info', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+					'source','undo','clearhtml','hr',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+					});
+				});
+				</script>
+
+          <div class="cLineB"><h4>编辑品牌</h4></div>
+    <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+<div class="msgWrap">
+  <form class="form" method="post"  action="{weikucms::U('Car_pp/upsave')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+  <TBODY><input type="hidden" class="px" id="id" value="{weikucms:$_GET['id']}" name="id" style="width:300px" ><input type="hidden" class="px" id="token" value="{weikucms:$_SESSION['token']}" name="token" style="width:300px" ><TR>
+  <TH valign="top"><label for="keyword">品牌名称</label></TH>
+  <TD><input type="input" class="px" id="name" value="{weikucms:$info.name}" name="name" style="width:300px" onfocus="leave();"  ><br/>  例如：宝马 奥迪
+                  </TD>
+  <TD></TD>
+</TR><TR>
+  <TH valign="top"><label for="keyword">官方网站</label></TH>
+  <TD><input type="input" class="px" id="weburl" value="{weikucms:$info.weburl}" name="weburl" style="width:300px" onfocus="leave();"  ><br/>例如：http://www.wapwei.com
+                  </TD>
+  <TD></TD>
+</TR>
+  <TR>
+      <TH><label for="picurl">图片展示：</label></TH>
+
+      <TD><img style="display: block;" id="image_show" class="indexs_img" src="{weikucms:$info.picurl}"></TD>
+  </TR>
+  <TR>
+  <TH valign="top"><label for="keyword">图片地址</label></TH>
+  <TD>
+
+      <input type="hidden" class="text textMiddle inputQ"  name="picurl" id="pic" value="{weikucms:$info.picurl}" style="width:300px;"   />
+      <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+                  </TD>
+  <TD></TD>
+</TR><TR>
+  <TH valign="top"><label for="keyword">排序</label></TH>
+  <TD><input type="input" class="px" id="Sort" value="{weikucms:$info.Sort}" name="Sort" style="width:50px" onfocus="leave();"  ><br/>请填写数字  数字越大越靠前
+                  </TD>
+  <TD></TD>
+</TR><TR>
+  <TH valign="top"><label for="keyword">描述</label></TH>
+  <TD><input type="input" class="px" id="info" value="{weikucms:$info.content}" name="content" style="width:500px" onfocus="leave();"  ><br/>
+                  </TD>
+  <TD></TD>
+</TR><TR>
+  <TH></TH>
+  <TD><button type="submit"  name="button"  class="btn btn-primary" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+  <TR style="height: 150px;">
+
+  </TR>
+  </TBODY>
+</TABLE>
+  </form>
+
+
+
+  </div> 
+
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>

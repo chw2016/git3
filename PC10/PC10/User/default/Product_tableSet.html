@@ -1,0 +1,45 @@
+ <include file="Public:head" /> 
+
+<input type="hidden" id="catUrl" value="{weikucms::U('Product/ajaxCatOptions',array('token'=>$token))}" />
+
+   <div class="cLineB"> 
+    <h4>桌台设置</h4> 
+
+   </div> 
+   <form class="form" method="post" action="" enctype="multipart/form-data"> 
+<if condition="$isUpdate eq 1">
+<input type="hidden" name="id" value="{weikucms:$set.id}" />
+</if>
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.id}" />
+    <div class="msgWrap bgfc">
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+       <tr>
+        <th>名称：</th>
+        <td><input type="text" name="name" value="{weikucms:$set.name}" class="px" style="width:300px;" /></td>
+       </tr>
+      <tr>
+        <th>介绍：</th>
+        <td>
+            <textarea name="intro" style="width: 300px;">{weikucms:$set.intro}</textarea>
+            </td>
+       </tr>
+        <tr>
+        <th>顺序：</th>
+        <td><input type="text" name="taxis" value="{weikucms:$set.taxis}" class="px" style="width:300px;" /></td>
+       </tr>
+        <tr>
+
+       <tr>
+       <th>&nbsp;</th>
+       <td>
+       <input type="hidden" name="id" value="{weikucms:$set.id}" />
+       <button type="submit" name="button" class="btn btn-primary">保存</button> &nbsp; </td>
+       </tr>
+      </tbody>
+     </table>
+     </div>
+    
+   </form> 
+  </div> 
+  <include file="Public:footer" />

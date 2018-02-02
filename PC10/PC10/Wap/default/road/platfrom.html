@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>东莞控股</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/style.css" />
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/road/js/jquery.touchSwipe.min.js"></script>
+
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/road/css/reset.css"> <!-- CSS reset -->
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/road/css/style_1.css"> <!-- Resource style -->
+<script src="{weikucms::STATICS}/wapweiui/road/js/main.js"></script> <!-- Resource jQuery -->
+<style type="text/css">
+/* .bodys{
+width:100%;height:100%; background: url('images/gg.png')  no-repeat fixed bottom;
+background-position: 53%;
+background-size: 77% 100%;
+} */
+.bodys{
+  border-bottom: 500px solid rgba(0,0,0,0);
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
+  height: 100%;
+  width: 100%;
+  background: url("{weikucms::STATICS}/wapweiui/road/images/gg.png") no-repeat;
+  background-position: 53%;
+  background-size:70% 100%;
+  overflow: hidden;
+}
+.m{
+    transition:all 0.2s;
+    transition-timing-function:ease-out;
+    -webkit-transition:all 0.2s;
+    -webkit-transition-timing-function:ease-out;
+}
+.left-s1{display: block;width: 30px;height: 29px;border-radius: 50%;margin-top: 4px;}
+.lk3{background: url("{weikucms::STATICS}/wapweiui/road/images/lk4.png");background-size: 100%;}
+.lk4{background: url("{weikucms::STATICS}/wapweiui/road/images/lk3.png");background-size: 100%;}
+.lk5{background: url("{weikucms::STATICS}/wapweiui/road/images/lk2.png");background-size: 100%;}
+.lk9{background: url("{weikucms::STATICS}/wapweiui/road/images/lk5.png");background-size: 100%;}
+.left-s2{display: block;width: 30px;height: 29px;border-radius: 50%;margin-top: 4px;}
+.lk6{background: url("{weikucms::STATICS}/wapweiui/road/images/lk6.png");background-size: 100%;}
+.left-s3{display: block;width: 30px;height: 29px;border-radius: 50%;margin-top: 4px;}
+.lk1{ background: url("{weikucms::STATICS}/wapweiui/road/images/lk5.png"); background-size: 100%;}
+.left-s4{display: block;width: 30px;height: 29px;border-radius: 50%;margin-top: 4px;}
+.lk2{background: url("{weikucms::STATICS}/wapweiui/road/images/lk2.png"); background-size: 100%;}
+</style>
+<script type="text/javascript">
+$(function(){
+	/*$(".page0").click(function(){
+        event.preventDefault();
+		$('#rot5').addClass('is-visible');
+        	})*/
+})
+    $(document).ready(  	
+        function() {   	
+            var nowpage = 0;
+            //给最大的盒子增加事件监听
+            $(".container").swipe({
+                swipe:function(event, direction, distance, duration, fingerCount) {
+//              	console.log(nowpage);
+                    if(direction == "up"){
+                        nowpage = nowpage + 1>5?5:nowpage + 1;                       
+                        $(".page").eq(nowpage-1).addClass("cur02").siblings().removeClass("cur02");
+                        $(".page").eq(nowpage).addClass("cur").siblings().removeClass("cur");
+                        $(".page").eq(nowpage+1).addClass("cur01").siblings().removeClass("cur01");
+                     
+                    }else if(direction == "down"){
+                        nowpage = nowpage - 1<0?0:nowpage - 1;                        
+                        $(".page").eq(nowpage-1).addClass("cur02").siblings().removeClass("cur02");
+                        $(".page").eq(nowpage).addClass("cur").siblings().removeClass("cur");
+                        $(".page").eq(nowpage+1).addClass("cur01").siblings().removeClass("cur01");
+                       
+                    }
+                    /*if(nowpage > 6){nowpage = 6;}*/
+                    if(nowpage < 0){nowpage = 0;}
+                    $(".container").animate({"top":nowpage * -164 + "px"},400);                 
+                   
+                }
+            });
+        }
+      
+    );
+function seeinfo(pid,sid,vid,mid,ctype,type){
+    event.preventDefault();
+    $('.rot5').addClass('is-visible');
+    var url = "{weikucms::U('Road/ajaxsign',array('token'=>$token,'openid'=>$openid))}";
+    $('.pinfo').empty();//清空
+    $.post(url,{pid:pid,sid:sid,vid:vid,mid:mid,ctype:ctype,type:type},function(data){
+        if(data.status ==1){
+            $('.pinfo').append(data.fetch);
+        }else{
+            alert('系统繁忙，请稍后！');
+        }
+    },'json')
+}
+</script>
+</head>
+<body>
+<div class="bodys">
+    <div class="keTitle">{weikucms:$startinfo[pname]}</div>
+    <!--提示信息【开始】-->
+    <div class="cd-popup pinfo rot5" role="alert" style="z-index:99999;">
+        <div class="cd-popup-container">
+            <div class="alerts_one">
+                <div class="Station">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--提示信息【结束】-->
+
+    <div class="container-cen">
+        <div class="text">
+            <div class="container">
+
+                <volist name="aplatfrom" id="vo">
+                    <div class="page m page0" style="margin-top:40px;" onclick="seeinfo('{weikucms:$vo.id}','','','','','')" >{weikucms:$vo.pname}</div>
+                    <div class="page_lk_cen">
+                        <div class="page_lk">
+                            <if condition="$vo['service']">
+                                <a href="#" id="cd-popup" class="left-s3 lk5 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','1','','','','')"></a>
+                            </if>
+                            <if condition="$vo['lvms']">
+                                <a href="#" id="cd-popup" class="left-s3 lk9 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','1','','','1')"></a>
+                            </if>
+                            <if condition="$vo['lmaintain']">
+                                <a href="#" id="cd-popup" class="left-s3 lk6 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','1','1','1')"></a>
+                            </if>
+                            <if condition="$vo['lmaintains']">
+                                <a href="#" id="cd-popup" class="left-s4 lk7 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','1','2','1')"></a>
+                            </if>
+                            <if condition="$vo['pic']">
+                                <a href="#" id="cd-popup" class="left-s2 lk4 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','','','1')"></a>
+                            </if>
+                        </div>
+                        <div class="page_lk2">
+                            <if condition="$vo['service']">
+                                <a href="#" id="cd-popup" class="left-s3 lk5 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','1','','','','')"></a>
+                            </if>
+                            <if condition="$vo['rvms']">
+                                <a href="#" id="cd-popup" class="left-s3 lk9 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','1','','','2')"></a>
+                            </if>
+                            <if condition="$vo['rmaintain']">
+                                <a href="#" id="cd-popup" class="left-s3 lk6 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','1','1','2')"></a>
+                            </if>
+                            <if condition="$vo['rmaintains']">
+                                <a href="#" id="cd-popup" class="left-s4 lk7 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','1','2','2')"></a>
+                            </if>
+                            <if condition="$vo['pic']">
+                                <a href="#" id="cd-popup" class="left-s2 lk4 mg_left_1" onclick="seeinfo('{weikucms:$vo.id}','','','','','2')"></a>
+                            </if>
+                        </div>
+                    </div>
+
+                </volist>
+
+            </div>
+        </div>
+    </div>
+    <!--效果html结束-->
+
+    <div class="keBottom" id="cd-popup">{weikucms:$endinfo[pname]}</div>
+</div>
+
+
+</body>
+</html>

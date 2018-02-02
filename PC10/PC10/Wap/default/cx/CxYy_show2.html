@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>创鑫激光</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Cx/css/index.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Cx/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Cx/css/press.css">
+<script src="{weikucms::STATICS}/wapweiui/Cx/js/iscroll.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/common/msg.js"></script>
+
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Cx/css/style_new.css"> <!-- Resource style -->
+
+<script>
+	$(function(){
+		//msg.confirm('你确定要预定吗？', function(){
+			//location.href = 'http://www.baidu.com';
+		//},'去结算')
+	});
+</script>
+
+<style type="text/css">
+
+*{margin: 0;padding: 0;}
+.top{height: 60px;background-color: #e8e8e6;}
+.top_logo{
+  float: left;
+  margin-top: 16px;
+  margin-left: 22%;
+  width: 204px;
+  height: 30px;
+  background: url("{weikucms::STATICS}/wapweiui/Cx/images/logo.png");
+  background-size: 100%;
+  clear: both;
+}
+.top_hr{width: 100%;height:5px;background-color: #484848;}
+.select{
+    background:#7DFF79 !important;
+}
+
+/*新样式*/
+.btn_btn{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	background-color: #0071b7;
+	margin: 0 auto;
+	color: #fff;
+	border-radius: 4px;
+    padding: 5px 15px;
+}
+.re_btn{
+	padding: 20px 0;
+}
+.re_text{
+	text-align: center;
+	padding-top: 30px;
+	color: #525252;
+}
+._F{
+
+	font-size: 16px;
+	height: 40px;
+	line-height: 40px;
+}
+._F_times{
+	font-size: 12px;
+	height: 20px;
+	color: #fe9d9d;
+}
+._F_yuyue{
+	font-size: 16px;
+
+	line-height: 40px;
+	color: #828282;
+}
+.foot2{
+
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -1px 8px #ccc;
+    position: fixed;
+    bottom:15px;
+    right: 0;
+}
+.Mask{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(94, 110, 141, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+.Mask.is-visible{
+	  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+.center{
+	overflow: scroll;
+	position: fixed;
+	bottom: 71px;
+	right: 0;
+	width: 100%;
+	height: 80%;
+	border-radius: 5px;
+	background-color: #FFF;
+	display: none;
+}
+.Mask_nav div{
+	color: #828282;
+	line-height: 10px;
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.form_control5{;
+	width: 100%;
+	height: 50px;
+	display: block;
+	border: 0px;
+	font-size: 14px;
+	padding-left: 5px;
+	outline: 0;
+	color: #8f8f8f;
+}
+
+
+
+
+
+</style>
+<script>
+/* 	$(function(){
+		$(".foot button").click(function(event) {
+			$(".wrapper").css('height', '80%');
+			var myScroll;
+		myScroll = new IScroll('.close-nr', { mouseWheel: true, click: true});
+
+		// document.addEventListener('DOMContentLoaded', loaded, false);
+		});
+		$("#close-span").click(function(event) {
+			$(".wrapper").css('height', '0');
+		});
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+	}) */
+
+
+</script>
+
+
+<script>
+	$(function(){
+		$(".jilu").click(function(event) {
+			var name = "<?php echo $_GET['name']; ?>";
+			var lc = "<?php echo $_GET['lc']; ?>";
+			var time = "<?php echo $_GET['time']; ?>";
+	        $.post("{weikucms::U('ajax')}",{"name":name,"lc":lc,"time":time},function(data){
+	                $(".Mask_nav").html(data.str);
+		    },'json');
+
+			event.preventDefault();//阻止默认事件,相当于return false;
+			$('.Mask').addClass('is-visible');//add class
+			/*$(".center").animate({right:"0"},"1000","swing");*/
+			$(".center").css("display","block");
+
+		})
+		$('.Mask').on('click', function(event){
+		if( $(event.target).is('.Mask') ||$(event.target).is('.btn_btn')) {
+			//当点击为.cd-popup-close(关闭按钮)或者.cd-popup(满屏)时触发
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+		})
+
+        $('.cancelOrder').click(function(event){
+          //  alert(4);
+		event.stopPropagation();
+            $.ajax({
+                type: 'POST',
+                url: "{weikucms::U('CxYy/show2')}",
+                data: {
+                    "name":$('.re_btn ._name_').val(),
+                    "time":$('.re_btn ._time_').val()
+                },
+                dataType: 'json',
+                success: function(ret){
+                    if(ret.status == 0){
+                        window.location.reload()
+                    }else{
+                        msg.alert('取消失败，请重试', '好');
+                    }
+                }
+            })
+
+
+        })
+	})
+</script>
+
+</head>
+<body>
+<!--头部-->
+<div class="top">
+	<a href="#"></a><div class="top_logo"   ></div></div>
+</div>
+<div class="top_hr"></div>
+
+<div class="form_group">
+   <div class="form_control4">
+   <!--
+    <select  class="form_control5" disabled>
+       	<option value="1" <if condition="$_GET['lc'] eq 1" >selected=selected </if>  >F1</option>
+       	<option value="2" <if condition="$_GET['lc'] eq 2" >selected=selected </if>  >F2</option>
+ 		<option value="3" <if condition="$_GET['lc'] eq 3" >selected=selected </if>  >F3</option>
+        <option value="4" <if condition="$_GET['lc'] eq 4" >selected=selected </if>  >F4</option>
+    </select>
+    -->
+    <span style="font-size: 24px; line-height: 50px; margin-left: 20px;">
+       	<if condition="$_GET['lc'] eq 1" >F1</if>
+       	<if condition="$_GET['lc'] eq 2" >F2</if>
+ 		<if condition="$_GET['lc'] eq 3" >F3</if>
+        <if condition="$_GET['lc'] eq 4" >F4</if>
+    </span>
+<!--     <i class="fa fa-caret-down" style="float:left;margin-left:70%;margin-top:-34px;color: #000000;"></i> -->
+   </div>
+    <select id="hys" class="form_control4" style="width:35%; ">
+	    <volist name="hys" key='ke' id="v" >
+	     <option <if condition="$_GET['name'] eq $v['name']" >selected=selected</if>  value="{weikucms:$v['name']}" >{weikucms:$v['name']}</option>
+	    </volist>
+    </select>
+
+
+    <select id="aaa"  class="form_control4" style="width:35%;">
+          <option  value="<?php echo date('Y-m-d',time()) ?>" >当前时间</option>
+		  <volist name="aDate" id="v" >
+		     <option <if condition="$_GET['time'] eq $v" >selected=selected</if> value="{weikucms:$v}" >{weikucms:$v}</option>
+		  </volist>
+    </select>
+
+</div>
+
+
+
+<div class="days" style="border:0;box-shadow:0 0 0;">
+<volist name="aDate"  id="v" >
+   <if condition="$i eq 1" >
+
+          	<a href="{weikucms::U('show2',get1('time',$v,name,lc))}" ><span  id="day1" class="days_left" ><?php echo date('m-d',strtotime($v));?>({weikucms:$aWeek[$i]})</span></a>
+   </if>
+      <if condition="$i eq 2" >
+          	<a href="{weikucms::U('show2',get1('time',$v,name,lc))}" ><span id="day2" class="days_cen" flag="{weikucms:$v}"><?php echo date('m-d',strtotime($v));?>({weikucms:$aWeek[$i]})</span></a>
+   </if>
+      <if condition="$i eq 3" >
+          <a href="{weikucms::U('show2',get1('time',$v,name,lc))}" ><span id="day3" class="days_right"><?php echo date('m-d',strtotime($v));?>({weikucms:$aWeek[$i]})</span></a>
+   </if>
+</volist>
+</div>
+
+
+
+
+<div class="ts">
+	<span>
+		<span class="color1"></span>固定预定
+	</span>
+	<span>
+		<span class="color2"></span>已被预定
+	</span>
+	<span>
+		<span class="color3"></span>我的预定
+	</span>
+</div>
+
+<div class="mnn">
+<div class="cd-popup" role="alert">
+	<div class="cd-popup-container">
+		<!--这里为添加提示的html代码-->
+		<!-- <a href="#" class="cd-popup-close img-replace">关闭</a> -->
+		<div class="re_ts">
+
+			<div class="re_text">
+				<div class="_F">
+					<!-- F2-会议室A -->
+				</div>
+				<div class="_F_times">
+					<span class="_F_times1"><!-- 2015-05-28  --></span>
+					<span class="_F_times2"><!-- 15:00-15:30  --></span>
+				</div>
+				<div  class="_F_yuyue">
+					<span>预约人：<a class="_F_yuyue1" ><!-- 某某部门张某某 --></a></span>
+				</div>
+
+				<div  class="_F_yuyue">
+					<span>预约主题：<a class="_F_yuyue2" ><!-- 某某部门张某某 --></a></span>
+				</div>
+			</div>
+			<div class="re_btn">
+                <input type="hidden" class="_time_" value="">
+                <input type="hidden" class="_name_" value="">
+                <input type="hidden" class="_time_1" value="">
+                <input type="hidden" class="_name_1" value="">
+				<span class="btn_btn">我知道了</span>
+				<span class="btn_btn cancelOrder" style="display: none;">取消预订</span>
+
+			</div>
+		</div>
+	</div>
+</div> <!-- cd-popup -->
+
+
+<div class="morning">
+		<div class="body_top">
+		    <span>上午</span>
+		</div>
+		<div class="body_cen">
+	<php>
+      for($i=1;$i<8;$i++){
+    </php>
+
+
+		   <?php
+		    //判断固定预约
+		     $date=$_GET['time'];
+		    $w=date('w',strtotime($date));
+		    if($gd[$w.','.$i]){
+		       echo '';//固定预约
+		    }else{
+
+
+	          if($list[$date.','.$i]){
+	             echo '';//自己或它人预约
+	          }else{
+
+	          }
+
+            }
+
+
+	   ?>
+<!-- 	     -->
+<?php
+$zz=$list[$date.','.$i].$gd[$w.','.$i];
+$zzs=M('cx_member')->where(array('id'=>$zz))->find();
+$zza=$zzs['bm'].$zzs['name'];
+$zz=$zza?$zza:$zz;
+?>
+            <input type="hidden" id="zhi" msg="<?php echo $i; ?>" value="<?php echo $zz; ?>" />
+
+		    <span class="on1 chicks
+
+		    <?php
+		   //判断固定预约
+		   $date=$_GET['time'];
+		   $w=date('w',strtotime($date));
+		   if($gd[$w.','.$i]){
+		       echo 'color1 span';
+		    }else{
+			     if($list[$date.','.$i]){
+		           if($list[$date.','.$i]==$zhi){
+		            echo 'color3 span';
+		          }else{
+		            echo 'color2 span';
+		         }
+		      }else{
+		        echo 'color';
+		      }
+		   }
+
+	   ?>
+
+		    ">
+		            <if condition="$i eq 1" >08:30-09:00</if>
+		            <if condition="$i eq 2" >09:00-9:30</if>
+		            <if condition="$i eq 3" >09:30-10:00</if>
+		            <if condition="$i eq 4" >10:00-10:30</if>
+		            <if condition="$i eq 5" >10:30-11:00</if>
+		            <if condition="$i eq 6" >11:00-11:30</if>
+		            <if condition="$i eq 7" >11:30-12:00</if>
+		            <if condition="$i eq 8" >12:00-12:30</if>
+		            <if condition="$i eq 9" >12:30-13:00</if>
+		            <if condition="$i eq 10" >13:00-13:30</if>
+		            <if condition="$i eq 11" >13:30-14:00</if>
+		            <if condition="$i eq 12" >14:00-14:30</if>
+		            <if condition="$i eq 13" >14:30-15:00</if>
+		            <if condition="$i eq 14" >15:00-15:30</if>
+		            <if condition="$i eq 15" >15:30-16:00</if>
+		            <if condition="$i eq 16" >16:00-16:30</if>
+		            <if condition="$i eq 17" >16:30-17:00</if>
+		            <if condition="$i eq 18" >17:00-17:30</if>
+		            <if condition="$i eq 19" >17:30-18:00</if>
+		            <if condition="$i eq 20" >18:00-18:30</if>
+		            <if condition="$i eq 21" >18:30-19:00</if>
+		            <if condition="$i eq 22" >19:00-19:30</if>
+		            <if condition="$i eq 23" >19:30-20:00</if>
+		            <if condition="$i eq 24" >20:00-20:30</if>
+		            <if condition="$i eq 25" >20:30-21:00</if>
+		    </span>
+	  </a>
+	<php>
+      }
+    </php>
+
+		</div>
+</div>
+
+
+
+	<div class="morning">
+		<div class="body_top">
+		    <span>下午</span>
+		</div>
+		<div class="body_cen">
+		    <php>
+      for($i=8;$i<20;$i++){
+    </php>
+
+
+		   <?php
+		    //判断固定预约
+		     $date=$_GET['time'];
+		    $w=date('w',strtotime($date));
+		    if($gd[$w.','.$i]){
+		       echo '';//固定预约
+		    }else{
+
+
+	          if($list[$date.','.$i]){
+	             echo '';//自己或它人预约
+	          }else{
+
+	          }
+
+            }
+
+
+	   ?>
+<!-- 	     -->
+<?php
+$zz=$list[$date.','.$i].$gd[$w.','.$i];
+$zzs=M('cx_member')->where(array('id'=>$zz))->find();
+$zza=$zzs['bm'].$zzs['name'];
+$zz=$zza?$zza:$zz;
+?>
+            <input type="hidden" id="zhi" msg="<?php echo $i; ?>" value="<?php echo $zz; ?>" />
+
+		    <span class="on2 chicks
+
+		   <?php
+		   //判断固定预约
+		   $date=$_GET['time'];
+		   $w=date('w',strtotime($date));
+		   if($gd[$w.','.$i]){
+		       echo 'color1 span';
+		    }else{
+			     if($list[$date.','.$i]){
+		           if($list[$date.','.$i]==$zhi){
+		            echo 'color3 span';
+		          }else{
+		            echo 'color2 span';
+		         }
+		      }else{
+		        echo 'color';
+		      }
+		   }
+
+	   ?>
+
+		    ">
+		            <if condition="$i eq 1" >08:30-09:00</if>
+		            <if condition="$i eq 2" >09:00-9:30</if>
+		            <if condition="$i eq 3" >09:30-10:00</if>
+		            <if condition="$i eq 4" >10:00-10:30</if>
+		            <if condition="$i eq 5" >10:30-11:00</if>
+		            <if condition="$i eq 6" >11:00-11:30</if>
+		            <if condition="$i eq 7" >11:30-12:00</if>
+		            <if condition="$i eq 8" >12:00-12:30</if>
+		            <if condition="$i eq 9" >12:30-13:00</if>
+		            <if condition="$i eq 10" >13:00-13:30</if>
+		            <if condition="$i eq 11" >13:30-14:00</if>
+		            <if condition="$i eq 12" >14:00-14:30</if>
+		            <if condition="$i eq 13" >14:30-15:00</if>
+		            <if condition="$i eq 14" >15:00-15:30</if>
+		            <if condition="$i eq 15" >15:30-16:00</if>
+		            <if condition="$i eq 16" >16:00-16:30</if>
+		            <if condition="$i eq 17" >16:30-17:00</if>
+		            <if condition="$i eq 18" >17:00-17:30</if>
+		            <if condition="$i eq 19" >17:30-18:00</if>
+		            <if condition="$i eq 20" >18:00-18:30</if>
+		            <if condition="$i eq 21" >18:30-19:00</if>
+		            <if condition="$i eq 22" >19:00-19:30</if>
+		            <if condition="$i eq 23" >19:30-20:00</if>
+		            <if condition="$i eq 24" >20:00-20:30</if>
+		            <if condition="$i eq 25" >20:30-21:00</if>
+		    </span>
+	  </a>
+	<php>
+      }
+    </php>
+		</div>
+	</div>
+	<div class="morning">
+		<div class="body_top">
+		    <span>晚上</span>
+		</div>
+		<div class="body_cen">
+		   <php>
+      for($i=20;$i<26;$i++){
+    </php>
+
+
+		   <?php
+		    //判断固定预约
+		     $date=$_GET['time'];
+		    $w=date('w',strtotime($date));
+		    if($gd[$w.','.$i]){
+		       echo '';//固定预约
+		    }else{
+
+
+	          if($list[$date.','.$i]){
+	             echo '';//自己或它人预约
+	          }else{
+
+	          }
+
+            }
+
+
+	   ?>
+<!-- 	     -->
+<?php
+$zz=$list[$date.','.$i].$gd[$w.','.$i];
+$zzs=M('cx_member')->where(array('id'=>$zz))->find();
+$zza=$zzs['bm'].$zzs['name'];
+$zz=$zza?$zza:$zz;
+?>
+            <input type="hidden" id="zhi" msg="<?php echo $i; ?>" value="<?php echo $zz; ?>" />
+
+		    <span class="on2 chicks
+
+		   <?php
+		   //判断固定预约
+		   $date=$_GET['time'];
+		   $w=date('w',strtotime($date));
+		   if($gd[$w.','.$i]){
+		       echo 'color1 span';
+		    }else{
+			     if($list[$date.','.$i]){
+		           if($list[$date.','.$i]==$zhi){
+		            echo 'color3 span';
+		          }else{
+		            echo 'color2 span';
+		         }
+		      }else{
+		        echo 'color';
+		      }
+		   }
+
+	   ?>
+
+		    ">
+		            <if condition="$i eq 1" >08:30-09:00</if>
+		            <if condition="$i eq 2" >09:00-9:30</if>
+		            <if condition="$i eq 3" >09:30-10:00</if>
+		            <if condition="$i eq 4" >10:00-10:30</if>
+		            <if condition="$i eq 5" >10:30-11:00</if>
+		            <if condition="$i eq 6" >11:00-11:30</if>
+		            <if condition="$i eq 7" >11:30-12:00</if>
+		            <if condition="$i eq 8" >12:00-12:30</if>
+		            <if condition="$i eq 9" >12:30-13:00</if>
+		            <if condition="$i eq 10" >13:00-13:30</if>
+		            <if condition="$i eq 11" >13:30-14:00</if>
+		            <if condition="$i eq 12" >14:00-14:30</if>
+		            <if condition="$i eq 13" >14:30-15:00</if>
+		            <if condition="$i eq 14" >15:00-15:30</if>
+		            <if condition="$i eq 15" >15:30-16:00</if>
+		            <if condition="$i eq 16" >16:00-16:30</if>
+		            <if condition="$i eq 17" >16:30-17:00</if>
+		            <if condition="$i eq 18" >17:00-17:30</if>
+		            <if condition="$i eq 19" >17:30-18:00</if>
+		            <if condition="$i eq 20" >18:00-18:30</if>
+		            <if condition="$i eq 21" >18:30-19:00</if>
+		            <if condition="$i eq 22" >19:00-19:30</if>
+		            <if condition="$i eq 23" >19:30-20:00</if>
+		            <if condition="$i eq 24" >20:00-20:30</if>
+		            <if condition="$i eq 25" >20:30-21:00</if>
+		    </span>
+	  </a>
+	<php>
+      }
+    </php>
+		</div>
+	</div>
+</div>
+<!--出现内容-->
+	<div class="wrapper">
+		<div class="close-btn">
+			<span id="close-span"></span><!--关闭按钮-->
+		</div>
+		<div class="close-nr">
+			<div  class="_show1">
+				<!-- 标题 -->
+				<!-- <ul class="_show1_ul1">
+					<li>高速事件</li>
+					<div style="float:left;line-height:40px;">|</div>
+					<li class="on">施工信息</li>
+					<div style="float:left;line-height:40px;">|</div>
+					<li>高速预览</li>
+				</ul> -->
+				<ul class="_show1_ul2">
+					<li>
+
+					</li>
+
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+<div style="height:100px;background-color:#ddd"></div>
+
+
+
+<!--出现内容-->
+<div class="Mask">
+<div class="center">
+   <div class="Mask_nav">
+   	    <div></div>
+   </div>
+		    <div class="re_btn" style="text-align: center;">
+				<span class="btn_btn">我知道了</span>
+			</div>
+</div>
+</div>
+
+
+<!--底-->
+<div class="foot">
+	<button class="jilu">预定记录</button>
+    <button class="foot2">确认预定</button>
+</div>
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+$(function(){
+   scrollDate({
+      "obj":".dsays_day",
+      "minDate": new Date(2010,0,1),
+      "maxDate" : new Date(2020,0,1)
+   },function(a){
+    var date = a.inst._getVal().split("-"),
+        dates = {},
+        a = new Date(2015,1,2).getTime()-new Date(2015,1,1).getTime();
+    $.each(date,function(i,o){
+      if(i==1){
+        dates[i]=Number(o)-1;
+      }else{
+        dates[i]=Number(o);
+      }
+    })
+    var selDay = new Date(dates[0],dates[1],dates[2]).getTime(),
+    bDay = new Date(selDay-a).Format('MM-dd'),
+    nDay = new Date(selDay).Format('MM-dd'),
+    aDay = new Date(selDay+a).Format('MM-dd');
+      $("#day1").text(bDay);
+      $("#day2").text(nDay);
+      $("#day3").text(aDay);
+   })
+});
+
+
+
+   function scrollDate(opt,callback){
+      $(opt.obj).mobiscroll().date({
+          theme: 'ios',     // Specify theme like: theme: 'ios' or omit setting to use default
+          mode: 'Scroller',       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+          display: 'bottom', // Specify display mode like: display: 'bottom' or omit setting to use default
+          lang: "zh",       // Specify language like: lang: 'pl' or omit setting to use default
+          onSelect: function (valueText, inst) {
+              function _setVal(obj,date){
+                  $(obj).mobiscroll("setVal",date)
+              }
+              if(typeof callback === "function"){
+                  callback({
+                      valueText:valueText,
+                      inst:inst,
+                      _setVal :_setVal
+                  });
+              }
+          },
+          minDate: opt.minDate,  // More info about minDate: http://docs.mobiscroll.com/2-14-0/datetime#!opt-minDate
+          maxDate: opt.maxDate,   // More info about maxDate: http://docs.mobiscroll.com/2-14-0/datetime#!opt-maxDate
+          stepMinute: 1  // More info about stepMinute: http://docs.mobiscroll.com/2-14-0/datetime#!opt-stepMinute
+      });
+
+   }
+</script>
+
+<script>
+   $("#aaa").change(function(){
+	//alert(0);
+	  var time = $("#aaa").val();
+	 // alert(time);
+	  location.href = "{weikucms::U('show',array('time'=>'"+time+"','lc'=>$_GET['lc'],'name'=>$_GET['name']))}";
+
+   })
+
+   $("#hys").change(function(){
+	//alert(0);
+	  var name = $("#hys").val();
+
+	  location.href = "{weikucms::U('show',array('time'=>$_GET['time'],'lc'=>$_GET['lc'],'name'=>'"+name+"'))}";
+
+   })
+
+      $("#lc").change(function(){
+	//alert(0);
+	  var lc = $("#lc").val();
+
+	  location.href = "{weikucms::U('show',array('time'=>$_GET['time'],'lc'=>'"+lc+"','name'=>$_GET['name']))}";
+
+   })
+</script>
+
+
+<script>
+    var myDate = new Date();
+    var day = myDate .getDay();
+
+   $("#aaa").change(function(){
+	//alert(0);
+	  var time = $("#aaa").val();
+	 // alert(time);
+	  location.href = "{weikucms::U('show2',array('time'=>'"+time+"','lc'=>$_GET['lc'],'name'=>$_GET['name']))}";
+
+   })
+
+   $("#hys").change(function(){
+	//alert(0);
+	  var name = $("#hys").val();
+
+	  location.href = "{weikucms::U('show2',array('time'=>$_GET['time'],'lc'=>$_GET['lc'],'name'=>'"+name+"'))}";
+
+   })
+
+      $("#lc").change(function(){
+	//alert(0);
+	  var lc = $("#lc").val();
+
+	  location.href = "{weikucms::U('show2',array('time'=>$_GET['time'],'lc'=>'"+lc+"','name'=>$_GET['name']))}";
+
+   })
+
+
+
+	//按钮点击事件
+	$('.body_cen .span').on('click', function(event){
+
+    		$("._F_times2").html('');//时间
+    		$("._F_yuyue1").html('');//名称
+    		$("._F_yuyue2").html('');//类型
+
+        //区分固定预定；
+
+        if($(this).hasClass("color1")||$(this).hasClass("color2")){
+            $(".cancelOrder").hide();
+        }else{
+            $(".cancelOrder").show();
+        }
+       // alert(5);
+		event.preventDefault();//阻止默认事件,相当于return false;
+		$('.cd-popup').addClass('is-visible');//add class
+        var timeMsg = $(this).prev('input').attr('msg');
+        //var datetime = $('.days_cen').text();
+        var datetime = $('.days_cen').attr('flag');
+        var hys      = $('#hys').val();
+
+        $('.re_btn ._time_').val(datetime + ',' + timeMsg);
+        $('.re_btn ._name_').val(hys);
+        //$('.re_btn ._time_1').val($('.days_cen').attr('flag')) +','+ timeMsg;
+
+      //  alert($('.re_btn ._time_1').val());
+		var zhi = $(this).prev("input").val();
+		var i = $(this).prev("input").attr("msg");
+		var time = "<?php echo $_GET['time']; ?>"+","+i;
+		//var time = '2015-07-06,20';
+		var type = "<?php echo M('cx_yd2')->where(get1(time,'"+time+"'))->getField('zhi'); ?>";
+
+        $.post("{weikucms::U('ajax2')}",{"time":time},function(data){
+            if(i==1){i='8:30-9:00'};
+    		if(i==2){i='9:00-9:30'};
+    		if(i==3){i='9:30-10:00'};
+    		if(i==4){i='10:00-10:30'};
+    		if(i==5){i='10:30-11:00'};
+    		if(i==6){i='11:00-11:30'};
+    		if(i==7){i='11:30-12:00'};
+    		if(i==8){i='12:00-12:30'};
+    		if(i==9){i='12:30-13:00'};
+    		if(i==10){i='13:00-13:30'};
+    		if(i==11){i='13:30-14:00'};
+    		if(i==12){i='14:00-14:30'};
+    		if(i==13){i='14:30-15:00'};
+    		if(i==14){i='15:00-15:30'};
+    		if(i==15){i='15:30-16:00'};
+    		if(i==16){i='16:00-16:30'};
+    		if(i==17){i='16:30-17:00'};
+    		if(i==18){i='17:00-17:30'};
+    		if(i==19){i='17:30-18:00'};
+    		if(i==20){i='18:00-18:30'};
+    		if(i==21){i='18:30-19:00'};
+    		if(i==22){i='19:00-19:30'};
+    		if(i==23){i='19:30-20:00'};
+    		if(i==24){i='20:00-20:30'};
+    		if(i==25){i='20:30-21:00'};
+
+
+
+    		$("._F").html("F<?php echo $_GET['lc'];?>-<?php echo $_GET['name'];?>");//楼层会议室
+    		$("._F_times1").html("<?php echo $_GET['time']; ?>");//时间
+    		$("._F_times2").html(i);//时间
+    		$("._F_yuyue1").html(zhi);//名称
+    		$("._F_yuyue2").html(data.type);//类型
+ 		},'json');
+
+
+	});
+
+	//关闭提示,这里设置满屏，点击出现提示以外的地方即可进行关闭提示
+	$('.cd-popup').on('click', function(event){
+		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') || $(event.target).is('.btn_btn')) {
+			//当点击为.cd-popup-close(关闭按钮)或者.cd-popup(满屏)时触发
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+	});
+   $('.chicks').not('.color3 ,.color1,.color2').click(function(){
+       //alert(5);
+       if($(this).hasClass('select')){
+           $(this).removeClass('select');
+       }else{
+           $(this).addClass('select');
+       }
+
+   });
+   $('.foot2').click(function(){
+      // var msg = '';
+       var msg=[];
+       $.each($('.select'),function(i,row){
+         //  msg += ',' + $(row).prev('input').attr('msg');
+            msg[i]=$(row).prev('input').attr('msg');
+       });
+
+       //msg = msg.substr();
+
+       msg.join(',');
+        //  console.log(msg);
+     //  return false;
+       if(!msg){
+               alert('请选择时间段');
+           return false;
+       }else{
+
+           window.location.href = "{weikucms::U('CxYy/aaa',array('time'=>$_GET['time'],'name'=>$_GET['name'],'lc'=>$_GET['lc']))}"+"&i="+msg;
+
+      //   window.location.href="{weikucms ::U('aaa',get1(i,$i,time,name,lc))}";
+       }
+
+   })
+
+
+
+
+   /*//close popup when clicking the esc keyboard button
+   $(document).keyup(function(event){
+       if(event.which=='27'){
+           $('.cd-popup').removeClass('is-visible');
+       }
+   });*/
+
+
+
+</script>

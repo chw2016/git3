@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>交通在线</title>
+	<meta charset="utf-8">
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<meta content="eric.wu" name="author">
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/index.css">
+     <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/jquery-1.11.2.min.js"></script>
+    <body>
+    <style>
+            .vipc{
+                color: yellow;
+                background: rgba(254, 185, 0, 0.8);
+                border-radius: 20px;
+                width: 90px;
+                padding: 5px;
+                margin: 0 auto;
+            }
+    </style>
+    	<div class="bj-1">
+    			<div class="jt-top">
+    				<div class="jt-img">
+    					<img src="{weikucms:$wxusers.headimgurl}" alt="">
+    				</div>
+    				<div class="jt-title">{weikucms:$wxusers.nickname}</div>
+    				<div class="jt-text">等级：
+                        <if condition="$zhehy eq 1 "> vip秘书会员
+
+                        <elseif condition="$zhehy eq 2" />高级会员 :<p class="vipc">预存vip秘书</p>
+
+                        <else /> 注册会员<p class="vipc">预存vip秘书</p>
+                         </if>
+                    </div>
+    			</div>
+    			<div class="jt-footer">
+
+    				<div class="jt-footer-main" onclick="window.location.href = '{weikucms::U('Check/inndex',array('token'=>$token,'openid'=>$openid))}'">
+						<span class="jt-footer-main-title">违章查询</span>
+						<span class="icon-chevron-thin-right"></span>
+    				</div>
+
+    				<div class="jt-footer-main" onclick="window.location.href = '{weikucms::U('Check/indent',array('token'=>$token,'openid'=>$openid))}'">
+						<span class="jt-footer-main-title">我的订单</span>
+						<span class="icon-chevron-thin-right"></span>
+    				</div>
+    				<div class="jt-footer-main" onclick="window.location.href = '{weikucms::U('Check/form',array('token'=>$token,'openid'=>$openid))}'">
+						<span class="jt-footer-main-title">年审待办</span>
+						<span class="icon-chevron-thin-right"></span>
+    				</div>
+					<div class="jt-footer-main xian">
+						<span class="jt-footer-main-title">等级说明</span>
+						<span class="icon-chevron-thin-right dengjis"></span>
+    				</div>
+
+                    <div class="jt-footer-main xiane" style="display:none; background:#FFFFFF;">
+                        <span class="jt-footer-main-title"><h3>注册会员</h3> ：享有免费查询违章资格，累积
+                            4次/一月，超过次数这安0.1元一次收费，完成一次订单后升级为高级会员者可免
+                        </span>
+                        <br />
+                        <span class="jt-footer-main-title"><h3>高级会员</h3> ：注册会员完成一次违章订单后升级而来
+                            ，免费查询违章信息且次数不限，使用一年，年底扔仅完成一次订单者，次年1月1日降级为注册会员
+                        </span>
+                        <br />
+                        <span class="jt-footer-main-title"><h3>vip秘书会员</h3> ：预存300元/年的服务费，享有服务如下：
+                            <p>违章信息自动推送，1次/周。也可手动查询，次数不限。面服务办理违章，次数不限，用户只需缴纳违章罚款即可</p>
+
+                        </span>
+                    </div>
+    			</div>
+            <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+                <input type="hidden" name="order_money" value="300" id="totalPrice1">
+                <input type="hidden" name="order_text" value="交通预存">
+                <input type="hidden" name="orderid" value="{weikucms:$checkid}" id="orderid">
+
+                <input type="hidden" name="openid" value="{weikucms:$this->openid}" >
+                <input type="hidden" name="returnurl" value="{weikucms::U('Check/index',array('token'=>$this->token,'openid'=>$this->openid))}">
+                <input type="hidden" name="type" value="jiaotong_check_cwhy">
+                 <div class="pay_area" id="pay_area" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+                </div>
+            </form>
+    	</div>
+        <p class="nslaibg">{weikucms:$ns}</p>
+    </body>
+<script type="text/javascript">
+    $('.xian').touch(function(){
+        var xian = $('.xiane').show();
+        var die = $ ('.dengjis').hide();
+        $(this).toggleClass('ongt');
+ });
+
+    $('.ongt').touch(function(){
+        var xian = $('.xiane').hide();
+        var die = $ ('.dengjis').show();
+        $(this).toggleClass('ongt');
+    });
+
+    var die = $('.nslaibg').text();
+        if(die!=''){
+            msg.alert(die);
+        }
+    $('.vipc').touch(function(){
+        $('#myweipayform').submit();
+    })
+
+</script>
+</html>

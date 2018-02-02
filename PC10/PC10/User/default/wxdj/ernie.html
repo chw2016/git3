@@ -1,0 +1,152 @@
+<include file="Public:head"/>
+<style>
+    .abc1{
+        display: block;
+        /* right: 0px; */
+        /* top: -10px; */
+        height: 39px;
+        /* padding: 0 40px; */
+        line-height: 2;
+        background: #C4E238;
+        width: 50px;
+        height: 25px;
+        text-align: center;
+    }
+	#savebtn{
+	background-color: #1576ad;
+	border-radius: 5px;
+	display: inline-block;
+  overflow: visible;
+  padding: 0 20px;
+  height: 35px;
+  line-height: 35px;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 14px;
+  border-width: 1px;
+  border-style: solid;
+  cursor: pointer;
+  margin-top: -11px;
+	}
+</style>
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+			摇奖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共<b style="color:#f00"> {weikucms:$con} </b>人参与摇奖
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+    <input class="con" type="hidden" value="{weikucms:$con}"/>
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+			<input type="text" name="s" id="s" placeholder="请输入预设中奖数量" onkeypress="keyPress()">
+			<button type="button" id="savebtn" name="button"  class="btn btn-primary" onclick="save()">开始摇奖</button>
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+        <!--<tr>
+					<td>编号</td>
+					<td>摇奖名单</td>
+					<td>电话号码</td>
+					<td>地址</td>
+					<td>时间</td>
+					<td>状态</td>
+				</tr>
+				<volist name="ernie" id="v">
+				<if condition="$v['type']==2">
+				<tr>
+					<td>{weikucms:$v.id}</td>
+					<td>{weikucms:$v.name}</td>
+					<td>{weikucms:$v.phone}</td>
+					<td>{weikucms:$v.address}</td>
+					<td>{weikucms:$v.add_time}</td>
+					<td>摇奖</td>
+				</tr>-->
+				</if>
+				</volist>
+				<tr>
+                    <th valign="top"><label for="key"></label></th>
+					
+                    <td>
+					
+                       <!-- <button type="button" id="savebtn" name="button"  class="btn btn-primary" onclick="save()">确定</button>
+					</if>
+						<a target="_self" class="btn btn-success btn-sm" href="javascript:history.go(-1);" >返回</a>
+                    </td>-->
+					
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+        <script>
+            //去处理
+function keyPress(){    
+     var keyCode = event.keyCode;    
+     if ((keyCode >= 48 && keyCode <= 57))    
+    {    
+         event.returnValue = true;    
+    } else {    
+           event.returnValue = false;    
+    }    
+ }
+            function save(){
+			//var kk=$('input[name="status"]:checked').val();
+				var con = $('.con').val();
+				var s = $('#s').val();
+				if(!s)
+				{
+					notif({
+						msg: '请输入摇奖数',
+						type: "error"
+					});
+					return false;
+				}
+				if(s>con)
+				{
+					notif({
+						msg: '摇奖数不能超过总数',
+						type: "error"
+					});
+					return false;
+				}
+                var url="{weikucms::U('djyj',array('token'=>$token))}";
+                   $.post(url,{s:s},function(data){
+						if(data.status==1){
+							notif({
+								msg: '摇奖成功',
+								type: "success"
+							});
+							window.location.href="{weikucms::U('luckjoy',array('token'=>$token))}";
+						}else{
+							notif({
+								msg: '摇奖失败',
+								type: "error"
+							});
+						}
+				   },'json')
+                //}
+                
+            }
+        </script>
+
+
+

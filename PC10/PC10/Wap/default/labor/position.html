@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>劳动局</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/common.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/index.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/main.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/font-awesome.min.css" />
+    <script src="{weikucms::STATICS}/wapweiui/labor/js/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function(){
+            $(".input_data_center").each(function(){
+                $(this).next().width($(".input_data_nav_name").width()-$(this).width()-2);
+            })
+            $(".input_data_nav_name").click(function(){
+//		var This = $(this);z
+                if($(this).find(".data_sex").length>0){
+                    if(!$(this).hasClass('onInputting')){
+                        $(this).addClass('onInputting');
+                        $(this).find(".data_sex").show()
+                    }else{
+                        $(this).removeClass('onInputting');
+                        $(this).find('.data_sex').hide()
+                    }
+                }
+            })
+
+            $('._sel').click(function(e){
+                $(".onInputting").find("input").val($(this).html())
+            })
+
+        })
+    </script>
+</head>
+<style>
+    body{
+        background-color: #f0f0f0;
+        color: #4c4b4c;
+    }
+
+</style>
+<body>
+<div>
+    <img src="{weikucms::STATICS}/wapweiui/labor/images/icon_img.png" />
+</div>
+<div class="data_people">
+    <div class="main_user recruit ">{weikucms:$info['office']}</div>
+</div>
+<div class="data_post">
+    <div class="data_nav">
+        <div class="data_post_pay">
+            <div class="ml10">
+                <div class="data_post_want mb5">招聘公司：{weikucms:$cinfo['gname']}</div>
+            </div>
+        </div>
+    </div>
+    <div class="data_nav">
+        <div class="data_post_pay">
+            <div class="ml10">
+                <div class="data_post_want mb5">岗位需求：</div>
+                <div >
+                    {weikucms:$info['requirement']}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="data_nav">
+        <div class="data_post_pay">
+            <div class="ml10">
+                <div class="data_post_want mb5">职责描述：</div>
+                <div >
+                    {weikucms:$info['description']}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="data_home">
+        <p>联系人：{weikucms:$cinfo['person']}</p>
+        <p>联系电话：{weikucms:$cinfo['phone']}</p>
+        <p>邮箱：{weikucms:$cinfo['email']}</p>
+        <p>公司地址：{weikucms:$cinfo['address']}</p>
+    </div>
+
+    <div class="data_nav">
+        <div class="data_post_pay">
+            <div class="ml10">
+                <div class="data_post_want mb5">公司简介：</div>
+                <div >
+                    {weikucms:$cinfo['abstract']}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="data_people1">
+    <div class="main_user1 f16">填写资料</div>
+    <div class="data_post">
+        <div class="input_data clearfix mb5">
+            <div class="input_data_nav fl">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">姓名：</div>
+                    <div class="input_data_center1"><input type="text" value="" /></div>
+                </div>
+            </div>
+            <div class="input_data_nav fr">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">性别：</div>
+                    <div class="input_data_center1"><input type="text" value=""  readonly="readonly" id="sex"/></div>
+                    <i class="fa fa-angle-down fa_size" ></i>
+                    <div class="data_sex">
+                        <ul>
+                            <li class="_sel">男</li>
+                            <li class="_sel">女</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="input_data clearfix mb5">
+            <div class="input_data_nav fl">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">出生年月：</div>
+                    <div class="input_data_center1"><input type="text" value="" /></div>
+                </div>
+            </div>
+            <div class="input_data_nav fr">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">联系方式：</div>
+                    <div class="input_data_center1"><input type="text" value="" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input_data clearfix mb5">
+            <div class="input_data_nav fl">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">籍贯：</div>
+                    <div class="input_data_center1"><input type="text" value="" /></div>
+                </div>
+            </div>
+            <div class="input_data_nav fr">
+                <div class="input_data_nav_name">
+                    <div class="input_data_center">学历：</div>
+                    <div class="input_data_center1" ><input type="text" value=""  readonly="readonly" id="xue"/></div>
+                    <i class="fa fa-angle-down fa_size" ></i>
+                    <div class="data_sex">
+                        <ul>
+                            <li class="_sel">小学</li>
+                            <li class="_sel">初中</li>
+                            <li class="_sel">高中</li>
+                            <li class="_sel">中专</li>
+                            <li class="_sel">大专</li>
+                            <li class="_sel">本科</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input_data_nav_name mb5 " id="email">
+        <div class="input_data_center2">邮箱：</div>
+        <div class="input_data_center3"><input type="text" value="" /></div>
+    </div>
+    <div class="input_data_nav_name">
+        <div style="font-size: 12px;">工资经历：</div>
+        <div class="data_textarea">
+            <textarea></textarea>
+        </div>
+    </div>
+</div>
+<div class="footer_data_btn">
+    <span class="btn">提交简历</span>
+</div>
+-->
+
+</body>
+</html>

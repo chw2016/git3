@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a_add.css">
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/samphay.css">
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/style.css">
+
+
+<link rel="stylesheet" href="/tpl/static/lm/css/style.css">
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/main1.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/core.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/msg.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/slider.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/iscroll.js"></script>
+
+<script src="/tpl/static/lm/js/jquery-1.7.1.min.js"></script>
+<script src="/tpl/static/lm/js/jquery.event.drag-1.5.min.js"></script>
+<script src="/tpl/static/lm/js/jquery.touchSlider.js"></script>
+
+<style>
+    .gray { color: #B5AEAE; margin-left: 3px; }
+
+    .cat_goods h3:before {
+        /*
+        content: "";
+        display: block;
+        width: 14px;
+        border-top: 1px solid;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        */
+    }
+    .cat_goods ul li .goods_img { border: 0;}
+
+</style>
+
+
+
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+<div class="container mini-innner">
+    <div class="row">
+                      <div class="col-md-12 p0">
+
+
+
+
+                          <div class="sliderBox" style="position: relative; height: 145px;" >
+
+                              <div class="main_visual">
+                                  <div class="flicking_con">
+                                      <volist name="flashdata" id="vo">
+                                          <a href="#">{weikucms:$i}</a>
+                                      </volist>
+                                  </div>
+                                  <div class="main_image">
+                                      <ul>
+                                          <volist name="flashdata" id="vo">
+                                              <li><span  class="img_{weikucms:$i}" ><img src="{weikucms:$vo.img}" width="100%" height="100%" ></span></li>
+                                          </volist>
+
+                                      </ul>
+                                      <a href="javascript:;" id="btn_prev"></a>
+                                      <a href="javascript:;" id="btn_next"></a>
+                                  </div>
+                              </div>
+
+
+                          </div>
+
+                        </div>
+
+
+
+
+        <!--快速分类导航了-->
+        <if condition="$fast_carts">
+        <div class='fast_div'>
+            <volist name="fast_carts" id="vo">
+            <span class='fast_carts' style="font-size: 16px; line-height: 37px;">
+                <!--
+                <div style="width: 14%; margin: 0 auto;"><img src="{weikucms:$vo.label_pic}" style="width: 100%;" /></div>
+                -->
+                <div style="color: #333;">
+                    <a href="{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$vo['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">{weikucms:$vo.label}</a>
+                </div>
+                </span>
+            </volist>
+        </div>
+        </if>
+        <div class="col-md-12 p10">
+
+            <div class="cat_goods" style="  position: relative; top: -10px;">
+                <ul class='rowUl'>
+            <volist name="cats" id="hostlist">
+            <volist name="hostlist['shop']" id="goods">
+                    <li class='rowLi'>
+                        <a href="{weikucms::U('Store_shop/product',array('token' => $_GET['token'], 'id' => $goods['id'], 'wecha_id' => $_GET['openid'],'openid'=>$_GET['openid']))}" class='rowList'>
+                            <div class="goods_img"><img src="{weikucms:$goods.logourl}" style="max-height: 235px;" data-src="http://www.sisterzhong.com/upload/product/fa/ef/d5/faefd5a101330e048c14e6e2e14d1ea4.jpg" width="100%" height="100%" pagespeed_url_hash="1541764222" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+                            <div class="googds_item">
+                                <div class="name">{weikucms:$goods.name}</div>
+                                <div class="price" style="color: red;">¥{weikucms:$goods.price}</div>
+                            </div>
+                        </a>
+                    </li>
+            </volist>
+            </volist>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-12 p10 tac" style=" margin-top:20px; background:#CAAC63; display:block; clear:both;">
+            <if condition="$token eq 'b873d389377626a99006d613c85fb3a6'">
+                <p style="color:#fff;font-size:14px; padding-top:3px; margin-bottom:0px;">订购电话  020-31137759</p>
+            </if>
+            <p style="color:#fff;font-size:14px; padding-top:6px; margin-bottom:0px;">
+                <if condition="$token eq 'b873d389377626a99006d613c85fb3a6'">
+                    广州益笙行贸易有限公司
+                    <else />
+            {weikucms:$tpl.name}
+                    </if>
+            <if condition="$contact"><br />服务热线：{weikucms:$contact}</if>
+            <if condition="$token neq '233eb0b413256696f977e4c963645877'">
+                -万普技术支持</if></p>
+
+        </div>
+    </div>
+</div>
+
+        <div class="footnav mini-innner">
+
+<include file="Store:shop_foot_add"/>
+
+
+    </div>
+
+    </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $(".main_visual").hover(function(){
+            $("#btn_prev,#btn_next").fadeIn()
+        },function(){
+            $("#btn_prev,#btn_next").fadeOut()
+        });
+
+        $dragBln = false;
+
+        $(".main_image").touchSlider({
+            flexible : true,
+            speed : 200,
+            btn_prev : $("#btn_prev"),
+            btn_next : $("#btn_next"),
+            paging : $(".flicking_con a"),
+            counter : function (e){
+                $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+            }
+        });
+
+        $(".main_image").bind("mousedown", function() {
+            $dragBln = false;
+        });
+
+        $(".main_image").bind("dragstart", function() {
+            $dragBln = true;
+        });
+
+        $(".main_image a").click(function(){
+            if($dragBln) {
+                return false;
+            }
+        });
+
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        }, 3000);
+
+        $(".main_visual").hover(function(){
+            clearInterval(timer);
+        },function(){
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            },3000);
+        });
+
+        $(".main_image").bind("touchstart",function(){
+            clearInterval(timer);
+        }).bind("touchend", function(){
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            }, 3000);
+        });
+
+    });
+</script>
+
+
+</body>
+
+</html>
+

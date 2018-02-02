@@ -1,0 +1,188 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/index',array('token'=>$token))}" >网点管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/orders',array('token'=>$token))}" >援救订单管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/staff',array('token'=>$token))}" >公司职员管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/integralInstall',array('token'=>$token))}">积分设置</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/store',array('token'=>$token))}">积分商城</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/menber',array('token'=>$token))}">会员管理</a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里对会员客服获取积分进行设置。</li>
+    </ol>
+</div>
+<div class="msgWrap">
+    <form class="form" method="post" id="form" action="">
+        <if condition="$info['id'] neq ''">
+            <input type="hidden" name="id" id="id" value="{weikucms:$info['id']}" />
+        </if>
+        <div class="msgWrap bgfc">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>维修后在一天内第一次评价后获取
+                        <if condition="$info['id'] eq ''">
+                            <input type="text" id="store" name="name" value="" class="px require" style="width:30px;" />
+                            <else/>
+                            <input type="text" id="store" name="name" value="{weikucms:$info['store']}" class="px require" style="width:30px;" />
+                        </if>
+                        积分;
+                    </td>
+                </tr>
+                <tr>
+                    <td>在一天内第一次填写评价内容获取积分
+                        <if condition="$info['id'] eq ''">
+                            <input type="text" id="stores" name="name" value="" class="px require" style="width:30px;" />
+                            <else/>
+                            <input type="text" id="stores" name="name" value="{weikucms:$info['stores']}" class="px require" style="width:30px;" />
+                        </if>
+                        积分;
+                    </td>
+                </tr>
+                <tr>
+                    <td>每天签到获取积分
+                        <if condition="$info['id'] eq ''">
+                            <input type="text" id="stors" name="name" value="" class="px require" style="width:30px;" />
+                            <else/>
+                            <input type="text" id="stors" name="name" value="{weikucms:$info['stors']}" class="px require" style="width:30px;" />
+                        </if>
+                        积分;
+                    </td>
+                </tr>
+                <tr>
+                    <td>推荐好友买车后填写推荐表后，一周内获取
+                        <if condition="$info['id'] eq ''">
+                            <input type="text" id="integral" name="name" value="" class="px require" style="width:30px;" />
+                            <else/>
+                            <input type="text" id="integral" name="name" value="{weikucms:$info['integral']}" class="px require" style="width:30px;" />
+                        </if>
+                        积分;
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <if condition="$info['id'] eq ''">
+                            <input type="hidden" name="op" id="op" value="0" />
+                            <else/>
+                            <input type="hidden" name="op" id="op" value="1" />
+                        </if>
+                        <input type="hidden" name="token" id="token" value="{weikucms::$token}" />
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary"><if condition="$info['id'] eq ''">确定<else/>编辑</if></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="cLine">
+
+    <div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+
+            var store = $("#store").val();
+            var stores = $("#stores").val();
+            var stors = $("#stors").val();
+            var integral = $("#integral").val();
+            var token = $("#token").val();
+            var op = $("#op").val();
+            var id = $("#id").val();
+
+            if(! store){
+                notif({
+                    msg: "积分设置不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! stores){
+                notif({
+                    msg: "积分设置不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! stors){
+                notif({
+                    msg: "积分设置不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! integral){
+                notif({
+                    msg: "积分设置不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('ServicestoreNew/integralInstall')}",
+                    {id:id,store:store,stores:stores,stors:stors,integral:integral,token:token,op:op},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                                alert(window.location.href);
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+ </script>
+<include file="Public:footer"/>
+

@@ -1,0 +1,244 @@
+<html>
+    <head>
+	<meta charset="utf-8">
+	<meta content="telephone=no" name="format-detection">
+	<link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/common.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/index.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/icon/style.css">
+	<title>{weikucms:$title}-{weikucms:$share}</title>
+	<script type="text/javascript" src="tpl/Wap/default/hn/js/jquery-1.1.2.min.js"></script>
+	<style type="text/css">
+	body{
+		background-color:#fff;
+	}
+	img{  vertical-align: bottom;}
+	.top{height:40px;}
+	#left li{
+		width: 24.5%;
+  		text-align: center;
+ 		border-right: 1px solid #fff;
+  		float: left;
+	} 
+
+	#left{
+	  -webkit-box-flex: 1;
+	  height:40px;
+	  line-height: 40px;
+	  border-right: 5px;
+  	  color: #fff;
+  	  text-align: center;
+  	  background-color: #EA4B56;
+	}
+	li a{color: #fff;}
+	.m{  width: 100%
+		;
+  text-align: center;
+  color: #f00;}
+	</style>
+    </head>
+    <body>
+    		<img src="{weikucms:$img}" onclick="location.href='{weikucms::U('title4',array('token'=>$token,'openid'=>$openid))}'"/>
+			<input type="hidden" value="{weikucms::U('addNum',array('token'=>$token))}" id="url">
+			<input type="hidden" value="{weikucms::U('comm',array('token'=>$token))}" id="curl">
+			<input type="hidden" value="{weikucms::U('addphoto',array('token'=>$token))}" id="photoc">
+	<div class="top">
+		
+		<div id="left">
+		<ul>
+			<li class="prcimg">相机</li>
+			<li class="wo"><a href="{weikucms::U('wo',array('token'=>$token,'openid'=>$openid))}">我的</a></li>
+			<li class="re"><a href="{weikucms::U('re',array('token'=>$token))}">最热</a></li>
+			<li class="news" style="border-right:none;"><a href="{weikucms::U('photo',array('token'=>$token))}">最新</a></li>
+		</ul>
+		</div>
+	</div>
+	<div class="all">
+	<volist name="p" id="v">
+	<div class="main" dateid="{weikucms:$v.id}">
+		<div class="main-img" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">
+			<img src="{weikucms:$v.local_pic}" id="show"/>
+			<div id="picToLike">
+			</div>
+		</div>
+		<div class="main-title">
+			<div class="main-titile-left"></div>
+			<div class="main-titile-right">
+				<span class="icon-thumbs-up" dataid="{weikucms:$v.id}" id="{weikucms:$v.id}" style="margin-right:10px;">{weikucms:$v.click_num}</span>
+				<span class="icon-chat" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">{weikucms:$v.comment_num}</span>
+			</div>
+		</div>
+	</div>
+	</volist>
+	</div>
+	<div style="width: 100%; height: 20px;display: none; text-align: center;color:#fff;" id="now_add">
+        <span style="position: relative; display: inline-block;width: 12px;height: 10px; line-height: 10px;" class="a" ></span><span class="b">正在加载...</span>
+	</div><!--
+		<script src="tpl/Wap/default/rh/js/jquery.event.drag-1.5.min.js" type="text/javascript" charset="utf-8" ></script>
+    <script src="tpl/Wap/default/rh/js/jquery.touchSlider.js" type="text/javascript" charset="utf-8" ></script>
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/gta/js/Smaty.js"></script>
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/lm/js/prompt.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>-->
+    </body>
+
+
+	<script type="text/javascript">
+//加载
+function shareConfig(){
+        return config={
+            'shareTitle':'{weikucms:$title}',
+            'descContent':"{weikucms:$share}"
+        }
+   }
+	// var n=0;
+ //    var a=0;
+	// if(a==0){
+ //            $("#now_add").find(".a").waiting(function(){},16);
+ //    }
+ //    var timeOut = null;
+ //    $(document).scroll(function(){
+ //        if(a==1){
+ //            return false;
+ //        }
+ //        //滚动条顶部的偏移==总个文档的高度-窗口的高度
+ //        var diff = Number($(window).height()) + Number(20);
+
+ //        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+			
+ //            if(timeOut != null) {
+ //                return false;
+ //            }  //判断容器timeOut 是否在运行！
+ //            n++;
+	// 		$("#now_add").show();
+           
+ //            timeOut = setTimeout(function(){//1秒加载一次
+ //                $.post($('#photoc').val(),{"n": n},function(html){
+ //                    if($.trim(html).length>0){
+					
+ //                        console.log(html);
+ //                        $(html).appendTo('.all');//第五步：拿到class="limitShoppingBox"看效果
+ //                        $("#now_add").hide();
+ //                        timeOut=null;
+ //                    }else{
+ //                        a=1;
+	// 					$("#now_add").find('.a').waitingDone();
+ //                        $("#now_add").find(".b").text("已加截全部");
+
+ //                    }
+ //                },'html');
+ //            },1000);
+ //        }
+
+ //    })
+	
+	
+	
+	
+	$(function(){
+		$(".icon-thumbs-up").touch(function(){
+			var This = $(this);
+			var id=$(this).attr('dataid');
+			if($(this).hasClass('on')){
+				$.post($('#curl').val(),{id:id},function(data){
+					$('#'+id).html(data);
+					This.removeClass('on');
+				})
+			}else{
+				$.post($('#url').val(),{id:id},function(data){
+					$('#'+id).html(data);
+					This.addClass('on');
+				})
+
+			}
+			
+		})
+	});
+		//照片接口
+		/*
+		
+		 wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+            'uploadImage',
+            'downloadImage',
+        ]
+		
+    });
+	*/
+    //wx.ready(function () {
+	function wxready(){
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+        //chooseImage
+
+        $(".prcimg").click(function() {    //拍照、本地选图
+
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    //$('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+									
+										$.each(data.imgs, function(e,t){
+									
+                                                $.post("{weikucms::U('Hn/add_photo',array('token'=>$token,'openid'=>$openid))}",{t:t},function(msg){
+													
+													if(msg.status==1)
+													{
+														window.location.href=window.location.href;
+													}
+													
+												},'json')
+                                        })
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                                $('#show').attr('src',t);
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+    //})
+	}
+	
+	$(document).on('click', '#imges', function(){
+	$(".prcimg").trigger('click');
+	});
+	
+		</script>
+</html>

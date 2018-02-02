@@ -1,0 +1,301 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+  <div class="cLineB">
+    <h4 class="left">
+      <if condition="$op neq 1">添加幼儿园
+        <else/>
+        编辑幼儿园</if>
+    </h4>
+    <div class="searchbar">
+      <form method="post" action="">
+<script>
+function selectall(name) {
+    var checkItems=$('.cbitem');
+    if ($("#check_box").attr('checked')==false) {
+        $.each(checkItems, function(i,val){
+            val.checked=false;
+        });
+        
+    } else {
+        $.each(checkItems, function(i,val){
+            val.checked=true;
+        });
+    }
+}
+function setlatlng(longitude,latitude){
+    art.dialog.data('longitude', longitude);
+    art.dialog.data('latitude', latitude);
+    art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:800,height:650,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#kgpic').val(),
+                    clickFn : function(url, title) {
+                        K('#kgpic').val(url);
+                        $("#kgpic_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+    
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#uploadtwocode').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#twocode').val(),
+                    clickFn : function(url, title) {
+                        K('#twocode').val(url);
+                        $("#twocode_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+    
+    
+    var editor1;
+    KindEditor.ready(function(K) {
+        editor1 = K.create('#notice', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true,
+            afterBlur: function(){this.sync();}
+        })
+
+    });
+
+</script>
+</form>
+</div>
+<div class="clr"></div>
+</div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以了解万普幼儿园的会员总数、幼儿园数量，还可以添加幼儿园、编辑幼儿园、删除幼儿园，最后还可以根据幼儿园名称进入后台管理。</li>
+    </ol>
+  </div>
+  <div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">top:150px</if>">
+  <!--tab end-->
+  <div class="msgWrap">
+    <form class="form" method="post" id="form" action="">
+      <input type="hidden" name="userid" id="userid" value="{weikucms:$a['userid']}" />
+        <input type="hidden" name="id" id="id" value="{weikucms:$branch['id']}" />
+      <div class="msgWrap bgfc">
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+          <tbody>
+            <tr>
+              <th>幼儿园名称：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="kgname" name="kgname" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="kgname" name="kgname" value="{weikucms:$branch['kgname']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+            </tr>
+           
+            <tr>
+              <th>幼儿园联系电话：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="kgtel" name="kgtel" value="" class="px require" style="width:300px;" size="11"/>
+                  <else/>
+                  <input type="text" id="kgtel" name="kgtel" value="{weikucms:$branch['kgtel']}" class="px require" style="width:300px;" size="11"/>
+                </if>
+              </td>
+            </tr>
+            <tr>
+              <th>幼儿园营业时间：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" class="px" id="kgbusinessstarthours" style="width:60px;" value="" name="kgbusinessstarthours">
+                  到
+                  <input type="text" class="px" id="kgbusinessendhours" style="width:60px;" value="" name="kgbusinessendhours">
+                  <else/>
+                  <input type="text" class="px" id="kgbusinessstarthours" style="width:60px;" value="{weikucms:$branch['kgbusinessstarthours']}" name="kgbusinessstarthours">
+                  到
+                  <input type="text" class="px" id="kgbusinessendhours" style="width:60px;" value="{weikucms:$branch['kgbusinessendhours']}" name="kgbusinessendhours">
+                </if>
+              </td>
+            </tr>
+          <tr>
+              <th>幼儿园地址：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="kgaddress" name="kgaddress" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="kgaddress" name="kgaddress" value="{weikucms:$branch['kgaddress']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+          </tr>
+         <tr>
+            <th>幼儿园地址的经纬度：</th>
+            <td><if condition="$op neq 1"> 经度
+                <input type="text" id="longitude" style="width:80px;" name="longitude" size="14" class="px" />
+                纬度
+                <input type="text" style="width:80px;" name="latitude" size="14" id="latitude" class="px"  />
+                <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a>
+                <else/>
+                经度
+                <input type="text" id="longitude" style="width:80px;" name="longitude" size="14" class="px" value="{weikucms:$branch['longitude']}" />
+                纬度
+                <input type="text"  name="latitude" style="width:80px;" size="14" id="latitude" class="px" value="{weikucms:$branch['latitude']}" />
+                <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a> </if>
+            </td>
+          </tr>
+          
+          <tr>
+              <TH valign="top">幼儿园图片：</TH>
+              <TD><if condition="$data.picurl"> <img style="display: block;" id="kgpic_show" class="fenlei_img" src="{weikucms:$branch['kgpic']}">
+                  <else/>
+                  <img style="display: none;" id="kgpic_show" class="fenlei_img" src="{weikucms:$branch['kgpic']}"> </if>
+              </TD>
+          </tr>
+            
+          <tr>
+            <th>上传图片：</th>
+            <td><if condition="$op neq 1">
+                <input type="hidden" class="pic text textMiddle inputQ"  name="kgpic" id="kgpic" value="{weikucms:$branch['kgpic']}" style="width:300px;"   />
+                <else/>
+                <input type="hidden" class="pic text textMiddle inputQ"  name="kgpic" id="kgpic" value="{weikucms:$branch['kgpic']}" style="width:300px;"   />
+              </if>
+              <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span> </td>
+          </tr>
+          
+           <tr>
+              <th>幼儿园招生电话：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="retel" name="retel" value="" class="px require" style="width:300px;" size="11"/>
+                  <else/>
+                  <input type="text" id="retel" name="retel" value="{weikucms:$branch['retel']}" class="px require" style="width:300px;" size="11"/>
+                </if>
+              </td>
+            </tr>
+          <tr>
+          <tr>
+              <th valign="top">幼儿园二维码：</th>
+              <td><if condition="$op neq 1"> <img style="display: inline;width:200px;height:200px" id="twocode_show" class="fenlei_img" src="">
+                  <span style="color:red;font-size:20px">提示：在添加幼儿园时不生成二维码。二维码是添加完幼儿园之后再进行编辑时生成的。</span>
+                  <else/>
+                  <img style="display: block;width:200px;height:200px;" id="twocode_show" class="fenlei_img" src="{weikucms:$imgUrl}"> </if>
+              
+              </td>
+              <input style="display:none;" value="{weikucms:$imgUrl}" name="twocode" id="twocode">
+          </tr>
+         
+   
+          <tr>
+            <th>&nbsp;</th>
+            <td>
+                <if condition="$op neq 1">
+                    <input type="hidden" name="op" id="op" value="0" />
+                <else/>
+                    <input type="hidden" name="op" id="op" value="1" />
+                </if>
+              <input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+              <if condition="$op neq 1">添加幼儿园
+                <else/>确定编辑
+              </if>
+              </button>
+           </td>
+          </tr>
+          </tbody>
+          
+        </table>
+      </div>
+    </form>
+  </div>
+  <div class="cLine">
+    <div class="clr"></div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            
+            var id = $("#id").val();
+            var userid = $("#userid").val();
+            var kgname = $("#kgname").val();
+            var kgtel = $("#kgtel").val();
+            var retel = $("#retel").val();
+            var kgbusinessstarthours = $("#kgbusinessstarthours").val();
+            var kgbusinessendhours = $("#kgbusinessendhours").val();
+            var kgaddress = $("#kgaddress").val();
+            var kgpic = $("#kgpic").val();
+            var twocode = $('#twocode').val();
+            var longitude = $("#longitude").val();
+            var latitude = $("#latitude").val();
+            var op = $("#op").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(!id){
+                id=null;
+            }
+             if(! kgname){
+                notif({
+                    msg: "幼儿园名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }  
+            if(! kgaddress){
+                notif({
+                    msg: "幼儿园地址不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! kgtel){
+                notif({
+                    msg: "幼儿园电话不能为空",
+                    type: "warning"
+                });
+                return false;
+            }             
+            $.post("{weikucms::U('KindergartenBranch/manage',array('token'=>$token))}",{id:id,userid:userid,kgname:kgname,kgtel:kgtel,kgbusinessstarthours:kgbusinessstarthours,kgbusinessendhours:kgbusinessendhours,kgaddress:kgaddress,kgpic:kgpic,longitude:longitude,latitude:latitude,op:op,__hash__:__hash__,kgpic:kgpic,twocode:twocode,retel:retel},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                    }else{
+                        notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json'); 
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

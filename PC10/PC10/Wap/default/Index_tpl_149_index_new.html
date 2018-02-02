@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:weiweb"/>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_149/main.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_149/theme.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_149/zepto.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_149/sea.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_149/seajs-text.js"></script>
+    <title>{weikucms:$tpl['name']}</title>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+<script>
+    //
+    seajs.config({
+        base: "../../",
+        alias: {
+            //"zepto": "lib/zepto",
+            "main":"js/main",
+            "swipe":"lib/swipe"
+        },
+        paths: {
+            "WIDGET":"widget" //widget nav1
+        },
+        'map': [
+            [ /^(.*\.(?:css|js))(.*)$/i, '$1?'+(new Date().getTime()) ]
+        ],
+        preload: [""]
+    });
+    //
+    /*seajs.on("exec", function(module){
+     if(module.uri = seajs.resolve("zepto")){
+     window.$ = window.zepto = module.exports;
+     }
+     });*/
+    // 加载入口模块
+    seajs.use("./js/index", function(index){
+        $(function(){
+
+        });
+    });
+</script>
+<div data-role="container" class="container index red" >
+    <header data-role="header">
+        <a href="javascript:;" class="logo"><img src="{weikucms:$tpl.headpicurl}" /></a>
+    </header>
+    <section data-role="body" class="body">
+        <div class="circleMenu">
+            <ul>
+
+                <ol>
+                    <volist name="flash" id="so" offset="0" length='1'>
+                    <a onclick="return false;" class="weimob-list-item">
+
+                        <img src="{weikucms:$so.img}" />
+                    </a>
+                    </volist>
+                </ol>
+
+                <li class="la la_1">
+                    <volist name="info" id="vo" offset="0" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                        <span class="{weikucms:$vo.icon}"></span>
+                        <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+
+                <li class="la la_2">
+                    <volist name="info" id="vo" offset="1" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                        <span class="{weikucms:$vo.icon}"></span>
+                        <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+
+                <li class="lb lb_1">
+                    <volist name="info" id="vo" offset="2" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                        <span class="{weikucms:$vo.icon}"></span>
+                        <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+
+                <li class="lb lb_2">
+                    <volist name="info" id="vo" offset="3" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                        <span class="{weikucms:$vo.icon}"></span>
+                        <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+
+                <li class="lc lc_1">
+                    <volist name="info" id="vo" offset="4" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                        <span class="{weikucms:$vo.icon}"></span>
+                        <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+
+                <li class="lc lc_2">
+                    <volist name="info" id="vo" offset="5" length='1'>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+                    <span class="{weikucms:$vo.icon}"></span>
+                    <label>{weikucms:$vo.name}</label>
+                    </a>
+                    </volist>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <footer data-role="footer">
+        <div class="copyright" style="padding-top:20px;"><a href="#" style="color:white;">©<php>echo $tpl['name'];echo '-';echo C('site_my');</php></a></div>
+
+    </footer>
+</div>
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>
+

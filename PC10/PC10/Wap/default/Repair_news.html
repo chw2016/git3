@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+        {weikucms:$news.title}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <style>
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; }
+    </style>
+    <style>
+        #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+    </style>
+</head>
+
+<body id="activity-detail">
+    <include file="Public:audio"/> 
+<eq name="res.showpic" value="1">
+<img width="12px" style="position: absolute;top:-1000px;" src="{weikucms:$res.pic}">
+</eq>
+<div class="page-bizinfo">
+    <div class="header">
+        <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:40px;">{weikucms:$news.title}
+        </h1>
+        <p class="activity-info">
+        	<span class="activity-meta">
+                 <span>发布者：</span><span style="padding-left:5px;">{weikucms:$news.editer}</span>
+             </span>
+             <br/>
+            <span id="post-date" class="activity-meta no-extra" style="padding-left:8px;">
+                <span>发布时间：</span><span style="padding-left:5px;"><php> echo date('Y-m-d H:i:s',$news['time']);</php></span>
+            </span>     
+        </p>
+    </div>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+<div id="img-content">
+<div class="text">
+    {weikucms:$news.message|htmlspecialchars_decode}
+</div>
+<!-- <div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div> -->
+
+<div id="back" style="z-index: 98;bottom:5px;width:100%;line-height:30px;text-align:center;">
+    <span style="color:red">©<php>echo $news['name'];</php><php>if($token != '8890fe84b729e89c2240ec70d843c15a'){ echo '-'.C('site_my'); };</php></span>
+</div>
+
+</div>
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>

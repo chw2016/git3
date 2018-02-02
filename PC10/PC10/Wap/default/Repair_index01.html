@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.touchSlider.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcore.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcalendar.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.form.js"></script>
+<script src="{weikucms::STATICS}/jquery-ui-datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/datepicker.css" media="all" />
+
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var imgreturn  =  '{weikucms::STATICS}'
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+.demo{width:100%;}
+.demo p{line-height:32px}
+.btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;/*padding:4px 5px 4px;font-size:14px; line-height:18px; *line-height:20px;*/color:#fff;text-align:center;vertical-align:middle;cursor:pointer;/*background-color:#5bb75b;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;*/}
+/*.btn span{display: block;}*/
+.btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+.progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+.bar {background-color: green; display:block; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+.files{height:22px; line-height:22px; margin:5px 0}
+.delimg{margin-left:20px; color:#090; cursor:pointer}
+</style>
+<style type="text/css">
+    .gray_1{
+        background: #ccc;
+        /*border: 1px solid #ccc;*/
+        font-size: 14px;
+       
+    }.red{
+        background: #f00 !important;
+        /*border: 1px solid #f00;*/
+       
+        color: #fff;
+        font-size: 14px;
+    }
+    *{-webkit-tap-highlight-color:transparent;}
+    .bcqtxx{
+	
+	position: absolute;
+	right: 10px;
+	top: 7px;
+}
+.huise{
+    background: #ccc !important;
+}
+    
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    $( "#ctime" ).datepicker({
+        yearRange:"c-60:c+1"
+    });
+
+    $("#birthday" ).datepicker({
+        yearRange:"c-60:c+1"
+    });
+
+    $(".main_visual").hover(function(){
+        $("#btn_prev,#btn_next").fadeIn()
+    },function(){
+        $("#btn_prev,#btn_next").fadeOut()
+    });
+    
+    $dragBln = false;
+    
+    $(".main_image").touchSlider({
+        flexible : true,
+        speed : 200,
+        btn_prev : $("#btn_prev"),
+        btn_next : $("#btn_next"),
+        paging : $(".flicking_con a"),
+        counter : function (e){
+            $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+        }
+    });
+    
+    $(".main_image").bind("mousedown", function() {
+        $dragBln = false;
+    });
+    
+    $(".main_image").bind("dragstart", function() {
+        $dragBln = true;
+    });
+    
+    $(".main_image a").click(function(){
+        if($dragBln) {
+            return false;
+        }
+    });
+    
+    timer = setInterval(function(){
+        $("#btn_next").click();
+    }, 3000);
+    
+    $(".main_visual").hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        },3000);
+    });
+    
+    $(".main_image").bind("touchstart",function(){
+        clearInterval(timer);
+    }).bind("touchend", function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        }, 3000);
+    });
+    
+});
+</script>
+</head>
+<body style="background:#fff;">
+    <!-- 上面的 -->
+<div id="bigAll">
+<!-- 此处是幻灯片的位置 -->
+<div class="main_visual">
+    <div class="flicking_con">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+    </div>
+    <div class="main_image">
+        <ul>
+            <li><img src="{weikucms::STATICS}/wapweiui/service/images/jishibaner.png"></li>
+            <li><img src="{weikucms::STATICS}/wapweiui/service/images/jishibaner.png"></li>
+            <li><img src="{weikucms::STATICS}/wapweiui/service/images/jishibaner.png"></li>
+        </ul>
+        <a href="javascript:;" id="btn_prev"></a>
+        <a href="javascript:;" id="btn_next"></a>
+    </div>
+    <div style="width:100%;height:30px;position:absolute;bottom:0px;"></div>
+</div>
+<!--main_visual end-->
+<script type="text/javascript">
+    $(function(){
+        $('.main_image>ul>li>img').css({'width':$('.main_image>ul>li').width()+'px','height':'180px'});
+    })
+</script>
+<!-- 此处是幻灯片的位置 -->
+<div style="padding:10px;background:#f5f4f4;margin:15px auto;width:90%;border-radius:6px;">
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;">注册提示</div>
+    <ul margin-top>
+        <li style="margin-bottom:10px;line-height:20px;">
+            1.在加盟前请详细阅读<a href="#" style="color:#f00;">《加盟事项说明》</a>和
+            <a href="#" style="color:#f00;">《加盟合同》</a>，否则您无权使用本服务。
+        </li>
+         <li style="margin-bottom:5px;line-height:20px;">
+            2.您承接1号服务提供的订单即视为您已阅读并同意上述协议的约束。
+        </li>
+    </ul>
+</div>
+<!--
+<div style="padding:10px;background:#f5f4f4;margin:15px auto;width:90%;border-radius:6px;">
+	网页注册时，请复制以下地址:<br>http://v.wapwei.com/index.php?g=Wap&m=Repair&a=index&token=
+	88adf5d047280550b7a6fa5f738c5ad5
+	&openid={weikucms:$openid}
+	<br>提示：为了顺利注册，请提前准备一份身份证照片，文件大小不超过1M。
+</div>
+-->
+<div style="text-align:center;margin:5px auto;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">门店资料(可不填)</div>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+<div class="publicList wml100">
+	<ul>
+        <li class="noAfter">
+            <div class="li-l">编码</div>
+            <div class="li-r"><span id="Code">{weikucms:$encoded}</span></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">门店名称</div>
+            <div class="li-r"><input id="store" placeholder="请输入门店名称" value="" class="input"></div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">负责人名称</div>
+            <div class="li-r"><input id="head" placeholder="请输入负责人名称" class="input" value=""></div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">成立时间</div>
+            <div class="li-r">
+            	<input type="text" readonly  id="ctime" />
+            </div>
+        </li>
+
+        <li class="noAfter">
+            <div class="li-l">营业执照编号</div>
+            <div class="li-r"><input id="license" placeholder="输入营业执照编号" class="input" value=""></div>
+        </li>                      
+    </ul>
+</div>
+
+<div style="text-align:center;margin:10px auto;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">技师资料</div>
+
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+            <div class="li-l">姓名<span style="color:#f00">*</span></div>
+            <div class="li-r">
+			<input id="yname" placeholder="请输入姓名" value="" class="input" maxlength="20">
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">性别<span style="color:#f00">*</span></div>
+            <div class="li-r">
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_yes.png" wdith="20px" height="20px" style="position:relative;top:1px;" id="manR" class="flags">&nbsp;男
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" wdith="20px" height="20px" style="position:relative;top:1px;" id="womanR">&nbsp;女
+            </div>
+        </li>
+		   
+        <li class="noAfter">
+            <div class="li-l">出生日期<span style="color:#f00">*</span></div>
+            <div class="li-r">
+            	<input type="text" readonly  id="birthday" value=""/>
+            </div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">身份证号<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="idcard" placeholder="请输入身份证号" class="input" value=""></div>
+        </li>
+
+        <li class="noAfter">
+            <div class="li-l">身份证地址<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="yplace" placeholder="输入身份证地址" class="input" value=""></div>
+        </li>
+
+
+        <li class="noAfter">
+            <div class="li-l">手机号码<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="yphone" placeholder="输入手机号码" class="input" value=""></div>
+        </li>
+
+        <li class="noAfter">
+            <div class="li-l">驻点地址<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="stagnation" placeholder="请输入驻点地址" class="input" value=""></div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">交通工具<span style="color:#f00">*</span></div>
+            <div class="li-r" style="position:static;">
+            <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                </span>
+            <select id="Traffic" class="select">
+                <option value="0" selected></option>
+                <option value="自行车">自行车</option>
+                <option value="助力车">助力车</option>
+                <option value="摩托车">摩托车</option>
+                <option value="公交车">公交车</option>
+                <option value="汽车">汽车</option>
+            </select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">紧急联系人<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="contact" placeholder="输入紧急联系人" class="input" value=""></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l" style="font-size:16px;text-align: left;left:-4px;">紧急联系人电话<span style="color:#f00">*</span></div>
+            <div class="li-r"><input id="contacttel" placeholder="请输入手机号码" class="input" value=""></div>
+        </li>
+
+    </ul>
+</div>
+
+<div style="text-align:center;margin:10px auto;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">行业基本信息</div>
+
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+            <div class="li-l">行业经验(年)<span style="color:#f00">*</span></div>
+            <div class="li-r">
+				<input id="Experience" placeholder="请输入行业经验" value="" class="input" maxlength="20" type="number">
+			</div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">工作形式<span style="color:#f00">*</span></div>
+            <div class="li-r" style="position:static;">
+	            <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                </span>
+				<select id="work" class="select">
+                    <option value="0" selected></option>
+					<option value="全职">全职</option>
+					<option value="兼职">兼职</option>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">带教学徒</div>
+            <div class="li-r" style="position:static;">
+	            <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/gray_choice.png"  style="position:absolute;right:40px;top:0px;" width="80px" height="36px" id="Apprentice" />
+                    <span style="position:relative;right:10px;top:5px;">否</span>
+                </span>
+				<!-- <select id="Apprentice" class="select">
+                    <option value="2" selected></option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select> -->
+            </div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">资格证书</div>
+            <div class="li-r" style="position:static;">
+	           <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                </span>
+				<select id="Certificate" class="select">
+					<option value="0" selected></option>
+					<option value="无">无</option>
+					<option value="初级">初级</option>
+					<option value="中级">中级</option>
+					<option value="高级">高级</option>
+					<option value="技师">技师</option>
+					<option value="助理工程师">助理工程师</option>
+					<option value="工程师">工程师</option>
+				</select>
+            </div>
+        </li>
+
+    </ul>
+</div>
+<div style="text-align:center;margin:10px auto;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">服务区域及内容</div>
+<div class="publicList wml100">
+    <ul>
+    	<li class="noAfter">
+        	<div class="li-l">添加区域</div>
+        	<div class="li-r" style="position:static;">
+               <!--  <span class="bcqtxx" style="right:1px;top:8px;">
+                                <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                            </span>  -->       		
+            	<select id="addarea" class="select">
+            		<option selected="selected" value="0">选择省</option>
+            		<volist name="province" id="vo">
+			            <option value="{weikucms:$vo.code}" id="pp_{weikucms:$vo.code}">{weikucms:$vo.name}</option>			                
+			        </volist>
+				</select>
+				<br/>
+				<select id="city" class="select" style="margin-top:3px;display:none;border-top:1px solid #cfcbcb;">
+				</select>
+				<br/>
+				<select id="county" class="select" style="margin-top:3px;display:none;border-top:1px solid #cfcbcb;">
+				</select>
+				<!--<br/>
+				<select id="town" class="select" style="margin-top:3px;display:none;border-top:1px solid #cfcbcb;">
+				</select>-->
+            </div>
+        </li>
+        <!--<li class="noAfter">
+            <div class="li-l">服务区域</div>
+            <div class="li-r" id="town">
+                <!--<div>
+                    <ul class="label" style="float:left;" id="area"></ul>
+                </div>
+            </div>
+        </li>  
+        -->
+        
+        <li class="noAfter">
+            <div class="li-l">服务区域</div>
+            <div class="li-r" id="town">
+                <!--<div>
+                    <ul class="label" style="float:left;" id="area"></ul>
+                </div>-->
+            </div>
+        </li>  
+        
+        
+        <li class="noAfter">
+        	<div class="li-l">添加大类</div>
+        	<div class="li-r" style="position:static;">
+        		<span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                </span> 
+        		<select id="wxtype" class="select">
+            		<option selected="selected">请选择分类</option>
+            		<volist name="bigClass" id="vo">
+			            <option value="{weikucms:$vo.id}">{weikucms:$vo.name}</option>            
+			        </volist>
+				</select>
+        	</div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">服务大类</div>
+            <div class="li-r">
+            	<div>    
+                    <ul class="label1" style="float:left;" id="bigclass"></ul>
+                </div>
+           </div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">服务小类</div>
+            <div class="li-r" id="scate"></div>
+        </li>
+        <!-- <li class="noAfter">
+            <div class="li-l">具体服务</div>
+            <div class="li-r"><input id="specific" placeholder="输入具体服务" value="" class="input" ></div>
+        </li> -->
+        <li class="noAfter">
+            <div class="li-l">服务内容</div>
+            <div class="li-r" id="content">
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="debug" class="flagContent flagsContent" content="调试"/>
+                调试
+                <!-- <input id="clean" value="清洗" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+                &nbsp;&nbsp;&nbsp;
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="clean" class="flagContent flagsContent" content="清洗"/>
+                清洗
+                <br/>
+               <!--  <input id="care" value="保养" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="care" class="flagContent flagsContent" content="保养"/>
+               保养
+               &nbsp;&nbsp;&nbsp;
+                <!-- <input id="install" value="安装" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="install" class="flagContent flagsContent" content="安装"/>
+                安装
+                <br/>
+                <!-- <input id="repair" value="维修" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="repair" class="flagContent flagsContent" content="维修"/>
+                维修
+                &nbsp;&nbsp;&nbsp;
+               <!--  <input id="Disassemble" value="拆卸" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+               <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="Disassemble" class="flagContent flagsContent" content="拆卸"/>
+               拆卸
+                <br/>
+                <!-- <input id="Demolition" value="拆除" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/> -->
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png"  style="" width="20px" height="20px" id="Demolition" class="flagContent flagsContent" content="拆除"/>
+                拆除
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+<div class="publicList wml100" id="otherInfo_1">
+    <ul>
+	<!--
+        <li class="noAfter">
+            <div class="li-l">上传身份证照片<span style="color:#f00">*</span></div>
+            <div class="li-r">
+                <form id="myupload" action="{weikucms::U('Wap/Repair/uploadsT',array('token'=>$token, 'openid'=>$openid))}" method="post" enctype="multipart/form-data">
+                   <div class="demo">
+                        <span id="bar" style="padding-left:20px;font-size: 12px;">上传图片</span>
+                        <div id="showimg" style="margin-left:50px;">
+                            
+                        </div>
+                        <div class="btn" style="margin-left:30px; width:100px;">
+                            <span>
+                                <img src="{weikucms::STATICS}/wapweiui/service/images/click_add.png" width="84px" height="80px" class="img"/>
+                            </span>
+                            <input id="fileupload" type="file" name="mypic" style="height:70px;">
+                        </div>
+                        <p>提示：<br/>1.只允许上传gif/jpg格式的图片。<br/>2.图片大小不能超过1M。</p>
+                        <input type="hidden" value="" id='url' />
+                   </div>
+               </form>
+            </div>
+        </li>  
+		-->
+       	<!--<li class="noAfter" style="font-size:16px;position:relative;" id="otherInfo">-->
+            <!---->
+            <!--<div class="li-l">其他信息</div>-->
+            <!--<div class="li-r" style="position:static;">-->
+                		<!--点击可补充信息-->
+                <!--<span class="bcqtxx" style="right:1px;top:8px;">-->
+                    <!--<img src="{weikucms::STATICS}/wapweiui/service/images/right_1.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;"/>-->
+                <!--</span>-->
+           <!--</div>-->
+            <!---->
+        <!--</li>-->
+    </ul>
+</div>
+<div id="agreeAdd">
+<div class="publicList wml100" style="font-size:15px;">
+    <ul> 
+        <li class="noAfter">
+         	<input type="checkbox" id="agree" name="agree" value="" style="-webkit-appearance:checkbox;width:15px;height:15px;position:relative;top:-2px;"/>&nbsp;&nbsp;已阅读并同意&nbsp;<a href="#" style="color:#f00;display:inline;">《加盟事项说明》</a> 和<a href="#" style="color:#f00;display:inline;">《加盟合同》</a>
+        </li>
+    </ul>
+</div>
+<input type="hidden" id="manager_name" value="{weikucms:$saler}"/>
+<div style="height:50px;">
+</div>
+<div id="back" style="z-index: 98;bottom:3px;width:95%;line-height:40px;border-right:2px solid #555;border-bottom:2px solid #555;border-top:2px solid #ccc;border-left:2px solid #ccc;box-shadow:6px 6px 6px #aaa;">  
+    <div style="width:100%;text-align:center;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;line-height:2em;font-size:16px;padding:0;" id="submit">提交审核</a>
+    </div>
+</div>
+</div>
+<!-- 隐藏的自定义添加 -->
+<div style="display:none;" id="hyhidden">
+<div style="text-align:center;margin:0px auto 10px;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">技师资料</div>
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+            <div class="li-l">身高(cm)</div>
+            <div class="li-r"><input id="yheight" placeholder="请输入身高" class="input" value=""></div>
+        </li>
+        
+         
+        
+         <li class="noAfter">
+            <div class="li-l">固定电话</div>
+            <div class="li-r"><input id="fixedtel" placeholder="输入固定电话号码" class="input" value=""></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">qq号码</div>
+            <div class="li-r"><input id="qq" placeholder="输入qq号码" class="input" value=""></div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">电子邮箱</div>
+            <div class="li-r"><input id="yemail" placeholder="输入电子邮箱地址" class="input" value=""></div>
+        </li>
+
+       
+
+         <li class="noAfter">
+            <div class="li-l">学历</div>
+            <div class="li-r" style="position:static;">
+                <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                </span>
+                <select id="education" class="select" placeholder="输入紧急联系人电话">
+                    <option value="0" selected></option>
+                    <option value="小学">小学</option>
+                    <option value="初中">初中</option>
+                    <option value="高中">高中</option>
+                    <option value="大专">大专</option>
+                    <option value="本科">本科</option>
+                    <option value="硕士">硕士</option>
+                </select>
+            
+           </div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">银行名称</div>
+            <div class="li-r"><input id="bankname" placeholder="请输入银行名称" class="input" value=""></div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">开户银行</div>
+            <div class="li-r"><input id="openbank" placeholder="请输入开户银行" class="input" value=""></div>
+        </li>
+
+         <li class="noAfter">
+            <div class="li-l">银行账号</div>
+            <div class="li-r"><input id="bankNo" placeholder="请输入银行账号" class="input" value=""></div>
+        </li>
+    </ul>
+</div>
+
+<div style="text-align:center;margin:1px auto 18px;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">教育培训</div>
+
+<div id="school">
+	<div class="publicList wml100">
+
+		<ul id="edu">
+			<li class="noAfter">
+				<div class="li-l">开始时间</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span>
+                    <input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_1"/>
+                </div>
+			</li>
+			<li class="noAfter">
+				<div class="li-l">结束时间</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入结束时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="结束时间" id="end_1"></div>
+			</li>
+			 <li class="noAfter">
+				<div class="li-l">学校/培训机构</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_1"></div>
+			</li>
+			
+			 <li class="noAfter">
+				<div class="li-l">专业</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_1"></div>
+			</li>
+		</ul>
+	</div>
+	<div class="publicList wml100 hideblock" id="Nofour">
+
+		<ul id="edu">
+			<li class="noAfter">
+				<div class="li-l">开始时间</div>
+		      <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_2"/></div>
+			</li>
+			<li class="noAfter">
+				<div class="li-l">毕业时间</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入毕业时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="毕业时间" id="end_2"></div>
+			</li>
+			 <li class="noAfter">
+				<div class="li-l">学校/培训机构</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_2"></div>
+			</li>
+			
+			 <li class="noAfter">
+				<div class="li-l">专业</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_2"></div>
+			</li>
+		</ul>
+	</div>
+	<div class="publicList wml100 hideblock" id="Nofive">
+
+		<ul id="edu">
+			<li class="noAfter">
+				<div class="li-l">开始时间</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span>
+					<input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_3"/>
+				</div>
+			</li>
+			<li class="noAfter">
+				<div class="li-l">毕业时间</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入毕业时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="毕业时间" id="end_3"></div>
+			</li>
+			 <li class="noAfter">
+				<div class="li-l">学校/培训机构</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_3"></div>
+			</li>
+			
+			 <li class="noAfter">
+				<div class="li-l">专业</div>
+				<div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_3"></div>
+			</li>
+		</ul>
+	</div>
+</div>
+ <div style="padding:10px;">
+    <div style="width:100%;">
+        <button href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="edusave" class="gray">再添加教育</button>
+    </div>
+  
+</div>
+<div style="text-align:center;margin:18px auto;background:#d30709;width:93.6%;padding:10px;color:#fff;font-size:14px;">行业简历</div>
+
+<div class="publicList wml100">
+
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+           <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_1"/></div>
+        <li class="noAfter">
+            <div class="li-l">结束时间</div>
+           <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入结束时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="结束时间" id="over_1"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+           <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_1"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+            <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_1"/></div>
+        </li>
+         
+         
+    </ul>
+</div>
+
+<div class="publicList wml100 hideblock" id="Notwo">   
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+      <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_2"/></div>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+      <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入毕业时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="毕业时间" id="over_2"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+           <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_2"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+           <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_2"/></div>
+        </li>
+         
+        
+    </ul>
+</div>
+<style type="text/css">
+  .hideblock{
+      display: none;
+  }
+</style>
+<div class="publicList wml100 hideblock" id="Nothree">   
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+      <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_3"/></div>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+     <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input value="" placeholder="请输入毕业时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="毕业时间" id="over_3"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+            <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_3"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+            <div class="li-r" style="position:static;">
+                    <span class="bcqtxx" style="right:1px;top:8px;">
+                        <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;border-left:1px solid #cfcbcb"/>
+                    </span><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_3"/></div>
+        </li>       
+    </ul>
+</div>  
+<div style="padding:10px;">
+        <div style="width:100%;">
+            <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="ressave" onclick="ressave();" class="gray">再添加简历</a>
+        </div> 
+        <!-- <div style="clear:both;"></div> -->
+        <style type="text/css">
+            .gray{
+                border-top:2px solid #ddd !important;
+                border-left:2px solid #ddd !important;
+                border-right:2px solid #888 !important;
+                border-bottom:2px solid #888 !important;
+            }.red_1{
+                border-top:2px solid #888 !important;
+                border-left:2px solid #888 !important;
+                border-right:2px solid #ddd !important;
+                border-bottom:2px solid #ddd !important;
+            }
+            .huise{
+                background: #ccc;
+            }.hongse{
+                background: #f00;
+            }
+        </style>
+</div>
+
+<div class="button clearfix">
+    <div style="width:49%;float:left;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;padding:0;" id="sureAdd" class="gray">确定添加</a>
+   </div>
+   <div style="width:49%;float:right;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;padding:0;" id="goHistory" class="gray">返回</a>
+   </div>
+</div>
+
+<!-- <div id="back" class="backoff"><a href="javascript:void(0);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div> -->
+</div>
+
+<!-- 隐藏的自定义添加 -->
+<!-- 隐藏的自定义添加的脚本 -->
+
+<script type="text/javascript">
+    $(function(){
+        $('#otherInfo').click(function(){
+            var timeID;
+            $('#bigAll').hide();
+            $('#agreeAdd').hide();
+            $('#hyhidden').show();
+            $('.backoff').show();
+            $(this).hide().addClass('knows');
+            $('#otherInfo_1').hide();
+            $('#goHistory').show().addClass('knows');
+            $('#sureAdd').show().addClass('knows');
+            /*if($('#otherInfo').hasClass('knows')){
+                    timeID = setInterval(function(){
+                    alert(1);
+                },5000);
+            }
+            if($('#otherInfo').hasClass('knows') == false){
+                clearInterval(timeID);
+            }*/
+        })
+        //添加自动保存5秒后
+         
+
+         //修改的复选框，点击男人
+        $('#manR').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png').addClass('flags').siblings().removeClass('flags');
+            $('#womanR').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+            //修改的复选框，点击女人
+        $('#womanR').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png').addClass('flags').siblings().removeClass('flags');
+            $('#manR').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+
+        //点击左右滑动按钮
+        $('#Apprentice').click(function(){
+            if($(this).hasClass('flag')){
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/gray_choice.png').removeClass('flag');
+                 $(this).next().html("否");
+            }else{
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/red_choice.png').addClass('flag');
+                 $(this).next().html("是");
+            }
+        })
+
+        //点击控制服务内容的
+        $('.flagContent').click(function(){
+            if($(this).hasClass('flagsContent')){
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png').removeClass('flagsContent');
+            }else{
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png').addClass('flagsContent');
+            }
+        })
+
+    })
+</script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/hidden.js"></script>
+
+<!-- 隐藏的自定义添加的脚本 -->
+<script type="text/javascript">
+  $(function(){
+	  
+	  var total = new Array();
+	  var jsonstr = "[{";
+	  var bigclass = new Array();
+	  var area = new Array();
+	  var smallarea = new Array();
+	  
+	  
+	  $('#back').mousedown(function(){
+            $(this).css({'border-left':'2px solid #555','border-right':'2px solid #aaa','border-top':'2px solid #555','border-bottom':'2px solid #aaa'})
+       });
+       $('#back').mouseup(function(){
+            $(this).css({'border-left':'2px solid #ccc','border-right':'2px solid #555','border-top':'2px solid #ccc','border-bottom':'2px solid #555'})
+       });
+
+	  $('#idcard').blur(function(){
+                    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                    if(reg.test($(this).val()) == false){
+                        show_error_tip('身份证格式不正确！');
+                        $(this).select();
+                        $(this).focus();
+                        return false;
+                    } else {
+                    	var card = $(this).val();
+                        var url="index.php?g=Wap&m=Repair&a=checkCard&token="+$("#token").val()+"&openid="+$("#openid").val();
+                        $.post(url,{card:card},
+                          function(data){ 
+                            if(data.status == 100){ 
+                          	  	alert('你的身份证已被注册，请联系客服');
+                                return false;
+                            }else if(data.status == 1 ){
+                              
+                            }else if(data.status == 2 ){
+                              show_error_tip(data.info);
+                                return false;
+                            }
+                        },'json');
+                    }
+                });
+
+            //电话号码的验证
+            $('#yphone').blur(function(){
+                 var reg = /^1[3,5,8]\d{9}$/;
+                 if(reg.test($(this).val()) == false){
+                    show_error_tip('电话号码格式不正确！');
+                    $(this).select();
+                    $(this).focus();
+                    return false;
+                }
+            });
+
+            //身高验证
+            $('#yheight').blur(function(){
+                if (isNaN($('#yheight').val())) {
+                    show_error_tip('身高应为数字！');
+                    $(this).select();
+                    $(this).focus();
+                    return false;
+                };
+            });
+            //紧急联系人电话
+            $('#contacttel').blur(function(){
+                var _reg = /\d{3}-\d{8}|\d{4}-\d{7}/;
+                var reg = /^1[3,5,8]\d{9}$/;
+                if (_reg.test($(this).val()) == false) {
+
+                    if (reg.test($(this).val()) == false) {
+                        show_error_tip('紧急联系人电话格式不正确！');
+                        $(this).select();
+                        $(this).focus();
+                        return false;
+                    }   
+                }
+            });
+
+            //行业经验是否为数字的验证
+             $('#Experience').blur(function(){
+                    if (isNaN($(this).val())) {
+                        show_error_tip('行业经验应为数字！');
+                        $(this).select();
+                        $(this).focus();
+                        return false;
+                    }
+             });
+	  
+	  	/*添加其他信息*/
+	  	$('#otherInfo').click(function(){
+	       /* window.location.href="{weikucms::U('Wap/Repair/other',array('token'=>$token, 'openid'=>$openid))}";*/
+	    });
+
+	    $('#back').css('left',($(window).width()-$('#back').width())/2);
+	  
+	    
+	    $('#resadd').css('background','#ccc');
+        $('#resadd').attr('disabled','disabled');
+
+        //按钮ressave
+        contralmouse('#ressave');
+        
+        //新添加 职位1
+              $('#pos_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#start_1").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['start_1'] = $("#start_1").val();
+                }
+                
+                if(!$('#over_1').val()){
+                    show_error_tip('结束时间不能为空！');
+                    return false;
+                } else{
+                    total['over_1'] = $('#over_1').val();
+                }
+                if(!$('#com_1').val()){
+                    show_error_tip('公司不能为空！');
+                    return false;
+                } else{
+                    total['com_1'] = !$('#com_1').val();
+                }
+                
+                
+                total['pos_1'] = $(this).val();
+
+            }
+        });
+
+        //新添加
+         //新添加 职位2
+              $('#pos_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#start_2").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['start_2'] = $("#start_2").val();
+                }
+                
+                if(!$('#over_2').val()){
+                    show_error_tip('结束时间不能为空！');
+                    return false;
+                } else{
+                    total['over_2'] = $('#over_2').val();
+                }
+                if(!$('#com_2').val()){
+                    show_error_tip('公司不能为空！');
+                    return false;
+                } else{
+                    total['com_2'] = $('#com_2').val();
+                }
+                
+                
+                total['pos_2'] = $(this).val();
+
+            }
+        });
+        //新添加
+
+        //新添加 职位3
+              $('#pos_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#start_3").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['start_3'] = $("#start_2").val();
+                }
+                
+                if(!$('#over_3').val()){
+                    show_error_tip('结束时间不能为空！');
+                    return false;
+                } else{
+                    total['over_3'] = $('#over_3').val();
+                }
+                if(!$('#com_3').val()){
+                    show_error_tip('公司不能为空！');
+                    return false;
+                } else{
+                    total['com_3'] = $('#com_3').val();
+                }
+                
+                
+                total['pos_3'] = $(this).val();
+
+            }
+        });
+        //新添加
+
+        //新添加 专业1
+              $('#profess_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#begin_1").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['begin_1'] = $("#begin_1").val();
+                }
+                
+                if(!$('#end_1').val()){
+                    show_error_tip('毕业时间不能为空！');
+                    return false;
+                } else{
+                    total['end_1'] = $('#end_1').val();
+                }
+                if(!$('#org_1').val()){
+                    show_error_tip('公司不能为空！');
+                    return false;
+                } else{
+                    total['org_1'] = $('#org_1').val();
+                }
+                
+                
+                total['profess_1'] = $(this).val();
+
+            }
+        });
+
+        //新添加
+         //新添加 专业2
+              $('#profess_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#begin_2").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['begin_2'] = $("#begin_2").val();
+                }
+                
+                if(!$('#end_2').val()){
+                    show_error_tip('毕业时间不能为空！');
+                    return false;
+                } else{
+                    total['end_2'] = $('#end_2').val();
+                }
+                if(!$('#org_2').val()){
+                    show_error_tip('学校/组织名称不能为空！');
+                    return false;
+                } else{
+                    total['org_2'] = $('#org_2').val();
+                }
+                
+                
+                total['profess_2'] = $(this).val();
+
+            }
+        });
+        //新添加
+
+        //新添加 专业3
+              $('#profess_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+            
+                if(!$("#begin_3").val()){
+                    show_error_tip('开始时间不能为空！');
+                    return false;
+                } else{
+                    total['begin_3'] = $("#begin_2").val();
+                }
+                
+                if(!$('#end_3').val()){
+                    show_error_tip('毕业时间不能为空！');
+                    return false;
+                } else{
+                    total['over_3'] = $('#over_3').val();
+                }
+                if(!$('#org_3').val()){
+                    show_error_tip('学校/组织名称不能为空！');
+                    return false;
+                } else{
+                    total['org_3'] = $('#org_3').val();
+                }
+                
+                
+                total['profess_3'] = $(this).val();
+
+            }
+        });
+       
+        $('#ressave').click(function(){
+            
+
+        	if( !$('#start_1').val() ){
+                show_error_tip('开始时间不能为空！'); 
+                return false;
+            }
+
+            if( !$('#over_1').val() ){
+                show_error_tip('毕业时间不能为空！'); 
+                return false;
+            }
+
+            if( !$('#com_1').val() ){
+                show_error_tip('公司名称不能为空！'); 
+                return false;
+            }
+
+            if( !$('#pos_1').val() ){
+                show_error_tip('职位名称不能为空！'); 
+                return false;
+            } 
+            if($('#Notwo').hasClass('hideblock') == false){
+            	if( !$('#start_2').val() ){
+                    show_error_tip('开始时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#over_2').val() ){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#com_2').val() ){
+                    show_error_tip('公司名称不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#pos_2').val() ){
+                    show_error_tip('职位名称不能为空！'); 
+                    return false;
+                }
+
+            }
+
+            if($('#Nothree').hasClass('hideblock') == false){
+            	if( !$('#start_3').val() ){
+                    show_error_tip('开始时间不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#over_3').val() ){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#com_3').val() ){
+                    show_error_tip('公司名称不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#pos_3').val() ){
+                    show_error_tip('职位名称不能为空！'); 
+                    return false;
+                }
+            }
+            if($('#Notwo').hasClass('hideblock') == false && $('#Nothree').hasClass('hideblock') == false){
+                    
+                    if ($(this).hasClass('huise')) {
+                        return false;
+                    }else{
+                        show_error_tip('最多只能添加三条！');
+                        $(this).addClass('huise'); 
+                        return false;
+                    }
+                    
+                    
+          }
+           
+            //document.getElementById('resadd').removeAttribute('disabled');
+             if($('#Notwo').hasClass('hideblock') == true){
+               
+                $('#Notwo').removeClass('hideblock');
+              
+          }else{
+             
+                  $('#Nothree').removeClass('hideblock');
+                  
+          }  
+          
+        });
+
+        //按钮效果
+        function contralmouse(obj){
+            // 当鼠标放下的时候
+            $(obj).mousedown(function(){
+                $(this).removeClass('gray').addClass('red_1');
+            })
+
+            //当鼠标上去的时候
+            $(obj).mouseup(function(){
+                $(this).removeClass('red_1').addClass('gray');
+            })
+        }
+
+        contralmouse('#edusave');
+        $('#edusave').click(function(){
+
+             if( !$('#begin_1').val()){
+                show_error_tip('开始时间不能为空！'); 
+                return false;
+              } 
+
+            if( !$('#end_1').val()){
+                show_error_tip('毕业时间不能为空！'); 
+                return false;
+              }
+             
+
+            if( !$('#org_1').val()){
+               show_error_tip('学校/培训机构不能为空！'); 
+               return false;
+              }
+            
+
+            if( !$('#profess_1').val()){
+               show_error_tip('专业不能为空！'); 
+               return false;
+              }
+
+          
+     
+           if($('#Nofour').hasClass('hideblock') == false){
+             if( !$('#begin_2').val()){
+                   show_error_tip('开始时间不能为空！'); 
+                   return false;
+                }
+
+                if( !$('#end_2').val()){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#org_2').val()){
+                    show_error_tip('学校/培训机构不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#profess_2').val()){
+                    show_error_tip('专业不能为空！'); 
+                    return false;
+                }
+           }
+
+
+           if($('#Nofive').hasClass('hideblock') == false){
+             if( !$('#begin_3').val()){
+                   show_error_tip('开始时间不能为空！'); 
+                   return false;
+                }
+
+                if( !$('#end_3').val()){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#org_3').val()){
+                    show_error_tip('学校/培训机构不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#profess_3').val()){
+                    show_error_tip('专业不能为空！'); 
+                    return false;
+                }
+           }
+          
+           
+
+           if($('#Nofour').hasClass('hideblock') == false && $('#Nofive').hasClass('hideblock') == false){
+                    if ($(this).hasClass('huise')) {
+                        return false;
+                    }else{
+                        show_error_tip('最多只能添加三条！');
+                        $(this).addClass('huise'); 
+                        return false;
+                    }
+                }   
+
+                    $('#eduadd').css('background','#f00');
+                    //document.getElementById('eduadd').removeAttribute('disabled');
+                    if($('#Nofour').hasClass('hideblock') == true){
+                        $('#Nofour').removeClass('hideblock');
+           
+                    }else{
+            
+                        $('#Nofive').removeClass('hideblock');
+                    }  
+               
+        });
+		
+		//确定添加按钮后接收的数据
+    $('#sureAdd').click(function(){
+        //教育培训
+		
+		
+		if((!$('#begin_1').val()) || (!$('#end_1').val()) || (!$('#org_1').val()) || (!$('#profess_1').val())){
+			total['begin_1'] = $('#begin_1').val();
+			total['end_1'] = $('#end_1').val();
+			total['org_1'] = $('#org_1').val();
+			total['profess_1'] = $('#profess_1').val();
+		}
+		
+		if((!$('#begin_2').val()) || (!$('#end_2').val()) || (!$('#org_2').val()) || (!$('#profess_2').val())){
+			total['begin_2'] = $('#begin_2').val();
+			total['end_2'] = $('#end_2').val();
+			total['org_2'] = $('#org_2').val();
+			total['profess_2'] = $('#profess_2').val();
+		}
+		
+		if((!$('#begin_3').val()) || (!$('#end_3').val()) || (!$('#org_3').val()) || (!$('#profess_3').val())){
+			total['begin_3'] = $('#begin_3').val();
+			total['end_3'] = $('#end_3').val();
+			total['org_3'] = $('#org_3').val();
+			total['profess_3'] = $('#profess_3').val();
+		}
+		
+		/*简历*/
+		
+		if((!$('#start_1').val()) || (!$('#over_1').val()) || (!$('#com_1').val()) || (!$('#pos_1').val())){
+			total['start_1'] = $('#start_1').val();
+			total['over_1'] = $('#over_1').val();
+			total['com_1'] = $('#com_1').val();
+			total['pos_1'] = $('#pos_1').val();
+		}
+		
+		if((!$('#start_2').val()) || (!$('#over_2').val()) || (!$('#com_2').val()) || (!$('#pos_2').val())){
+			total['start_2'] = $('#start_2').val();
+			total['over_2'] = $('#over_2').val();
+			total['com_2'] = $('#com_2').val();
+			total['pos_2'] = $('#pos_2').val();
+		}
+		
+		if((!$('#start_3').val()) || (!$('#over_3').val()) || (!$('#com_3').val()) || (!$('#pos_3').val())){
+			total['start_3'] = $('#start_3').val();
+			total['over_3'] = $('#over_3').val();
+			total['com_3'] = $('#com_3').val();
+			total['pos_3'] = $('#pos_3').val();
+		}
+        //身高
+		total['yheight']=$('#yheight').val();
+		//固定电话
+        total['fixedtel']=$('#fixedtel').val();
+        //qq号码
+        total['qq']=$('#qq').val();
+        //电子邮箱
+        total['yemail'] = $('#yemail').val();
+        //学历
+        total['education']=$('#education').val();
+        //银行名称
+        total['bankname']=$('#bankname').val();
+        //开户银行
+        total['openbank']=$('#openbank').val();
+        //银行账号
+        total['bankNo']=$('#bankNo').val();
+
+		$('#bigAll').show();
+		$('#agreeAdd').show();
+		$('#hyhidden').hide();
+		$(this).hide().removeClass('knows');
+		$('#otherInfo').show().removeClass('knows');
+        $('#otherInfo_1').show();
+        $('#goHistory').hide().removeClass('knows');
+    });
+		
+	    
+      //点击返回按钮
+        $('#goHistory').click(function(){
+                $('#bigAll').show();
+                $('#agreeAdd').show();
+                $('#hyhidden').hide();
+                $(this).hide().removeClass('knows');
+                $('#otherInfo').show().removeClass('knows');
+                $('#otherInfo_1').show();
+                $('#sureAdd').removeClass('knows');
+        });
+	    
+	    $('#submit').css({'font-size':'16px','color':'#fff'}).addClass('huise');
+	    $('#agree').click(function(){
+            if($(this).is(':checked')){
+                
+                $('#submit').css({'font-size':'16px','color':'#fff'}).removeClass('huise').addClass('hongse');
+            }else{
+               
+                $('#submit').css({'font-size':'16px','color':'#fff'}).removeClass('hongse').addClass('huise');
+            }
+           
+        });
+	    
+	    
+	  	/*提交数据*/
+        $("#submit").click(function(){
+            if($(this).hasClass('hongse')){
+                total['Code']=$('#Code').text();
+	            total['store']=$('#store').val();
+	            total['head']=$('#head').val();
+	            total['ctime']=$('#ctime').val();
+	            total['license']=$('#license').val();
+
+            //技师资料
+            
+            if(!$('#yname').val()){
+                show_error_tip('请输入姓名！'); 
+                return false;
+            }else{
+                total['yname']=$('#yname').val();
+            }
+            //判断男的是否包含
+           if($('#manR').hasClass('flags') == true){
+                total['ysex']=0;
+            }
+            //判断女的是否包含
+            if($('#womanR').hasClass('flags') == true){
+                total['ysex']=1;
+            }
+            total['birthday']=$('#birthday').val();
+            
+            
+            
+            if(!$('#idcard').val()){
+                show_error_tip('请输入身份证号！'); 
+                return false;
+            } else{
+                var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                if(reg.test($('#idcard').val()) == false){
+                    show_error_tip('身份证格式不正确！');
+                    $(this).select();
+                    $(this).focus();
+                    return false;
+                } else{
+                    total['idcard']=$('#idcard').val();
+                }
+            }
+            if(!$('#yphone').val()){
+                show_error_tip('请输入手机号码！'); 
+                return false;
+            } else{
+                var reg = /^1[3,5,8]\d{9}$/;
+                if(reg.test($('#yphone').val()) == false){
+                  show_error_tip('电话号码格式不正确！');
+                  $(this).select();
+                  $(this).focus();
+                  return false;
+               }else{
+                   total['yphone']=$('#yphone').val();
+               }
+            }
+            
+            if(!$('#yplace').val()){
+                show_error_tip('请输入身份证地址！'); 
+                return false;
+            } else{
+                total['yplace']=$('#yplace').val();
+            }
+            
+            
+            
+            if(!$('#contact').val()){
+                show_error_tip('请输入紧急联系人！'); 
+                return false;
+            } else{
+                total['contact']=$('#contact').val();
+            }
+
+            if(!$('#contacttel').val()){
+                show_error_tip('请输入紧急联系人的电话！'); 
+                return false;
+			} else{
+				var _reg = /\d{3}-\d{8}|\d{4}-\d{7}/;
+			    var reg = /^1[3,5,8]\d{9}$/;
+			    if (_reg.test($('#contacttel').val()) == false) {
+		
+				  if (reg.test($('#contacttel').val()) == false) {
+					  show_error_tip('紧急联系人电话格式不正确！');
+					  $(this).select();
+					  $(this).focus();
+					  return false;
+				   }   
+			    }
+			    total['contacttel']=$('#contacttel').val();
+			}
+			
+			
+			
+			if(!$('#stagnation').val()){
+				show_error_tip('请填写驻点地址！'); 
+                return false;
+			} else{
+				total['stagnation']=$('#stagnation').val();
+			}
+			if($('#Traffic').val() == 0){
+				show_error_tip('请填写选择交通工具！'); 
+                return false;
+			} else{
+				total['Traffic']=$('#Traffic').val();
+			}
+			if(!$('#Experience').val()){
+				show_error_tip('请输入行业经验！'); 
+                return false;
+			} else{
+				total['Experience']=$('#Experience').val();
+			}
+
+            if($('#work').val() == 0){
+                show_error_tip('请选择工作形式！'); 
+                return false;
+            } else{
+                total['work']=$('#work').val();
+            }
+			
+            //行业基本信息
+            //total['work']=$('#work').val();
+            //判断获取前台数据
+            if($('#Apprentice').hasClass('flag')){
+                total['Apprentice']=1;
+            }else{
+                total['Apprentice']=0;
+            }
+            // total['Apprentice']=$('#Apprentice').val();
+            total['Certificate']=$('#Certificate').val();
+            
+            //业务经理
+            total['manager_name'] = $("#manager_name").text();
+            
+        	
+            var area ='';
+            
+            $("#town").find("div").each(function(i,o){
+
+                if($(o).children().attr("checked") == "checked"){
+                    var tempstr = '';
+                    if($("#addarea").val() == 'undefined'||$("#addarea").val() == '0'){
+                        tempstr +='';
+                    }else{
+                        tempstr +=$("#addarea").find("option:selected").text();
+                    }
+                    if($("#city").val() == 'undefined'||$("#city").val() == '0'){
+                        tempstr +='';
+                    }else{
+                        tempstr +=$("#city").find("option:selected").text();
+                    }
+                    if($("#county").val() == 'undefined'||$("#county").val() == '0'){
+                        tempstr +='';
+                    }else{
+                        tempstr +=$("#county").find("option:selected").text();
+                    }
+                    area += tempstr+$(o).children().val()+',';
+                }
+
+
+            });
+
+
+            var bigclass = '';
+            $("#bigclass").find("li").each(function(){        	
+            	if($(this).find("input")){
+            		bigclass += $(this).find("input").val()+',';
+            	}        	
+            });
+          
+            if( !area ){
+  	            show_error_tip('服务区域不能为空！'); 
+  	            return false;
+  	        }else{
+				total['area'] = area;
+			}
+            
+        	
+        	if( !bigclass ){
+                  show_error_tip('服务大类不能为空！'); 
+                  return false;
+            }else{
+				total['bigclass'] = bigclass;
+			}
+			var smallclass='';
+			$("#scate div").each(function(){
+			
+				if($(this).find("input").attr('type') == "checkbox" && $(this).find("input").prop("checked")){
+						
+					smallclass = smallclass + $(this).find("input").val() +',';
+				}
+			});
+			if( !smallclass ){
+  	            show_error_tip('服务小类不能为空！'); 
+  	            return false;
+  	        }else{
+				total['smallclass'] = smallclass;
+			}
+        	total['specific'] = $("#specific").val();
+			//服务内容添加区域
+			var scontent ='';
+			/*$("#content input").each(function(){
+				if($(this).attr('type') == "checkbox" && $(this).prop("checked")){
+					scontent = scontent + $(this).val() +',';
+				}
+			});*/
+            $('.flagContent').each(function(){
+                if($(this).hasClass('flagsContent') == false){
+                    scontent += $(this).attr('content') + ',';
+                }
+            })
+
+			if( !scontent){
+  	            show_error_tip('请选择服务内容！'); 
+  	            return false;
+  	        }else{
+				total['scontent'] = scontent;
+			}
+			
+			/*if(!$("#url").val()){
+				show_error_tip('请上传照片！'); 
+                return false;
+			} else{
+				total['imgurl'] = $("#url").val();
+			}
+			*/
+			
+			//total['imgurl'] = $("#url").val();
+			
+            var check = 0;
+      		if($('#agree').is(":checked")){
+      			check=1;
+      		} else {
+      			show_error_tip('需要同意相关协议！'); 
+                  return false;
+      		}
+              
+              
+            var jsonstr = "[{";
+  			for(var key in total) {
+  				jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\","; 				
+  			}
+  			jsonstr += "\"idd\":\"1\"}]";
+
+            
+            
+            var url="index.php?g=Wap&m=Repair&a=index&token="+$("#token").val()+"&openid="+$("#openid").val();
+            $.post(url,{jsonstr:jsonstr},
+              function(data){ 
+                if(data.status == 100){ 
+              	  //show_success_tip(data.info);
+                    setTimeout(function(){                            
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                  show_error_tip(data.info);
+                  return false;
+                }else if(data.status == 2 ){
+                  show_error_tip(data.info);
+                  return false;
+                }
+            },'json');
+         }	
+      });
+        
+  });
+</script>
+
+<script>
+	$(function(){
+		$("#wxtype").change(function(){
+			//var id = $("#wxtype").attr('txt');
+			var id = $("#wxtype").val();
+			var obj = document.getElementById("wxtype");
+			var txt = obj.options[obj.selectedIndex].text;
+			if(id != '请选择分类'){
+				for(var key in bigclass) {
+					if( !bigclass[id] ) {
+						bigclass[id] = id;
+						var li_id = $(".label1 li:last-child").attr('id');
+		                if (li_id != undefined) {
+		                    li_id = li_id.split('_');
+		                    li_id = parseInt(li_id[1]) + 1;
+		                } else {
+		                    li_id = 0;
+		                }
+						var text = "<li class='noAfter' id='li_" + li_id + "'><a href='javascript:;' onclick='deletes(" + li_id +','+ id +");' >" + txt + "<img src='{weikucms::STATICS}/wapweiui/service/images/label_03.png' class='label1-pic'></a><input type='hidden' name='label1[" + li_id + "].name' value='" + txt + "'></li>";
+		                $(".label1").append(text);
+	                
+		                var tet = '';
+		                var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+	               
+		                $.post(url,{id:id},
+		                function(data){ 
+		                  if(data.status == 100){
+		                  	var length = data.data.length;
+		                  	var i = 1;
+	                  	
+		                  	for(i; i<=length; i++){
+		                  		var index = i-1;
+	                  
+		                  		if(i/2 == 0){
+		                  			tet += '<div style="height:15px;position:relative;top:-2px;margin-top:5px;" id="ty_'+data.data[index].id+'"><input value="'+data.data[index].name+'" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>'+data.data[index].name + '</div>';
+		                  		} else {
+		                  			tet += '<div style="height:15px;position:relative;top:-2px;margin-top:5px;" id="ty_'+data.data[index].id+'"><input value="'+data.data[index].name+'" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>'+data.data[index].name + '</div>';
+			                  	}    		
+		                  	}
+		                	//alert(data.data[0].id)
+		                  	//alert(tet);
+		                  	$("#scate").append(tet);
+		                  }
+		              },'json');
+	                
+	               
+		               break;
+					}
+				}
+			}
+		
+		});
+		
+		$("#addarea").change(function(){
+			
+			if($("#addarea").val() == 0){
+				alert('请选择省');
+			} else {
+				
+				var id = $("#addarea").val();
+				
+				var div = document.getElementById("city");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+				var city = '<option selected="selected" value="0">选择市</option>';
+                var url="index.php?g=Wap&m=Repair&a=findCity&token="+$("#token").val()+"&openid="+$("#openid").val();
+               
+                
+                
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		city += '<option value="'+data.data[index].code+'" id="cc_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#city").show();
+                  	$("#city").append(city);
+                  }
+              },'json');
+                
+			}
+			
+		});
+		
+		$("#city").change(function(){
+			
+			if($("#city").val() == 0){
+				alert('请选择市');
+			} else {
+				
+				var id = $("#city").val();
+				
+				var div = document.getElementById("county");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+				var county = '<option selected="selected" value="0">选择区/县</option>';
+                var url="index.php?g=Wap&m=Repair&a=findCounty&token="+$("#token").val()+"&openid="+$("#openid").val();
+
+
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	var county='';
+                    $("#town").empty();
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                        county +='<div style="height:15px;position:relative;top:-2px;margin-top:5px;" id="ty_'+data.data[index].id+'"><input value="'+data.data[index].name+'" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>'+data.data[index].name + '</div>';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet)
+                  	//$("#county").empty();
+                	$("#town").show();
+                  	$("#town").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+    
+
+
+		
+		//var smallarea = new Array();
+		/*$("#town").change(function(){
+			
+			if($("#town").val() == 0){
+				alert('请选择镇');
+			} else {
+				
+				var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var ttobj = document.getElementById("county");
+				var tttxt = ttobj.options[ttobj.selectedIndex].text;
+				
+				var obj = document.getElementById("town");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +tttxt + txt;
+				id = $("#town").val();
+				if(!smallarea[id]){
+					smallarea[id] = txt;
+					var li_id = $(".label li:last-child").attr('id');
+					if (li_id != undefined) {
+						li_id = li_id.split('_');
+						li_id = parseInt(li_id[1]) + 1;
+					} else {
+						li_id = 0;
+					}
+					
+					var text = "<li class='noAfter' id='li_" + li_id + "'><a href='javascript:;' onclick='deletes(" + li_id +','+ id +");' >" + txt + "<img src='{weikucms::STATICS}/wapweiui/service/images/label_03.png' class='label1-pic'></a><input type='hidden' name='label1[" + li_id + "].name' value='" + txt + "'></li>";
+					$(".label").append(text);
+				}				
+			}
+			
+		});
+        */
+		
+		
+	});
+
+</script>
+
+<script type="text/javascript">
+function deletes(id,offset) {
+	
+    $("#li_" + id).remove();
+    
+    bigclass[offset] = null;
+    
+    var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+    
+    $.post(url,{id:offset},
+    function(data){ 
+      if(data.status == 100){
+      	var length = data.data.length;
+      	var i = 1;     	
+      	for(i; i<=length; i++){
+      		var index = i-1;
+      		var exist= $('#ty_'+data.data[index].id).find('input').val();
+      		if(exist){
+      			
+      		    var div = document.getElementById('#ty_'+data.data[index].id);
+                $('#ty_'+data.data[index].id).remove();
+      			//var div = document.getElementById("scate");
+      			//var node =  document.getElementById('#ty_'+data.data[index].id);
+      			//div.removeChild(node);
+      		}
+      		   		
+      	}
+      }
+  	},'json');
+    var li_id = $(".label1 li:last-child").attr('id');
+    if (li_id == undefined) {
+        $(".label1_box").css("display", "none");
+    }
+
+    /*
+    判断是否存在数组之内
+     */
+    function in_array(search,array){
+        for(var i in array){
+            if(array[i]==search){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+    /*
+    判断是否存在数组之内
+     */
+    function in_array(search,array){
+        for(var i in array){
+            if(array[i]==search){
+                return true;
+            }
+        }
+        return false;
+    }
+
+</script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/upfile.js"></script>
+</body>
+</html>

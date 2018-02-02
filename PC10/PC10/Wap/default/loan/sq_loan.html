@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{weikucms:$tpl.name}个人信息</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/css/prompt.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+	<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/aLocation.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/aSelect.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+	<style type="text/css">
+	.body_class{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		bottom: 0;
+		background-color: #E7E6E6;
+		display: none;
+		z-index: 9;
+
+	}
+    .imgs img{
+        margin-right: 5px;
+    }
+
+	.body{
+		width: 100%;
+		background-color: #E7E6E6;
+		overflow: hidden;
+	}
+	.body_img{
+		width: 90%;
+		margin-left: 5%;
+		margin-top: 10px;
+		height: 77px; 
+		float: left;
+		clear: both;
+	}
+	.body_img_left{
+		display: block;
+		float: left;
+		width: 85px;
+		height: 77px;
+		background-color: #ffffff;
+		border: 1px solid #b8b8b8;
+	}
+	.body_img_right{
+		display: block;
+		float: right;
+		width: 85px;
+		height: 77px;
+		background-color: #fff;
+		border: 1px solid #b8b8b8;
+	}
+	.body_text{
+		height: 30px;
+		width: 90%;
+		margin-left: 5%;
+		float: left;
+		font-size: 8px;
+		margin-top: 5px;
+		color: #5d5d5d;
+	}
+	.body_img_men{
+		display: block;
+		width: 100%;
+		height: 39px;
+		line-height: 57px;
+		text-align: center;
+	}
+	.body_img_ms{
+		display: block;
+		width: 100%;
+		height: 15px;
+		color: #b8b8b8;
+		font-size: 10px;
+		text-align: center;
+	}
+	.body_img_i{
+		display: block;
+		width: 100%;
+		height: 20px;
+		color: #b8b8b8;
+	}
+	.span_btn{
+		display: block;
+		width: 90%;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		border-radius: 6px;
+		background-color: #ff6b04;
+		margin-left: 5%;
+		color: #fff;
+		margin-top: 18px;
+	}
+	.c{
+		float:right;margin-right:5px;font-size:12px;margin-top:5px;
+	}
+	.abs_btn{
+		display: block;
+		width: 60px;
+		height: 25px;
+		background-color: #1A6DDB;
+		float: right;
+		border-radius: 6px;
+		font-size: 10px;
+		line-height: 25px;
+		text-align: center;
+		margin-left: 10px;
+		color: #fff;
+	}
+	.img_ts{
+		color: #fff;
+		line-height: 40px;
+		text-align: center;
+		height:40px;
+		background-color:rgb(255, 107, 4);
+		box-shadow:  0 2px 2px #ccc;
+	}
+	.body_text_text{
+		font-size: 8px;
+	}
+    .body_class {
+        top:2%;
+        z-index: 9999;
+
+       width: 90%;
+        height: 480px;
+        margin-left: 5%;
+    }
+        .imgs img{
+            max-width: 130px;
+            max-height: 150px;
+        }
+     .Mask{
+	  position: fixed;
+	  left: 0;
+	  top: 0;
+	  height: 100%;
+	  width: 100%;
+	  background-color:  rgba(0, 0, 0, 0.7);
+	  opacity: 0;
+	  visibility: hidden;
+	  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+	  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+	  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+.Mask.is-visible{
+	  opacity: 1;
+	  visibility: visible;
+	  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+	  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+	  transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+</style>
+<script type="text/javascript">
+	$(function(){
+       // $(".abs_btn").invite();
+
+    //    $(".abs_btn").invite();
+       $(".abs_btn").click(function(event) {
+            $(".body_class").css('display', 'block');
+            $('.Mask').addClass('is-visible');
+
+        });
+        $(".span_btn").click(function(event) {
+            $(".body_class").css('display', 'none');
+          //  $(".abs_btn").invite();
+            if( $(event.target).is('.Mask') ||$(event.target).is('.span_btn')) {
+				//当点击为.cd-popup-close(关闭按钮)或者.cd-popup(满屏)时触发
+				event.preventDefault();
+				$(".Mask").removeClass('is-visible');
+			}
+        });
+        
+        
+	})
+</script>
+</head>
+<body class='info'>
+<!-- 第一步 -->
+<section class='bcf2f2f2 stepBody rel one'>
+	
+	<div class='myul caaaaaa htitle' style='width: 100%;'>
+		<span class='myli stepRow on'>
+			<div class='ib stepml step'>1</div>
+			<div class='txt'>个人信息</div>
+		</span>
+		<span class='myli stepRow'>
+			<div class='ib stepml step'>2</div>
+			<div class='txt'>教育信息</div>
+		</span>
+		<!--<span class='myli stepRow'>
+			<div class='ib stepml step'>3</div>
+			<div class='txt'>联系人</div>
+		</span>-->
+	</div>
+</section>
+
+<!-- 第二步 -->
+<section class='bcf2f2f2 stepBody rel hide two'>
+	<div class='dashed abs'></div>
+	<div class='myul caaaaaa htitle' style='width: 100%;'>
+		<span class='myli stepRow'>
+			<div class='ib stepml step right'>√</div>
+			<div class='txt'>个人信息</div>
+		</span>
+		<span class='myli stepRow on'>
+			<div class='ib stepml step'>2</div>
+			<div class='txt'>教育信息</div>
+		</span>
+		<!--<span class='myli stepRow'>
+			<div class='ib stepml step'>3</div>
+			<div class='txt'>联系人</div>
+		</span>-->
+	</div>
+</section>
+
+<!-- 第三步 -->
+<!--<section class='bcf2f2f2 stepBody rel hide'>
+	<div class='dashed abs'></div>
+	<div class='myul caaaaaa htitle' style='width: 100%;'>
+		<span class='myli stepRow'>
+			<div class='ib stepml step right'>√</div>
+			<div class='txt'>个人信息</div>
+		</span>
+		<span class='myli stepRow'>
+			<div class='ib stepml step right'>√</div>
+			<div class='txt'>教育信息</div>
+		</span>
+		<span class='myli stepRow on'>
+			<div class='ib stepml step'>3</div>
+			<div class='txt'>联系人</div>
+		</span>
+	</div>
+</section>-->
+
+<!-- 第一步 -->
+<section class='main one'>
+	<form id='form1'>
+	<div class='arrow'></div>
+	<div class='row of'>
+		<div class='icon icon-name fl'></div>
+		<div class='fl inputDiv'><input type="text" name='name' <if condition="$user_info['card_num']"> readonly</if>  placeholder='姓名' value="{weikucms:$user_info.true_name}" /></div>
+	</div>
+
+    <div class='row of'>
+        <div class='icon icon-card fl' style="background-image: url({weikucms::STATICS}/wapweiui/loan/image/phone11.png); margin-left: 5px;"></div>
+        <div class='fl inputDiv' style="margin-left:8px;"><input  type="text" name='phone_me' placeholder='手机号码' value="{weikucms:$user_info.phone}" /></div>
+    </div>
+    <div class='row of'>
+        <div class='icon icon-card fl' style="background-image: url({weikucms::STATICS}/wapweiui/loan/image/sex.png); margin-left: -1px;"></div>
+        <div class='fl inputDiv' style="margin-left:8px;margin-top:8px;">
+        	<form >
+        		<input name="sex"   type="radio" style="width:10%;height:15px;" value="1" <if condition="$user_info['sex'] eq 1">checked</if>  /><span style="color:#8B8B8B">男</span>
+				<input name="sex"  type="radio" style="width:10%;height:15px; " value="0"  <if condition="$user_info['sex'] eq 0">checked</if>/><span style="color:#8B8B8B">女</span>
+        	</form>
+        </div>
+    </div>
+
+	<div class='row of'>
+		<div class='icon icon-card fl'></div>
+		<div class='fl inputDiv'><input type="text"  name='card' <if condition="$user_info['card_num']"> readonly flag="1"<else /> flag="0"</if>  placeholder='身份证号' value="{weikucms:$user_info.card_num}" /></div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-zhiye fl'></div>
+		<div class='fl inputDiv'><input type="text" name='zhiye' placeholder='职业' value="学生" readonly /></div>
+	</div>
+	</form>
+
+	<form id='myupload' action="{weikucms::U('upload_img',array('token'=>$token,'openid'=>$openid))}" method="post" enctype="multipart/form-data">
+
+	<div class='row of rl'>
+		<div class='icon icon-ziliao fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+		<input style="width: 100px;" type="text" multiple="multiple" name="kk[]"  id='fileupload' />
+		<div class='abs uploadtxt nonepic' style="float: left;" id="chooseImage">上传资料文件</div>
+		<span class="abs_btn" style="float: right;">上传示例</span>
+<!--
+        <div>所需图片:身份证正反两面、学生证正面个人信息、手持身份证上半身图</div>
+-->
+		</div>
+		<input type="hidden" name="__hidden_ziliao__" id="__hidden_ziliao__" />
+
+	</div>
+        <div class="imgs">
+            <if condition="$user_info['pid_info']">
+        <volist name="user_info['pid_info']" id="vo">
+            <img src="{weikucms:$vo}" width="90px">
+        </volist>
+            </if>
+        </div>
+        <if condition="$user_info['pid_info']">
+        <volist name="user_info['pid_info']" id="vo">
+            <input type='hidden' name='image_name' value="{weikucms:$vo}" >
+
+        </volist>
+        </if>
+	</form>
+	<form id='form2'>
+	<!--<div class='cbbb mt30 mb10'>当前居住地址</div>
+	<div class='row of'>
+		<div class='icon icon-province fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+
+            &lt;!&ndash;<span id='area' data-name='area1'></span>&ndash;&gt;
+            <p><select style="width: 81px;" id="area1send" name="area1send"></select>
+                <select style="width: 81px;" id="area1si" name="area1si"></select>
+                <select style="width: 81px;" id="area1xian" name="area1xian"></select> </p>
+		&lt;!&ndash;
+		<div class='fr icon-arrow'></div>
+		&ndash;&gt;
+		</div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-area fl'></div>
+		<div class='fl inputDiv'><input type="text" name='address' placeholder='详细地址' value="{weikucms:$user_info.detail_now}"/></div>
+	</div>-->
+	<!--家庭居住地址-->
+	<div class='cbbb mt30 mb10'>家庭居住地址</div>
+	<div class='row of'>
+		<div class='icon icon-province fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+		<!--<span id='homearea' data-name='area2'></span>-->
+            <p><select style="width: 81px;" id="area2send" name="area2send"></select>
+                <select style="width: 81px;" id="area2si" name="area2si"></select>
+                <select style="width: 81px;" id="area2xian" name="area2xian"></select> </p>
+		<!--
+		<div class='fr icon-arrow'></div>
+		-->
+		</div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-area fl'></div>
+		<div class='fl inputDiv'><input type="text" name='homeaddress' placeholder='详细地址' value="{weikucms:$user_info.detail_home}" />
+	</div>
+	</form>
+</section>
+
+
+<!-- 第二步 -->
+<section class='main hide two'>
+	<form id='form3'>
+	<div class='arrow'></div>
+	<div class='row of'>
+		<div class='icon icon-school fl'></div>
+		<div class='fl inputDiv'><input type="text" name='school' placeholder='学校' value="{weikucms:$user_info.school}" /></div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-xuewei fl'></div>
+		<div class='fl inputDiv'>
+            <!--<input type="text" name='xuewei' placeholder='学位' value="{weikucms:$user_info.xuewei}" />-->
+            <select name="xuewei">
+                <option>请选择学位</option>
+                <option value="学士" <if condition="$user_info['xuewei'] eq '学士'">selected </if> >学士</option>
+                <option value="硕士" <if condition="$user_info['xuewei'] eq '硕士'">selected </if>>硕士</option>
+                <option value="博士" <if condition="$user_info['xuewei'] eq '博士'">selected </if>>博士</option>
+                <option value="其它" <if condition="$user_info['xuewei'] eq '其它'">selected </if>>其它</option>
+            </select>
+        </div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-province fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+		<span>
+			<select style="width: 100px; float: left;" name="schooltime1">
+				<option>请选择在校时间</option>
+                <for start="2000" end="2030"><option value='{weikucms:$i}' <if condition="$user_info['school_time'][0] eq $i">selected</if> >{weikucms:$i}</option></for>
+
+
+			</select>
+            <span style="margin-right: 36px; float: left;">到</span>
+            <select style="width: 100px;" name="schooltime2">
+                <option>请选择在校时间</option>
+                <for start="2000" end="2030"><option value='{weikucms:$i}' <if condition="$user_info['school_time'][1] eq $i">selected</if> >{weikucms:$i}</option></for>
+            </select>
+		</span>
+		</div>
+	</div>
+	</form>
+	<!--<form id='myupload2' action="http://damon.v.wapwei.com" method="post" enctype="multipart/form-data">
+	<div class='row of rl'>
+		<div class='icon icon-ziliao fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+		<input type="file" multiple="multiple"  id='fileupload2' />
+		<div class='abs uploadtxt nonepic'>上传资料文件</div>
+		</div>
+		<input type="hidden" name="__hidden_ziliao__" />
+	</div>
+	</form>-->
+	<form id='form4'>
+	<div class='cbbb mt30 mb10 of mr10'>
+		<div class='fl'>宿舍地址</div>
+	<!--	<div class='fr'>
+			<span class='textbox sametoarea'></span>
+			<span>同居住地址</span>
+		</div>-->
+	</div>
+	<div class='row of'>
+		<div class='icon icon-province fl'></div>
+		<div class='fl inputDiv cbbb pb5 mt5 bbf4ecec'>
+		<!--<span id='sxarea' data-name='sxarea'></span>-->
+            <p><select style="width: 81px;" id="sxareasend" name="sxareasend"></select>
+                <select style="width: 81px;" id="sxareasi" name="sxareasi"></select>
+                <select style="width: 81px;" id="sxareaxian" name="sxareaxian"></select> </p>
+		</div>
+	</div>
+	<div class='row of'>
+		<div class='icon icon-area fl'></div>
+		<div class='fl inputDiv'><input type="text" name='sxaddress' placeholder='详细地址' value="{weikucms:$user_info.detail_room}" /></div>
+	</div>
+	</form>
+</section>
+
+<!--第三步-->
+<!--<div class='step3Body hide three'>
+<section class='step3'>
+	<div class='addMember'><span class="addPlusMember">+</span>添加联系人</div>
+	<div class='f12 cff5858 mtb10'>需至少添加两个联系人且其中一位为亲属</div>
+</section>
+&lt;!&ndash; 添加联系人 &ndash;&gt;
+<div class="addForm f14 c333333 hide">
+	<div>
+		<span class='itemName'>关系：</span>
+		<span>
+			<select name="friends">
+				<option value="亲">亲属</option>
+				<option value="友">朋友</option>
+			</select>
+		</span>
+	</div>
+	<div>
+		<span class='itemName'>姓名：</span>
+		<span><input type="text" name="add_name" /></span>
+	</div>
+	<div>
+		<span class='itemName'>电话：</span>
+		<span><input type="text" name="add_phone" /></span>
+	</div>
+	<div>
+		<span class='itemName'>身份：</span>
+		<span><input type="text" name="add_address" /></span>
+	</div>
+	<div>
+		<input type="submit" class="submits" value="添加" />
+	</div>
+</div>
+<div  class='addedMember'>
+
+<if condition="$user_info['lid_info'][0]">
+    <volist name="user_info['lid_info']" id="vo">
+	<div class='itemRow of c333'>
+		<div class='fl qin fried'>{weikucms:$vo.friendly}</div>
+		<div class='fl details'>
+			<div class='of'>
+				<div class='fl fried_name'>{weikucms:$vo.name}</div>
+				<div class='fr fried_phone'>{weikucms:$vo.phone}</div>
+			</div>
+			<div class='f12 c888 mt5 fried_address'>{weikucms:$vo.address}</div>
+		</div>
+		<div class='fr delete'>×</div>
+	</div>
+    </volist>
+</if>
+
+</div>
+</div>-->
+
+<div class='btn btn-red submit1 clear ' flag="1">下一步</div>
+
+
+
+
+<!--弹出提示-->
+<div class="Mask">
+<div class="body_class">
+	<div class="img_ts">
+		图片预览
+	</div>
+	<div class="body">
+		<div class="body_img">
+			<span class="body_img_left">
+				<span class="body_img_men"><i class="fa fa-user" style="color:#ccc;font-size:30px;"></i></span>
+				<span class="body_img_ms">本人审核照</span>
+				<span class="body_img_i"><i class="fa fa-camera c"></i></span>
+			</span>
+		</div>
+		<div class="body_text">
+			<span clas="body_text_text">
+				1.本人审核照需拍摄一张，请手持身份证拍摄，要求五官清晰无遮挡，身份证资料清晰可辨。
+			</span>
+		</div>
+	</div>
+	<div class="body">
+		<div class="body_img">
+			<span class="body_img_left">
+				<span class="body_img_men"><i class="fa fa-newspaper-o" style="color:#ccc;font-size:30px;"></i></span>
+				<span class="body_img_ms">身份证(正)</span>
+				<span class="body_img_i"><i class="fa fa-camera c"></i></span>
+			</span>
+			<span class="body_img_right">
+				<span class="body_img_men"><i class="fa fa-newspaper-o" style="color:#ccc;font-size:30px;"></i></span>
+				<span class="body_img_ms">身份证(反)</span>
+				<span class="body_img_i"><i class="fa fa-camera c"></i></span>
+			</span>
+		</div>
+		<div class="body_text">
+			<span clas="body_text_text">
+				2.身份证照需拍摄两张，分别为正面和反面。
+			</span>
+		</div>
+	</div>
+	<div class="body">
+		<div class="body_img">
+			<span class="body_img_left">
+				<span class="body_img_men"><i class="fa fa-github-alt" style="color:#ccc;font-size:30px;"></i></span>
+				<span class="body_img_ms">学生证(正面)</span>
+				<span class="body_img_i"><i class="fa fa-camera c"></i></span>
+			</span>
+			<span class="body_img_right">
+				<span class="body_img_men"><i class="fa fa-github-alt" style="color:#ccc;font-size:30px;"></i></span>
+				<span class="body_img_ms">学生证(反面)</span>
+				<span class="body_img_i"><i class="fa fa-camera c"></i></span>
+			</span>
+		</div>
+		<div class="body_text">
+			<span clas="body_text_text">
+				3.学生证照需拍摄两张，分别为为学生证封面及个人信息页，个人信息页需显示本人所属院系及专业。
+			</span>
+		</div>
+	</div>
+	<span class="span_btn">取消</span>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+	<div class='zwf' style="height: 70px;"></div>
+<include file="Loan:foot"/>
+
+
+<script>
+    var url="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid))}";
+    var type3="{weikucms:$_GET['type']}";
+    if(type3==3){
+        var url2="{weikucms::U('sq_loan3',array('token'=>$token,'openid'=>$openid))}";
+    }else{
+        var url2="{weikucms::U('sq_loan2',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+    }
+</script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/main.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/f.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+<!--<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/provincesdata.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery.provincesCity.js"></script>-->
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery.validate.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery.validate_helper.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/userinfo.js"></script>
+<!--<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery.form.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/upfile.js"></script>-->
+
+
+<script type="text/javascript">
+    //省市级联动
+    $(function() {
+        var sel = aSelect({data: aLocation});
+        sel.bind('#area1send', '{weikucms:$user_info.seng_now}');
+        sel.bind('#area1si', '{weikucms:$user_info.si_now}');
+        sel.bind('#area1xian', '{weikucms:$user_info.xian_now}');
+        var sel2 = aSelect({data: aLocation});
+        sel2.bind('#area2send', '{weikucms:$user_info.seng_home}');
+        sel2.bind('#area2si', '{weikucms:$user_info.si_home}');
+        sel2.bind('#area2xian', '{weikucms:$user_info.xian_home}');
+        var sel3 = aSelect({data: aLocation});
+        sel3.bind('#sxareasend', '{weikucms:$user_info.seng_room}');
+        sel3.bind('#sxareasi', '{weikucms:$user_info.si_room}');
+        sel3.bind('#sxareaxian', '{weikucms:$user_info.xian_room}');
+    });
+    //验证身份证号码
+    $("input[name='card']").blur(function(){
+        var card=$(this).val();
+        var name=$("input[name=name]").val();
+        if(card==''||name==''){
+            show_error_tip('请填写姓名');
+            return false;
+        }
+        var sex=$("input[name=sex]:checked").val();
+       // alert(sex);
+       // return false;
+        if(card.length==15||card.length==18){
+            var url="{weikucms::U('is_card',array('token'=>$token,'openid'=>$openid))}";
+            if($(this).attr('flag')==0){
+                $.post(url,{sex:sex,card:card,name:name},function(data){
+                    if(data.status==1){
+                        $("input[name='card']").attr('flag',1);
+
+                        //   $("input[name=card]").removeAttr('readOnly');
+                        $("input[name='card']").attr('readonly',true);
+                        $("input[name='name']").attr('readonly',true);
+                        show_success_tip('身份证验证成功');
+                    }else{
+                        show_error_tip('身份证验证失败');
+                    }
+                },'json');
+            }
+        }else{
+            show_error_tip('身份证位数不对');
+            return false;
+        }
+
+
+    });
+	//调用插件
+    $(function(){
+
+
+
+       /* //把省市附值过去啊
+        //当前居住地址
+        var seng_now=$("select[name=area1send]").val("{weikucms:$user_info.seng_now}").trigger('change');
+
+        var si_now=$("select[name=area1si]").val("{weikucms:$user_info.si_now}");
+        var xian_now=$("select[name=area1xian]").val("{weikucms:$user_info.xian_now}");
+        var detail_now=$("input[name=address]").val("{weikucms:$user_info.detail_now}");
+        //家庭居住地址
+        var seng_home=$("select[name=area2send]").val("{weikucms:$user_info.seng_home}").trigger('change');
+        var si_home=$("select[name=area2si]").val("{weikucms:$user_info.si_home}");
+        var xian_home=$("select[name=area2xian]").val("{weikucms:$user_info.xian_home}");
+        var detail_home=$("input[name=homeaddress]").val("{weikucms:$user_info.detail_home}");
+
+        //宿舍地址
+        var seng_room=$("select[name=sxareasend]").val("{weikucms:$user_info.seng_room}").trigger('change');
+        var si_room=$("select[name=areasi]").val("{weikucms:$user_info.si_room}");
+        var xian_room=$("select[name=areaxian]").val("{weikucms:$user_info.xian_room}");
+        var detail_room=$("input[name=sxaddress]").val("{weikucms:$user_info.detail_room}");*/
+    });
+    $(".submits").click(function(){
+        var friends=$("select[name=friends]").val();
+        var add_name=$("input[name=add_name]").val();
+        var add_phone=$("input[name=add_phone]").val();
+        var add_address=$("input[name=add_address]").val();
+        if(add_name==''){
+            msg.alert('请填写姓名',"知道了");
+            return false;
+        }
+        if(add_phone==''){
+            msg.alert('请填写电话号码',"知道了");
+            return false;
+        }
+        var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+        if (!reg.test(add_phone)) {
+            msg.alert('请输入有效的手机号码！','知道了');
+            //document.form1.mobile.focus();
+            return false;
+        }
+        if(add_address==''){
+            msg.alert('请填写身份',"知道了");
+            return false;
+        }
+        var html="<div class='itemRow of c333'><div class='fl qin fried'>"+friends+"</div><div class='fl details'><div class='of'><div class='fl fried_name'>"+add_name+
+                "</div><div class='fr fried_phone'>"+add_phone+"</div></div><div class='f12 c888 mt5 fried_address'>"+add_address+
+                "</div></div><div class='fr delete'>×</div></div>";
+        $(".addedMember").append(html);
+        $('.addForm').fadeToggle();
+    });
+    $("body").on("click",'img',function(){
+
+            var val=$(this).attr('src');
+            var a=$(this);
+        msg.confirm('你确定删除此图片吗？','确定',function(){
+            $("input[name=image_name]").each(function(e,t){
+                if($(t).val()==val){
+                /*    if(typeof($(t).val())=='undefined'){
+
+                    }*/
+                    //alert(7);
+                    $(t).remove();
+                    a.remove();
+                }
+            });
+        });
+
+    });
+</script>
+
+
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+          
+            'uploadImage',
+            'downloadImage',
+        ]
+    });
+    wx.ready(function () {
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+        //chooseImage
+
+        $("#chooseImage").click(function() {    //拍照、本地选图
+
+            wx.chooseImage({
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                        //    alert(item)
+                                            $("#fileupload").parents("form").append("<input type='hidden' name='image_name' value='"+t+"' >");
+                                            $(".imgs").append("<img src='"+t+"' width='90px' />");
+                                            $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">上传资料完成</span>');
+
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+    })
+
+    $(".body_img_left,.body_img_right").on('click',function(){
+        $(".span_btn").trigger('click');
+        $("#chooseImage").trigger('click');
+    })
+</script>
+</html>

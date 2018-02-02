@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+    <meta charset="UTF-8">
+
+    <title>{weikucms:$tpl.name}</title>
+
+    <meta name="Keywords" content="万普微盟Wapwei">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var UID = '{weikucms:$cid}';
+        UID = parseInt(UID);
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+    </script>
+</head>
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>
+    <if condition="$data['vip_name'] eq ''">
+        注册会员
+        <else/>
+        我的资料
+    </if>
+</div>
+<div class="publicList wml100">
+    <ul>
+		 <if condition="$data['vip_name'] neq ''">
+	         <li class="noAfter">
+	         	<div class="li-l">会员号</div>
+	            <div class="li-r">
+                    {weikucms:$data['vip_name']}
+	            </div>
+	         </li>
+	         <else/>
+        </if>
+	
+        <li>
+            <div class="li-l">姓名</div>
+            <div class="li-r">
+                <if condition="$data['vip_name'] neq ''">
+                    <input id="name" value="{weikucms:$data['car_username']}" placeholder="请输入您的姓名" class="input">
+                    <else/>
+                    <input id="name" value="" placeholder="请输入您的姓名" class="input">
+                </if>
+
+            </div>
+        </li>
+        <if condition="$data['vip_name'] neq ''">
+            <li class="noAfter">
+                <div class="li-l">可用积分</div>
+                <div class="li-r">
+                    {weikucms:$data['integral']}
+                </div>
+            </li>
+            <else/>
+        </if>
+        <li>
+            <div class="li-l">联系方式</div>
+            <div class="li-r">
+                <if condition="$data['vip_name'] neq ''">
+                    <input id="phone" placeholder="请输入您的联系方式" value="{weikucms:$data['user_phone']}" class="input" type="tel" maxlength="11">
+                    <else/>
+                    <input id="phone" placeholder="请输入您的联系方式" value="" class="input" type="tel" maxlength="11">
+                </if>
+            </div>
+        </li>
+
+
+        <li>
+            <div class="li-l">车架号</div>
+            <div class="li-r">
+                <if condition="$data['vip_name'] neq ''">
+                    <input id="fnum" placeholder="请输入您的车架号" class="input" value="{weikucms:$data['car_frame']}" >
+                    <else/>
+                    <input id="fnum" placeholder="请输入您的车架号" class="input" value="">
+                </if>
+            </div>
+        </li>
+        <if condition="($data['type'] eq '') OR ($data['type'] eq 2) OR ($data['type'] eq 0)">
+            <li>
+                <div class="li-l">角色</div>
+                <div class="li-r">
+                    <if condition="$data['type'] eq 2">
+                        公司职员
+                        <else/>
+                        <select id="type">
+                            <option >请选择你的角色</option>
+                            <option value="1">客户</option>
+                            <option value="2">内部职员</option>
+                        </select>
+                    </if>
+
+                </div>
+            </li>
+
+        </if>
+
+    </ul>
+    <input type="hidden" value="{weikucms:$token}" id="token"/>
+    <input type="hidden" value="{weikucms:$openid}" id="openid"/>
+
+</div>
+
+<div class="button clearfix"><a href="#" id="save">保　存</a></div>
+<div class="truees"></div>
+<script type="text/javascript">
+    $(function(){
+        if( browser.versions.iPhone )
+        {
+            $('#back a').attr('href',"javascript:window.history.back(-1);");
+            $('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+        }
+        else
+        {
+            $('#back a').attr('href',"javascript:window.history.back(-1);");
+            $('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        //WeixinJSBridge.call('hideOptionMenu');
+        WeixinJSBridge.call('hideToolbar');
+    });
+</script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery.mobile-1.2.0.min.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/mobiscroll.custom-2.4.5.min.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/common/f.js"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+<script type="text/javascript">
+
+
+    function getLngLat(callback){
+        var geolocation = new BMap.Geolocation(),
+                geoc = new BMap.Geocoder();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var pt = r;
+                console.log(r);
+                if(typeof callback ==="function"){
+                    callback(pt);
+                }
+            }
+        })
+    }
+
+
+
+    $(function(){
+      
+        $("#save").click(function() {
+            getLngLat(function (pt) {
+               /* console.log(pt);
+                alert(pt.address.province);
+                return false;city: "深圳市"*/
+                var province = pt.address.city;
+                var uid = '{weikucms:$data.id}';
+                var car_username = $('#name').val();
+                var user_phone = $('#phone').val();
+                var car_frame = $('#fnum').val();
+                var token = $('#token').val();
+                var openid = $('#openid').val();
+                var type = $('#type').val();
+                if (!car_username) {
+                    show_error_tip('您的姓名不能为空');
+                    return false;
+                }
+                if (!user_phone) {
+                    show_error_tip('您的联系方式不能为空');
+                    return false;
+                }
+                if (!type && type==0) {
+                    show_error_tip('请选择您的角色');
+                    return false;
+                }
+                /*if( !car_frame ){
+                show_error_tip('您的车架号不能为空');  return false;
+            }*/
+            var
+                    url = 'index.php?g=Wap&m=ServicestoreNew&a=register&token='+$("#token").val()+ "&openid="+$("#openid").val();
+            $.post(
+                    url,{
+                        province:province,
+                        uid: uid,
+                        car_username: car_username,
+                        user_phone: user_phone,
+                        car_frame: car_frame,
+                        token: token,
+                        openid: openid,
+                        type:type
+                    }, function(data){
+                        if(data.status == 100){
+                            show_success_tip(data.info);
+                            setTimeout(function(){
+                                //$('.truees').trigger('click');
+                                window.location.href = data.url;
+                            },'1000');
+                        } else if(data.status== 1 ){
+                            show_error_tip(data.info);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else if(data.status == 2 ){
+                            show_error_tip(data.info);
+                            setTimeout(function (){
+                                window.location.href = data.url;
+                            },'1000');
+                        }
+                    },
+                    'json');
+            });
+        });
+    });
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    <script>
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'scanQRCode'
+            ]
+        });
+        wx.ready(function () {
+
+            $(".truees").click(function() {
+                wx.closeWindow();
+            })
+        })
+    </script>
+</body>
+</html>

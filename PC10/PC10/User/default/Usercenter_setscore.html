@@ -1,0 +1,145 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/index',array('token'=>$token))}" <if condition="$hover eq 1" >class="hover"</if>>用户中心设置</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/memberman',array('token'=>$token))}" <if condition="$hover eq 2" >class="hover"</if>>微信会员管理</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/salecard',array('token'=>$token))}" <if condition="$hover eq 3" >class="hover"</if>>会员优惠</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/scoreman',array('token'=>$token))}" <if condition="$hover eq 4" >class="hover"</if>>积分规则</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/userlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/notice',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>会员通知</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/shitimember',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>实体会员</a>
+                </li>
+				                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Integralshop/index',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>积分商城</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>设置活动开启规则,是否需要会员,是否需要积分开启？</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="app_id" id="app_id" value="{weikucms:$app_id}">
+                <div class="control-group">
+                    <label for="title" class="control-label">是否需要会员：</label>
+                    <div class="controls">
+                        <select name="is_member" id="is_member">
+                            <option value="1" <if condition="$data['is_member'] eq 1">selected</if>>是</option>
+                            <option value="2"  <if condition="$data['is_member'] eq 2">selected</if>>否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="title" class="control-label">是否需要积分：</label>
+                    <div class="controls">
+                        <select name="is_score" id="is_score">
+                            <option value="1"  <if condition="$data['is_score'] eq 1">selected</if>>是</option>
+                            <option value="2"  <if condition="$data['is_score'] eq 2">selected</if>>否</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">每玩一次所需积分：</label>
+                    <div class="controls">
+                        <input type="text" name="need_score" value="{weikucms:$data.need_score}" id="need_score" placeholder="输入每一次所需要的积分为数字" class="input-small" data-rule-required="true">&nbsp;&nbsp; 分
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var app_id = $("#app_id").val();
+            var is_member = $("#is_member").val();
+            var is_score = $("#is_score").val();
+            var need_score = $("#need_score").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            var patter = /\d+$/;
+            if(is_score == 1){
+                if(!need_score){
+                    notif({
+                        msg: '请输入每此游戏消费的积分数',
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(!patter.test(need_score)){
+                    notif({
+                        msg: '请输入整数',
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }
+
+
+            $.post("{weikucms::U('Usercenter/setscore',array('token'=>$token))}",
+                    {app_id:app_id,is_member:is_member,is_score:is_score,need_score:need_score,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+
+
+</div>

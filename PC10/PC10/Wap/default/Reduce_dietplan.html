@@ -1,0 +1,378 @@
+<html>
+	<head>
+		<title>饮食方案</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/7.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">饮食方案</span>
+		</div> -->
+		<!-- 饮食的统计 -->
+		<if condition="$Number eq 1">
+			<div id="header">
+				<span style="padding-right:0;color:#FF5757;font-size:14px;text-align:center;">你还没有定制过方案，赶紧去定制吧！</span>
+			</div>
+			<script type="text/javascript">
+			
+					$(function(){
+						
+						$('#adjust').click(function() {
+							window.location.href = "{weikucms::U('Wap/Reduce/scheme',array('token'=>$token,'openid'=>$openid))}";
+						});
+					})
+			</script>
+		<else/>
+		</if>
+		<div class="drinkTotal">
+			<div class="Dtotals">
+				<span>饮食</span>
+				<p>
+					<span style="color:red" id="allkg">{weikucms:$all}</span>克
+					<span>/</span>
+					<span style="color:#0b93dd">{weikucms:$result.total_kcal}</span>千卡
+				</p>
+			</div>
+			<!-- <div class="Ptotals">
+				<span>预测</span>
+				<p>
+					<span>瘦约</span>
+					<span style="color:red">43</span>
+					<span>克</span>
+				</p>
+			</div> -->
+		</div>
+		<div class="cereal">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/cereal.png" width="30px" height="22px" class="interval"/>
+			<span class="interval adjusts">早餐</span>
+			<span class="interval adjusts one">
+				<span>{weikucms:$b}</span>g/<span>{weikucms:$result.total_break}</span></span>
+			<span class="adjusts">kcal</span>
+			<span class="changeL"><a href="javascript:void(0)" id="cereal">换一组</a></span>
+		</div>
+		<!-- 早餐 -->
+		<div class="eat" id="Porridge">
+			<table id="b">
+				<volist name="breaks" id="vo">
+					<tr>
+						<td>{weikucms:$vo.foodname}</td>
+						<td class="color">{weikucms:$vo.weight}g</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+		<!-- 中餐 -->
+		<div class="lunch">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/lunch.png" width="30px" height="25px" class="interval"/>
+			<span class="interval adjusts">中餐</span>
+			<span class="interval adjusts two">
+				<span>{weikucms:$l}</span>g/<span>{weikucms:$result.total_lunch}</span></span>
+			<span class="adjusts">kcal</span>
+			<span class="changeL"><a href="javascript:void(0)" id="lunch" style="position:relative;top:3px;">换一组</a></span>
+		</div>
+		<!-- 中餐 -->
+		<div class="eat" id="lunchs">
+			<table id="l">
+				<volist name="lunchs" id="vo">
+					<tr>
+						<td>{weikucms:$vo.foodname}</td>
+						<td class="color">{weikucms:$vo.weight}g</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+		
+		<!-- 晚餐 -->
+		<div class="dinner">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/dinner.png" width="30px" height="21px" class="interval"/>
+			<span class="interval adjustss">晚餐</span>
+			<span class="interval adjustss four">
+				<span>{weikucms:$d}</span>g/<span>{weikucms:$result.total_dinner}</span></span>
+			<span class="adjustss">kcal</span>
+			<span class="changeL"><a href="javascript:void(0)" id="dinner">换一组</a></span>
+		</div>
+		<!-- 晚餐 -->
+		<div class="eat" id="dinners">
+			<table id="d">
+				<volist name="dinners" id="vo">
+					<tr>
+						<td>{weikucms:$vo.foodname}</td>
+						<td class="color">{weikucms:$vo.weight}g</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+		<!-- 加餐 -->
+		<div class="extra">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/extra.png" width="30px" height="30px" class="interval"/>
+			<span class="interval adjusts">加餐</span>
+			<span class="interval adjusts three">
+				<span>{weikucms:$e}</span>g/<span>{weikucms:$result.total_extra}</span></span>
+			<span class="adjusts">kcal</span>
+			<span class="changeL"><a href="javascript:void(0)" id="extra" style="position:relative;top:7px;">换一组</a></span>
+		</div>
+		<!-- 加餐 -->
+		<div class="eat" id="extras">
+			<table id="e">
+				<volist name="extras" id="vo">
+					<tr>
+						<td>{weikucms:$vo.foodname}</td>
+						<td class="color">{weikucms:$vo.weight}g</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+		<!-- 换一组 -->
+		<div class="change">
+			<div class="total">
+				<div class="changes" id="changes">换一组</div>
+				<!-- <div class="user" id="user">采用此方案</div> -->
+			</div>
+		</div>
+		<!-- 邀请好友开看看 -->
+		<!--
+		<div id="Invitation">
+            分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+		</div>
+		-->
+		<div style="height:50px;"></div>
+		<if condition="$Number eq 1">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/subBtnDing.png" width="90px" height="48px" class="adjust" id="adjust"/> 
+		<else />
+		</if>
+		
+		<script type="text/javascript">
+			$(function(){
+				// 采用此方案
+				$('#user').click(function(){
+					var url1 = "{weikucms::U('Wap/Reduce/useYes',array('token'=>$token,'openid'=>$openid))}"
+					$.post(url1,{}, function(data){
+						show_error_tip(data.info);
+					},'json');
+				});
+				// 点击换一组
+				$('#changes').click(function(){
+					// var bid = $(this).attr('id');
+					var url = "{weikucms::U('Wap/Reduce/randomDrink',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:1}, function(data){
+						// 首先早，中，加，晚餐删除
+						$('#Porridge>table').children().remove();
+						$('#lunchs>table').children().remove();
+						$('#extras>table').children().remove();
+						$('#dinners>table').children().remove();
+						// 
+						var breaktr,breaktd1,breaktd2
+						,lunchtr,lunchtd1,lunchtd2
+						,extratr,extratd1,extratd2
+						,dinnertr,dinnertd1,dinnertd2
+						,breakkg = 0,lunchkg = 0,extrakg = 0,dinnerkg = 0,allkg = 0;
+						for (var i = 0; i < 4; i++) {
+							for(var x in data[i]){
+								// 早餐
+								if (Number(i) == Number(0)) {
+									breaktr = document.createElement('tr');
+									breaktd1 = document.createElement('td');
+									breaktd2 = document.createElement('td');
+									breaktd2.setAttribute('class','color');
+									breaktd1.innerHTML = data[i][x].split(',')[0];
+									breaktd2.innerHTML = data[i][x].split(',')[1]+ "g";
+									breaktr.appendChild(breaktd1);
+									breaktr.appendChild(breaktd2);
+									document.getElementById('b').appendChild(breaktr);
+									breakkg += Number(data[i][x].split(',')[1]);
+									$(".one").children('span').eq(0).text(breakkg);
+									$(".one").children('span').eq(1).text(data[i][x].split(',')[2]);
+								};
+								// 午餐
+								if (Number(i) == Number(1)) {
+									lunchtr = document.createElement('tr');
+									lunchtd1 = document.createElement('td');
+									lunchtd2 = document.createElement('td');
+									lunchtd2.setAttribute('class','color');
+									lunchtd1.innerHTML = data[i][x].split(',')[0];
+									lunchtd2.innerHTML = data[i][x].split(',')[1]+ "g";
+									lunchtr.appendChild(lunchtd1);
+									lunchtr.appendChild(lunchtd2);
+									document.getElementById('l').appendChild(lunchtr);
+									lunchkg += Number(data[i][x].split(',')[1]);
+									$(".two").children('span').eq(0).text(lunchkg);
+									$(".two").children('span').eq(1).text(data[i][x].split(',')[2]);
+								};
+								// 加餐
+								if (Number(i) == Number(2)) {
+									extratr = document.createElement('tr');
+									extratd1 = document.createElement('td');
+									extratd2 = document.createElement('td');
+									extratd2.setAttribute('class','color');
+									extratd1.innerHTML = data[i][x].split(',')[0];
+									extratd2.innerHTML = data[i][x].split(',')[1]+ "g";
+									extratr.appendChild(extratd1);
+									extratr.appendChild(extratd2);
+									document.getElementById('e').appendChild(extratr);
+									extrakg += Number(data[i][x].split(',')[1]);
+									$(".three").children('span').eq(0).text(extrakg);
+									$(".three").children('span').eq(1).text(data[i][x].split(',')[2]);
+								}
+								if (Number(i) == Number(3)){
+									// 晚餐
+									dinnertr = document.createElement('tr');
+									dinnertd1 = document.createElement('td');
+									dinnertd2 = document.createElement('td');
+									dinnertd2.setAttribute('class','color');
+									dinnertd1.innerHTML = data[i][x].split(',')[0];
+									dinnertd2.innerHTML = data[i][x].split(',')[1] + "g";
+									dinnertr.appendChild(dinnertd1);
+									dinnertr.appendChild(dinnertd2);
+									document.getElementById('d').appendChild(dinnertr);
+									dinnerkg += Number(data[i][x].split(',')[1]);
+									$(".four").children('span').eq(0).text(dinnerkg);
+									$(".four").children('span').eq(1).text(data[i][x].split(',')[2]);
+								}
+							}
+						};
+						// 统计所有的数据
+						allkg = allkg + Number($('.one').children('span').eq(0).text()) + Number($('.two').children('span').eq(0).text()) + Number($('.three').children('span').eq(0).text()) + Number($('.four').children('span').eq(0).text());
+						$('#allkg').text(allkg);
+	                  },'json');
+				})
+
+				// 单个换一组
+				// 点击早餐
+				$('#cereal').click(function(){
+					var bid = $(this).attr('id');
+					var url = "{weikucms::U('Wap/Reduce/randomDrink',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{id:bid,type:2}, function(data){
+						// 第一组
+						var breaktrs,breaktds1,breaktds2,breakskg = 0,allkg = 0;
+						/*console.log(data[0]);*/
+						// 首先清除掉首部的表格
+						$('#Porridge>table').children().remove();
+	        			for(var x in data){
+	        				breaktrs = document.createElement('tr');
+							breaktds1 = document.createElement('td');
+							breaktds2 = document.createElement('td');
+							breaktds2.setAttribute('class','color');
+							breaktds1.innerHTML = data[x].split(',')[0];
+							breaktds2.innerHTML = data[x].split(',')[1]+ "g";
+							breaktrs.appendChild(breaktds1);
+							breaktrs.appendChild(breaktds2);
+							document.getElementById('b').appendChild(breaktrs);
+							breakskg += Number(data[x].split(',')[1]);
+							$(".one").children('span').eq(0).text(breakskg);
+							
+	        			}
+	        			allkg = allkg + Number($('.one').children('span').eq(0).text()) + Number($('.two').children('span').eq(0).text()) + Number($('.three').children('span').eq(0).text()) + Number($('.four').children('span').eq(0).text());
+						$('#allkg').text(allkg);
+	                  },'json');
+				})
+				// 点击午餐
+				$('#lunch').click(function(){
+						var lid = $(this).attr('id');
+						var url = "{weikucms::U('Wap/Reduce/randomDrink',array('token'=>$token,'openid'=>$openid))}";
+						$.post(url,{lid:lid,type:2}, function(data){
+						var lunchtrs,lunchtds1,lunchtds2,lunchskg = 0,allkg = 0;
+						// 删除午餐
+						$('#lunchs>table').children().remove();
+						// console.log(data);
+						for(var x in data){
+							lunchtrs = document.createElement('tr');
+							lunchtds1 = document.createElement('td');
+							lunchtds2 = document.createElement('td');
+							lunchtds2.setAttribute('class','color');
+							lunchtds1.innerHTML = data[x].split(',')[0];
+							lunchtds2.innerHTML = data[x].split(',')[1]+ "g";
+							lunchtrs.appendChild(lunchtds1);
+							lunchtrs.appendChild(lunchtds2);
+							document.getElementById('l').appendChild(lunchtrs);
+							lunchskg += Number(data[x].split(',')[1]);
+							$(".two").children('span').eq(0).text(lunchskg);
+						}
+						allkg = allkg + Number($('.one').children('span').eq(0).text()) + Number($('.two').children('span').eq(0).text()) + Number($('.three').children('span').eq(0).text()) + Number($('.four').children('span').eq(0).text());
+						$('#allkg').text(allkg);
+	                  },'json');
+				})
+				//加餐
+				$('#extra').click(function(){
+						var eid = $(this).attr('id');
+						var url = "{weikucms::U('Wap/Reduce/randomDrink',array('token'=>$token,'openid'=>$openid))}";
+						$.post(url,{eid:eid,type:2}, function(data){
+							var extratrs,extratds1,extratds2,extraskg = 0,allkg = 0;
+							$('#extras>table').children().remove()
+							for(var x in data){
+								extratrs = document.createElement('tr');
+								extratds1 = document.createElement('td');
+								extratds2 = document.createElement('td');
+								extratds2.setAttribute('class','color');
+								extratds1.innerHTML = data[x].split(',')[0];
+								extratds2.innerHTML = data[x].split(',')[1]+ "g";
+								extratrs.appendChild(extratds1);
+								extratrs.appendChild(extratds2);
+								document.getElementById('e').appendChild(extratrs);
+								extraskg += Number(data[x].split(',')[1]);
+								$(".three").children('span').eq(0).text(extraskg);
+								
+						}
+						allkg = allkg + Number($('.one').children('span').eq(0).text()) + Number($('.two').children('span').eq(0).text()) + Number($('.three').children('span').eq(0).text()) + Number($('.four').children('span').eq(0).text());
+						$('#allkg').text(allkg);
+	                  },'json');
+						
+				})
+				//晚餐
+				$('#dinner').click(function(){
+						var did = $(this).attr('id');
+						// alert(did);
+						var url = "{weikucms::U('Wap/Reduce/randomDrink',array('token'=>$token,'openid'=>$openid))}";
+						$.post(url,{did:did,type:2}, function(data){
+							var dinnertrs,dinnertds1,dinnertds2,dinenrkg = 0,allkg = 0;
+							$('#dinners>table').children().remove()
+							for(var x in data){
+								dinnertrs = document.createElement('tr');
+								dinnertds1 = document.createElement('td');
+								dinnertds2 = document.createElement('td');
+								dinnertds2.setAttribute('class','color');
+								dinnertds1.innerHTML = data[x].split(',')[0];
+								dinnertds2.innerHTML = data[x].split(',')[1]+ "g";
+								dinnertrs.appendChild(dinnertds1);
+								dinnertrs.appendChild(dinnertds2);
+								document.getElementById('d').appendChild(dinnertrs);
+								dinenrkg += Number(data[x].split(',')[1]);
+								$(".four").children('span').eq(0).text(dinenrkg);
+								
+						}
+						allkg = allkg + Number($('.one').children('span').eq(0).text()) + Number($('.two').children('span').eq(0).text()) + Number($('.three').children('span').eq(0).text()) + Number($('.four').children('span').eq(0).text());
+						$('#allkg').text(allkg);
+	                  },'json');
+				})
+
+			// 邀请好友来
+			// 遮罩分享
+				$('#Invitation').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+					// $(this).children('img').hide();
+				})
+			})
+		</script>
+	</body>
+</html>

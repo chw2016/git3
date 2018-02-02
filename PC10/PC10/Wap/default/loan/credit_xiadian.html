@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/nouislider.fox.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/nou.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+
+<script src="{weikucms::STATICS}/wapweiui/loan/js/jquery.nouislider.min.js"></script>
+
+<style>
+    .fa.fa-volume-up{
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body style="overflow-x:hidden;">
+    <div class="jz-body">
+        <div class="body_pad">
+            
+            <div class="_jz">
+                <div class="_jz-mun">
+                    <span class="_jz-mun span1">申请金额：</span>
+                    <span class="_jz-mun span2 bbc" id="y2">￥<b >{weikucms:$info.min_price}</b></span>
+                </div>
+                <div class="_ld">
+                    <div class="noUiSlider" id="noUiSlider"></div>
+                </div>
+            </div>
+             <div class="_jz">
+                <div class="_jz-mun">
+                    <span class="_jz-mun span1">贷款期限：</span>
+                    <span class="_jz-mun span2" id="y1"><b>12月</b></span>
+                </div>
+                <div class="_ld">
+                    <div class="noUiSlider" id="noUiSlider_y"></div>
+                </div>
+            </div>
+            <div class="_qs">
+                <span class="_qs left">每期还款金额：</span>
+                <span class="_qs right">￥<b class="kk">349.85</b></span>
+            </div>
+        </div>
+    </div>
+    <div class="foot">
+        <span><i class="fa fa-volume-up"></i>{weikucms:$tpl.name}新版上线，极速放款，随时提现！</span>
+        <div class="tijiao"> 立即申请</div>
+    </div>
+
+    
+</body>
+<script>
+    $(function(){
+        var loan_total_money=$(".bbc").text().substr(1);
+        var fenqi=1;
+        var lilu={weikucms:$lilu};
+        $.each(lilu,function(e,t){
+            if(e==1){
+                var monthly_repayments=((loan_total_money/fenqi)*1.+1*(loan_total_money*t));
+                monthly_repayments= parseFloat(monthly_repayments.toFixed(2));
+                $(".right b").text(monthly_repayments);
+            }
+        })
+
+    });
+    $(".tijiao").click(function(){
+        var loan_total_money=$(".bbc").text().substr(1);
+
+               var fenqi=$("#y1").text().substr(2);
+
+                       var monthly_repayments=$(".right b").text();
+        var url="{weikucms::U('credit_xiadian',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['id']))}";
+        $.post(url,{loan_total_money:loan_total_money,fenqi:fenqi,monthly_repayments:monthly_repayments},function(data){
+            if(data.status==1){
+                var url1="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+                location.href=url1;
+            }else if(data.status==2){
+                var url2="{weikucms::U('sq_loan2',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+                location.href=url2;
+            }else if(data.status==3){
+                var url3="{weikucms::U('phone',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url3;
+            }else{
+                alert('失败');
+            }
+        },'json')
+    })
+</script>
+<script>
+    $(function() {
+        var b=document.getElementById ("y2");
+        b.innerHTML='￥{weikucms:$info.min_price}';
+        $('#noUiSlider').noUiSlider({
+            range: [{weikucms:$info.min_price}, {weikucms:$info.max_price}],
+            start: {weikucms:$info.min_price},
+            step: 100,
+            handles: 1,
+            slide: function(){
+
+                var values = $(this).val();
+
+                b.innerHTML='￥'+values;
+
+                var fenqi=$("#y1").text().substr(2);
+
+
+                var lilu={weikucms:$lilu};
+
+                $.each(lilu,function(e,t){
+
+                    if(e==fenqi){
+                        var monthly_repayments=((values/fenqi)*1.+1*(values*t));
+                        monthly_repayments= parseFloat(monthly_repayments.toFixed(2));
+
+                      $(".right b").text(monthly_repayments);
+                    }
+                })
+            }
+        });
+        var a=document.getElementById ("y1");
+        a.innerHTML='期:1';
+        $('#noUiSlider_y').noUiSlider({
+            range: [1, {weikucms:$info.max_fenqi}],
+            start: 1,
+            step: 1,
+            handles: 1,
+            slide: function(){
+                var values = $(this).val();
+
+                a.innerHTML = '期:'+values;
+                console.log(values);
+
+                var loan_total_money=$(".bbc").text().substr(1);
+                var lilu={weikucms:$lilu};
+                $.each(lilu,function(e,t){
+                    if(values==e){
+                        var monthly_repayments=((loan_total_money/values)*1+1*(loan_total_money*t));
+                        monthly_repayments= parseFloat(monthly_repayments.toFixed(2));
+                        $(".right b").text(monthly_repayments);
+                    }
+                })
+                if(values==2){
+                }
+
+            }
+        });
+
+    });
+</script>
+
+</html>

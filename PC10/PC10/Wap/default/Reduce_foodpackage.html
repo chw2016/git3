@@ -1,0 +1,843 @@
+<html>
+	<head>
+		<title>减肥记录</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/20.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/3.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/21.css" />
+		<link href="{weikucms::STATICS}/wapweiui/Reduce/css/common.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/date.js" ></script> 
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/iscroll.js" ></script>
+		<style type="text/css">
+			.parent{display: -webkit-box;display: flex;margin-top: 15px;}
+			.parent .sizes{text-align: center;}
+			.parent .foods{text-align: left !important;}
+			.parent .sizes:nth-of-type(1){width: 23%;}
+			.parent .sizes:nth-of-type(2){width: 51%;color: #222;}
+			.parent .sizes:nth-of-type(2) div{
+				color: #898989;
+				font-size: 13px;
+			}
+			/*.parent .sizes:nth-of-type(2){width: 14%;}*/
+			.parent .sizes:nth-of-type(3){width: 26%;}
+			.parent .sizes:nth-of-type(3) a img{width: 13px;height: 13px;}
+			/*.parent .sizes:nth-of-type(3) a{display: block;}*/
+			
+			.times{margin: 15px auto;display: flex;display: -webkit-box;}
+			.times div:nth-of-type(1){width: 60%;text-align: right;}
+			.times div:nth-of-type(2){/* width: 50%; */text-align: left;border-top: 2px solid #000;border-right: 2px solid #000;width: 10px;height: 10px;-webkit-transform:rotate(135deg);position: relative;top: 2px;left: 10px;}
+			.drinkfont,.sportfont{
+				border: 2px solid #DCE5E5;border-radius: 50%;-ms-border-radius: 50%;-o-border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;width:100px;height:100px;
+			}
+		</style>
+		<script language="JavaScript">
+			function delete_confirm(e)
+			{
+			if (event.srcElement.outerText == "删除")
+			{
+			event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
+			}
+			}
+			document.onclick = delete_confirm;
+		</script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<div id="datePlugin"></div>
+		<!-- 创建遮罩 -->
+		<div id="Mask" style="top:0;"></div>
+		<!-- 生日 -->
+	    
+	    </form>
+		<div id="birth">
+			<form action="{weikucms::U('Wap/Reduce/foodpackage',array('token'=>$token,'openid'=>$openid))}" id="form1" method="post">
+		    	<input type="hidden" name="dates" id="dates"/>
+				<div class="choice">
+					请选择日期
+				</div>
+				<div class="downlist">
+					<div class="Eject">
+						<span>日期</span>
+						<input id="beginTime" class="kbtn" placeholder="请选择日期" type="text" readonly/>
+					</div>
+				</div>
+				<!-- 确定以及取消按钮 -->
+				<div class="sure" id="submitbtn">确定</div>
+				<div class="cancel">取消</div>
+			</form>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$("#submitbtn").click(function(){
+					$("#dates").val($('#beginTime').val());
+					$("#form1").submit();
+				});
+			});
+		</script>
+
+		<div id="Mask" style="top:0;"></div>
+		<!-- <form action="{weikucms::U('Wap/Reduce/foodSearch',array('token'=>$token,'openid'=>$openid))}" method="post" name="form1"> -->
+		<!-- 创建遮罩 -->
+		
+		<!-- 创建搜索框 -->
+		<!-- 今天的搜索框 -->
+		<div id="searchbox">
+			<div class="closeBtn"></div>
+			<div class="clear"></div>
+			<div class="search">
+				<input type="text" name="findFood" id="findFood" placeholder="输入名称进行搜索" />
+				
+				<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit" 
+				style="width:25px;height:25px;" id="searchResult"/>
+			</div>
+			<ol id="lists">
+						
+			</ol>
+			<!-- 清除历史记录 -->
+			<div class="clearHis">
+				<a href="javascript:void(0)">清空历史记录</a>
+			</div>
+		</div>
+		<!-- </form> -->
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">饮食方案</span>
+		</div> -->
+		<!-- drinkrecord -->
+		<!-- 时间的查询 -->
+		<if condition="$choicedate eq 100">
+			<div class="times">
+				<div style="font-size:18px;">
+					{weikucms:$datess}
+				</div>
+				<div></div>
+			</div>
+			
+				<div class="spoAnddri">
+					<div class="left">
+						<div class="drinkfont">
+							<span class="energy">
+								<span class="fontEat">饮食</span>
+								<br />
+								<span class="energyKeCa">
+										<span class="fontRed" id="ke">{weikucms:$allke}</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">{weikucms:$allcalorie}</span>
+										<br/>
+										<span style="color:#85C4E7">千卡</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="Middle-line"></div>
+					<div class="right">
+						<div class="drinkfont">
+							<span class="energy">
+								<span class="fontEat">运动</span>
+								<br />
+								<span class="energyKeCa">
+										<span class="fontRed" id="ke">{weikucms:$allsportke}</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">{weikucms:$allsportcalorie}</span>
+										<br/>
+										<span style="color:#85C4E7">千卡</span>
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+			
+			<div class="allDrink">
+			<table>
+				
+					<tr class="borderColor" id="currentzao">
+								<td>
+									<img src="/tpl/static/wapweiui/Reduce/imgs/cereal.png" width="30px" height="21px">
+								</td>
+								<td>早餐</td>
+								<td id="zaocan">
+									{weikucms:$diffentz.ke}/{weikucms:$diffentz.caluli}kcal
+								</td>
+								<php>
+									if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+								</php>
+									<td>
+										<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="breakfast" know="zao">
+									</td>
+								<php>
+									}
+								</php>
+								
+							</tr>
+							<if condition="$countz neq 0">
+								<for start="0" end="$countz">
+									<tr style="font-size:10px;line-height:20px;">
+										<php>
+											if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												echo "<td colspan='4'>";
+											}else{
+												echo "<td colspan='3'>";
+										}
+										</php>
+											<div class="parent">
+												<div class="sizes"></div> 
+												<div class="sizes foods">
+												{weikucms:$zaofood[$i]}
+												<div>{weikucms:$zaoke[$i]}克&nbsp;|&nbsp;{weikucms:$zaocalorie[$i]}千卡</div>
+												</div>
+												
+												<php>
+													if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												</php>
+													<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('zid'=>$zid,'token'=>$token,'openid'=>$openid,'name'=>$eat[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('zid'=>$zid,'token'=>$token,'openid'=>$openid,'name'=>$eat[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+												<php>
+													}
+												</php>
+											</div>
+											</td>
+										</tr>
+								</for>
+							<else />
+							</if>																			
+							<tr class="borderColor">
+								<td>
+									<img src="/tpl/static/wapweiui/Reduce/imgs/lunch.png" width="30px" height="25px">
+								</td>
+								<td>中餐</td>
+								<td id="zhongcan">
+									{weikucms:$diffentzh.ke}/{weikucms:$diffentzh.caluli}kcal
+								</td>
+								<php>
+									if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+								</php>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="lunch" know="zhong">
+								</td>
+								<php>
+									}
+								</php>
+								
+							</tr>
+							<if condition="$countzh neq 0">
+								<for start="0" end="$countzh">
+									<tr style="font-size:10px;line-height:20px;">
+											<php>
+											if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												echo "<td colspan='4'>";
+											}else{
+												echo "<td colspan='3'>";
+										}
+										</php>
+												<div class="parent">
+													<div class="sizes"></div>
+													<div class="sizes foods">{weikucms:$zhongfood[$i]}
+													<div>
+														{weikucms:$zhongke[$i]}克&nbsp;|&nbsp;{weikucms:$zhongcalorie[$i]}千卡
+													</div>
+													</div>
+												
+													<php>
+														if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+													</php>
+														<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('wid'=>$wid,'token'=>$token,'openid'=>$openid,'name'=>$eats[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('wid'=>$wid,'token'=>$token,'openid'=>$openid,'name'=>$eats[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+													<php>
+														}
+													</php>
+												</div>
+											</td>
+									</tr>
+								</for>
+							<else />
+							</if>					
+										<tr class="borderColor">
+								<td>
+									<img src="/tpl/static/wapweiui/Reduce/imgs/dinner.png" width="30px" height="21px">
+								</td>
+								<td>晚餐</td>
+								<td id="wancan">
+									{weikucms:$diffentw.ke}/{weikucms:$diffentw.caluli}kcal
+								</td>
+								<php>
+									if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+								</php>
+									<td>
+										<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="dinner" know="wan">
+									</td>
+								<php>
+										}
+								</php>
+								
+							</tr>
+							<if condition="$countw neq 0">
+								<for start="0" end="$countw">
+									<tr style="font-size:10px;line-height:20px;">
+												<php>
+											if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												echo "<td colspan='4'>";
+											}else{
+												echo "<td colspan='3'>";
+										}
+										</php>
+													<div class="parent">
+														<div class="sizes"></div> 
+														<div class="sizes foods">{weikucms:$wanfood[$i]}
+														<div>
+															{weikucms:$wanke[$i]}克&nbsp;|&nbsp;{weikucms:$wancalorie[$i]}千卡
+														</div>
+														</div>
+														
+														<php>
+															if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+														</php>
+															<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('did'=>$did,'token'=>$token,'openid'=>$openid,'name'=>$eatsss[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('did'=>$did,'token'=>$token,'openid'=>$openid,'name'=>$eatsss[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+														<php>
+															}
+														</php>
+													</div>
+												</td>
+											</tr>
+											</for>							
+											<else />	  
+									</if>
+										<tr class="borderColor">
+								<td>
+									<img src="/tpl/static/wapweiui/Reduce/imgs/extra.png" width="30px" height="30px">
+								</td>
+								<td>加餐</td>
+								<td id="jiacan">
+									{weikucms:$diffentj.ke}/{weikucms:$diffentj.caluli}kcal
+								</td>
+								<php>
+									if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+								</php>
+									<td>
+										<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="addMeal" know="jia">
+									</td>
+								<php>
+								}
+								</php>
+								
+							</tr>
+							<if condition="$countj neq 0">
+								<for start="0" end="$countj">
+									<tr style="font-size:10px;line-height:20px;">
+										<php>
+											if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												echo "<td colspan='4'>";
+											}else{
+												echo "<td colspan='3'>";
+										}
+										</php>
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$jiafood[$i]}	
+												<div>
+													{weikucms:$jiake[$i]}克&nbsp;|&nbsp;{weikucms:$jiacalorie[$i]}千卡
+												</div>
+												</div>
+												
+												<php>
+													if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												</php>
+													<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('jid'=>$jid,'token'=>$token,'openid'=>$openid,'name'=>$eatss[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('jid'=>$jid,'token'=>$token,'openid'=>$openid,'name'=>$eatss[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+												<php>
+													}
+												</php>
+											</div>
+										</td>
+									</tr>									
+									</for>
+									<else />
+									</if>
+						<!-- 运动 -->
+						<tr class="borderColor">
+								<td>
+									<img src="/tpl/static/wapweiui/Reduce/imgs/runs.png" width="30px" height="30px">
+								</td>
+								<td>运动</td>
+								<td id="yun-dong">
+									{weikucms:$diffenty.ke}/{weikucms:$diffenty.caluli}kcal
+								</td>
+								<php>
+									if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+								</php>
+									<td>
+										<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="yundong" know="yun">
+									</td>
+								<php>
+								}
+								</php>
+								
+							</tr>
+							<if condition="$county neq 0">
+
+								<for start="0" end="$county">
+
+									<tr style="font-size:10px;line-height:20px;">
+										<php>
+											if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												echo "<td colspan='4'>";
+											}else{
+												echo "<td colspan='3'>";
+										}
+										</php>
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$yunfood[$i]}	
+												<div>
+													{weikucms:$yunke[$i]}分钟&nbsp;|&nbsp;{weikucms:$yuncalorie[$i]}千卡
+												</div>
+												</div>
+												
+												<php>
+													if (date("Y-m-d") == $datess || date("Y-m-d",strtotime("-1 day")) == $datess || date("Y-m-d",strtotime("+1 day")) == $datess){
+												</php>
+													<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('yid'=>$yid,'token'=>$token,'openid'=>$openid,'name'=>$eatyun[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('yid'=>$yid,'token'=>$token,'openid'=>$openid,'name'=>$eatyun[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+												<php>
+													}
+												</php>
+											</div>
+										</td>
+									</tr>									
+									</for>
+									<else />
+									</if>		
+								</table>
+		</div>
+		<!-- 如果不是选择提交的话 -->
+			<else />
+			<div class="times">
+				<div style="font-size:18px;">
+					<!-- {weikucms:$datess} -->
+					<php>echo date("Y-m-d");</php>
+				</div>
+				<div></div>
+			</div>
+			
+				<div class="spoAnddri">
+					<div class="left">
+						<div class="drinkfont">
+							<span class="energy">
+							<span class="fontEat">饮食</span>
+							<br />
+								<span class="energyKeCa">
+									<if condition="$flags eq 1">
+										<span class="fontRed" id="ke">{weikucms:$num}</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">{weikucms:$num1}</span>
+										<br/>
+										<span style="color:#85C4E7">千卡</span>
+									<else />
+										<span class="fontRed" id="ke">0</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">0</span>
+										<br/>
+										<span style="color:#85C4E7">千卡</span>	
+									</if>
+								
+								</span>
+							</span>
+			
+						</div>
+					</div>
+					<div class="Middle-line"></div>
+					<div class="right">
+						<div class="drinkfont">
+							<span class="energy">
+							<span class="fontEat">运动</span>
+							<br />
+								<span class="energyKeCa">
+									<if condition="$flags eq 1">
+										<span class="fontRed" id="ke">{weikucms:$sportke}</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">{weikucms:$sportcaluri}</span>
+										<br/>
+										<span style="color:#13b8b8">千卡</span>
+									<else />
+										<span class="fontRed" id="ke">0</span>
+										<span class="fontBlue">/</span>
+										<span class="fontBlue" id="calorie">0</span>
+										<br/>
+										<span style="color:#13b8b8">千卡</span>	
+									</if>
+								
+								</span>
+							</span>
+			
+						</div>
+					</div>
+				</div>
+				
+			
+		<!-- all drink -->
+		<div class="allDrink">
+			<table>
+				<php>
+					if($flags == 1 && $dates == date("Y-m-d",time())){
+				</php>
+
+					<volist name="result" id="so">
+						<if condition="$so['type'] eq 'zao'">
+							<tr class="borderColor" id="currentzao">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/cereal.png" width="30px" height="21px"/>
+								</td>
+								<td>早餐</td>
+								<td id="zaocan">
+									{weikucms:$so.ke}/{weikucms:$so.caluli}kcal
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="breakfast" know="zao">
+								</td>
+							</tr>
+							<if condition="$zao neq ''">
+								<for start="0" end="$countzao">
+									<tr style="font-size:10px;line-height:20px;">
+										<td colspan="4">
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$eat[$i]}
+												<div>{weikucms:$ke[$i]}克&nbsp;|&nbsp;{weikucms:$kaluli[$i]}千卡</div>
+												</div>
+												
+												<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('zid'=>$zid,'token'=>$token,'openid'=>$openid,'name'=>$eat[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('zid'=>$zid,'token'=>$token,'openid'=>$openid,'name'=>$eat[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+											</div>
+										</td>
+									</tr>
+ 								</for>
+							<else />
+							</if>
+						<elseif condition="$so['type'] eq 'zhong'" />
+							<tr class="borderColor">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/lunch.png" width="30px" height="25px"/>
+								</td>
+								<td>中餐</td>
+								<td id="zhongcan">
+									{weikucms:$so.ke}/{weikucms:$so.caluli}kcal
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="lunch" know="zhong">
+								</td>
+							</tr>
+							<if condition="$zhong neq ''">
+								<for start="0" end="$countzhong">
+									<tr style="font-size:10px;line-height:20px;">
+										<td colspan="4">
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$eats[$i]}
+												<div>
+													{weikucms:$kes[$i]}克&nbsp;|&nbsp;{weikucms:$kalulis[$i]}千卡
+												</div>
+												</div>
+												
+												<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('wid'=>$wid,'token'=>$token,'openid'=>$openid,'name'=>$eats[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('wid'=>$wid,'token'=>$token,'openid'=>$openid,'name'=>$eats[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+											</div>
+										</td>
+									</tr>
+ 								</for>
+							<else />
+							</if>
+						<elseif condition="$so['type'] eq 'jia'" />
+							<tr class="borderColor">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/extra.png" width="30px" height="30px"/>
+								</td>
+								<td>加餐</td>
+								<td id="jiacan">
+									{weikucms:$so.ke}/{weikucms:$so.caluli}kcal
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="addMeal" know="jia">
+								</td>
+							</tr>
+							<if condition="$jia neq ''">
+								<for start="0" end="$countjia">
+									<tr style="font-size:10px;line-height:20px;">
+										<td colspan="4">
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$eatss[$i]}
+												<div>
+													{weikucms:$kess[$i]}克&nbsp;|&nbsp;{weikucms:$kaluliss[$i]}千卡
+												</div>
+												</div>
+											
+												<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('jid'=>$jid,'token'=>$token,'openid'=>$openid,'name'=>$eatss[$i-1],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('jid'=>$jid,'token'=>$token,'openid'=>$openid,'name'=>$eatss[$i-1],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+											</div>
+										</td>
+									</tr>
+ 								</for>
+							<else />
+							</if>
+						<elseif condition="$so['type'] eq 'wan'" />
+							<tr class="borderColor">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/dinner.png" width="30px" height="21px"/>
+								</td>
+								<td>晚餐</td>
+								<td id="wancan">
+									{weikucms:$so.ke}/{weikucms:$so.caluli}kcal
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="dinner" know="wan">
+								</td>
+							</tr>
+							<if condition="$wan neq ''">
+								<for start="0" end="$countwan">
+									<tr style="font-size:10px;line-height:20px;">
+										<td colspan="4">
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$eatsss[$i]}
+												<div>
+													{weikucms:$kesss[$i]}克&nbsp;|&nbsp;{weikucms:$kalulisss[$i]}千卡
+												</div>
+												</div>
+												
+												<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('did'=>$did,'token'=>$token,'openid'=>$openid,'name'=>$eatsss[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('did'=>$did,'token'=>$token,'openid'=>$openid,'name'=>$eatsss[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+											</div>
+										</td>
+									</tr>
+ 								</for>
+							<else />
+							</if>
+						<else/>
+						     <tr class="borderColor">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/runs.png" width="30px" height="21px"/>
+								</td>
+								<td>运动</td>
+								<td id="yun-dong">
+									{weikucms:$so.ke}/{weikucms:$so.caluli}kcal
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="yundong" know="yun">
+								</td>
+							</tr>
+
+							<if condition="$countyun neq 0">
+								
+								<for start="0" end="$countyun">
+
+									<tr style="font-size:10px;line-height:20px;">
+										<td colspan="4">
+											<div class="parent">
+												<div class="sizes"></div>
+												<div class="sizes foods">
+												{weikucms:$yunfood[$i]}
+												<div>
+													{weikucms:$yunke[$i]}分钟&nbsp;|&nbsp;{weikucms:$yuncalorie[$i]}千卡
+												</div>
+												</div>
+												
+												<div class="sizes"><a href="{weikucms::U('Wap/Reduce/addfoods',array('yid'=>$yid,'token'=>$token,'openid'=>$openid,'name'=>$yunfood[$i],'time'=>$currentime))}" style="color:#000;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/xiugai.png" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{weikucms::U('Wap/Reduce/fooddel',array('yid'=>$yid,'token'=>$token,'openid'=>$openid,'name'=>$yunfood[$i],'time'=>$currentime))}" onClick="delete_confirm" style="color:#f00;"><img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/delete.png" /></a></div>
+											</div>
+										</td>
+									</tr>
+ 								</for>
+							<else />
+							</if>
+						</if>
+					</volist>
+				<php>
+					}else{
+				</php>
+					<tr class="borderColor">
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/cereal.png" width="30px" height="21px"/>
+						</td>
+						<td>早餐</td>
+						<td>
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="breakfast" know="zao">
+						</td>
+					</tr>
+					<tr class="borderColor">
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/lunch.png" width="30px" height="25px"/>
+						</td>
+						<td>午餐</td>
+						<td>
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="lunch" know="zhong">
+						</td>
+					</tr>
+					<tr class="borderColor">
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/extra.png" width="30px" height="30px"/>
+						</td>
+						<td>加餐</td>
+						<td>
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="addMeal" know="jia">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/dinner.png" width="30px" height="21px"/>
+						</td>
+						<td>晚餐</td>
+						<td>
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="dinner" know="wan">
+						</td>
+					</tr>
+				<php>
+					}
+				</php>
+			</table>
+		</div>
+		</if>
+		
+		<script type="text/javascript">
+			window.onload = function(){
+				// 夹圈文字的位置
+				$('.energy').css('top', ($('.drinkfont').height()-$('.energyKeCa').height()-$('.fontEat').height())/2+'px');
+			}
+			$(function(){
+				// 初始样式确定
+				// $('.times').children('div').eq(1).css({'width': '10px','height':'10px'});
+				// 调整位置
+				// 夹圈
+				$('.drinkfont').css('height', $('.drinkfont').width()+'px');
+				$('.sportfont').css('height', $('.sportfont').width()+'px');
+				
+				$('#searchbox').css({'left':($(window).width()-280)/2+'px','top':'20px'});
+				$('ol').css({'height':($(window).height()-200)+"px",'overflow':'scroll','overflow-x':'hidden'});
+				//点开，早餐
+				$('#breakfast').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$(this).attr('know');
+					$('#searchbox').data('know',$(this).attr('know'));
+					$('#searchbox').data('date',$('.times').children('div').text());
+				})
+				
+				// 中餐
+				$('#lunch').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$(this).attr('know');
+					$('#searchbox').data('know',$(this).attr('know'));
+					$('#searchbox').data('date',$('.times').children('div').text());
+				})
+				
+				// 加餐
+				$('#addMeal').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$('#searchbox').data('know',$(this).attr('know'));
+					// 带参数日期
+					$('#searchbox').data('date',$('.times').children('div').text());
+				})
+				
+				// 晚餐
+				$('#dinner').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$(this).attr('know');
+					$('#searchbox').data('know',$(this).attr('know'));
+					$('#searchbox').data('date',$('.times').children('div').text());
+				})
+				// 运动
+				$('#yundong').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$(this).attr('know');
+					$('#searchbox').data('know',$(this).attr('know'));
+					$('#searchbox').data('date',$('.times').children('div').text());
+				})
+				
+				//关闭
+				$('.closeBtn').click(function(){
+					$('#Mask').hide();
+					$('#searchbox').hide();
+					$('#lists').children('a').remove();
+					$('#findFood').val("");
+				})
+
+				//清除历史记录
+				$('.clearHis').click(function(){
+					$('#lists').children('a').remove();
+				})
+			//发送数据到后台获取结果集合
+				var findFood;
+				$('#searchResult').click(function(){
+					findFood = $('#findFood').val();
+					var url = "{weikucms::U('Wap/Reduce/foodSearch',array('token'=>$token,'openid'=>$openid))}"+"&data="+$('#searchbox').data('know')+"&date="+$('#searchbox').data('date');
+					$.post(url,{findFood:findFood},function(data){
+						
+						$("#lists").empty();
+						if (data == '') {
+							str = "<span style='color:red;font-size:13px;padding:10px;'>暂无搜索结果</span>";
+
+							$("#lists").append(str);
+
+						}else{
+							
+							
+							var str=data;
+
+							
+
+
+							$("#lists").append(str);
+
+						}
+					},'text'); 
+				})
+				// 点击进行日期的搜索
+				/*$('.times').click(function(){
+
+				})*/
+				$('#beginTime').date();
+				// $('#endTime').date();
+
+				// 日历
+				$('.times').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#birth').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/3.5+'px'}).show();
+				})
+				
+				// 取消按钮
+				$('.cancel').click(function(){
+					$('#birth').hide();
+					$('#Mask').hide();
+					$('#beginTime').val("");
+					$('#endTime').val("");
+				})
+			})
+		</script>
+	</body>
+</html>	

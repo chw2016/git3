@@ -1,0 +1,432 @@
+<html>
+	<head>
+		<title>体重记录</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/3.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/21.css" />
+		<link href="{weikucms::STATICS}/wapweiui/Reduce/css/common.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/date.js" ></script> 
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/iscroll.js" ></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+		
+	</head>
+	<body>
+		<div id="mcover" style="z-index:100000;">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 日历显示的位置 -->
+		<div id="datePlugin"></div>
+		<!-- 创建遮罩 -->
+		<div id="Mask"></div>
+		<!-- 生日 -->
+		<div id="birth">
+			<div class="choice">
+				请选择日期
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>开始</span>
+					<input id="beginTime" class="kbtn" placeholder="开始日期" type="text" readonly/>
+				</div>
+				
+				<div class="Eject">
+					<span>结束</span>
+					<input id="endTime" class="kbtn" placeholder="结束日期" type="text" readonly/>
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="sure">确定</div>
+			<div class="cancel">取消</div>
+		</div>
+		<!-- 
+		<div id="header">
+			<span style="padding-right:0;">我的减肥</span>
+		</div>
+		头部  -->
+		<!-- 减肥量 -->
+        <if condition="$Number eq 1">
+            <div id="header">
+                <span style="padding-right:0;color:#FF5757;font-size:14px;text-align:center;">你还没有定制过方案，赶紧去定制吧！</span>
+            </div>
+            <script type="text/javascript">
+
+                $(function(){
+
+                    $('#adjust').click(function() {
+                        window.location.href = "{weikucms::U('Wap/Reduce/scheme',array('token'=>$token,'openid'=>$openid))}";
+                    });
+                })
+            </script>
+            <else/>
+        </if>
+		<div class="weightlose">
+			<div class="left">
+				<span>{weikucms:$bweight}kg</span>
+				<br />
+				<span>原始体重</span>
+			</div>
+			<!-- 间隔线 -->
+			<div class="middle">
+				<if condition="$nweight eq ''">
+					<span></span>
+				<else />
+					<span>{weikucms:$nweight}kg</span>
+				</if>
+				<br />
+				<span>当前体重</span>
+			</div>
+			<!-- 间隔线 -->
+			<div class="interval"></div>
+			<div class="right">
+				<if condition="$know eq 1">
+					<if condition="$nweight eq ''">
+						<span></span>
+					<else />
+						<span>{weikucms:$get}kg</span>
+					</if>
+					<br />
+					<span>已增重</span>
+				<else />
+					<if condition="$nweight eq ''">
+						<span></span>
+					<else />
+						<span>{weikucms:$diff}kg</span>
+					</if>
+					<br />
+					<span>已减重</span>
+				</if>
+				
+			</div>
+
+			<div class="clear"></div>
+		</div>
+		<!-- 开始以及结束日期 -->
+		<div>
+			<div class="begintime">开始日期</div>
+			<div class="endtime">结束日期</div>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 下面是日期 -->
+		<div class="dates">
+			<div class="datesleft"></div>
+			<div class="leftArrow">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/whiteArrow.png" />
+			</div>
+			<span id="startTime"><php>echo date("Y.m.d",strtotime("-1 week"));</php></span><span class="timer">—</span><span id="overTime"><php>echo date("Y.m.d");</php>
+			</span>
+			<div class="rightArrow">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/whiteArrow.png" />
+			</div>
+			<!-- 暂时先注释掉 -->
+			<div class="datesright"></div>
+			<div class="clear"></div>
+		</div>
+		<!-- 折线图 -->
+		<div id="zhexian">
+		<if condition="$flages eq 1">
+			<script type="text/javascript">
+				$(function(){
+					show_error_tip("当前时段没有体重记录，请重选！");
+				})
+			</script>
+		<else />
+			<div id="lines"></div>
+		</if>
+		</div>
+		<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载，使用统计图的模式
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('lines')); 
+                // 获取创建好div框
+                option = {
+				    tooltip : {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				        data:['体重(kg)','BMI']//标题
+				    },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+
+				            data : [{weikucms:$times}]
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value'
+				        }
+				    ],
+				    series : [
+				        {
+                            "name":"体重(kg)",
+                            "type":"line",
+                            "data":[{weikucms:$tizhong}]
+                            // 描点
+                           /* "markPoint":{
+                                    data : [
+                                        {type : 'max', name: '最大值'},
+                                        {type : 'min', name: '最小值'}
+                                    ]
+                                }*/
+                        },{
+                            "name":"BMI",
+                            "type":"line",
+                            "data":[{weikucms:$bmi}]
+                            /*"markPoint":{
+                                    data : [
+                                        {type : 'max', name: '最大值'},
+                                        {type : 'min', name: '最小值'}
+                                    ]
+                                }*/
+                        }
+				    ]
+				};
+				
+				
+				
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+        
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+        );
+    </script>
+		<!-- 脚本 -->
+			
+    <!-- 添加记录 -->
+    <div class="addRecord"><a href="{weikucms::U('Wap/Reduce/record',array('token'=>$token,'openid'=>$openid))}">添加记录</a></div>
+    <!-- 邀请好友来 -->
+	<!--
+	<div id="Invitation">
+		分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+	</div>
+	-->
+	<!-- 设置点高度 -->
+	<div style="height:10px;"></div>
+    <if condition="$Number eq 1">
+        <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/subBtnDing.png" width="90px" height="48px" class="adjust" id="adjust"/>
+        <else />
+    </if>
+	<script type="text/javascript">
+		$(function(){
+			// 遮罩分享
+			$('#Invitation').click(function(){
+				$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+				$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+			})
+			// 遮罩消失
+			$('#mcover').click(function(){
+				$(this).hide();
+			})
+			var airtime,terminal;//后面一个结束时间
+			// 日历
+			$('#beginTime').date();
+			$('#endTime').date();
+
+			// 日历
+			$('.dates').click(function(){
+				$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+				$('#birth').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+			})
+			
+			// 取消按钮
+			$('.cancel').click(function(){
+				$('#birth').hide();
+				$('#Mask').hide();
+				$('#beginTime').val("");
+				$('#endTime').val("");
+			})
+			// 确定按钮
+			$('.sure').click(function(){
+				if (!($('#beginTime').val())) {
+					show_error_tip("请选择开始时间");
+					return false;
+				};
+				if (!($('#endTime').val())) {
+					show_error_tip("请选择结束时间");
+					return false;
+				};
+				$('#startTime').html($('#beginTime').val().replace(/-/g,'.'));
+				$('#overTime').html($('#endTime').val().replace(/-/g,'.'));
+				
+				// 去判断两个数字之间的间隔的大小
+				// 开始时间
+				airtime = $('#startTime').text();
+				airtime = airtime.replace(/\./g,'-');
+				
+				// 结束时间
+				terminal = $('#overTime').text();
+				terminal = terminal.replace(/\./g,'-');
+				// 差值
+				// 年份
+				if (terminal.split("-")[0] < airtime.split("-")[0]) {
+					show_error_tip("开始年份必须小于结束年份");
+					return false;
+				};
+				// 月份
+				if (terminal.split("-")[0] <= airtime.split("-")[0] && terminal.split("-")[1] < airtime.split("-")[1]) {
+						show_error_tip("开始月份必须小于结束月份");
+						return false;	
+				};
+				// 天数
+				if (terminal.split("-")[0] <= airtime.split("-")[0] && terminal.split("-")[1] <= airtime.split("-")[1] && terminal.split("-")[2] < airtime.split("-")[2]) {
+					show_error_tip("开始天数必须小于结束天数");
+					return false;
+				};
+				$('#birth').hide();
+				$('#Mask').hide();
+				// 通过ajax提交过程查询数据
+				
+				var begintime = $('#beginTime').val();
+				var endTime = $('#endTime').val();
+				// alert(begintime);return;
+				var url = "{weikucms::U('Wap/Reduce/loseSearch',array('token'=>$token,'openid'=>$openid))}";
+				$.post(url,{begintime:begintime,endTime:endTime}, function(data){
+
+						 if (data[1] == "wrong") {
+						 	// $('#zhexian').children('#sorry').remove();
+						 	show_error_tip("当前时段没有体重记录，请重选！");
+						 	return;
+						 };	
+						  var date = new Array();
+						  var weight = new Array();
+						  var BMI = new Array();
+						  var i = 0,j = 0,k = 0;
+						  // 定义三个字符串
+						  var datestr = "";
+						  for(var x in data[0]){
+						  	  date[i] = data[0][x].split("-")[1] +"."+ data[0][x].split("-")[2];
+						  	  i++;
+						  }
+						  // 日期获取
+						  for(var x in data[1]){
+						  	  weight[j] = data[1][x];
+						  	  j++;
+						  }
+						  // 体重获取
+						   for(var x in data[2]){
+						  	  BMI[k] = data[2][x];
+						  	  k++;
+						  }
+						  // BMI 获取
+
+	                      $('#lines').children("div").remove();
+
+	                      // 删除上面的，重新添加数据
+	                       // 路径配置
+					        require.config({
+					            paths: {
+					                echarts: 'http://echarts.baidu.com/build/dist'
+					            }
+					        });
+					        
+					        // 使用
+					        require(
+					            [
+					                'echarts',
+					                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载，使用统计图的模式
+					            ],
+					            function (ec) {
+					                // 基于准备好的dom，初始化echarts图表
+					                var myChart = ec.init(document.getElementById('lines')); 
+					                // 获取创建好div框
+					                var option = {
+					                    tooltip: {
+					                        show: true
+					                    },
+					                    legend: {
+					                        data:['体重(kg)','BMI']//标题
+					                    },
+					                    xAxis : [
+					                        {
+					                            type : 'category',
+
+					                            data : date
+					                            // x轴坐标数据
+					                        }
+					                    ],
+					                    // y轴的值得类型
+					                    yAxis : [
+					                        {
+					                            type : 'value'
+					                        }
+					                    ],
+					                    // 系列
+					                    series : [
+					                        {
+					                            "name":"体重(kg)",
+					                            "type":"line",
+					                            "data":weight
+					                        },{
+					                            "name":"BMI",
+					                            "type":"line",
+					                            "data":BMI
+					                            
+					                        }
+					                    ]
+					                };
+					        
+					                // 为echarts对象加载数据 
+					                myChart.setOption(option); 
+					            }
+					        );
+	                  },'json');
+				$('#beginTime').val("");
+				$('#endTime').val("");
+				
+			})
+			// 日期函数
+			 //返回某月的总天数0-11月份
+        	function getDays(months,years){
+            	var date = new Date();
+            	// var y = date.getFullYear();
+            	// var m = date.getMonth() + 1;
+            	if(months == 2){
+                	return years % 4 == 0 ? 29 : 28;
+            	}else if(months == 1 || months == 3 || months == 5 || months == 7 || months == 8 || months == 10 || months == 12){
+                	return 31;
+            	}else{
+                	return 30;
+            	}
+        	}
+		})
+	</script>
+	</body>
+</html>

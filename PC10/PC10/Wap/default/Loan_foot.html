@@ -1,0 +1,73 @@
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style(1).css">
+<script>
+	$(function(){
+		var x = 0;
+		$("#more").click(function(){
+			if(x == 0){
+				$("#more1").css("display","block");
+				x=1;
+			}else{
+				$("#more1").css("display","none");
+				x=0;
+			}
+			
+			
+		})
+	
+	})
+</script>
+<style>
+	#more1 li{
+		width: 70px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+        font-size: 12px;
+	}
+    .fixB .myli.on .icon5{
+        background-position: 0 7px;
+    }
+
+</style>
+<div class='fixB' style="z-index: 999;<if condition="$foot_css eq 1">height:53px;</if>" >
+    <ul class='myul ptb5 c999999'>
+        <li class='myli <if condition="$foot eq 1">on</if>'>
+            <a href="{weikucms::U('Loan/index',array('token'=>$token,'openid'=>$openid))}">
+                <div class='icon1'></div>
+                <div class="textMiddle">首页</div>
+            </a>
+        </li>
+        <li class='myli <if condition="$foot eq 2">on</if>'>
+            <a href="{weikucms::U('Loan/baoku',array('token'=>$token,'openid'=>$openid))}">
+                <div class='icon2'></div>
+                <div class="textMiddle">爆款</div>
+            </a>
+        </li>
+        <li class='myli <if condition="$foot eq 3">on</if>'>
+            <a href="{weikucms::U('Loan/user_index',array('token'=>$token,'openid'=>$openid))}">
+                <div class='icon3'></div>
+                <div class="textMiddle">我的</div>
+            </a>
+        </li>
+        <li class='myli <if condition="$foot eq 4">on</if>'>
+            <a href="{weikucms::U('Commercedyb/zoneIndex',array('token'=>$token,'openid'=>$openid))}">
+                <div class='icon4'></div>
+                <div class="textMiddle">社区</div>
+            </a>
+        </li>
+        <li class='myli <if condition="$foot eq 5">on</if>' style="position: relative;">
+        	<div style="position: absolute;top: -100px;right: 2px;display: none;" id="more1">
+        		<ul style="border: 1px solid gray;border-radius: 5px;">
+        			<li style="background-color: #FFF;"><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6057">铆钉突击队</a></li>
+                    <li><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6058">勾兑勾兑</a></li>
+                    <li><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6059">帮助</a></li>
+        		</ul>
+        	</div>
+            <a href="{weikucms::U('Loan/more',array('token'=>$token,'openid'=>$openid))}" id="more7">
+            <!--<a href="javascript:;;" id="more1">-->
+                <div class='icon5'></div>
+                <div class="textMiddle">更多</div>
+            </a>
+        </li>
+    </ul>
+</div>

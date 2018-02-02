@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<!-- saved from url=(0140)http://wx.rongchain.com/mobile.php?act=module&goodsid=18&from_user=oMWhZt_kOO8jsIU7RL3dw4QvfBYM&user_type=1&name=washing&do=wapdetail&weid=5 -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣服务</title>
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/page.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/touchslider.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/klass.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jsAddress.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/select.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jscommon.js"></script>
+<!--定位-->
+<script type="text/javascript" src="{weikucms::STATICS}/GetLocation.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/api"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/getscript"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/convertor.js"></script>
+<!--/定位-->
+<script>
+    $(function(){
+        var getLocation_Loading = 0;
+        var locationAddress = '';//存储定位后的地址详情字符串
+        baiduGetLocaltion();
+    });
+</script>
+<script type="text/javascript">
+    function showxiangqing() {
+        $("#xiangqing").show();
+    }
+    function closexiangqing() {
+        $("#xiangqing").hide();
+        return false;
+    }
+
+    function closeAxiangqing() {
+        $("#Axiangqing").hide();
+        return false;
+    }
+</script>
+<style>
+.address_div {
+    display: none;
+}
+
+.inline {
+    display: inline-block; padding-top: 5px; margin-bottom: 0; margin-left: 5px; vertical-align: middle;
+}
+</style>
+</head>
+<body class="bg-w index">
+	<form method="post" action="http://wx.rongchain.com/mobile.php?act=module&name=washing&do=wapcart&weid=5" id="formorder">
+		<input type="hidden" name="nums" value="1">
+		<input type="hidden" name="delivery_fee" id="delivery_fee" value="0.00">
+		<div style="overflow: hidden;" class="boxflexr" id="iscroll">
+			<!--商品详情页-->
+			<div class="page_item">
+				<div class="item_main1">
+					<div class="goods_img" id="J_goods_img">
+						<div class="mod_img">
+							<a href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}">
+								<img src="{weikucms:$goods['goods_index_pic']}">
+							</a>
+						</div>
+					</div>
+					<!--/商品图-->
+					<div class="goods_info borderS">
+						<!--商品价格-->
+						<div class="goods_price">
+							<div class="price_Other mb10">
+								<p class="price_wrap">
+									<span class="title">取送费:</span>
+									<span class="price">0.00</span>
+                                    <span class="title">商品价格:</span>
+                                    <span class="price">{weikucms::floatval($goods['goods_price'])}</span>
+									<span>元</span>
+									<span class="Remarks">(广州市区内，花都，增城，萝岗区域暂未开通)</span>
+									<span>
+										<a style="color: #337FE5" href="javascript:showxiangqing();">详情</a>
+									</span>
+								</p>
+							</div>
+						</div>
+						<!--/商品价格-->
+					</div>
+					<!-- 收货地址 -->
+					<if condition="$info['id']">
+					<section class="section_1 ">
+						<div class="m_input borderS">
+							<a href="{weikucms::U('Laundry/customer',array('token'=>$token,'openid'=>$openid))}&goods_id={weikucms:$goods['id']}" class="J_bi_product_item J_ytag">
+								<div class="label c94">个人信息</div>
+								<div class="input">
+									<div id="J_defaultReceiverWrapper">
+										<input type="hidden" name="aid" value="33573">
+										<p class="person">
+											<span class="name">{weikucms:$info['c_name']}</span>
+											<span class="tel">{weikucms:$info['c_tel']}</span>
+										</p>
+										<p class="address">{weikucms:$info['c_province']}{weikucms:$info['c_city']}{weikucms:$info['c_town']}{weikucms:$info['c_address']}</p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</section>
+					<else />
+					<section class="section_1 ">
+						<div class="m_input borderS">
+							<a href="{weikucms::U('Laundry/customer',array('token'=>$token,'openid'=>$openid))}&goods_id={weikucms:$goods['id']}" class="J_bi_product_item J_ytag">
+								<div class="titel">请先点击填写详细地址</div>
+							</a>
+						</div>
+					</section>
+					</if>
+					<if condition="$goods['is'] eq 1">
+					<div class="goods_item goods_quantity mb10  borderS">
+		                <p class="title c94">购买数量</p>
+		                <div class="quantity">
+		                    <div class="act_wrap">
+		                        <a id="decrement2" class="decrement add y_hover J_ytag btn_disabled" noto="#item2" href="javascript:void(0);"></a>
+		                        <input type="text" id="order_goods_num" name="order_goods_num" value="1" class="quantity-text num" readonly="">
+		                        <a id="increment2" class="increment  add reduce y_hover J_ytag btn_disabled" href="javascript:void(0);"></a>
+		                    </div>
+		                </div>
+		            </div>
+		            <else />
+		            </if>
+					<!-- 服务日期-->
+					<section class="">
+						<div id="J_shipDateTemplateWrapper">
+							<div class="m_input J_shipTimeContainer">
+								<label for="id_separate_order_time" class="c94">服务日期</label>
+								<div class="selectBox  selectcont y_hover">
+									<select name="washing_date" id="washing_date">
+                                        <option value="请选择服务日期" selected>请选择服务日期</option>
+									</select>
+                                    <div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!-- /服务日期-->
+					<!-- 服务时段-->
+					<section class="section_4">
+						<div id="J_shipDateTemplateWrapper">
+							<div class="m_input J_shipTimeContainer borderS">
+								<label for="id_separate_order_time" class="c94">服务时段</label>
+								<div class="selectBox  selectcont y_hover">
+									<select class="" name="washing_time" id="washing_time">
+                                        <option value="请选择服务时间段" selected>请选择服务时间段</option>
+									</select>
+                                    <div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+                    <!-- 服务商选择-->
+					<section class="section_4">
+						<div id="J_shipDateTemplateWrapper">
+							<div class="m_input J_shipTimeContainer borderS">
+								<label for="id_separate_order_time" class="c94">服务商</label>
+								<div class="selectBox  selectcont y_hover">
+									<select class="s" name="online" id="online">
+									</select>
+                                    <div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section class="section_4">
+						<div class="m_input select y_hover borderS">
+							<label for="" class="c94">支付方式 </label>
+							<div class="y_hover" style="float: right">
+								<!-- <label class="inline" for="card"><input type="radio" name="paytype" value="1" />余额支付</label> 
+                        <label class="inline" for="alipay"><input type="radio" name="paytype" value="2" id="alipay" checked />微信支付</label>
+                        <label class="inline" for="out"><input type="radio" name="paytype" value="3" id="out" checked />现金支付</label> 
+                        <label class="inline" for="out"><input type="radio" name="paytype" value="4" id="pos" /> POS刷卡</label>   
+                        -->
+								<div class="selectBox  selectcont y_hover">
+									<select class="select01 J_shippingDateSelect select_J_ytag" name="paytype" id="paytype">
+										<option value="0">现金支付</option>
+										<!--<option value="1">支付宝支付</option>-->
+										<option value="4">余额支付</option>
+										<option value="2">微信支付</option>
+									</select>
+                                    <div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- 备注-->
+				<section class="section_4">
+					<div class="m_input">
+						<textarea placeholder="若您对订单有特殊要求，可在此备注" name="remark" id="special_requirements"></textarea>
+					</div>
+				</section>
+				<!-- 备注-->
+				<!-- 商品介绍 -->
+				<div class="goods_details borderS mb10">
+					<h2>商品简介</h2>
+					<div class="goods_details_text">{weikucms:$goods['goods_brief']}</div>
+				</div>
+				<!-- ／商品介绍 -->
+			</div>
+			<!--/商品详情页-->
+		</div>
+		<!-- 固定底部 下单-->
+		<div id="footer_points"></div>
+		<div class="bar-draw-two" id="mod_draw_wrapper">
+		    <input type="hidden" id="goods_id" value="{weikucms:$goods['id']}">
+		    <input type="hidden" id="key" value="{weikucms:$key}">
+		    <input type="hidden" id="online_id" value="{weikucms:$info['online_id']}">
+            <input type="hidden" id="url" value="{weikucms::U('Laundry/latANDlong',array('token'=>$token,'openid'=>$openid))}">
+			<if condition="$info['id']">
+			<button type="button" class="Red btn-draw" value="立即下单" id="sorder" style="width: 100%">立即下单</button>
+			<else />
+			<button disabled="disabled" type="button" class="Ash btn-draw" value="立即下单" id="sorder" style="width: 100%">立即下单</button>
+			</if>
+			<div id="showBottom" class="my">
+				<a href="javascript:;">
+					<span class="my-index">更多</span>
+				</a>
+			</div>
+		</div>
+		<div class="cbp-spmenu  cbp-spmenu-bottom" id="cbp-spmenu">
+			<div class="cbp-spmenu-horizontal ">
+				<a href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}">
+					<span class="home-index">首页</span>
+				</a>
+				<a href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}">
+					<span class="Order-index">订单</span>
+				</a>
+				<a href="{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}">
+					<span class="card-index">会员中心</span>
+				</a>
+			</div>
+		</div>
+		<!-- /固定底部 下单-->
+		<!-- 我的弹出框-->
+		<script type="text/javascript" src="{weikucms::RES}/laundry/js/classie.js"></script>
+		<script type="text/javascript">
+            var menuBottom = document.getElementById('cbp-spmenu'), showBottom = document
+                    .getElementById('showBottom'), body = document.body;
+
+            showBottom.onclick = function() {
+                classie.toggle(this, 'active');
+                classie.toggle(menuBottom, 'cbp-spmenu-open');
+                disableOther('showBottom');
+            };
+            function disableOther(button) {
+                if (button !== 'showBottom') {
+                    classie.toggle(showBottom, 'disabled');
+                }
+            }
+        </script>
+		<!-- /我的弹出框-->
+		<!-- 选择框表单-->
+		<script>
+            $(function() {
+                selectcont('.select01', '.selectBx');
+
+            });
+        </script>
+		<!-- /选择框表单-->
+		<script>
+            jQuery(function($) {
+                //num click
+                $('#sorder').click(function(event) {
+                    var method = $("#paytype").find("option:selected").text();
+                    $("#cod_fuwu").html(method);
+                    var washing_date = $.trim($("#washing_date").val());
+                    if(washing_date == '请选择服务日期'){
+                        $(".X").text("服务日期不能为空");
+                        $("#Axiangqing").show();
+                        return false;
+                    }else{
+                        $("#washing_date_tip").html(washing_date);
+                        var washing_time = $.trim($("#washing_time").val());
+                        $("#washing_time_tip").html(washing_time);
+                        if(washing_time == '请选择服务时间段'){
+                            $(".X").text("服务时段不能为空");
+                            $("#Axiangqing").show();
+                            return false;
+                        }else{
+                            var o = $("#online").find('option:selected').val();
+                            if(o == 'error'){
+                                $(".X").text("服务商不能为空");
+                                $("#Axiangqing").show();
+                                return false;
+                            }else{
+                                $("#onlinemsg").text($("#online").find('option:selected').text());
+                                $("#codFloat").show();
+                                $("#GoPay").click(function(){
+                                    var c_tel = $(".tel").text().trim();
+                                    var paytype = $("#paytype").find("option:selected").val();
+                                    var special_requirements = $("#special_requirements").val();
+                                    var goods_id = $("#goods_id").val();
+                                    var key = $("#key").val();
+                                    var online_id = $("#online_id").val();
+                                    var order_goods_num = $("#order_goods_num").val();
+                                    var url = "{weikucms::U('Laundry/order',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{o:o,order_goods_num:order_goods_num,key:key,online_id:online_id,goods_id:goods_id,c_tel:c_tel,washing_date:washing_date,washing_time:washing_time,paytype:paytype,special_requirements:special_requirements},function(data){
+                                        if(data.status == 1){
+                                            window.location.href = data.url;
+                                        }else{
+                                            $(".X").text(data.info);
+                                            $("#Axiangqing").show();
+                                            return false;
+                                        }
+                                    },'json');
+                                });
+                            }
+                        }
+                    }                    
+                });
+                //money click
+                $('#codGoPayCancel').click(function(event) {
+                    $("#codFloat").hide();
+                    return false;
+                });
+            })
+        </script>
+		<!-- 弹出框 提示-->
+		<!-- 弹出框 提示 是否确认购买 -->
+		<div id="codFloat" style="display: none" class="cod">
+			<div class="wx_mask"></div>
+			<div class="wx_confirm">
+				<div class="wx_confirm_inner">
+					<div class="wx_confirm_hd">
+						<div class="wx_confirm_tit">是否确认提交订单？</div>
+					</div>
+					<div class="wx_confirm_bd">
+						<div class="wx_confirm_cont">
+							<div class="confirm_order">
+								<p>
+									<em>支付方式：</em>
+									<span id="cod_fuwu">微信支付</span>
+								</p>
+								<p>
+									<em>联系电话：</em>
+									<span>{weikucms:$info['c_tel']}</span>
+								</p>
+								<p>
+									<em>服务日期：</em>
+									<span id="washing_date_tip"></span>
+								</p>
+								<p>
+									<em>服务时间：</em>
+									<span id="washing_time_tip"></span>
+								</p>
+                                <p>
+									<em>服务商：</em>
+									<span id="onlinemsg"></span>
+								</p>
+								<p>
+									<em>详细地址：</em>
+									<span>{weikucms:$info['c_address']}</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="wx_confirm_bd">
+						<div class="wx_confirm_btns">
+							<button type="cancel" id="codGoPayCancel">取消</button>
+							<button type="button" id="GoPay">确认</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 弹出详情框 -->
+		<div id="xiangqing" style="display: none" class="cod">
+			<div class="wx_mask"></div>
+			<div class="wx_confirm">
+				<div class="wx_confirm_inner">
+					<div class="wx_confirm_hd">
+						<div class="wx_confirm_tit">区域详情</div>
+					</div>
+					<div class="wx_confirm_bd">
+						<div class="wx_confirm_cont">
+							<div class="confirm_order">
+								<p>广州市区内，花都，增城，萝岗区域暂未开通</p>
+							</div>
+						</div>
+						<div class="wx_confirm_btns">
+							<button type="button" style="width: 100%; color: #FFF" onClick="closexiangqing();">确认</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 提示弹出详情框 -->
+		<div id="Axiangqing" style="display: none" class="A cod">
+			<div class="B wx_mask"></div>
+			<div class="C wx_confirm">
+				<div class="D wx_confirm_inner">
+					<div class="E wx_confirm_bd">
+						<div class="F wx_confirm_cont">
+							<div class="G confirm_order">
+								<p class="X" style="text-align: center;padding-top: 20px;"></p>
+							</div>
+						</div>
+						<div class="H wx_confirm_btns">
+							<button type="button" style="width: 100%; color: #FFF" onClick="closeAxiangqing();">确认</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

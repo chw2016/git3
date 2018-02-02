@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>鱼美人-个人资料</title>    
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/style.css">
+		<script src="{weikucms::RES}/mru/js3/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js3/main.js"></script>
+		<script src="{weikucms::RES}/mru/js3/msg.js"></script>
+<!-- 			<script src="{weikucms::RES}/mru/js3/edit.js"></script> -->
+		 <script src="{weikucms::STATICS}/common/edit.js"></script>
+	
+    </head>
+    
+<style>
+.__editable_class_private__{ width:200px; height:30px;border:none;text-align:center; }    
+
+</style>    
+    <body class="userCenter" style="overflow-x:hidden">
+   <div class="usersconten">
+   	<div class="userlist">
+   		<div class="lname">头像</div>
+   		<div class="luser imga"><img style="width:80px; height:70px;" src="{weikucms:$headimgurl}"/></div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	<div class="userlist">
+   		<div class="lname">昵称</div>
+   		<div class="luser editable" data-key="name"><if condition="$list['name']" >{weikucms:$list['name']}<else/>昵称</if></div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	<div class="userlist">
+   		<div class="lname">积分</div>
+   		<div class="luser uscolor"><if condition="$list['num']" >{weikucms:$list['num']}<else/>0</if></div>
+   		<div class="clearBoth"></div>
+   		
+   	</div>
+   	
+   	<div class="userlist">
+   		<div class="lname">红包</div>
+   		<div class="luser uscolor"><if condition="$list['hongbao']" >{weikucms:$list['hongbao']}元<else/>0元</if></div>
+   		<div class="clearBoth"></div>
+   		
+   	</div>
+   	
+   	<div class="userlist">
+   		<div class="lname">卡号</div>
+   		<div class="luser uscolor"><if condition="$list['idcard']" >{weikucms:$list['idcard']}<else/><a href="{weikucms::U('Mhyzx/bd',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >您还未绑定</a></if></div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	<div class="userlist">
+   		<div class="lname" >性别</div>
+   		<div class="luser">
+   		
+   		<input type="radio" <if condition="$list['sex'] eq '男'" >checked="checked"</if>  name="sex" onclick="aaa('男','sex')" />&nbsp男&nbsp&nbsp&nbsp
+   		
+   		<input type="radio" <if condition="$list['sex'] eq '女'" >checked="checked"</if> name="sex" class="aaa" onclick="bbb('女','sex')"  />&nbsp女
+
+   		</div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	<div class="userlist">
+   		<div class="lname">联系电话</div>
+   		<div class="luser editable" data-key="tel"><if condition="$list['tel']" >{weikucms:$list['tel']}<else/>电话</if></div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	
+   	
+   	   	<div class="userlist">
+   		<div class="lname">收货地址</div>
+   		<div class="luser editable" data-key="address"><if condition="$list['address']" >{weikucms:$list['address']}<else/>地址</if></div>
+   		<div class="clearBoth"></div>
+   	</div>
+   	
+   	
+   	   	   	
+   		<div class="lname" style="margin:20px 0px 45px 0px;color:red;" >*收货地址必须输入正确否则购买商品收不到货</div>
+   		
+
+   	
+   </div>
+   <div class="clearBoth"></div>
+
+<style>
+.btm.save {
+	bottom: 0;
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	height: 45px;
+	background-color: #8CAC01;
+	line-height: 45px;
+	color: #FFF;
+	letter-spacing: 5px;
+	font-size: 16px;
+}
+   
+</style>
+    
+ 	<div class="btm save" onclick='location.href="{weikucms::U('Mhyzxsy/gr',get(token,openid))}"' >
+		提交修改
+	</div> 
+<script type="text/javascript">
+$(function(){
+	$('.editable').editable(function(key, val){
+		var key=key;
+		var val=val;
+	    var data = {
+	    		"key":key,
+	    		"val":val,
+	    };
+	    //data[key] = val;
+	    var url1 = "{weikucms::U('ajax',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+		 $.post(url1,data,function(data){
+			// alert(data.str);
+		 },'json');
+	});
+	
+
+})
+
+   function aaa(val,key){
+	var key=key;
+	var val=val;
+	var data = {
+    		"key":key,
+    		"val":val,
+    };
+    //data[key] = val;
+    var url1 = "{weikucms::U('ajax',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+	 $.post(url1,data,function(data){
+		// alert(data.str);
+	 },'json');
+   }
+   
+function bbb(val,key){
+	var key=key;
+	var val=val;
+	var data = {
+    		"key":key,
+    		"val":val,
+    };
+    //data[key] = val;
+    var url1 = "{weikucms::U('ajax',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+	 $.post(url1,data,function(data){
+		 //alert(data.str);
+	 },'json');
+   }
+
+</script>
+<include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+</html>

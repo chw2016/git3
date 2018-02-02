@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <title>劳动局</title>
+ <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/common.css" />
+ <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/index.css" />
+ <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/font-awesome.min.css" />
+ <script src="{weikucms::STATICS}/wapweiui/labor/js/jquery-1.11.1.min.js"></script>
+ <script src="{weikucms::STATICS}/wapweiui/labor/js/msg.js"></script>
+ <script src="{weikucms::STATICS}/wapweiui/labor/js/prompt.js"></script>
+  <style>
+	body{
+	 background-color: #f2f1f0;
+	}
+	</style>
+  <script>
+      $(function(){
+          var type = "{weikucms:$_GET['type']}";
+          if(type ==1){
+              $('.info').addClass("hide");
+              $('.shensu').addClass("active");
+          }else{
+              $('.tijiao').addClass("hide");
+              $('.sinfo').addClass("active");
+          }
+          $("body").touch(function(){
+              $(".complaint_header_user1").removeClass('on');
+          })
+          $(".complaint_header_user1").click(function(){
+              event.stopPropagation();
+              if($(this).hasClass('on')){
+
+                  $(this).removeClass('on');
+              }else{
+                  $(".complaint_header_user1").removeClass('on');
+                  $(this).addClass('on');
+              }
+          })
+          $(".user_sex ul li").touch(function(){
+              $(this).parent().parent().next().val($(this).html());
+          })
+          $(".complaint_header_top li").touch(function(){
+              $(this).addClass("active").siblings().removeClass("active");
+              var index = $(this).index();
+              $(".complaint_header_nav>li").eq(index).show().siblings().hide();
+          });
+          $(".btn").touch(function(){
+              var name=$("[name=name]").val();
+              var tel=$("[name=tel]").val();
+              var sex=$("[name=sex]").val();
+              var Education=$("[name=Education]").val();
+              var Place=$("[name=Place]").val();
+              var home=$("[name=home]").val();
+              var id=$("[name=id]").val();
+              var lid=$("input[name=lid]").val();
+              var Result=$("input[name=Result]").val();
+              var  Company=$("input[name=Company]").val();
+              var  Event=$(".Event").val();
+              var address=$("#location_p").val()+$("#location_c").val()+$("#location_a").val();
+              var flag=$(this).attr('flag');
+              if(flag==1){//重复提交
+                  return false;
+              }
+
+              if(name==''){
+                  show_error_tip('请填写姓名');
+                  $("[name=name]").focus();
+                  return false;
+              }
+              if(sex==''){
+                  show_error_tip('请填写性别');
+                  $("[name=sex]").focus();
+                  return false;
+              }
+              if(Education==''){
+                  show_error_tip('请填写学历');
+                  $("[name=Education]").focus();
+                  return false;
+              }
+              if(Place==''){
+                  show_error_tip('请填写籍贯');
+                  $("[name=Place]").focus();
+                  return false;
+              }
+              if(home==''){
+                  show_error_tip('请填写户口所在地');
+                  $("[name=home]").focus();
+                  return false;
+              }
+              if(id==''||id.length!=18){
+                  show_error_tip('请填写正确的身份证');
+                  $("[name=id]").focus();
+                  return false;
+              }
+              if(tel==''||tel.length!=11){
+                  show_error_tip('请填写正确的手机号码');
+                  $("[name=tel]").focus();
+                  return false;
+              }
+              if(Company==''){
+                  show_error_tip('请填写单位');
+                  $("[name=Company]").focus();
+                  return false;
+              }
+              if(Result==''){
+                  show_error_tip('请填写希望达成结果');
+                  $("[name=Result]").focus();
+                  return false;
+              }
+              if(Event==''){
+                  show_error_tip('请填写希望达成结果');
+                  $("[name=Event]").focus();
+                  return false;
+              }
+              //提交表单
+              var posturl = "{weikucms::U('Labor/shenxu',array('token'=>$token,'openid'=>$openid))}";
+              $.post(posturl,
+                      {name:name,sex:sex,tel:tel,id:id,address:address,
+                          Education:Education,place:Place,home:home,Event:Event,Company:Company,Result:Result
+                      },
+                      function(data){
+                          if(data.status == 1){
+                              msg.alert('申述成功！');
+                              window.location.href = "{weikucms::U('Labor/appeal',array('token'=>$token,'openid'=>$openid,'type'=>2))}";
+                          }else{
+                              msg.alert("系统繁忙...");
+                              window.location.href = data.url;
+                          }
+                      },
+                      'json');
+              $(this).attr('flag',1);
+              /*  $(".btn").text('提交中');
+               msg.confirm('<p style=font-size:19px;>信息已提交成功</p>')*//*
+               */
+          })
+      });
+
+  </script>
+ </head>   
+ <body> 
+  <div class="complaint_header"> 
+   <ul class="complaint_header_top">
+       <li class="shensu ">我要申述</li>
+       <li class="sinfo">申述记录</li>
+   </ul> 
+   <ul class="complaint_header_nav"> 
+    <li class="tijiao">
+     <div class="complaint_header_center"> 
+      <div class="complaint_user"> 
+       <p>*姓名</p>
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的姓名" value="" name="name"  /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>*性别</p>
+       <div class="complaint_header_user1 shadow">
+       <div class="user_sex">
+              <ul>
+                    <li>男</li>
+                    <li>女</li>
+              </ul>
+       </div> 
+        <input type="text" placeholder="请输入您的性别" value="" name="sex" readonly  />
+      <i class="fa fa-chevron-down wen" ></i>
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>学历</p> 
+       <div class="complaint_header_user1 shadow"> 
+       <div class="user_sex">
+              <ul>
+                    <li>小学</li>
+                    <li>初中</li>
+                    <li>高中</li>
+                    <li>中专</li>
+                    <li>大学</li>
+              </ul>
+       </div> 
+        <input type="text" placeholder="请输入您的学历" value="" name="Education" readonly/> 
+        <i class="fa fa-chevron-down wen" ></i>
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>籍贯</p> 
+       <div class="complaint_header_user1 shadow"> 
+            <select class="shenfen" id="origin" name="Place">
+                  <option value="北京">北京市</option>
+                                                  <option value="浙江省">浙江省</option>
+                                                  <option value="天津市">天津市</option>
+                                                  <option value="安徽省">安徽省</option>
+                                                  <option value="上海市">上海市</option>
+                                                  <option value="福建省">福建省</option>
+                                                  <option value="重庆市">重庆市</option>
+                                                  <option value="江西省">江西省</option>
+                                                  <option value="山东省">山东省</option>
+                                                  <option value="河南省">河南省</option>
+                                                  <option value="湖北省">湖北省</option>
+                                                  <option value="湖南省">湖南省</option>
+                                                  <option value="广东省">广东省</option>
+                                                  <option value="海南省">海南省</option>
+                                                  <option value="山西省">山西省</option>
+                                                  <option value="青海省">青海省</option>
+                                                  <option value="江苏省">江苏省</option>
+                                                  <option value="辽宁省">辽宁省</option>
+                                                  <option value="吉林省">吉林省</option>
+                                                  <option value="台湾省">台湾省</option>
+                                                  <option value="河北省">河北省</option>
+                                                  <option value="贵州省">贵州省</option>
+                                                  <option value="四川省">四川省</option>
+                                                  <option value="云南省">云南省</option>
+                                                  <option value="陕西省">陕西省</option>
+                                                  <option value="甘肃省">甘肃省</option>
+                                                  <option value="黑龙江省">黑龙江省</option>
+                                                  <option value="香港特别行政区">香港特别行政区</option>
+                                                  <option value="澳门特别行政区">澳门特别行政区</option>
+                                                  <option value="广西壮族自治区">广西壮族自治区</option>
+                                                  <option value="宁夏回族自治区">宁夏回族自治区</option>
+                                                  <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                                                  <option value="内蒙古自治区">内蒙古自治区</option>
+                                                  <option value="西藏自治区">西藏自治区</option>
+            </select>
+      <!--   <input type="text" placeholder="籍贯" value="" name="Place" readonly />  -->
+        <i class="fa fa-chevron-down wen" ></i>
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>户口所在地</p> 
+       <div class="complaint_header_user shadow"> 
+                   <span class="selectBox fa "> 
+                            <select name="location_p" id="location_p">
+                            </select>
+                    </span>
+                    <span class="selectBox fa "> 
+                            <select name="location_c" id="location_c">
+                            </select>
+                    </span>
+                    <span class="selectBox fa"> 
+                            <select name="location_a" id="location_a">
+                            </select>
+                    </span>
+                  <!-- <i class="fa fa-angle-down arrow_dw" style="font-size:17px"/></i>
+                  <i class="fa fa-angle-down arrow_dw1" style="font-size:17px"/></i>
+                  <i class="fa fa-angle-down arrow_dw2" style="font-size:17px"/></i> -->
+                  <!-- <select name="location_c" id="location_c">
+                  </select>
+                  <select name="location_a" id="location_a">
+                  </select> -->
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>*身份证号码</p>
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的身份证号码" value="" name="id" onkeyup="value=this.value.replace(/\D+/g,'')" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>*联系方式</p>
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的联系方式" value="" name="tel" onkeyup="value=this.value.replace(/\D+/g,'')" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>单位名称</p>
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的单位" value="" name="Company" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user">
+       <p>单位地址</p>
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的单位地址" value="" name="Result" />
+       </div> 
+      </div>
+      <div class="complaint_user"> 
+       <p>诉求</p>
+       <div class="complaint_header_user shadow"> 
+        <textarea placeholder="请输入你的诉求" name="Event"></textarea>
+       </div> 
+      </div> 
+     </div> 
+     <div class="mt10 mb10"> 
+      <span class="btn">提交信息</span> 
+     </div> </li> 
+    <li class="info">
+           <div class="p5 clearfix" style="background-color: #f2f1f0;">
+               <span style="color:#e23840" class="fr">申诉次数：{weikucms:$count}次</span>
+           </div>
+           <foreach name="list" item="i">
+               <div class="shadow Company mb10">
+                   <p>姓名：{weikucms:$i.name}</p>
+                   <p>时间：{weikucms:$i.add_time}</p>
+                   <p>单位：{weikucms:$i.company}</p>
+                   <div class="Handle ">
+                       <div class="Handle_nav">
+                           <if condition="$i['type'] eq 0">
+                               <span class="Handle_nav_green">等待处理</span>
+                               <else/>
+                               <span class="Handle_nav_red">申诉成功</span>
+                           </if>
+                       </div>
+                   </div>
+                   <if condition="$i['type'] eq 1">
+                       <if condition="$i['reply']">
+                           <div>
+                                回复：{weikucms:$i.reply}
+                           </div>
+                       </if>
+                   </if>
+               </div>
+           </foreach>
+       </li>
+   </ul> 
+  </div>   
+  <script src="{weikucms::STATICS}/wapweiui/labor/js/region_select.js"></script>
+    <script type="text/javascript">
+        new PCAS('location_p', 'location_c', 'location_a', '广东省', '', '');
+  </script>
+ </body>
+</html>

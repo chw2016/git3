@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/main.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog.css?2014-05-21" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/jquery_min.js?2014-05-21"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/main.js?2014-05-21"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog_min.js?2014-05-21"></script>
+    <title>积分商城</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style type="text/css">
+        .dialogWindow.tip .dialogContent{
+            text-align: left;
+            padding-left: 8px;
+            font-size: 14px;;
+        }
+        .dialogWindow.tip .dialogContent .editadd{
+            margin-left: 90px;
+            font-size: 12px;
+            color: #56C6D6;
+            border-bottom: 1px solid #56C6D6;
+        }
+    </style>
+    <!-- Mobile Devices Support @end -->
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<script>
+
+    function exchange(exc_id,point){
+        var url = "{weikucms::U('Wap/Usercenter/joinusercenter',array('token'=>$token,'uid'=>$data['id'],'openid'=>$openid))}";
+        confirm('<label style="text-align: left;">收货人：<span>{weikucms:$aUser.name}</span></label><br/>' +
+        '<label>地址：<span>{weikucms:$aUser.stradd}</span></label><br/>' +
+        '<label>联系方式：<span>{weikucms:$aUser.phone}</span></label><br/>' +
+        '<label>扣除积分：<span>'+point+'</span><a href="'+url+'"><span class="editadd">修改地址</span></a></label>', function(){
+            loading(true);
+            $.ajax({
+                url: "{weikucms::U('Wap/Course/exchange',array('token'=>$token,'uid'=>$data['id'],'openid'=>$openid))}",
+                type:"post",
+                data:{exc_id:exc_id,point:point},
+                dataType:"JSON",
+                success: function(res){
+                    loading(false);
+                    if(0 == res.status){
+                        alert(res.info);
+                        setTimeout(function(){
+                            window.location.href = res.url;
+                        },'1000');
+
+                    }else{
+                        alert(res.info);
+                        setTimeout(function(){
+                            window.location.href = res.url;
+                        },'3000');
+
+                    }
+                }
+            });
+//
+        });
+    }
+
+</script>
+<style>
+    .list_exchange{
+        padding-top:10px;
+    }
+    .list_exchange li[data-card]:first-of-type{
+        margin-top:0;
+    }
+</style>
+
+<div class="container exchange ">
+    <div class="body">
+        <ul class="list_exchange" >
+            <if condition="$data">
+                <volist name="data" id="vo">
+                    <li data-card onclick="this.classList.toggle('on');" >
+                        <header>
+                            <ul class="tbox">
+                                <li>
+                                    <!--<h5>{weikucms:$vo.id} </h5>-->
+                                    <h5>{weikucms:$vo.title} </h5>
+                                    <p>有效期至{weikucms:$vo.endtime} </p>
+                                </li>
+                            </ul>
+                        </header>
+                        <section>
+                            <div>
+                                <figure>
+                                    <img src="{weikucms:$vo.pic}" />
+                                </figure>
+                                <article class="p">{weikucms:$vo.explain|htmlspecialchars_decode|strip_tags}</article>
+                            </div>
+                        </section>
+                        <footer>
+                            <dl class="box">
+                                <dd><label><big>{weikucms:$vo.integral}</big>积分</label></dd>
+                                <dd><a href="javascript:;" onclick="exchange({weikucms:$vo.id},{weikucms:$vo.integral});">立即兑换</a></dd>
+                            </dl>
+                        </footer>
+                    </li>
+                </volist>
+                <else/>
+                <li style="line-height: 200px;line-height:200px;text-align: center;font-size:14px;color: #8b0000;">
+                    还没有设置积分兑换活动哦
+                </li>
+
+            </if>
+
+        </ul>
+    </div>
+    <footer style="padding: 12px;">
+
+    </footer>
+    <style type="text/css">
+        .action .wechat {
+            background-color: #3884FF;
+            border-color: #3884FF;
+            color: #fff;
+            position: fixed;
+            z-index: 900;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .action a {
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            background-color: #f3f3f3;
+            border: 1px solid #cbcbcb;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            text-align: center;
+        }
+    </style>
+    <p class="action">
+        <a href="{weikucms::U('Integralshop/reveal',array('token'=>$token,'openid'=>$openid))}" id="goPay" class="wechat">我的礼品</a>
+    </p>
+    <script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+    </script>
+</div>
+</body>
+</html>

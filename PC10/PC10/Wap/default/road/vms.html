@@ -1,0 +1,30 @@
+
+<style>
+    .cd-popup-container p{
+        padding: 0;
+    }
+    .cd-popup-container p span{
+        background-color: transparent!important;
+        color: #005293!important;
+    }
+    #_bodys p span{
+        line-height: 20px!important;
+    }
+</style>
+<div class="cd-popup-container">
+    <div class="alerts_one">
+        <div class="Station">
+            <volist name="info" id="vo">
+                <div id="_bodys">
+                    <php>if($vo['key']){</php>
+                        <div style="float:left;">桩号：{weikucms:$vo.key}</div>
+                    <php>}</php>
+                    <div class="Pile_right" style="float: left;margin-top: -15px;">{weikucms:$vo.add_time}</div>
+                    <div style="clear:both;"></div>
+                    <div>{weikucms:$vo.content}</div>
+                </div>
+            </volist>
+
+        </div>
+    </div>
+</div>

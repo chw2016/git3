@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>方案-{weikucms:$detail.title}</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+<script src="{weikucms::STATICS}/jquery.min.js" ></script>
+<script src="{weikucms::STATICS}/common/invite.js" ></script>
+<script src="{weikucms::STATICS}/common/msg.js" ></script>
+</head>
+<style>
+/*	body{
+		background: url(../tpl/Wap/default/common/Jd/images/JD_bj_02.png) no-repeat;
+		background-size:100;
+	}*/
+	.bodys{
+		background: url(../tpl/Wap/default/common/Jd/images/JD_bj_02.png) no-repeat;
+	}
+	.bodys {
+	  background-color: #BFDFEC;
+	}
+	.bodys p{
+		margin-top: 10px;
+	}
+	.ons{
+		  background: url(../tpl/Wap/default/common/Jd/images/fx_py.png) no-repeat;
+		  background-size: 100%;
+		  width: 27px;
+		  height: 26px;
+		  text-align: center;
+		  margin-top: 9px;
+		  margin-left: 14px;
+	}
+	.ons1{
+		  background: url(../tpl/Wap/default/common/Jd/images/fx_py1.png) no-repeat;
+		  background-size: 100%;
+		  width: 22px;
+		  height: 26px;
+		  text-align: center;
+		  margin-top: 9px;
+		  margin-left: 15px;
+	}
+	.ons2{
+		background: url(../tpl/Wap/default/common/Jd/images/fx_py2.png) no-repeat;
+		background-size: 100%;
+		width:27px;
+		height: 30px;
+		text-align: center;
+		margin-top: 9px;
+  		margin-left: 5px;
+	}
+	.ons3{
+		  background: url(../tpl/Wap/default/common/Jd/images/fx_py3.png) no-repeat;
+		  background-size: 100%;
+		  width: 20px;
+		  height: 26px;
+		  text-align: center;
+		  margin-top: 9px;
+		  margin-left: 15px;
+	}
+	.fangan{
+		color:#fff;
+		background-color:#016ae0;
+		padding:10px 0;
+		text-align:center;
+	}
+	.look-btn{
+		background-color: #00B5FF;
+		width: 52%;
+		padding: 10px;
+		border-radius: 5px;
+	          text-align: center;
+	}
+</style>
+<body>
+<!-- <div class="fangan">
+	<span>方案</span>
+</div> -->
+<img src="./tpl/Wap/default/common/Jd/images/login.png" style="display: none">
+<!-- <div class="search" style="font-size:20px;">{weikucms:$detail['title']|mb_substr=0,15,'utf8'}</div> -->
+	<div class="bodys" style="  padding: 30px 10px 10px 10px;" >
+        <!--{weikucms:$detail.content}-->
+        <p><span><b>名称：</b></span><span>{weikucms:$detail['title']}</span></p>
+        
+<!--         <p><span>类型：</span><span>{weikucms:$detail['title']}</span></p>新加
+        <p><span>行业：</span><span>{weikucms:$detail['hy']}</span></p> 新加 -->
+        <p><span><b>作者：</b></span><span>{weikucms:$detail['name']}</span></p>
+        
+<!--         <p><span>亮点：</span><span>{weikucms:$detail['ld']}</span></p>新加
+        <p><span>手机：</span><span>{weikucms:$detail['tel']}</span></p>新加
+        <p><span>标签：</span><span>{weikucms:$str}</span></p> 新加 -->
+        
+        <p><span><b>时间：</b></span><span><?php echo date("Y-m-d h:i",$detail['add_time']) ?></span></p>
+        <p><span><b>方案亮点：</b></span><span>{weikucms:$detail['ld']}</span></p>
+        <p><span><b>描述：</b></span><span style="  word-break: break-all;">{weikucms:$detail['content']}</span></p>
+        <p><span><b>关键字：</b></span><span>{weikucms:$detail['gjz']}</span></p>
+        
+        
+		
+        <p>
+        <style>
+			img.pic { width: 30px; height: 30px; }
+		</style>
+        <if condition="($detail['hz'] eq 'doc') OR ($detail['hz'] eq 'docx')" >
+        <img class="pic" alt="" src="./tpl/Wap/default/common/Jd/images/doc.png" /> 
+        </if>
+        <if condition="$detail['hz'] eq 'txt'" >
+         <img class="pic"  alt="" src="./tpl/Wap/default/common/Jd/images/txt.png" />
+        </if> 
+        <if condition="($detail['hz'] eq 'xls') OR ($detail['hz'] eq 'xlsx')">
+        <img class="pic" alt="" src="./tpl/Wap/default/common/Jd/images/xls.png" />
+        </if>
+        <if condition="($detail['hz'] eq 'ppt') OR ($detail['hz'] eq 'pptx')">
+            <img class="pic" alt="" src="./tpl/Wap/default/common/Jd/images/ppt.png" />
+        </if>
+        <if condition="$detail['hz'] eq 'pdf'">
+            <img class="pic"  alt="" src="./tpl/Wap/default/common/Jd/images/pdf.png" />
+        </if>
+        <if condition="$detail['hz'] eq 'html'">
+            <img class="pic"  alt="" src="./tpl/Wap/default/common/Jd/images/html.png" />
+        </if>
+
+            <i style="color:#39F;" ><span>附件：</span><span>{weikucms:$detail['title']}.{weikucms:$detail['hz']}</span></i>
+             
+        <!--     <img alt="" src="./tpl/Wap/default/common/Jd/images/txt.png" />
+            <img alt="" src="./tpl/Wap/default/common/Jd/images/xls.png" /> -->
+        </p>
+        <p><i style="color:#39F;"  >
+            <a class="goRead" data-href="{weikucms:$detail['url']}" href="javascript: void(0)" style=" color: #fff; background-color: #3B87F1; position: relative; top: 10px; #4C8FFB; padding: 10 25px; padding: 10px 25px; border-radius: 10px; color:#fff;" >在线阅读</a></i></p>
+	</div>
+	<div style="height:80px;background-color:#BFDFEC">
+	</div>
+	<div class="foot">
+		<a href="{weikucms::U('ccc',get(id,token,openid))}"><span style="margin-left:10px;width:120px;float:left;">发送邮件</span></a>
+		
+		<a href="#">
+			<div style="float: right;margin-left: 10px;">
+			      <p class="ons" style="margin-top: 13px;"></p>
+			      <p style="font-size: 12px;color:#000000">发送给朋友</p>
+			</div>
+		</a>
+		<a href="#">
+			<div style="float: right;margin-left: 10px;">
+			      <p class="ons1" style=" margin-top: 13px;"></p>
+			      <p style="font-size: 12px;color:#000000">分享到QQ</p>
+			</div>
+		</a>
+		<!--<a href="#">
+			<div style="float: right;">
+			      <p class="ons2"></p>
+			      <p style="font-size: 12px;color:#000000">朋友圈</p>
+			</div>
+		</a>-->
+
+		<a href="#">
+			<div style="float: right;">
+			      <p class="ons2" style="width: 22px; margin-left: 15px; position: relative; top: 4px;"></p>
+			      <p style="font-size: 12px;color:#000000">复制链接</p>
+			</div>
+		</a>
+	</div>
+	<script>
+		$(function(){
+			$('.ons').invite({"bg":'tpl/static/wapweiui/images/py.png'});//{"bg":'./tpl/Wap/default/common/Jd/images/doc.png'}
+			$('.ons1').invite({"bg":'tpl/static/wapweiui/images/qq.png'});
+			$('.ons2').invite({"bg":'tpl/static/wapweiui/images/lj.png'});
+		})
+		
+	</script>
+<script>
+	function isApple() {
+		var agent = navigator.userAgent.toLowerCase();
+		return agent.match(/iphone/i) || agent.match(/ipad/i);
+	}
+	$(function(){
+				
+		$('.goRead').click(function(){
+			if(isApple()){
+				window.location.href = $(this).attr('data-href');
+			}else{
+				//安卓
+				<if condition="$detail['hz'] neq 'html'">
+				msg.alert('长按复制链接在浏览器中打开:<br /><br />'+$(this).attr('data-href'), '好，我知道了');
+				<else />
+					window.location.href = $(this).attr('data-href');
+				</if>
+			}
+			
+		});
+	});
+    function shareConfig(){
+		return {
+			'imgUrl': '<?php echo C('site_url');?>./tpl/Wap/default/common/Jd/images/login.png'
+		};
+         
+    }
+    function shareSuccess(type){//分亨成功回调
+        $.post('',{},function(data){
+
+        },'json')
+
+    }
+</script>
+</body>
+</html>

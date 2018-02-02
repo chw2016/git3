@@ -1,0 +1,752 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<title>{weikucms:$title}</title>
+<script>
+        var root="{weikucms::STATICS}/wapweiui/images/lottery";
+        var tacha={weikucms:$tacha};
+        var url="{weikucms::U('Start/start',array('uid'=>$uid,'lid'=>$lid))}";//ajax处理地址
+        var getgift="{weikucms::U('Start/result',array('uid'=>$uid))}";
+        var linkUrl="<php>echo c('site_url');</php>{weikucms::U('Start/index',array('uid'=>$uid,'linkid'=>$linkid,'aid'=>$lid))}";//分享连接地址
+ </script>
+ <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/jquery-1.8.3.min.js"></script>
+  <script src="{weikucms::STATICS}/wapweiui/js/cliIcon.js?2014"></script>
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery-ui.js"></script>
+        
+
+<!--可无视-->
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/wapweiui/css/normalize.css" />
+
+<!--主要样式-->
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/wapweiui/css/style.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/wapweiui/css/idangerous.swiper.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/lotTry.css" /> 
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/imagescroll.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/common.css" />
+
+<style type="text/css">
+			*{padding: 0;margin: 0;list-style: none;text-decoration: none;}
+			body{font-family: "Microsoft YaHei";font-size: 18px;}
+			.m-page section{margin-top: 20px;}
+			.m-page section .p{line-height: 2em;text-align: center;border-radius: 6px;font-size: 18px;
+				width: 92%;margin: 0 auto;background: rgba(255,255,255,0.8);color: #000;}
+			#get{width: 85%;margin: 0 auto;margin-top: 20px;
+				border-radius: 6px;padding: 20px 10px;text-align: center;line-height: 24px;background: rgba(255,255,255,0.8);color: #000;}
+			#get span{color: #625C5C;font-size: 15px;text-align: left;display: block;
+				margin-bottom: 10px;}
+			ul li{margin-top: 10px;text-align: left;font-size: 15px;}
+			#data{margin: 0 auto;width: 92%;margin-top: 10px;text-align: center;font-size: 16px;}
+			#data .span{margin-bottom: 5px;display: block;}
+			/*#data form{width: 92%;}*/
+			#data form .span_1{margin-bottom: -15px;display: block;}
+			#data form .span_1 input{width: 94%;padding: 8px 5px;margin-top: 10px;}
+			#btn{
+				background:#4ab86b;color: #fff;display: block;width: 98.6%;padding: 8px 5px;border-radius: 4px;margin: 0 auto;margin-top: 10px;
+			}
+			#Snd{position: fixed;width: 100%;z-index: 10;bottom: 0;height: 50px;}
+			.indexMenu {width: 134%;}
+			.indexMenu a {float: left;width: 25%;height: 50px;font-size: 11px;text-align: center;color: #808080;}
+			.home-index,.home-index-active,.Order-index,.Order-index-active,.My-index,.My-index-active,.card-index,.card-index-active{line-height: 0px;display: inline-block;padding-top: 26px;width: 100%;font-size: 15px;color: #fff;}
+
+			/*新增加的*/
+			/*闪光背景图层*/
+#turnplatewrapper{height:240px;width:240px;background:url('{weikucms::STATICS}/wapweiui/images/lottery/turnplate/plate_06_03.png') top left no-repeat;background-size:240px 480px;-moz-user-select:none;user-select:none;margin: 110px auto 0;position: relative;}
+/*闪光的图片*/
+#turnplate{height:240px;width:240px;background:url('{weikucms::STATICS}/wapweiui/images/lottery/turnplate/plate_009.png') top left no-repeat;background-size:227.2px 1463.2px; position: relative;background-position: 7px 0px;}
+
+/*上面的文字层*/
+#turnplate #awards{position:absolute;width:100%;height:100%;background:url('{weikucms::STATICS}/wapweiui/images/lottery/turnplate/scroll.png') top left no-repeat;background-size:225px 225px;left: 8px;top: 8px;}
+/*抽奖按钮*/
+#platebtn{position:absolute; top:61px;left:62px;background:url('{weikucms::STATICS}/wapweiui/images/lottery/turnplate/plate_08.png') top left no-repeat;height:114px;width:114px;cursor:pointer; background-size: 118px 118px;z-index: 0 !important;}
+
+
+#msg{position:absolute;display:none;top:130px;left:195px;border-radius:5px;color:#333;border:3px solid #FED33f;box-shadow:2px 2px 2px rgba(0,0,0,0.6);background:#fffcf2;width:200px;padding:10px;text-align:center;}
+
+#init{position:absolute;top:50%;left:50%;width:100px;height:30px;border-radius:5px;color:#333;border:3px solid #FED33f;box-shadow:2px 2px 2px rgba(0,0,0,0.6);background:#fffcf2;width:250px;padding:10px;margin-top:-30px;margin-left:-138px;text-align:center;opacity:0.9;filter:alpha(opacity=90);}
+#turnplatewrapper .circle{width: 64px;height: 32px;position: absolute;z-index: 9000 !important;}
+/*设计*/
+#turnplatewrapper .one{top: 29px;left: 25px;border-radius: 8px;border-top-left-radius: 20px;border-top-right-radius: 20px;}
+/*施工*/
+ #turnplatewrapper .two{top: 178px;left: 68px;border-radius: 8px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+/*售后*/
+#turnplatewrapper .three{top: 66px;left: -3px;transform:rotate(-60deg);border-radius: 8px;border-top-left-radius: 20px;border-top-right-radius: 20px;}
+/*主材*/
+#turnplatewrapper .four{top: 69px;left: 137px;transform:rotate(60deg);border-radius: 8px;border-top-left-radius: 20px;border-top-right-radius: 20px;}
+/*家私*/
+#turnplatewrapper .five{top: 142px;left: 86px;transform:rotate(120deg);border-radius: 8px;border-top-left-radius: 20px;border-top-right-radius: 20px;width: 75px;}
+/*辅材*/
+#turnplatewrapper .six{top: 142px;left: 5px;transform:rotate(-120deg);border-radius: 8px;border-top-left-radius: 20px;border-top-right-radius: 20px;} 
+/*logo*/
+/* #header-logo{text-align: center;}
+#header-logo img{margin-top: -2px;}
+.slogan{text-align: center;margin-top: 120px;}
+.slogan img{} */
+.prize{width: 80%;margin: 5px auto 0;background:#f1f1f1;text-align: center;padding: 3px;letter-spacing: 3px;font-size: 14px;border-radius: 6px;}
+.prize a{display: block;font-family: "Microsoft YaHei";color: #b30015;}
+.prize ._font{background: #fceb79;}
+#logo{position: relative;}
+#logo img{display: block;margin: 0 auto;}
+#logo .img1{position: absolute;z-index: 1000;opacity: 0;top:-30px;}
+#logo .img2{position: relative;top:30px;opacity: 0;}
+#logo .img3{position: relative;top:-30px;opacity: 0;}
+#logo .img6{position: relative;top:-30px;opacity: 0;}
+#logo .img4{margin-top: 6px;position: relative;top:-30px;opacity: 0;}
+#logo .img5{margin-top: 9px;position: relative;top:30px;opacity: 0;}
+#logo .img7{margin-top: 0px;position: relative;}
+#logo .img8{margin-top: 0px;position: relative;}
+#logo .img9{position: absolute;z-index: 1000;}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$('#logo').css('background-size',$(window).width()+"px "+($(window).height()+5)+"px")
+		$('#turnplatewrapper').css('margin-top',$(window).height()*0.22+'px');
+		$('.slogan').css('margin-top',$(window).height()*7/48+"px");
+		
+		$('.img2').animate({"top":"0px"},3000);
+		$('.img6').animate({"top":"0px"},3000);
+		// 文字
+		$('.img1').animate({"top":"0px"},3000);
+		$('.img3').animate({"top":"0px"},3000);
+		$('.img4').animate({"top":"0px"},3000);
+		$('.img5').animate({"top":"0px"},3000);
+		var num1 = 0,num2 = 0,num3 = 0,num4 = 0,num5 = 0,num6 = 0;
+
+		var _img2 = setInterval(function(){
+			$('.img2').css('opacity',num2+=0.04);
+			if (num2 == 1) {
+				clearInterval(_img3);
+			};
+		},100)
+		var _img6 = setInterval(function(){
+			$('.img6').css('opacity',num6+=0.04);
+			if (num6 == 1) {
+				clearInterval(_img6);
+			};
+		},100)
+		// 文字
+		var _img1 = setInterval(function(){
+			$('.img1').css('opacity',num1+=0.04);
+			if (num1 == 1) {
+				clearInterval(_img1);
+			};
+		},100)
+
+		var _img3 = setInterval(function(){
+			$('.img3').css('opacity',num3+=0.04);
+			if (num3 == 1) {
+				clearInterval(_img3);
+			};
+		},100)
+
+		var _img4 = setInterval(function(){
+			$('.img4').css('opacity',num4+=0.04);
+			if (num4 == 1) {
+				clearInterval(_img4);
+			};
+		},100)
+
+		var _img5 = setInterval(function(){
+			$('.img5').css('opacity',num5+=0.04);
+			if (num5 == 1) {
+				clearInterval(_img5);
+			};
+		},100)
+		
+
+		$('.img1').css({'left':($(window).width()-$(window).width()/2)/2+'px','width':$(window).width()/2+'px',height:$(window).width()*9/64+'px'});
+		$('.img2').css({'width':$(window).width()+'px',height:$(window).width()*273/640+'px'});
+		$('.img3').css({'left':($(window).width()-$(window).width()*61/64)/2+'px','width':$(window).width()*61/64+'px',height:$(window).width()*5/64+'px'});
+		$('.img4').css({'left':($(window).width()-$(window).width())/2+'px','width':$(window).width()+'px',height:$(window).width()*3/32+'px'});
+		$('.img5').css({'left':($(window).width()-$(window).width())/2+'px','width':$(window).width()+'px',height:$(window).width()*9/32+'px'});
+		$('.img6').css({'left':($(window).width()-$(window).width())/2+'px','width':$(window).width()+'px',height:$(window).width()*183/320+'px'});
+		$('.img7').css({'left':($(window).width()-$(window).width())/2+'px','width':$(window).width()+'px',height:$(window).width()*87/640+'px'});
+		$('.img8').css({'left':($(window).width()-$(window).width())/2+'px','width':$(window).width()+'px',height:$(window).width()*213/320+'px'});
+
+		$('.img9').css({'left':($(window).width()-$(window).width()/2)/2+'px','width':$(window).width()/2+'px',height:$(window).width()*9/64+'px'});
+
+
+        $('#FirInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+		$('#TwoInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+		$('#ThrInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+		$('#FouInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+		$('#FivInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+		$('#SixInfo').css('left',($(window).width()-$(window).width()*0.8)/2+$(window).width()*2+'px');
+
+
+
+		$('#logo_1').css('background-size',$(window).width()+"px "+($(window).height()+5)+"px");
+		$('#mdNoT').css('background-size',$(window).width()+'px '+$(window).width()*51/32+'px');
+		$('#shaFri').css({'width':$(window).width()+'px','height':$(window).width()*3/2+'px','position':'relative','left':$(window).width()+'px'});
+		// 箭头
+		$('.arrow').css({'margin-left':($(window).width()-30)+'px','margin-top':'6px','width':'15px','height':'25px'});
+		var arr = 0;
+		setInterval(function(){
+			if (arr % 2 == 0) {
+				$('.arrow').css('margin-left',($(window).width()-30)+'px');
+			}else{
+				$('.arrow').css('margin-left',($(window).width()-25)+'px');
+			}
+			arr++;
+			if (arr >= 20) {
+				arr = 0;
+			};
+		},300)
+	})
+
+
+	
+</script>
+</head>
+<body>
+
+<div class="swiper-container swiper-content">
+	<div class="swiper-wrapper">
+		<!-- 第一个页面 -->
+
+		<div class="swiper-slide" style="background:url('{weikucms::STATICS}/wapweiui/images/lottery/YellBg.jpg') center no-repeat;background-size:cover;overflow:auto;">
+			<div id="logo">
+
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/_logo.png" class="img1" />
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/arrow_1.png" class="arrow" width="3px" height="5px" style="position:absolute;z-index:20000;"/>
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/TongJi.png" class="img2"/>
+		
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/JiJin.png" class="img3"/>
+		
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/BlackWZ.png" class="img4"/>
+
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/dianWz.png" class="img5"/>
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/prize.png" class="img6"/>
+		
+		</div>
+		
+
+		</div>
+	<!-- 第一个页面 -->
+	<!-- 第二个页面 -->
+		<div class="swiper-slide" style="background:url({weikucms::STATICS}/wapweiui/images/lottery/Pinkbg.jpg) center 0px no-repeat; overflow:auto;" id="mdNoT">
+			<div id="logo">
+
+		
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/arrow_1.png" class="arrow" width="3px" height="5px" style="position:absolute;z-index:20000;"/>
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/_logo.png" class="img9" />
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/TongJi.png" class="img2"/>
+		
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/JiJin.png" class="img3"/>
+		
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/BlackWZ.png" class="img4"/>
+
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/shuoM.png" class="img7"/>
+		<img src="{weikucms::STATICS}/wapweiui/images/lottery/Info.png" class="img8"/>
+		
+		</div>
+			
+		</div>
+	<!-- 第二个页面 -->
+	<!-- 第三个页面 -->
+		<div class="swiper-slide" style="background:url({weikucms::STATICS}/wapweiui/images/lottery/bg_lot.jpg);padding-top:10px;background-size:cover;overflow:auto;">
+			<!-- 遮罩 -->
+			<div style="position:absolute;z-index:10000;width:500px;height:800px;background:#000;opacity:0.5;top:-10px;padding-top:10px;display:none" id="black"></div>
+			<!-- 遮罩 -->
+			<!--显示信息  -->
+			<div>
+	<div class="circleCont" id="FirInfo"> <b>国际原创设计脑库</b>
+		 <ul class="title">
+		 	<li>（1）鼎级精英设计团队；</li>
+			<li>（2）国际、亚太等全球设计荣誉，国际原创理念，接轨国际；</li>
+			<li>（3）4大设计标准28项质量控制节点，保障设计品质与效果；</li>
+			<li>（4）个性化量身设计：以客户需求为导向，彰显个性品位和需求。</li>
+		 </ul> 
+	</div>
+	<div class="circleCont" id="TwoInfo"><b>行业最高验收标准</b>
+		 <ul class="title">
+		 	<li>（1）行业首施ERP网络信息管理系统，全方位把控各阶段施工质量；</li>
+			<li>（2）一流的施工团队：5大机构，6大岗位，200位高级工程师；</li>
+			<li>（3）多层次质量管控：108项工艺节点控制，12道工地形象管理标准；</li>
+			<li>（4）360度全透明验收标准： 108项高验收标准，树立行业验收新标准；</li>
+		 </ul> 
+	</div>
+	<div class="circleCont" id="ThrInfo"><b>至尊管家售后模式</b>
+		 <ul class="title">
+		 	<li>（1）五星级服务标准，优质高效快捷；</li>
+			<li>（2）“24小时金牌”服务，第一时间解决问题；</li>
+			<li>（3）售后服务严格遵照名雕统一标准，确保高品质维修质量；</li>
+			<li>（4）主动跟踪服务，定期回访，及时解决问题。</li>
+		 </ul> 
+	</div>
+	<div class="circleCont" id="FouInfo"><b>名品主材体验中心</b>
+		 <ul class="title">
+		 	<li>（1）行业唯一拥有品牌主材体验馆，助您一站式购齐，省心省力；</li>
+			<li>（2）全球采购优质材料，环保标准与国际同步；</li>
+			<li>（3）高性价比精选装修品牌主材，多重优价保障体系，直接让利客户；</li>
+			<li>（4）终极售后保障，全方位护航客户装修利益。</li>
+		 </ul> 
+	</div>
+	<div class="circleCont" id="FivInfo"><b>个性化家私定制基地</b>
+		 <ul class="title">
+		 	<li>（1）首创“个性化家私定制”模式，完美实现家居风格和谐统一；</li>
+			<li>（2）引领行业施工产业化，木制品实现产业化施工；</li>
+			<li>（3）全球化精选采购名贵实木，尊享国际环保标准的奢华品质；</li>
+			<li>（4）跨越传统售后服务模式，畅享终极行业售后服务。</li>
+		 </ul> 
+	</div>
+	<div class="circleCont" id="SixInfo"><b>生态家居产业基地</b>
+		 <ul class="title">
+		 	<li>（1）独家拥有30多类自主研发专业装修材料，品质环保领跑装饰市场；</li>
+			<li>（2）全球知名品牌特供，国际环保监测体系；</li>
+			<li>（3）行业规模最大的生态产业基地，规模仓储量行业居首；</li>
+			<li>（4）现代化物流配送， ERP管理，科学配送，保障施工工期。</li>
+		 </ul> 
+	</div>
+</div>
+<!--显示信息  -->
+			<!-- 大转盘 -->
+<div id="turnplatewrapper" onselectstart="return false;" class="bgfix">
+	<div id="turnplate" class="bgfix">
+		<div id="awards" class="bgfix"></div>
+		<div id="platebtn" class="bgfix"></div>
+		<p id="msg"></p>
+		<p id="init" class="dn">初始化中，请稍后<span></span></p>
+	</div>
+	<div class="circle one" id="first">
+		<div class="Introduction" style="left:40px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			设计
+		</div>
+	</div>
+	<div class="circle two" id="second">
+		<div class="Introduction" style="left:0px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			施工
+		</div>
+	</div>
+	<div class="circle three" id="third">
+		<div class="Introduction" style="left:0px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			售后
+		</div>
+	</div>
+	<div class="circle four" id="five">
+		<div class="Introduction" style="left:0px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			主材
+		</div>
+	</div>
+	<div class="circle five" id="six">
+		<div class="Introduction" style="left:0px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			家私
+		</div>
+	</div>
+	<div class="circle six" id="seven">
+		<div class="Introduction" style="left:0px;top:0px;background:rgb(211, 47, 47);display:none;z-index:18000;color:#fff;">
+			辅材
+		</div>
+	</div>
+</div>
+<!-- 大转盘 -->
+			<!-- 我的奖品 邀请朋友来帮助 -->
+<div class="prize">
+	<a href="{weikucms::U('Start/results',array('uid'=>$uid,'lid'=>$lid))}">我的奖品</a>
+</div>
+<div class="prize">
+	<a href="javascript::" class="_font" onclick="document.getElementById('mcover').style.display='block';">邀请朋友来帮助</a>
+	<!-- 遮罩 -->
+	<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+         <img src="{weikucms::STATICS}/wapweiui/images/lottery/guide_1.png" id="shaFri" />
+     </div>
+</div>
+<!-- 我的奖品 邀请朋友来帮助 -->
+		</div>
+	<!-- 第三个页面 -->
+	</div>
+</div>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/jquery.easing.1.3.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/99_main.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/lotTry.js"></script>
+<script type="text/javascript">
+
+	var turnplate = {
+	turnplateBox : $('#turnplate'),
+	turnplateBtn : $('#platebtn'),
+	lightDom : $('#turnplatewrapper'),
+	freshLotteryUrl : 'http://huodong.kuaipan.cn/ajaxTurnplate/freshLottery/',
+	msgBox : $('#msg'),
+	lotteryUrl : 'http://huodong.kuaipan.cn/ajaxTurnplate/lottery/',
+	height : '240', //帧高度
+	lightSwitch : 0, //闪灯切换开关. 0 和 1间切换
+	minResistance : 5, //基本阻力
+	Cx : 0.01, //阻力系数 阻力公式：  totalResistance = minResistance + curSpeed * Cx;	
+	accSpeed : 15, //加速度
+	accFrameLen : 40, //加速度持续帧数
+	maxSpeed : 250, //最大速度 
+	minSpeed : 20, //最小速度 
+	//一圈的帧的数量
+	frameLen : 7, //帧总数
+	//一圈的帧的数量
+	totalFrame : 0, //累计帧数,每切换一帧次数加1
+	curFrame : 0, //当前帧
+	curSpeed : 20, //上帧的速度
+	lotteryTime : 0, //抽奖次数
+	lotteryIndex : 6, //奖品index
+	errorIndex : 6, //异常时的奖品指针
+	initBoxEle : $('#turnplate #init'),
+	progressEle : $('#turnplate #init span'),
+	initProgressContent : '~~~^_^~~~', //初始化进度条的内容
+	initFreshInterval : 500, //进度条刷新间隔
+	virtualDistance : 10000, //虚拟路程,固定值，速度越快，切换到下帧的时间越快: 切换到下帧的时间 = virtualDistance/curSpeed
+	isStop : false, //抽奖锁,为true时，才允许下一轮抽奖
+	timer2 : undefined, //计时器
+	initTime : undefined,
+	showMsgTime : 2000, //消息显示时间
+	lotteryChannel: '',
+	//定义一个flag用来控制中奖的
+	// flag : 0,
+	
+
+	lotteryType : {
+		'5M' : 0,	
+		'80M' : 1,
+		'1G' : 2,
+		'200M' : 3,
+		'100M' : 4,
+		'20M' : 5,
+		'empty' : 6,
+		'10G' : 7,
+		'50M' : 8,
+		'1T' : 9
+	},
+
+
+	
+	//初始化
+	init : function() {
+		this.initAnimate()
+		this.freshLottery();
+		this.turnplateBtn.click($.proxy(function(){
+			this.click();	
+		},this));	
+	},
+
+	//初始化动画
+	initAnimate : function() {
+		this.initBoxEle.show();	
+		clearTimeout(this.initTimer);
+		var curLength = this.progressEle.text().length,
+			totalLength = this.initProgressContent.length;//进度条
+
+		if (curLength < totalLength) {
+			this.progressEle.text(this.initProgressContent.slice(0, curLength + 1));
+		}else{
+			this.progressEle.text('');
+		}
+		this.initTimer = setTimeout($.proxy(this.initAnimate, this), this.initFreshInterval);
+		this.flag++;
+	},
+
+	//停止初始化动画
+	stopInitAnimate : function() {
+		clearTimeout(this.initTimer);
+		this.initBoxEle.hide();
+	},
+
+	freshLotteryTime : function() {
+		$('#top-menu').find('.lottery-times').html(this.lotteryTime);
+	},
+
+	//更新抽奖次数
+	freshLottery : function() {
+		this.stopInitAnimate();
+		// this.setBtnHover();
+		this.isStop = true;
+		this.lotteryTime = 1;
+		this.freshLotteryTime();
+
+	},
+
+	
+	//获取奖品
+	lottery : function() {
+		this.lotteryIndex = undefined;
+		this.lotteryTime--;
+		this.freshLotteryTime();
+		this.totalFrame = 0;
+		this.curSpeed = this.minSpeed;
+		this.turnAround();
+		this.lotteryIndex = typeof this.lotteryType[2] !== 'undefined' ? this.lotteryType[2] : this.errorIndex;
+		this.lotteryChannel = typeof this.channelList[1] !== 'undefined' ? this.channelList[1] : '';	
+	},
+
+	//点击抽奖
+	click : function() {
+		//加锁时
+		if(this.isStop == false) {
+			//alert("您现在还不能抽奖");
+			if ($('#turnplatewrapper').hasClass('know')) {
+				//show_error_tip("点击右上角将他发送给制定的朋友或分享到朋友圈来点亮图标吧！");
+			}else{
+//				show_error_tip('现在还不能抽奖哦');
+			}
+			
+			return;
+		} 
+
+		this.lottery();
+
+	},
+
+	//更新当前速度
+	freshSpeed : function() {
+		var totalResistance = this.minResistance + this.curSpeed * this.Cx;
+		var accSpeed = this.accSpeed;
+		var curSpeed = this.curSpeed;
+		if(this.totalFrame >= this.accFrameLen) {
+			accSpeed = 0;
+		}
+		curSpeed = curSpeed - totalResistance + accSpeed;
+
+		if(curSpeed < this.minSpeed){
+			curSpeed = this.minSpeed;
+		}else if(curSpeed > this.maxSpeed){
+			curSpeed = this.maxSpeed;
+		}
+
+		this.curSpeed  = curSpeed;
+	},
+
+	//闪灯,切换到下一张时调用
+	switchLight : function() {
+		this.lightSwitch = this.lightSwitch === 0 ? 1 : 0;
+		var lightHeight = -this.lightSwitch * this.height;
+		this.lightDom.css('backgroundPosition','0 ' + lightHeight.toString() + 'px');	
+	},
+
+	//旋转,trunAround,changeNext循环调用
+	turnAround : function() {
+		//加锁
+		this.isStop = false;
+		var intervalTime = parseInt(this.virtualDistance/this.curSpeed);
+		/*$('#turnplatewrapper').click(function(){
+
+		})*/
+		// $('#platebtn').click(function(){
+
+		// })
+		if ($('#turnplatewrapper').hasClass('know')) {
+			//这里是没有点亮的信息页面的提示信息，只有一次。第一次
+			$.post(url, function(data) {
+                        if (data.status == 1) {
+                            location.href=getgift+"&gid="+data.data.gid;
+                        }else{
+                            show_error_tip(data.mes);
+                        }
+                    }, 'json');
+			return;
+		}else{
+			this.timer = window.setTimeout('turnplate.changeNext()', intervalTime);
+		}
+			
+	},
+
+	//弹出奖品
+	showAwards : function(){
+		$.post(url, function(data) {
+                        if (data.status == 1) {
+                            location.href=getgift+"&gid="+data.data.gid;
+                        }else{
+                            alert(data.mes);
+                        }
+                    }, 'json');
+	},
+
+	//切换到下帧
+	changeNext : function() {
+		//判断是否应该停止
+		
+		// 奖品index{lotteryIndex} 当前的帧数{curFrame}  等于奖品目录的时候
+		if(this.lotteryIndex !== undefined && this.curFrame == this.lotteryIndex && this.curSpeed <= this.minSpeed+10 && this.totalFrame > this.accFrameLen) {
+			
+			this.isStop = true;//开启抽奖按钮的点击事件,
+			this.showAwards();
+			return; 		
+		}
+
+		var nextFrame =  this.curFrame+1 < this.frameLen ? this.curFrame+1 : 0;
+		// var bgTop = - nextFrame * this.height;
+		// var bgTop = -nextFrame * 600;
+		switch(nextFrame){
+			case 0 : bgTop = -48;break;
+			case 1 : bgTop = -295;break;
+			case 2 : bgTop = -477;break;
+			case 3 : bgTop = -719;break;
+			case 4 : bgTop = -997;break;
+			case 5 : bgTop = -1332;break;
+		}
+		//能够控制帧的旋转的高度
+		//必须是3的倍数，并且不能为-3000px;		
+		this.turnplateBox.css('backgroundPosition','9px ' + bgTop.toString() + 'px');	
+		this.switchLight();
+		this.curFrame = nextFrame;
+		this.totalFrame ++;
+		this.freshSpeed();
+		this.turnAround();
+		this.flag ++;
+	}
+}
+
+
+
+</script>
+
+
+
+<script type="text/javascript">
+//登录插件
+(function($){
+	$.fn.login = function(options){
+
+		settings = {
+				loginUrl: 'account/login/',
+				msgEle: $(this).find('.msg'),
+				loginIdEle: $(this).find('#loginId'),
+				passwordEle: $(this).find('#password')
+		};
+		function showMsg(msg) {
+			settings.msgEle.html(msg);
+		}
+
+		if(typeof options == 'string'){
+			switch(options) {
+				case 'submit':
+					submit();
+					break;
+				default:
+
+			}		
+		}
+		return $(this);
+
+	}
+})(jQuery);
+
+$('#lotteryMsg').dialog({
+	modal: true,
+	width: 500,
+	height: 350,
+	resizable: false,
+	title: '获奖信息',
+	autoOpen: false,
+	open: function(){
+			var showMsg = '恭喜你您抽中了： ' + turnplate.lotteryList[turnplate.lotteryIndex];//后面是信息
+			var options = '今天抽中了' + turnplate.lotteryList[turnplate.lotteryIndex] + '，' + turnplate.lotteryDes[turnplate.lotteryIndex];
+			$('#lotteryMsg').find('.msg').html(showMsg);
+			$('#lotteryMsg').find('.option').html(options);
+	},
+});
+
+control(tacha);
+turnplate.init();
+//控制抽奖的图片
+function control(bgImg){
+	switch(bgImg){
+			case 0 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_06.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			case 1 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_05.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			case 2 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_04.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			case 3 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_03.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			case 4 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_02.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			case 5 : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_01.png)").addClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/dark_btn.png)");$('#awards').css("background-size","0px 0px");break;
+			default : $('#turnplatewrapper').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/plate_06_03.png)").removeClass('know');$('#platebtn').css("background-image","url({weikucms::STATICS}/wapweiui/images/lottery/turnplate/plate_08.png)");break;
+		}
+}
+//提示框
+function show_error_tip(text,time)
+
+				{
+
+					if (typeof(time) == "undefined") { 
+
+					time = 5000;
+
+				}
+
+				
+				var wh = $(window).height();
+				var ww = $(window).width();
+				var top = (wh-100)/2;
+				var left = (ww-248)/2;
+				
+
+				var tip = '<d                                iv id="tips" style="z-index:100000000;position: fixed;top:'+top+'px;left:'+left+'px;background:url({weikucms::STATICS}/wapweiui/images/lottery/alert_bg.png);background-size:100% 100%;width:240px;text-align:center;padding:15px 8px;border-radius:6px;font-size:16px;"><span><img src="{weikucms::STATICS}/wapweiui/images/lottery/alert.png" width="67" height="67" /></span><p style="color:#fff;text-align:left;margin-top:6px;">'+text+'</p></div>';
+
+				$('body').append(tip);
+
+	
+
+				if(time>0){
+
+					setTimeout(function(){
+
+						$("#tips").remove();
+
+				}, time);
+
+		}
+
+			return false;
+
+	};
+	//控制圆盘距离顶端的距离
+$('#turnplatewrapper').css('margin-top',$(window).height()*19/80+'px');
+</script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/jquery.min.js"></script> 
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/js/idangerous.swiper-2.0.min.js"></script> 
+
+
+<script type="text/javascript">
+$(function(){
+	function setContentSize() {
+		$('.swiper-content').css({
+			height: $(window).height()-$('.swiper-nav').height()
+		})
+	}
+	setContentSize()
+	$(window).resize(function(){
+		setContentSize()
+	})
+
+	//Swiper Content
+	var contentSwiper = $('.swiper-content').swiper({
+		onSlideChangeStart: function(){
+			updateNavPosition()
+		}
+	})
+	//Nav
+	var navSwiper = $('.swiper-nav').swiper({
+		visibilityFullFit: true,
+		slidesPerView:'auto',
+		//Thumbnails Clicks
+		onSlideClick: function(){
+			contentSwiper.swipeTo( navSwiper.clickedSlideIndex )
+		}
+	})
+	
+	//Update Nav Position
+	function updateNavPosition(){
+		$('.swiper-nav .active-nav').removeClass('active-nav')
+		var activeNav = $('.swiper-nav .swiper-slide').eq(contentSwiper.activeIndex).addClass('active-nav')
+		if (!activeNav.hasClass('swiper-slide-visible')) {
+			if (activeNav.index()>navSwiper.activeIndex) {
+				var thumbsPerNav = Math.floor(navSwiper.width/activeNav.width())-1
+				navSwiper.swipeTo(activeNav.index()-thumbsPerNav)
+			}
+			else {
+				navSwiper.swipeTo(activeNav.index())
+			}	
+		}
+	}
+})
+</script>
+
+</body>
+</html>

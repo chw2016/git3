@@ -1,0 +1,238 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>留言墙</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/font/style.css" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+
+   <style>
+
+        body{overflow-x: hidden;}
+
+       .btnCamera {
+
+           width: 50px;
+
+           height: 50px;
+
+           border: 1px solid;
+
+           top: 1%;
+
+           background-color: #789;
+
+           color: #789;
+
+       }
+
+       .imgbox{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            background-color:#ee0011;
+            color:#fff;
+       }
+
+    .iblue {
+        color: #9EBF26;
+    }
+
+    .liuYan .listpic{ width: 75%; left: 30px;   box-shadow: 0 0 8px rgba(0,0,0,1) inset;}
+
+   </style>
+
+</head>
+
+
+
+<body r='1' g='195' b='255'>
+
+<div class="Home" style="display: none;" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="btnCamera camera" onclick="location.href='{weikucms::U('Ieat/commont',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'"></div>
+
+<div class="Home">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+   
+
+<div class="shuLine">
+
+    <!--<div class="liuYanTimeLine myul">-->
+
+        <!--<div class="LYTime">11/12/2014</div>-->
+
+        <!--<div class="Tcircle">-->
+
+            <!--<div class="InTcircle"></div>-->
+
+        <!--</div>-->
+
+    <!--</div>-->
+
+</div>
+
+
+
+<div class="main liuYan ">
+<!--<div style="text-align:center;margin-left:22%;">
+ <div class="btnCamera camera circulPub" style="margin-right:50%px;" onclick="location.href='{weikucms::U('Ieat/commont',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+     <img src="{weikucms::RES}/ieat/img/btnPub.png" width="100%"/>
+ </div>
+</div>-->
+
+    <div id="msgListBody">
+        <!--
+    <volist name="msgList" id="vo">
+
+        <div class="listbox">
+
+
+
+            <div class="liuYanTimeLine myul" style="left:4px;">
+                <php>
+                    $tempArr = explode(' ',$vo['add_time']);
+                </php>
+                <div class="LYTime">{weikucms::str_replace('-','/',$tempArr[0])}</div>
+
+                <div class="Tcircle">
+
+                    <div class="InTcircle"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="listpic" style=" background-image:url({weikucms:$vo.customer_upload_pic});">
+
+
+
+                <div class="liuYanLogo" style="background-image:url({weikucms:$vo.customer_pic})"></div>
+
+            </div>
+
+            <div class="listtitlebox myul" style="margin-left:20%;">
+
+
+
+                <div class="titlebox" >
+
+
+
+                    <div class="title iblue ieatXianGou"><span class="titletext">{weikucms:$vo.customer_msg}</span></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </volist>
+    -->
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="havbox liuYan">
+    <div class="hav myul" style="overflow-x: auto; overflow-y: hidden;">
+    <include file="./tpl/Wap/default/Ieat_home_btn.html" />
+    </div>
+</div>
+<script>
+    // myFadeIn(5);
+
+    var page = 1;
+
+    getPage(page);
+
+    var range = 50;
+    var _srollPos = 0;
+    var totalheight = 0;
+    $(window).scroll(function() {
+            var srollPos = $(window).scrollTop();
+            if (srollPos < _srollPos) {
+                return
+            } else {
+                _srollPos = srollPos
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (($(document).height() - range) <= totalheight) {
+                page = page + 1;
+                getPage(page);
+            }
+        })
+
+
+
+    //getPage({weikucms:$page} + 1);
+    //getPage
+    function getPage(iPage){
+        $.ajax({
+             type: "GET",
+             url: "{weikucms::U('Ieat/msgWall', array('token' => $token, 'openid' => $openid))}",
+             data: {"page":iPage,"ajax":1, "cat_id" : "{weikucms:$cat_id}"},
+             dataType: "html",
+             success: function(html){
+                $('#msgListBody').append(html);
+                $('.listpic').css('height', $('.listpic:first').width() + 'px');
+             }
+        });
+    }
+</script>
+</body>
+</html>

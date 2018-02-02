@@ -1,0 +1,235 @@
+<include file="Public:head"/>
+<style>
+    .abc1{
+        display: block;
+        /* right: 0px; */
+        /* top: -10px; */
+        height: 39px;
+        /* padding: 0 40px; */
+        line-height: 2;
+        background: #C4E238;
+        width: 50px;
+        height: 25px;
+        text-align: center;
+    }
+</style>
+
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+                  订单详情
+
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">订单编号</label></th>
+                    <td>
+                        {weikucms:$info.orderid}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">微信昵称</label></th>
+                    <td>
+                    	{weikucms:$info.nickname}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">微信图像</label></th>
+                    <td>
+                        <img src="{weikucms:$info.headimgurl}" width="100px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">真实名字</label></th>
+                    <td>
+                        {weikucms:$info.name}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">手机号码</label></th>
+                    <td>
+                        {weikucms:$info.phone}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">贷款金额</label></th>
+                    <td>
+                        {weikucms:$info.c_money}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">贷款期限(天)</label></th>
+                    <td>
+                        {weikucms:$info.qi_xian}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">下单时间</label></th>
+                    <td>
+                        {weikucms:$info.add_time|date='Y-m-d H:i:s',###}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">订单状态</label></th>
+                    <td>
+
+                        <if condition="$info['status'] eq 0" >
+                            新订单
+                            <elseif condition="$info['status'] eq 1" />
+                            处理中
+                            <elseif condition="$info['status'] eq 2" />
+                            待录佣
+                            <elseif condition="$info['status'] eq 3" />
+                            待处理  <span class="btn btn-primary" style="margin-left: 25px" onclick="chuli2(4)">处理</span>
+                            <elseif condition="$info['status'] eq 4" />
+                            待核审  <span class="btn btn-primary" style="margin-left: 25px" onclick="chuli2(5)">审核</span>
+                            <elseif condition="$info['status'] eq 5" />
+                            交易成功
+                            <elseif condition="$info['status'] eq -2" />
+                            交易失败
+                            <else />
+                        </if>
+                    </td>
+                </tr>
+                <if condition="$info['money']">
+                <tr>
+                    <th valign="top"><label for="key">成功交易金额(元)</label></th>
+                    <td>
+                      {weikucms:$info.money}
+                    </td>
+                </tr>
+                    </if>
+                <tr>
+                    <th valign="top"><label for="key">操作</label></th>
+                    <td>
+
+                        <if condition="$info['status'] eq 0" >
+                            <button type="button" name="button" class="btn btn-primary" onclick="chuli(1)">去处理</button>
+                            <elseif condition="$info['status'] eq 1" />
+                            <input type="radio" name="kk" value="-2"  />失败<input style="margin-left: 20px;" type="radio" name="kk" value="2" />成功<button style="margin-left: 20px;" type="button" name="button" class="btn btn-primary" onclick="chuli(2)">提交</button>
+                            <elseif condition="($info['status'] eq 2)AND($info['money'] eq '')" />
+                            交易金额<input type="text" name="kk2" >元<button style="margin-left: 20px;" type="button" name="button" class="btn btn-primary" onclick="chuli(3)">提交</button>
+                            <else />
+                        </if>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <th valign="top"><label for="cid">上传资料</label></th>
+                    <td>
+                        <volist name="info['imgs']" id="vo">
+                            <img src=" {weikucms:$vo}" width="250px" style="max-height: 300px;" class="img_tu" />
+                        </volist>
+
+                    </td>
+                </tr>
+
+                <!--<tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                    </td>
+                </tr>-->
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+        <script>
+            //去处理
+            function chuli(str){
+             //   var id="{weikucms:$_GET['id']}";
+
+                var url="{weikucms::U('chuli',array('token'=>$token,'id'=>$_GET['id']))}";
+                if(str==2){//失败还是成功
+                    if($("input[name=kk]:checked").val()==null){
+                        notif({
+                            msg: '请选择成功或者失败',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    var kk=$("input[name=kk]:checked").val();
+                    url=url+"&kk="+kk;
+                }
+                if(str==3){//设置成功交易金额
+                    var money=$("input[name=kk2]").val();
+                  //  $("input[name=kk2]").val().replace(/\D|^0/g,'');
+                    if(money==''){
+                        notif({
+                            msg: '请先填写金额',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    url=url+"&kk="+money;
+                }
+               // alert(kk);return false;
+
+                $.post(url,{str:str},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: '操作成功',
+                            type: "success"
+                        });
+                        if(2==str){
+                            location.href =  "{weikucms::U('gta_life_order',array('token'=>$token,'id'=>$_GET['id']))}";
+                        }else{
+                            location.reload();
+                        }
+                    }else{
+                        notif({
+                            msg: '操作失败',
+                            type: "error"
+                        });
+                    }
+                },'json');
+            }
+
+            function chuli2(statues){
+                var url="{weikucms::U('chuli2',array('token'=>$token,'id'=>$_GET['id']))}";
+                //var status = status;
+                $.post(url,{status:statues},function(rel){
+                    if(rel.status == 1){
+                        notif({
+                            msg: '操作成功',
+                            type: "success"
+                        });
+                        location.href =  "{weikucms::U('gta_life_order',array('token'=>$token,'id'=>$_GET['id']))}";
+                    }else{
+                        notif({
+                            msg: '操作失败',
+                            type: "error"
+                        });
+                        location.href =  "{weikucms::U('gta_life_info',array('token'=>$token,'id'=>$_GET['id']))}";
+                    }
+                },'json')
+            }
+        </script>
+
+
+

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/a.css">
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/b.css">
+<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+    <div class="container itemdetail mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" onclick="javascript:history.go(-1);"></a></div>
+                    <div class="wx_bar_tit">我的分销</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt20">
+            <div class="col-md-12 p0">
+                <div class="my_nav">
+                    <ul>
+                        <li class="tiao"><a href="{weikucms::U('Usercenterzj/commission',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">分销详情</a></li>
+                        <li class="tiao"><a href="{weikucms::U('Usercenterzj/fengxia',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">分销产品</a></li>
+                                       </ul>
+                </div>
+            </div>
+            <div class="col-md-12 p0" style="display:none;">
+                <p class="alert bg-info p10 ml10 mr10" style="color:#333;">您目前推荐了： <strong style="color:red;">28</strong> 位朋友&nbsp;&nbsp;&nbsp;&nbsp;累积赚取佣金：￥<strong style="color:red;">168.80</strong>元</p><!--说明：可以根据需要调用不同class，bg-primary蓝色背景、bg-success浅绿色背景、bg-info淡蓝色背景、bg-warning浅黄色背景、bg-danger浅红色背景-->
+                <div class="my_menu" style="display:none;">
+                    <ul>
+                        <li class="tiao"><a href="/personal.html"><span class="m7">会员中心</span></a></li>
+                        <li class="tiao update"><a href="/personal/order.html"><span class="m3">我的订单</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="  font-size: 12px;margin-top: -8px; text-align: left;">
+            <if condition="$dd_nickname['nickname'] AND $dd_nickname['tuijian_time']">
+                您的推荐人是：{weikucms:$dd_nickname.nickname}
+                <br />
+                推荐时间:{weikucms:$dd_nickname.tuijian_time|date='Y-m-d H:i:s',###}
+                <elseif condition="$dd_nickname['nickname'] AND ($dd_nickname['tuijian_time']==false)" />
+                您的推荐人是：{weikucms:$dd_nickname.nickname}
+                <else />
+                您目前没有推荐人
+            </if>
+        </div>
+        <div class="row">
+            <div class="col-md-12 tal p10">
+                <div class="panel panel-default" style="border:none;">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="{weikucms::U('Usercenterzj/kefu',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">我的客户</a></li>
+
+                        <li><a href="{weikucms::U('Usercenterzj/commission',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">我的佣金</a></li>
+                    </ul>
+                    <div class="panel-body smallfont p5" style="border:1px #ddd solid; border-top:none;">
+                        <if condition="$showDetail">
+                        <table class="table table-hover table-condensed" style="margin-bottom:5px;">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>姓名</th>
+
+                                <th>加入时间</th>
+                            </tr>
+                            <volist name="list" id="vo">
+                            <tr style="border: 1px solid #eee; color: #ccc; font-size: 14px;font-weight: 100;">
+                                <th>{weikucms:$i}</th>
+                                <th>{weikucms:$vo.nickname}</th>
+
+                                <th>{weikucms:$vo.add_time}</th>
+                            </tr>
+                                </volist>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <else />
+                        <style type="text/css" media="screen">
+                            tr.rowList td div span { display: inline-block; min-width: 90px;}
+                            .none { display: none;}
+                        </style>
+                        <script type="text/javascript" charset="utf-8">
+                            $(document).on('touchstart', '.showList', function(){
+                                $(this).next('.rowList').toggle();
+                            });
+                        </script>
+                        <table class="table table-hover table-condensed" style="margin-bottom:5px;">
+                            <tbody>
+                            <tr class="showList">
+                                <td>一级分销</td>
+                                <td style='text-align: right;'>{weikucms:$one}人</td>
+                            </tr>
+                            <tr class='rowList none'>
+                                <td colspan="2">
+                                <volist name="aone" id="v">
+                                <div>
+                                    <span><if condition="$v['nickname']">{weikucms:$v.nickname}<elseif condition="$v['pname']"/>{weikucms:$v.pname}<else/>{weikucms:$v.name}</if></span>
+                                    <span>{weikucms:$v.add_time}</span>
+                                </div>
+                                </volist>
+                                </td>
+                            </tr>
+                            <tr class="showList">
+                                <td>二级分销</td>
+                                <td style='text-align: right;'>{weikucms:$two}人</td>
+                            </tr>
+                            <if condition="$_GET['token'] neq '6278b84cdaa4f05c9bff030d6338d270'">
+                            <tr class='rowList none'>
+                                <td colspan="2">
+                                <volist name="atwo" id="v">
+                                <div>
+                                    <span><if condition="$v['nickname']">{weikucms:$v.nickname}<elseif condition="$v['pname']"/>{weikucms:$v.pname}<else/>{weikucms:$v.name}</if></span>
+                                    <span>{weikucms:$v.add_time}</span>
+                                </div>
+                                </volist>
+                                </td>
+                            </tr>
+                            </if>
+                            <tr class="showList">
+                                <td>三级分销</td>
+                                <td style='text-align: right;'>{weikucms:$three}人</td>
+                            </tr>
+                            <if condition="$_GET['token'] neq '6278b84cdaa4f05c9bff030d6338d270'">
+                            <tr class='rowList none'>
+                                <td colspan="2">
+                                <volist name="athree" id="v">
+                                <div>
+                                    <span><if condition="$v['nickname']">{weikucms:$v.nickname}<elseif condition="$v['pname']"/>{weikucms:$v.pname}<else/>{weikucms:$v.name}</if></span>
+                                    <span>{weikucms:$v.add_time}</span>
+                                </div>
+                                </volist>
+                                </td>
+                            </tr>
+                            </if>
+                            </tbody>
+
+                        </table>
+                        </if>
+                        <div class="wap_page" style="text-align:center;">
+                        </div>
+                        <p class="bg-success p10" style="color:#333;">*说明：以上数据是您加入分销后推荐的好友列表，该统计是根据你发送带有独有PID编码的链接，在您的好友访问之后，系统会自动检测统计出来的数据。如有差异或疑问，请及时联系{weikucms:$tpl.name}客服人员。全国服务热线：{weikucms:$phone}。</p><!--说明：可以根据需要调用不同class，bg-primary蓝色背景、bg-success浅绿色背景、bg-info淡蓝色背景、bg-warning浅黄色背景、bg-danger浅红色背景-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footnav mini-innner">
+
+    </div>
+</div>
+
+
+
+</body>
+</html>

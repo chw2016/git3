@@ -1,0 +1,93 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+        float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+
+    }.borderColor{
+         border-bottom:3px solid #1576AD;
+     }
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="financial" style="padding-left: 10px;">
+                消息中心
+            </li>
+            <li style="background-color: #1576AD;color: white;float: right;width:10%;font-size: 15px">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" style="color: white;text-decoration:none;">返&nbsp&nbsp回</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--添加按钮-->
+<div>
+    <ul>
+        <li><div class="addstyle" style="margin-left: 0px;background: #1576ad;" onclick="window.location.href='{weikucms::U('Media/station',array('token'=>$token,'type'=>'add'))}'">添加消息</div></li>
+    </ul>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>这里是站内消息的</li>
+    </ol>
+</div>
+
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>消息标题</th>
+                <th>消息类型</th>
+                <th>消息时间</th>
+				<th>操作</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="info" key="i">
+            <tr>
+				<td>{weikucms:$vo.title}</td>
+				<td>
+					<if condition="$vo['type'] eq 1">
+						系统消息
+					<else/>
+						任务消息
+					</if></td>
+				<td>{weikucms:$vo.info_time}</td>
+                <td >
+                	<a href="{weikucms::U('Media/scan',array('token'=>$token,'id'=>$vo['id'],'tid'=>$tid))}" title="查看" class="btn btn-success btn-sm">查看</a>
+                    <a href="{weikucms::U('Media/station',array('token'=>$token,'id'=>$vo['id'],'tid'=>$tid))}" title="站内消息" class="btn btn-success btn-sm">编辑</a>
+                    <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Media/stationDel',array('token'=>$token,'id'=>$vo['id'],'tid'=>$tid))}')">删除</a>
+                </td>
+            </tr>
+            </volist>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

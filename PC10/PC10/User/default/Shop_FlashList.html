@@ -1,0 +1,160 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+<div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top first" data-id="today">
+                <a href="{weikucms::U('Shop/account',array('token'=>$token,'type'=>0))}">账户</a>
+            </li>
+
+            <li data-index="0" class="tab_nav sub js_top " data-id="total">
+                <a href="{weikucms::U('Shop/index',array('token'=>$token))}">主页</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ShopOrder/All',array('token'=>$token,'resour'=>'index'))}">所有订单</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ShopOrder/All',array('token'=>$token,'type'=>1,'resour'=>'index'))}">今日订单</a>
+            </li>
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/AddShop',array('token'=>$token,))}">添加店铺</a>
+            </li>
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/type',array('token'=>$token))}">店铺类型</a>
+            </li>
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/member',array('token'=>$token))}">区域运营商</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/Union',array('token'=>$token))}">社区管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/flash',array('token'=>$token))}">轮播图管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/navigation',array('token'=>$token))}">导航栏</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/BaseSet',array('token'=>$token))}">基础配置</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/WareList',array('token'=>$token))}">商品列表</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/GradeList',array('token'=>$token))}">会员等级</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/ScoreSet',array('token'=>$token))}">积分管理</a>
+            </li>
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/classify',array('token'=>$token))}">分类管理</a>
+            </li>
+
+
+
+        </ul>
+    </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以了解万普微门店(所有分店)的订单总数、今日的订单量、会员总数和未处理订单，未处理订单将会展示各分店订单的处理情况，有利于了解和管理分店。</li>
+        <li>在这里还可以添加分店、编辑分店、删除分店。</li>
+    </ol>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <span>店铺登陆网址：<php>echo C('site_url');</php>index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Shop</span>
+    <br/>
+    <br/>
+    <span>店铺管理员登陆网址：<php>echo C('site_url');</php>index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Shopmember</span>
+</div>
+
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>
+            <a class="btn btn-success btn-sm" href="{weikucms::U('Shop/AddFlash',array('token'=>$token))}">添加图片</a>
+            <a class="btn btn-primary btn-sm" href="{weikucms::U('Shop/FlashList',array('token'=>$token))}"> 轮播图列表</a>
+        </h4>
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>图片标题</th>
+                    <th>图片展示</th>
+                    <th>轮播图类型</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="data" id="vo">
+                    <tr>
+                        <td>{weikucms:$vo.id}</td>
+                        <td>{weikucms:$vo.title}</td>
+                        <td><img src="{weikucms:$vo.pic}" alt="" style="width: 100px;height: 50px;"/></td>
+                        <td>
+                            <if condition="$vo[type] eq 1">
+                                首页轮播图
+                            </if>
+                            <if condition="$vo[type] eq 2">
+                                列表轮播图
+                            </if>
+                            <if condition="$vo[type] eq 3">
+                                渠道商轮播图
+                            </if>
+                            <if condition="$vo[type] eq 4">
+                                店铺轮播图
+                            </if>
+                        </td>
+                        <td class="norightborder">
+                            <if condition="$v[status] eq 0">
+                            <a class="btn btn-success btn-sm" href="{weikucms::U('Shop/checkFlash',array('id'=>$vo[id],'token'=>$token,'status'=>1))}">审核</a>
+                                </if>
+
+                            <if condition="$v['status'] eq 1">
+                            <a class="btn btn-success btn-sm" href="{weikucms::U('Shop/EditFlash',array('id'=>$vo[id],'token'=>$token,'status'=>0))}">取消审核</a>
+                            </if>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+<include file="Public:footer"/>

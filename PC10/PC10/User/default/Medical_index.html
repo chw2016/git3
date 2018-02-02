@@ -1,0 +1,73 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Medical/index',array('token'=>$token))}" >医院介绍</a>
+                </li>
+
+
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Medical_departments/index',array('token'=>$token))}">科室设置</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+  <div class="cLineC" style="line-height: 32px;">
+    <if condition="$tj eq 0"> 
+	<a  target="_self" href="{weikucms::U('Medical/add',array('token'=>$token))}" class="btn btn-primary" >添加医院介绍</a>
+      <else/>
+	  <a  target="_self"  class="btn btn-primary" >医院介绍</a>
+       </if>
+  </div>
+  <div class="msgWrap form">
+    <div class="bdrcontent">
+      <div id="div_ptype">
+        <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+          <thead>
+            <tr>
+              <th style=" width:100px;">关键词</th>
+              <th style=" width:100px;">标题</th>
+              <th style=" width:100px;">图文封面</th>
+              <th style=" width:100px;">挂号页头部图</th>
+              <th style=" width:100px;">地址</th>
+              <th style=" width:100px;">联系方式</th>
+              </span>
+              </span>
+              </th>
+              <th style=" width:120px;">操作</th>
+            </tr>
+          </thead>
+          <volist name="info" id="vo">
+            <tr>
+              <td>{weikucms:$vo.keyword}</td>
+              <td>{weikucms:$vo.title}</td>
+              <td><div class="cateimg"><img src="{weikucms:$vo.piccover}" class="cateimg_small"  /></div></td>
+              <td><div class="cateimg"><img src="{weikucms:$vo.registrationtoppic}" class="cateimg_small"  /></div></td>
+              <td>{weikucms:$vo.address}</td>
+              <td>{weikucms:$vo.phone}</td>
+              <td class="norightborder"><a target="_self" href="{weikucms::U('Medical/edit',array('token'=>$vo['token'],'id'=>$vo['id']))}">编辑</a> <a href="{weikucms::U('Medical/del',array('token'=>$vo['token'],'id'=>$vo['id']))}">删除</a> </td>
+            </tr>
+          </volist>
+        </table>
+      </div>
+    </div>
+    <div class="footactions" style="padding-left:10px">
+      <div class="pages">{weikucms:$page}</div>
+    </div>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>

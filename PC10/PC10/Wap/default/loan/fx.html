@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}-分亨</title>
+<!--<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="css/global.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/index1-4.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+    <style>
+        #share-wrap{position:fixed;top:0px;left:auto;padding:0px;margin:0 auto;text-align:center;z-index:1100;opacity:1;outline:none;display:block}
+        #share-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            opacity: .8;
+            cursor: pointer;
+            display: block;
+            background-color: #777;
+        }
+        .share-block {
+            display: block!important;
+        }
+        .share_txt {
+            color: #fff;
+            font-size: 2em;
+            float: right;
+            text-align: left;
+        }
+        .share_txt img {
+            border: 0;
+            height: 25px;
+            vertical-align: top;
+            width: 25px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .share_txt p {
+            margin: 0 0 10px;
+        }
+        .mt10 {
+            margin-top: 10px;
+        }
+        .mt20 {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+	<div class="top_text">您的邀请码：</div>
+	<div class="top_1">
+		<span><b>
+
+        <?php echo substr(md5($openid),0,10);?>
+        </b></span>
+		<div class="top_btn">
+			<div >立即分享</div>
+		</div>
+	</div>
+	<div class="body_text">
+
+		给好友发邀请函，一起领福利！<br/>
+		好友注册时填写邀请码，还有获得10.00元的奖励。好友注册时填写邀请码，还有获得10.00元的奖励。<br/>
+		给好友发邀请函，一起领福利！<br/>
+		好友注册时填写邀请码，还有获得10.00元的奖励。好友注册时填写邀请码，还有获得10.00元的奖励。<br/>
+		给好友发邀请函，一起领福利！<br/>
+		好友注册时填写邀请码，还有获得10.00元的奖励。好友注册时填写邀请码，还有获得10.00元的奖励。<br/>
+		好友注册时填写邀请码，还有获得10.00元的奖励。好友注册时填写邀请码，还有获得10.00元的奖励。<br/>
+		给好友发邀请函，一起领福利！<br/>
+		好友注册时填写邀请码，还有获得10.00元的奖励。好友注册时填写邀请码，还有获得10.00元的奖励。<br/>
+	</div>
+
+	<div style="height:77px;background-color: #f0f0f0;"></div>
+	<!--尾部-->
+	<section>
+        <include file="Loan:foot"/>
+</section>
+    <if condition="$tpl['is_auth'] eq 1">
+        <span style="display:none ;" id="textarea_c">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/loan/token/{weikucms:$token}/dopenid/{weikucms:$openid}/type&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+        <else />
+        <span style="display:none ;" id="textarea_c">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/loan/token/{weikucms:$token}/dopenid/{weikucms:$openid}/type&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+    </if>
+    <!----蔗盖层--->
+
+    <div id="share-overlay" style="display:none;"></div>
+    <div id="share-wrap" style="z-index: 1101;opacity: 1; text-align: center; margin:0 auto;width:100%;outline: none;display: none;">
+        <div class="share_txt" style="font-size:16px;width:55%;margin:30px 0 auto;">
+             <p class="mt10">点击右上角<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAOVBMVEX///////////////////////////////////////////////////////////////////////////+0EB4eAAAAEnRSTlMAGBopLC0xQEbj6uvt8Pf4+f6cTTdwAAAAVklEQVRYw+3TSw6AIBAEUVQUxS/e/7Cy6bXJTEwkqXeAWnWHAHzslMUYuGX1BjKBHwSKMTBL4lQN66XzDmnnTASqwxiIMvDKhk0yeod0cSYC1capgFcPTdUS5Jr0Wp0AAAAASUVORK5CYII=" pagespeed_url_hash="3988083293" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">图标</p>
+             <p>然后 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADcklEQVR42u2aO2uTURiATy1WRSw04CBCFRxUei9NTNN7QqHQJL2kLYiLoIM4tEOxoogIdtC6uKv/QP+BZql1UCeXTg462aKIaYUWS4/PW/wghKTQ5DvJwZzhofCl3znnfd5zT5TWuqpxApwAJ8AJcAKcACfACXACnAAnwAlwAvLR1NRkC8/gyAHf+a8E6OHh4ffNzc2NVStgZmZGJxKJ9fb29mjVChAmJyd3QqHQLZ7VlFNAAtKwAdoH7hcrQJientYDAwMveX6iHAIWQYfDYT06OqqnpqakEaVwF9Tg4GDRAjxGRkZWW1paLpgUEAc9NDQkFfrBAiiyVyjQ83ATXsA7+AzfoWCZY2Njmc7OzklTAtJk3q/g5wsEfxzm4BNogtF9fX0y6+t4PK7Hx8d1KpXat2x65W53d/cj3q/1W0CGbp9d2TbMQgDUQenv788O/BDcgDW6seYznUwmS5IcjUZfs1Se9FNA7pifYwJSZEi1traWMqufhmXQvb29MrNL2b5Awr60tbUF/RKQW0HAy2IJBGGN9Vy6uJTpOxMTE1tdXV3XTAgoNfOX4BeN87Juii166nUTAkoJ/hysE7w3rEzxFUIIUDYJqIOPHR0dpjP/Bk4yBBSirRJwj9lZ9vKmAt+FJahlElRMglKnNQJOwW92fqaCz0AKFMugQrTUaZWAJ2Rkv3H/B1bgMVyFCJyFBjgGap/gV+EiZSs2Ql59Vgmogx9kJl/j03AF6mXCYkncy2BPT48KBoOKZXJvxWGTVOgs8Arq2Qordo/yP1YKiNMlc7eyKxAGJeM1EolIkAc5DO3AbajhMOS9a62Ap1lniZ9wGSTbMksXcxpchxg9JvtMYbWAt7FYTN5bhjP0BMl4sRciH6CRZVRxIeI9t17AN7L9nPcO81fGdbHLqJRxlGU0XxnzNgt4IBnjaOstT8VSqIw7ICdJawV4Nz8meAhyNSbtskyAeZaybqqqUoD29hZVK4C2OAFOQAUEBCwIPlBJAXPelVgFWaANZROQyalom03HLM8bKhB4A8zC9r+132PDpIB07jmeg8jeFxeSBT4vK9QpdUsbstskbTQmIOF9MWIx0kZjAhTH2UWLg18EaaM5AQJbzqR0Ndi0IOhNSEMCpG2F5gz3IyknwAlwApwAJ8AJcAKcACfACXACnAAnIA9/Aaws8FP+zMIHAAAAAElFTkSuQmCC" pagespeed_url_hash="3428687099" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"> 发送给朋友</p>
+             <p>或 <img src="{weikucms:$staticFilePath}/shop/images/a.png" pagespeed_url_hash="1629321881" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"> 分享到朋友圈</p>
+
+        </div>
+
+
+    </div>
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="{weikucms:$tpl.name}";
+    var imgUrl="{weikucms:$img}";
+    //var descContent="http://v.wapwei.com/{weikucms:$product.logourl}";
+    var descContent="如多分期";
+    var shareUrl='';
+
+    $(function() {
+        shareUrl = $("#textarea_c").text();
+    });
+
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+    //蔗盖层
+    $(".top_btn").click(function(){
+
+        var parent5=document.getElementById("share-overlay");
+        $("#share-overlay").removeClass("share-none");
+        parent5.className=parent5.className+" share-block";
+        var parent6=document.getElementById("share-wrap");$("#share-wrap").removeClass("share-none");
+        parent6.className=parent6.className+" share-block";
+        return false;
+
+
+    })
+    $("#share-overlay").click(function(){
+        $(this).removeClass("share-block");
+        $(this).addClass('share-none');
+        $("#share-wrap").removeClass();
+        $("#share-wrap").addClass('share-none');
+    });
+</script>
+</html>

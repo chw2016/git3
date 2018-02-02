@@ -1,0 +1,86 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+    <div class="cLine">
+        <div class="pageNavigator e_left">
+            <a  href="javascript:history.go(-1);" class="btn btn-primary">返回</a>
+
+        </div>
+
+        <div class="clr"></div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <span>核审</span>
+    </div>
+
+
+
+    <div class="msgWrap">
+
+        <form method="post"  action="" id="info" >
+            <input name="id"  type="hidden" value="{weikucms:$_GET['id']}" />
+
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <!--这里是type=2的产品-->
+
+        <if condition="$info['authentication'] eq 0">
+                    <tbody>
+                    <tr>
+                        <th valign="top" style="width: 200px;">
+                            <label for="keyword">
+                                请您对此用户做出审核判断！
+                            </label>
+                        </th>
+                        <td>
+
+                            <input type="radio" name="authentication"  value="1" >通过
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="authentication"  value="-1" >拒绝
+                            <br><br>
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                        </td>
+                    </tr>
+                    </tbody>
+            <else />
+            此用户已经审核过咯！
+            </if>
+
+
+
+
+                <!--这里是type=1的产品-->
+
+            </table>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+        <script>
+            $("#save").click(function(){
+                $("#info").submit();
+            })
+        </script>
+
+<include file="Public:footer"/>
+
+

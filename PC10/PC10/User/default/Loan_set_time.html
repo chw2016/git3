@@ -1,0 +1,125 @@
+<include file="Public:head"/> 
+
+
+
+<style>
+    .bbc tr td .set{
+        margin-right: 20px;;
+    }
+    .bbc tr{
+        height: 93px;
+    }
+    .bbc .tou{
+        font-size: 26px;;
+    }
+    .bbc tr td{
+        text-align: center;
+        height: 85px;
+        border: solid 1px #333;
+
+
+    }
+    .bbc tr td p{
+       text-align: center;
+    }
+    .bbc tr td.red{
+        color: #FFF;
+        background-color: #333;
+    }
+    .bbc .red p{
+        color: #FFF;
+    }
+</style>
+
+
+<div class="cLine">
+
+
+<!--  <div class="cLineB">
+
+       <h4 class="left">帖子列表</h4>
+
+       <div class="clr"></div>
+
+   </div> -->
+</div>
+<div class="cLine">
+    <div class="pageNavigator e_left">
+        <a  href="{weikucms::U('Loan/index',array('token'=>$token))}" class="btn btn-primary">返回</a>
+
+    </div>
+
+    <div class="clr"></div>
+</div>
+
+
+<div class="msgWrap bbc" style="margin-top: -30px;">
+
+{weikucms:$time_info}
+
+</div>
+
+
+
+</div>
+
+</div>
+
+<include file="Public:footer"/>
+        <script>
+            $(".bbc td .del").click(function(){
+                if($(this).parent().hasClass('red')) {
+                    if (confirm("确定要去掉些日期发团吗？")) {
+                        $(this).parent().removeClass('red');
+                        var y_m=$(".y").text()+"-"+$(".m").text();
+                        var d=$(this).parent().find('.d').text();
+                        var url = "{weikucms::U('Loan/edit_time',array('del'=>1,'token'=>$token,'cid'=>$_GET['id']))}&y_m=" + y_m + "&d=" + d;
+                        location.href = url;
+                    }
+                }else{
+                    $(this).parent().find(".num").hide();
+                }
+            })
+
+
+            $(function(){
+                $(".bbc td .set").click(function(){
+
+                    var y_m=$(".y").text()+"-"+$(".m").text();
+                    var d=$(this).parent().find('.d').text();
+
+                    //    if ($(this).parent().find(".num").is(":hidden")) {
+                            $(this).parent().find(".num").show();
+
+                          //  alert(num);
+                         //   $(this).find(".set").click(function () {
+                                var num = $(this).parent().find(".num").val();
+                               if(num!=''){
+
+                                   var url="{weikucms::U('Loan/edit_time',array('token'=>$token,'cid'=>$_GET['id']))}&y_m="+y_m+"&d="+d+"&num="+num;
+                                   location.href=url;
+                               }else{
+                                 // alert(7);
+                               }
+
+                         //   })
+
+                   // }
+
+
+
+                                  //  $(this).find(".num").hide(0);
+                                  //  alert(num);
+
+
+
+
+
+
+                })
+           /*  $(".bbc td .num").click(function(e){
+                   e.stopPropagation();
+                   e.preventDefault();
+               })*/
+           })
+        </script>

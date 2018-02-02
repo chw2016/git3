@@ -1,0 +1,255 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+  <div class="cLineB">
+    <h4 class="left">
+      <if condition="$op neq 1">添加教师信息
+        <else/>
+        编辑教师信息</if>
+    </h4>
+    <div class="searchbar">
+      <form method="post" action="">
+        <script>
+function selectall(name) {
+    var checkItems=$('.cbitem');
+    if ($("#check_box").attr('checked')==false) {
+        $.each(checkItems, function(i,val){
+            val.checked=false;
+        });
+        
+    } else {
+        $.each(checkItems, function(i,val){
+            val.checked=true;
+        });
+    }
+}
+function setlatlng(longitude,latitude){
+    art.dialog.data('longitude', longitude);
+    art.dialog.data('latitude', latitude);
+    art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:600,height:400,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+        <script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#show_pic").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+<script>
+
+var editor1;
+KindEditor.ready(function(K) {
+    editor1 = K.create('#declaration', {
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : true,
+        allowFileManager:true,
+        afterBlur: function(){this.sync();}
+    })
+
+});
+
+
+
+</script>
+      </form>
+    </div>
+    <div class="clr"></div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以添加或者编辑教师信息。</li>
+    </ol>
+  </div>
+  <div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">top:150px</if>">
+  <!--tab end-->
+  <div class="msgWrap">
+    <form class="form" method="post" id="form" action="">
+    <input type="hidden" name="userid" id="userid" value="{weikucms:$b['userid']}" />
+    <if condition="$op neq 1">
+        <input type="hidden" name="id" id="id" value="{weikucms:$a['id']}" />
+    <else/>
+        <input type="hidden" name="id" id="id" value="{weikucms:$a['id']}" />
+    </if>
+      <div class="msgWrap bgfc">
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+          <tbody>
+            <tr>
+              <th>教师名称：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="name" name="name" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="name" name="name" value="{weikucms:$message['name']}" class="px require" style="width:300px;" />
+                  <input type="text" id="teacher_id" name="teacher_id" value="{weikucms:$message['id']}" class="px require" style="display:none" />
+                </if>
+              </td>
+            </tr>
+            
+             <tr>
+              <th>教师职务：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="post" name="post" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="post" name="post" value="{weikucms:$message['post']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+            </tr>
+            
+            
+          <tr>
+              <TH valign="top">教师照片：</TH>
+              <TD><if condition="$data.picurl"> <img style="display: block;" id="show_pic" class="fenlei_img" src="{weikucms:$message['pic']}">
+                  <else/>
+                  <img style="display: none;" id="pic" class="fenlei_img" src="{weikucms:$message['pic']}"> </if>
+              </TD>
+          </tr>
+          
+          <tr>
+          <th>上传标志：</th>
+            <td><if condition="$op neq 1">
+                <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$message['pic']}" style="width:300px;"   />
+                <else/>
+                <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$message['pic']}" style="width:300px;"   />
+              </if>
+              <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span> </td>
+          </tr>
+           
+            <tr>
+              <th>教师联系电话：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="tel" name="tel" value="" class="px require" style="width:300px;" size="11"/>
+                  <else/>
+                  <input type="text" id="tel" name="tel" value="{weikucms:$message['tel']}" class="px require" style="width:300px;" size="11"/>
+                </if>
+              </td>
+            </tr>
+            
+            <tr>
+              <th>教师宣言：</th>
+              <td><if condition="$op neq 1">
+                <textarea class="px" id="declaration" name="declaration" style="width: 560px; height: 560px; display: ;"></textarea>                  
+                <else/>
+                <textarea class="px" id="declaration" name="declaration" style="width: 560px; height: 560px; display: ;">
+{weikucms:$message['declaration']}
+                </textarea>                
+                </if>
+              </td>
+            </tr>
+
+          <tr>
+            <th>&nbsp;</th>
+            <td>
+                <if condition="$op neq 1">
+                    <input type="hidden" name="op" id="op" value="0" />
+                <else/>
+                    <input type="hidden" name="op" id="op" value="1" />
+                </if>
+              <input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+              <if condition="$op neq 1">添加教师
+                <else/>确定编辑
+              </if>
+              </button>
+           </td>
+          </tr>
+          </tbody>
+          
+        </table>
+      </div>
+    </form>
+  </div>
+  <div class="cLine">
+    <div class="clr"></div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var userid = $("#userid").val();
+            var teacher_id = $('#teacher_id').val();
+            var name = $("#name").val();
+            var tel = $("#tel").val();
+            var pic = $("#pic").val();
+            var declaration = $("#declaration").val();
+            var post = $("#post").val();
+            var op = $("#op").val();
+            if(! name){
+                notif({
+                    msg: "教师名不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+            /* if(! pic){
+                notif({
+                    msg: "教师照片不能为空",
+                    type: "warning"
+                });
+                return false;
+            } */
+            
+            if(! post){
+                notif({
+                    msg: "教师职务不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! declaration){
+                notif({
+                    msg: "教师宣言不能为空",
+                    type: "warning"
+                });
+                return false;
+            }             
+            
+
+            $.post("{weikucms::U('KindergartenBranch/manageteacher',array('token'=>$token))}&id="+id+"&userid="+userid,{id:id,userid:userid,pic:pic,name:name,teacher_id:teacher_id,tel:tel,post:post,tel:tel,declaration:declaration,op:op},function(back){
+                if(back.status == 1){
+                    notif({
+                        msg: back.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = back.url;
+                    },'1000');
+                    }else{
+                        notif({
+                        msg: back.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

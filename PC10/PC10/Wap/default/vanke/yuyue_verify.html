@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weipayapp/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weipayapp/css/index.css">
+	<script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weipayapp/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weipayapp/js/msg.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".verify_btn").touch(function(){
+            var THIS  = $(this);
+            if(THIS.hasClass('_on_')){
+                return;
+            }
+			var v = $("[name=money]").val();
+            if(!v){
+                return alert('请输入验证码');
+            }
+            $('.verify_btn a').text('正在验证...');
+            THIS.addClass('_on_');
+            $.post('', {verify:v}, function(data){
+                if(data.status == 0){
+                    $('.verify_btn a').text('验证成功');
+                    setTimeout(function(){
+                        $('.verify_btn a').text('确认验证');
+                        $("[name=money]").val('');
+                    }, 5000);
+                }else{
+                    $('.verify_btn a').text('验证失败:' + data.msg);
+                    setTimeout(function(){
+                        $('.verify_btn a').text('确认验证');
+                    }, 10000);
+                }
+            }, 'json');
+		});
+	})
+
+	</script>
+    </head>
+    <body>
+    	<div>
+    		<img src="{weikucms:$phone['pic']}" alt="">
+    	</div>
+    	<div class="pay">
+		<div class="pay_money">
+			<input type="tel" value="" name="money" placeholder="请输入验证码">
+		</div>
+		<div class="verify_btn">
+            <a href="javascript:void(0)" style="color: #FFF;">确认验证</a>
+		</div>
+    	</div>
+        <style type="text/css" media="screen">
+            .demo-footer { color: #000; text-align: center; margin-top: 20px; position: fixed; bottom: 20px; margin: 0 auto; width: 100%; }
+        </style>
+        <footer class="demo-footer">@万普微信全方位技术支持</footer>
+    </body>
+</html>

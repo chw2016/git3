@@ -1,0 +1,133 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true,
+items : [
+'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+	<div class="cLineB">
+		
+		<h4 class="left"><if condition="$type eq 1">添加发布信息<elseif condition="$type eq 2"/>编辑发布信息</if></h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Repair/release',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一层</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		 <tr>
+			<th valign="top">发布信息标题：</th>
+			<td>
+				<input type="input" class="px" id="title"  name="title" style="width:500px" maxlength="255" value="{weikucms:$messageFind['title']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">信息的关键词：</th>
+			<td>
+				<input type="input" class="px" id="keyword"  name="keyword" style="width:500px" maxlength="255" value="{weikucms:$messageFind['keyword']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">信息发布日期：</th>
+			<td>
+				<if condition="$type eq 2">
+				<input type="input" class="px" id="date" value="{weikucms:$messageFind['time']|date="Y-m-d",###}" onclick="WdatePicker()" name="date"> 
+				<else/>
+				<input type="input" class="px" id="date" value="" onclick="WdatePicker()" name="date"> 
+				</if>
+				
+				<!-- <input type="input" class="px" id="date"  name="date" style="width:208px" maxlength="16" value="{weikucms:$messageFind['time']}"/> -->
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">信息发布编者：</th>
+			<td>
+				<input type="input" class="px" id="editer"  name="editer" style="width:208px" maxlength="255" value="{weikucms:$messageFind['editer']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+           <th valign="top"><label for="info">图文详细页内容：</label></th>
+           <td>
+           		<textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();"><?php echo html_entity_decode(htmlspecialchars_decode($messageFind['message'])); ?></textarea>
+           </td>
+         </tr> 
+  		<!--  
+  		 <tr>
+  		 	<th valign="top">发布信息内容：</th>
+			<td valign="top">
+				<textarea class="px" id="info" name="info" style="width: 560px; height: 300px;"><?php echo html_entity_decode(htmlspecialchars_decode($messageFind['message'])); ?></textarea>
+			</td>
+		</tr>
+		--> 
+  		 <tr>
+			<th valign="top">发布信息排序：</th>
+			<td>
+				<input type="input" class="px" id="sort" name="sort" style="width:208px"  value="{weikucms:$messageFind['sort']}"/>
+			</td>
+  		</tr>
+  		 
+  		 <tr> 
+	        <th valign="top">发布信息针对对象：</th>				        
+	        <td>
+	        	<select name="obj" id="obj">
+	        		 <option value="0" disabled="true">请选择</option>
+		        	 <option value="用户">用户</option>
+		        	 <option value="服务商">服务商</option>
+		        	 <option value="用户和服务商">用户和服务商</option>
+	        	</select>
+	        </td>
+	     </tr>
+  		 
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="sure" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<include file="Public:footer"/> 

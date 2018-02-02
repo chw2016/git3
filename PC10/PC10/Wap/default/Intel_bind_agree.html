@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}设备</title>
+		<script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Intel/css/paipai.css">
+		<script src="{weikucms::STATICS}/wapweiui/Intel/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Intel/js/paipai.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    </head>
+    <style>
+    .equipment{
+    	position: absolute;
+    	display: none;
+		margin-top: 4px;
+    }
+    .equipment ul{
+    	border-radius: 5px;
+    	background-color: #CCCCCC;
+		background: #FFF;
+		border: 1px solid #ccc;
+    }
+	.equipment ul li{
+		list-style: none;
+        line-height: 25px;
+        text-align: left;
+        text-indent: 0;
+        font-size: 12px;padding-left:18px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	.on{
+		position: relative;
+	}
+	.arrow{
+		height: 40px;
+		line-height: 40px;
+		margin-left: -12px;
+		border: 1px solid transparent;
+		position: absolute;
+		right: 20px;
+	   top: -14px;
+	}
+	.arrows{
+		width: 10px;
+		height: 10px;
+		border-bottom: 2px solid #000;
+		border-right: 2px solid #000;
+		transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+    </style>
+    <body class="bodys">
+    	<section style="height: 80px; font-size: 17px; margin-top: 20px; width: 87%; margin: 0 auto; margin-top: 20px; color: green;">
+        <if condition="$data.callback eq 0">
+        您的设备号【{weikucms:$data.imei}】被用户【{weikucms:$data.ask_phone}】申请绑定，请审核
+        <else />
+        您的设备号【{weikucms:$data.imei}】被用户审核已操作
+        </if>
+        </section>
+        <if condition="$data.callback eq 0">
+    	<footer class="footer locus" style="display: -webkit-box;">
+    		<section class="left" style="-webkit-box-flex: 1;">
+                <a style="display: block;" type='2' class='deal' href="javascrip: void(0);">不同意</a>
+            </section>
+    		<section class="left" style="-webkit-box-flex: 1;">
+                <a style="display: block;" type='1' class="goPosition deal" href="javascript: void(0);">同意</a>
+            </section>
+            <script type="text/javascript" charset="utf-8">
+                $(function(){
+                    $('.deal').click(function(){
+                        var url = "{weikucms::U('Intel/bind_agree', array('token' => $token, 'openid' => $openid, 'imei' => $imei,'id' => $id))}";
+                        $.post(url, {agree:$(this).attr('type')}, function(ret){
+                            if(ret.status == 0){
+                                msg.alert('操作成功', function(){
+                                    window.location.reload();
+                                });
+                            }else{
+                                msg.alert('操作失败，请重新操作', function(){
+                                    window.location.reload();
+                                });
+                            }
+                        }, 'json');
+                    });
+                })
+            </script>
+    		<!--<section class="right">
+                <a style="display: block;" href="{weikucms::U('Intel/setcentertwo', array('token' => $token, 'openid' => $openid, 'imei' => $imei))}">监控</a>
+            </section>-->
+    	</footer>
+        </if>
+    </body>
+ </html>

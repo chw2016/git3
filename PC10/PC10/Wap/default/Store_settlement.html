@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>进入结算</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--,target-densitydpi=device-dpi-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=0" />
+<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_common.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/es/css/settlement.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="initSettlement()">
+<input type="hidden" id="common_message_serverCannotConnection" value="由于网络故障无法连接服务器，请稍后重试" />
+<input type="hidden" id="confirm_html_invoiceOtherRequirements" value="发票和送餐要求" />
+<input type="hidden" id="shoppingCart_yuan" value="元" />
+<input type="hidden" id="login_takeTime" value="自取时间" />
+<input type="hidden" id="confirm_html_storeAddress" value="自取地址" />
+<input type="hidden" id="confirm_html_today" value="当日" />
+<input type="hidden" id="shoppingCart_html_subtotal" value="小计:" />
+<input type="hidden" id="confirm_html_deliveryTime" value="送餐时间" />
+<input type="hidden" id="confirm_html_deliveryAddress" value="送餐地址" />
+<input type="hidden" id="confirm_html_message21" value="成功提交订单后,<br/>预计<span class='hightlight'>" />
+<input type="hidden" id="confirm_html_message22" value="</span>分钟左右送达" />
+<input type="hidden" id="confirm_html_message31" value="成功提交订单后,<br/>预计将在<span class='hightlight'>" />
+<input type="hidden" id="confirm_html_message32" value="</span>左右送达" />
+<input type="hidden" id="confirm_form_wrongFormatInfo" value="输入的发票信息不符合规范" />
+<input type="hidden" id="confirm_form_wrongFormatOfOtherRequirement" value="输入的其他要求不符合规范" />
+<input type="hidden" id="confirm_form_beyond8Characters" value="输入的其他要求超出8个字的长度限制" />
+<input type="hidden" id="confirm_form_wrongFormatOfMobile" value="电话号码不符合要求" />
+<input type="hidden" id="confirm_form_reminder" value="温馨提示" />
+<input type="hidden" id="confirm_form_messgae1" value="请您在“备用联系电话”处添加备用手机号码，用于接收本期活动的优惠券代码，若您不填写则视为主动放弃，谢谢！" />
+<input type="hidden" id="confirm_form_fillIn" value="去填写" />
+<input type="hidden" id="confirm_form_pay" value="去结算" />
+<input type="hidden" id="confirm_form_failToSumbit" value="提交订单失败" />
+<input type="hidden" id="token"	value="{weikucms:$token}"/>
+<input type="hidden" id="wecha_id"	value="{weikucms:$wecha_id}"/>
+<input type="hidden" id="storeId" value="{weikucms:$storeId}"/>	
+	<div class="page-app settlement">
+		<div class="page-header_box">
+			<div class="page-header_boxInner">
+				<div class="page-header">
+					<a class="head-button-left backhome page-button bright"
+						href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}"><span class="icon"></span>首页</a>
+					<p>结算中心</p>
+				</div>
+			</div>
+		</div>
+		<div class="page-header_boxPH"></div>
+		<div class="settlement-overview">
+			<div class="amount">
+				<p class="tag">订单金额:</p>
+				<p class="value">
+					<span class="hightlight">{weikucms:$totlePrice}&nbsp;</span>元<span class="gray"></span>
+				</p>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<ul class="settlement-list">
+			<li>
+				<div class="tag">姓名:</div>
+				<div class="val"><input type="text" value="{weikucms:$lastInfoData.order_user}" id="username" name="username" maxlength="8"  style="width:100px;border:none;border-bottom: 1px solid rgb(209, 199, 199);padding-left:5px;border-radius:0px;font-size:14px;height:35px; border-width:thin;"/></div>
+			</li>
+			<li>
+				<div class="tag">地址:</div>
+				<div class="val"><input type="text" value="{weikucms:$lastInfoData.order_adress}" id="address" name="address" style="width:180px;border:none;border-bottom: 1px solid rgb(209, 199, 199);padding-left:5px;border-radius:0px;height:35px;font-size:14px;border-width:thin;"/></div>
+			</li>
+			<li>
+				<div class="tag">联系电话:</div>
+				<div class="val">
+					<input type="text" value="{weikucms:$lastInfoData.order_user_phone}" id="phone" name="phone" maxlength="11" style="width:160px;border:none;border-bottom: 1px solid rgb(209, 199, 199);padding-left:5px;border-radius:0px;height:35px;font-size:14px;border-width:thin;"/>
+				</div>
+			</li>
+            <li>
+                <div class="tag">是否外送:</div>
+                <div class="val">
+                    <select name="is_waisong" id="is_waisong">
+                        <option value="1">到店自取</option>
+                        <option value="2">需要外送</option>
+                    </select>
+                </div>
+            </li>
+            
+            
+             <li id="aaa" style="display:none;" >
+                <div class="tag">送货时间:</div>
+                <div class="val">
+                    <select name="sh_time" id="sh_time">
+                        <option value="">请先择送货时间</option>
+                        <option value="11:00-11:30">11:00-11:30</option>
+                        <option value="11:30-12:00">11:30-12:00</option>
+                        <option value="11:30-12:00">12:00-12:30</option>
+                        <option value="12:30-13:00">12:30-13:00</option>
+                    </select>
+                </div>
+            </li>
+            
+			<li>
+				<div class="tag">支付方式:</div>
+				<div class="val">
+                    <select name="pay_type" id="pay_type">
+                        <if condition="$is_weipay eq 1"><option value="2">微信支付</option></if>
+                        <option value="1">现金支付</option>
+                    </select>
+				</div>
+			</li>
+		</ul>
+		<ul class="settlement-form" style="display: block;">
+			<!--<li>-->
+				<!--<div class="tag">发票信息</div>-->
+				<!---->
+				<!--<div class="am-clickable page-checkBox" id="settlement-invoice" style="padding-left:35px;font-size:16px;line-height:40px;height:40px;">我需要发票</div>-->
+				<!--<div class="val" style="display:none">-->
+					<!--<input type="text" value="" name="f" placeholder="如果需要请填写抬头" />-->
+				<!--</div>-->
+				<!--<div class="settlement-invoiceText" style="color:red;font-size:16px;padding-left:35px;display:none">该地区只提供定额发票</div>-->
+			<!--</li>-->
+		
+			<li>
+				<div class="tag">其它要求</div>
+				<div class="val" style="height: 60px;padding-top: 5px;">
+                    <textarea name="order_extra_info" id="order_extra_info" style="border: none;width: 100%;height: 50px;"></textarea>
+				</div>
+			</li>
+			<!--<li>-->
+				<!--<div class="tag">其它联系电话</div>-->
+				<!--<div class="val">-->
+					<!--<input type="tel" value="" name="t" placeholder="仅限手机号码，11个数字" />-->
+				<!--</div>-->
+			<!--</li>-->
+		</ul>
+		<div class="settlement-bottom">
+		
+			<div class="settlement-button">
+			<!-- 	发票和送餐要求<span class="arrow down"></span> -->
+			</div>
+		
+			<div class="page-button submit">
+				<span class="text">提交订单</span>
+			</div>
+			<div class="page-tipsTitle">友情提示</div>
+			<div class="page-tipsContent">
+				<p>
+					提醒：您的优惠代码将会在次日发送至您的手机，若您还未填写手机号码，请在备用联系电话处添加，以用于接收本期活动的优惠券代码，若不填写则视为主动放弃.</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="page-comfirm" style="display: none" id="globle-confirm">
+		<div class="page-comfirmBox">
+			<div class="container">
+				<div class="title"></div>
+				<div class="content"></div>
+				<div class="buttons">
+					<div class="page-button"></div>
+					<div class="page-button bright"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+
+        <input type="hidden" name="order_money" value="{weikucms:$orderInfoData.order_price}">
+
+        <input type="hidden" name="order_text" value="{weikucms:$orderInfoData.order_info}">
+
+        <input type="hidden" name="orderid" value="{weikucms:$orderInfoData.order_id}">
+
+        <input type="hidden" name="openid" value="{weikucms:$orderInfoData.wx_openid}">
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store&a=orderList&token={weikucms::$_GET['token']}&openid={weikucms:$orderInfoData.wx_openid}">
+        <input type="hidden" name="type" value="Store_goods_order">
+
+    </form>
+    
+    
+
+    
+    
+    
+
+	<!--  libs -- start -->
+	<script src="{weikucms::STATICS}/wapweiui/es/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+	<script src="{weikucms::STATICS}/wapweiui/es/js/am.js" type="text/javascript"></script>
+
+	<script src="{weikucms::STATICS}/wapweiui/es/js/settlement.js" type="text/javascript">
+		
+	</script>
+	<script>
+		var isXMAS =false
+		var phoneAlert = false		
+		$(".page-button.submit").click(function() {
+	
+			var name = $("#username").val();
+			var address = $("#address").val();
+			var phone = $("#phone").val();
+			var pay_type = $("#pay_type").val();
+			var is_waisong = $("#is_waisong").val();
+			var order_extra_info = $("#order_extra_info").val();
+			var sh_time = $("#sh_time").val();
+			
+			if(! name){
+				utilities.ui.msg("用户名不能为空")
+				$("#username").focus();
+                return false;
+            }
+            if(! address){
+            	utilities.ui.msg("地址不能为空")
+            	$("#address").focus();
+                return false;
+            }
+            
+            if(!phone){
+            	utilities.ui.msg("联系方式不能为空")
+            	$("#phone").focus();
+                return false;
+            }
+
+            $.ajax({
+                url : "index.php?g=Wap&m=Store&a=checkOrder&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val(),
+                type : "POST",
+                data : {name:name,address:address,phone:phone,pay_type:pay_type,is_waisong:is_waisong,order_extra_info:order_extra_info,sh_time:sh_time},
+                dataType : "json",
+                timeout : 40000,
+                success : function(data) {
+                    if(data.success == 1){
+                        utilities.ui.msg("下单成功");
+                        if(pay_type == 1){
+                            location.href = "index.php?g=Wap&m=Store&a=orderLista&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+                        }else if(pay_type == 2){
+                        	
+                            $("#myweipayform").submit();
+                            
+                        }
+                    }else{
+                        utilities.ui.msg("读取数据失败，请重新填写！");
+                        location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+                    }
+                },
+                error : function() {
+                    utilities.ui.msg("上传数据失败，请重新填写！");
+                    //location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+                    //location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+                }
+            })
+		})
+		
+		$("#is_waisong").change(function(){
+			if($("#is_waisong").val()==2){
+                   $("#aaa").show();				
+			}else{
+				 $("#aaa").hide(); 
+			}
+		})
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/shopping_bg.css" rel="stylesheet" type="text/css">
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="Keywords" content="服务商订单">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+    #header,#footer{
+        margin: 8px auto 0;
+        /*padding: 0 8px;*/
+        width: 98%;
+    }
+    #footer table tr td{
+        width: 33%;
+    }
+    #header table, #footer table{
+        width: 100%;
+        margin: 0 auto;
+    }#footer table tr td{
+        width: 33%;
+        border: 1px solid #dcdcdc;
+        color: red;
+        text-align: center;
+        line-height: 2em;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    #header table tr td{
+        width: 23.4%;
+        /*float: left;*/
+        border: 1px solid #AAA0A0;
+        color: red;
+        text-align: center;
+        line-height: 2em;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }.color{
+        color:#fff !important;
+        
+        border:1px solid #f00;
+    }.a_color{
+    	/*color:#fff !important;*/
+    }
+    .hidden{
+        display: none;
+    }#footer table tr td a{
+        display: block;
+        width: 100%;
+        color: #f00;
+    }#Mask{
+        display: none;
+        background: #000;
+        opacity: 0.7;
+        position: absolute;
+        z-index: 10;
+    }#if{
+        position: absolute;;
+        z-index: 20;
+        width: 40%;
+        padding: 20px;
+        border: 1px solid #dcdcdc;
+        border-radius: 5px;
+        display: none;
+        background: #fff;
+    }.sureColor{
+        color: #fff !important;
+        border:none !important;
+        background: #EE4B4B;
+        box-shadow: 2px 4px 4px #aaa;
+    }
+</style>
+<script type="text/javascript">
+    $(function(){
+        $('#header td').bind('click' ,function(){
+            $(this).addClass('color').children('a').addClass('a_color').parents($(this)).siblings().removeClass('color');
+            $(this).parents('#header').next().find('.publicList').eq($(this).index()).removeClass('hidden').siblings().addClass('hidden');
+        })
+        $('#absort').click(function(){
+            $('#Mask').css({'width':$(document).width(),'height':$(document).height()}).show();
+            $('#if').css({'left':($(document).width()-$('#if').outerWidth())/2,'top':($(document).height()-$('#if').outerHeight())/2}).show();
+        })
+        $('#cannel').bind('click',function(){
+             $('#Mask').fadeOut();
+              $('#if').fadeOut();
+        })
+    })
+</script>
+<style type="text/css">
+	#bottom td a{
+		color: #fff;
+		display: block;
+		font-size: 20px;
+	}
+</style>
+<script type="text/javascript">
+    $(function(){
+    	if(document.body.scrollHeight > $(window).height()){
+    		$('#bottom').css({'width':$(window).width(),'left':0,'bottom':-(document.body.scrollHeight-$(window).height())});
+    	}else{
+    		$('#bottom').css({'width':$(window).width(),'left':0});
+    	}
+        
+    })
+</script>
+</head>
+
+
+
+<body>
+
+<div id="Mask"></div>
+<div id="if">
+    <div>您确定要取消该服务订单吗？</div>
+    <div class="button clearfix">
+        <a href="javascript:void(0);" style="width:45%;text-align:center;font-size:12px;line-height:0px;padding:9px 0;float:left;background:#f00;border:1px solid #f00;" id="makesure">确认</a>
+        <a href="javascript:void(0);" style="width:45%;text-align:center;font-size:12px;line-height:0px;padding:9px 0;float:right;background:#f00;border:1px solid #f00;" id="cannel">取消</a>
+    </div>
+</div>
+<div id="header">
+    <table>
+        <tr>
+            <!--<td <if condition="$type eq 0">class="color a_color"<else/></if> >-->
+            	<!--<a style="display:block;" href="index.php?g=Wap&m=Repair&a=myOrder&token={weikucms:$token}&openid={weikucms:$openid}" <if condition="$type eq 0">class="sureColor"<else/></if>>待确认</a>-->
+            <!--</td>-->
+            <td <if condition="$type eq 1">class="color a_color"<else/></if> >
+            	<a style="display:block;" href="index.php?g=Wap&m=Repair&a=myOrder&type=1&token={weikucms:$token}&openid={weikucms:$openid}" <if condition="$type eq 1">class="sureColor"<else/></if>>服务中</a>
+            </td>
+            <td <if condition="$type eq 2">class="color a_color"<else/></if> >
+            	<a style="display:block;" href="index.php?g=Wap&m=Repair&a=myOrder&type=2&token={weikucms:$token}&openid={weikucms:$openid}" <if condition="$type eq 2">class="sureColor"<else/></if>>保修期</a>
+            </td>
+            <td <if condition="$type eq 3">class="color a_color"<else/></if> >
+            	<a style="display:block;" href="index.php?g=Wap&m=Repair&a=myOrder&type=3&token={weikucms:$token}&openid={weikucms:$openid}" <if condition="$type eq 3">class="sureColor"<else/></if>>已完成</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+
+<if condition="$isNull eq 1">
+	<div class="yxyyList">
+		<ul id="rtable">
+			<div class="notContentTips">
+				<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>目前还没有订单！</p>
+			</div>
+		</ul>
+	</div>
+<else/>
+	<if condition="$type eq 1">	
+		<volist id="value" name="orderInfo">			
+		<div class="publicList wml100">
+		    <ul>
+		    	<li class="noAfter">
+			          <div class="li-l">订单编号</div>
+			          <div class="li-r">
+                          <a href="index.php?g=Wap&m=Repair&a=wxorderInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">
+                               <span style="word-wrap:break-word;">{weikucms:$value.order_nid}<br/>点击查看详细信息</span>
+                          </a>
+                      </div>
+			        </li>         
+		        <li class="noAfter">
+		            <div class="li-l">订单信息</div>
+		            <div class="li-r"><span style="word-wrap:break-word;">
+		            <if condition='$value.repairorder_type eq 1'>
+                        		普通订单&nbsp;
+                        	<elseif condition='$value.repairorder_type eq 2' />
+                        		保修单&nbsp;
+                        	<else />
+                        		客留单&nbsp;
+                        	</if>
+		            {weikucms:$value.repair_ele}<br /> {weikucms:$value.order_name} {weikucms:$value.order_tel}</span></div>
+		        </li>
+		         
+		        <li class="noAfter" style="height:1px;">
+		          
+		        </li>
+		    </ul>
+		     <div class="button clearfix" style="padding:0;">
+                <!--<if condition="$value.status eq 3"> <a-->
+                    <!--href="javascript:void(0);"-->
+                    <!--style="width: 45%; float: left; background: #f00; border: 1px solid #f00;"-->
+                    <!--onClick="see({weikucms:$value.id})">查看员工位置</a> <else />-->
+                <!--<a href="javascript:void(0);"-->
+                    <!--style="width: 45%; float: left; background: gray; border: 1px solid gray;">查看员工位置</a>-->
+                <!--</if>-->
+                <!--<if condition="$value.status eq 2"> <a-->
+                    <!--href="index.php?g=Wap&m=Repair&a=allot&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}"-->
+                    <!--style="width: 45%; float: right; background: #f00; border: 1px solid #f00;">分配订单</a>-->
+                <!--<else /> <a href="javascript:void(0);"-->
+                    <!--style="width: 45%; float: right; background: gray; border: 1px solid gray;">分配订单</a>-->
+                <!--</if>-->
+                <if condition='$value.repairorder_type eq 2'>
+                	<a href="javascript:void(0);" style="width:45%;margin: auto;background:#f00;border:1px solid #f00;" onClick="confirmWarranty({weikucms:$value.id})">确认保修</a>
+                <elseif condition='$value.repairorder_type eq 3' />
+                	<if condition="$value.status neq 4">
+		        	<a href="{weikucms::U('Wap/Repair/set',array('token'=>$token,'openid'=>$openid,'type'=>3,'id'=>$value['id']))}" style="width:45%;margin:auto;background:#f00;border:1px solid #f00;">维修完成</a>
+		        	<else/>
+		        	<a href="javascript:void(0);" style="width:45%;float:left;margin-top:6px;background:gray;border:1px solid gray;">维修完成</a>
+		        	</if>
+                <else />
+                	<if condition="$value.status neq 4">
+		        	<a href="{weikucms::U('Wap/Repair/set',array('token'=>$token,'openid'=>$openid,'type'=>3,'id'=>$value['id']))}" style="width:45%;float:left;margin-top:6px;background:#f00;border:1px solid #f00;">服务完成</a>
+		        	<else/>
+		        	<a href="javascript:void(0);" style="width:45%;float:left;margin-top:6px;background:gray;border:1px solid gray;">服务完成</a>
+		        	</if>
+			        <!--<a href="javascript:void(0);" style="width:45%;float:right;margin-top:6px;background:#f00;border:1px solid #f00;" onClick="gofinish({weikucms:$value.id})">来店维修已完成</a>-->
+			        <if condition="$value.status eq 2">
+		        	<a href="javascript:void(0);" style="width:45%;float:right;margin-top:6px;background:#f00;border:1px solid #f00;" onClick="set({weikucms:$value.id})">工程师已出发</a>
+		        	<else/>
+		     		<a href="javascript:void(0);" style="width:45%;float:right;margin-top:6px;background:gray;border:1px solid gray;">工程师已出发</a>
+		     		</if>
+                	<if condition="$value.is_tel eq 0">
+                    <a href="javascript:void(0);" style="width:45%;float:left;margin-top:6px;background:#f00;border:1px solid #f00;" onClick="tel({weikucms:$value.id})">已电话</a>
+                	<else/>
+                    <a href="javascript:void(0);" style="width:45%;float:left;margin-top:6px;background:gray;border:1px solid gray;">已电话</a>
+                	</if>
+                </if>
+		        	
+		    </div>
+		</div>
+	</volist>
+	<elseif condition="$type eq 2"/>
+		<volist id="value" name="orderInfo">
+		<div class="publicList wml100">
+		    <ul>
+		    	<li class="noAfter">
+			            <div class="li-l">订单编号</div>
+			            <div class="li-r">
+                            <a href="index.php?g=Wap&m=Repair&a=wxorderInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">
+                                <span style="word-wrap:break-word;">{weikucms:$value.order_nid}<br/> 点击查看详细信息</span>
+                            </a>
+			            </div>
+			        </li>      
+		        <li class="noAfter">
+		            <div class="li-l">订单信息</div>
+		            <div class="li-r"><span style="word-wrap:break-word;">
+		            <if condition='$value.repairorder_type eq 1'>
+                        		普通订单&nbsp;
+                        	<elseif condition='$value.repairorder_type eq 2' />
+                        		保修单&nbsp;
+                        	<else />
+                        		客留单&nbsp;
+                        	</if>
+		            {weikucms:$value.repair_ele}<br /> {weikucms:$value.order_name} {weikucms:$value.order_tel}</span></div>
+		        </li>
+		         
+		    </ul>
+		      <div class="button clearfix" style="padding:0;">
+                <if condition="$value['status'] eq 6">
+		        <a href="javascript:void(0);" style="width:45%;margin: auto;background:#f00;border:1px solid #f00;" onClick="repair({weikucms:$value.id})">返修完成</a>
+		        <!--<a href="index.php?g=Wap&m=Repair&a=allot&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}" style="width:45%;float:right;background:#f00;border:1px solid #f00;" id="fpdd">分配订单</a>-->
+                 <else/>
+                    <a href="javascript:void(0);" style="width:45%;margin: auto;background:gray;border:1px solid #f00;">返修完成</a>
+                </if>
+		     </div>
+		</div>
+	</volist>
+	<elseif condition="$type eq 3"/>
+		<volist id="value" name="orderInfo">		
+			<div class="publicList wml100">
+			    <ul>
+                    <li class="noAfter">
+                        <div class="li-l">订单编号</div>
+                        <div class="li-r">
+                            <a href="index.php?g=Wap&m=Repair&a=wxorderInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">
+                                <span style="word-wrap:break-word;">{weikucms:$value.order_nid}<br/> 点击查看详细信息</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="noAfter">
+                        <div class="li-l">订单信息</div>
+                        <div class="li-r"><span style="word-wrap:break-word;">
+                        <if condition='$value.repairorder_type eq 1'>
+                        		普通订单&nbsp;
+                        	<elseif condition='$value.repairorder_type eq 2' />
+                        		保修单&nbsp;
+                        	<else />
+                        		客留单&nbsp;
+                        	</if>
+                        {weikucms:$value.repair_ele} <br />{weikucms:$value.order_name} {weikucms:$value.order_tel}</span></div>
+                    </li>
+			         <li class="noAfter">
+			            <div class="li-l">订单状态</div>
+			            <div class="li-r"><input id="ddstate" placeholder="输入服务大类" value="已完成" class="input" type="text"  disabled /></div>
+			        </li>
+			    </ul>
+			</div>
+		</volist>
+	<else/>
+		<volist id="value" name="orderInfo">
+			<div class="publicList wml100">			
+			    <ul> 
+			    	<li class="noAfter">
+			            <div class="li-l">订单编号</div>
+			            <div class="li-r">
+                            <a href="index.php?g=Wap&m=Repair&a=wxorderInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">
+                                <span style="word-wrap:break-word;">{weikucms:$value.order_nid}<br/> 点击查看详细信息</span>
+                            </a>
+			            </div>
+			        </li>      
+			        <li class="noAfter">
+			            <div class="li-l">订单信息</div>
+			            <div class="li-r"><span style="word-wrap:break-word;">{weikucms:$value.repair_ele} {weikucms:$value.order_name} {weikucms:$value.order_tel}</span></div>
+			        </li>
+			         
+			        <li class="noAfter">
+			          
+			        </li>
+			        
+			    </ul>
+			     <div class="button clearfix"><a href="javascript:void(0);" style="width:100%;background:#f00;" onClick="sure({weikucms:$value.id})" class="gray flag">确认接单</a></div>
+			</div>
+		</volist>
+	</if>	
+</if>
+
+<script type="text/javascript">
+function sure(id){
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=myOrder&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function confirmWarranty(id){
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repairtech&a=techOrderOpr&opr=6&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	alert(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	alert(data.info);
+            }
+        },'json');
+}
+
+function see(id) {
+	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=myOrder&type=1&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function set(id) {
+	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=0&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function tel(id) {
+    
+    var id = id;
+    var url = 'index.php?g=Wap&m=Repair&a=set&type=6&token={weikucms:$token}&openid={weikucms:$openid}';
+    $.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+                show_success_tip(data.info);
+                setTimeout(function(){                          
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function del(id) {
+	
+	var id = id;
+	alert('你确定要取消该服务订单吗？');
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=1&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function cancel(id) {
+	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=2&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+function finish(id) {
+	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=3&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+
+
+function gofinish(id) {	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=4&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+function repair(id) {	
+	var id = id;
+	var url = 'index.php?g=Wap&m=Repair&a=set&type=5&token={weikucms:$token}&openid={weikucms:$openid}';
+	$.post(url,{id:id},
+        function(data){ 
+            if(data.status == 100){ 
+            	show_success_tip(data.info);
+                setTimeout(function(){                        	
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+            	show_error_tip(data.info);
+            }
+        },'json');
+}
+</script>
+</div>
+<div style="height:100px;">
+</div>
+
+
+<style type="text/css">
+	
+	.gray{
+		border-top:2px solid #ddd;
+		border-left:2px solid #ddd;
+		border-right:2px solid #888;
+		border-bottom:2px solid #888;
+	}
+    .red{
+		border-top:2px solid #888;
+		border-left:2px solid #888;
+		border-right:2px solid #ddd;
+		border-bottom:2px solid #ddd;
+	}.indexMenu a span{
+        color: #fff;
+    }
+</style>
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=home&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=myOrder&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><span class="Order-index">订单</span></a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=recharge&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><span class="My-index">充值</span></a>
+                    
+              </div>
+        </div>
+    </div>
+</footer>	
+
+<script type="text/javascript">
+	$(function(){
+		$('.flag').mousedown(function(){
+			$(this).removeClass('gray').addClass('red');
+			$(this).children('a').css({'bottom':'1px','right':'1px'});
+		})
+		$('.flag').mouseup(function(){
+			$(this).addClass('gray').removeClass('red');
+			$(this).children('a').css({'top':'0px','left':'0px'});
+		})	
+	})
+</script>
+<!--<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>-->
+</body>
+</html>

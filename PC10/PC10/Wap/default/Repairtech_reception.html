@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.event.drag-1.5.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.touchSlider.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/service/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcore.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcalendar.js"></script>
+
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.form.js"></script>
+    <script src="{weikucms::STATICS}/jquery-ui-datepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/datepicker.css" media="all" />
+
+    <meta charset="UTF-8">
+    <title>{weikucms:$tpl['name']}-电子客留单</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var imgreturn  =  '{weikucms::STATICS}'
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+        function browserRedirect() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";            
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {                
+            } else {
+				
+                //obj = document.getElementById("bigAll");				
+				$("#bigAll").attr("style","width:540px;margin:0px auto;border:1px solid #dcdcdc; border-radius:5px;");
+				$("#back").attr("style","width:530px;margin:0px auto;");
+            }
+        }          
+    </script>
+    <style type="text/css">
+        .demo{width:100%;}
+        .demo p{line-height:32px}
+        .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;/*padding:4px 5px 4px;font-size:14px; line-height:18px; *line-height:20px;*/color:#fff;text-align:center;vertical-align:middle;cursor:pointer;/*background-color:#5bb75b;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;*/}
+            /*.btn span{display: block;}*/
+        .btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+        .progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+        .bar {background-color: green; display:block; width:0%; height:20px; border-radius: 3px; }
+        .percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+        .files{height:22px; line-height:22px; margin:5px 0}
+        .delimg{margin-left:20px; color:#090; cursor:pointer}
+    </style>
+    <style type="text/css">
+        .gray_1{
+            background: #ccc;
+            /*border: 1px solid #ccc;*/
+            font-size: 14px;
+
+        }.red{
+             background: #f00 !important;
+             /*border: 1px solid #f00;*/
+
+             color: #fff;
+             font-size: 14px;
+         }
+
+        .bcqtxx{
+
+            position: absolute;
+            right: 10px;
+            top: 7px;
+        }
+        .huise{
+            background: #ccc !important;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $( "#ctime" ).datepicker({
+                yearRange:"c-60:c+1"
+            });
+
+            $("#birthday" ).datepicker({
+                yearRange:"c-60:c+1"
+            });
+
+            $(".main_visual").hover(function(){
+                $("#btn_prev,#btn_next").fadeIn()
+            },function(){
+                $("#btn_prev,#btn_next").fadeOut()
+            });
+
+            $dragBln = false;
+
+            $(".main_image").touchSlider({
+                flexible : true,
+                speed : 200,
+                btn_prev : $("#btn_prev"),
+                btn_next : $("#btn_next"),
+                paging : $(".flicking_con a"),
+                counter : function (e){
+                    $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+                }
+            });
+
+            $(".main_image").bind("mousedown", function() {
+                $dragBln = false;
+            });
+
+            $(".main_image").bind("dragstart", function() {
+                $dragBln = true;
+            });
+
+            $(".main_image a").click(function(){
+                if($dragBln) {
+                    return false;
+                }
+            });
+
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            }, 3000);
+
+            $(".main_visual").hover(function(){
+                clearInterval(timer);
+            },function(){
+                timer = setInterval(function(){
+                    $("#btn_next").click();
+                },3000);
+            });
+
+            $(".main_image").bind("touchstart",function(){
+                clearInterval(timer);
+            }).bind("touchend", function(){
+                        timer = setInterval(function(){
+                            $("#btn_next").click();
+                        }, 3000);
+                    });
+
+        });
+    </script>
+</head>
+<body style="background:#fff;" onLoad="browserRedirect()">
+<div id="bigAll" >
+
+<div style="padding:10px;background:#f5f4f4;margin:15px auto;width:90%;border-radius:6px;">
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;">1号服务电子客留单</div>
+    <ul margin-top="">
+        <li style="margin-bottom:10px;line-height:20px;">
+            1.本电子凭证由维修技师填写，提交后维修客户会收到手机验证码.
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            2.输入手机验证码确认后生效，生效后会给客户发送一条手机短信，作为取机证明。
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            3.您也可以通过【用户专区】-【我的主页】-【订单】查看您的客留单 。
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            4.维修完成后，维修技师点击“已完成”，本单据将转为用户保修证明。
+        </li>
+    </ul>
+</div>
+<div style="text-align:center;margin:5px auto;background:#d30709;width:90.6%;padding:10px;color:#fff;font-size:14px;">用户信息</div>
+<input id="token" value="{weikucms:$token}" type="hidden">
+<input id="openid" value="{weikucms:$openid}" type="hidden">
+<div class="publicList wml100">
+	<ul>
+        <li class="noAfter">
+            <div class="li-l">姓名</div>
+            <div class="li-r"><input id="uname" placeholder="必填，请输入您的姓名" class="input" type="text"></div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">手机</div>
+            <div class="li-r"><input id="uphone" placeholder="必填，请输入您的手机号" class="input" type="tel"></div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">地址</div>
+            <div class="li-r"><input id="uaddress" placeholder="请输入您的地址" class="input" type="text"></div>
+        </li>                              
+    </ul>
+</div>
+
+<div style="text-align:center;margin:10px auto;background:#d30709;width:90.6%;padding:10px;color:#fff;font-size:14px;">维修信息</div>
+
+<div class="publicList wml100">
+    <ul>    
+    	 <li class="noAfter">
+        	<div class="li-l">维修大类</div>
+        	<div class="li-r" style="position:static;">        		
+        		<select id="wxtype" class="select">
+            		<option selected="selected" value="0">必选，请点击选择</option>
+            		<volist name="bigClass" id="vo">
+			            <option value="{weikucms:$vo.id}">{weikucms:$vo.name}</option>            
+			        </volist>				
+            	</select>
+        	</div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">维修电器</div>
+            <div class="li-r" style="position:static;">                
+				<select id="electric" class="select">
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">品牌型号</div>
+            <div class="li-r"><input id="brand" placeholder="必填，请输入品牌、型号" class="input" type="text"></div>
+        </li> 
+        <li class="noAfter">
+            <div class="li-l">服务内容</div>
+            <div class="li-r" id="content">
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="debug" class="flagContent flagsContent" content="调试" height="20px" width="20px">
+                调试               
+                &nbsp;&nbsp;&nbsp;
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="clean" class="flagContent flagsContent" content="清洗" height="20px" width="20px">
+                清洗
+                <br>              
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="care" class="flagContent flagsContent" content="保养" height="20px" width="20px">
+               保养
+               &nbsp;&nbsp;&nbsp;               
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="install" class="flagContent flagsContent" content="安装" height="20px" width="20px">
+                安装
+                <br>              
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="repair" class="flagContent flagsContent" content="维修" height="20px" width="20px">
+                维修
+                &nbsp;&nbsp;&nbsp;               
+               <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="Disassemble" class="flagContent flagsContent" content="拆卸" height="20px" width="20px">
+               拆卸
+                <br>               
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" style="" id="Demolition" class="flagContent flagsContent" content="拆除" height="20px" width="20px">
+                拆除
+            </div>
+        </li>
+    	 <li class="noAfter">
+            <div class="li-l">维修类型</div>
+            <div class="li-r">
+              	<img src="{weikucms::STATICS}/wapweiui/service/images/choice_no.png" wdith="20px" style="position:relative;top:1px;" id="warrantyexpired" height="20px">&nbsp;保外
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="{weikucms::STATICS}/wapweiui/service/images/choice_yes.png" wdith="20px" style="position:relative;top:1px;" id="dureingwarranty" class="flags" height="20px">&nbsp;保内  
+            </div>
+        </li>             
+        <li class="noAfter">
+            <div class="li-l">维修费（元）</div>
+            <div class="li-r"><input id="repairfee" placeholder="必填，请输入数值" class="input" type="number"></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">受理日期</div>
+            <div class="li-r">
+            	<input id="d11" type="text" onClick="WdatePicker()" readonly placeholder="必填，请点击选择日期"/>            	
+            </div>
+        </li>
+    	<li class="noAfter">
+            <div class="li-l">约定取机日期</div>
+            <div class="li-r">
+            	<input id="d12" type="text" onClick="WdatePicker()" readonly placeholder="必填，请点击选择日期"/>            	
+            </div>
+        </li>    	
+        <li class="noAfter">
+            <div class="li-l">故障说明</div>
+            <div class="li-r">
+            	<textarea id="descrition" placeholder="请说明故障现象以及备注信息。" cols="20" rows="5"></textarea>
+            </div>
+        </li>   
+
+    </ul>
+</div>
+
+<div class="publicList wml100">
+    <ul>
+         <li class="noAfter">
+            <div class="li-l">技师手机</div>
+            <div class="li-r"><input id="techphone" placeholder="必填，请输入技师手机号" value="" class="input" type="tel"></div>
+        </li>
+
+      </ul>
+</div> 
+
+<div style="padding:10px;background:#f3f0f0;width:90%;border:1px solid #cfcbcb;border-radius:6px;margin:0 auto;">
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;">注意事项</div>
+    <ul margin-top>
+    	<li style="margin-bottom:10px;line-height:20px;">
+             1.在维修过程中可能会造成机身资料的掉失，请用户在送修前先行备份，我方既不负责对资料的保存也不承担因而造成的一切损失，同时本公司对有效修好的机器，正常情况下保修一个月；
+        </li>
+       <li style="margin-bottom:10px;line-height:20px;">
+       		2.清洗后的机器可能存在故障，本公司将对其故障另行报价维修，但本次清洗费用照常收取；
+       </li>
+       <li style="margin-bottom:10px;line-height:20px;">
+       		3.进水、跌过或曾被另维修点修过的机器可能已存在隐藏故障，在检修后不一定能恢复原样，本公司对此类机器只作尽量修复处理；
+       </li>
+       <li style="margin-bottom:10px;line-height:20px;">
+       		4.针对因缺乏维修零件而无法修复的机器，本公司将无条件退回还给客户；
+       </li>
+       <li style="margin-bottom:10px;line-height:20px;">
+       		5.本电子单据发出时，用户会通过短信或微信收到信息，同时本电子单据只有用户可以关闭，未关闭的单据即为取机凭证；
+       </li>
+       <li style="margin-bottom:10px;line-height:20px;">
+       		6.从通知用户取机日起，超过三个月不取回的机器将由本公司自行处理。
+       </li>      
+    </ul>
+</div>
+<div style="padding:10px; background:#f3f0f0;width:90%;border:1px solid #cfcbcb;border-radius:6px;margin:0 auto;margin-top:10px;">
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;"></div>
+    <ul margin-top>
+    	<li style="margin-bottom:10px;line-height:20px;">
+            维修门店：苏宁佛山东方广场店
+        </li>
+         <li style="margin-bottom:10px;line-height:20px;">
+            服务投诉电话：400-9696-011
+        </li>
+         <li style="margin-bottom:10px;line-height:20px;">
+            &copy;南京修业网络科技有限公司
+        </li>
+    </ul>
+</div>
+<div id="agreeAdd" style="margin-left:5px;" >
+    <div style="height:50px; ">
+    </div>
+	<div id="back" style="z-index: 98; bottom: 3px; width: 97%; line-height: 40px; border-width: 2px; border-style: solid; border-color: rgb(204, 204, 204) rgb(85, 85, 85) rgb(85, 85, 85) rgb(204, 204, 204); box-shadow: 6px 6px 6px rgb(170, 170, 170); left: 36.6167px;">  
+        <div style="width:100%;text-align:center;">
+           <a class="hongse" href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;line-height:2em;font-size:16px;padding:0;" id="submit">提交</a>
+        </div>
+	</div>
+</div>
+
+</div>
+<script type="text/javascript">
+
+    $(function(){  
+    	
+    		var url="index.php?g=Wap&m=Repairtech&a=getData&type=6&token="+$("#token").val()+"&openid="+$("#openid").val();
+            $.post(url,'',
+              function(data){ 
+                if(data.status == 100){ 
+                	$('#techphone').attr('value',data.info);
+                }
+            },'json');
+    	 
+         //保内保外单选框
+        $('#warrantyexpired').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png');
+            $('#dureingwarranty').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+            
+        $('#dureingwarranty').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png');
+            $('#warrantyexpired').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+    
+		//是否更换配件单选框
+        $('#replacement').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png');
+            $('#noreplacement').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+            
+        $('#noreplacement').click(function(){
+            $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png');
+            $('#replacement').attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png');
+        })
+
+        //点击控制服务内容的
+        $('.flagContent').click(function(){
+            if($(this).hasClass('flagsContent')){
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_yes.png').removeClass('flagsContent');
+            }else{
+                $(this).attr('src','{weikucms::STATICS}/wapweiui/service/images/choice_no.png').addClass('flagsContent');
+            }
+        })
+
+    })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+	  
+	  var total = new Array();
+	  var jsonstr = "[{";	  
+	  
+	  $('#back').mousedown(function(){
+            $(this).css({'border-left':'2px solid #555','border-right':'2px solid #aaa','border-top':'2px solid #555','border-bottom':'2px solid #aaa'})
+       });
+       $('#back').mouseup(function(){
+            $(this).css({'border-left':'2px solid #ccc','border-right':'2px solid #555','border-top':'2px solid #ccc','border-bottom':'2px solid #555'})
+       });	  
+
+            //用户电话号码的验证
+            $('#uphone').blur(function(){
+				
+                 var reg = /^1[3,5,8]\d{9}$/;
+                 if(reg.test($(this).val()) == false){
+                    show_error_tip('用户手机号码格式不正确！');                    
+                    $(this).focus();
+                    return false;
+                }
+            });			
+           //验证维修费
+		   $('#repairfee').blur(function(){	                    
+					var reg = /^\d+(\.{1}\d+)?$/;
+					if(reg.test($(this).val()) == false){
+                    show_error_tip('维修费应为数值！');                    
+                    $(this).focus();
+                    return false;
+                }				
+             });
+		   
+		   //验证保修期为数字		   
+		   $('#warrantyperiod').blur(function(){	                    
+					var reg = /^\d+$/;
+					if(reg.test($(this).val()) == false){
+                    show_error_tip('保修期应为整数！');                    
+                    $(this).focus();
+                    return false;
+                }
+             });
+			 
+            //技师电话号码验证
+            $('#techphone').blur(function(){
+                var _reg = /\d{3}-\d{8}|\d{4}-\d{7}/;
+                var reg = /^1[3,5,8]\d{9}$/;
+                if (_reg.test($(this).val()) == false) {
+
+                    if (reg.test($(this).val()) == false) {
+                        show_error_tip('技师手机号码格式不正确！');                        
+                        $(this).focus();
+                        return false;
+                    }   
+                }
+            });
+	    $('#back').css('left',($(window).width()-$('#back').width())/3);
+	    $('#resadd').css('background','#ccc');
+        $('#resadd').attr('disabled','disabled');
+
+        //按钮ressave
+        contralmouse('#ressave');
+        
+        //按钮效果
+        function contralmouse(obj){
+            // 当鼠标放下的时候
+            $(obj).mousedown(function(){
+                $(this).removeClass('gray').addClass('red_1');
+            })
+
+            //当鼠标上去的时候
+            $(obj).mouseup(function(){
+                $(this).removeClass('red_1').addClass('gray');
+            })
+        }
+        
+	  	/*提交数据*/
+        $("#submit").click(function(){
+            if($(this).hasClass('hongse')){ 
+            //用户资料
+			if(!$('#uname').val()){
+                show_error_tip('请输入姓名！'); 
+                return false;
+            }else{
+                total['uname']=$('#uname').val();
+            }			
+            if(!$('#uphone').val()){
+                show_error_tip('请输入用户手机号码！'); 				
+                return false;
+            } else{
+                var reg = /^1[3,5,8]\d{9}$/;
+                if(reg.test($('#uphone').val()) == false){
+                  show_error_tip('用户手机号格式不正确！');                  
+                  return false;
+               }else{
+                   total['uphone']=$('#uphone').val();
+               }
+            } 
+			
+			//维修信息			
+			if(!$('#electric').val()){
+                show_error_tip('请选择维修电器！'); 				
+                return false;
+            }else{
+            	$electric = document.getElementById("electric");
+				total['electric'] = electric.options[electric.selectedIndex].text;
+            }
+				
+			//品牌型号
+			if(!$('#brand').val()){
+                show_error_tip('请填写品牌型号信息！'); 				
+                return false;
+            }else{
+            	total['brand']=$('#brand').val();
+            }
+			//服务内容
+			var scontent ='';			
+            $('.flagContent').each(function(){
+                if($(this).hasClass('flagsContent') == false){
+                    scontent += $(this).attr('content') + ',';					
+                }
+            })
+			if( !scontent){
+  	            show_error_tip('请选择服务内容！'); 
+  	            return false;
+  	        }else{
+				total['scontent'] = scontent;
+			}
+			//判断保内保外
+           if($('#dureingwarranty').hasClass('flags') == true){
+                total['repairtype']=0;
+            }
+            
+            if($('#warrantyexpired').hasClass('flags') == true){
+                total['repairtype']=1;
+            }
+			
+			//判断是否填写维修费
+			if($("#repairfee").val() == 0){
+				total['repairfee']=$('#repairfee').val();
+			}			
+			if(!$("#repairfee").val()){				
+				show_error_tip('请填写维修费，应为数值！'); 
+                return false;
+			}else{	
+				var reg = /^\d+(\.{1}\d+)?$/;
+				if(reg.test($("#repairfee").val()) == false){
+					show_error_tip('维修费应为数值！');                    
+					$(this).focus();
+					return false;	
+				}		
+				total['repairfee']=$('#repairfee').val();
+			}
+                
+			//判断是否选择受理日期
+			if(!$('#d11').val()){
+                show_error_tip('请选择受理日期！'); 
+                return false;
+            }else{
+                total['receivedate']=$('#d11').val();
+            }
+			//判断是否选择取机日期
+			if(!$('#d12').val()){
+                show_error_tip('请选择取机日期！'); 
+                return false;
+            }else{
+                total['completedate']=$('#d12').val();
+            }
+			
+			total['descrition']=$('#descrition').text(); 
+			//判断技师手机号
+			if(!$('#techphone').val()){
+                show_error_tip('请输入技师手机号码！'); 				
+                return false;
+            } else{
+                var reg = /^1[3,5,8]\d{9}$/;
+                if(reg.test($('#techphone').val()) == false){
+                  show_error_tip('技师用户手机号格式不正确！');                  
+                  return false;
+               }else{
+                   total['techphone']=$('#techphone').val();
+               }
+            } 
+            
+            var jsonstr = "[{";
+  			for(var key in total) {
+  				jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\","; 				
+  			}
+  			jsonstr += "\"idd\":\"1\"}]";
+            
+            var url="index.php?g=Wap&m=Repairtech&a=techOrderOpr&type=6&token="+$("#token").val()+"&openid="+$("#openid").val();
+            var $bn = $(this);
+            $bn.text('正在提交...');
+            $.post(url,{jsonstr:jsonstr},
+              function(data){             	
+                if(data.status == 100){ 
+                	$bn.text('提交成功');
+                	alert(data.info);
+                    setTimeout(function(){                            
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                  alert(data.info);
+                  $bn.text('提交');
+                  return false;
+                }else if(data.status == 2 ){
+                  alert(data.info);
+                  $bn.text('提交')
+                  return false;
+                }
+            },'json');
+         }	
+      });
+        
+  });
+</script>
+
+<script>
+$(function(){
+	$("#wxtype").change(function(){			
+		//var id = $("#wxtype").attr('txt');
+		var id = $("#wxtype").val();
+		var obj = document.getElementById("wxtype");
+		var txt = obj.options[obj.selectedIndex].text;
+		if(id != 0){
+			var tet = '';
+            var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+            $.post(url,{id:id},
+	                function(data){ 
+	                  if(data.status == 100){
+	                  	var length = data.data.length;
+	                  	var i = 1;
+	                  	
+	                  	tet += '<option value="0">请选择电器</option>';
+	                  	for(i; i<=length; i++){
+	                  		var index = i-1;
+	                  		tet += '<option value="'+data.data[index].id+'">'+data.data[index].name+'</option>';		                  		   		
+	                  	}
+	                	//alert(data.data[0].id)
+	                  	//alert(tet);
+	                	 $("#electric").empty();
+	                  	$("#electric").append(tet);
+	                  }
+	              },'json');      
+		}else{ 
+			tet += '<option value="0">请选择电器</option>';
+			$("#electric").empty();
+			$("#electric").append(tet);
+		}
+	});
+})
+
+</script>
+
+<script type="text/javascript">
+function deletes(id,offset) {
+	
+    $("#li_" + id).remove();
+    
+    bigclass[offset] = null;
+    
+    var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+    
+    $.post(url,{id:offset},
+    function(data){ 
+      if(data.status == 100){
+      	var length = data.data.length;
+      	var i = 1;     	
+      	for(i; i<=length; i++){
+      		var index = i-1;
+      		var exist= $('#ty_'+data.data[index].id).find('input').val();
+      		if(exist){
+      			
+      		    var div = document.getElementById('#ty_'+data.data[index].id);
+                $('#ty_'+data.data[index].id).remove();
+      			//var div = document.getElementById("scate");
+      			//var node =  document.getElementById('#ty_'+data.data[index].id);
+      			//div.removeChild(node);
+      		}
+      		   		
+      	}
+      }
+  	},'json');
+    var li_id = $(".label1 li:last-child").attr('id');
+    if (li_id == undefined) {
+        $(".label1_box").css("display", "none");
+    }
+
+    /*
+    判断是否存在数组之内
+     */
+    function in_array(search,array){
+        for(var i in array){
+            if(array[i]==search){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+    /*
+    判断是否存在数组之内
+     */
+    function in_array(search,array){
+        for(var i in array){
+            if(array[i]==search){
+                return true;
+            }
+        }
+        return false;
+    }
+
+</script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/images/upfile.js"></script>
+
+</body></html>

@@ -1,0 +1,98 @@
+<html>
+	<head>
+		<title>体重目标</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/5.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+		<script type="text/javascript">
+			$(function(){
+				var small = "{weikucms:$before}";
+				var big = "{weikucms:$after}";
+				$('#small').text(small);
+				$('#big').text(big);
+			})
+		</script>
+	</head>
+	<body>
+		<!--头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">减肥目标</span>
+		</div> -->
+		<!-- 健康体重 -->
+		<div class="health">
+			您的健康体重范围为
+			<span><span id="small">50.4</span>kg-<span id="big">60.1</span>kg</span>
+			<div class="range">
+				您当前的体重为<span>{weikucms:$weight}kg</span>
+			</div>
+		</div>
+		<!-- 预计减重 -->
+		<div id="predict">
+			<div class="loseW">预计减重</div>
+			<ul class="kgs">
+				<li>2kg</li>
+				<li>4kg</li>
+				<li>6kg</li>
+				<li>8kg</li>
+			</ul>
+			<div class="loseT">预计时间</div>
+			<ul class="time">
+				<li>一个月</li>
+			</ul>
+		</div>
+		<!-- 底部 -->
+		<div id="footer"></div>
+		<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/goodBtn.png" width="90px" height="48px" class="adjust" /> 
+		<script type="text/javascript">
+			$(function(){
+				var kgs,time;
+				$('.time li').addClass('borderColors');
+				$(".kgs li").click(function(){
+					$(this).addClass('borderColors').siblings().removeClass('borderColors');
+					kgs = 2*($(this).index()+1);
+				})
+				/*$('.time li').click(function(){
+					$(this).addClass('borderColors').siblings().removeClass('borderColors');
+					time = $(this).index()+1;
+				})*/
+
+				// 点击按钮接收数据
+				$('.adjust').click(function(){
+					// alert(kgs);
+					// alert(time);return;
+					if (kgs == undefined) {
+						show_error_tip("请选择预计减重");
+						return false;
+					};
+					/*if (time == undefined) {
+						show_error_tip("请选择预计时间");
+						return false;
+					};*/
+					// 否则接收数据
+					var url = "{weikucms::U('Wap/Reduce/aimData',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{explose:kgs,exptime:1}, function(data){
+	                            if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+				})
+			})
+		</script>
+	</body>
+</html>

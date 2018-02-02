@@ -1,0 +1,553 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+	<div class="cLineB">
+		<h4 class="left">服务商资料</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Repair/index',array('token'=>$token, 'type'=>1))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		  <tr>
+			<th valign="top" style="padding-left:20px;">编码：</th>
+			<td>{weikucms:$agentDatas.agent_no}</td>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">门店名称：</th>
+			<td>{weikucms:$agentDatas.store_name}</td>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">负责人名称：</th>
+			<td>{weikucms:$agentDatas.head_name}</td>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">成立时间：</th>
+			<td>{weikucms:$agentDatas.found_time}</td>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">营业执照编号：</th>
+			<td>{weikucms:$agentDatas.agent_no}</td>
+  		  </tr>
+  		 
+            <tr>
+                <th valign="top" style="padding-left: 20px;">服务商地址：</th>
+                <td>{weikucms:$agentDatas.area}</td>
+            </tr>
+
+          <tr>
+              <th valign="top" style="padding-left: 20px;">服务大类：</th>
+              <td>{weikucms:$agentDatas.bigclass}</td>
+          </tr>
+          <tr>
+              <th valign="top" style="padding-left: 20px;">服务小类：</th>
+              <td>{weikucms:$agentDatas.smallclass}</td>
+          </tr>
+  		 
+  		 <tr>
+
+  		 	<td colspan="2"><div class="cLineB"><h4 class="left">技师资料</h4></div></td>
+  		 </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">姓名：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.staff_name}</td>
+			<else/>
+				<td><input type="text" class="px" id="yname" value="{weikucms:$staffInfo.staff_name}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">性别：</th>
+			<if condition="$type neq 2">
+				<td><if condition="$staffInfo.staff_sex eq 0">男<else/>女</if></td>
+			<else/>
+				<td>
+					<select id="ysex" name="ysex">
+						<option value="0" <if condition="$staffInfo.staff_sex eq 0">selected<else/></if>>男</option>
+						<option value="1" <if condition="$staffInfo.staff_sex eq 1">selected<else/></if>>女</option>
+					</select>
+				</td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">出生日期：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.birth_time}</td>
+			<else/>
+			
+				<td><input type="input" class="px" value="{weikucms:$staffInfo.birth_time}" onclick="WdatePicker()" id="birthday"></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">身高：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.staff_heigh}</td>
+			<else/>
+				<td><input type="text" class="px" id="yheight" value="{weikucms:$staffInfo.staff_heigh}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;padding-top:40px;">身份证照片：</th>
+			<td><img alt="身份证照片" src="{weikucms:$staffInfo.car_img}" style="height:80px;width:80px;"></td>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">身份证号码：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.staff_cardno}</td>
+			<else/>
+				<td><input type="text" class="px" id="idcard" value="{weikucms:$staffInfo.staff_cardno}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">手机号码：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.staff_telphone}</td>
+			<else/>
+				<td><input type="text" class="px" id="yphone" value="{weikucms:$staffInfo.staff_telphone}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">身份证地址：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.hukou_address}</td>
+			<else/>
+				<td><input type="text" class="px" id="yplace" value="{weikucms:$staffInfo.hukou_address}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">固定电话：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.phone}</td>
+			<else/>
+				<td><input type="text" class="px" id="fixedtel" value="{weikucms:$staffInfo.phone}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">qq号码：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.qq}</td>
+			<else/>
+				<td><input type="text" class="px" id="qq" value="{weikucms:$staffInfo.qq}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">电子邮箱：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.email}</td>
+			<else/>
+				<td><input type="text" class="px" id="yemail" value="{weikucms:$staffInfo.email}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">紧急联系人：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.contact}</td>
+			<else/>
+				<td><input type="text" class="px" id="contact" value="{weikucms:$staffInfo.contact}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">紧急联系人电话：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.contact_tel}</td>
+			<else/>
+				<td><input type="text" class="px" id="contacttel" value="{weikucms:$staffInfo.contact_tel}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">学历：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.education}</td>
+			<else/>
+				<td>
+					<select id="education" class="select">
+					<option value="0"></option>
+					<option value="小学" <if condition="$fristStaff.education eq '小学'">selected<else/></if>>小学</option>
+					<option value="初中" <if condition="$fristStaff.education eq '初中'">selected<else/></if>>初中</option>
+					<option value="高中" <if condition="$fristStaff.education eq '高中'">selected<else/></if>>高中</option>
+					<option value="大专" <if condition="$fristStaff.education eq '大专'">selected<else/></if>>大专</option>
+					<option value="本科" <if condition="$fristStaff.education eq '本科'">selected<else/></if>>本科</option>
+					<option value="硕士" <if condition="$fristStaff.education eq '硕士'">selected<else/></if>>硕士</option>
+				</select>
+				</td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">银行名称：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.bank_name}</td>
+			<else/>
+				<td><input type="text" class="px" id="bankname" value="{weikucms:$staffInfo.bank_name}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">开户银行：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.bank}</td>
+			<else/>
+				<td><input type="text" class="px" id="openbank" value="{weikucms:$staffInfo.bank}" ></td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">银行帐号：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.bank_card}</td>
+			<else/>
+				<td><input type="text" class="px" id="bankNo" value="{weikucms:$staffInfo.bank_card}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">驻点地址：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.bank_card}</td>
+			<else/>
+				<td><input type="text" class="px" id="stagnation" value="{weikucms:$staffInfo.staff_address}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">交通工具：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.vehicle}</td>
+			<else/>
+				<td>
+					<select id="Traffic" class="select">
+						<option value="0"></option>
+						<option value="自行车" <if condition="$fristStaff.vehicle eq '自行车'">selected<else/></if>>自行车</option>
+						<option value="助力车" <if condition="$fristStaff.vehicle eq '助力车'">selected<else/></if>>助力车</option>
+						<option value="摩托车" <if condition="$fristStaff.vehicle eq '摩托车'">selected<else/></if>>摩托车</option>
+						<option value="公交车" <if condition="$fristStaff.vehicle eq '公交车'">selected<else/></if>>公交车</option>
+						<option value="汽车" <if condition="$fristStaff.vehicle eq '汽车'">selected<else/></if>>汽车</option>
+					</select>
+				</td>
+			</if>
+  		  </tr>
+  		  
+  		 
+  		 <tr>
+  		 	<td colspan="2"><div class="cLineB"><h4 class="left">行业基本信息</h4></div></td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top" style="padding-left:20px;">工作经验：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.experience}</td>
+			<else/>
+				<td><input type="text" class="px" id="Experience" value="{weikucms:$staffInfo.experience}" ></td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">工作形式：</th>
+			<if condition="$type neq 2">
+				<td>
+					<if condition="$staffInfo.work_type eq 0">
+					<td>全职</td>
+					<else/>
+					<td>兼职</td>
+					</if>
+				</td>
+			<else/>
+				<td>
+					<select id="work" class="select">
+						<option value="0" <if condition="$fristStaff.work_type eq 0"> selected <else/></if>>全职</option>
+						<option value="1" <if condition="$fristStaff.work_type neq 0"> selected <else/></if>>兼职</option>
+					</select>
+				</td>
+			</if>
+  		  </tr>
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">是否带学徒：</th>
+			<if condition="$type neq 2">
+				<td>
+					<if condition="$staffInfo.have_apprentice eq 0">
+					<td>没带</td>
+					<else/>
+					<td>带</td>
+					</if>
+				</td>
+			<else/>
+				<td>
+					<select id="Apprentice" class="select">
+						<option value="0" <if condition="$fristStaff.have_apprentice eq 0"> selected <else/></if>>否</option>
+						<option value="1" <if condition="$fristStaff.have_apprentice neq 0"> selected <else/></if>>是</option>
+					</select>
+				</td>
+			</if>
+  		  </tr>
+  		  
+  		  <tr>
+			<th valign="top" style="padding-left:20px;">资格证书：</th>
+			<if condition="$type neq 2">
+				<td>{weikucms:$staffInfo.qualification}</td>
+			<else/>
+				<td>
+					<select id="Certificate" class="select">
+					<option value="0"></option>
+					<option value="无" <if condition="$fristStaff.qualification eq '无'">selected<else/></if>>无</option>
+					<option value="初级" <if condition="$fristStaff.qualification eq '初级'">selected<else/></if>>初级</option>
+					<option value="中级" <if condition="$fristStaff.qualification eq '中级'">selected<else/></if>>中级</option>
+					<option value="高级" <if condition="$fristStaff.qualification eq '高级'">selected<else/></if>>高级</option>
+					<option value="技师" <if condition="$fristStaff.qualification eq '技师'">selected<else/></if>>技师</option>
+					<option value="助理工程师" <if condition="$fristStaff.qualification eq '助理工程师'">selected<else/></if>>助理工程师</option>
+					<option value="工程师" <if condition="$fristStaff.qualification eq '工程师'">selected<else/></if>>工程师</option>
+				</select>
+				</td>
+			</if>
+  		  </tr>
+  		 
+  		 <tr>
+  		 	<td colspan="2"><div class="cLineB"><h4 class="left">教育培训</h4></div></td>
+  		 </tr>
+  		 
+  		 	<if condition="$type neq 2">
+  		 		<volist id="value" name="trainInfo" key="i">
+				<tr>
+					<th valign="top" style="padding-left:20px;">时间：</th>
+					<td><span>{weikucms:$value.start_time}</span>到<span>{weikucms:$value.end_time}</span></td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">学校/培训机构：</th>
+					<td>{weikucms:$value.school_name}</td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">所学专业：</th>
+					<td>{weikucms:$value.major}</td>
+		  		  </tr>
+		  		 </volist>
+			<else/>
+				<volist id="value" name="trainInfo" key="i">
+				<tr>
+					<th valign="top" style="padding-left:20px;">开始时间：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.start_time}" onclick="WdatePicker()" id="xstart_{weikucms:$i}">
+					</td>
+		  		 </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">结束时间：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.end_time}" onclick="WdatePicker()" id="xend_{weikucms:$i}">
+					</td>
+					
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">学校/培训机构：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.school_name}" id="sname_{weikucms:$i}">
+					</td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">所学专业：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.major}" id="major_{weikucms:$i}">
+					</td>
+		  		  </tr>
+		  		</volist>
+			</if>  
+  		  
+  		  
+  		 
+  		 <tr>
+  		 	<td colspan="2"><div class="cLineB"><h4 class="left">行业简历</h4></div></td>
+  		 </tr>
+  		 
+  		 
+  		 	<if condition="$type neq 2">
+	 		 	<volist id="value" name="resumeInfo" key="i">
+		  		 <tr>
+					<th valign="top" style="padding-left:20px;">时间：</th>
+					<td><span>{weikucms:$value.start_time}</span>到<span>{weikucms:$value.end_time}</span></td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">公司名称：</th>
+					<td>{weikucms:$value.company}</td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">职位：</th>
+					<td>{weikucms:$value.staff_position}</td>
+		  		  </tr>
+		  	</volist>
+			<else/>
+			<volist id="value" name="resumeInfo" key="i">
+				<tr>
+					<th valign="top" style="padding-left:20px;">开始时间：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.start_time}" onclick="WdatePicker()" id="ystart_{weikucms:$i}">
+					</td>
+		  		 </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">结束时间：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.end_time}" onclick="WdatePicker()" id="yend_{weikucms:$i}">
+					</td>
+					
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">公司名称：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.company}" id="sname_{weikucms:$i}">
+					</td>
+		  		  </tr>
+		  		  <tr>
+					<th valign="top" style="padding-left:20px;">职位：</th>
+					<td>
+						<input type="input" class="px" value="{weikucms:$value.staff_position}" id="major_{weikucms:$i}">
+					</td>
+		  		  </tr>
+		  		</volist>
+			</if>  
+  		  
+  		   
+  		 <tr>
+             <th>是否通过：</th>
+			<td ><!--colspan="2"-->
+
+				<span style="padding-left:20px;">
+                        <!--<input type="radio" name="check" id="check" class="px" value="1" checked/>是否修改-->
+                    <if condition="$type eq 2">
+                        <else/>
+                        <input type="radio" name="check" class="px" value="1"/>通过&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" name="check" class="px" value="2"/>不通过
+                    </if>
+
+                </span>
+				<!--<span style=""><if condition="$type neq 2"><else/>确定修改</if></span>-->
+				<input type="hidden"  id="id"  value="{weikucms:$id}"/>
+				<input type="hidden"  id="token"  value="{weikucms:$token}"/>	
+			</td>
+			
+         </tr>
+          <tr>
+              <td>
+                  操作原因
+              </td>
+              <td colspan="3">
+                  <textarea id="op_reason"></textarea>
+              </td>
+          </tr>
+
+          <tr>
+              <td>
+                 不通过原因
+              </td>
+              <td colspan="3">
+                  <textarea id="not_allow"></textarea>
+              </td>
+          </tr>
+  		  		 
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<if condition="$type eq 2">
+					<!--<a id="edit"class="btn btn-primary">确定修改</a>-->
+				<else/>
+					<a id="review"class="btn btn-primary"  type="button">审核</a>
+				</if>
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<script>
+$(function(){
+	$("#review").click(function(){
+		var check = 0;
+        var op_reason = $("#op_reason").val();
+
+		if($("input[name='check']:checked").val() == 2){
+			if(!$("#not_allow").val()){
+                notif({
+                    msg: "请输入不通过原因",
+                    type: "warning"
+                });
+                return false;
+            }
+			check = 2;
+		} else {
+            check = 1;
+
+		}
+
+        if(!op_reason){
+            notif({
+                msg: "操作原因不能为空",
+                type: "warning"
+            });
+            return false;
+        }
+		var url = "index.php?g=User&m=Repair&a=review&token={weikucms:$token}"+"&id="+$("#id").val();
+		$.post(url,{check:check,not_allow:$("#not_allow").val(),op_reason:op_reason},
+                function(data){
+                    if(data.status == 100){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+		
+	});
+	
+	
+	$("#edit").click(function(){
+		var check = 0;
+		if($("#check").is(":checked")){
+			
+			check = 1;	
+		} else {
+			notif({
+                msg: "请选择是否修改",
+                type: "warning"
+            });
+            return false;
+		}
+		var url = "index.php?g=User&m=Repair&a=review&type=2&token="+$("#token").val()+"&id="+$("#id").val();		
+		$.post(url,{check:check},
+                function(data){
+                    if(data.status == 100){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+		
+	});
+	
+});
+</script>
+<include file="Public:footer"/> 

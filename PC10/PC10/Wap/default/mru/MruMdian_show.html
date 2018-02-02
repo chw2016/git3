@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title><?php echo (mb_substr(strip_tags($list['name']), 0, 9, 'utf-8')) ?>-鱼美人</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js5/main.js"></script>
+		<script src="{weikucms::RES}/mru/js5/msg.js"></script>
+
+		<script type="text/javascript" src="{weikucms::STATICS}/common/f.js" ></script>
+    </head>
+    <body class="shopNav2 limiting professor" style="overflow-x:hidden;background-color:white;" >
+    <?php
+       $pic=M('mru_mt')->where(array('token'=>TO))->find();
+
+    ?>
+    <div >
+    		<img style="width:100%" src="{weikucms::$pic['pic']}" alt="">
+    </div>
+    	<div class="shopDetail" style="padding: 8px 6%; padding-right: 10%;">
+    		<div class="shopADDTEL myul">
+    			<span class="text" style="font-weight:800;font-size:15px; color:black;" >
+    				{weikucms:$list['name']}
+    			</span>
+    			<span class="num"   style="font-size:14px; color:#666;letter-spacing:2px;line-height:0px; top: 8px; "  >{weikucms:$list['dh']}</span>
+    		</div>
+    		<div class="location myul"  style="font-weight: 100; " >
+    			<div style="width:30px; height:20px; " class="icon-locate containBg">
+
+    			</div>
+
+    			<div style="font-size:14px; color:#666;letter-spacing:2px;line-height:20px;"  onclick="baiduMap('{weikucms:$list['dz']}')" class="locateAddress">
+    				{weikucms:$list['dz']}
+    			</div>
+
+    		</div>
+    	</div>
+    	<div class="eventBox">
+    		<div class="limitShopping">
+    			<div class="title"  id="aaaww" style="font-size:14px; color:#666;letter-spacing:2px;line-height:20px;" >
+    				限时抢购
+    			</div>
+    			<div class="changeLimit myul">
+    				<div class="CLleft">
+    					<div class="arrow-left arrowLeft"></div>
+    				</div>
+    				<div class="CLcenter">
+
+    				 <volist name="qianggou" id="v" >
+
+						<div class="CLcenterItem myul">
+						   <a href="{weikucms::U('MruQianggou/show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+						<!-- <a href="{weikucms::U('Qianggou/show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >	 -->
+					<!-- 	background-image:url('{weikucms:$v.pic}') -->
+						<div  class="CLpic fixBg"  style=" background-image:url('{weikucms:$v.pic}');background-size: contain;"   ></div></a>
+
+	    					<div  onclick='location.href="{weikucms::U('MruQianggou/show',get1(id,$v['id'],token,openid))}"' class="CLInfo">
+	    						<div class="title" style="font-size:14px; color:#666;letter-spacing:2px;line-height:20px;" >
+	    						     				        <?php
+    				          echo mb_substr($v['title'],0,13,'utf-8');
+    				       ?>
+
+	    						</div>
+	    						<div class="CLprice">
+	    							<span class="RMB nowPrice"  >
+	    								{weikucms:$v['price3']}
+	    							</span>
+	    							<span class="RMB oldPrice">{weikucms:$v['price2']}</span>
+	    						</div>
+	    					</div>
+	    					</a>
+						</div>
+
+
+					 </volist>
+                   </div>
+    				<div class="CLright">
+    					<div class="arrow-right arrowRight"></div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="newEvent">
+    			<div class="title" style="font-size:14px; color:#666;letter-spacing:2px;line-height:20px;" >
+    				最新活动
+    			</div>
+    			<ul class="eventListUl" style="width: 81%;">
+    				<volist name="huodong" id="v" >
+    				<a href="{weikucms::U('Mruhd/show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],id=>$v['id']))}" >
+    				<li class="eventList" style="font-size:14px; color:#666;line-height:20px;" >
+
+
+    					      				        <?php
+    				          echo mb_substr($v['title'],0,18,'utf-8');
+    				       ?>
+    				</li>
+    				</a>
+    				</volist>
+    			</ul>
+    		</div>
+    	</div>
+    	<div class="moreNav myul"  style="margin-top:30px;" >
+			<div class="nav myli">
+			  <a href="{weikucms::U('MruWyyy/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'aid'=>$list['id']))}" >
+				<div class="wrapNav textMiddle">
+					<div class="icon_phone circle"></div>
+					<div class="title textMiddle">
+						我要预约
+					</div>
+				</div>
+				</a>
+			</div>
+			<div class="nav myli">
+			 <a href="{weikucms::U('MruXm/show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'aid'=>$list['id']))}" >
+				<div class="wrapNav textMiddle">
+					<div class="icon_like circle"></div>
+					<div class="title textMiddle">
+						项目推荐
+					</div>
+				</div>
+			</a>
+			</div>
+			<div class="nav myli">
+			 <a href="{weikucms::U('MruZx/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'aid'=>$list['id']))}" >
+				<div class="wrapNav textMiddle">
+					<div class="icon_zixun circle"></div>
+					<div class="title textMiddle">
+						美丽资讯
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+
+
+
+    </body>
+    <script type="text/javascript">
+    $(function(){
+       $(".CLcenter").slider();
+    })
+    </script>
+    <include file="./tpl/Wap/default/mrufx.html" />
+
+</html>

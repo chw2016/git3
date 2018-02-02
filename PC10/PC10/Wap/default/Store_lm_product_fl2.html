@@ -1,0 +1,28 @@
+
+    <if condition="$cat_two">
+        <volist name="cat_two" id="vo">
+            <div class="floatLeft pinpai-content">
+                <div class='pinpai-name'>{weikucms:$vo.name}</div>
+                <ul class="sub-pinpai">
+                    <volist name="vo.cat_three" id="vo1">
+                        <li>{weikucms:$vo1.name}</li>
+                    </volist>
+                </ul>
+            </div>
+        </volist>
+        <else />
+        没有子分类
+    </if>
+
+
+    <!--精选品牌-->
+    <div class="floatLeft pinpai-content pinpai-special">
+        <div class='pinpai-name'>精选品牌</div>
+        <ul class="sub-pinpai">
+            <volist name="cBrand" id="vo">
+                <li><a href="{weikucms::U('Store_lm/brand_details',array('id'=>$vo['id'],'openid'=>$openid,'token'=>$token))}">
+                    <img src="{weikucms:$vo.logo_picmin}" width="100%"/>
+                </a></li>
+            </volist>
+        </ul>
+    </div>

@@ -1,0 +1,169 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+
+    <div class="cLineB">
+        <h4>支付中心设置 </h4>
+    </div>
+    <!--tab start-->
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>支持微信支付和支付宝支付（即时到帐接口）。</li>
+            <li>请填写真实信息，否则支付中可能会出现错误！</li>
+        </ol>
+    </div>
+    <!--tab end-->
+    <!--tab start-->
+    <script>
+        function ccolumns(value){
+            if(value=='alipay'){
+                $('.alipay').css('display','');
+                $('.tenpay').css('display','none');
+            }else{
+                $('.alipay').css('display','none');
+                $('.tenpay').css('display','');
+            }
+        }
+    </script>
+    <!--tab end-->
+
+    <div class="msgWrap bgfc">
+
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th>支付开关：</th>
+                    <td>
+                        <select name="open" id="open">
+                            <option value="0" <if condition="$config.open eq 0">selected</if>>关闭支付</option>
+                            <option value="1" <if condition="$config.open eq 1"> selected</if>>开启支付</option>
+                        </select>
+                        开启支付后，商城等b2c功能将有在线支付功能
+                    </td>
+                </tr>
+                <tr>
+                    <th>支付方式：</th>
+                    <td>
+                        <select name="paytype" id="paytype" onchange="ccolumns(this.value)">
+                            <option value="weixin" <if condition="$config.paytype eq 'weixin'"> selected</if>>微信支付</option>
+                            <option value="alipay" <if condition="$config.paytype eq 'alipay'">selected</if>>支付宝</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="alipay" <if condition="$config.paytype neq 'alipay'">style="display:none"</if>>
+                    <th width="120">帐号：</th>
+                    <td><input type="text" name="name" id="name" value="{weikucms:$config.name}" class="px" style="width:550px;"></td>
+                </tr>
+                <tr class="alipay" <if condition="$config.paytype neq 'alipay'">style="display:none"</if>>
+                    <th width="120">PID：</th>
+                    <td>
+                        <input type="text" name="pid" id="pid" value="{weikucms:$config.pid}" class="px" style="width:550px;">
+                    </td>
+                </tr>
+                <tr class="alipay" <if condition="$config.paytype neq 'alipay'">style="display:none"</if>>
+                    <th>KEY：</th>
+                    <td>
+                        <input type="text" name="key" id="key" value="{weikucms:$config.key}" class="px" style="width:550px;">
+                    </td>
+                </tr>
+
+                <tr class="tenpay" <if condition="$config.paytype eq 'alipay'">style="display:none"</if>>
+                    <th>appId：</th>
+                    <td>
+                        <input type="text" name="appid" id="appid" value="{weikucms:$config.appid}" class="px" style="width:350px;">
+                        公众号身份的唯一标识（使用财付通接口不用填写）
+                    </td>
+                </tr>
+                <tr class="tenpay" <if condition="$config.paytype eq 'alipay'">style="display:none"</if>>
+                    <th>paySignKey：</th>
+                    <td>
+                        <input type="text" name="paysignkey" id="paysignkey" value="{weikucms:$config.paysignkey}" class="px" style="width:350px;">
+                        公众号支付请求中用于加密的密钥Key（使用财付通接口不用填写）
+                    </td>
+                </tr>
+                <tr class="tenpay" <if condition="$config.paytype eq 'alipay'">style="display:none"</if>>
+                    <th>AppSecret：</th>
+                    <td>
+                        <input type="text" name="appsecret" id="appsecret" value="{weikucms:$config.appsecret}" class="px" style="width:350px;">
+                        （使用财付通接口不用填写）
+                    </td>
+                </tr>
+                <tr class="tenpay" <if condition="$config.paytype eq 'alipay'">style="display:none"</if>>
+                    <th>partnerId：</th>
+                    <td>
+                        <input type="text" name="partnerid" id="partnerid" value="{weikucms:$config.partnerid}" class="px" style="width:350px;">
+                        财付通商户身份的标识
+                    </td>
+                </tr>
+                <tr class="tenpay" <if condition="$config.paytype eq 'alipay'">style="display:none"</if>>
+                    <th>partnerKey：</th>
+                    <td>
+                        <input type="text" name="partnerkey" id="partnerkey" value="{weikucms:$config.partnerkey}" class="px" style="width:350px;">
+                        财付通商户权限密钥Key
+                    </td>
+                </tr>
+                    </if>
+                    <th>&nbsp;</th>
+                    <td>
+                        <input type="hidden" name="token" id="token" value="{weikucms:$token}" />
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+
+                    <!--type="button" id="bsubmit" name="button" class="btn btn-primary"-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+</div>
+<include file="Public:footer"/>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var open = $("#open").val();
+            var paytype = $("#paytype").val();
+            var name = $("#name").val();
+            var pid = $("#pid").val();
+            var key = $("#key").val();
+            var appid = $("#appid").val();
+            var paysignkey = $("#paysignkey").val();
+            var appsecret = $("#appsecret").val();
+            var partnerid = $("#partnerid").val();
+            var partnerkey = $("#partnerkey").val();
+            var token = $("#token").val();
+
+
+
+            var posturl = "{weikucms::U('Alipay_config_new/index',array('token'=>$token))}";
+            $.post(posturl,
+                    {open:open,paytype:paytype,name:name,pid:pid,key:key,appid:appid,paysignkey:paysignkey,appsecret:appsecret,partnerid:partnerid,partnerkey:partnerkey,token:token},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>

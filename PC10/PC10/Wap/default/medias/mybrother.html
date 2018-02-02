@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>我的团队</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        #nav .myteam .nav_title{
+            padding-left: 12%;
+        }
+    </style>
+</head>
+<body>
+<div id="showImg" class='relative'>
+    <img src="{weikucms:$tuanpic['pic']}" width="100%" style="height: 150px;  display: inherit;">
+    <div class='clock'>
+        <span class='wth20 inlineblock'><img src="{weikucms::STATICS}/wapweiui/medias/img/clock.png" width="100%" /></span>
+        <span class='topTip'><php>
+            echo date('m/d Y');
+        </php></span>
+    </div>
+    <div class='new'>
+        <span class='topTip'>公告栏</span>
+        <span  class='wth20 inlineblock'><img src="{weikucms::STATICS}/wapweiui/medias/img/new.png"  width="100%"  /></span>
+    </div>
+</div>
+<div id="nav">
+    <div class="nav_content myteam">
+        <ul>
+            <li class="nav_title">
+                <div style="padding: 0 21px;">{weikucms:$mybrother}</div>
+                <div class="cgray1">团队数量</div>
+            </li>
+            <li class="nav_title">
+                <div style="padding: 0 21px;">{weikucms:$aTask}</div>
+                <div class="cgray1">总任务量</div>
+            </li>
+
+             <li class="nav_title">
+                <div>{weikucms:$aUser['yongjin']}</div>
+                <div class="cgray1">总佣金</div>
+            </li>
+             
+        </ul>
+    </div>
+</div>
+
+<div class='listof'>
+    <div class="tuantitle">团队列表</div>
+    <div class="tuanlist">
+        <div class="tuaninfo">
+            <div class="info time">时间</div>
+            <div class="info nick">昵称</div>
+            <div class="info phone">手机号</div>
+            <div class="info qql">QQ</div>
+            <div style="clear: both"></div>
+        </div>
+        <if condition="$info">
+        <volist name="info" id="vo">
+            <div class="tuaninfo">
+                <div class="info font time">{weikucms:$vo.date}</div>
+                <div class="info font nick"><if condition="$vo['nickname']">{weikucms:$vo.nickname}<else/>{weikucms:$vo.openid}</if></div>
+                <div class="info font phone">{weikucms:$vo.phone}</div>
+                <div class="info font qql">{weikucms:$vo.qq}</div>
+                <div style="clear: both"></div>
+            </div>
+        </volist>
+            <else/>
+            <div style="text-align: center;padding: 20px;">暂无小伙伴!</div>
+        </if>
+</div>
+
+<div class="zw"></div>
+<div id="footer">
+    <ul>
+        <a href="{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer1.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>2))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer2.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myCenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer3.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/mybrother',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer4.png" width="35px" ></li>
+        </a>        
+    </ul>
+</div>
+</body>
+</html>

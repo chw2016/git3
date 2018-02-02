@@ -1,0 +1,165 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script src="{weikucms::STATICS}/vote/common.js"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+
+<div class="cLineB">
+  <h4><if condition="$type neq 1">添加微测试结果评分段<else/>编辑微测试结果评分段</if></h4>
+</div>
+<div class="msgWrap bgfc">
+	<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+			<tr>
+				<th width="120">第一分数段：</th>
+				<td>
+					<input type="text" name="one_min" id="one_min" value="{weikucms:$findOne['score_min']}" class="px" style="width:100px;"/>
+					<span style="padding-left:10px;padding-right:10px;">到</span>
+					<input type="text" name="one_max" id="one_max" value="{weikucms:$findOne['score_max']}" class="px" style="width:100px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第一分段结果说明：</th>
+				<td>
+					<textarea  class="px" id="one_info" name="one_info" style="width:500px;  height:120px">{weikucms:$findOne['result_info']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第二分数段：</th>
+				<td>
+					<input type="text" name="two_min" id="two_min" value="{weikucms:$findTwo['score_min']}" class="px" style="width:100px;"/>
+					<span style="padding-left:10px;padding-right:10px;">到</span>
+					<input type="text" name="two_max" id="two_max" value="{weikucms:$findTwo['score_max']}" class="px" style="width:100px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第二分段结果说明：</th>
+				<td>
+					<textarea  class="px" id="two_info" name="two_info" style="width:500px;  height:120px">{weikucms:$findTwo['result_info']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第三分数段：</th>
+				<td>
+					<input type="text" name="three_min" id="three_min" value="{weikucms:$findThree['score_min']}" class="px" style="width:100px;"/>
+					<span style="padding-left:10px;padding-right:10px;">到</span>
+					<input type="text" name="three_max" id="three_max" value="{weikucms:$findThree['score_max']}" class="px" style="width:100px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第三分段结果说明：</th>
+				<td>
+					<textarea  class="px" id="three_info" name="three_info" style="width:500px;  height:120px">{weikucms:$findThree['result_info']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第四分数段：</th>
+				<td>
+					<input type="text" name="four_min" id="four_min" value="{weikucms:$findFour['score_min']}" class="px" style="width:100px;"/>
+					<span style="padding-left:10px;padding-right:10px;">到</span>
+					<input type="text" name="four_max" id="four_max" value="{weikucms:$findFour['score_max']}" class="px" style="width:100px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第四分段结果说明：</th>
+				<td>
+					<textarea  class="px" id="four_info" name="four_info" style="width:500px;  height:120px">{weikucms:$findFour['result_info']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第五分数段：</th>
+				<td>
+					<input type="text" name="five_min" id="five_min" value="{weikucms:$findFive['score_min']}" class="px" style="width:100px;"/>
+					<span style="padding-left:10px;padding-right:10px;">到</span>
+					<input type="text" name="five_max" id="five_max" value="{weikucms:$findFive['score_max']}" class="px" style="width:100px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">第五分段结果说明：</th>
+				<td>
+					<textarea  class="px" id="five_info" name="five_info" style="width:500px;  height:120px">{weikucms:$findFive['result_info']}</textarea>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2">
+					<div style="float:left;padding-left:100px;">
+						<button  name="button" type="button" id="bsubmit" class="btn btn-primary">保存</button>
+					</div>
+					<div style="float:left; padding-left:40px;">
+						<a href="{weikucms::U('Test/index',array('token'=>$token))}" class="btn btn-primary">取消</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		<input type="hidden" id="type" value="{weikucms:$type}"/>
+		<input type="hidden" id="sid" value="{weikucms:$id}"/>
+	</table>  	
+	</form>
+ </div> 
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+    	
+        $("#bsubmit").click(function(){       	
+            var one_min = $("#one_min").val();
+            var one_max = $("#one_max").val();
+            var one_info = $("#one_info").val();
+            
+            var two_min = $("#two_min").val();
+            var two_max = $("#two_max").val();
+            var two_info = $("#two_info").val();
+            
+            var three_min = $("#three_min").val();
+            var three_max = $("#three_max").val();
+            var three_info = $("#three_info").val();
+            
+            var four_min = $("#four_min").val();
+            var four_max = $("#four_max").val();
+            var four_info = $("#four_info").val();
+            
+            var five_min = $("#five_min").val();
+            var five_max = $("#five_max").val();
+            var five_info = $("#five_info").val();
+          
+            var id = $("#sid").val();
+            
+            var type = $("#type").val();
+            if (type == 1) {
+            	var url = "{weikucms::U('Test/addResult', array('token'=>$token,'type'=>$type, 'tid'=>$data['id']))}";
+            } else {
+            	var url = "{weikucms::U('Test/addResult', array('token'=>$token,'type'=>$type))}";
+            }
+            
+            $.post(url,{id:id,one_min:one_min,one_max:one_max,one_info:one_info,two_min:two_min,two_max:two_max,two_info:two_info,three_min:three_min,three_max:three_max,three_info:three_info,four_min:four_min,four_max:four_max,four_info:four_info,five_min:five_min,five_max:five_max,five_info:five_info},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

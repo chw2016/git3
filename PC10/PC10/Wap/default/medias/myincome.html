@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>我的收入</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .padleft50{
+            padding: 47px;
+        }
+
+        #nav .nav_title {
+            width: 27%;
+            padding-left: 20%;
+        }
+        .haos.addPic #jianPic,
+        .haos.jianPic #addPic,
+        .shows{
+            display: none;
+        }
+        .tixian{
+            position: relative;
+            top: 0px;
+            margin-top: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').click(function(){
+                $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            });
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                //$(this).children('img').hide();
+            })
+        })
+    </script>
+
+
+</head>
+<body>
+<!--分享罩罩-->
+<div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 99099999;background-color: rgba(0, 0, 0, 0.8);left: 0;">
+    <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+</div>
+<!--分享罩罩-->
+<div id="nav">
+    <div class="nav_content income">
+        <ul>
+            <li class="nav_title <if condition='$iType eq 2'>on</if>" income="YQ" onclick="window.location.href='{weikucms::U('Wap/Medias/myincome',array('openid'=>$openid,'token'=>$token,'iType'=>2))}'">积分收入</li>
+            <li class="nav_title <if condition='$iType eq 3'>on</if>" income="JF" onclick="window.location.href='{weikucms::U('Wap/Medias/myincome',array('openid'=>$openid,'token'=>$token,'iType'=>3))}'">佣金收入</li>
+          <!--  <li class="nav_title on">分众任务</li>-->
+        </ul>
+    </div>
+</div>
+<div class='hr'></div>
+<div class='of bg272B36 cwhite f12 pad10'>
+    <div class='fl wth20'><img src='{weikucms::STATICS}/wapweiui/medias/img/clock.png' width="100%" /></div>
+    <div class='fl today-info'>
+        <div><if condition='$iType eq 2'>今日积分收入<else/>今日现金收入</if> <span class='cBDA799'>Today's instant income</span></div>
+        <div> <php>echo date('M d.Y');        </php></div>
+        <!--<div>4.28PM | JAN 28.2015</div>-->
+    </div>
+    <div class='fr wth20  Invitation'><img src='{weikucms::STATICS}/wapweiui/medias/img/share.png' width="100%" /></div>
+
+    <div class='cl'>
+        <if condition='$iType eq 2'>
+            <span class='cFFF fs35'>{weikucms:$iOneMediascore}</span>
+            <span class='cBDA799'>分</span>
+            <elseif condition='$iType eq 3'/>
+            <span class='cFFF fs35'>{weikucms:$iOneMediaMoney}</span>
+            <span class='cBDA799'>人民币</span>
+        </if>
+
+    </div>
+</div>
+<div class='of padtb10 bbCCC f12'>
+    <div class='fl padleft20 w25'>
+        <if condition='$iType eq 2'>
+            <div class='f20'>{weikucms:$iYeasDayscore}</div>
+            <div>昨日积分</div>
+            <else/>
+            <div class='f20'>{weikucms:$iYeasDaysMoney}</div>
+            <div>昨日收入</div>
+        </if>
+
+    </div>
+
+    <div class='fl padleft20 w25'>
+        <if condition='$iType eq 2'>
+            <div class='f20'> {weikucms:$fThreeDayscore}</div>
+            <div>三日积分</div>
+            <else/>
+            <div class='f20'> {weikucms:$ifThreeDayMoney}</div>
+            <div>三日收入</div>
+        </if>
+
+    </div>
+    <div class='fl padleft20 w25'>
+        <if condition='$iType eq 2'>
+            <div class='f20'> {weikucms:$monthscore}</div>
+            <div>本月积分</div>
+            <else/>
+            <div class='f20'> {weikucms:$monthMoney}</div>
+            <div>本月收入</div>
+        </if>
+    </div>
+</div>
+<div class='of padtb10 bbCCC f12'>
+    <div class='fl padleft20 w25'>
+        <div class='f20 bold cFF4948'>
+            <if condition='$iType eq 2'>
+           {weikucms:$aMediaUser['money']}分
+            <else/>
+            {weikucms:$aMediaUser['yongjin']}元
+            </if>
+        </div>
+        <div>
+            <if condition='$iType eq 2'>
+            积分余额
+            <else/>
+            账户余额
+            </if>
+        </div>
+    </div>
+    <div class='fr padleft20 w40 tixian'>
+        <span class='wth20 inlineblock'><img width="100%" src="{weikucms::STATICS}/wapweiui/medias/img/card.png" /></span>
+        <if condition='$iType eq 2'>
+            <span class='f16 bold' onclick="window.location.href='{weikucms::U('Wap/Integralshop/index',array('token'=>$token,'openid'=>$openid))}'">
+                兑换
+            </span>
+            <else/>
+            <span class="f16 bold tixian" id="tixian">
+                马上提现
+            </span>
+        </if>
+
+    </div>
+</div>
+
+<php>if($iType ==2){</php>
+<div class="bgFF4948 padtb10 cFFF tc">积分收入明细</div>
+<!--详细列表-->
+<if condition="$alist eq ''">
+    <div style="text-align: center;margin: 30px;">暂无数据！</div>
+    <else/>
+    <volist name="alist" id="times">
+        <div class="xiang">
+            <div class='of show-income line pad10 sty'>
+                <div class='fl mlr5'>{weikucms:$times.date}</div>
+                <div class='fl  mlr5 relative  h5 t5' style="width: 35%">
+
+                </div>
+                <div class='fl mlr5 cFF4948'>{weikucms:$times.score}</div>
+                <div class='fl mlr5 wth20 haos addPic'>
+                    <img id="addPic" src="{weikucms::STATICS}/wapweiui/medias/img/add.png" width="100%" />
+                    <img id="jianPic" src="{weikucms::STATICS}/wapweiui/medias/img/jian.png" width="100%" />
+                </div>
+            </div>
+
+
+            <!-- <div class='f12 of pad10 xiang'>-->
+            <volist name="times['info']" id="tasks">
+                <div class="shows">
+                    <div class='of padbottom5 bb1CCC'>
+                        <span class='fl'>编号{weikucms:$tasks.key}</span>
+                        <span class='fr'>
+                            <span>转发{weikucms:$tasks.number}次</span><span class='mlr5'>|</span>
+                            <span>浏览{weikucms:$tasks.clicks}次</span><span class='mlr5'>|</span>
+                            <!--<span>成交15单</span>
+                            <span>共65元</span>-->
+                        </span>
+                    </div>
+                    <div class='cl of padtop5 bb2CCC padbottom5'>
+                     <span class='fl'>
+                         <div>
+                             <php>if(mb_strlen($tasks['abstract'],'utf8') < 15){
+                                 echo $tasks['abstract'];
+                                 }else{
+                                 echo mb_substr($tasks['abstract'],0,15, 'utf8').'...';
+                                 }
+                             </php>
+                         </div>
+                         <div>产品：
+                             <php>if(mb_strlen($tasks['task_name'],'utf8') < 6){
+                             echo $tasks['task_name'];
+                             }else{
+                             echo mb_substr($tasks['task_name'],0,6, 'utf8').'...';
+                             }
+                         </php> | {weikucms:$tasks.commission}分</div>
+                     </span>
+                        <a href="{weikucms::U('Wap/Medias/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$task['task_id']))}">
+                            <span class='fr btnTG'>继续推广</span>
+                        </a>
+                    </div>
+                </div>
+            </volist>
+            <div class="zw" style="height: 5px;"></div>
+        </div>
+    </volist>
+    <div style="height: 70px;"></div>
+
+</if>
+
+<php>}else{</php>
+<div class="bgFF4948 padtb10 cFFF tc">佣金收入明细</div>
+<!--详细列表-->
+<if condition="$alist eq ''">
+    <div style="text-align: center;margin: 30px;">暂无数据！</div>
+    <else/>
+    <volist name="alist" id="times">
+        <div class="xiang">
+            <div class='of show-income line pad10 sty'>
+                <div class='fl mlr5'>{weikucms:$times.date}</div>
+                <div class='fl  mlr5 relative  h5 t5' style="width: 35%">
+
+                </div>
+                <div class='fl mlr5 cFF4948'>{weikucms:$times.yongjin}</div>
+                <div class='fl mlr5 wth20 haos addPic'>
+                    <img id="addPic" src="{weikucms::STATICS}/wapweiui/medias/img/add.png" width="100%" />
+                    <img id="jianPic" src="{weikucms::STATICS}/wapweiui/medias/img/jian.png" width="100%" />
+                </div>
+            </div>
+
+
+            <!-- <div class='f12 of pad10 xiang'>-->
+            <volsit name="times['info']" id="tasks">
+                <div class="shows">
+                    <div class='of padbottom5 bb1CCC'>
+                        <span class='fl'>编号{weikucms:$task.key}</span>
+                        <span class='fr'>
+                            <span>转发{weikucms:$task.report_times}次</span><span class='mlr5'>|</span>
+                            <span>浏览{weikucms:$task.clicks}次</span><span class='mlr5'>|</span>
+                            <!--<span>成交15单</span>
+                            <span>共65元</span>-->
+                        </span>
+                    </div>
+                    <div class='cl of padtop5 bb2CCC padbottom5'>
+                     <span class='fl'>
+                         <div>{weikucms:$task.abstract}</div>
+                         <div>产品：{weikucms:$task.task_name} | {weikucms:$task.commission}元</div>
+                     </span>
+                        <a href="{weikucms::U('Wap/Medias/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$task['task_id']))}">
+                            <span class='fr btnTG'>继续推广</span>
+                        </a>
+                    </div>
+                </div>
+            </volsit>
+            <div class="zw"></div>
+        </div>
+    </volist>
+</if>
+<php>}</php>
+
+
+
+
+
+<div id="footer">
+    <ul>
+        <a href="{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer1.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>2))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer2.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myCenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer3.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/mybrother',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer4.png" width="35px" ></li>
+        </a>        
+    </ul>
+</div>
+</body>
+
+</html>
+<script type="text/javascript">
+    $(function(){
+        $(".haos").click(function(){
+            if($(this).hasClass('addPic')){
+                $(this).removeClass('addPic').addClass('jianPic');
+                $(this).parents(".xiang").find(".shows").fadeIn(0);
+            }else if($(this).hasClass('jianPic')){
+                $(this).parents(".xiang").find(".shows").fadeOut(0);
+                $(this).removeClass('jianPic').addClass('addPic');
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+    $(function(){
+        $('#tixian').click(function(){
+            var url = "{weikucms::U('Wap/Medias/withdrawals',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{},function(data){
+                if(data.codes==0){
+                    msg.alert(data.msg,'知道了',function(){
+                        window.location.href = data.urles;
+                    })
+                }else{
+                    window.location.href = data.urles;
+                }
+            },'json')
+        })
+    })
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<if condition="$tpl['is_auth'] eq 1">
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getMyhome/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+    <else />
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getMyhome/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+</if>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+
+
+<script type="text/javascript">
+    var shareTitle="";
+    var imgUrl="";
+    var descContent="";
+    var shareUrl="";
+
+    $(function() {
+        shareTitle = "我是{weikucms:$wxusers.nickname}我在这里等你哦";
+        imgUrl = "{weikucms:$wxusers.headimgurl}";
+        descContent = "一切在于分享";
+        shareUrl = $("#shareUrl").text();
+    });
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>

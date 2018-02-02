@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>消息中心</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <style type="text/css">
+        .red-bg{
+            background-color: #FF4948;
+        }
+    </style>
+</head>
+<body>
+<div class="myul header  h3 red-bg white">
+    <a href="javascript:history.go(-1)">
+        <div class="arrowLeft white back"></div>
+    </a>
+    <div class="setMiddle textMiddle">
+        消息中心
+    </div>
+</div>
+<div class="hav myul h4 white-bg light-gray">
+    <div class="textMiddle myli havItem <if condition='$type eq 2'>on<else/></if>" onclick="window.location.href='{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>2))}'">
+        任务消息
+    </div>
+    <div class="textMiddle myli havItem <if condition='$type eq 1'>on<else/></if>" onclick="window.location.href='{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}'"><!-- on的意思是当前浏览的页面，也就是下面三角形的提示位置 -->
+        系统消息
+    </div>
+</div>
+
+
+
+
+<!-- 消息列表循环体开始-->
+<if condition="$message neq ''">
+    <volist name="message" id="vo">
+        <div class="msgList h4 myul white-bg gray" onclick="window.location.href='{weikucms::U('Media/messagecontent',array('token'=>$token,'openid'=>$openid,'mid'=>$vo['id']))}'">
+            <div class="msg">
+                <div class="msgTitle">
+                    {weikucms:$vo.title}
+                </div>
+                <div class="msgTime h6 light-gray">
+                    {weikucms:$vo.info_time}
+                </div>
+            </div>
+            <div class="arrowRight readMsg setRight"></div>
+        </div>
+</volist>
+<else/>
+    <div class="msgList h4 myul white-bg gray">
+        <div class="msg" style="font-size: 10px;" >
+            暂无消息！
+        </div>
+    </div>
+
+</if>
+<!-- 消息列表循环体结束 -->
+
+
+
+</body>
+</html>

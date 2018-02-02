@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+	<title>日历记事本</title>
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/calendar.css">
+	<script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+	<script src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/lanrenzhijia.js"></script>
+	<script type="text/javascript"  src="{weikucms::STATICS}/common/invite.js"></script>
+    </head>
+    <body class="bj" onload="initial();">
+   	<!--  头部 -->
+   	<div class="header">
+ 		<img src="{weikucms::STATICS}/wapweiui/gjlog/images/guoyuan.png" alt="">
+   	</div>
+	<!-- tab -->
+   	<!-- 日历区域 -->
+	<div class="essay-content">
+		<div class="essay-main">
+			<p class="essay-title">管理日历</p>
+
+			<p>
+				<span>当天天气：{weikucms:$list.temperature}</span>
+				<span class="ml20">{weikucms:$list.weather}</span>
+			</p>
+			<p>
+				<span id="bianxie">编写人：{weikucms:$list.name}</span>
+				<span class="ml20">时间：{weikucms:$list.data_tima}</span>
+			</p>
+			<p>
+				<span>地址：</span>
+				<span>{weikucms:$list.address}</span>
+			</p>
+		</div>
+		<div class="main-content">
+			<div class="main-text">
+                {weikucms:$list.content}
+			</div>
+			<div class="essay-img">
+				<ul class="essay-img-ul">
+					<li class="essay-img-ul-li">
+						<img src="{weikucms:$list.pic1}" alt="">
+					</li>
+					<li class="essay-img-ul-li">
+						<img src="{weikucms:$list.pic2}" alt="">
+					</li>
+					<li class="essay-img-ul-li">
+						<img src="{weikucms:$list.pic3}" alt="">
+					</li>
+				</ul>
+			</div>
+
+            <if condition="$open eq 1">
+
+                <else />
+			<div class="share" id="share">
+				点击右上角即可分享<span class="icon-point-up"></span>
+			</div>
+			<div class="btn-share">
+				<div class="btn-share-tab" id="xiug" onclick="window.location.href = '{weikucms::U('Gjlog/loges',array('token'=>$token,'openid'=>$openid,'id'=>$list['id']))}'">修改</div>
+			</div>
+            </if>
+            <script>
+                $(function(){
+                    $('#share').invite();
+                });
+            </script>
+	<script src="{weikucms::STATICS}/wapweiui/gjlog/js/garden.js"></script>
+		</div>
+	</div>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="white" name="apple-mobile-web-app-status-bar-style">
+    <title>{weikucms:$tpl.name}</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui" name="viewport">
+    <link href="{weikucms::STATICS}/wapweiui/weiactivity/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="{weikucms::STATICS}/jquery.min.js"></script>
+    <script>
+    var config = config || {};
+    config.isvip = 0;
+    config.nickname = '';
+    </script>
+</head>
+<body class="page-m2 bg-black">
+ <div id="container" target="index" data-main="m2">
+    <div class="m2-index m2-index-1">
+        <img src="{weikucms::STATICS}/wapweiui/weiactivity/images/logo.png" width="100%" height="auto" class="block m2-index-logo">
+        <img src="{weikucms::STATICS}/wapweiui/weiactivity/images/jiangpin.png" width="100%" height="auto" class="block m2-index-phone" alt="美图手机M2">
+        <div class="m2-btnbox">
+            <a href="javascript:;" class="btn-m2-double12 btn-m2-buy-disabled btn-oneline">
+                <span class="block f20" id="choujiang">抽奖</span>
+            </a>
+            <div class="secdtips"></div>
+        </div>
+    </div>
+    <div class="m2-index m2-index-2">
+
+        <div class="swipe-circle" id="slide-circle" slide="slidePlay">
+            <span class="swipe-circle-item"></span>
+            <span class="swipe-circle-item current"></span>
+            <span class="swipe-circle-item"></span>
+            <span class="swipe-circle-item"></span>
+        </div>
+    </div>
+
+</div>
+<script>
+    var rush_time =-2758329;
+</script>
+
+<a href="javascript:history.back();" class="goback" id="goBack"><span class="goback-bg"><i class="icon icon-back"></i></span></a>
+
+<script src="http://js.app.meitudata.com/meitushop/js/lib/sea.js" id="seajsnode"></script>
+<script>
+    seajs.config({
+        base:'http://js.app.meitudata.com/meitushop/',
+        alias: {
+            'zepto': 'mobile/lib/zepto.min.js?20141227',//alias里的js版本号手动维护，并不常更新
+            'juicer':'mobile/lib/juicer.min.js?20141227',
+            'swipe':'mobile/lib/swipe.js?20141227',
+            'lazyload':'mobile/lib/jquery.lazyload.min.js?20150123'
+        },
+        preload:['zepto'],
+        'map': [ //修改版本号
+            [ /^(.*\/mobile\/js\/.*\.(?:css|js))(.*)$/i, '$1?20150210' ]
+        ]
+    });
+    seajs.use('mobile/js/init');
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#choujiang").click(function(){
+            var btn = $(this);
+            var text = btn.text();
+            btn.text('系统正在努力抽奖中...');
+            var url = "{weikucms::U('Wap/Activity/choujiang',array('token'=>$token,'openid'=>$openid))}";
+            setTimeout(function(){
+                $.post(url,{},function(data){
+                    if(data.code == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('失败');
+                    }
+                    btn.text(text);
+                },'json');
+            },'3000')
+        });
+    });
+</script>
+
+</body></html>

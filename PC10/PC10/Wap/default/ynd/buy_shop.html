@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+             <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+        <style type="text/css">
+            .inputprice{
+                line-height: 28px;
+                border: 1px solid #7B7B7B;
+                height: 28px;
+                padding: 0 5px;
+                width: 70px;
+            }
+            input[type="radio"]{
+                -webkit-appearance: normal;
+            }
+            .btn-Mask {
+                background-color: #FF7600;
+                text-align: center;
+                font-size: 14px;
+                border-radius: 3px;
+                color: #fff;
+                width: 100%;
+                display: inline-block;
+                height: 32px;
+                line-height: 32px;
+            }
+        </style>
+     <script type="text/javascript">
+     $(function(){
+         var type = {weikucms:$_GET['type']};
+         if(1==type){
+             var address_id = "{weikucms:$address['id']}";
+             if(!address_id){
+                 //alert(4354);
+                alert('您还没有设置默认的收货地址！');
+                 location.href = "{weikucms::U('addressselect',array('token'=>$token,'openid'=>$openid))}";
+             }
+         }
+         $('.wprice').blur(function(){
+             var pay = parseInt($('.wprice').val());
+             var sumpir = pay * parseInt($('.text').html());
+             $('.pay').html(sumpir);
+             var sumpires = sumpir + parseInt($('.sell').html());
+             $('.summoney').html(sumpires);
+
+         })
+         var sell = $('.sell').html();
+		$(".icon-plus").touch(function(){
+            var pay = $('.wprice').val();
+            if(pay){
+                pay = pay;
+            }else{
+               pay = parseInt({weikucms:$product['price']});
+            }
+			var n=$(this).prev(".text").html();
+			var num=parseInt(n)+1;
+			var pay1=$(".pay").html();
+			var num1=parseInt(pay)+parseInt(pay1);
+            var sumnum = {weikucms:$product['num']};
+            if(num >sumnum){alert("数量不能超过总部的存量!"); return}
+            $('.quantitys').html(num);
+			$(this).prev(".text").html(num);
+            if(2==type){
+                var num43 = parseFloat(pay)*parseInt($(".text").html())
+                $(".pay").html(num43);
+               /* var num45 = parseInt(num43/parseFloat($(".money").val())*10000);
+                if(num45){
+                    $('.exponent').html(num45);
+                }*/
+                var money= $(".money").val();
+                if(money){
+                    var num45 = parseInt(parseFloat(pay)/parseFloat(money)*10000);
+                    $('.exponent').html(num45);
+                    var moneyes = parseFloat(money)*num;
+                }else{
+                    var moneyes = parseFloat(pay)*num;
+                }
+                $('.moneyes').html(moneyes);
+
+            }else{
+                $(".pay").html(num1);
+            }
+            $('.CQnum').html(parseInt($('.text').text())*parseInt($('.cqqq').html()));
+            $('.LQnum').html(parseInt($('.text').text())*parseInt($('.lqqq').html()));
+            $('.summoney').html(parseInt($(".pay").html())+parseInt(sell));
+		});
+
+		$(".icon-minus").touch(function(){
+            var pay = $('.wprice').val();
+            if(pay){
+                pay = pay;
+            }else{
+                pay = parseInt({weikucms:$product['price']});
+            }
+			var n=$(this).next(".text").html();
+			var num=parseInt(n)-1;
+			var pay1=$(".pay").html();
+			var num1=parseInt(pay1)-parseInt(pay);
+			if(num==0){alert("不能为0!"); return}
+			$(this).next(".text").html(num);
+            $('.quantitys').html(num);
+            if(2==type){
+               var num43 = parseFloat(pay)*parseInt($(".text").html())
+                $(".pay").html(num43);
+                var money= $(".money").val();
+                if(money){
+                    var num45 = parseInt(parseFloat(pay)/parseFloat(money)*10000);
+                    $('.exponent').html(num45);
+                    var moneyes = parseFloat(money)*num;
+                }else{
+                    var moneyes = parseFloat(pay)*num;
+                }
+                $('.moneyes').html(moneyes);
+            }else{
+                $(".pay").html(num1);
+            }
+            $('.CQnum').html(parseInt($('.text').text())*parseInt($('.cqqq').html()));
+            $('.LQnum').html(parseInt($('.text').text())*parseInt($('.lqqq').html()));
+            $('.summoney').html(parseInt($(".pay").html())+parseInt(sell));
+		})
+         $('.money').blur(function(){
+             var num = $(".text").html();
+             var price = $('.money').val();
+             var moneyes = parseFloat(price)*num;
+             $('.moneyes').html(moneyes);
+             var pay = $('.wprice').val();
+            if(!pay){
+                pay = parseInt({weikucms:$product['price']})
+            }
+             if(!price){
+                 price = parseInt({weikucms:$product['price']})
+             }
+
+             var num45 = parseInt(parseFloat(pay)/parseFloat(price)*10000);
+             $('.exponent').html(num45);
+         })
+
+         //wprice
+
+         $('.wprice').blur(function(){
+             var price = $('.money').val();
+             var pay = $('.wprice').val();
+             if(!pay){
+                 pay = parseInt({weikucms:$product['price']})
+             }
+             if(!price){
+                 price = parseInt({weikucms:$product['price']})
+             }
+             var num45 = parseInt(parseFloat(pay)/parseFloat(price)*10000);
+             $('.exponent').html(num45);
+         })
+
+		$(".affirm-btn").touch(function(){
+            $(".wprice").trigger('blur')
+			var number=$(".text").html();
+            var LQ = $('.LQnum').html();
+            var CQ = $('.CQnum').html();
+            var way = $("input[name='way']:checked").val();
+
+            if(1==type){
+                var money=parseInt($(".pay").html())+parseInt(sell);
+                if(money<=0){
+                    alert("支付金额必须大于零!"); return
+                }
+                var data = {
+                    num:number,
+                    money:money,
+                    address_id:"{weikucms:$address['id']}",
+                    CQ:CQ,
+                    LQ:LQ,
+                    way:way
+                }
+                var url = "{weikucms::U('Ynd/buy',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id']))}";
+                $.post(url,data,function(rel){
+                   if(rel.status==2){
+                        msg.alert(rel.info,function(){
+                            location.href = "{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}";
+                        })
+                    }else{
+                        msg.alert(rel.info)
+                    }
+                },'json')
+            }else if(2==type){
+                //var pay = parseFloat($('.wprice').val());wprice
+
+                var money= $(".money").val();
+                var wfprice = $('.wprice').val();
+                var parameter = parseFloat({weikucms:$product['parameter']});
+                var lpirce =parseFloat(money) + parseFloat(parameter);
+                var moneyes = money*number;
+                if(money< 1){
+                    msg.alert("支付金额必须大于一!"); return
+                }
+                if(wfprice< 1){
+                    msg.alert("我的放单价必须大于一!"); return
+                }
+                if(wfprice > lpirce){
+                    msg.alert("您的放单价已超出了你的临界放单价!"); return
+                }
+                if(1==way){
+                    var eq;
+                    function check_num(){
+                        var num;
+                        $(".Mask_password_ul li").each(function(i){
+                            // console.log(i);
+                            num=$(this).children("input").val();
+                            if(num==""){
+                                eq=i;
+                                return false;
+                            }
+                        });
+                                // alert("eq"+eq)
+                                return eq;
+                    }
+                    $(".Mask").addClass('is-visible');
+                    // 数字键盘
+                $(".key_li").touch(function(){
+                    if(eq==6){
+                        // alert("不能输入了")
+                        return false;
+                    }else{
+                        var  values=$(this).html();
+                        var  index=check_num();
+                        if(index==5){
+                        // alert("不能输入了")
+                        eq=6;
+                        // $(".key .key_li ").addClass('select')
+                        $(".Mask_btn").addClass('outstanding');
+                        }else{
+                        $(".Mask_btn").removeClass('outstanding');
+                        }
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                    }
+                })
+                $(".key_del").touch(function(){
+                    var index;
+                    if(eq==6){
+                        index=eq-1;
+                        eq--;
+                    }else{
+                        index=check_num()-1
+                    }
+                    $(".Mask_btn").removeClass('outstanding');
+                    $(".Mask_password_ul").find("li").eq(index).children("input").val("");
+                });
+                // 立即支付
+                $(".btn-Mask").click(function(event) {
+                    var btns = "";
+                    $('.Mask_password_ul_li input').each(function(key,value){
+                        btns += $(this).val();
+                    });
+                    $(".Mask_password_ul_li").find("input").val("");
+                    if(eq==6){
+                        $(".Mask").removeClass('is-visible');
+                        data = {
+                            password:btns,
+                            wfprice:wfprice,
+                            //price:pay,
+                            num:number,
+                            money:moneyes,
+                            CQ:CQ,
+                            LQ:LQ,
+                            way:way
+                        };
+                        var url = "{weikucms::U('Ynd/fangdan',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id']))}";
+                        $.post(url,data,function(rel){
+                            if(rel.status==1){
+                                if(rel.wayes == 2){
+                                    $("#orderid").val(rel.infoes);
+                                }else{
+                                    msg.alert(rel.info,function(){
+                                        location.href = "{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid))}";
+                                    })
+                                }
+
+                            }else{
+                                msg.alert(rel.info)
+                            }
+                        },'json')
+                    }
+                    eq=0;
+                })
+                $(".Mask_abolish").touch(function(){
+                    $(".Mask").removeClass('is-visible');
+                    $(".Mask_btn").removeClass('outstanding');
+                    $("input").val("");
+                    eq=0;
+                })
+                    return
+               }
+                if(3 == way){
+                    msg.alert("支付宝支付暂未开通，请选择其他的支付!"); return
+                }
+                data = {
+                    wfprice:wfprice,
+                    //price:pay,
+                    num:number,
+                    money:moneyes,
+                    CQ:CQ,
+                    LQ:LQ,
+                    way:way
+                };
+                var url = "{weikucms::U('Ynd/fangdan',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id']))}";
+                $.post(url,data,function(rel){
+                    if(rel.status==1){
+                        if(rel.wayes == 2){
+                            $("#orderid").val(rel.infoes);
+                            $("#totalPrice1").val(moneyes);
+                            $("#myweipayform").submit();
+                        }else{
+                            msg.alert(rel.info,function(){
+                                location.href = "{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid))}";
+                            })
+                        }
+
+                    }else{
+                        msg.alert(rel.info)
+                    }
+                },'json')
+            }
+
+			//var money1=$(".sell").html();
+            //msg.alert("<div style='font-size:30px;color:red'>您已经购买成功</div>"+"您购买的数量的是"+number+"<br>"+"您需要支付的金额"+money+"元"+"<br>")
+
+		})
+             })
+  	</script>
+    </head>
+    <body>
+        <div class="top-details border-inherit">
+                <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                <div class="details-center">
+                    <if condition="$type eq 1">确认购买<else/>确认放单</if>
+                </div>
+        </div>
+        <div class="affirm-conter animated fadeInDown">
+            <if condition="$type eq 1">
+                <div class="consignee" onclick="location.href='{weikucms::U('Ynd/addressselect',array('token'=>$token,'openid'=>$openid))}'">
+                    <div class="consignee-title clearfix">
+                        <span class="fl">收货人：{weikucms:$address['name']}</span>
+                        <span class="fr">{weikucms:$address['phone']}</span>
+                    </div>
+                    <div class="consignee-home mt5">
+                        收货地址：{weikucms:$address['address']}
+                    </div>
+                    <div class="icon-arrow-right">
+                        <span class="arrow-right"></span>
+                    </div>
+                </div>
+            </if>
+            <div class="indent-tab-title">
+			<div class="commodity mt10 border-inherit">
+				<div class="order-tab-main-content-left">
+					<img src="{weikucms:$product['pic']}">
+				</div>
+				<div class="order-tab-main-content-right space">
+					<div class="order-tab-main-content-right-size">
+						{weikucms:$product['name']}
+					</div>
+                    <div class="order-tab-main-content-right-size">
+                        规格：{weikucms:$product['norms']}
+                    </div>
+
+                    <div class="order-tab-main-content-right-money clearfix">
+                        <span>参考零售价：￥{weikucms:$product['price']} </span>
+                        <br />
+                        <span class="title-name">（LQ<b class="lqqq">{weikucms:$product['LQ']}</b> + CQ <b class="cqqq">{weikucms:$product['CQ']}</b>）</span>
+                        <div class="quantity">
+                            ×<span class="quantitys">{weikucms:$_GET['num']}</span>
+                        </div>
+                    </div>
+
+
+				</div>
+			</div>
+		</div>
+        <if condition="$type eq 1">
+            <div class="mian-type">
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">类型：购买</span>
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">我的投价：</span>
+                    <input type="tel" class="inputprice wprice" name="wprice" value=""/>
+                    &nbsp;&nbsp;元
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">购买数量：</span>
+                    <span class="icon-minus"></span>
+                    <span class="text">{weikucms:$_GET['num']}</span>
+                    <span class="icon-plus"></span>
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</span>
+                    <span class="main-type-conter sell">
+                       5
+                    </span>
+                    <span class="main-type-money">元</span>
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">总&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</span>
+                    <span class="main-type-conter pay">
+                        <php>
+                            echo $_GET['num']*$product['price'];
+                        </php>
+                    </span>
+                    <span class="main-type-money">元</span>
+                </div>
+
+                <div class="mian-type-title border-inherit">
+                   <p class="mian-type-title-p gray">支付金额：<span class="summoney">
+                       <php>
+                           echo $_GET['num']*$product['price']+5;
+                       </php>
+                   </span>元
+                   </p>
+                    <p class="mian-type-title-p gray">扣除配额：LQ<span class="LQnum">
+                    <php>
+                            echo $_GET['num']*$product['LQ'];
+                    </php>
+                    </span>+CQ<span class="CQnum">
+                      <php>
+                          echo $_GET['num']*$product['CQ'];
+                      </php>
+                    </p>
+                  <!--  <p class="mian-type-title-p gray">选择支付方式：
+                        <input type="radio" name="way" class="way" id="walet" value="1" checked/><label for="walet">钱包</label>
+                        <input type="radio" name="way" class="way" id="weChatPay" value="2"/><label for="weChatPay">微信支付</label>
+                        <input type="radio" name="way" class="way" id="aliPay" value="3"/><label for="aliPay">支付宝支付</label></p>-->
+                </div>
+            </div>
+            <div class="affirm-btn">
+                确认购买
+            </div>
+
+            <else/>
+
+            <div class="mian-type">
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">类型：放单</span>
+                    <span class="mian-type-title-size" style="display: inline-block;float: right;">放单指数：<span class="exponent">10000</span></span>
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">放单数量：</span>
+                    <span class="icon-minus"></span>
+                    <span class="text">{weikucms:$_GET['num']}</span>
+                    <span class="icon-plus"></span>
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">支付单品金额：</span>
+                    <input type="tel" class="inputprice money" name="money" value=""/>
+                    &nbsp;&nbsp;元
+                </div>
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">放单单价：</span>
+                    <input type="tel" class="inputprice wprice" name="wfprice" value=""/>
+                    &nbsp;&nbsp;元
+                </div>
+
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">支付总额：</span>
+                    <span class="main-type-conter moneyes">
+                        <php>
+                            echo $_GET['num']*$product['price'];
+                        </php>
+                    </span>
+                    <span class="main-type-money">元</span>
+                </div>
+
+                <div class="mian-type-title">
+                    <span class="mian-type-title-size">放单总额：</span>
+                    <span class="main-type-conter pay">
+                        <php>
+                            echo $_GET['num']*$product['price'];
+                        </php>
+                    </span>
+                    <span class="main-type-money">元</span>
+                </div>
+                <!--<div class="mian-type-title">
+                    <span class="mian-type-title-size">放单指数：</span>
+                    <span class="main-type-conter exponent">
+                       10000
+                    </span>
+                   &lt;!&ndash; <span>说明：放单指数 =（放单总额/支付金额）×10000（默认为10000） </span>&ndash;&gt;
+
+                </div>-->
+                <div class="mian-type-title border-inherit">
+                   <!-- <p class="mian-type-title-p gray">合计：400.00元</p>-->
+                    <p class="mian-type-title-p gray">扣除配额：LQ<span class="LQnum">{weikucms:$product['LQ']}</span>+CQ<span class="CQnum">{weikucms:$product['CQ']}</span></p>
+                    <p class="mian-type-title-p gray">选择支付方式：
+                        <input type="radio" name="way" class="way" id="walet" value="1" checked/><label for="walet">钱包</label>
+                        <input type="radio" name="way" class="way" id="weChatPay" value="2"/><label for="weChatPay">微信支付</label>
+                        <input type="radio" name="way" class="way" id="aliPay" value="3"/><label for="aliPay">支付宝支付</label></p>
+                </div>
+            </div>
+            <div class="affirm-btn">
+                确认放单
+            </div>
+
+        </if>
+	</div>
+<!-- 弹出框 -->
+              <div class="Mask">
+                        <div class="Mask_pop">
+                        <div class="pass_word">
+                                <div>确认支付</div>
+                                <div>{weikucms:$userinfo['phone']}</div>
+                        </div>
+                        <div class="Mask-title">
+                       <!--  <div>
+                            您所购买的商品一共<span class="colorf03e3e monryse">{weikucms:$orderinfo['money']}</span>元
+                        </div> -->
+                        </div>
+                        <div class="Mask_password">
+                            <ul class="Mask_password_ul">
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password"  readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="Mask_main clearfix">
+                                    <div class="btn-Mask">立即支付</div>
+                                </div>
+                        </div>
+                        <div class="keyboard">
+                                <ul class="key">
+                                    <li class="key_li">1</li>
+                                    <li class="key_li">2</li>
+                                    <li class="key_li">3</li>
+                                    <li class="key_li">4</li>
+                                    <li class="key_li">5</li>
+                                    <li class="key_li">6</li>
+                                    <li class="key_li">7</li>
+                                    <li class="key_li">8</li>
+                                    <li class="key_li">9</li>
+                                    <li class="key_li">&nbsp;</li>
+                                    <li class="key_li">0</li>
+                                    <li class="key_del">×</li>
+                                </ul>
+                        </div>
+              </div>
+        <!--微信支付表单-->
+        <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+            <input type="hidden" name="order_money" value="" id="totalPrice1">      <!--付款金额-->
+            <input type="hidden" name="order_text" value="放单">    <!--订单描述-->
+            <input type="hidden" name="orderid" value="" id="orderid">                  <!--商户订单号-->
+            <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">      <!--微信用户openid-->
+            <input type="hidden" name="returnurl" value="{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$_GET['openid']))}">    <!--支付成功后返回地址-->
+            <input type="hidden" name="type" value="Ynd_fangdanpay">       <!--支付订单类型(主要用于weipay的config里的配置key用的)-->
+        </form>
+
+
+
+
+
+    </body>
+</html>

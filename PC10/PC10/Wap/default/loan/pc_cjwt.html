@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/index.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/public-css.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/bootstrap.min.css">
+<script src="{weikucms::STATICS}/wapweiui/loan/pc/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/loan/pc/js/bootstrap.min.js"></script>
+<title>{weikucms:$tpl.name}-常见问题</title>
+    <style>
+        .body_ul li { height: inherit; }
+        .fixB{
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .body_ul li { width: 100%; margin: 0; }
+        .width50 { width: 50% !important; }
+        .bs li{
+            color: #337ab7;
+        }
+    </style>
+</head>
+<body>
+<!--顶部-->
+<div class="top-body">
+    <div class="top-cen width50" style="margin: 0 auto;">
+        <a href="{weikucms::U('pc_index')}" class="logo bs" style="background: url();">
+            <img src="{weikucms::STATICS}/wapweiui/loan/pc/images/logo.png"  height="60px"/>
+        </a>
+        <div class="top-right">
+            <ul>
+                <a class="bs" href="{weikucms::U('pc_cjwt',array('token'=>$token,'openid'=>$openid))}"><li>常见问题</li></a>
+                <a  class="bs" href="{weikucms::U('pc_gywm',array('token'=>$token,'openid'=>$openid))}"><li>关于我们</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+	.navbar-brand{
+		padding: 7px 15px;
+	}
+	.navbar-header{
+		margin:0 auto;
+	}
+    .problem{
+        width: 49%;
+        margin-left: 25%;
+        height: 1000px;
+    }
+	
+</style>
+<!--顶部结束-->
+
+<!--常见问题-->
+<script type="text/javascript">
+
+function Panel(panelBox,panelHead,panelContent,ifSibling){//面板展开
+		if(ifSibling){ifSibling=true;}else{ifSibling=false;}
+		panelContent.hide(0);
+		function OpenPanel(e){//开启功能
+				panelHead.on('click',PanelToggle);
+				return true;
+			}
+		function ClosePanel(e){//关闭功能
+				panelHead.off('click');
+				return false;
+			};			
+	    OpenPanel();			
+		function PanelToggle(){
+			var THIS = $(this);			
+		   if(THIS.parent().find(panelContent).is(":hidden")){
+			if(ifSibling) {panelBox.find(panelContent).slideUp();panelHead.removeClass('on');}
+
+			THIS.parent().find(panelContent).slideDown()//.fadeIn(80);
+
+			THIS.addClass('on');
+			}else{
+				THIS.parent().find(panelContent).slideUp()//.fadeOut(80);
+				THIS.removeClass('on');
+			}	
+		}
+}
+	$(function(){
+		/*var x =0;
+		$(".up").click(function() {
+			$(this).find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+			$(this).find('.glyphicon').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+			$(this).find('.glyphicon').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+			
+			$(this).find(".glyphicon-minus").trigger('click;');
+			$(this).find('.glyphicon').toggleClass('glyphicon-minus');
+			$(this).find('.up-nr').slideToggle();
+
+			
+		});
+		*/
+		Panel($(".up"),$(".up-color"),$(".up-nr"),true)
+	})
+</script>
+<div class="problem">
+
+	        <volist name="info" id="vo">
+			<div class="problem-left-border" style="width: 45%; margin-left:20px; float: left;">
+				<div id="div">
+					<span class="left">{weikucms:$vo.name}</span>
+					<!--<span class="right">3</span>-->
+				</div>
+                <volist name="vo['extend']" id="vo1">
+				<div class="up">
+					<span class="up-color glyphicon">{weikucms:$vo1.title}</span>
+					<div class="up-nr" style="display:none;">
+                        {weikucms:$vo1.text}
+                    </div>
+				</div>
+                </volist>
+			</div>
+            </volist>
+
+
+</div>
+	
+
+
+
+
+
+
+</body>
+</html>

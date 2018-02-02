@@ -1,0 +1,132 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+<div class="cLineB">
+  <h4>支付中心设置 </h4>
+ </div>
+ <!--tab start-->
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>设置您的支付宝和财付通信息</li>
+            <li>开启之后在商城里面将能使用您所选择的支付方式进行支付！</li>
+        </ol>
+    </div>
+<!--tab end-->        
+    <div class="msgWrap bgfc" style="margin-top:10px;">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	  
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+			<tr>
+					<th>支付开关：</th>
+					<td><select name="open"><option value="0" <if condition="$config.open eq 0">selected</if>>关闭支付</option><option value="1" <if condition="$config.open eq 1"> selected</if>>开启支付宝手机端支付</option><option value="2" <if condition="$config.open eq 2"> selected</if>>开启财付通即时到帐支付</option><option value="3" <if condition="$config.open eq 3"> selected</if>>开启财付通担保支付</option></select> 开启支付后将有支付功能</td>
+				</tr>
+				<tr>
+					<th width="120">支付宝帐号：</th>
+					<td><input type="text" name="name" value="{weikucms:$config.name}" class="px" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th width="120">支付宝PID：</th>
+					<td><input type="text" name="pid" value="{weikucms:$config.pid}" class="px" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>支付宝KEY：</th>
+					<td><input type="text" name="key" value="{weikucms:$config.key}" class="px" style="width:300px;"></td>
+				</tr>
+                
+                	<tr>
+					<th width="120">财付通商户号：</th>
+					<td><input type="text" name="tenpaypartner" value="{weikucms:$config.tenpaypartner}" class="px" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>财付通KEY：</th>
+					<td><input type="text" name="tenpaykey" value="{weikucms:$config.tenpaykey}" class="px" style="width:300px;"></td>
+				</tr>
+				
+				<th>&nbsp;</th>
+					<td>
+					<input type="hidden" name="token" value="{weikucms:$token}" />
+						<button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button>
+						<a href="javascript:history.go(-1);" class="btn btn-primary">取消</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+  </div>
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var name = $("input[name='name']").val();
+                var pid = $("input[name='pid']").val();
+                var key = $("input[name='key']").val();
+                var tenpaypartner = $("input[name='tenpaypartner']").val();
+                var tenpaykey = $("input[name='tenpaykey']").val();
+                var token = $("input[name='token']").val();
+                var open = $("select[name='open']").val();
+
+                if(! $("input[name='name']").val()){
+                    notif({
+                        msg: "请输入支付宝帐号",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(! $("input[name='pid']").val()){
+                    notif({
+                        msg: "请输入支付宝帐号PID",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! $("input[name='key']").val()){
+                    notif({
+                        msg: "请输入支付宝帐号KEY",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! $("input[name='tenpaypartner']").val()){
+                    notif({
+                        msg: "请输入财付通商户号",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(! $("input[name='tenpaykey']").val()){
+                    notif({
+                        msg: "请输入财付通KEY",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                $.post("{weikucms::U('Alipay_config/index')}",{open:open,name:name,pid:pid,key:key,tenpaypartner:tenpaypartner,tenpaykey:tenpaykey,token:token},function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+
+            });
+        });
+
+    </script>
+  
+        </div>
+<include file="Public:footer"/>

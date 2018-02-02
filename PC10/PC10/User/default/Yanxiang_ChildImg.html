@@ -1,0 +1,71 @@
+<include file="Public:head"/>
+    <div class="cLineB">
+      <h4 class="left">微休闲休闲列表</h4>    
+      <div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+        <a href="{weikucms::U('Yanxiang/Microactive',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+      </div>
+      <div class="searchbar"> 
+      </div>
+      <div class="cLine">
+
+      <div class="clr"></div>
+      </div>
+    </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里可以添加微休闲名称</li>
+        </ol>
+    </div>
+          <div class="cLine">
+              <div class="pageNavigator left">
+     <a href="{weikucms::U('Yanxiang/aeChildImg',array('token'=>$token,'type'=>'add','uid'=>$_GET['uid']))}"  class='btn btn-primary'>新增微休闲</a>　
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th style="width: 100px;">编号</th>
+                      <th style="width: 200px;">休闲名称</th>         
+                      <th>休闲图片</th>
+                      <th>休闲链接</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+					  	  <td>{weikucms:$i}</td>
+					  	  <td>{weikucms:$vo.a_name}</td>	
+                          <td><img style="width: 120px;height: 80px;" src="{weikucms:$vo.img_path}" /></td>
+                          <td>{weikucms:$vo.link_url}</td>
+                          <td>
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Yanxiang/aeChildImg',array('id'=>$vo['id'],'token'=>$token,'uid'=>$_GET['uid']))}" title="编辑图文自定义回复">编辑</a>
+                              <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Yanxiang/aeChildImgdel',array('id'=>$vo['id'],'token'=>$token,'uid'=>$_GET['uid']))}')" href="#">删除</a>
+                          </td>
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+<include file="Public:footer"/>

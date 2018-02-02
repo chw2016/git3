@@ -1,0 +1,84 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/cymain.css" />
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+            <li data-index="0" class="tab_nav first js_top "
+                data-id="total">
+                <a
+                    href="{weikucms::U('WechatConferencemarking/index',array('token'=>$token))}"
+                    <if condition="$hover1 eq 1">class="hover"</if>
+                    >活动管理主页
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('WechatConferencemarking/teacher',array('token'=>$token))}&actid={weikucms:$w['id']}"
+                    <if condition="$hover3 eq 1">class="hover"</if>
+                    >讲师管理
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('WechatConferencemarking/verification_code',array('token'=>$token))}&actid={weikucms:$w['id']}"
+                    <if condition="$hover4 eq 1">class="hover"</if>
+                    >验证码
+                </a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以管理讲师，生成验证码</li>
+    </ol>
+</div>
+
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>活动信息</h4>
+    </div>
+    <div class="msgWrap">
+        <form method="post" action="###" id="info">
+            <input name="delall" type="hidden" value="" />
+            <input name="wxid" type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 80px; text-align: center;">活动照片</th>
+                        <th style="width: 200px; text-align: center;">活动名称</th>
+                        <th style="width: 100px; text-align: center;">活动地址</th>
+                        <th style="width: 60px; text-align: center;">活动时间</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">
+                            <img src="{weikucms:$act['pic']}"
+                                style="width: 100px; height: 100px; border-radius: 5px;" />
+                        </td>
+                        <td style="text-align: center;">{weikucms:$act['name']}</td>
+                        <td style="text-align: center;">{weikucms:$act['address']}</td>
+                        <td style="text-align: center;">{weikucms:$act['starttime']}到{weikucms:$act['endtime']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<include file="Public:footer" />

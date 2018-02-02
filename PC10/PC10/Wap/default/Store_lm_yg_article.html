@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>文章详情页</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+        <script src="{weikucms:$staticFilePath}/lm/js/pageDetail.js"></script>
+        <style>
+            .bba img{
+                width: 100%;
+            }
+            .bba{
+                width: 100%;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+		<!--<header class="header textMiddle white h3 goodsTitle">
+	    	<div class="setLeft closeIcon"><img src="{weikucms:$staticFilePath}/lm/img/close.png" /></div>
+	    	<span>文章详情页</span>
+	    </header>-->
+		<section class="pageBox">			
+			<div class='pageTitle'>{weikucms:$list.name}</div>
+			<div class="of ltitle">
+				<div class="fl">
+					<span>发货时间{weikucms:$list.time|date='Y-m-d',###}</span>
+
+				</div>
+
+			</div>
+			<div class="bba">
+
+                {weikucms:$list.content|htmlspecialchars_decode}
+			</div>
+		</section>
+
+		<!--留言-->
+
+
+
+		
+
+    </body>
+
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"));
+    	
+    </script>   
+    <script type="text/javascript">
+        /**
+         * 喜欢文章
+         */
+        function abc(){
+            var love=$("#love").attr('love');;//状态,1代表喜欢
+            var status=$("#love").attr('status');
+            var flag=$("#love").attr('flag');
+            var img='';
+            var name="{weikucms:$res.title}";
+            if(status==1){//是否已经喜欢
+                img="{weikucms:$staticFilePath}/lm/img/detail-like.png";
+            }else{
+                img="{weikucms:$staticFilePath}/lm/img/hx.jpg";//红的
+            }
+            $("#love").attr('src',img);
+            var num={weikucms:$res.id};//商品id
+            var url1=window.location.href;//当前面面地址
+            var url = "{weikucms::U('Store_lm/love',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+            if(flag==1) {
+                $.post(url, {love: love, num: num, url1: url1,type:1,name:name}, function (data) {
+                    $("#love").attr('flag',0);
+                    if (data.code == 1) {
+                        $("#love").attr('status', data.s);
+                        $("#love").attr('love', data.s);
+
+                        $("#love").attr('flag',1);
+                    } else {
+                        alert("失败");
+                        $("#love").attr('flag',1);
+                    }
+                }, 'json');
+            }
+        }
+
+        $(function(){
+            $('#sendBtn').click(function(){
+                var _this = $(this);
+                var on = _this.attr('data-on');
+                var $Text = $('.send-message');
+                if (on == 1){
+                    //ajax请求成功的代码
+                    var cid=$("#sendBtn").attr('cid');
+                    var text=$(".send-message").val();
+
+                    var url="{weikucms::U('article',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,{cid:cid,text:text},function(data){
+                        if(data.status==1){
+
+                            _this.attr('data-on',0);
+                            $Text.val('');
+                            $Text.hide();
+                            _this.text('点击留言');
+                            var sHtml = '<div class="mRow">'+
+                                    '<div class="fl user">'+data.name+'<span class="say">说~：</span></div>'+
+                                    '<div class="fr">'+data.time+'</div>'+
+                                    '<div class="cl sMsg">'+text+'</div>'+
+                                    '</div>';
+                            $(sHtml).prependTo($('.mRowBody'));
+                        }else{
+                            alert("失败");
+                        }
+                    },'json');
+
+                    //提交留言
+                }else{
+                    _this.attr('data-on',1);
+                    $Text.show();
+                    _this.text('发送');
+                }
+            });
+        })
+    </script>
+</html>

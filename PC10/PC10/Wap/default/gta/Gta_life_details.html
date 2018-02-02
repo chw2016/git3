@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	<title>{weikucms:$tpl.name}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+	</head>
+	<script>
+		$(function(){
+			 $(".Loan").click(function(){
+           	 $(".body_class").css('display', 'block');
+             $('.Mask').addClass('is-visible');
+         	 i=$(this).textnode;
+          
+           })
+          $(".gta_bj_btn").click(function(event) {
+            $(".body_class").css('display', 'none');
+            if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+				event.preventDefault();
+				$(".Mask").removeClass('is-visible');
+			}
+        });
+		})
+	</script>
+	<style>
+	.shadow25 input{
+		border: 0;
+		background-color: #e5f2e5;
+		color: #91b391;
+		width: 60%;
+	}
+	.tian{
+		width: 40px;
+		height: 40px;
+		background:linear-gradient(top,#499c4e,#367d39);
+		background:-webkit-linear-gradient(top,#499c4e,#367d39);
+		background:-ms-linear-gradient(top,#499c4e,#367d39);
+		background:-moz-linear-gradient(top,#499c4e,#367d39);
+		background:-o-linear-gradient(top,#499c4e,#367d39);
+		color: #fff;
+		display: inline-block;
+		text-align: center;
+		line-height: 40px;
+		border-radius:5px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	.Loan{
+		width: 40%;
+		height: 40px;
+		background:linear-gradient(top,#499c4e,#367d39);
+		background:-webkit-linear-gradient(top,#499c4e,#367d39);
+		background:-ms-linear-gradient(top,#499c4e,#367d39);
+		background:-moz-linear-gradient(top,#499c4e,#367d39);
+		background:-o-linear-gradient(top,#499c4e,#367d39);
+		color: #fff;
+		display: inline-block;
+		text-align: center;
+		line-height: 40px;
+		border-radius:5px;
+	}
+	.gta_data{
+		width: 100%;
+	}
+	.gta_data_id{
+		-webkit-box-shadow:0px 3px 5px rgba(192, 192, 192, 1);
+		-moz-box-shadow: 0px 3px 5px rgba(192, 192, 192, 1);
+		box-shadow: 0px 3px 5px rgba(192, 192, 192, 1);
+		background-color: #e5f2e5;
+		color: #91b391;
+		text-align: center;	
+		width: 25%;
+		line-height: 17px;
+		position: relative;
+	}
+	.dashed{
+		border: 1px dashed #bad6ba;
+		padding: 5px;
+		color: #bad6ba;
+		font-size:14px;
+		padding: 1px 6px;
+		display: inline-block;
+		margin-top: 10px;
+		
+	}
+	@media screen and (min-width: 320px) { 
+	.gta_data_id {width: 31%} 
+	} 
+ 
+
+    @media screen and (min-width: 385px) { 
+		.ml10 {
+			margin-left: 13px;
+	}
+	} 
+	.Mask.is-visible{
+		opacity: 1;
+		visibility: visible;
+		-webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+		-moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+		transition: opacity 0.3s 0s, visibility 0s 0s;
+	}
+	.Mask{
+		  position: fixed;
+		  left: 0;
+		  top: 0;
+		  height: 100%;
+		  width: 100%;
+		  background-color: rgba(0,0,0, 0.4);
+		  opacity: 0;
+		  visibility: hidden;
+		  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+		  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+		  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+		  z-index: 9999;
+		}
+	.mg0a{
+		margin-top:50%;
+	}
+	.gta_bj{
+		width: 300px;
+		height: 55px;
+		background:url(images/sprites/gta_bj_03.png) no-repeat;
+		background-size: 100%;
+		margin:0 auto;
+		position: relative;
+		}
+	.gta_bj_btn{
+		width: 18px;
+		height: 18px;	 
+		line-height: 18px;
+		text-align: center;
+		border: 1px solid #fff;
+		color: #fff;
+		background-color: #39843d;
+		border-radius: 50%;
+		display: inline-block;		
+	}
+	.bf80{
+		width: 80%;
+		
+	}
+	.gr{
+		position: absolute;
+		right: 5px;
+		top: 10px;
+	}
+	.body_classone p{
+		padding: 20px;
+		color: #000000;
+		font-size: 18px;
+		text-align: center;
+		
+	}
+	.body_classone{
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		background-color: rgba(238, 239, 238, 1);
+		width: 300px;
+		margin: 0 auto;
+		padding-bottom: 20px;
+		}
+	.itemBox {
+		padding: 8px 10px;
+		margin: 12px 0 0;
+		background-color: #FFF;
+		box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+		overflow: hidden;
+	}
+	</style>
+	<script>
+		$(function(){
+			$(document).on('click','.Loan',function(){
+				var money=$("[name=money]").val();
+				var tel=$("[name=tel]").val();
+				var id=$("[name=id]").val();
+				Loan=[money,tel,id]
+				alert(Loan);
+			})
+		})
+	</script>
+	<style>
+		.ml10 p{
+			width: 100%;
+		}
+		.itemBox {
+			    padding: 8px 10px;
+			    margin: 12px 0 0;
+			    background-color: #FFF;
+			    box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+			}
+
+		.itemBox .title {
+		    font-size: 14px;
+		    color: #4D4D4D;
+		}
+
+		.itemBox .text {
+		    padding: 8px 0;
+		    font-size: 12px;
+		}
+	</style>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">保险详情</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+		  <div class="shadow ">
+		  	<p class="p5">{weikucms:$info.title}</p>
+		  	<div class="pt10 clearfix bt">
+		  	  <div class="ta_bx fl" style="background: url({weikucms:$info.company_logo}) no-repeat;background-size:100% 100%;"></div>
+		  	  	<div class="fl ml10">
+		  	  		<!--<p><font class="color69">产品类型&nbsp;:</font><font class="color80">{weikucms:$info.product_type}</font></p>-->
+		  	  		<p class="mt5"><font class="color69">公司名称&nbsp;:</font><font class="color80">{weikucms:$info.company_name}</font></p>
+		  	  		<p class="mt5"><font class="color69">投保范围&nbsp;:</font><font class="color80">{weikucms:$info.range}</font></p>
+		  	  		<p class="mt5"><font class="color69">保险期间&nbsp;:</font><font class="color80">{weikucms:$info.qijian}</font></p>
+		  	  		<p class="mt5"><font class="color69">交费方式&nbsp;:</font><font class="color80">{weikucms:$info.way}</font></p>
+		  	  		<p class="mt5"><font class="color69">交费期间&nbsp;:</font><font class="color80">{weikucms:$info.nianxian}</font></p>
+		  	  	</div>
+		  	  </div>
+		  	</div>
+		  	<div class="mt10 deta_day clearfix">
+
+                {weikucms:$info.content}
+		  	</div>
+		  	<div class="shadowdata">
+		  		<span class="jjxc_add"></span>
+		  		<span onclick="location.href='{weikucms:$info.jsq}'">风险缺口计算器</span>
+		  </div>
+		  <!-- <div class="deta_money mt5">
+		  	<span class="color34">录入投保金额</span>
+		    <span class="money_coupon">
+		    	<input type="tel" placeholder="请输入投保金额" name="money" onkeyup="this.value=this.value.replace(/\D/g,'')"  />
+		    	  <span class="moneyex">元</span>
+		    	  <span class="moneyxi">|</span>
+		    </span>
+		  </div> -->
+
+
+          <!--  <volist name="fulist" id="vo">
+		   <div class="itemBox">
+		  	<div class="title">{weikucms:$vo.title}</div>
+		  	<div class="text">{weikucms:$vo.content}</div>
+		  </div>
+                </volist>-->
+            <volist name="fulist" id="vo">
+            <div class="itemBox">
+                <div class="title" style="margin-bottom: 3px;">{weikucms:$vo.title}</div>
+                <span style="display:inline-block;width: 50%">投保范围：{weikucms:$vo.range}</span><span style="width: 50%">保险期间：{weikucms:$vo.qijian}</span>
+                <br /><span style="display: inline-block;width: 50%">交费方式：{weikucms:$vo.way}</span><span>交费年限：{weikucms:$vo.nianxian}</span>
+                <div class="text" style="width: 100%">
+                    <?php echo trim($vo['content'],'');?>
+                </div>
+            </div>
+                </volist>
+
+		  <div class="deta_btn" onclick="location.href='{weikucms::U('input_life_data',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}'">
+		  	<span class="btn type_btn p10">申请投保</span>
+		  </div>
+		</section>	
+	</body>
+<script>
+   /* $(".p10").click(function(){
+        var money=$("input[name=money]").val();
+        if(money<=0){
+           show_error_tip('请填写投保金额');
+            $("input[name=money]").focus();
+            return false;
+        }
+        var url="{weikucms::U('input_life_data',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}&money="+money;
+        location.href=url;
+
+    });*/
+	$(function(){
+		$(".itemBox").find(".text").each(fucntion(){
+			$(this).html($.trim($(this).text()))
+		})
+	})
+</script>
+</html>

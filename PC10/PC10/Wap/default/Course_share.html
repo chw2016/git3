@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+    <style type="text/css">
+        .content{
+            padding: 20px;
+            color: rgb(86, 111, 63);
+            line-height: 32px;
+        }
+    </style>
+</head>
+<body>
+<div class="shareimg">
+    <img src="{weikucms::STATICS}/course/img/565651.png" title="分享">
+    <p class="shareimgp">亲恭喜您,报名成功啦！</p>
+    <p class="shareimgpt content">通过报名此次课程，您获得了金财币 <span>{weikucms:$info['score']}</span> 个,您可以点击我要兑换去获得精美礼品，也可以分享给朋友获得更多积分哦！</p>
+</div>
+<div class="navBox myul">
+    <div class="nav myli" onclick="window.location.href='{weikucms::U("Wap/Course/score",array("token"=>$token,"openid"=>$openid))}'">我要兑换</div>
+<div class="nav myli" onclick="window.location.href='{weikucms::U('Wap/Course/content',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['cid']))}'">我要分享</div>
+</div>
+
+</body>
+</html>

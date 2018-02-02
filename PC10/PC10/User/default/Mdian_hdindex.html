@@ -1,0 +1,75 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+     <div class="cLineB">
+         <div class="title_tab" id="topTab">
+             <ul class="tab_navs title_tab" data-index="0">
+
+
+                 <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Fuwu/index',array('token'=>$token,'dining'=>$isDining))}" >活动列表</a>
+                 </li>
+
+
+
+                
+             </ul>
+         </div>
+     </div>
+
+
+<!--tab end-->
+<div class="cLine">
+<div class="pageNavigator left">
+    <a href="{weikucms::U('Mdian/addhd',array('id'=>$id,'token'=>$token))}" title="添加" class="btn btn-primary" >添加<if condition="$isDining neq 1">活动<else/>菜品</if></a>
+    <a href="{weikucms::U('Mdian/index',array('token'=>$token))}" title="添加" class="btn btn-primary" > 首页</a>
+    </div>
+    
+<div class="clr"></div>
+</div>
+<?php $id=$_GET['id'] ?>
+<div class="msgWrap">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>活动编号</th>
+            <th>活动名称</th>
+            <th>活动详情</th>
+           
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+    
+        <volist name="list" id="hostlist">
+        <tr>
+                <td>{weikucms:$hostlist.id}</td>
+                <td>{weikucms:$hostlist.name}</td>
+                <td>{weikucms:$hostlist.content|substr=0,36}...</td>
+              
+                <td>{weikucms:$hostlist.time|date="Y-m-d H:i:s",###}</td>
+
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Mdian/addhd',array('infoid'=>$hostlist['id'],'token'=>$token,'id'=>$id))}">修改</a>
+                    <a class="btn btn-danger btn-sm" href="{weikucms::U('Mdian/delhd',array('infoid'=>$hostlist['id'],'token'=>$token,'id'=>$id))}">删除</a>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Mdian/hdindex',array('infoid'=>$hostlist['id'],'token'=>$token,'id'=>$id))}">置顶</a>
+                </td>
+         </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+</div>
+<include file="Public:javascript"/>
+<include file="Public:footer"/>

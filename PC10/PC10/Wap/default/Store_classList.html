@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="keywords" content="{weikucms:$storeName}" />
+		<meta name="description" content="{weikucms:$storeInfo}" />
+		<title>{weikucms:$storeName}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=0" />
+		<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_common.css" rel="stylesheet" type="text/css" />
+		<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_menu.css" rel="stylesheet" type="text/css" />		
+	</head>
+<body>
+	<input type="hidden" id="login_instruction" value="友情提示" />
+	<input type="hidden" id="menu_message_specialOfferAdded" value="本优惠已加入您的"本单可享优惠"列表。" />
+	<input type="hidden" id="menu_continue" value="继续购买" />
+	<input type="hidden" id="shoppingCart_message_lookAtMenuFirst" value="购物车内为空，请先浏览菜单点餐" />	
+		<h1 class="hide_h">{weikucms:$storeName}</h1>
+		<div class="page-app menuA" id="page_menuA">
+		    <div class="page-header_box">
+				<div class="page-header_boxInner">
+					<div class="page-header">						
+						<a class="head-button-left backhome page-button bright" href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}">
+							<span class="icon"></span>首页</a>						
+						<p>商 品</p>
+					</div>
+				</div>
+			</div>
+			<div class="page-header_boxPH"></div>
+			<ul class="menu-tabs">
+				<li class="selected"><img src="{weikucms::STATICS}/wapweiui/es/images/menu-tab1.png" width="17" height="17" />商品种类</li>
+				<li class=""><img src="{weikucms::STATICS}/wapweiui/es/images/menu-tab2.png" width="17" height="17" />优惠直通车</li>
+			</ul>
+			<!-- 菜单列表 -->
+			<ul class="menu-list" id="list1">				
+			<volist name="data" id="value">
+				<li class="am-clickable">					
+						<a href="/index.php?g=Wap&amp;m=Store&amp;a=goodsList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$value.store_id}&amp;classId={weikucms:$value.id}">								
+						<div class="img"><img src="{weikucms::STATICS}/wapweiui/es/images/170.png"><!-- 图片要更改 --></div>
+						<p class="title">{weikucms:$value.goods_class_name}</p>
+						<span class="arrow"></span>
+					</a>
+				</li>
+			</volist>						
+			</ul>
+			
+			
+			<!-- 优惠直通车列表 -->
+			<ul class="menu-list" id="list2" style="display: none">					
+				<volist name="isData" id="value">
+				<li class="am-clickable">					
+						<a href="/index.php?g=Wap&amp;m=Store&amp;a=goodsList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$value.store_id}&amp;classId={weikucms:$value.id}">								
+						<div class="img"><img src="{weikucms::STATICS}/wapweiui/es/images/170.png"><!-- 图片要更改 --></div>
+						<p class="title">{weikucms:$value.goods_class_name}</p>
+						<span class="arrow"></span>
+					</a>
+				</li>
+			</volist>				
+			</ul>
+		   	<div class="page-tipsTitle">友情提示</div>
+	        <div class="page-tipsContent">
+	        	<!-- 后台提供设置 -->
+	        	<p>本店营业时间&nbsp;:&nbsp;&nbsp;{weikucms:$storeTime}
+	        	<br />本店营业地址&nbsp;:&nbsp;&nbsp;{weikucms:$storeAddress}
+	        	<br/>本店活动信息&nbsp;:&nbsp;&nbsp;{weikucms:$promptInfo}
+	        	</p>
+	        </div>
+	        <div class="menuB-shoppingCartBox">
+                <div class="menuB-shoppingCartBoxA">
+                    <div class="menuB-shoppingCart"></div>
+                </div>
+            </div>
+		</div>
+		<div class="page-comfirm" style="display: none" id="globle-confirm">
+			<div class="page-comfirmBox">
+				<div class="container">
+					<div class="title">
+						友情提示
+					</div>
+					<div class="content">
+						您选择了不设置密码,您的送餐地址下次将显示为:虹"****"2号
+					</div>
+					<div class="buttons">
+						<div class="page-button">
+							设置密码
+						</div>
+						<div class="page-button bright">
+							取消
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	<!--  libs -- start -->
+	<script src="{weikucms::STATICS}/wapweiui/es/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+	<script src="{weikucms::STATICS}/wapweiui/es/js/am.js" type="text/javascript"></script>
+	<!--  libs -- end -->
+	<script src="{weikucms::STATICS}/wapweiui/es/js/menua.js" type="text/javascript"></script>
+	<script src="{weikucms::STATICS}/wapweiui/es/js/shoppingcart.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var userinfo = {weikucms:$userInfoData};						
+	</script>		
+</body>
+</html>

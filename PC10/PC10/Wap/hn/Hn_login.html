@@ -1,0 +1,158 @@
+<html><head>
+    <title>登录</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<body>
+    <div class="space-20"></div>
+    <h1 class="logo animated fadeInDown"><img src="http://jjr2.weizhi.in/wap/img/logo.png" alt="带客通经纪人"></h1>
+    <div class="space-20"></div>
+
+<section class="account-form">
+    <div class="af-row">
+        <label for="login_phone"><i class="icon-phone"></i></label>
+        <input type="text" pattern="[0-9]*" placeholder="您的手机号码" id="login_phone" value="15013760590">
+    </div>
+    <div class="af-row">
+        <label for="login_passwd"><i class="icon-lock"></i></label>
+        <input type="password" pattern="[0-9]*" placeholder="请输入密码" id="login_passwd" value="">
+    </div>
+</section>
+<aside class="account-text"><a href="/Home/Usr/resetPasswd">忘记密码？</a></aside>
+<aside class="account-submit">
+    <input type="hidden" id="waid" value="293">
+    <input type="hidden" id="uid" value="1141259">
+    <input type="hidden" id="submitUrl" value="/Home/Usr/login">
+    <button class="ui-btn-lg ui-btn-danger" type="button" id="J_submitLogin">登录</button>
+</aside>
+
+<footer class="foot">
+    Powered by 智讯科技&nbsp;·&nbsp;带客通</footer>
+<div class="space-50"></div>
+<a class="account-fixed" href="/Home/Usr/register/waid/293/uid/1141259">还未注册？请注册&nbsp;»</a>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+(function(window){
+    //初始化默认的分享配置
+     window._Conf={
+         title: "开启财富之旅--全民经纪人",
+         desc:"调动你的社交关系，推荐客源，获丰厚佣金!",
+//         link: "http://jjr2.weizhi.in/Home/Share/index/waid/293/uid/1141259",
+         link: "http://jjr2.weizhi.in/Home/Index/guideRegister/waid/293/uid/1141259",
+         imgUrl: "http://jjr2.weizhi.in/wap/img/share.jpg",
+         trigger:function(res){},
+         success:function(res){},
+         cancel:function(res){},
+         fail:function(res){},
+         complete:function(res){}
+     };
+      //声明默认的加载接口
+    window._DfJsApiList=[
+                     'checkJsApi',
+                     'onMenuShareTimeline',
+                     'onMenuShareAppMessage',
+                     'onMenuShareQQ',
+                     'onMenuShareWeibo',
+                     'hideMenuItems',
+                     'showMenuItems'
+                     ];
+    //处理加载config签名
+    wx.loadConfig=function(apiConfig){
+         if(apiConfig.jsApiList==undefined){
+             apiConfig.jsApiList=_DfJsApiList;
+         }
+         if(apiConfig.debug==undefined){
+             apiConfig.debug=false;
+             wx.debugstate=false;
+         }else{
+            wx.debugstate=apiConfig.debug;
+         } 
+         wx.config(apiConfig);
+     };
+       
+     //组合分享方法
+     window._Share=function(){
+         wx.showOptionMenu();
+         wx.onMenuShareAppMessage(_Conf);
+         wx.onMenuShareTimeline(_Conf);
+         wx.onMenuShareQQ(_Conf);
+         wx.onMenuShareWeibo(_Conf);
+     };
+     //异常处理
+     wx.error(function(res){
+         if(wx.debugstate){
+             alert(res.errMsg);
+         }
+     });
+})(window);
+//签名配置
+var apiConfig={
+ debug:false,//默认微false
+ appId:'wxdb23c27d23c2b7b6',
+ timestamp:'1439284411',
+ nonceStr:'usqJWXKg6FQnvjdp',
+ signature:'4c7e9837d0bb971ce84818f891b2eb5cc81ee8cf'
+};
+wx.loadConfig(apiConfig);//加载配置
+wx.ready(function(){
+  _Share();//分享 依赖_Conf变量 参数设置
+});
+
+$(function(){
+                $("#J_submitLogin").click(function(){
+                	//张湘南 
+                	var jz=1;
+                	
+                    var btn = $(this);
+					var type = $("#type").val();
+                    if(! $("#username").val()){
+                        show_error_tip('请输入用户名');
+						$("#reg_phone").focus();
+						return false;
+                    }
+                    if(! $("#password").val()){
+                        notif({
+                            msg: "请输入密码",
+                            type: "warning"
+                        });
+                        return false;
+                    }
+					if(type == 1){
+					   url = "{weikucms::U('Users/checklogin')}";                             //张湘南
+					   $.post(url,{username:$("#username").val(),password:$("#password").val(),jz:jz},function(data){
+							if(data.status == 1){
+								notif({
+									msg: data.info,
+									type: "success"
+								});
+								setTimeout(function(){
+									window.location.href = data.url;
+								},'2000');
+							}else{
+								notif({
+									msg: data.info,
+									type: "error"
+								});
+							}
+						},'json');
+					}else if(type == 2){
+					   url = "http://vshop.wapwei.com/index.php?app=member&act=login&user_name="+$("#username").val()+"&password="+$("#password").val();
+                       window.location.href=url;
+					}
+
+                });
+            });
+</script>
+</body></html>

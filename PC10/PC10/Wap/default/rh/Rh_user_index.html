@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/common.css" />
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/index.css" />
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="tpl/Wap/default/rh/css/search_bed.css" />
+      <script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<title>{weikucms:$tpl.name}</title>
+    </head>
+    <body>
+               <div class="user_header">
+                        <img src="tpl/Wap/default/rh/image/rh_logo.png">
+               </div>
+               <div class="user_header_message1 clearfix">
+                 <div class="user_header_message_img">
+                    <div class="user_header_message_img1">
+                           <img src="{weikucms:$info.headimgurl}" alt="">
+                    </div>
+                 </div>
+                  <div class="user_size">
+                       <span>{weikucms:$info.nickname}</span>
+                    </div>
+                    <div class="My_points">
+                       <span>我的积分：{weikucms:$jifeng}</span>
+                    </div>
+               </div>
+               <div class="user_service">
+                 <ul>
+                      <li onclick="location.href='{weikucms::U('Store_shop/orders',array('token'=>$token,'openid'=>$openid))}'">
+                        <p><span class="user_arrow1"></span></p>
+                        <p>订单查询</p>
+                      </li>
+                      <li style="background-color:#f0ede3" onclick="location.href='{weikucms::U('Rh/user_info',array('token'=>$token,'openid'=>$openid))}'">
+                          <p><span class="user_arrow2"></span></p>
+                         <p>个人资料</p>
+                      </li>
+                 </ul>
+                 <ul>
+                      <li  style="background-color:#f0ede3" onclick="location.href='{weikucms::U('Usercenterzj/jifenshop',array('token'=>$token,'openid'=>$openid))}'">
+                         <p><span class="user_arrow3"></span></p>
+                        <p>积分商城</p>
+                      </li>
+                      <li onclick="location.href='{weikucms::U('Rh/shop_list1',array('token'=>$token,'openid'=>$openid))}'">
+                         <p><span class="user_arrow4"></span></p>
+                         <p>商城首页</p>
+                      </li>
+                 </ul>
+               </div>
+    </body>
+</html>

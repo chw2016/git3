@@ -1,0 +1,175 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+
+    <div class="cLineB">
+
+        <div class="cLine">
+
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+                <volist name="header" id="h">
+                    <li data-index="{weikucms:$h.data-id}" class="{weikucms:$h.class}" data-id="{weikucms:$h.data-id}">
+                        <a href="{weikucms:$h.href}" >{weikucms:$h.name}</a>
+                    </li>
+                </volist>
+                <!--
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token))}">商品管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/setting',array('token'=>$token))}">商城设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Shoptmpls/index',array('token'=>$token))}">商城模版选择</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/articleindexfl',array('token'=>$token))}">商城文章</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/flashindex',array('token'=>$token))}">广告轮播</a>
+                    </li>
+
+					<li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/sn',array('token'=>$token))}">商城优惠券</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Weipay/index',array('token'=>$token))}">在线支付设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/analyse',array('token'=>$token))}">数据分析</a>
+                    </li>
+                    -->
+					<!--
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/brand',array('token'=>$token))}">品牌</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/tg',array('token'=>$token))}">团购</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/yg',array('token'=>$token))}">预售</a>
+                    </li>
+					-->
+                    <!--
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/gg',array('token'=>$token))}">商城广告</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/supplier',array('token'=>$token))}">供货商管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/yj',array('token'=>$token))}">佣金管理</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/tixianinfo',array('token'=>$token))}">提现管理</a>
+                    </li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <span>商城地址：<php>echo C('site_url');</php>/index.php?g=Wap&m=Store_new&a=cats&token={weikucms:$token}</span>
+    </div>
+
+    <div class="cLineC" style="line-height: 32px;">
+        <a href="{weikucms::U('Store_new/catAdd',array('token'=>$token))}" class="btn btn-primary">新增商品分类</a>　
+        <div style="margin-top: -30px;margin-left: 650px;">
+            <form class="form" method="post" action="{weikucms::U('Store_new/product',array('token'=>$token))}" enctype="multipart/form-data">
+                <input type="text" value="{weikucms:$name}" name="name" id="name" placeholder="在此输入商品名称进行搜索" />
+                <button type="submit" name="button" class="btn btn-primary" style="margin-top: -10px;">
+                    搜索
+                </button>
+                <!--<input type="button" name="" value="搜索" style="width: 60px; height: 30px; margin-left: 5px; color: #ffffff; background-color: #1576ad; margin-top: -10px;"/>-->
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th >分类名称</th>
+                    <th >简介</th>
+                    <th >规格</th>
+                    <th >产品外观</th>
+					<th >排序</th>
+                    <th >创建时间</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+                <volist name="list" id="hostlist">
+                <tr>
+
+                    <td style="text-indent:{weikucms:$hostlist['Count']*20}px;"><neq name="hostlist.Count" value="1">|---</neq>{weikucms:$hostlist.name} </td>
+                    <!--<td>{weikucms:$hostlist.name}</td>-->
+                    <td>{weikucms:$hostlist.des}</td>
+                    <td>{weikucms:$hostlist.norms}<if condition="empty($hostlist['norms']) neq true"><span>&nbsp;&nbsp;<a href="{weikucms::U('Store_new/norms', array('catid'=>$hostlist['id'],'token'=>$token, 'type' => 0))}">规格管理</a></span></if></td>
+                    <td>{weikucms:$hostlist.color}<if condition="empty($hostlist['color']) neq true"><span>&nbsp;&nbsp;<a href="{weikucms::U('Store_new/norms', array('catid'=>$hostlist['id'],'token'=>$token, 'type' => 1))}">外观管理</a></span></if></td>
+                    <td>{weikucms:$hostlist.sort}</td>
+                    <td>{weikucms:$hostlist.time|date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$hostlist.cattype eq 2">
+                        <a href="{weikucms::U('GroupBuy/index',array('catid'=>$hostlist['id']))}" title="团购管理" class="btn btn-success btn-sm">团购管理</a>
+                        <elseif condition="$hostlist.cattype eq 3"/>
+                            <if condition="($hostlist.parentid eq 0) OR ($hostlist.parentid eq '')">
+                            <else/>
+                                <a href="{weikucms::U('Ynd/index',array($token=$token,'cat_id'=>$hostlist['id']))}" title="商品管理" class="btn btn-success btn-sm">商品管理</a>
+                            </if>
+                        <else />
+                        <a href="{weikucms::U('Store_new/attributes',array('token'=>$token,'catid'=>$hostlist['id']))}" title="分类属性管理" class="btn btn-success btn-sm">分类属性管理</a>
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token,'catid'=>$hostlist['id']))}" title="商品管理" class="btn btn-success btn-sm">商品管理</a>
+                        </if>
+                        <a href="{weikucms::U('Store_new/catset',array('token'=>$token,'id'=>$hostlist['id']))}" title="修改" class="btn btn-success btn-sm">修改</a>
+                        <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Store_new/catDel',array('id'=>$hostlist['id'],'token'=>$token))}')">删除</a>
+
+                        <!--<a href="#" onclick="source_delete('#')" title="删除" class="btn btn-danger btn-sm">删除</a>-->
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+

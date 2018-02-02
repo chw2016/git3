@@ -1,0 +1,192 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+  <div class="cLineB">
+    <h4>添加品种</h4>
+  </div>
+  <div class="cLineB" id="uppict" style="display:none">
+  </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>添加产品信息</li>
+        </ol>
+    </div>
+  <div class="msgWrap">
+    <form class="form" method="post" action="{weikucms:$FormUrl}"  target="_top" enctype="multipart/form-data" >
+      <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+          <tr>
+            <input type="hidden" class="px" id="id" value="{weikucms:$id}" name="id">
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION["token"]}" name="token">
+          <tr>
+            <td>地区：</td>
+            <td>
+                <?php HtmlTagHelper::select(
+                    $area, 'finances_area_id', array('id' => 'finances_area_id'),
+                    $product['finances_area_id']
+                )?>
+            </td>
+          </tr>
+          <tr>
+            <td>理财师：</td>
+            <td>
+                <?php HtmlTagHelper::select(
+                    $planner, 'finances_planner_id', array('id' => 'finances_planner_id'),
+                    $product['finances_planner_id']
+                );?>
+            </td>
+          </tr>
+          <tr>
+            <td>产品类型：</td>
+            <td>
+                <?php HtmlTagHelper::select(
+                    $product_type, 'finances_product_type_id',
+                    array('id' => 'finances_product_type_id'),
+                    $product['finances_product_type_id']
+                );?>
+            </td>
+          </tr>
+          <tr>
+            <th valign="top"><label for="keyword">标题</label></th>
+            <td>
+                <input type="input" class="px" id="title" value="{weikucms:$product.title}" name="title" style="width:300px">
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th valign="top"><label for="keyword">图文封面</label></th>
+            <td>
+                <input type="input" class="px" id="piccover" value="{weikucms:$product.image}" name="image" style="width:300px" readonly  >
+                <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th valign="top"><label for="keyword">实体价</label></th>
+            <td><input type="input" class="px" id="entity_price" value="{weikucms:$product.entity_price}" name="entity_price" style="width:300px">
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th valign="top"><label for="keyword">价格</label></th>
+            <td><input type="input" class="px" id="price" value="{weikucms:$product.price}" name="price" style="width:300px">
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th valign="top"><label for="keyword">产品介绍</label></th>
+                <td valign="top">
+                    <textarea class="px" id="info" name="desc" style="width: 560px; height: 120px; display: ;">{weikucms:$product.desc}</textarea>
+                </td>
+            </td>
+            <td></td>
+          </tr>
+        <input type="hidden" class="px" id="hid" value="{weikucms:$info.hid}" name="hid" style="width:300px" >
+        <tr>
+          <th></th>
+          <td>
+              <button type="submit" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+              <include file="./tpl/User/default/helper/list_btn.html"/>
+            <div class="clr"></div></td>
+        </tr>
+        </TBODY>
+      </table>
+    </form>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        //地区
+        if($('#finances_area_id').val() == -1){
+            notif({
+                msg: "请选择地区",
+                type: "warning"
+            });
+            return false;
+        }
+        //理财师
+        if($('#finances_planner_id').val() == -1){
+            notif({
+                msg: "请选择理财师",
+                type: "warning"
+            });
+            return false;
+        }
+        //产品类型
+        if($('#finances_product_type_id').val() == -1){
+            notif({
+                msg: "请选择产品类型",
+                type: "warning"
+            });
+            return false;
+        }
+        //标题
+        if($('#title').val() == ''){
+            notif({
+                msg: "请输入产品名称",
+                type: "warning"
+            });
+            $('#title').focus();
+            return false;
+        }
+        //封面
+        if($('#image').val() == ''){
+            notif({
+                msg: "请上传产品图文封面",
+                type: "warning"
+            });
+            return false;
+        }
+        //实体价
+        var iEntityPrice = $('#entity_price').val();
+        if(iEntityPrice  == ''){
+            notif({
+                msg: "请输入产品实体价",
+                type: "warning"
+            });
+            $('#entity_price').focus();
+            return false;
+        }
+        if(isNaN(iEntityPrice)) {
+            notif({
+                msg: "请输入正确的实体价",
+                type: "warning"
+            });
+            $('#entity_price').focus();
+            return false;
+        }
+        //价格
+        var iPrice = $('#price').val();
+        if(iPrice == ''){
+            notif({
+                msg: "请输入产品价",
+                type: "warning"
+            });
+            $('#price').focus();
+            return false;
+        }
+        if(isNaN(iPrice)) {
+            notif({
+                msg: "请输入正确的价格",
+                type: "warning"
+            });
+            $('#price').focus();
+            return false;
+        }
+        return true;
+    }
+</script>

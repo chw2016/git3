@@ -1,0 +1,74 @@
+<include file="Public:head"/>
+<div class="content">
+
+<div class="cLineB">
+  <h4>首页回复配置 </h4><a href="javascript:history.go(-1);" class="right btnGrayS vm" style="margin-top:-27px">返回</a>
+ </div>
+    <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+<script> 
+ function current(text){    
+   document.getElementById("uppict").style.display="block";
+	var kjname = document.getElementById("kjname");
+	kjname.value=text;    
+}
+ function leave(){    
+   document.getElementById("uppict").style.display="none";
+   
+}  
+//回调    
+function stopUpload(responseText,text){    
+    var spanObj = document.getElementById(text);   
+    spanObj.value = "上传成功";    
+    spanObj.value = responseText;    
+}
+</script>
+<form id="upForm" action="uppict.php" method="post" enctype="multipart/form-data" target="upload_target" >    
+图片上传区:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图片：<input type="file" name="myfile" id="myfile" />  
+ <input type="hidden" name="kjname" id="kjname"/>   
+<input type="submit" name="submitBtn" value="上传" />    
+</form>
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe> 
+ </div> 
+ 
+ <!--复制结束-->      
+    <div class="msgWrap bgfc">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+                <tr>
+				  <th valign="top"><span class="red">*</span>首页地址：</th>
+				  <td>
+					<strong><a href="index.php?g=Wap&m=Index&a=index&token={weikucms:$_SESSION['token']}" class="green" target="_blank">点击进入</a></strong></td>
+				</tr>
+				<tr>
+				  <th valign="top"><span class="red">*</span>关键词：</th>
+				  <td>
+					<span class="red">首页 或者 home —— 当用户输入该关键词时，将会触发此回复。</span></td>
+				</tr>
+				<tr>
+					<th width="120">回复标题：</th>
+					<td><input type="text" name="title" value="{weikucms:$home.title}" class="px" style="width:550px;" onfocus="leave();" ></td>
+				</tr>
+				<tr>
+					<th width="120">内容介绍：</th>
+					<td><textarea style="width:560px;height:75px" name="info" id="info" class="px" onfocus="leave();" >{weikucms:$home.info}</textarea><br/>最多填写120个字</td>
+				</tr>
+				<tr>
+					<th>回复图片：</th>
+					<td><input type="text" name="picurl" id="picurl" value="{weikucms:$home.picurl}" class="px" style="width:550px;" onfocus="current('picurl');" ><br/> 填写图片外链地址，大小为720x400</td>
+				</tr>
+				<th>&nbsp;</th>
+					<td>
+						<button type="submit" name="button" class="btnGreen">保存</button>
+						<a href="javascript:history.go(-1);" class="btnGray vm">取消</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+  </div> 
+ 
+  
+        </div>
+<include file="Public:footer"/>

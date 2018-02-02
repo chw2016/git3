@@ -1,0 +1,421 @@
+﻿<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>【{weikucms:$foodInfo[0]['food_name']}】团购价：￥{weikucms::floatval($foodInfo[0]['food_price'])}元</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <meta name="format-detection" content="telephone=no" />
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/api"></script>
+
+<style>
+
+    .PicBox{
+
+        background-color: #fff !important;
+
+        overflow: hidden;
+
+    }
+
+    .PicBoxSwrap{
+
+        width: 100%;
+
+        height: 100%;
+
+    }
+
+    .Pic{
+
+        width: 100%;
+
+        height: 100%;
+
+        position: relative;
+
+        background-position: 50%;
+
+        background-repeat: no-repeat;
+
+        background-size: contain;
+
+    }
+
+    .CountPicBox {
+
+        position: absolute;
+
+        bottom: 0;
+
+        background-color: rgba(0,0,0,0.2);
+
+        color: #fff;
+
+        width: 100%;
+
+        text-align: center;
+
+        z-index:99999;
+
+    }
+.ItemBox {border-bottom: 0px; }
+
+
+</style>
+
+</head>
+
+
+
+<body class="TuanGou">
+
+<div class="Home" style="display: none;" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="PicBox"  >
+
+    <div class="Pic" 
+
+	<if condition="$_GET['ticket_id']">
+
+	onclick="payTicket()" 
+
+	<elseif condition="$_GET['food_id']" />
+
+	onclick="payFood()" 
+
+    </if>
+    ><img src="tpl/Wap/default/common/ieat/img/btnBuy.png" style="width: 210px; height: 210px; margin: 0 auto; display: block;" /></div>
+</div>
+
+<div class="ItemBox">
+	<!--
+    <div class="DetailItem  myul noborder">
+
+
+        <div class="PriceBox myul">
+
+            <if condition="$_GET['ticket_id']">
+
+            <div class="PriceNow RMB">{weikucms::floatval($detailInfo[0]['ticket_price'])}元</div>
+
+                <elseif condition="$_GET['food_id']" />
+
+                <div class="PriceNow RMB">{weikucms::floatval($foodInfo[0]['food_price'])}元</div>
+
+            </if>
+
+        </div>
+
+        <if condition="$_GET['ticket_id']">
+
+             <div class="getIt" onclick="payTicket()">立即购买</div>
+
+        <elseif condition="$_GET['food_id']" />
+
+             <div class="getIt" onclick="payFood()">立即购买</div>
+
+        </if>
+
+    </div>
+	
+    <div class="Item">
+
+        <if condition="$_GET['ticket_id']">
+
+            <div class="titleblack title">{weikucms:$detailInfo[0]['ticket_name']}</div>
+
+            <div class="contentgray content">{weikucms:$detailInfo[0]['ticket_des']}</div>
+
+            <elseif condition="$_GET['food_id']" />
+
+            <div class="titleblack title">{weikucms:$foodInfo[0]['food_name']}</div>
+
+            <div class="contentgray content">{weikucms:$foodInfo[0]['food_des']}</div>
+
+        </if>
+
+    </div>
+
+    <div class="Item">
+
+        <div class="inItem myul">
+
+            <if condition="$_GET['ticket_id']">
+
+                <if condition="$detailInfo[0]['other_set']['sstk'] eq 1">
+
+                <div class="Ia iblue">支持随时退款</div>
+
+                <else />
+
+                    <div class="Ia iblue">不支持随时退款</div>
+
+                </if>
+
+                <if condition="$detailInfo[0]['other_set']['gqtk'] eq 1">
+
+                <div class="Ia iblue">支持过期退款</div>
+
+                    <else />
+
+                    <div class="Ia iblue">不支持过期退款</div>
+
+                </if>
+
+                <elseif condition="$_GET['food_id']" />
+
+                <if condition="$foodInfo[0]['other_set']['sstk'] eq 1">
+
+                    <div class="Ia iblue">支持随时退款</div>
+
+                    <else />
+
+                    <div class="Ia iblue">不支持随时退款</div>
+
+                </if>
+
+                <if condition="$foodInfo[0]['other_set']['gqtk'] eq 1">
+
+                    <div class="Ia iblue">支持过期退款</div>
+
+                    <else />
+
+                    <div class="Ia iblue">不支持过期退款</div>
+
+                </if>
+
+            </if>
+
+        </div>
+
+        <div class="inItem myul">
+
+            <if condition="$_GET['ticket_id']">
+
+                <div class="Ia iblue">剩余<span id="leftday">{weikucms::intval((strtotime($detailInfo[0]['end_date'])-time())/86400)}</span>天以上</div>
+
+                <div class="Ia iblue">已有<span id="buyperion">{weikucms:$buyNum}</span>人购买</div>
+
+            <elseif condition="$_GET['food_id']" />
+
+                <div class="Ia iblue">剩余<span id="leftday">{weikucms::intval((strtotime($foodInfo[0]['end_date'])-time())/86400)}</span>天以上</div>
+
+                <div class="Ia iblue">已有<span id="buyperion">{weikucms:$buyNum}</span>人购买</div>
+
+            </if>
+
+        </div>
+-->
+    </div>
+
+</div>
+<!--
+<div class="ItemBox">
+
+    <div class="Item noborder title titleblack">商品信息</div>
+
+    <volist name="mallList" id="vo" key="k">
+
+    <div class="Item myul">
+
+        <div class="inItemb">
+
+            <div class="Ib">{weikucms:$vo.cat_name}</div>
+
+            <div class="Ib contentgray ">{weikucms:$vo.address}</div>
+
+            <div class="Ib contentgray "><a href="tel:{weikucms:$vo.tel}">{weikucms:$vo.tel}</a></div>
+
+        </div>
+
+        <div class="inItem map" id="longi{weikucms:$k}" style="border: 2px solid rgb(147,209,250);"></div>
+
+        <span style="display: none;" class="longi"long="{weikucms:$vo.longitude}" lat="{weikucms:$vo.latitu}" address="{weikucms:$vo.address}"></span>
+
+    </div>
+
+   </volist>
+
+</div>
+-->
+<div class="ItemBox">
+<div class="Item noborder title titleblack">商品信息</div>
+    <if condition="$_GET['ticket_id']">
+
+        <div class="Item noborder title titleblack" style="font-size: 10px;">{weikucms::htmlspecialchars_decode($detailInfo[0]['taocan'])}</div>
+
+    <elseif condition="$_GET['food_id']" />
+
+        <div class="Item noborder title titleblack" style="font-size: 10px;">{weikucms::htmlspecialchars_decode($foodInfo[0]['taocan'])}</div>
+
+    </if>
+
+</div>
+<!--
+<div class="ItemBox noborder">
+
+    <if condition="$_GET['ticket_id']">
+
+        <div class="Item noborder title titleblack" style="font-size: 10px;">{weikucms::htmlspecialchars_decode($detailInfo[0]['ticket_intro'])}</div>
+
+    <elseif condition="$_GET['food_id']" />
+
+        <div class="Item noborder title titleblack" style="font-size: 10px;">{weikucms::htmlspecialchars_decode($foodInfo[0]['food_brief'])}</div>
+
+    </if>
+
+</div>
+-->
+<if condition="$_GET['ticket_id']">
+
+    <form id="myweipayticketform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+
+        <input type="hidden" name="order_money" value="{weikucms::floatval($detailInfo[0]['ticket_price'])}">
+
+	
+
+        <input type="hidden" name="order_text" value="Ieat联盟团购券">
+
+        <input type="hidden" name="orderid" value="{weikucms:$detailInfo[0]['ticket_id']}">
+
+        <input type="hidden" name="openid" value="{weikucms:$openid}">
+
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Ieat&a=ticketANDfood&openid={weikucms:$openid}&t=1">
+
+        <input type="hidden" name="type" value="Ieat_Ticket">
+
+    </form>
+
+<elseif condition="$_GET['food_id']" />
+
+    <form id="myweipayFoodform" method="post" action="{weikucms::U('Wap/Ieat/receiving',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">
+
+        <input type="hidden" name="order_money" value="{weikucms::floatval($foodInfo[0]['food_price'])}">
+
+	<input type="hidden" name="order_yunfei" value="{weikucms::floatval($foodInfo[0]['food_yunfei'])}">
+
+	<input type="hidden" name="order_name" value="{weikucms:$foodInfo[0]['food_name']}">
+
+        <input type="hidden" name="order_text" value="Ieat联盟特色食物限购">
+
+        <input type="hidden" name="orderid" value="{weikucms:$foodInfo[0]['food_id']}">
+
+        <input type="hidden" name="openid" value="{weikucms:$openid}">
+
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Ieat&a=ticketANDfood&openid={weikucms:$openid}&t=2">
+
+        <input type="hidden" name="type" value="Ieat_Food">
+
+    </form>
+
+</if>
+
+</body>
+
+<script>
+
+    //slider($(".PicBox"),$(".PicBoxSwrap"),$(".Pic"));
+
+</script>
+
+<script>
+
+    $(function(){
+
+        $(".longi").each(function(i,o){
+
+            var long = $(o).attr("long");
+
+            var lat = $(o).attr("lat");
+
+            var address = $(o).attr("address");
+
+            var clas = $(o).prev().attr("id");
+
+            // 百度地图API功能
+
+            var map = new BMap.Map(clas);
+
+            var point = new BMap.Point(long,lat);
+
+            map.centerAndZoom(point,12);
+
+            // 创建地址解析器实例
+
+            var myGeo = new BMap.Geocoder();
+
+            // 将地址解析结果显示在地图上,并调整地图视野
+
+            myGeo.getPoint(address, function(point){
+
+                if (point) {
+
+                    map.centerAndZoom(point, 16);
+
+                    map.addOverlay(new BMap.Marker(point));
+
+                }
+
+            }, "深圳市");
+
+        });
+
+    });
+
+</script>
+
+<script>
+
+    function payTicket(){
+        $("#myweipayticketform").submit();
+    }
+
+</script>
+
+<script>
+
+    function payFood(){
+
+        $("#myweipayFoodform").submit();
+
+    }
+
+</script>
+
+<script>
+
+    myFadeIn(50);
+
+</script>
+
+</html>
+

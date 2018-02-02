@@ -1,0 +1,69 @@
+<include file="Public:head"/>
+
+	<div class="cLineB">
+		<h4 class="left">所有员工信息</h4>		
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Service/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+		<div class="searchbar"></div>
+		<div class="clr"></div>
+	</div>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里您可以添加图文关键词回复信息,比如您添加"万普微盟"这个关键词以后，用户在微信输入"万普微盟"系统就会回复您所设
+
+置的图文回复内容，以图文信息的的形式回复给用户</li>
+
+        </ol>
+    </div>
+         
+
+          <div class="msgWrap">
+
+                  		<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>员工名称</th>
+                      <th>工号</th>
+                      <th>性别</th>
+                      <th>工龄</th>
+                      <th>所属分部</th>
+                      <th>联系方式</th>
+                      <th>工种类型</th>
+                      <th ><div style="width:200px;">工作安排信息信息</div></th>                 
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="staffInfoDatas" id="vo">
+                      <tr>
+                          <td>{weikucms:$vo.name}</td>
+                          <td>{weikucms:$vo.staff_id}</td>
+                          <td><if condition="$vo.sex eq 1">男<else/>女</if></td>
+                          <td>{weikucms:$vo.age}</td>
+                          <td>{weikucms:$vo.belong_id}</td>
+                          <td>{weikucms:$vo.telephone}</td>
+                          <td><if condition="$vo.staff_type eq 1">技工<elseif condition="$vo.staff_type eq 0"/>销售<else/>其他</if></td>
+                          <td style=""><div style="width:200px;word-wrap:break-word;">{weikucms:$vo.staff_time_info}</div></td>
+                          <td style="width:270px;">
+	                          <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Service&amp;a=managerStaff&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="查看订单">编辑</a>
+	                          <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Service&amp;a=delStaff&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="#">删除</a>
+	                          <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Service&amp;a=see&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}&amp;type=2" title="查看对应员工评价">查看评价</a>
+                          </td>
+                      </tr>
+                  </volist>
+                  </tbody>
+              </table>
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+</div>
+<include file="Public:footer"/>

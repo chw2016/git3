@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<title>邮件发送</title>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/login.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/tpl/Home/weikucms/common/css/notifIt.css">
+<script type="text/javascript" src="/tpl/Home/weikucms/common/js/notifIt.js"></script>
+
+</head>
+<style>
+
+
+
+	::-webkit-input-placeholder{
+    color:#fff;
+}
+#aaa {
+border: 1px solid #3488e6;
+  background-color: transparent;
+  border-radius: 6px;
+  padding: 9px;
+  padding-top: 0;
+color: black; 
+}
+.input_name { text-align: left; text-indent: 10px; border: 1px solid #C5C8CD;color: black;}
+body{
+	background-color: white;
+}
+:: input {
+	color:red;
+}
+
+input#u_email::-webkit-input-placeholder {
+  color: black;
+}
+.btn_login{
+	background: -webkit-linear-gradient(top, #071422, #3695ff);
+}
+.contents{
+    word-break: break-all;
+}
+    .contents span{
+        word-break: break-all;
+    }
+</style>
+<body>
+<!-- 	<div class="top">
+        <span class="imgs"><img src="{weikucms:$wxusers['headimgurl']}"></span>
+	</div> -->
+	<div class="bodys" style="margin-top:10px; margin-bottom: 10px;" >
+	<form action="" method="post" id="form">
+		<div class="mr">
+		<!-- 	<input type="text" class="input_name" name="u_name" id="u_name" placeholder="*输入用户名">
+			<input type="password" class="input_name" name="u_password" id="u_password" placeholder="*输入密码">
+			<input type="password" class="input_name" name="re_u_password" id="re_u_password" placeholder="*再次输入密码"> -->
+		<input type="text" class="input_name"  name="u_email" id="u_email" placeholder="*填写接收邮箱" value="<?php echo cookie('fs_email');?>" onfocus="if (placeholder =='*填写接收邮箱'){placeholder =''}"onblur="if (placeholder ==''){placeholder='*填写接收邮箱'}">
+			<!-- <input type="text" class="input_name" name="u_phone" id="u_phone" placeholder="输">
+			<input type="text" class="input_name" name="u_qq" id="u_qq" placeholder="填写QQ"> -->
+			
+<!-- 			<div class="ts">
+				<span style="float:left"><a style="color:#fff;" href="">忘记密码</a></span>
+                <span style="float:right"><a style="color:#fff;" href="{weikucms::U('login',array('token'=>session('token')))}">返回登录</a></span>
+			</div> -->
+		</div>
+        
+	</form>
+<style>
+#aaa{width:79%; height: auto;  margin:0 auto; font-size:14px; margin-top:10px; color: black; border: 1px solid #C5C8CD;}
+#aaa p{ margin-top:10px; }
+
+#ccc {
+display: block;
+width: 130px;
+height: 39px;
+border: 1px solid #ccc;
+border-radius: 6px;
+text-align: center;
+line-height: 39px;
+box-shadow: 0 1px 6px #fff;
+margin-top: 12px;
+margin-left: 30%;
+color: #000;
+}
+</style>    	
+	  <div id="aaa" contentEditable=true>
+	  
+	  	<P><b >邮件内容</b></P>
+       <P><b>名称：</b>{weikucms:$list['title']}</P>
+       <P><b>作者：</b>{weikucms:$list['name']}</P>
+       <P><b>时间：</b><?php echo date("Y-m-d h:i",$list['add_time']) ?></P>
+       <P><b>方案亮点：</b>{weikucms:$list['ld']}</P>
+       <P><b>描述：</b>{weikucms:$list['content']}</P>
+       <P><b>关键字：</b>{weikucms:$list['gjz']}</P>
+       <P><i><b>链接地址：</b><a href="{weikucms:$list['url']}"> {weikucms:$list['url']} </a></i></P>
+       		<p class="contents"  style=" background-color:#FFFFFF; font-size:12px; width:100%; margin:0 auto;text-align:center;" >
+
+	                <?php   $xx['content']=str_replace('background-color:#FFFFFF','',$xx['content']);
+                            echo str_replace('color:#333333','',$xx['content']);
+                               
+                    ?>
+	               
+	      </p>
+      </div>
+	</div>
+	<span  style="margin-top: 0px; margin-top: 10px; width: 84%; display: block; margin: 0 auto;  " id="ccc" class=" aaa">发送</span>
+    <script>
+        $(function () {
+            var email = getcookie('email');
+            $('#u_email').val(email);
+        })
+       $(".aaa").click(function(){
+    	   var email = $("#u_email").val();
+    	   var html = $("#aaa").html();
+    	   if(!email){
+    		   alert('请输入邮箱');
+			   return false;
+    	   } 
+    	   $.post("{weikucms::U('ajax',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}",{email:email,html:html},function(data){
+    		   alert(data.str);
+               setcookie('email',email,30);
+    		   location.href="{weikucms::U('search',get(token,openid))}";
+    	   },'json');
+       })
+    </script>
+
+</body>
+</html>

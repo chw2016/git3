@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>车商通SCRM</title>
+<meta name="Keywords" content="车商通SCRM">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" /> 
+</head>
+
+
+
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>车辆信息</div>
+<form action="http://cheshangtong.chexiu.cn/index.php?mod=wzcx&code=rules" id="wzForm" method="post">
+<div class="publicList wml65">
+    <ul>
+        <li class="noAfter">
+        	<div class="li-l">车牌号</div>
+        	<div class="li-r">粤B12345</div>
+        </li>
+		<input type="hidden" name="cp" id="cp" value="粤B12345">
+		<input type="hidden" name="apikey" id="apikey" value="gd">
+        <li class="noAfter">
+        	<div class="li-l">车架号码</div>
+        	<div class="li-r">
+        		<input class="input" id="frame" maxlength="6" placeholder="输入车架号码后6位" name="frame" value="">
+        	</div>
+        </li>
+        <li class="noAfter">
+        	<div class="li-l">发动机号</div>
+        	<div class="li-r">
+        		<input class="input" id="ecode" maxlength="6" placeholder="输入发动机号后6位" name="ecode" value="">
+        	</div>
+        </li>    
+   </ul>
+</div>
+<div class="button clearfix"><a href="javascript:void(0);" onclick="show_success_box();">查　询</a></div>
+</form>
+<!--<div class="tips">
+	<div class="tit">温馨提示</div>
+    <p>1.您的车架号必须与车牌匹配,否则不能成功查询.</p>
+    <p>2.支持全国大部分地区，其他地区正在陆续上线中...</p>
+</div> -->
+<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"index.php");
+		$('#back a img').attr('src','http://i.16888.com/4/default/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.location.href='/';");
+		$('#back a img').attr('src','http://i.16888.com/4/default/foot_back_android.png');
+	}
+});
+</script>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_setAccount', 1]);
+	_maq.push(['_areaid', 49]);
+	_maq.push(['_typeid', 2]);
+	_maq.push(['_uid', 100047]);
+	_maq.push(['_regtime', 1407047043]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+<script type="text/javascript">
+var show_loading_bombBox = function()
+{
+	var loading_div = '<div id="global_loadbombBox"><img width="40" height="40" src="http://i.16888.com/4/default/loading128.gif"></div>';
+	$('body').append(loading_div);
+	global_loadbombBox();
+};
+var show_success_box = function(){
+	/*var frame = $("#frame").val();
+	var cp	  = $("#cp").val();
+	if (!frame)
+	{
+		show_tip('请输入车架号'); 
+		return false;
+	} 
+	if (!checkAbc( frame ))
+	{
+		show_tip('车架号输入格式不正确'); 
+		return false;
+	}
+	else
+	{
+		if (frame.length != 6)
+		{
+			show_tip('请输入车架号后6位'); 
+			return false;
+		}
+	}*/
+var frame = $('#frame').val();
+			if( !checkAbc(frame) )
+			{
+				show_error_tip("输入车架号码后6位");
+				return false;
+			}
+var ecode = $('#ecode').val();
+			if( !checkAbc(ecode) )
+			{
+				show_error_tip("输入发动机号后6位");
+				return false;
+			}
+show_loading_bombBox();
+	$('#wzForm').submit();
+};
+</script></body></html>

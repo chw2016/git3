@@ -1,0 +1,147 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<div class="cLineB">
+      <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+        
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('KindergartenSupermanage/index',array('token'=>$token))}">超级管理员主页</a>
+            </li>
+
+            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenSupermanage/manage',array('token'=>$token))}">添加会员</a>
+            </li>
+            
+             <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenSupermanage/vipdes',array('token'=>$token))}">VIP说明</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenSupermanage/child',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>幼教产品</a>
+            </li>
+			
+			            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenSupermanage/register',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>注册用户</a>
+            </li>
+            
+          
+            
+          
+        </ul>        
+    </div>
+ 
+</div>
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>提示信息!</strong>
+  <ol>
+    <li>在这里可以添加/编辑会员信息。</li>
+  </ol>
+</div>
+<div class="box-content">
+ 
+<div class="alert alert-info">
+    <span>子会员登陆网址：<php>echo C('site_url');</php>/index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Kg_super_meb</span>
+</div>
+  <div class="cLine">
+    <div class="pageNavigator left"> <a href="{weikucms::U('KindergartenSupermanage/manage',array('token'=>$token))}" title="添加幼儿园" class="btn btn-primary">添加会员</a></div>
+    <div class="clr"></div>
+  </div>
+  <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align:center">编号</th>
+            <th style="text-align:center">会员名称</th>
+            <th style="text-align:center">会员联系电话</th>
+            <th style="text-align:center">会员真实姓名</th>
+            <th style="text-align:center">会员等级</th>
+            <th style="text-align:center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="info" id="vo">
+            <tr>
+              <td style="text-align:center">{weikucms:$vo.id}</td>
+              <td style="text-align:center">{weikucms:$vo.username}</td>
+              <td style="text-align:center">{weikucms:$vo.tel}</td>
+              <td style="text-align:center">{weikucms:$vo.name}</td>
+              <td style="text-align:center;"><if condition="$vo['lever'] eq 1 "><span style="color:red;">高级会员</span><else/>普通会员</if></td>
+              <td class="norightborder" style="text-align:center">
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=KindergartenSupermanage&amp;a=manage&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="编辑文本">编辑</a> 
+                  <a class="btn btn-danger btn-sm" onClick="sourc_delete('/index.php?g=User&amp;m=KindergartenSupermanage&amp;a=del&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="javascript:;">删除</a>
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=KindergartenBranch&amp;a=show&amp;token={weikucms:$token}&amp;userid={weikucms:$vo.id}" title="编辑文本">进入</a>
+                  <a class="vip btn btn-success btn-sm" href="javascript::void(0)" title="编辑文本" id="{weikucms:$vo.lever}x{weikucms:$vo.id}">升级VIP</a>
+              </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <div>
+    <ul class="pager">
+      {weikucms:$page}
+    </ul>
+  </div>
+</div>
+<script>
+$(function(){
+    $(".vip").each(function(i,o){
+        var userid = $(o).attr('id'); 
+        if(userid.split("x")[0] % 2 == 1){
+            $(o).text('降级');
+        }
+        $(o).click(function(){
+            var url = "{weikucms::U('KindergartenSupermanage/upvip',array('token'=>$token))}";
+            $.post(url,{userid:userid},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+        });
+    });
+});
+function sourc_delete(url){
+    if(confirm('您确定删除此会员?若删除此会员，会删除会员名下的所有内容')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+</script>
+
+<include file="Public:footer"/>

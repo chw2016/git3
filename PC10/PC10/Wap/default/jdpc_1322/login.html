@@ -1,0 +1,87 @@
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>登录</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/jdpc/css/login.css">
+<script src="{weikucms::STATICS}/wapweiui/jdpc/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/jdpc/js/msg.js"></script>
+<style>
+.top {
+  overflow: hidden;
+  }
+  
+::-webkit-input-placeholder{
+    color:#fff;
+}
+</style>
+
+</head>
+<body>
+    <div style="width: 40%; margin: 0 auto;">
+
+	<div class="top" style="">
+        <span class="imgs" style="height:40px;padding: 0px;"><img src="http://zgfk.kingdee.com/./tpl/Wap/default/common/Jd/images/li1.png"></span><!--  -->
+	</div>
+	<div class="bodys">
+		<div class="mr">
+			<input type="text" class="input_name" name="u_name" id="u_name" placeholder="输入用户名" onfocus="if (placeholder =='输入用户名'){placeholder =''}" onblur="if (placeholder ==''){placeholder='输入用户名'}">
+			<input type="password" class="input_name" name="u_password" id="u_password" placeholder="输入密码" onfocus="if (placeholder =='输入密码'){placeholder =''}" onblur="if (placeholder ==''){placeholder='输入密码'}">
+            <div class="tishi" style="color: red;"></div>
+            <span id="put" class="btn_login">芝麻开门</span>
+			<div class="ts">
+				<!--<div><a style="color:#EAEAEA;-webkit-tap-highlight-color: rgba(0,0,0,0);" href="/index.php?g=Wap&amp;m=Jd&amp;a=aaa&amp;token=3eaf0f4f4805de0439d6940654198378">忘记密码</a></div>
+                <div style="padding: 5px 0;"><a style="color:#EAEAEA;" href="/index.php?g=Wap&amp;m=Jd&amp;a=register&amp;token=3eaf0f4f4805de0439d6940654198378">申请加入K/3Cloud方案私享圈子</a></div>-->
+                <div><a style="color:#EAEAEA;" href="/index.php?g=Wap&amp;m=Jd&amp;a=membership&amp;token=3eaf0f4f4805de0439d6940654198378">了解圈友权益和义务</a></div>
+			</div>
+		</div>
+	</div>
+    <div style="clear: both"></div>
+    <div class="bottoms">方案+<br>移动互联时代的知识管理新玩法！</div>
+    <div style="height: 10px;"></div>
+    <script type="text/javascript">
+    var url="{weikucms::U('JdPc/login',array('token'=>$token))}";
+    
+    $(function(){
+    	$(".input_name").focus(function(){
+    		if($(this).placeholder=="输入用户名"){
+    			$(this).placeholder="";
+    		}
+//            $(".tishi").html("");
+    	})
+    	$(".input_name").blur(function(){
+    		if($(this).placeholder()==""){
+    			$(this).placeholder("输入用户名");
+    		}	
+    	})
+    	
+    })
+    $()
+    $('#put').click(function(){
+        $(".tishi").html('');
+        var name=$('#u_name').val();
+        var password=$('#u_password').val();
+        
+        
+        if(name==''){
+            msg.alert('请填写用户名');
+            return false;
+        }
+        if(password==''){
+        msg.alert('请填写登录密码');
+        return false;
+        }
+        $.post(url,{name:name,password:password},function(data){
+            if(data.status){
+                window.location=data.url;
+            }else{
+                $(".tishi").append(data.info);
+//                msg.alert(data.msg);
+            } 
+        },'json');
+    });
+    
+    
+    
+    </script>
+</div>
+</body></html>

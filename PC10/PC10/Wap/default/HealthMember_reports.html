@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+
+<body>
+
+<div class="top">
+    <div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('HealthMember/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+
+<div class="Box Guding">
+   <div class="quotaBox">
+
+         <div class="userInfoBox myul">
+         	<div class="userPic myli">
+         		<span class="zhibiao-All pic"></span>
+         	</div>
+
+         	<div class="userinfo myli">
+         		<div class="infoItem">
+                  姓名：<span id="username">{weikucms:$user.xm}</span>
+               </div>
+         		<div class="infoItem">
+                  性别：<span id="sex">{weikucms:$user.xb}</span>
+               </div>
+         	</div>
+
+         	<div class="userinfo myli">
+         	   <div class="infoItem">
+         	    	年龄：<span id="age">{weikucms:$user.age}</span>岁
+         	   </div>
+         	   <div class="infoItem">
+         	    	籍贯：<span id="homeLand">{weikucms:$user.jiguan} </span>
+         	   </div>
+         	</div>
+
+         </div>
+   </div>
+</div>
+
+<div class="ReportListBox">
+    <volist name="reports" id="report" key="k">
+       <div class="ReportList" onclick="window.location.href='{weikucms::U('HealthMember/report',array('token'=>$token,'openid'=>$openid,'id'=>$report['tjid']))}'">
+          <div class="ReportListTimeArrow myul">
+             <div class="arrowBox">
+                <div class="arrowSwrap">
+                   <div class="arrow">
+                      <span class="icon-arrow-right"></span>
+                   </div>
+                </div>
+             </div>
+
+             <div class="ReportTime">
+                 {weikucms:$report.tjsj}
+             </div>
+          </div>
+          <div class="numberBox" <php>if(count($reports) == $k){</php>style="border:none;"<php>}</php>>
+             体检编号：{weikucms:$report.tjid}
+          </div>
+       </div>
+    </volist>
+</div>
+
+
+
+
+
+
+</body>
+<script type="text/javascript">
+	myFadeIn()
+</script>
+</html>

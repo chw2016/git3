@@ -1,0 +1,154 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/cymain.css" />
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top "
+                data-id="total">
+                <a
+                    href="{weikucms::U('WechatConferencemarking/show',array('token'=>$token))}&actid={weikucms:$w['actid']}">活动主页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以生成验证码。</li>
+    </ol>
+</div>
+<div class="box-content">
+    <div style="float: left; width: 49%; margin-left: 10px;">
+        <div class="cLineB" style="width: 500px">
+            <h4 style="display: inline">基本验证码数量:</h4>
+            <input value="{weikucms:$data['base_ver_num']}" type="text"
+                id="base_ver_num" name="base_ver_num"
+                style="margin-top: 10px"
+                placeholder="在这里输入基础数量，不能大于300~">
+            <input value="{weikucms:$w['actid']}" type="text" id="actid"
+                name="actid" style="display: none">
+            <button type="button" class="base btn btn-round btn-success">点击生成</button>
+        </div>
+        <div class="msgWrap">
+            <input name="delall" type="hidden" value="" />
+            <input name="wxid" type="hidden" value="" />
+            <table class="table table-bordered" style="width: 500px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">基础验证码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <volist name="base_ver_code" id="vo">
+                    <tr>
+                        <td style="text-align: center">{weikucms:$vo.base_ver_code}</td>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center" style="width: 500px">
+            <ul class="pagination">{weikucms:$page}
+            </ul>
+        </div>
+    </div>
+    <div style="float: right; width: 49%; margin-left: 10px;">
+        <div class="cLineB" style="width: 500px;">
+            <h4 style="display: inline">预留验证码数量:</h4>
+            <input value="" type="text" id="res_ver_num"
+                name="res_ver_num" style="margin-top: 10px;"
+                placeholder="在这里输入预留数量，不能大于10~">
+            <button type="button" class="res btn btn-round btn-danger">点击生成</button>
+        </div>
+        <table class="table table-bordered" style="width: 500px;">
+            <thead>
+                <tr>
+                    <th style="text-align: center">预留验证码</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="res_ver_code" id="vo">
+                <tr>
+                    <td style="text-align: center">{weikucms:$vo.res_ver_code}</td>
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+    <div sytle="clear:both"></div>
+    <script type="text/javascript">
+    $(function(){
+        $(".base").click(function(){
+            var op = 1;
+            var base_ver_num = $("#base_ver_num").val();
+            if(base_ver_num > 300){
+                notif({
+                    msg: '基础验证码数目不能超过300个'
+                });
+            }else{
+                $(".base").text("正在生成…");
+                var actid = $("#actid").val();
+                $.post("{weikucms::U('WechatConferencemarking/verification_code')}",
+                        {base_ver_num:base_ver_num,actid:actid,op:op},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                },'json');
+            }
+        });
+    });
+
+</script>
+    <script type="text/javascript">
+    $(function(){
+        $(".res").click(function(){
+            var op = 0;
+            var res_ver_num = $("#res_ver_num").val();
+            if(res_ver_num > 10){
+                notif({
+                    msg: '预留验证码数目不能超过10个'
+                });
+            }else{
+                $(".res").text("正在生成…");
+                var actid = $("#actid").val();
+                $.post("{weikucms::U('WechatConferencemarking/verification_code')}",
+                        {res_ver_num:res_ver_num,actid:actid,op:op},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                },'json');
+            }
+        });
+    });
+
+</script>
+    <include file="Public:footer" />

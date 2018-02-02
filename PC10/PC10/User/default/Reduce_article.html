@@ -1,0 +1,244 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<div class="cLineB">
+    <h4 style="position:relative;">
+        添加文章
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Reduce/index',array('token'=>$token,'pid'=>$pid))}">
+            返回
+        </a>
+    </h4>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+    editor = K.create('#info', {
+    resizeType : 1,
+    allowPreviewEmoticons : false,
+    allowImageUpload : true,
+    allowFileManager:true,
+    items : [
+    'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+    'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+    });
+
+    });
+</script>
+<script>
+        // 图片上传
+         KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#click_icon").click(function(e){
+            $('#icon_btn').css({
+                top:e.pageY - 370,
+                left:e.pageX- 330
+            }).show();
+           $('#icon_btn').css({'position':'absolute','left':'76px','top':'50px'}).show();
+        
+        })
+        $(".tile-themed i").each(function(){
+            $(this).click(function(){
+                var thisclass = $(this).attr('class');
+                $(".ico_bg i").attr("class",thisclass);
+                $("#icon").val(thisclass);
+                $('#icon_btn').hide();
+            });
+        });
+    });
+</script>
+<style type="text/css">
+    .upimg{
+        margin-bottom: 15px;
+    }
+    .upimg img{
+        width: 80px;
+        height: 70px;
+    }
+</style>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+
+<div class="msgWrap">
+    <form class="form" method="post" action=""
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+             <TR class="video">
+                <TH valign="top">
+                    <label for="title">
+                       文章标题
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="articleT" value="" name="video_url" style="width:300px" placeholder="此处填写文章标题">
+                </TD>
+            </TR>
+            <TR class="video">
+                <TH valign="top">
+                    <label for="name">
+                        文章简介
+                    </label>
+                </TH>
+                <TD>
+                    <textarea class="px" id="articleJ" name="articleJ" style="width:420px;height:150px;" placeholder="请填写文章简介简介" /></textarea>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        文章内容标题：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="articleC" value=""  name="sorts" style="width:300px;" placeholder="请填写内容标题" />
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top"><label for="keyword">文章内容图片</label></TH>
+                <TD>
+                    <img id="image_show" src="">
+                    <input type="hidden" class="text textMiddle inputQ"  name="picurl" id="pic" value="" style="width:300px;"   />
+                    <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+                </TD>
+                <TD></TD>
+            </TR>
+             <TR id="picText">
+                <TH valign="top">
+                    <label for="title">
+                       文章内容
+                    </label>
+                </TH>
+                <TD>
+                    <textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();"></textarea>
+                </TD>
+            </TR>
+            
+            </THEAD>
+            <TBODY>              
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            // 新闻标题
+            var articleT = $('#articleT').val();
+            // 文章简介
+            var articleJ = $('#articleJ').val();
+            // 文章内容标题
+            var articleC = $('#articleC').val();
+            // 图片
+            var pic = $('#pic').val();
+            // 文章内容
+            var newscontent = editor.html();
+            
+            if(!articleT){
+                notif({
+                    msg: "文章标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!articleJ){
+                notif({
+                    msg: "文章简介不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!articleC){
+                notif({
+                    msg: "文章内容标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!newscontent){
+                notif({
+                    msg: "文章内容不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+                //视频链接地址
+                 $.post("{weikucms::U('Reduce/articleInsert',array('token'=>$token))}",
+                    {articleT:articleT,articleJ:articleJ,articleC:articleC,pic:pic,newscontent:newscontent},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+             })
+})
+</script>
+<include file="Public:footer" />

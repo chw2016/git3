@@ -1,0 +1,62 @@
+<include file="Public:head"/> 
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>编辑排行榜</h4>
+
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%"><TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>昵称：</th>
+                    <TD>
+                        <input type="input" class="px" value="{weikucms:$data[0][nickname]}" style="width:400px;"  readonly><br />
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>手机号：</th>
+                    <TD>
+                        <input type="input" class="px" value="{weikucms:$data[0][tel]}" style="width:400px"  readonly/>
+                        <input type="hidden" class="px" value="{weikucms:$data[0][id]}" style="width:400px" name="id"/>
+                        <input type="hidden" class="px" value="{weikucms:$lid}" style="width:400px" name="lid"/>
+
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>节操数：</th>
+                    <TD>
+                        <input type="text" class="px"  name="integrity" style="width: 400px;" value="{weikucms:$data[0][integrity]}" id="integrity"/>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th>&nbsp;</th>
+                    <td><button type="submit" class="btn btn-primary" id="submit" onclick="return erank()">保存</button></td>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div>
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    function erank(){
+        var integrity=$("#integrity").val();
+        if (!(/^\d+$/.test(integrity))) {
+            notif({
+                msg: "节操必需为数字",
+                type: "warning"
+            });
+            return false;
+        }
+    }
+</script>
+<include file="Public:footer"/> 

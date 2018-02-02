@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>{weikucms:$tpl['name']}</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				list-style: none;
+				margin: 0;
+				text-decoration: none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			*:focus{
+				outline: 0px;
+			}
+
+            table{text-align: center;width: 100%;background: #faebb2;position: fixed;bottom: 0px;border-collapse: collapse;}
+            table .border{border-right:1px solid #f6ad69;padding: 15px 0;}
+            table td {color: #b48c4f;display: block;font-size: 14px;}
+            .selected{
+                background-color: #ea6262;
+                color: white;
+            }
+            .friend {
+                background: #f6ad69;
+                padding: 6px;
+                color: #f7edb2;
+                text-align: center;
+                width: 100%;
+                position: fixed;
+                bottom: 50px;
+                height: 30px;
+                line-height: 30px;
+            }
+        </style>
+	</head>
+	<body>
+		<img src="{weikucms::STATICS}/works/canyuf.jpg" style="width:100%;height:auto;margin-bottom: 100px;"/>
+        <div class="friend" onclick="window.location.href='{weikucms::U('Works/set',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'" style="margin-top: 30px;width: 100%;">立即参与</div>
+
+        <table>
+            <tr>
+                <td class="border <if condition="$selected eq 1">selected</if>" onclick="window.location.href='{weikucms::U('Works/index',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'" >参赛作品</td>
+                <td class="border <if condition="$selected eq 2">selected</if>" onclick="window.location.href='{weikucms::U('Works/rules',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'openid'=>$_GET['openid']))}'">参与方法</td>
+                <td class="border <if condition="$selected eq 3">selected</if>"  onclick="window.location.href='{weikucms::U('Works/event',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">活动规则</td>
+                <td class="border <if condition="$selected eq 4">selected</if>" onclick="window.location.href='{weikucms::U('Works/set',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">我要投稿</td>
+            </tr>
+        </table>
+		<script type="text/javascript">
+			$(function(){
+				$('#header').css('max-width',$('body').width());
+				$('ul>li:even').css({'float':'left','margin-left':'15px'});
+				$('ul>li:odd').css({'float':'right','margin-right':'15px'});
+				$('#content').css({'height':$('body').height()*0.68+"px",'overflow':'scroll','overflow-x':'hidden'});
+			})
+		</script>
+	</body>
+</html>

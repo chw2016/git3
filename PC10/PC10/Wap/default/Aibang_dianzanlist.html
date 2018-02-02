@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+    <title>{weikucms:$tpl.name}</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Aibang/css/aibang.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/service/js/jquery.form.js"></script>
+    <style type="text/css">
+        .Rewidth{
+            width:64% !important;
+        }
+        .Refont{
+            font-size: 18px !important;padding-left:11px;
+        }.Recolor{
+             background: #f0f0f0 !important;padding: 6px 0 6px 10px !important;
+         }.Resize{padding-top: 0px !important;font-size: 17px !important;}
+        .Recolor1{color: #878787 !important;padding: 11px 11px !important;font-size: 13px !important;}
+        .personal{font-size: 15px !important;color: #959595 !important;position: relative;bottom: 2px;left: 2px;}
+        .meters{float: right;}
+        #meter{-webkit-appearance:none;border-top-left-radius: 6px;-webkit-border-top-left-radius: 6px;-moz-border-top-left-radius: 6px;-ms-border-top-left-radius: 6px;-o-border-top-left-radius: 6px;border-bottom-left-radius: 6px;-webkit-border-bottom-left-radius: 6px;-moz-border-bottom-left-radius: 6px;-ms-border-bottom-left-radius: 6px;-o-border-bottom-left-radius: 6px;border: 1px solid #7b7b7b;}
+        .panelBox{
+            width: 100%;
+            min-height:30px;
+            position: relative;
+            /*margin-left: 5px;*/
+            background-color: #fff;
+            border-radius: 6px;-webkit-border-radius: 6px;-ms-border-radius: 6px;-moz-border-radius: 6px;-o-border-radius: 6px;
+        }
+        .panelHead{
+            border:1px solid #919191;border-radius: 6px;-webkit-border-radius: 6px;-ms-border-radius: 6px;-moz-border-radius: 6px;-o-border-radius: 6px;
+            height: 32px;
+            width: 97%;
+            border: 1px solid #7b7b7b;
+            position: relative;
+            z-index: 123;
+            font-size: 10px;line-height: 30px;text-align: left;text-indent: 6px;
+            border-right:none;
+        }
+        .panelContent{
+            position: absolute;
+            width: 100%;
+            max-height: 160px;
+            overflow-y: scroll;
+            background: #fff;
+            z-index: 0;
+        }
+        .panelContent div{
+            padding: 6px;border-top: 1px solid #878787;
+        }
+        .panelContent div:nth-of-type(1){
+            border-top:0;
+        }
+        .myul{
+            display: flex;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -moz-box;  }
+        .myli{
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            -ms-flex: 1;
+            flex:1;
+            /*max-height: 90px;*/
+        }
+        .abc{
+            position: absolute;
+            width: 24px;
+            height: 100%;
+            background: #878787;
+            top: 0;
+            right: 0;
+            z-index: 0;
+            border-top-right-radius: 6px;-webkit-border-top-right-radius: 6px;-ms-border-top-right-radius: 6px;-moz-border-top-right-radius: 6px;-o-border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;-webkit-border-bottom-right-radius: 6px;-ms-border-bottom-right-radius: 6px;-moz-border-bottom-right-radius: 6px;-o-border-bottom-right-radius: 6px;
+        }
+        .abc:after{
+            content: "";
+            border-top: 6px solid #fff;
+            border-right: 6px solid transparent;
+            border-left: 6px solid transparent;
+            position: absolute;
+            display: inline-block;
+            top: 44%;right: 25%;
+        }
+        .PB{
+            width: 100%;
+            position: relative;
+            margin:0 auto;
+            z-index: 0;
+
+        }
+        .margin{
+            margin-left: 2%;
+        }#header form input[type='button']{
+             height: 40px;
+             border:none;
+             border-left:1px solid #919191;
+             width:13%;
+             border-right:1px solid #919191;
+         }
+        .zan{
+            float:right;position:relative;bottom:2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="zanlist" style="padding: 10px 5px;">
+  <ul>
+      <volist name="list" id="vo">
+         <li style="text-align:center;line-height: 30px;">微信用户<span style="color: green;padding: 0px 5px;">{weikucms:$vo.nickname}</span> 在{weikucms:$vo.date}<span style="color: red;padding: 0px 5px;"><if condition="$vo['type'] eq 1">点了赞<else/>点了不赞</if></span></li>
+      </volist>
+  </ul>
+</div>
+
+</body>
+</html>

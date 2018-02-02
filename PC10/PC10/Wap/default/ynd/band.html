@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>银行卡信息</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/prompt.js"></script>
+    <script type="text/javascript">
+      $(function(){       
+                $(".rolloff_btn").touch(function(){
+                    var card=$("[name=card]").val();
+                    var user=$("[name=user]").val();
+                    var open=$("[name=open]").val();
+                    var tel=$("[name=tel]").val();
+                     var password=$("[name=password]").val();
+                    var bank=$("[name=bank]").val();
+//                    var flag=$(this).attr('flag');
+//                    if(flag==1){//重复提交
+//                        return false;
+//                    }
+                    if(user==''){
+                        show_error_tip('请输入持卡人姓名');
+                        $("[name=user]").focus();
+                        return false;
+                    }
+                    if(bank==''){
+                        show_error_tip('请选择银行卡所属银行');
+                        $("[name=open]").focus();
+                        return false;
+                    }
+                    if(card==''){
+                        show_error_tip('请输入您的银行卡号');
+                        $("[name=card]").focus();
+                        return false;
+                    }
+                  /* if(password==''){
+                        show_error_tip('请输入您的安全密码');
+                        $("[name=password]").focus();
+                        return false;
+                    }else{
+                         if(password.length!=6){
+                                  show_error_tip('您的密码必须为6位数');
+                                   $("[name=password]").focus();
+                                   return false;
+                         }
+                    }*/
+                      if(open==''){
+                         show_error_tip('请输入开户行');
+                        $("[name=open]").focus();
+                        return false;
+                    }
+                     if(tel==''||tel.length!=11){
+                         show_error_tip('请输入手机号码');
+                        $("[name=tel]").focus();
+                        return false;
+                    }
+                    $(".rolloff_btn").text('提交中');
+                    var data = {
+                        name:user,
+                        bank_code:card,
+                        bank_room:open,
+                        phone :tel,
+                        bank:bank,
+                        password:password
+
+                    }
+                    var url = "{weikucms::U('Ynd/band',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,data,function(rel){
+                        if(rel.status==1){
+                            msg.alert('<p style=font-size:19px;>'+rel.info+'</p>',function(){
+                                window.location.href = "{weikucms::U('Ynd/band',array('token'=>$token,'openid'=>$openid))}";
+                            })
+                        }else{
+                            msg.alert('<p style=font-size:19px;>'+rel.info+'</p>',function(){
+                                window.location.href = "{weikucms::U('Ynd/band',array('token'=>$token,'openid'=>$openid))}";
+                            })
+                        }
+                    },'json')
+
+                })
+            })
+            </script>
+    </head>
+    <body>
+        <div class="top-details">
+                <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                <div class="details-center">
+                            银行卡信息
+                </div>
+        </div>
+    	<div class="datum_name animated fadeInDown">
+	            <div class="datum_data">
+	                    <div class="name_user">持卡人</div>
+	                    <div class="name_input"><input type="text"  placeholder="请输入持卡人姓名" value="{weikucms:$data[name]}" name="user" /></div>
+	            </div>
+
+                <div class="datum_data">
+                    <div class="name_user">所属银行</div>
+                    <div class="name_input" style="position: relative;">
+                        <span style="font-size: 13px;color: #A9A9A9;">&nbsp;</span>
+                        <select name="bank" id="bank">
+                            <option value="">请选择您银行卡所属的银行</option>
+                            <option value="1" <if condition="$data['bank'] eq 1">selected</if>>中国工商银行</option>
+                            <option value="2" <if condition="$data['bank'] eq 2">selected</if>>中国农业银行</option>
+                            <option value="3" <if condition="$data['bank'] eq 3">selected</if>>中国建设银行</option>
+                            <option value="4" <if condition="$data['bank'] eq 4">selected</if>>中国银行</option>
+                            <option value="5" <if condition="$data['bank'] eq 5">selected</if>>其它银行  </option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+	            <div class="datum_data">
+	                    <div class="name_user">银行卡号</div>
+	                    <div class="name_input"><input type="tel"  placeholder="请输入您的银行卡号" value="{weikucms:$data['bank_code']}" name="card" /></div>
+	            </div>
+                        <!--<div class="datum_data">
+                                <div class="name_user">安全密码</div>
+                                <div class="name_input"><input type="password"  placeholder="请输入您的安全密码" value="{weikucms:$data['mpassword']}" name="password" /></div>
+                        </div>-->
+	            <div class="datum_data">
+	                    <div class="name_user">开户行</div>
+	                    <div class="name_input"><input type="text"  placeholder="请输入您开户的银行名称" value="{weikucms:$data['bank_room']}" name="open" /></div>
+	            </div>
+	             <div class="datum_data">
+	                    <div class="name_user">手机号码</div>
+	                    <div class="name_input"><input type="tel"  placeholder="请输入您银行预留的手机号码" value="{weikucms:$data['phone']}" name="tel" /></div>
+	            </div>
+                         <div class="rolloff_btn">
+                                     <if condition="$data">
+                                         修改
+                                        <else/>
+                                         绑定
+                                     </if>
+                          </div>
+            </div>
+
+    </body>
+</html>

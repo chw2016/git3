@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>
+	<if condition="$isHD">
+	活动及培训
+	<else />
+	招标方案主题
+	</if>
+	</title>
+	<meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication1.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+    <script src="{weikucms::STATICS}/jquery.min.js" ></script>
+    <script src="{weikucms::STATICS}/common/invite.js" ></script>
+    <script type="text/javascript" src="{weikucms::RES}/Jd/js/jquery-1.11.2.min.js"></script>
+    <style>
+		.bodys{
+		background: url(../tpl/Wap/default/common/Jd/images/JD_bj_02.png) no-repeat;
+	}
+		.bodys {
+	  background-color: #BFDFEC;
+	}
+        .bodys p{
+            margin-top: 10px;
+        }
+        li{
+            list-style:none;
+        }
+        .ons{
+            background: url(../tpl/Wap/default/common/Jd/images/fx_py.png) no-repeat;
+            background-size: 100%;
+            width: 27px;
+            height: 26px;
+            text-align: center;
+            margin-top: 9px;
+            margin-left: 14px;
+        }
+        .ons1{
+            background: url(../tpl/Wap/default/common/Jd/images/fx_py1.png) no-repeat;
+            background-size: 100%;
+            width: 22px;
+            height: 26px;
+            text-align: center;
+            margin-top: 9px;
+            margin-left: 15px;
+        }
+        .ons2{
+            background: url(../tpl/Wap/default/common/Jd/images/fx_py2.png) no-repeat;
+            background-size: 100%;
+            width:27px;
+            height: 30px;
+            text-align: center;
+            margin-top: 9px;
+            margin-left: 5px;
+        }
+        .ons3{
+            background: url(../tpl/Wap/default/common/Jd/images/fx_py3.png) no-repeat;
+            background-size: 100%;
+            width: 20px;
+            height: 26px;
+            text-align: center;
+            margin-top: 9px;
+            margin-left: 15px;
+        }
+        .apply-nav{
+            display:-webkit-box;
+        }
+        .apply-nav li{
+            -webkit-box-flex:1;
+            text-align:center;
+            list-style:none;
+            color:#fff;
+            padding:5px;
+            background-color:#95c3d6;
+            letter-spacing: 5px;
+            font-weight: initial;
+        }
+        .active{
+            background-color: #016ae0 !important;
+            color: #fff !important;
+        }
+        .hide{
+            display:none;
+        }
+        .apply-size{
+            font-size:0;
+            background-color:#fff;
+        }
+       .apply-main-li{
+            width: 50%;
+            display: inline-block;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            color:#484848;
+            border-bottom: 1px solid #c6dfe8;
+            border-right: 1px solid #c6dfe8;
+            box-sizing: border-box;
+            font-weight: initial;
+       }
+       .apply-main-li:nth-child(2n){
+        border-right:0;
+       }
+       .book-title {
+              font-weight: initial;
+            }
+        .mt5{
+            margin-top:5px;
+        }
+        .book-name{
+            background-color: #fff;
+            padding: 10px;
+            border-bottom:1px solid #BFDFEC ;
+        }
+        .more{
+            text-align: right;
+            margin-top: 10px;
+            margin-right: 10px;
+            font-size: 12px;
+            color: rgb(1, 106, 224);
+        }
+        .more1{
+            text-align: right;
+            margin-top: 10px;
+            margin-right: 10px;
+            font-size: 12px;
+            color: rgb(1, 106, 224);
+        }
+        .show-size{
+            font-size:0;
+            background-color:#fff;
+            display:none;
+        }
+        .apply-main.on .show-size{
+            display:block;
+        }
+        .show-book{
+            display: none;
+        }
+        .show-book.on{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+        $(function(){
+            var all=$("#demoP").html();
+            if(all.length<300) return;
+            $("#demoP").html(all.substr(0,300)+".......");
+            $("#demoP").click(function(){
+                var isshow=$(this).attr("isshow");
+                if(isshow=="0"){
+                    $("#demoP").html(all);
+                    $(this).attr("isshow","1")
+                }
+                else{
+                    $("#demoP").html(all.substr(0,300)+".......");
+                    $(this).attr("isshow","0")
+                }
+            });
+        });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $(".apply-nav li").click(function(){
+           $(this).addClass('active').siblings().removeClass('active');
+             var index=$(this).index();
+           $(".apply-conter>li").eq(index).show().siblings().hide();
+        })
+        $(".more").click(function(){
+            if($(".apply-main").hasClass('on')){
+                        $(".apply-main").removeClass('on');
+                        $(this).html("更多");
+            }else{
+                        $(".apply-main").addClass('on');
+                        $(this).html("收起");
+            }
+        })
+        $(".more1").click(function(){
+            if($(".show-book").hasClass('on')){
+                $(".show-book").removeClass('on');
+                $(this).html("更多");
+            }else{
+                $(".show-book").addClass('on');
+                $(this).html("收起");
+            }
+        })
+    })
+</script>
+<!--
+<div class="search" style="font-size:20px;"><b>招标主题：{weikucms:$info['title']}</b></div>
+-->
+<div class="bodys">
+    <div style="display: none;"><img src="./tpl/Wap/default/common/Jd/images/login.png"></div>
+<div style="padding-bottom:10px;font-size: 16px;"><b>
+<if condition="$isHD">
+活动及培训主题：
+<else />
+招标主题：
+</if>
+
+{weikucms:$info['title']}</b></div>
+    <div style="padding-bottom: 5px;"><img src="{weikucms:$info['pic']}" style="width: 100%;"/></div>
+	<if condition="!$isHD">
+    <div class="search_size" style="margin-bottom: 10px;">目标奖金&nbsp;{weikucms:$info['money']}&nbsp;元</div>
+	</if>
+    <div style="margin-bottom: 5px;"><b>
+	<if condition="$isHD">
+	活动及培训描述：
+	<else />
+	标书描述：
+	</if>
+	
+	</b></div>
+    <div style="line-height:25px;">
+        <div class="click_top demoBtn" id="demoP" isshow="0">
+            {weikucms:$info['abstract']}
+        </div>
+        <!--<div class="click_bottom">
+            解决方案：<br/>
+            旭辉在集团启动全面信息化建设时，已经有了财务系统、OA系统等，但不能满足旭辉的战略发展与集团化管理的需要。公司非常重旭辉在集团启动全面信息化建设时，已经有了财务系统、OA系统等，但不能满足旭辉的战略发展与集团化管理的需要。公司非常重旭辉在集团
+        </div>-->
+    </div>
+	<div style="padding-bottom:10px; margin-top: 5px;"><b>
+		<if condition="$isHD">
+		开始时间：{weikucms:$info['startday']}
+		<else />
+		开始日期：<php>echo date('Y-m-d', strtotime($info['startday']));</php>
+		</if>
+	
+	</b></div>
+    <div style="padding-bottom:10px"><b>
+		<if condition="$isHD">
+		截止时间： {weikucms:$info['endday']}
+		<else />
+		截止日期： <php>echo date('Y-m-d', strtotime($info['endday']));</php>
+		</if>
+	
+
+    <div style="margin-top: 5px;"><i style="color:#3388df">附件链接地址：{weikucms:$info['activeurl']}</i></div>
+</div>
+<div class="apply">
+    <if condition="$isHD">
+
+        <else/>
+        <ul class="apply-nav">
+            <li class="active">报名信息</li>
+            <li>交标列表</li>
+        </ul>
+        <ul class="apply-conter">
+            <li>
+               <!--  初始区域 -->    
+                 <div class="apply-main">
+                        <ul class="apply-size">
+                            <li class="apply-main-li">报名人</li>
+                            <li class="apply-main-li">组织名称</li>
+                            <volist name="regist" id="vo"  offset="0" length="5">
+                            <li class="apply-main-li">{weikucms:$vo.name}</li>
+                            <li class="apply-main-li">{weikucms:$vo.organization}</li>
+                            </volist>
+                            <!--<li class="apply-main-li">李四</li>
+                            <li class="apply-main-li">sadasdasdasd</li>-->
+                        </ul>
+                    <!-- 隐藏区域 -->    
+                        <ul class="show-size">
+                            <volist name="regist" id="vo"  offset="5" >
+                            <li class="apply-main-li">{weikucms:$vo.name}</li>
+                            <li class="apply-main-li">{weikucms:$vo.organization}</li>
+                            </volist>
+
+                        </ul>
+                     <if condition="$rescount gt 5">
+                        <div class="more">更多</div>
+                         </if>
+                 </div>
+            </li>
+            <li class="hide">
+                <volist name="scale" id="bs" offset="0" length="5">
+                    <div class="book-name">
+                        <div class="book-title">标书名称：{weikucms:$bs.tender}</div>
+                        <div class="book-title">作者：{weikucms:$bs.author}</div>
+                        <div class="book-title">交标日期：{weikucms:$bs.add_time}</div>
+                    </div>
+                </volist>
+                <volist name="scale" id="bs" offset="5">
+                     <div class="show-book">
+                        <div class="book-name">
+                            <div class="book-title">标书名称：{weikucms:$bs.tender}</div>
+                            <div class="book-title">作者：{weikucms:$bs.author}</div>
+                            <div class="book-title">交标日期：{weikucms:$bs.add_time}</div>
+                        </div>
+                     </div>
+                </volist>
+                <if condition="$scacount gt 5">
+                <div class="more1">更多</div>
+                </if>
+                    <!--<div class="book-name">
+                                <div class="book-title">标书名称：黑夜里的阻击手</div>
+                                <div class="book-title">作者：Kimcong</div>
+                                <div class="book-title">交标日期：2015-08-07</div>
+                    </div>-->
+            </li>
+        </ul>
+    </if>
+
+</div>
+
+
+<div style="height:80px;float:left;"></div>
+</div>
+<div class="foot">
+	<if condition="$validTime">
+    <a href="{weikucms::U('Jd/setactive',array('token'=>$token,'oepnid'=>$openid,'id'=>$_GET['id']))}"><span style="margin-left:10px;width:120px;float:left;font-weight: initial;">我要报名</span></a>
+	<else />
+	<a href="javascript: void(0)"><span style="margin-left:10px;width:120px;float:left;  color: #CACACA;">我要报名</span></a>
+	</if>
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons" style="margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">发送给朋友</p>
+        </div>
+    </a>
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons1" style=" margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">分享到QQ</p>
+        </div>
+    </a>
+    <!--<a href="#">
+        <div style="float: right;">
+              <p class="ons2"></p>
+              <p style="font-size: 12px;color:#000000">朋友圈</p>
+        </div>
+    </a>-->
+
+    <a href="#">
+        <div style="float: right;">
+            <p class="ons2" style="width: 22px; margin-left: 15px; position: relative; top: 4px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">复制链接</p>
+        </div>
+    </a>
+</div>
+<script>
+    $(function(){
+        $('.ons').invite({"bg":'tpl/static/wapweiui/images/py.png'});//{"bg":'./tpl/Wap/default/common/Jd/images/doc.png'}
+        $('.ons1').invite({"bg":'tpl/static/wapweiui/images/qq.png'});
+        $('.ons2').invite({"bg":'tpl/static/wapweiui/images/lj.png'});
+    })
+
+</script>
+<script>
+    function shareConfig(){
+        return {
+            'imgUrl': "<?php echo C('site_url');?>./tpl/Wap/default/common/Jd/images/login.png"
+        };
+
+    }
+    function shareSuccess(type){//分亨成功回调
+        $.post('',{},function(data){
+
+        },'json')
+
+    }
+</script>
+</body>
+</html>

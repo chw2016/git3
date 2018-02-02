@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>台铃</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/font/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/main.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/msg.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/tailg/js/init.js"></script>
+        <style type="text/css" media="screen">
+            body.login {
+              overflow: auto;
+              overflow-y: scroll;
+              position: static;
+            }
+        </style>
+    </head>
+    <body class="login">
+    	<div class="logo"></div>
+    	<div class="form">
+    		<div class="input userName">
+    			<input type="text" id="userName" value="{weikucms:$username}" placeholder="请输入用户名">
+    		</div>
+    		<div class="input password">
+    			<input type="password" id="password" placeholder="请输入密码">
+    		</div>
+    		<!--<div class="input tel">
+    			<input type="tel" id="tel" placeholder="请输入您的手机号">
+    		</div>-->
+    		<div class="subLogin">登录</div>
+    		<div style="text-align: right; color: #FFF; font-size: 14px; width: 80%; margin: 10%; position: relative; top: -24px;"><a href="{weikucms::U('Tailg/editpasswd', array('token' => $token, 'openid' => $openid))}">修改密码</a></div>
+    	</div>
+    <script type="text/javascript">
+		$(function(){
+			$(".subLogin").click(function(){
+                var userName = $('#userName').val();
+                var password = $('#password').val();
+                var phone = $('#tel').val();
+                $.post("{weikucms::U('Tailg/login', array('token' => $token, 'openid' => $openid))}",
+                    {userName:userName,password:password,phone:phone},
+                    function(data){
+                        if(data.status ==1){
+                            tips.tip(data.info);
+                            window.location.href = data.url;
+                        }else{
+                            tips.tip('登录失败！');
+                        }
+                    },'json');
+                /*
+				check.form(function(){
+					msg.alert("密码不正确")
+				})
+                */
+			});
+
+		})
+    </script>
+    </body>
+</html>

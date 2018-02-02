@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+    <meta charset="UTF-8">
+
+    <title>{weikucms:$tpl.name}</title>
+
+    <meta name="Keywords" content="万普微盟">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var UID = {weikucms:$cid};
+        UID = parseInt(UID);
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+    </script>
+</head>
+<body>
+<div class="pageTitle" style="display:none;"><i></i><span class="arrow-r"></span>我的救援记录</div>
+<if condition="isset($info['vip_name'])">
+    <if condition="$info['status'] eq 0">
+        <div class="yxyyList">
+            <ul id="rtables" style="position: relative;margin: 10px;padding: 10px;height: auto;overflow: hidden;background: #fff;border: 1px solid #dcdcdc;border-radius: 5px;">
+                <div class="notContentTips" style="padding: 0px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/shuaxin.gif">
+                    <p style="text-indent: 2em; text-align: left;">客服中心正在安排师傅赶往处理，请稍后...</p>
+					<p style="text-indent: 2em; text-align: left;">停留此页面可以实时了解派工情况，刷新间隔30秒。</p>
+                </div>
+            </ul>
+        </div>
+        <else/>
+    </if>
+	<volist id="vo" name="list">
+        <div class="yxyyList">
+            <ul id="rtable1">
+                <li id="yy_11" style="padding: 10px;">
+                    <div class="tit">
+                        <strong>
+                            故障：{weikucms:$vo.reason}
+                        </strong>
+                    </div>
+                    <p>在{weikucms:$vo.oaddress}附近</p>
+                    <p>状态：<if condition="$vo.status eq 0"><span style="color: #e31e00;">未派工</span><elseif condition="$vo.status eq 1"/><span style="color: #33176C;">已派工></span><elseif condition="$vo.status eq 2"/><span style="color: #b4b4b4;">已完成></span><elseif condition="$vo.status eq 3"/>订单取消</if></p>
+                    <if condition="$vo.status neq 0">
+                        <p>维修技师：{weikucms:$vo.sname}</p>
+                        <p>技师电话：<a href="tel:{weikucms:$vo.tel}">{weikucms:$vo.tel}</a></p>
+                        <else/>
+
+                    </if>
+
+                    <p>请求与：{weikucms:$vo.otime|date='Y-m-d H:i:s',###}</p>
+                    <!--<a class="cancel" href="javascript:void(0);" onclick="Del()">取消</a>-->
+            </ul>
+        </div>
+    </volist>
+    
+    <else/>
+	<div class="yxyyList">
+        <ul id="rtable" style="position: relative;margin: 10px;padding: 10px;height: auto;overflow: hidden;background: #fff;border: 1px solid #dcdcdc;border-radius: 5px;">
+            <div class="notContentTips" style="padding: 0px;">
+                <img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>您暂时没有救援记录哦！</p>
+            </div>
+        </ul>
+    </div>
+    
+    <input type="hidden" id="token" value="{weikucms:$token}"/>
+    <input type="hidden" id="openid" value="{weikucms:$openid}"/>
+
+
+
+
+</if>
+</body>
+<script>
+    $(document).ready(function(){
+        setInterval(getnums,30*1000);
+    });
+    function getnums(){
+        location.reload();
+       // alert(7);
+    }
+</script>
+</html>

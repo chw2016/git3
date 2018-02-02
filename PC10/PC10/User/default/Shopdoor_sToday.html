@@ -1,0 +1,66 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+	<div class="cLineB">
+		<h4 class="left">今日订单详情</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Shopdoor/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	<div class="clr"></div>
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>订单编号</th>
+                      <th style="width:300px;">订单详情</th>
+                      <th>订单价格</th>
+                      <th>下单用户</th>
+                      <th>联系方式</th>
+                      <th>下单时间</th>
+                      <th>所属门店</th>
+                      <th>是否外送</th>
+                      <th>订单状态</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.id}</td>
+                  			<td>{weikucms:$vo.order_info}</td>
+                  			<td><div class="answer_text">{weikucms:$vo.order_price}</div></td>
+                  			<td>{weikucms:$vo.order_user}</td>
+                    		<td>{weikucms:$vo.order_user_phone}</td>
+                    		<td>{weikucms:$vo.order_ok_time}</td>
+                    		<td>{weikucms:$vo.username}</td>
+                            <if condition="$vo.is_waisong eq 1">
+                                <td>到店自取</td>
+                                <else/>
+                                <td>需要外送</td>
+                            </if>
+                    		<if condition="$vo.order_status neq 1">
+                    		<td>未处理</td>
+                    		<else/>
+                    		<td>已处理</td>
+                    		</if>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+	</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style.css" />
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/iscroll.js"></script>
+        <script src="{weikucms::RES}/commerce/js/area.js"></script>
+        <script src="{weikucms::RES}/commerce/js/location.js"></script>
+        <style>
+            .collectunion{
+                display: block;
+                position: relative;
+                top: 20px;
+                font-size: 16px;
+                color: #ff4500;
+				left: -40px;
+            }
+        </style>
+    </head>
+    <body class="light-gray-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg">
+
+                <div class="homeBox left">
+                    <div class="icon person home  white" onclick="window.location.href='{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                </div>
+		    	<div class="titleBox middle">
+		    		<div class="title white"></div>
+		    	</div>
+		    	<div class="PersonBox right myul">
+		    		<div class="icon person userCenter circle white" onclick="window.location.href='{weikucms::U('MemberCenter/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                  
+		    	</div>
+		    </div>
+			<!---->
+
+			<!-- selector -->
+			<div class="selectorBox myul">
+
+
+			<div class="shopBox">
+                <div style="padding: 4px;">
+                   
+                    <div style="width:100%;padding:10px 2px;">
+                        <form id="myforms" action="{weikucms::U('Commerce/findUnion',array('token'=>$token,'openid'=>$openid,'lat'=>$_GET['lat'],'lng'=>$_GET['lng']))}" method="post">
+                                <select id="loc_province" style="height: 20px;font-size:12px;line-height: 20px;width: 18%;"></select>
+                                <select id="loc_city" style="height: 20px;font-size:12px;line-height: 20px;width: 18%;"></select>
+                                <select id="loc_town" style="height: 20px;font-size:12px;line-height: 20px;width: 18%;"></select>
+
+                            <input type="hidden" name="seng" id="seng" value="">
+                            <input type="hidden" name="si" id="si" value="">
+                            <input type="hidden" name="xian" id="xian" value="">
+
+                            <input type="text" name="cname" style="width:22%;height:20px;line-height:20px;border:none;border-radius: 5px;position: relative;">&nbsp;&nbsp;
+                            <button id="bsubmit" type="button" style="width:15%;height:22px;line-height:20px;border:1px solid white;border-radius:5px;color:white;background: rgb(228, 94, 76);">搜索</button>
+                        </form>
+                    </div>
+					<!-- <form id="myform" action="" method="post" style="width: 50%;">
+                        <select name="distance" id="distance" style="width: 150px;height: 20px;display: inline-block;">
+                        <option value="1000" <if condition="$distance eq 1000">selected</if>>1KM</option>
+                        <option value="3000" <if condition="$distance eq 3000">selected</if>>3KM</option>
+                        <option value="5000" <if condition="$distance eq 5000">selected</if>>5KM</option>
+                        <option value="10000" <if condition="$distance eq 10000">selected</if>>10KM</option>
+                        <option value="50000" <if condition="$distance eq 50000">selected</if>>50KM</option>
+                        </select>
+						-->
+
+                    </form>
+                </div>
+                <volist name="union" id="union">
+                    <div class="shop myul">
+                        <div class="circleBox" long="{weikucms:$union['long']}" lat="{weikucms:$union['lat']}" onclick="shopware(this)">
+                            <div class="incircle" style=" background-image:url({weikucms:$union[pic]})"></div>
+                        </div>
+                        <div class="contentBox">
+                            <div class="dark-black shopName">{weikucms:$union.cname}</div>
+                            <div class="dark-gray describ">{weikucms:$union.seng}{weikucms:$union.si}{weikucms:$union.xian}{weikucms:$union.address}</div>
+                            <div class="dark-gray describ">{weikucms:$union.des}</div>
+                            <div class="light-green derection">距离我<span id="derection">{weikucms:$union.distance}</span></div>
+                        </div>
+                        <div class="collectunion" onclick="return CollectUnion(this)" uid="{weikucms:$union.id}">
+                            <div class="light-green" >收藏</div>
+                        </div>
+                    </div>
+                </volist>
+			</div>
+    </body>
+    <!--ajax处理-->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            showLocation();
+        });
+    </script>
+    <script>
+        function shopware(obj){
+            var long=$(obj).attr("long");
+            var lat=$(obj).attr("lat");
+            url="{weikucms::U('Commerce/ShopList',array('token'=>$token,'openid'=>$openid,'access'=>'union'))}"+"&long="+long+"&lat="+lat;
+            location.href=url;
+        }
+    </script>
+    <script>
+        function shopInfo(obj){
+            var tid=$(obj).attr("tid");
+            var url="{weikucms::U('Commerce/TypeAjax',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{tid:tid},function(data){
+                var html="";
+                $.each(data.shops,function(i,o){
+                    html+='<div class="shop myul" shopid="'+ o.id+'" onclick="shopware(this)"> <div class="circle circleBox"> <div class="circle incircle" style=" background-image:url('+ o.pic+')"></div> </div> <div class="contentBox"> <div class="dark-black shopName">'+ o.username+'</div> <div class="dark-gray describ">'+ o.des+'</div> <div class="light-green derection">距离我<span id="derection">'+ o.distance+'</span></div> </div> </div>'
+                })
+                $(".shopBox").html(html);
+            },"json")
+        }
+    </script>
+
+    <script type="text/javascript">
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+  	Panel($(".selectorSwrap"),$(".span"),$(".shopContentBox"),true);
+  	var shopScroll = new iScroll( document.getElementById('shop') );
+  	var locationScroll = new iScroll( document.getElementById('location'));
+  	myFadeIn();
+    </script>
+
+    <!-- selector的列表选择 -->
+    <script type="text/javascript">
+    $(function(){
+    	function selectHTML(clicker,Html){
+    		clicker.on('click',function(event) {
+    			var h = $(this).text();
+    			Html.html(h);
+    		});
+    	}
+		selectHTML($(".shopNames"),$(".shop_p"));
+    	selectHTML($(".locationName"),$(".location"));
+
+        $("#distance").change(function(){
+            $("#myform").submit();
+        });
+
+    })
+    </script>
+
+    <script>
+        function CollectUnion(obj){
+            var uid=$(obj).attr("uid");
+            var url="{weikucms::U('Commerce/CollectUnion',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{uid:uid},function(data){
+                if(data.status==1){
+                    location.reload();
+                }else{
+                    alert(data.info)
+                }
+            },"json")
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var province=$("#loc_province").find("option:selected").text();
+                var city=$("#loc_city").find("option:selected").text();
+                var town=$("#loc_town").find("option:selected").text();
+                $("#seng").val(province);
+                $("#si").val(city);
+                $("#xian").val(town);
+                $("#myforms").submit();
+            });
+        })
+
+    </script>
+
+    <!---->
+</html>

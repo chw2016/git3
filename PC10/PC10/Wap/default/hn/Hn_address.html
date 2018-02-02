@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)http://trade.koudaitong.com/wxpay/pay?order_no=E20141125220141517232&forbid_wxpay=1 -->
+<html class="no-js " lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_1728f7a531.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/trade_8c1bc19b80.css" onerror="_cdnFallback(this)">
+    <style>
+        #test select{
+            width:20%;
+            margin-left:20px;
+            line-height: 30px;
+            font-size: 15px;
+        }
+		.block-moduled{
+  margin-left: 10px;
+  font-size: 14px;
+		}
+    </style>
+
+</head>
+<body class=" ">
+<form class="js-address-fm address-ui address-fm" method="post" action="">
+    <input type="hidden" name="id" value="{weikucms:$data[id]}">
+   <input type="hidden" name="sid" value="{weikucms:$_GET['sid']}">
+    <input type="hidden" name="dopenid" value="{weikucms:$_GET['dopenid']}">
+    <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">
+    <div class="block" style="margin-bottom:10px;">
+        <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label">收货人</em>
+                <span class="input-wrapper"><input type="text" name="name" class="form-text-input" value="{weikucms:$add.s_name}" placeholder="名字" id="name"></span>
+            </label>
+        </div>
+        <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label">联系电话</em>
+                <span class="input-wrapper"><input type="tel" name="tel" class="form-text-input" value="{weikucms:$add.s_phone}" placeholder="手机或固话" id="tel"></span>
+            </label>
+        </div>
+        <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label">详细地址</em>
+                <span class="input-wrapper">
+                <input type="text" name="detail" class="form-text-input" value="{weikucms:$add.address}" placeholder="街道门牌信息" id="detail">
+                <input type="hidden" name="uid" value="{weikucms:$_GET['uid']}">
+                <input type="hidden" name="s_name" id="s_name" value="{weikucms:$name}">
+                <input type="hidden" name="s_id" id="s_id" value="{weikucms:$id}">
+                <input type="hidden" name="price" id="s_price" value="{weikucms:$price}">
+                    <input type="hidden" name="token" value="{weikucms:$token}">
+                </span>
+            </label>
+        </div>
+		<div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label">备注</em>
+                <span class="input-wrapper"><input type="text" name="other" class="form-text-input" value="" placeholder="颜色/款式
+" id="other"></span>
+            </label>
+        </div>
+       <!-- <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label">邮政编码</em>
+                <span class="input-wrapper">
+                    <input type="tel" maxlength="6" name="code" class="form-text-input" value="{weikucms:$data[code]}" placeholder="邮政编码" id="code">
+                </span>
+            </label>
+        </div>-->
+    </div>
+	<div class="block-moduled">
+
+因佣金未除税，产品发票归本司所有，敬请谅解。
+    </div>
+    <div>
+        <div class="action-container">
+            <button type="button" class="js-address-save btn btn-block btn-blue" onclick="address()">确定</button>
+        </div>
+    </div>
+</form>
+
+</div></div>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+</body>
+<script type="text/javascript">
+        function address(){
+            var name=$("#name").val();
+            var s_name=$("#s_name").val();
+            var s_id=$("#s_id").val();
+            var s_price=$("#s_price").val();
+            var tel=$("#tel").val();
+            var other=$("#other").val();
+            var detail=$("#detail").val();
+            if(!name){
+               var DG=$.dialog({
+					content:'请输入姓名',
+					button:['我知道了']
+				});
+				return false;
+            }
+            var reg = /^(((13[0-9]{1})|(15[0-9]{1}|17[0-9]{1}|18[0-9]{1}))+\d{8})$/;
+            if(!reg.test(tel)){
+                var DG=$.dialog({
+					content:'请输入正确的手机号码',
+					button:['我知道了']
+				  });
+				  return false;
+            }
+
+            if(!detail){
+                var DG=$.dialog({
+					content:'请输入详细地址',
+					button:['我知道了']
+				  });
+				  return false;
+            }
+		  var el=$.loading({
+			content:'正在提交'
+		  });
+      $.post("{weikucms::U('shop_buy',array('token'=>$token,'openid'=>$openid))}",{shou_name:name,shou_phone:tel,shou_address:detail,s_name:s_name,s_id:s_id,s_price:s_price,other:other},function(data){
+		if(data.status==1){
+          var DG=$.dialog({
+            content:'恭喜您，消费成功！我们将在48小时内安排发货，物流信息将发送至您的手机，注意查收！',
+            button:['我知道了']
+          });
+          DG.on('dialog:action',function(e){
+              document.location.href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}";
+          });
+        }
+        if(data.status==3)
+		{
+					var DG=$.dialog({
+						content:'你的余额不足',
+						button:['我知道了']
+					});
+		}
+        
+        el.hide();
+      },'json');
+
+        }
+</script>
+</html>

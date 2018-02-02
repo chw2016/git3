@@ -1,0 +1,155 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+</style>
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+   <div class="cLineB">
+      <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+         <li data-index="0" class="tab_nav first js_top" data-id="total">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" >任务中心</a>
+            </li>
+			 <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Media/marketing',array('token'=>$token))}" >营销中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/addInfo',array('token'=>$token))}" >消息中心</a>
+            </li>
+			<li data-index="0" class="tab_nav first js_top" data-id="financial">
+				<a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" >用户中心</a>
+			</li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/setCenter',array('token'=>$token))}" >配置中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="financial">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >统计报表</a>
+            </li>
+            <if condition="$token eq $teToken">
+                <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                    <a href="{weikucms::U('Media/guanggao',array('token'=>$token))}" >广告位设置</a>
+                </li>
+            </if>
+          
+        </ul>        
+    </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以了解自媒体销售订单的统计以及一些相关信息</li>
+	</ol>
+</div>
+
+  
+
+
+<div class="box-content">
+        <div class="row-fluid">
+            <ul id="custom_group_navigator_div" class="qb_clearfix unstyled">
+                
+				 <li class="list-box">
+                    <div class="list-box__hd list-box__hd_bg_1">订单总数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday">{weikucms:$info.orderTotal}</strong>
+                            <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+                        <div class="list-box__links"><a href="index.php?g=User&amp;m=Media&amp;a=orderInfo&amp;token={weikucms:$token}">详情</a></div>
+                    </div>
+                </li>
+				
+                <li class="list-box">
+                    <div class="list-box__hd list-box__hd_bg_1">销售总额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday">{weikucms:$info.sellTotal}</strong>
+                            <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+                        <div class="list-box__links"><a href="index.php?g=User&amp;m=Media&amp;a=orderInfo&amp;token={weikucms:$token}&amp;type=sell" class="margin-right_m">详情</a></div>
+                    </div>
+                </li>
+
+				<li class="list-box">
+                    <div class="list-box__hd list-box__hd_bg_1">自媒体数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday">{weikucms:$info.fansTotal}</strong>
+                            <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+                        <div class="list-box__links"><a href="javascript:void(0);">粉丝数量</a></div>
+                    </div>
+                </li>                
+			
+            </ul>
+        </div>       
+    <div class="cLineB">
+      <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+         <li data-index="0" class="tab_nav first js_top borderColor" data-id="total">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >销售报表</a>
+            </li>
+			<li data-index="0" class="tab_nav first js_top " data-id="financial">
+				<a href="{weikucms::U('Media/sell',array('token'=>$token))}" >单品排行</a>
+			</li>
+			<li data-index="0" class="tab_nav first js_top" data-id="financial">
+				<a href="{weikucms::U('Media/from',array('token'=>$token))}" >订单来源</a>
+			</li>
+        </ul>        
+    </div>
+</div>
+<div class="cLineB">
+    <div class="msgWrap">
+  <form method="post"  action="###" id="info" >
+    <input name="delall"  type="hidden" value="" />
+    <input name="wxid"  type="hidden" value="" />     
+      <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>产品编号</th>
+                      <th>产品名称</th>
+                      <th>销售数量</th>
+                      <th>原价</th>
+                      <th>现价</th>
+                      <th>会员价</th>
+                      <th>库存</th>
+                      <th>邮费</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo">
+                      <tr>
+                        <td>{weikucms:$vo.id}</td>
+                        <td>{weikucms:$vo.name}</td>
+                        <td>{weikucms:$vo.sellnum}件</td>
+                        <td>￥{weikucms:$vo.oprice}</td>
+                        <td>￥{weikucms:$vo.price}</td>
+                        <td>￥{weikucms:$vo.vprice}</td>
+                        <td>{weikucms:$vo.num}件</td>
+                        <td>￥{weikucms:$vo.mailprice}</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>      
+  </form>
+</div>
+<div>
+    <ul class="pager">
+      {weikucms:$page}
+    </ul>
+  </div> 
+</div>
+<include file="Public:footer"/>

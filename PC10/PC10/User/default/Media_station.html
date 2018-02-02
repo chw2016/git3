@@ -1,0 +1,138 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+        	站内消息发送
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Media/addInfo',array('token'=>$token,'tid'=>$tid))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            if ({weikucms:$info['type']} != '') {
+                $('#infoType').val({weikucms:$info['type']}).attr('selected','selected');
+            };
+        })
+    </script>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$info['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="infoTitle">消息标题</label></th>
+                    <td>
+                        <input type="input" class="px" id="infoTitle" value="{weikucms:$info.title}" name="infoTitle" style="width:300px" placeholder="此处填写消息标题"  />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="contents">消息内容</label></th>
+                    <td>
+                    	<textarea name="contents" id="contents" placeholder="请在此处填写消息内容">{weikucms:$info.content}</textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                    </th>
+                   
+                    <td>
+                        <if condition="$info eq ''">
+                            <button type="button" id="bsubmit" name="button" class="btn btn-primary">添加</button>
+                        <else />
+                            <button type="button" id="bsubmit" name="button" class="btn btn-primary">修改</button>
+                        </if>
+                        
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+           
+          // var infoType = $('#infoType').val();
+           var infoTitle = $('#infoTitle').val();
+           var content = $('#contents').val();
+           var id = $('#id').val();
+            if(!infoTitle){
+                notif({
+                    msg: "请填写消息标题",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!content){
+                notif({
+                    msg: "请填写消息内容",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+            var posturl = "{weikucms::U('Media/stationData',array('token'=>$token,'tid'=>$tid))}";
+
+            if ("{weikucms:$info}" == '') {
+                 $.post(posturl,
+                    {infoTitle:infoTitle,content:content,type:'add'},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            }else{
+                 $.post(posturl,
+                    {infoTitle:infoTitle,content:content,id:"{weikucms:$_GET['id']}"},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            }
+            
+           
+               
+
+        });
+    });
+</script>
+
+

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<title>劳动局</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/msg.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/prompt.js"></script>
+		<script>
+			$(function(){
+				
+				$(document).on('click','.user_btn',function(){
+					var company=$("[name=company]").val();
+                    var code = $("[name=code]").val();
+					var address=$("[name=address]").val();
+					var capital=$("[name=capital]").val();
+					var industry=$("[name=industry]").val();
+					var unit_type=$("[name=unit_type]").val();
+					var legal_person=$("[name=legal_person]").val();
+					var legal_phone=$("[name=legal_phone]").val();
+                    var identity_id=$("input[name=identity_id]").val();
+                    var company_person=$("input[name=company_person]").val();
+                    var compant_phone=$("input[name=compant_phone]").val();
+                    var id=$("input[name=id]").val();
+                    var password=$("input[name=password]").val();
+
+
+                    var data = {
+                        company:company,
+                        code:code,
+                        address:address,
+                        capital:capital,
+                        industry:industry,
+                        unit_type:unit_type,
+                        legal_person:legal_person,
+                        legal_phone:legal_phone,
+                        identity_id:identity_id,
+                        company_person:company_person,
+                        compant_phone:compant_phone,
+                        id:id,
+                        password:password
+                    };
+                    var flag=$(this).attr('flag');                
+                    if(flag==1){//重复提交
+                        return false;
+                    }
+                    if(company==''){
+                        show_error_tip('请填写用人单位');
+                        $("[name=company]").focus();
+                        return false;
+                    }
+                    if(code==''){
+                        show_error_tip('请填写单位的组织机构代码');
+                        $("[name=code]").focus();
+                        return false;
+                    }
+                    if(address==''){
+                        show_error_tip('请填写单位地址');
+                        $("[name=address]").focus();
+                        return false;
+                    }
+                    if(capital==''){
+                        show_error_tip('请填写注册基金');
+                        $("[name=capital]").focus();
+                        return false;
+                    }
+                     if(industry==''){
+                        show_error_tip('请填写行页类型');
+                        $("[name=industry]").focus();
+                        return false;
+                    }
+                      if(unit_type==''){
+                        show_error_tip('请填写单位类型');
+                        $("[name=unit_type]").focus();
+                        return false;
+                    }
+                       if(legal_person==''){
+                        show_error_tip('请填写负责人');
+                        $("[name=legal_person]").focus();
+                        return false;
+                    }
+                          if(legal_phone==''||legal_phone.length!=11){
+                        show_error_tip('请填写正确的联系方式');
+                        $("[name=legal_phone]").focus();
+                        return false;
+                    }
+                    if(identity_id==''||identity_id.length!=18){
+                        show_error_tip('请填写正确的身份证');
+                        $("[name=identity_id]").focus();
+                        return false;
+                    }
+                    if(company_person==''){
+                        show_error_tip('请填写联系人');
+                        $("[name=company_person]").focus();
+                        return false;
+                    }      
+                    if(compant_phone==''){
+                        show_error_tip('请填写正确联系方式');
+                        $("[name=compant_phone]").focus();
+                        return false;
+                    }
+                    $(this).attr('flag',1);
+                    $(".user_btn span").text('提交中');
+                    var url = "{weikucms::U('Labor/ajaxcompany',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,data,function(data){
+                        if(data.status == 1){
+                            msg.confirm('提交成功，等待审核中...');
+                            window.location.href = "{weikucms::U('Labor/company',array('token'=>$token,'openid'=>$openid))}";
+                        }else{
+                            msg.confirm('系统繁忙，请稍后...');
+                            window.location.href = "{weikucms::U('Labor/setcompany',array('token'=>$token,'openid'=>$openid))}";
+                        }
+                    },'json');
+                   //msg.confirm('<p style=font-size:19px;>信息已提交成功</p>')
+				})
+			})
+		</script>
+	</head>	
+	<style>
+		body{
+			background-color: #f2f0ee;
+		}
+	</style>
+	<body>
+	<div class="user_header clearfix">
+        <div class="user">
+            <div class="user_one">
+                <div class="user_two">
+                    <if condition="$user['headimgurl']">
+                        <img src="{weikucms:$user['headimgurl']}"  />
+                        <else/>
+                        <img src="{weikucms::STATICS}/wapweiui/labor/images/User.png"  />
+                    </if>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="user_header_name">
+            <if condition="$user['nickname']">
+                {weikucms:$user['nickname']}
+                <else/>
+                名字
+            </if>
+        </div>
+
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>用人单位机构</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">用人单位：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['company']}"  class="user_input_color" name="company"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">组织机构代码：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['code']}"  class="user_input_color" name="code"/></div>
+		</div>
+        <div class="mb10 user_name" >
+            <div class="black">单位地址：</div>
+            <div class="user_input" ><input type="text" value="{weikucms:$info['address']}"  class="user_input_color" name="address"/></div>
+        </div>
+		<div class="mb10 user_name" >
+			<div class="black">注册资金：</div>
+			<div class="user_input pr" ><input type="text" value="{weikucms:$info['capital']}"  class="user_input_color" name="capital"/><div class="user_money">万元</div></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">行业类型：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['industry']}"  class="user_input_color" name="industry"/></div>
+		</div>
+		<div class=" user_name" >
+			<div class="black">单位类型：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['unit_type']}"  class="user_input_color" name="unit_type"/></div>
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>法定代表</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">负责人：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['legal_person']}"  class="user_input_color" name="legal_person"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">联系方式：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['legal_phone']}"  class="user_input_color" name="legal_phone" onkeyup="value=this.value.replace(/\D+/g,'')"/></div>
+		</div>
+		<div class="user_name" >
+			<div class="black">身份证号码：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['identity_id']}"  class="user_input_color" name="identity_id" /></div>
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>单位信息</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">联系人：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['company_person']}"  class="user_input_color" name="company_person"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">联系方式：</div>
+			<div class="user_input" ><input type="text" value="{weikucms:$info['compant_phone']}"  class="user_input_color" name="compant_phone" onkeyup="value=this.value.replace(/\D+/g,'')"/></div>
+		</div>
+       <!-- <div class=" user_name" >
+            <div class="black">登录密码：</div>
+            <div class="user_input" ><input type="text" value="{weikucms:$info['password']}"  class="user_input_color" name="password"/></div>
+        </div>-->
+	</div>
+	</div>
+    <input type="hidden" name="id" value="{weikucms:$info['id']}">
+    <div class="mt10 mb10 user_btn">
+        <span class="btn" style="width: 90px;">完成</span>
+    </div>
+	</body>
+</html>

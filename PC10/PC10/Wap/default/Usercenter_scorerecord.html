@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <title>积分记录-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral integral_record">
+    <div class="body">
+        <section class="p_10">
+            <table class="table_record">
+                <thead>
+                <tr>
+                    <td style="width:40%;">日期 </td>
+                    <td style="width:40%;">项目 </td>
+                    <td style="width:20%;">积分</td>
+                </tr>
+                </thead>
+                <tbody>
+                <if condition="$scorerecordlist neq null">
+                    <volist name="scorerecordlist" id="vo">
+                        <tr>
+                            <td><php>echo date("Y-m-d",$vo['add_time']);</php></td>
+                            <td>
+                                <if condition="$vo['type'] eq 1">
+                                    每日签到
+                                    <elseif condition="$vo['type'] eq 2" />
+                                    连续签到
+                                    <elseif condition="$vo['type'] eq 3" />
+                                    手动修改
+                                    <elseif condition="$vo['type'] eq 4" />
+                                    大转盘
+                                    <elseif condition="$vo['type'] eq 5" />
+                                    刮刮卡
+                                    <elseif condition="$vo['type'] eq 6" />
+                                    优惠券
+                                    <elseif condition="$vo['type'] eq 7" />
+                                    砸金蛋
+                                    <elseif condition="$vo['type'] eq 8" />
+                                    积分兑换
+                                    <elseif condition="$vo['type'] eq 10" />
+                                    邀请好友
+                                    <elseif condition="$vo['type'] eq 99" />
+                                    错误更正
+                                </if>
+                            </td>
+                            <td>{weikucms:$vo.score}</td>
+
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td>您还没有任何积分记录 </td>
+
+                    </tr>
+                </if>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</div></body>
+
+</html>

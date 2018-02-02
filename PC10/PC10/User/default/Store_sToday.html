@@ -1,0 +1,95 @@
+<include file="Store:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Store/index',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >门店主页</a>
+            </li>
+
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/sAll',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover2 eq 1">class="hover"</if>>所有订单</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/sToday',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover3 eq 1">class="hover"</if>>今日订单</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/manager',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover4 eq 1">class="hover"</if>>商品管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/goods',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover5 eq 1">class="hover"</if>>添加商品</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/classify',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover4 eq 1">class="hover"</if>>分类管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Store/eClassify',array('token'=>$token,'id'=>session('wxid')))}" <if condition="$hover5 eq 1">class="hover"</if>>添加分类</a>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>订单编号</th>
+                        <th style="width: 300px;">订单详情</th>
+                      <th>订单价格</th>
+                      <th>下单用户</th>
+                      <th>联系方式</th>
+                      <th>下单时间</th>
+                        <th>是否外送</th>
+                      <th>订单状态</th>                      
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.id}</td>
+                  			<td>{weikucms:$vo.order_info}</td>
+                        <td>
+                            <div class="answer_text">{weikucms:$vo.order_price}</div>
+                        </td>
+                        <td>{weikucms:$vo.order_user}</td>
+                        <td>{weikucms:$vo.order_user_phone}</td>
+                        <td>{weikucms:$vo.order_ok_time}</td>
+
+                        <if condition="$vo.is_waisong neq 1">
+                            <td>到店自取</td>
+                            <else />
+                            <td>需要外送</td>
+                        </if>
+                        <if condition="$vo.order_status eq 1">
+                        <td>未处理</td>
+                        <else />
+                        <td>已处理</td>
+                        </if>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div>
+        <ul class="pager">{weikucms:$page}
+        </ul>
+    </div>
+</div>
+</div>
+<include file="Public:footer"/>

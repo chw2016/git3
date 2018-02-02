@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{weikucms:$tpl.name}</title>
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/loan/css/a.css">
+    <link href="{weikucms::STATICS}/wapweiui/loan/css/sfy_style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/loan/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+
+    <link type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style_2.css" rel="stylesheet"/>
+
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.event.drag-1.5.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.touchSlider.js"></script>
+	<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+</head>
+<style>
+    .k1 img{
+     max-width: 100%;
+    }
+    .my-bar{
+        margin-bottom: 51px;
+    }
+</style>
+<body>
+<section class="container">
+  <!--  <volist name="info['images']" id="vo">
+	    <div class="headerbg"><img src="{weikucms:$vo}" style="width: 100%;" /></div>
+
+    </volist>-->
+   <div class="main_visual">
+        <div class="flicking_con">
+             <volist name="info['images']" id="vo">
+            <a href="#">{weikucms:$i}</a>
+             </volist>
+        </div>
+        <div class="main_image">
+            <ul>
+                <volist name="info['images']" id="vo">
+             <li><img src="{weikucms:$vo}" width="100%" height="100%" /></li>
+
+                 </volist>
+            </ul>
+            <a href="javascript:;" id="btn_prev"></a>
+            <a href="javascript:;" id="btn_next"></a>
+        </div>
+    </div>
+
+</section>
+<a href="{weikucms::U('no_credit_xiadan',array('token'=>$token,'id'=>$info['id'],'openid'=>$openid))}">
+<section class='of h-body'>
+	<div class='fl f16'>
+		<div class='b c303030 mt5'>{weikucms:$info.title}</div>
+		<div class='mt5 f14'><span class='cf20000'>首付￥{weikucms:$info.shoufu}</span>+每月{weikucms:$info.monthly_repayments}*{weikucms:$info.fenqi}个月</div>
+	</div>
+	<div class='fr arrow'></div>
+</section>
+</a>
+<section>
+    <if condition="$info['start_address']" >
+	<div class='of item'>
+		<div class='fl'>{weikucms:$info.start_address.0}</div>
+		<div class='fr c333333'>{weikucms:$info.start_address.1}</div>
+	</div>
+    </if>
+    <if condition="$info['end_address']" >
+	<div class='of item'>
+		<div class='fl'>{weikucms:$info.end_address.0}</div>
+		<div class='fr c333333'>{weikucms:$info.end_address.1}</div>
+	</div>
+        </if>
+    <if condition="$info['day_num']" >
+	<div class='of item'>
+		<div class='fl'>{weikucms:$info.day_num.0}</div>
+		<div class='fr c333333'>{weikucms:$info.day_num.1}</div>
+	</div>
+    </if>
+    <if condition="$info['content']" >
+	<div class='of item'>
+		<div class='fl'>{weikucms:$info.content.0}</div>
+		<div class='fr c333333'>{weikucms:$info.content.1}</div>
+	</div>
+        </if>
+</section>
+<!--考备过来的-->
+<div class="my-container">
+    <div class="my-detail-box">
+        <div class="k1" style="padding-right: 10px; padding-bottom: 0px; padding-left: 10px; margin-right: -10px; margin-left: -10px; background-color: rgb(255, 255, 255);">
+            {weikucms:$info.intro}
+        </div>
+        <div style="margin-right: -10px; margin-left: -10px; ">
+            <if condition="$info['info1']" >
+        <div class="other-info"> 
+            <div class="other-title"> 
+            <div class="i-right icon-plus"><i id="i1" class="fa fa-plus" style="color:rgb(245, 10, 45);"></i></div> 
+            <div>{weikucms:$info.info1.0}</div>
+        </div>
+            <div class="other-body">
+                <?php echo str_replace("\n","<br />",$info['info1'][1]);?>
+
+            </div>
+        </div>
+                </if>
+            <if condition="$info['info2']" >
+        <div class="other-info"> <div class="other-title"> <div class="i-right icon-plus"><i id="i1" class="fa fa-plus" style="color:rgb(245, 10, 45);"></i></div> <div>{weikucms:$info.info2.0}</div> </div> <div class="other-body"> <?php echo str_replace("\n","<br />",$info['info2'][1]);?></div> </div>
+        </if>
+            <if condition="$info['info3']" >
+                <div class="other-info"> <div class="other-title"> <div class="i-right icon-plus"><i id="i1" class="fa fa-plus" style="color:rgb(245, 10, 45);"></i></div> <div>{weikucms:$info.info3.0}</div> </div> <div class="other-body">
+            <?php echo str_replace("\n","<br />",$info['info3'][1]);?>
+        </div> </div>
+        </if>
+            <if condition="$info['info4']" >
+                <div class="other-info"> <div class="other-title"> <div class="i-right icon-plus"><i id="i1" class="fa fa-plus" style="color:rgb(245, 10, 45);"></i></div> <div>{weikucms:$info.info4.0}</div> </div> <div class="other-body">
+            <?php echo str_replace("\n","<br />",$info['info4'][1]);?>
+         </div> </div>
+        </if>
+        </div>  </div>
+
+    <div class="row" style="margin-bottom:20px">
+
+    </div>
+
+
+</div>
+<!--考备过来的完-->
+<div class="my-bottom-bar" style="min-height:0px;">
+    <div class="my-bar" style="margin-bottom:0px"> <a href="{weikucms::U('no_credit_xiadan',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id'],'type'=>1))}" class="my-bar-bigbtn">¥{weikucms:$info.shoufu} 立即抢购</a> </div>
+</div>
+
+
+<div style="height: 70px;"></div>
+
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $(".main_visual").hover(function(){
+        $("#btn_prev,#btn_next").fadeIn()
+    },function(){
+        $("#btn_prev,#btn_next").fadeOut()
+    });
+
+    $dragBln = false;
+
+    $(".main_image").touchSlider({
+        flexible : true,
+        speed : 200,
+        btn_prev : $("#btn_prev"),
+        btn_next : $("#btn_next"),
+        paging : $(".flicking_con a"),
+        counter : function (e){
+            $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+        }
+    });
+
+    $(".main_image").bind("mousedown", function() {
+        $dragBln = false;
+    });
+
+    $(".main_image").bind("dragstart", function() {
+        $dragBln = true;
+    });
+
+    $(".main_image a").click(function(){
+        if($dragBln) {
+            return false;
+        }
+    });
+
+    timer = setInterval(function(){
+        $("#btn_next").click();
+    }, 5000);
+
+    $(".main_visual").hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        },5000);
+    });
+
+    $(".main_image").bind("touchstart",function(){
+        clearInterval(timer);
+    }).bind("touchend", function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        }, 5000);
+    });
+
+});
+//预定点击
+$(".other-info").click(function(){
+    if($(this).hasClass("active")){
+        $(this).removeClass("active");
+        $(this).find('#i1').attr("class","fa fa-plus");
+    }else{
+        $(".other-info").each(function(e,t){
+            $(t).removeClass("active");
+            $(this).find('#i1').attr("class","fa fa-plus");
+        })
+          $(this).addClass("active"); 
+          $(this).find('#i1').attr("class","fa fa-minus");
+    }
+         
+
+
+
+    });
+</script>
+</html>

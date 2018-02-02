@@ -1,0 +1,119 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<div class="" >
+    <div class="cLineB">
+        <div class="cLine">
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>
+                    <!--<if condition="empty($catid) neq true">-->
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token))}">商品管理</a>
+                    </li>
+                    <!--</if>-->
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/setting',array('token'=>$token))}">商城设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Shoptmpls/index',array('token'=>$token))}">商城模版选择</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/articleindexfl',array('token'=>$token))}">商城文章</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/flashindex',array('token'=>$token))}">广告轮播</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/sn',array('token'=>$token))}">商城优惠券</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Weipay/index',array('token'=>$token))}">在线支付设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/analyse',array('token'=>$token))}">数据分析</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/brand',array('token'=>$token))}">品牌</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/tg',array('token'=>$token))}">团购</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/yg',array('token'=>$token))}">预售</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/gg',array('token'=>$token))}">商城广告</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/supplier',array('token'=>$token))}">供货商管理</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <span>供货商登陆地址：<php>echo C('site_url');</php>index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Product_supplier</span>
+    </div>
+
+    <div class="cLineC" style="line-height: 32px;">
+        <a href="{weikucms::U('Store_new/cerateSup',array('token'=>$token))}" class="btn btn-primary">新增供货商</a>　
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th >供货商ID</th>
+                    <th >供货商账号</th>
+                    <th >联系方式</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+                <volist name="list" id="hostlist">
+                    <tr>
+                        <td>{weikucms:$hostlist.id}</td>
+                        <td>{weikucms:$hostlist.username}</td>
+                        <td>{weikucms:$hostlist.tel}</td>
+
+                        <td>
+                            <a href="{weikucms::U('Supplier/index',array('token'=>$token,'sid'=>$hostlist['id']))}" title="供货商管理" class="btn btn-success btn-sm">供货商管理</a>
+                            <a href="{weikucms::U('Store_new/cerateSup',array('token'=>$token,'id'=>$hostlist['id']))}" title="编辑" class="btn btn-success btn-sm">编辑</a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Store_new/delSup',array('id'=>$hostlist['id'],'token'=>$token))}')">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+

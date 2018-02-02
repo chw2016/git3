@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    金融产品
+    <!-- <div class="headerRight city-ed noWrap overFloatHidden">
+        请选择
+    </div> -->
+</div>
+<div class="produceImg setMiddle boxShadow fixBg" style="background-image:url({weikucms:$Product.image})"></div>
+<div class="produceNameBox lisheng-red-bg setMiddle lisheng-text-color h3 myul">
+    <div class="produceName white-bg myli">
+    {weikucms:$Product.title} 
+    </div>
+    <div class="RMB white myli">
+    {weikucms:$Product.price} 万起
+    </div>
+</div>
+
+<div class="produceNameBox lisheng-red-bg setMiddle lisheng-text-color h3 myul bull">
+    <div class="produceName white-bg myli">
+        {weikucms:$Product.titles}
+    </div>
+    <div class="RMB white myli">
+        {weikucms:$Product.entity_price} 万起
+    </div>
+</div>
+
+<!--<div class="lisheng-text-color h4 setMiddle textMiddle oldPrice">
+    实体价：<span class="RMB">{weikucms:$Product.entity_price}</span>
+</div>-->
+<div class="produceInfoBox setMiddle boxShadow white-bg lisheng-text-color">
+   <!-- <div class="PIBTitle h4">
+    {weikucms:$Product.title}
+    </div>-->
+    <div class="produceInfo h5">
+    <php>echo htmlspecialchars_decode($Product['desc'])</php>
+    </div>
+</div>
+<volist name="Planner" id="vo">
+<div class="produceLicaishiBox white-bg lisheng-text-color myul boxShadow">
+    <div class="produceLicaishiLogowrap">
+        <div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$vo.image})"></div>
+    </div>
+    <div class="produceLicaishiInfoBox">
+        <div class="pLicaishiName">{weikucms:$vo.name}</div>
+        <div class="licaishiDengJiBox">
+            <div class="licaishiDengJiWrap  myul" data-zhuanshi="{weikucms:$vo.stars}">
+            </div>
+        </div>
+        <div class="myul">
+            <div class="myli">
+                专业：{weikucms:$vo.specialty_level}
+            </div>
+            <div class="myli">
+                沟通：{weikucms:$vo.communication_level}
+            </div>
+            <div class="myli">
+                服务：{weikucms:$vo.service_level}
+            </div>
+        </div>
+        <div class="pLicaishiContent">
+        <if condition="$vo.desc">
+            {weikucms:$vo.desc|htmlspecialchars_decode}
+        <!--<php>echo htmlspecialchars_decode($Planner['desc'])</php>-->
+        <else />
+        这个理财师很懒，什么也没留下
+        </if>
+        </div>
+        <div style="float: right;"><span style="font-size:15px;">预约</span><input type="radio"  <if condition="$_GET['pid'] eq $vo['id']">checked</if> name="jishi" value="{weikucms:$vo.id}" style="margin:0px 10px;"></div>
+    </div>
+</div>
+</volist>
+<div class="footer yuyue lishengGoldBg textMiddle lisheng-text-color h4" >
+    预约
+    <!-- <div class="headerRight city-ed noWrap overFloatHidden">
+        请选择
+    </div> -->
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".licaishiDengJiWrap").each(function(i,o){
+            var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi'))  ,
+                    di = 0,
+                    zhuanshi = '<div class="zhuanshi fixBg"></div>';
+            for(di; di < d ; di++){
+                $(this).append(zhuanshi);
+            }
+        })
+        $(".footer").click(function(){
+                    var url = "{weikucms::U('Wap/Jishi/doorder',array('token'=>$token,'openid'=>$openid))}";
+                    var pid =$('input[name="jishi"]:checked').val();
+                    if(!pid){
+                       alert("请选择理财师！")
+                        return false;
+                    }
+                    window.location.href= url+'&id='+pid;
+        })
+    })
+</script>
+</html>

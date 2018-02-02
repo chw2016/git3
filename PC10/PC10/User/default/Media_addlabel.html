@@ -1,0 +1,116 @@
+<include file="Public:head"/>
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        <if condition="$task['id'] eq ''">添加任务标签<else/>编辑任务标签</if>
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #19b593;" href="{weikucms::U('Media/label',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+    <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+        <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+            <tr>
+                <th valign="top"><label for="cid">任务大类名称</label></th>
+                <td>
+                    <select id="cid">
+                        <option value="">请选择任务大类名称</option>
+                        <volist id="vo" name="classification">
+                            <option value="{weikucms:$vo.id}" <if condition="$vo.id eq $task['cid']">selected="selected"<else/></if>>{weikucms:$vo.cname}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th valign="top"><label for="lname">任务标签名称</label></th>
+                <td>
+                    <input type="input" class="px" id="lname" value="{weikucms:$task['lname']}" name="lname" style="width:300px" placeholder="此处填写任务大类的名称">
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                </th>
+                <td>
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+</div>
+
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var cid = $("#cid").val();
+            var lname = $("#lname").val();
+            if(!cid){
+                notif({
+                    msg: "请选择任务大类",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!lname){
+                notif({
+                    msg: "任务标签名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            var posturl = "{weikucms::U('Media/addlabel',array('token'=>$token))}";
+            $.post(posturl, {id:id,cid:cid,lname:lname},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+
+        });
+    });
+</script>
+
+

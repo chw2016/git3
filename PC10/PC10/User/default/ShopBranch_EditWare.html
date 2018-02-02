@@ -1,0 +1,390 @@
+<include file="Public:public"/>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#intro', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            items : [
+                'source','undo','clearhtml','hr',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut', 'music', 'video'],
+            afterBlur: function(){this.sync();}
+        });
+    });
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload0').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#fenlei_img0").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#flash1').val(),
+                    clickFn : function(url, title) {
+                        K('#flash1').val(url);
+                        $("#fenlei_img1").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#flash2').val(),
+                    clickFn : function(url, title) {
+                        K('#flash2').val(url);
+                        $("#fenlei_img2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload3').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#flash3').val(),
+                    clickFn : function(url, title) {
+                        K('#flash3').val(url);
+                        $("#fenlei_img3").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+<div style="width: 90%;margin: 0 auto;">
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        修改商品
+    </h4>
+</div>
+
+    <form method="post" action="" id="formID">
+        <div class="msgWrap bgfc">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th><span class="red">*</span>名称：</th>
+                    <td>
+                        <input type="text" name="name" id="name" value="{weikucms:$data.name}" class="px" style="width:400px;" />
+                        <br/>
+                        不能超过50个字符
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><span class="red">*</span>属性：</th>
+                    <td>
+                        <input type="text" name="attr" id="attr" value="{weikucms:$data.attr}" class="px" style="width:400px;" />
+                        <input type="hidden" name="id" id="id" value="{weikucms:$data.id}" class="px" style="width:400px;" />
+                        <br/>
+                        属性之间用|号隔开,不能超过50个字符
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><span class="red">*</span>分类：</th>
+                    <td>
+                        <select name="sid" id="sid"  style="width: 415px;">
+                            <option value="0">请选择分类</option>
+                            <volist name="list" id="list">
+                                <option value="{weikucms:$list.id}" {weikucms:$list.selected}>
+                                <neq name="list.Count" value="1"><php>echo str_repeat('&nbsp;',$list['Count']*3);</php>|---</neq>
+                                {weikucms:$list.tname}
+                                </option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+
+            <tr>
+                <th><span class="red">*</span>原价：</th>
+                <td>
+                    <input type="text" id="price" name="price" value="{weikucms:$data.price}" class="px" style="width:400px;" /> 元
+                    <br/>
+                    必须为数字
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>会员价：</th>
+                <td>
+                    <input type="text" id="vprice" name="vprice" value="{weikucms:$data.vprice}" class="px" style="width:400px;" /> 元
+                    <br/>
+                    必须为数字
+                </td>
+            </tr>
+
+            <tr>
+                <th>库存：</th>
+                <td>
+                    <input type="text" id="stock" name="stock" value="{weikucms:$data.stock}" class="px" style="width:400px;" />
+                    <br/>
+                    必须为数字
+                </td>
+            </tr>
+
+            <tr>
+                <th valign="top">
+                    <label>
+                        商品图片：
+                    </label>
+                </th>
+                <td>
+                    <img id="fenlei_img0" class="fenlei_img" src="{weikucms:$data.pic}">
+                    <input type="hidden" class="px" id="pic" value="{weikucms:$data.pic}"  name="pic" style="width:300px" readonly="readonly">
+                    <span class="ke-button-common" id="upload0">上传图片</span>
+                    <span class="info_tip">建议图片大小60x60</span>
+                </td>
+
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+
+            <!--<tr>-->
+                <!--<th valign="top">-->
+                    <!--<label>-->
+                        <!--展示图片一：-->
+                    <!--</label>-->
+                <!--</th>-->
+                <!--<td>-->
+                    <!--<img id="fenlei_img1" class="fenlei_img" src={weikucms:$images[0][flash]}>-->
+                    <!--<input type="hidden" class="px" id="flash1" value='{weikucms:$images[0][flash]}'  imageid="" name="flash1" style="width:300px" readonly="readonly">-->
+                    <!--<span class="ke-button-common" id="upload1">上传图片</span>-->
+                    <!--<span class="info_tip">建议图片大小720x400</span>-->
+                <!--</td>-->
+
+                <!--<td>-->
+                    <!--&nbsp;-->
+                <!--</td>-->
+            <!--</tr>-->
+
+            <!--<tr>-->
+                <!--<th valign="top">-->
+                    <!--<label>-->
+                        <!--展示图片二：-->
+                    <!--</label>-->
+                <!--</th>-->
+                <!--<td>-->
+                    <!--<img  id="fenlei_img2" class="fenlei_img" src={weikucms:$images[1].flash}>-->
+                    <!--<input type="hidden" class="px" id="flash2" value='{weikucms:$images[1].flash}'  name="flash2" imageid="" style="width:300px" readonly="readonly">-->
+                    <!--<span class="ke-button-common" id="upload2">上传图片</span>-->
+                    <!--<span class="info_tip">建议图片大小720x400</span>-->
+
+                <!--</td>-->
+
+                <!--<td>-->
+                    <!--&nbsp;-->
+                <!--</td>-->
+            <!--</tr>-->
+
+            <!--<tr>-->
+                <!--<th valign="top">-->
+                    <!--<label>-->
+                        <!--展示图片三：-->
+                    <!--</label>-->
+                <!--</th>-->
+                <!--<td>-->
+                    <!--<img id="fenlei_img3" class="fenlei_img" src={weikucms:$images[2].flash}>-->
+                    <!--<input type="hidden" class="px" id="flash3" value='{weikucms:$images[2].flash}'  imageid="" name="flash3" style="width:300px" readonly="readonly">-->
+                    <!--<span class="ke-button-common" id="upload3">上传图片</span>-->
+                    <!--<span class="info_tip">建议图片大小720x400</span>-->
+
+                <!--</td>-->
+
+                <!--<td>-->
+                    <!--&nbsp;-->
+                <!--</td>-->
+            <!--</tr>-->
+
+            <tr>
+                <th><span class="red">*</span>商品简介：</th>
+                <td><textarea name="des" id="des" cols="30" rows="10">{weikucms:$data.des}</textarea></td>
+            </tr>
+
+            <tr>
+                <th width="120">排序数字</th>
+                <td><input type="text" id="sort" name="sort" value="{weikucms:$data.sort}" class="px" style="width:150px;" placeholder="数字越小越靠前如:0">
+                </td>
+            </tr>
+
+            <!--<TR>-->
+                <!--<TH valign="top"><label>图文详细页内容：</label></TH>-->
+                <!--<TD><textarea name="con" id="body"  rows="5" style="width:590px;height:360px">{weikucms:$data.con}</textarea></TD>-->
+            <!--</TR>-->
+            <tr>
+                <th>&nbsp;</th>
+                <td>
+                    <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+<script>
+    $("#save").click(function(){
+        var name=$("#name").val();
+        var attr=$("#attr").val();
+        var price=$("#price").val();
+        var vprice=$("#vprice").val();
+        var stock=$("#stock").val();
+        var pic=$("#pic").val();
+        var flash1=$("#flash1").val();
+        var flash2=$("#flash2").val();
+        var flash3=$("#flash3").val();
+        var des=$("#des").val();
+        var con=$("#body").val();
+        var tid=$("#sid").val();
+        var id=$("#id").val();
+        var sort=$("#sort").val();
+        if(!name){
+            notif({
+                msg:"商品名称不能为空",
+                type:"warning"
+            });
+            return false;
+        }
+
+        if(tid==0){
+            notif({
+                msg:"请选择分类",
+                type:"warning"
+            });
+            return false;
+        }
+
+        if(!stock){
+            notif({
+                msg:"库存数量不能为空",
+                type:"warning"
+            });
+            return false;
+        }
+
+        if(!pic){
+            notif({
+                msg:"商品图片不能为空",
+                type:"warning"
+            });
+            return false;
+        }
+
+//        if(!flash1 && !flash2 && !flash3){
+//            notif({
+//                msg:"展示图片必须有一项",
+//                type:"warning"
+//            });
+//            return false;
+//        }
+
+        var images=[];
+        var i=-1;
+        if(flash1){
+            i++;
+            images[i]=flash1;
+        }
+        if(flash2){
+            i++;
+            images[i]=flash2;
+        }
+        if(flash3){
+            i++;
+            images[i]=flash3;
+        }
+
+        var data={
+            id:id,
+            name:name,
+            attr:attr,
+            price:price,
+            vprice:vprice,
+            stock:stock,
+            pic:pic,
+            tid:tid,
+            images:JSON.stringify(images),
+            des:des,
+            con:con,
+            sort:sort
+        };
+        $.post("{weikucms::U('ShopBranch/EditWare',array('token'=>$token,'branch_id'=>$branch_id))}",data,function(data){
+            if(data.status==1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                location.href="{weikucms::U('ShopBranch/ware',array('token'=>$token,'branch_id'=>$branch_id))}";
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "warning"
+                });
+            }
+        },"json")
+    })
+</script>
+<include file="Public:footer" />

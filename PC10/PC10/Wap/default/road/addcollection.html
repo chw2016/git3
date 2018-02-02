@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>东莞控股</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/Customized.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/road/js/iscroll.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var checked = [];
+    $(".nr-body").click(function(){
+        var chk=$(this).find(":checkbox");
+        if(chk.is(':checked')){
+            chk.prop("checked",false)
+        }else{
+            chk.prop("checked",true);
+        }
+    })
+    $("#dingzhi").click(function(){
+        var linenum = '';
+        $('input:checkbox:checked').each(function(){
+            linenum += checked.push($(this).val())+',';
+        });
+        var url = "{weikucms::U('Road/addcollection',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{linenum:linenum},
+            function(data){
+                if(data.status ==1){
+                    alert(data.msg);
+                    window.location.href = "{weikucms::U('Road/collection',array('token'=>$token,'openid'=>$openid))}";
+                }else{
+                    alert(data.msg);
+                }
+            },'json');
+    });
+});
+
+	
+</script>
+</head>
+<body>
+
+<div class="high-top">
+	<h3>路况定制</h3>
+</div>
+<php>$planarr= explode(',',$collection['linenum']);</php>
+<volist name="line" id="vo">
+	<div class="nr-body">
+		<div class="nr-img">
+			<span class="ones">{weikucms:$vo.jname}</span>
+			<span class="twos">{weikucms:$vo.bname}</span>
+			<span class="threes">{weikucms:$vo.qname}</span>
+		</div>
+		<div class="nr-text">
+			<span class="firsts">{weikucms:$vo.lname}</span>
+			<span class="lasts">{weikucms:$vo.position}</span>
+		</div>
+		<div class="nr-bz">
+			<input type="checkbox" name="chk" class="nr-bz-one" value="{weikucms:$vo.id}" <php>if(in_array($vo['id'],$planarr)){ echo 'checked';}</php>/>
+		</div>
+	</div>
+</volist>
+<div style="height: 100px;"></div>
+<div class="footer">
+	<div class="icon_bottom" id="dingzhi"><span>定制</span></div>
+</div>
+</body>
+</html>

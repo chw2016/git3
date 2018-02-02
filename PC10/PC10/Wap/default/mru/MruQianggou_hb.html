@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-选择红包</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/font-awesome.min.css" />
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+		<script>
+			 $(function(){
+		 	$(document).on('touchstart','.diyongquan',function(){
+		 		if($(this).hasClass("on")){
+		 	      $(this).removeClass("on");
+		 		}else{ 
+		 			$(this).addClass("on");
+		 		}	
+		 	})
+		 })
+		</script>
+        <style type="text/css">
+        	.diyongquan.on{
+        		color: #238896;
+        	}
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+            .diyongquan .ok{
+            	position: relative;bottom: -40px;float: right; right: 10px;color: rgb(221, 255, 8);display: none;width: 20px;border-radius: 50%;
+            	height: 20px;background:rgb(62, 247, 50);
+            }
+            .diyongquan.on .ok{
+            	  float: right;
+ 				  right: 10px;
+            	display: block;
+            }
+       </style>
+    </head>
+    <body class="freeFelt">
+        <div class="youhuiquanmain" style="margin-bottom:50px;" >
+        
+        <div class="ccc" style="font-size: 13px;color: #595A58;text-align: center;">订单价格为<a style="color:red;font-size: 20px;" >{weikucms:$price}</a>元，红包不设找赎，可叠加使用</div>
+        	<div class="ccc" style="font-size: 13px;color: red;text-align: center;">点击选择红包<i class="fa fa-arrow-down" style="font-size: 14px;color: red;"></i></div>
+            <volist name="list" id="v" >
+           		<input type="hidden" value="{weikucms:$v['id']}" />
+	            <div class="diyongquan" style="background-size: 100% 100%;background-image: url({weikucms::RES}/mru/img2/hb.png);position:relative;" >
+	                
+	                <div style="position:absolute; top:45px;left:52px; color:white;letter-spacing:3px;font-size:20px;" ><?php  //echo str_substr($v['name'],8); ?></div>
+	                <div class="jine" style="color:white;letter-spacing:3px;font-size:23px;" >红包<span class="money">{weikucms:$v['price']}</span>元</div>
+	                <div class="card">{weikucms:$v['yzm']}</div>
+	                <div class="ok">
+	            	<i class="fa fa-check" style="color: #fff;margin-left: 2px;"></i>
+	            	</div>
+	            </div>
+            </volist>
+        </div>
+       
+       <style>
+#aaa{
+	margin:0 auto;
+line-height: 32px;
+height: 32px;
+text-align: center;
+font-weight: bold; 
+width:100%;
+color: #FFF; 
+font-size: 18px; 
+background: #50C814;
+border-radius: 3px;
+box-shadow: 0 0 3px rgba(0,0,0,0.2);
+border: 1px solid #50C814; 
+position: fixed;  bottom: 0px;
+}
+</style>				
+<div id="aaa"  >支付</div>   
+    </body>
+    <script>
+    var hb;
+    $("#aaa").click(function(){
+    	$(".on").each(function(e,t){
+    		hb+=$(t).prev().val()+",";
+    	})
+    	if(!hb){
+    		location.href="{weikucms::U('zf',get(openid,token,dopenid,id))}";
+    	}else{
+    		location.href="{weikucms::U('zf',get1(hb,'"+hb+"',openid,token,dopenid,id))}";
+    	}
+    })
+    
+    $(".ccc").click(function(){
+    	$(".diyongquan").addClass("on");
+    })
+    </script>
+</html>

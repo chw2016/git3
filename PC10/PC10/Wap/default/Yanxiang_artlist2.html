@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+  <head>
+    	<title>研祥动态</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<!--<header id="c-product-header">
+    		研祥动态
+    	</header>
+		-->
+    	<ul class="article-list">
+            <volist name="info" id="vo">
+                <a href="{weikucms::U('Wap/Yanxiang/status',array('id'=>$vo['id']))}">
+                    <li>
+                   
+                        <div class="left">
+                            <div class="circle">
+                                <span class="day" style="font-size:18px;"><php>$day = explode('-',$vo['times']);echo $day[2]</php>/</span>
+								<!-- <span style="display:inline">/</span> -->
+                                <span class="month" style="left:-5px;"><php> $day = explode('-',$vo['times']);echo $day[1]</php></span>
+
+                                <span class="year"><php> $day = explode('-',$vo['times']);echo $day[0]</php></span>
+                            </div>
+                        </div>
+                        <div class="middle">
+                            <span class="content">{weikucms:$vo.title}</span>
+                        </div>
+                        <div class="right">
+                            <div class="jianjiao"></div>
+                        </div>
+                   
+                    </li>
+                </a>
+            </volist>
+    	</ul>
+    	<script type="text/javascript">
+    		window.onload = function(){
+    			$('.circle').css('height', $('.circle').width()+'px');
+    			// $('.circle').css('line-height', $('.circle').height()+'px');
+    			$('.day,.month,.year').css('top', ($('.circle').height()-$('.day').height()-$('.year').height())/2+'px');
+
+    			$('.middle>.content').css('top', ($('.middle').height()-$('.content').height())/2+'px');
+
+    			$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height())/2+'px');
+				var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+    		}
+    	</script>
+    </body>
+</html>

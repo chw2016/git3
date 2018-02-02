@@ -1,0 +1,104 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('userlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>修改会员等级</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="id" id="id" value="{weikucms:$data.id}" />
+                <div class="control-group">
+                    <label for="title" class="control-label">会员等级名称：</label>
+                    <div class="controls">
+                        <input type="text" name="name" id="name" value="{weikucms:$data.name}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="control-group" style="display: none;">
+                    <label for="title" class="control-label">等级类型：</label>
+                    <div class="controls">
+                        <select name="level_type" id="level_type">
+                            <option value="1" <if condition="$data['level_type'] eq 1">selected</if>>按积分</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="title" class="control-label">积分大于：</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" placeholder="大于多少分" name="score" id="score" value="{weikucms:$data.score}" class="input-small" data-rule-required="true" data-rule-ismoney="true">
+                            <span class="add-on"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var id = $("#id").val();
+            var level_type = $("#level_type").val();
+            var score = $("#score").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            $.post("{weikucms::U('edituserlevel',array('token'=>$token))}",
+                    {name:name,id:id,level_type:level_type,score:score,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+
+
+</div>

@@ -1,0 +1,16 @@
+    <foreach name="list" item="v">
+    <li class="he" href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}">
+    <div style="width:90%;height:35px;margin-left:10px;float:left;">
+        <span class="name" style="width:25%;">{weikucms:$v.title|mb_substr=###,0,13,'utf-8'}</span>
+        <span class="tel" style="width:45%;">作者:{weikucms:$v.name}</span>
+        <span class="lx">行业：{weikucms:$v.hy}</span>
+    </div>
+    <div class="bz color" style="width:90%;margin-left: 10px;">{weikucms:$v.content|mb_substr=###,0,13,'utf-8'}</div>
+    <div class="tb">
+        <foreach name="v.tag" item="vo">
+        <span class="color{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+        </foreach>
+    </div>
+    </li>
+    </foreach>
+

@@ -1,0 +1,86 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+
+    <div class="cLineB">
+
+        <div class="cLine">
+
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token, 'catid'=>$_GET['catid']))}">商品管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+
+                    </li>
+
+
+
+                    <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token,'catid'=>$catid))}" class="nohover">返回</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="cLineC" style="line-height: 32px;">
+        <a class="btn btn-primary">{weikucms:$name}商品评价列表</a>　
+
+
+    </div>
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th >编号</th>
+                    <th >评价人姓名</th>
+                    <th >评价人图像</th>
+                    <th >评价内容</th>
+
+                    <th >评价时间</th>
+
+                </tr>
+                </thead>
+                <volist name="list" id="hostlist" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$hostlist.name}</td>
+                    <td><img src="{weikucms:$hostlist.pic}"> </td>
+                    <td style="width: 300px;">{weikucms:$hostlist.content}元</td>
+
+                    <td>{weikucms:$hostlist.addtime|date="Y-m-d",###}</td>
+
+                </tr>
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>

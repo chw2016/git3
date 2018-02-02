@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta name="format-detection" content="telephone=no"/>  
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+
+<body>
+
+<div class="top">
+	<div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('HealthMember/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+<div class="Box">
+   <div class="AcountBox">
+   
+   <div class="Opacity10Circle yellow-border">
+       <div class="yellow-border userLogoCircle" style="background-image:url('{weikucms::STATICS}/headimg.png')"></div>
+   </div>
+   <div class="AcountItem">姓名：<span id="AcountName">{weikucms:$userInfo.xm}</span></div>
+    <div class="AcountItem">当前帐号余额：<span id="AcountMoney" class="red-color">{weikucms:$limit_money.ye}</span></div>
+	<div class="AcountItem" style="font-size:12px;line-height:15px;"><a href="{weikucms::U("Wap/HealthMember/unbind",array('token'=>$token,'openid'=>$openid))}" style="color:red;">解除绑定</a></div>
+   </div>
+   
+   
+   <div class="ConsumingRecordsBox">
+       <div class="Title">消费记录</div>
+       <div class="border-top"></div>
+   </div>  
+  
+  
+   <div class="ConsumingRecordsDetailBox">
+   
+   <div class="myul ConsumeItemBox">
+       <volist name="ulist" id="ulist">
+       <div class="ConsumeItem">
+           <div class="UpBox">
+               <span>消费内容<span id="CheckItem">{weikucms:$ulist.xfxm|msubstr=0,12}</span></span>
+               <span>消费金额<span id="ConsumeMoney">{weikucms:$ulist.xfje}</span></span>
+           </div>
+           <div class="orange-border circlePoint" ></div>
+           <div class="TimePoint">
+            <span id="date">{weikucms:$ulist.xfsj}</span>
+           </div>
+       </div>
+       </volist>
+
+   </div>
+   <div class="orange-border Line"></div>
+   </div>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	var l= $(".ConsumeItem").length;
+	var sl = $(".ConsumeItem").width()+2*parseInt($(".ConsumeItem").css("margin-left"));
+	$(".Line").width(l*sl);
+	$(".ConsumingRecordsDetailBox").animate({'scrollLeft':l*sl},1500,"easeInQuint");
+	})
+    document.body.addEventListener('touchmove', function(e) {                  //阻止冒泡事件
+                e.stopPropagation();
+				//e.preventDefault();
+				});
+	myFadeIn()
+</script>
+</html>

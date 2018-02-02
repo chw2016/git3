@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>商品详情</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+        <link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/a.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+        <style>
+             .gBGInfo img{
+                width: 100%;
+            }
+            .gBGIntroduce img{
+                width: 100%;
+            }
+        </style>
+
+    </head>
+    <body class="goodsBody">
+    	<div class="sliderBox">
+			<div class="sliderWrap myul">
+                    <volist name="imageList" id="vo">
+                    <div class="slider containBg" style="background-image: url({weikucms:$vo.image}); background-size: cover"></div>
+                    </volist>
+			</div>
+		</div>
+		<div class="goodsInfo">
+			<div class="gBName">
+				{weikucms:$product.name}
+			</div>
+			<div class="RMB gBPrice">
+				{weikucms:$product.vprice}
+			</div>
+			<a href="{weikucms::U('Store_lm/product_next',array('id'=>$product['id'],'openid'=>$openid,'catid'=>$product['catid'],'token'=>$token))}" class="nextGoods setRight">
+				<div class="arrowRight"></div>
+			</a>
+		</div>
+		<div class="goodIntroduction">
+			<nav class="myul">
+				<li class="myli textMiddle on" onclick="ch1()" id="ch1">
+					商品介绍
+				</li>
+				<li class="myli textMiddle" onclick="ch2()" id="ch2">
+					规格参数
+				</li>
+			</nav>
+			<section class="gBGIntroduce">
+                {weikucms:$product.des}
+			</section>
+			<section class="gBGInfo hide">
+                {weikucms:$product.intro}
+			</section>
+		</div>
+
+		<div class="afterSell">
+			<header class="textMiddle">
+				售后保障
+			</header>
+			<ul class="sellService myul">
+				<li class="myli iSellService">
+					<div class="containBg"></div>
+				</li>
+				<li class="myli iSellService">
+					<div class="containBg"></div>
+				</li>
+				<li class="myli iSellService">
+					<div class="containBg"></div>
+				</li>
+				<li class="myli iSellService">
+					<div class="containBg"></div>
+				</li>
+				<li class="myli iSellService">
+					<div class="containBg"></div>
+				</li>
+			</ul>
+		</div>
+		<div class="gBAssessment">
+			<header>
+				<strong>评价</strong>
+				<span class="betterPercent">
+					好评 95%
+				</span>
+				<span class="setRight totalSellingInfo">
+					评价( {weikucms:$cnum})/购买( {weikucms:$pnum})
+				</span>
+			</header>
+			<volist name="comment" id="vo">
+			<div class="gBIAssessment">
+				<span>
+					<span>{weikucms:$vo.name}：</span>
+					<!--<div class="setRight userRank">*</div>-->
+				</span>
+				<div>{weikucms:$vo.content}</div>
+			</div>
+</volist>
+
+		</div>
+        <!-- 套餐 -->
+        <if condition="$formatData">
+        <div class="detail-taocan">
+            <volist name="productDetail" id="vo">
+            <a style="margin-left: 10px;"><span price="{weikucms:$vo.price}" did="{weikucms:$vo.id}" vprice="{weikucms:$vo.vprice}">{weikucms:$vo.formatName}</span></a>
+
+                </volist>
+        </div>
+        </if>
+
+        <!--加入购物车 -->
+        <div class="detail-car">
+			<span class="detail-b-item l-icon">
+				<div><img src="<if condition='$love'>{weikucms:$staticFilePath}/lm/img/hx.jpg<else />{weikucms:$staticFilePath}/lm/img/detail-like.png</if>" width='30px' onclick="abc()"  id="love" status="{weikucms:$love}" flag="1" love="{weikucms:$love}" /></div>
+				<div>喜欢</div>
+			</span>
+            <span class="detail-b-item"><a href="" class="btn carBtn">加入购物车</a></span>
+            <span class="detail-b-item"><a class="btn buyBtn" onclick="return wxpay()" address="<if condition='$address'>1<else />0</if>" id="onxian">立即购买</a></span>
+			<span class="detail-b-item l-icon">
+				<div><img src="{weikucms:$staticFilePath}/lm/img/detail-car.png" width='30px' /></div>
+				<div>购物车</div>
+			</span>
+        </div>
+        <div class="fixBottonShare"><img src="{weikucms:$staticFilePath}/lm/img/share.png" width="50px" /></div>
+        <div id="gotobuy" class="sku-layout sku-box-shadow" style="overflow: hidden; visibility: visible; opacity: 1; bottom: 0px; left: 0px; right: 0px; height: auto; position: fixed; z-index: 1100;display: none;">
+            <div class="goods-header layout-title sku-box-shadow">
+                <div class="js-cancel" id="oncha">
+                    <div class="cancel-img"></div>
+                </div>
+                <div class="thumb"><img src="{weikucms:$product.logourl}" alt=""></div>
+                <div class="goods-base-info clearfix">
+                    <h2 class="title2" style="font-size: 14px;">{weikucms:$product.name}</h2>
+                    <div class="goods-price clearfix">
+                        <div class="current-price">
+                            <span>原价:</span>
+                            <i class="js-goods-price2 price" style="font-size: 12px;">￥{weikucms:$product.price}</i>
+                            &nbsp;&nbsp;&nbsp;
+                            <span>会员价:</span>
+                            <i class="js-goods-vprice price" style="color: #94341D;font-size: 12px;">￥{weikucms:$product.vprice}</i>
+                            <!--<span class="price-name font-size-18">原价￥</span><i class="js-goods-price price vertical-middle">{weikucms:$product.price}</i>-->
+                            <!--<span class="price-name font-size-18">会员价￥</span><i class="js-goods-price price vertical-middle">{weikucms:$product.price}</i>-->
+                        </div>
+                        <div class="original-price vertical-middle font-size-14 line-through">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="adv-opts layout-content" style="height:auto;">
+                <div class="goods-models js-sku-views">
+
+                    <if condition="$colorData">
+                        <div class="i-row">
+                            <div class="model-title sku-sel-title">{weikucms:$catData.color}：</div>
+                            <div class="c">
+                                <ul class="model-list sku-sel-list">
+                                    <volist name="colorData" id="detail" key="colorId">
+                                        <li style="cursor:pointer" class="color btn sku-btn" id="color_{weikucms:$detail['color']}">
+                                            <if condition="$detail['logo'] neq ''"><img src="{weikucms:$detail['logo']}"><else/>{weikucms:$detail['colorName']}</if>
+                                        </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </if>
+
+                    <if condition="$formatData">
+                        <div class="i-row">
+                            <div class="model-title sku-sel-title">{weikucms:$catData.norms}：</div>
+                            <div class="c">
+                                <ul id="shoe_size_list" class="model-list sku-sel-list">
+                                    <volist name="formatData" id="detail" key="formatId">
+                                        <li style="cursor:pointer;" class="btn sku-btn norms" id="norms_{weikucms:$detail['format']}">{weikucms:$detail['formatName']}</li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </if>
+
+                    <volist name="productDetail" id="pro">
+                        <input type=hidden id="color_{weikucms:$pro.color}_norms_{weikucms:$pro.format}" value="{weikucms:$pro.num}" did="{weikucms:$pro.id}" price="{weikucms:$pro.price}" vprice="{weikucms:$pro.vprice}" class="hidden"/>
+                    </volist>
+
+
+                    <dl>
+                        <dt class="model-title sku-num">
+                            <label>
+                                库存
+                            </label>
+                        </dt>
+                        <dd>
+                            <span id="stock" style="display: inline-block;line-height: 50px;">{weikucms:$product.num}</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="model-title sku-num">
+                            <label>
+                                数量
+                            </label>
+                        </dt>
+                        <dd>
+                            <dl class="quantity-view">
+                                <div class="quantity">
+                                    <div class="response-area response-area-minus" onclick="plus_minus({weikucms:$product.id}, -1,{weikucms:$product.price});">
+                                    </div>
+                                    <button class="minus" type="button" >
+                                    </button>
+                                    <input type="number" class="txt" id="buy_num" name="goods[num]"  value="1">
+                                    <button class="plus" type="button">
+                                    </button>
+                                    <div class="response-area response-area-plus"  onclick="plus_minus({weikucms:$product.id}, 1,{weikucms:$product.price});">
+                                    </div>
+                                    <div class="txtCover">
+                                    </div>
+                                </div>
+                            </dl>
+                        </dd>
+                    </dl>
+                    <div></div>
+                </div>
+                <?php if($productDetail):?>
+                <div class="confirm-action content-foot">
+                    <!--<a href="javascript:;" onClick=" $.ajax({
+                    url:"{weikucms::U('Store_new/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id']))}"+ '&count='+count + '&did=' + did,
+                    dataType:"json",
+                    success: function(data) {
+                        if(data.status==0){
+                            location.href = "{weikucms::U('Store_new/address',array('token'=>$token))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+                        } else {
+                            location.href = "{weikucms::U('Store_new/show',array('token'=>$token))}"+ '&pid=' + data.data.pid+'&wecha_id='+data.data.wecha_id;
+                        }
+                    }
+                });()" class="buynow">-->
+                    <a href="javascript:;" onClick="QuickBuy()" class="js-confirm-it btn btn-block btn-orange-dark butn-buy">下一步</a>
+                </div>
+                <?php else:?>
+                <div class="confirm-action content-foot">
+                    <!--<a href="javascript:;" onClick="QuickBuy()" class="buynow">-->
+                    <a href="javascript:;" onClick="parents()" class="js-confirm-it btn btn-block btn-orange-dark butn-buy">付款</a>
+                </div>
+                <?php endif;?>
+            </div>
+        </div>
+        <div id="hidediv" style="display:none;width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; z-index: 1000; opacity: 1; transition: none 0.2s ease; -webkit-transition: none 0.2s ease; background-color: rgba(0, 0, 0, 0.901961);"></div>
+        <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+            <input type="hidden" name="order_money" value="">
+            <input type="hidden" name="order_text" value="{weikucms:$product.name}">
+            <input type="hidden" name="orderid" value="">
+
+            <input type="hidden" name="openid" value="{weikucms:$openid}">
+            <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store_new&a=my&openid={weikucms:$openid}">
+            <input type="hidden" name="type" value="Store_new_goods_order">
+
+        </form>
+    </body>
+    <script type="text/javascript">    
+    slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+    <script>
+        function ch1(){
+            $(".gBGInfo").hide();
+            $("#ch2").removeClass("on");
+            $(".gBGIntroduce").show();
+            $("#ch1").addClass('on');
+        }
+        function ch2(){
+            $(".gBGIntroduce").hide();
+            $("#ch1").removeClass("on");
+            $(".gBGInfo").show();
+            $("#ch2").addClass('on');
+        }
+        /**
+         * 喜欢商品
+         */
+        function abc(){
+            var love=$("#love").attr('love');;//状态,1代表喜欢
+            var status=$("#love").attr('status');
+            var flag=$("#love").attr('flag');
+            var img='';
+            var name="{weikucms:$product.name}";
+            if(status==1){//是否已经喜欢
+                 img="{weikucms:$staticFilePath}/lm/img/detail-like.png";
+            }else{
+                 img="{weikucms:$staticFilePath}/lm/img/hx.jpg";//红的
+            }
+            $("#love").attr('src',img);
+            var num={weikucms:$product.id};//商品id
+            var url1=window.location.href;//当前面面地址
+            var url = "{weikucms::U('Store_lm/love',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+
+            if(flag==1) {
+                $.post(url, {love: love, num: num, url1: url1,type:2,name:name}, function (data) {
+                    $("#love").attr('flag',0);
+                    if (data.code == 1) {
+                        $("#love").attr('status', data.s);
+                        $("#love").attr('love', data.s);
+
+                        $("#love").attr('flag',1);
+                    } else {
+                        alert("失败");
+                        $("#love").attr('flag',1);
+                    }
+                }, 'json');
+            }
+        }
+        /**
+         * 支付
+         */
+        $(document).ready(function(){
+
+            $("#oncha").click(function(){
+                $("#hidediv").hide();
+                $("#gotobuy").fadeOut();
+            });
+
+        });
+        //加减
+        function plus_minus(rowid, number,price) {
+            var num = parseInt($('#buy_num').val());
+            num = num + parseInt(number);
+            if (num > parseInt($('#stock').text())) {
+                num = parseInt($('#stock').text());
+            }
+            if (num <= 0) {
+                return false;
+            }
+            $('#buy_num').attr('value',num);
+        }
+
+        function parents(){
+            var count=parseInt($("#buy_num").val());
+            var stock=parseInt($("#stock").html());
+            if(count>stock){
+                alert("库存不足");
+                return false;
+            }
+            var url="{weikucms::U('Store_lm/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'did'=>$product['id'],'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}"+ '&count='+count+"&type=par";
+            $.ajax({
+                url:url,
+                dataType:"json",
+                success: function(data) {
+                    if(data.status==0){
+                        location.href = "{weikucms::U('Store_new/address',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+                    } else {
+                        //alert(7);
+                        //alert(data.orderid);
+                        $("input[name=order_money]").val(data.price);
+                        $("input[name=orderid]").val(data.orderid);
+                        $("#myweipayform").submit();
+                    }
+                }
+            });
+        }
+        /**
+         * 支付
+         */
+        function wxpay(){
+            var address=$("#onxian").attr('address');
+
+            if(!address){
+                var url="{weikucms::U('edit',array('pid'=>$product['id'],'openid'=>$openid,'token'=>$token))}";
+                window.location.href=url;
+            }else{
+                $("#hidediv").show();
+                $("#gotobuy").fadeIn();
+            }
+
+            return true;
+        }
+    </script>
+    <script>
+        $(".detail-taocan span").click(function(){
+            $(".detail-taocan span").removeClass('hover');
+            $(this).addClass('hover');
+        });
+    </script>
+</html>

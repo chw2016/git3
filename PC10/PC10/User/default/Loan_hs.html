@@ -1,0 +1,138 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+    <div class="cLine">
+        <div class="pageNavigator e_left">
+            <a  href="javascript:history.go(-1);" class="btn btn-primary">返回</a>
+
+        </div>
+
+        <div class="clr"></div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <span>核审</span>
+    </div>
+
+
+
+    <div class="msgWrap">
+
+        <form method="post"  action="" id="info" >
+            <input name="id"  type="hidden" value="{weikucms:$_GET['id']}" />
+
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <!--这里是type=2的产品-->
+                <if condition="($info['type'] eq 2) AND ($info['paystatus'] neq 0)">
+                此订单已经审核过咯！
+                    <elseif condition="($info['type'] eq 1) AND ($info['paystatus'] neq 1)AND($info['paystatus'] neq 7)AND($info['paystatus'] neq 2)" />
+                    此订单已经审核过咯！
+                    <elseif condition="($info['type'] eq 1) AND ($info['paystatus'] eq 2)" />
+                    <tbody>
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                此订单审核未通过    ：
+                            </label>
+                        </th>
+                        <td>
+                            <input type="hidden" name="type" value="1">
+                            是否确认已退款<input type="radio" name="paystatus"  value="8" >是
+                            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="paystatus"  value="9" >否-->
+                            <br><br>
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <elseif condition="($info['type'] eq 1) AND ($info['paystatus'] eq 7)" />
+                    <tbody>
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                您批准此次退款吗？    ：
+                            </label>
+                        </th>
+                        <td>
+                            <input type="hidden" name="type" value="1">
+                            <input type="radio" name="paystatus"  value="8" checked="checked">通过
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="paystatus"  value="9" >不通过
+                            <br><br>
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <else />
+                    <tbody>
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                您批准这次贷款嘛！    ：
+                            </label>
+                        </th>
+                        <td>
+                            <input type="radio" name="iftour" id="yestour" value="1" checked="checked">通过
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="iftour" id="notour" value="2" >不通过
+                            <br><br>
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </if>
+
+                <!--这里是type=1的产品-->
+
+            </table>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+        <script>
+            $("#save").click(function(){
+                $("#info").submit();
+            })
+        </script>
+
+<include file="Public:footer"/>
+
+

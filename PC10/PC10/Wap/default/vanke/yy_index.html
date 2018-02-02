@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+
+    <title>4S服务</title>
+    <script>
+        seajs.use("helper",function(h){
+            var img = [
+                <volist name="imgs" id="pic">
+                {content: "{weikucms:$pic}"},
+                </volist>
+            ];
+            var slider = h.iSlider("picPlayground",img);
+            slider.addDot();
+        });
+        $(function(){
+            var $sortWrap = $("#sortWrap"),
+                $sort = $sortWrap.find(".sortItem"),
+                $btn = $(".slideBtn"),
+                L = $sortWrap.find(".sortItem").length;
+            function sortHide(){
+                if(arguments){
+                    $sort.each(function(i,o){
+                        if(i>3){
+                            $(this).hide(0);
+                        }
+                    });
+                }else{
+                    $sort.each(function(i,o){
+                        if(i>3){
+                            $(this).fadeOut(10*i>400?400:10*i);
+                        }
+                    });
+                }
+            }
+            sortHide(1);
+            $btn.touch(function(){
+                if(!$(this).hasClass("on")){
+                    $(this).addClass("on").find(".text").text("收起");
+                    $sort.each(function(i,o){
+                        if(i>3){
+                            $(this).fadeIn(10*i>400?400:10*i);
+                        }
+                    });
+                }else{
+                    $(this).removeClass("on").find(".text").text("展开");
+                    sortHide()
+                }
+            })
+        })
+    </script>
+    <style type="text/css" media="screen">
+        .rightLogo { float: right; height: 60px; }
+    </style>
+</head>
+<body class="houseHold">
+    <div class="fixTop header headerBg">
+        <div class="logo"></div>
+        <div class="title">/ 4S服务</div>
+        <div class="rightLogo"><img height="100%;" src="{weikucms::STATICS}/wapweiui/vanke/img/4s.png"></div>
+    </div>
+    <div class="content">
+        <div class="playGroundWrap">
+            <div class="picPlayground" id="picPlayground"></div>
+        <!--
+            <ul class="promiseWrap">
+                <li>全国联保</li>
+                <li>官方授权</li>
+                <li>全场包邮</li>
+            </ul>
+        -->
+        </div>
+        <!--
+        <div class="sortWrapBox">
+            <ul class="sortWrap" id="sortWrap">
+                <volist name="cattype" id="cattype">
+                <a href="{weikucms::U('index', array('cid' => $cattype['id']))}">
+                <li class="sortItem checkType">
+                    <div class="img">
+                        <img src="{weikucms:$cattype.pic}" alt=""/>
+                    </div>
+                    <span class="text">
+                        {weikucms:$cattype.name}
+                    </span>
+                </li>
+                </a>
+                </volist>
+            </ul>
+            <div class="slideBtn"><span class="text">展开</span><i class="circle iconArrow"></i></div>
+        </div>
+        -->
+
+        <input type="hidden" id="page" value="2" />
+        <input type="hidden" id="cid" value="" />
+        <div class="goodsWrap">
+            <ul class="wrap" id='yyBody'>
+            <include file="./tpl/Wap/default/vanke/yy_page_index.html" />
+            <!--
+            <volist name="product" id="p">
+                <a href="#">
+                    <li class="item">
+                        <div class="img">
+                            <img src="{weikucms:$p.url}" alt=""/>
+                        </div>
+                        <div class="infoText">
+                            <div class="title f16">
+                                {weikucms:$p.name}
+                            </div>
+                            <div class="priceTag f16">
+                                <span class="RMB f12"></span>
+                                {weikucms:$p.price}
+                            </div>
+                        </div>
+                    </li>
+                </a>
+            </volist>
+            -->
+            </ul>
+        </div>
+
+    </div>
+    <include file="./tpl/Wap/default/vanke/footer.html" />
+</body>
+</html>

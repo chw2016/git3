@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>会员注册</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js/jquery.validate.js"></script>
+        <script src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script>
+		
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt" style="overflow-x:hidden">
+    <div class="header" style="color:#0071b7;" >
+    	<div class="wrapHeader myul">
+  <!--   		<div class="circle icon_mian_huiyuan"></div> -->
+    		<div class="title" style="color:#0071b7;">会员<if condition="$list" >修改<else/>注册</if></div>
+    	</div>
+    </div>
+    <div class="limitShoppingBox">
+        
+        <div class="user_register">
+            
+            <form action="" method="post" id="form" >
+                <div class="zhuce_span">
+                    <span style="color:#0071b7;" > 姓名</span>  :
+                    <input id="bbb"  type="text" name="name" value="{weikucms:$list['name']}" placeholder="请输入您的姓名">
+                </div>
+                
+                           <!--      <div class="zhuce_span">
+                    <span style="color:#0071b7;"  >性别</span>  :
+        <select name="sex" >
+   <option value="" >请选择你的性别</option>
+   <option   <if condition="$list['sex'] eq '男'" >selected=selected</if>  value="男"  >男</option>
+     <option  <if condition="$list['sex'] eq '女'" >selected=selected</if>  value="女"  >女</option>
+</select>
+
+                </div> -->
+                
+ 
+                <div class="zhuce_span">
+                    <span style="color:#0071b7;"  >部门</span>  :
+                    <input type="text" style="width:45%" name="bm" value="{weikucms:$list['bm']}" placeholder="请输入部门">
+
+                </div>
+                <button style="background-color:#0071b7;" class="btn wrap_top">提交</button>
+            </form>
+
+        </div>
+
+    </div>
+<script type="text/javascript">
+
+    $(function(){
+        if($('#form').length > 0){
+            $('#form').validate({
+                //声明
+                rules: {
+                   // tel : "required",
+                    
+
+                    
+                    name: "required",
+                    sex: "required",
+                    bm: "required",
+
+                   
+                },
+                //跳出内容
+                messages: {
+                	
+        
+                	//tel: "请输入手机",
+                	name: "请输入姓名",
+                	sex: "请输入性别",
+                	bm: "请输入部门",
+                  
+      
+                   
+                },
+                //错误信息
+                errorPlacement: function(error, element) {
+                    var tipsContent = error.html();
+                    msg.alert(tipsContent,"知道了");
+                    //error.appendTo(element.parent());
+                    return false;
+                },
+                //提交方式
+                submitHandler:function(form){
+                    form.submit();   //post提交表单
+
+                },
+                onkeyup: false,
+                onfocusout: false
+            });
+        }
+        //给class="submit" 点击事件 ,触发submit
+        $('.submit').click(function(){
+            $('form').trigger('submit');
+        })
+    })
+
+
+</script>
+    </body>
+</html>

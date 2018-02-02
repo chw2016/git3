@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		 <title>鱼美人-积分兑换</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/style.css">
+		<script src="{weikucms::RES}/mru/js3/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js3/main.js"></script>
+		<script src="{weikucms::RES}/mru/js3/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js3/slider.js"></script>
+    </head>
+    <body class="userCenter professor" style="overflow-x:hidden">
+    <div class="shopl">
+    	<div class="guanshwo">
+    		<div class="sliderBox">
+			    <div class="sliderWrap myul">
+			       <volist name="pic" id="v" >
+			        <div class="slider containBg"><img src="{weikucms:$v['pic']}" alt="shoppic">0</div>
+			       </volist>
+			    </div>
+			</div>
+			</div>
+    	<div class="shoplist">
+    	<volist name="list" id="v">
+    	   <a href="{weikucms::U('show',array('token'=>$_GET['token'],openid=>$_GET['openid'],'id'=>$v['id']))}" >
+    		<div class="shoplistto">
+    			<div class="shoplileft" style="width:37%;" ><img src="{weikucms:$v['pic']}" alt="guanggao"></div>
+    			<div class="shopliright">
+    				<div>
+    				       <?php 
+				            echo mb_substr($v['name'],0,16,'utf-8');
+                         
+				        ?>
+    				</div>
+    				<div>所需积分：<span class="bianji">{weikucms:$v['jf']}</span></div>
+    				<div>已领取数量：<span class="bianji">{weikucms:$v['vnum']}/{weikucms:$v['num']}</span></div>
+    				<div>每人仅限兑换<span class="bianji">1</span>次</div>
+    			</div>
+    			<div class="clearBoth"></div>
+    		</div>
+    	   </a>	
+    	</volist>	
+    	</div>
+
+    </div>
+<!-- 复制开始 -->
+<style>
+.f14 { font-size: 14px; }
+.professor .pro .bg { background-color: #000; opacity: 0.4;}
+.professor .pro {   height: 30px; width: 100%;text-align: center; color: #FFF; }
+.professor .body ul li.on { background-color: #8eab01; }
+.professor .pro .bg, 
+.professor .pro .page { position: absolute; top: 0; left: 0; width: 100%; height: 30px;
+line-height: 30px; }
+.fixBottom{
+	position: fixed;
+	bottom: 0;
+	left: 0;	
+}
+</style> 
+<!-- 把总页数>1删除在本地才能看到郊果 -->
+
+<if condition="$firstRow gt 1" >
+
+          <?php
+              //如果没有P p==1
+               if(!$_GET['p']){
+                       $_GET['p']=1;
+                 }
+          ?>
+    <div class='fixBottom pro f14 on' style="bottom: -30px;">
+        <div style="position: relative">
+            <div class='bg'></div>
+            <div class='page'>
+              
+              
+                              <if condition="($_GET['p'] eq 1) or ($_GET['p'] lt 1)" >
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Hyzx&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=1" >
+                <else/>
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Hyzx&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=<?php echo $_GET['p']-1; ?>" >
+                </if>
+           
+                 上一页</a>，
+
+
+                <if condition="($_GET['p'] eq $firstRow) or ($_GET['p'] gt $firstRow)" >                          
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Hyzx&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $firstRow;?>">
+                <else/>
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Hyzx&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $_GET['p']+1; ?>">
+                </if>
+                  下一页</a>
+              
+              
+            </div>
+        </div>
+        
+    </div>
+</if>    
+    <script type="text/javascript">
+    var timeout = null;
+    $(window).scroll(function(){
+        if (timeout != null) {
+            return;
+        };
+        var $bottom = $('.fixBottom.pro');
+        timeout = setTimeout(function(){    
+            $bottom.animate({'bottom':'0px'});
+            setTimeout(function(){
+                $bottom.animate({'bottom':'-30px'});
+            }, 2500);
+            timeout = null;
+        }, 600);
+    });
+    </script>
+ <!-- 复制结束-->        
+    
+<script type="text/javascript">
+	    slider($(".sliderBox"),function(index){
+	    console.log(index)
+		}, {'showCount':true});
+	</script>
+<include file="./tpl/Wap/default/mrufx.html" />  	
+    </body>
+</html>

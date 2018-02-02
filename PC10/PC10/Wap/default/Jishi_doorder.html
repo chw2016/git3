@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>订单</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+    <script type="text/javascript">
+        // 预约时间Json
+        var bookDates = {
+            "20150312" : ["06:30","08:20","09:45","13:30","14:20"],
+            "20150313" : ["14:30","15:20","16:45","17:30","18:20"]
+        }
+        //console.log(bookDates)
+    </script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    订单确认
+</div>
+
+<div class="myul stepHav setMiddle">
+    <div class="myli step on">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">选择时间</span>
+    </div>
+    <div class="myli step">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">选择地址</span>
+    </div>
+    <div class="myli step">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">提交订单</span>
+    </div>
+</div>
+
+<div class="stepIndex">
+    <div class="dateSelectionBox textMiddle border-12 setMiddle myul white blur-gray-bg">
+        <div class="myli dateSelect on" id="day0">
+            <div class="dateName  h4">今天</div>
+            <div class="date">1月27号</div>
+        </div>
+        <div class="myli dateSelect" id="day1">
+            <div class="dateName  h4">明天</div>
+            <div class="date">1月28号</div>
+        </div>
+        <div class="myli dateSelect" id="day2">
+            <div class="dateName  h4">后天</div>
+            <div class="date">1月29号</div>
+        </div>
+        <div class="myli dateSelect" id="day4">
+            <div class="dateName  h4">大后天</div>
+            <div class="date">1月30号</div>
+        </div>
+    </div>
+    <div class="white-bg timeSelectBox setMiddle">
+        <!-- <span id="TimeBox" class="h7">- <span id="time" IFTime="1">没有可预约时间</span> -</span> -->
+        <select name="TimeBox" id="TimeBox" >
+            <!-- <option value="0">没有可预约时间</option> -->
+            <option value="06:30">06:30</option>
+            <option value="08:20">08:20</option>
+            <option value="10:45">10:45</option>
+            <option value="16:25">16:25</option>
+            <option value="17:20">17:20</option>
+            <option value="18:30">18:30</option>
+        </select>
+    </div>
+
+</div>
+<div class="stepIndex hide">
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-tel lisheng-text-color"></div><span>电话</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderTel" type="tel" placeholder='请输入您的手机号码'>
+        </div>
+    </div>
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-address lisheng-text-color"></div><span>地址</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderAddress" type="text" placeholder='请输入您的详细地址'>
+        </div>
+    </div>
+</div>
+<div class="stepIndex hide">
+    <div class="orderInfoBox border-6 boxShadow setMiddle lisheng-text-color white-bg">
+        <div class="orderInfoBoxHead myul">
+            <div class="myli">
+                <div class="setMiddle boxShadow fixBg ORImg" style="background-image:url({weikucms::STATICS}/wapweiui/jishi/img/img.png)"></div>
+            </div>
+            <div class="myli">
+                <div class="h2  bold">
+                    产品名称
+                </div>
+                <div class="h3 ">
+                    实体价：<span class="RMB">199</span>
+                </div>
+            </div>
+        </div>
+        <div class="myul couponBox">
+            <div>使用优惠券</div>
+            <div class="border-6">
+                <select name="coupon" id="coupon">
+                    <option value="0">不使用优惠券</option>
+                </select>
+            </div>
+        </div>
+        <div class="textMiddle lisheng-red h2 pay bold">
+            应付金额：<span class="RMB" id="pay">199</span>
+        </div>
+    </div>
+</div>
+
+<form action="" method="post" id="orderForm">
+    <input type="hidden" id="BookingMan" value="">
+    <input type="hidden" id="BookingDate" value="">
+    <input type="hidden" id="BookingTel" value="">
+    <input type="hidden" id="BookingAddr" value="">
+</form>
+<div class="myul stepHavList">
+    <div class="stepPrev lishengGoldBg  myli textMiddle h4 lisheng-text-color hide" >
+        上一步
+    </div>
+    <div class="stepNext nextBg  myli textMiddle h4 lisheng-text-color " >
+        下一步
+    </div>
+    <div class="nextBg subMit myli textMiddle h4 lisheng-text-color hide ">
+        <button type="submit" id="submit" form="orderForm" value="Submit">提交订单</button>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".stepNext").click(function(){
+            if($("#TimeBox").find("option:selected").val() == "0") return;
+            if($("#time").attr("IFTime") == "0") return;
+            var step = null ;
+            $(".step").each(function(i,o){
+                if($(this).hasClass('on')){
+                    step = i;
+                }
+            });
+            if(step == 0){
+                $("#BookingDate").val($("#TimeBox").find("option:selected").val());
+                $(".stepPrev").removeClass('hide')
+            } else if(step == 1){
+                if($("#orderTel").val() == "" || $("#orderAddress").val() == "") return;
+                var urphone = $("#orderTel").val();
+                var phonematch=/^1[3,4,5,8]\d{9}$/;
+                if(phonematch.test(urphone)){
+                    $(this).addClass('hide');
+                    $(".subMit").removeClass('hide');
+                }else{
+                    alert("请输入正确的手机号码！");
+                    $("#orderTel").val("").focus();
+                    return false;
+                }
+                $("#BookingTel").val($("#orderTel").val());
+                $("#BookingAddr").val($("#orderAddress").val())
+                $(this).addClass('hide');
+                $(".subMit").removeClass('hide');
+            }
+            $(".stepIndex").addClass('hide');
+            $(".step").eq(step+1).addClass('on');
+            $(".stepIndex").eq(step+1).removeClass('hide');
+
+        })
+        $(".stepPrev").click(function(){
+            var step = null ;
+            $(".step").each(function(i,o){
+                if($(this).hasClass('on')){
+                    step = i;
+                }
+            });
+            if(step == 1){
+                $(this).addClass('hide')
+            } else if(step == 2){
+                $(".stepNext").removeClass('hide');
+                $(".subMit").addClass('hide')
+            }
+            $(".stepIndex").addClass('hide');
+            $(".step").eq(step).removeClass('on');
+            $(".stepIndex").eq(step-1).removeClass('hide');
+
+        })
+        $("#submit").click(function(event) {
+            /* Act on the event */
+            alert($("#BookingDate").val());
+            alert($("#BookingTel").val());
+            alert($("#BookingAddr").val());
+
+        });
+
+    })
+</script>
+</html>

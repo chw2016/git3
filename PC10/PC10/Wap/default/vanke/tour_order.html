@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/style1-3.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/style_one.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <style type="text/css" media="screen">
+        .addPlus {
+            float: right;
+            border: 1px solid #BD9C9C;
+            /* padding: 3px 1px; */
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;}
+    </style>
+    <title>确认订单</title>
+</head>
+<body class="orders">
+    <div class="fixTop header headerBg">
+        <!--<div class="logo"></div>
+        <div class="title">/ 度假服务</div>-->
+        <div class="circle goBack">
+        </div>
+        <div class="titleRight">
+            确认订单
+        </div>
+    </div>
+    <div class="content">
+        <div class="ordersWrap boxShadow">
+            <div class="item ">
+                <div class="img">
+                    <img src="{weikucms:$product.url}" alt="" data-original="{weikucms:$product.url}"/>
+                </div>
+                <div class="goodsDetail">
+                    <div class="goodsTitle">
+                        {weikucms:$product.name}
+                    </div>
+                    <div class="priceBox">
+                        <div class="price RMB">{weikucms:$dataInfo.money}</div>
+                        <div class="count">
+                            <span class="countBtn minus" price="{weikucms:$dataInfo.money}"></span>
+                            <span class="num" id="goodNum">1</span>
+                            <span class="countBtn plus" price="{weikucms:$dataInfo.money}" max="10"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="totalWrap">
+                <!--
+                <span class="expressFee">
+                    快递:<span class="num">免运费</span>
+                </span>
+                -->
+                <span class="totalGoodsFee">
+                    合计:<span class="num RMB">{weikucms:$dataInfo.money}</span>
+                </span>
+            </div>
+        </div>
+		<div class="chooseBox cinemaChooseWrap boxShadow">
+            <div class="title">
+                <span>请选择成员</span>
+                <span class="addPlus">+</span>
+            </div>
+            <span class="wrap yeChoose movieChoose">
+                <div class="text tour_family" check="true">
+                    <span class="circle checkCircle on" data-name="{weikucms:$WxvankeBindUser.name}(本人)" data-id="{weikucms:$WxvankeBindUser.customer_id}"></span>
+                    {weikucms:$WxvankeBindUser.name}(本人)
+                </div>
+            </span>
+            <volist name="WxvankeQSInfo" id="m">
+            <span class="wrap yeChoose movieChoose">
+                <div class="text tour_family">
+                    <span class="circle checkCircle" data-name="{weikucms:$m.family.name}" data-id="{weikucms:$m.family.customer_id}"></span>
+                    {weikucms:$m.family.name}
+                    (
+                    <if condition="$m['relation'] eq 'children'">
+                    子女
+                    <elseif condition="$m['relation'] eq 'parent'" />
+                    父母
+                    <elseif condition="$m['relation'] eq 'couple'" />
+                    夫妻
+                    <else />
+                    未知
+                    </if>
+                    )
+                </div>
+            </span>
+            </volist>
+			</div>
+        <div class="chooseBox boxShadow">
+            <div class="title">
+                选择支付方式
+            </div>
+            <!--
+            <span class="wrap yeChoose yeChooseBody">
+                <span class="text yue">
+                    <span class="circle checkCircle"></span>
+                    <img src="{weikucms::STATICS}/common/img/ye.png" alt="" width="22"/>
+                    余额支付
+                    <span class="myMoney f12">可用:(<span class="num"><php>echo max(0,$userinfo['money'])</php></span>元)</span>
+                </span>
+                <span class="tipsText f12">
+                    勾选余额支付后，当余额不足时自动使用下列付款方式补足。
+                </span>
+            </span>
+            -->
+            <span class="wrap payTypeChoose">
+                <span class="text weChatPay payType" check="true">
+                    <span class="circle checkCircle on"></span>
+                    <img src="{weikucms::STATICS}/common/img/weChat.png" alt="" width="22"/>
+                    微信支付
+                </span>
+                <!--
+                <span class="text aLiPay payType">
+                    <span class="circle checkCircle"></span>
+                    <img src="{weikucms::STATICS}/common/img/alipay.png" alt="" width="22"/>
+                    支付宝支付
+                </span>
+                -->
+            </span>
+        </div>
+
+        <div class="submitBtn border-4 f18">
+            立即支付
+        </div>
+    </div>
+    <form id="yypayform" method="post" action="http://szm.vanke.com/shop/pay/commpay.php" >
+        <input type="hidden" name="orderid" value="" id="orderid">
+        <input type="hidden" name="token" value="{weikucms:$token}" id="token">
+        <input type="hidden" name="openid" value="{weikucms:$openid}" id="openid">
+        <input type="hidden" name="title" value="旅游服务" id="title">
+        <input type="hidden" name="money" value="0" id="totalPrice1">
+        <input type="hidden" name="product_id" value="{weikucms:$product.id}" id="product_id">
+        <!--gid数据是没有用的-->
+        <input type="hidden" name="gid" value="{weikucms:$product.id}" id="gid">
+        <input type="hidden" name="returnurl" value="{weikucms::U('Mtour/wx_pay', array('token' => $token, 'openid' => $openid),true,false, true)}">
+    </form>
+    <script>
+
+        seajs.use("helper",function(h){
+            $(".submitBtn").submitBtn({
+                tipText : "正在支付···",
+                testData : {
+                    ".payTypeChoose" : {
+                        extend : function(){
+                            var length = $(".payTypeChoose")
+                                .find(".payType")
+                                .find(".checkCircle.on")
+                                .length;
+                            if(length<1){
+                                this.errorCount++;
+                                return this.Error("请选择支付方式")
+                            }
+                            //选的票数不能小于选的人数
+                            var num = parseInt($('#goodNum').text());
+                            var selected = $('.tour_family .checkCircle.on').length;
+                            if(num < selected){
+                                this.errorCount++;
+                                return this.Error("购买的数量不得少于所选成员数哦~")
+                            }
+                            var goodNum = parseInt($('#goodNum').text());
+                            if(confirm('您确认购买'+ goodNum +'张吗')){
+                                $.post("{weikucms::U('Mtour/order')}", {
+                                    'product_id': "{weikucms:$product.id}",
+                                    'family'    : getFamily(),
+                                    'source'    : 2,
+                                    'month'     :   "{weikucms:$month}",
+                                    'day'       : "{weikucms:$day}",
+                                    'number'    : goodNum
+                                }, function(data){
+                                    //处理
+                                    if(data.status == 0){
+                                        $("[name='money']").val(data.data.money);
+                                        $("[name='orderid']").val(data.data.orderid);
+                                        $('#yypayform').submit();
+                                    }else{
+                                        $('.submitBtn')
+                                            .removeClass('_submitting_')
+                                            .text('确定支付')
+                                            .css('opacity', 1);
+                                        return msg.alert(data.msg);
+                                    }
+                                }, 'json');
+                                return false;
+                            }else{
+                                this.errorCount++;
+                                return false;
+                            }
+
+
+
+                        }
+                    }
+                },
+                success : function(){
+
+                },
+                error : function(text){
+                    h.tips(text);
+                }
+            })
+
+
+            function getFamily(){
+                var name = '';
+                $(".tour_family[check='true']").each(function(){
+                    name += $(this).find('.checkCircle.on').attr('data-name') + ',';
+                });
+                return name.substr(0, name.length -1);
+            }
+
+
+            $(function(){
+                var $minus = $(".minus"),
+                        $plus  = $(".plus"),
+                        $totalPrice = $(".totalGoodsFee").find(".num");
+                $minus.touch(function(){
+                    var $i = $(this).parent().find(".num"),
+                            i = Number($(this).parent().find(".num").text()),
+                            price = $(this).attr("price").fixNum(),
+                            totalPrice = Number($totalPrice.text()) - price ;
+                    i--;
+                    if(i>=1){
+                        $i.text(i);
+                        $totalPrice.text(totalPrice);
+                    }else{
+                        h.tips("至少选择一个")
+                    }
+                });
+                $plus.touch(function(){
+                    var $i = $(this).parent().find(".num"),
+                            i = Number($(this).parent().find(".num").text()),
+                            max = Number($(this).attr("max")),
+                            price = $(this).attr("price").fixNum(),
+                            totalPrice = Number($totalPrice.text()) + price ;
+                    i++;
+                    if(i<=max){
+                        $i.text(i);
+                        $totalPrice.text(totalPrice);
+                    }else{
+                        h.tips("最多只能选"+max+"个")
+                    }
+                })
+
+            });
+        })
+
+        $('.addPlus').touch(function(){
+            var returnurl = escape("{weikucms::U('Mtour/tour_detail')}" + '&id={weikucms:$product.id}');
+            location.href = "{weikucms::U('Vanke/bind_qs')}" + "&returnurl=" + returnurl;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/tour/css/tour.css">
+		<link rel="stylesheet" href="{weikucms::RES}/tour/css/islider.css">
+		<link href="{weikucms::RES}/tour/css/common.css" rel="stylesheet" />
+		<script src="{weikucms::RES}/tour/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/tour.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/islider.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/date.js" ></script>
+        <script type="text/javascript" src="{weikucms::RES}/tour/js/iscroll.js" ></script>
+        <script type="text/javascript" src="{weikucms::RES}/tour/js/msg.js" ></script>
+        <script type="text/javascript">
+			$(function(){
+				$('#selectedDates').date();
+			});
+			var urlpay = "{weikucms::U('Wap/Tour/alipay',array('token'=>$token,'openid'=>$openid))}";
+        </script>
+    </head>
+    <body class="bodys">
+	    <section class="productInfo precent-90">
+	    	<section class="title">产品预定</section>
+	    	<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	    	{weikucms:$info.name}
+	    	    </section>
+	    	    <section class="goWhere">
+	        	出发地：<span class="whereGo">{weikucms:$info.chufadi}</span>
+	            </section>
+		        <section class="goWhere">
+		        	目的地：<span class="whereGo aim">{weikucms:$info.mudidi}</span>
+		        </section>
+	    	</section>
+	    </section>
+	    <section class="productInfo precent-90">
+	    	<section class="title">出游信息</section>
+	    	<!--<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	    	<div id="selectedDates" class="selectedDate">
+	    	    	请选择出游日期
+	    	    		<div class="tangle"></div>
+	    	    	</div>
+	    	    	<div id="datePlugin"></div>
+	    	    </section>
+	    	</section>-->
+	    	<section id="man">
+			    <section class="productInfo-block limitWidth left">
+		    		<section class="productInfo-block-block abc">
+		    	    	<div class="choiceChildren">
+		    	    		<div class="lefts">
+		    	    			<div class="selectedDate" id="adult">
+		    	    	        请选择成人人数
+						            <div class="tangle"></div>
+		    	    	        </div>
+		    	    		</div>
+		    	    	</div>
+		    	    </section>
+		    	    <!-- 显示下拉框 -->
+		    	    <div class="showDDL">
+		    	    	<div>1</div>
+		    	    	<div>2</div>
+		    	    	<div>3</div>
+		    	    	<div>4</div>
+		    	    	<div>5</div>
+		    	    	<div>6</div>
+		    	    </div>
+	    	    </section>
+	    	    <section class="middle"></section>
+	    	    <section class="productInfo-block limitWidth right">
+		    		<section class="productInfo-block-block">
+		    	    	<div class="choiceChildren">
+		    	    		<div class="lefts">
+		    	    			<div class="selectedDate" id="child">
+		    	    	        请选择儿童人数
+						            <div class="tangle"></div>
+		    	    	        </div>
+		    	    		</div>
+		    	    	</div>
+		    	    </section>
+		    	    <div class="showDDL">
+		    	    	<div>1</div>
+		    	    	<div>2</div>
+		    	    	<div>3</div>
+		    	    	<div>4</div>
+		    	    	<div>5</div>
+		    	    	<div>6</div>
+		    	    </div>
+	    	    </section>
+	    	</section>
+	    </section>
+		<!-- 游客1信息 -->
+
+        <div class="bbc">
+            <section class="productInfo precent-90 copy">
+	    	<section class="title" >游客信息</section>
+	    	<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	        <input type="text" name="tour1" class="tour" placeholder="请填写游客的姓名"/>
+	    	    </section>
+
+	    	</section>
+            <section class="productInfo-block">
+                <section class="productInfo-block-block">
+                    <input type="text" name="phone" class="phone" placeholder="请填写手机号码"/>
+                </section>
+
+            </section>
+	    	<section class="productInfo-block tourist1">
+	    		<section class="productInfo-block-block margin">
+	    	    	<!-- <input name="selectedDate" id="selectedDate" placeholder="请选择出游日期"> -->
+	    	    	<div class="selectedDate car_name" >
+	    	    	请选择游客证件
+					    <div class="tangle"></div>
+	    	    	</div>
+	    	    	    <!-- 找插件 -->
+	    	    	<!-- <div class="tangle"></div> -->
+	    	    </section>
+	    	    <div class="showDDL" >
+		    	    	<div>身份证</div>
+		    	    	<div>学生证</div>
+		    	    	<div>残疾证</div>
+		    	</div>
+	    	</section>
+	    	<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	        <input type="text" name="cardno1" class="cardno" placeholder="请填写证件号码，千万不要写错了哦"/>
+	    	    </section>
+
+	    	</section>
+	    </section>
+            </div>
+	    <!-- 游客2信息 -->
+       <!-- <section class="productInfo precent-90">
+	    	<section class="title">游客2信息</section>
+	    	<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	        <input type="text" name="tour2" id="tour2" placeholder="请填写游客的姓名"/>
+	    	    </section>
+
+	    	</section>
+	    	<section class="productInfo-block tourist2">
+	    		<section class="productInfo-block-block margin">
+	    	    	&lt;!&ndash; <input name="selectedDate" id="selectedDate" placeholder="请选择出游日期"> &ndash;&gt;
+	    	    	<div class="selectedDate" id="card2">
+	    	    	请选择游客证件
+					    <div class="tangle"></div>
+	    	    	</div>
+	    	    	    &lt;!&ndash; 找插件 &ndash;&gt;
+	    	    	&lt;!&ndash; <div class="tangle"></div> &ndash;&gt;
+	    	    </section>
+	    	    <div class="showDDL">
+		    	    	<div>身份证</div>
+		    	    	<div>学生证</div>
+		    	    	<div>残疾证</div>
+		    	</div>
+	    	</section>
+	    	<section class="productInfo-block">
+	    	    <section class="productInfo-block-block">
+	    	        <input type="text" name="cardno2" id="cardno2" placeholder="请填写证件号码，千万不要写错了哦"/>
+	    	    </section>
+
+	    	</section>
+	    </section>-->
+	    <!-- 立即支付 -->
+	    <div class="alipay" data-id="{weikucms:$info.id}">立即支付</div>
+            <input type="hidden" name="order_money_hidden" value="<?php echo session('price');?>">
+			<form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+	            <input type="hidden" name="order_money" value="<?php echo session('price');?>">
+	            <input type="hidden" name="order_text" value="">
+	            <input type="hidden" name="orderid" id="orderid" value="">
+	            <input type="hidden" name="openid" value="{weikucms:$openid}">
+	            <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Tour&a=showOrder&token={weikucms:$token}&openid={weikucms:$openid}">
+	            <input type="hidden" name="type" value="Store_new_goods_order">
+	        </form>
+                <!--微信支付隐藏表单结束-->
+    </body>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>{weikucms:$tpl.name}</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .sous{
+            background-color: #FA405E;
+            border-radius: 5px;
+            margin-left: 5px;
+            padding:0 10px;
+            color: #ffffff;
+            border: 0;
+            height: 23px;
+        }
+        .inputs{
+            height: 30px;
+            width: 72%;
+            border: 1px solid #CFCDCD;
+            border-radius: 7px;
+            padding-left: 4px;
+        }
+        .content_top strong {
+            font-size: 14px;
+            margin: 0 5% 0 5%;
+            color: #515151;
+            position: relative;
+            top: 6px;
+        }
+        #content .content_footer {
+            padding-top: 10px;
+        }#nav .nav_title.on:after {
+             bottom: -95%;
+         }
+        .classers.taskon{
+            color: #FA405E;;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+
+            //$('.Invitation').each(function(i,o){
+                $(document).on('click', '.Invitation', function(){
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+
+                });
+                //$(this).click(function(){
+                //$(document).on('click','this',function(){
+                    //});
+            //})
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                // $(this).children('img').hide();
+            })
+        })
+    </script>
+</head>
+<body>
+
+<!--分享罩罩-->
+<div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+    <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+</div>
+<!--分享罩罩-->
+<!--
+<div id="header">
+    <ul>
+        <li class="li_first"> <img src="img/close.png" width="14px" ></li>
+        <li class="li_second"><span>任务中心</span></li>
+        <li class="li_third"><img src="img/upLoad.png"  height="14px"></li>
+    </ul>
+</div>
+-->
+<div id="showImg"><img src="{weikucms:$taskpic['pic']}" width="100%" style="height: 150px;  display: inherit;"></div>
+<div id="nav">
+    <div class="nav_content">
+        <ul>
+            <li class="nav_title <if condition='$gtask eq 1'>on</if>" onclick="window.location.href='{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid,'task'=>1))}'">今日任务</li>
+            <li class="nav_title <if condition='$gtask eq 2'>on</if>" onclick="window.location.href='{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid,'task'=>2))}'">推广任务</li>
+            <li class="nav_title <if condition='$gtask eq 3'>on</if>" onclick="window.location.href='{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid,'task'=>3))}'">悬赏任务</li>
+        </ul>
+    </div>
+    <div class="nav_show">
+        <ul>
+            <volist name="bigcate" id="vo" key="k">
+                <li class="classers" cid="{weikucms:$vo.id}">{weikucms:$vo.cname}</li>
+            </volist>
+            <!--<li taskon>活动</li>
+            <li>商品</li>
+            <li>品牌</li>-->
+        </ul>
+    </div>
+</div>
+<div class="labels">
+    <div id="content">
+        <div class="content_top"><strong>搜索任务</strong>
+            <form id="search-form" action="{weikucms::U('Wap/Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}" method="post">
+                <div style="margin-top: -19px; margin-left: 80px;">
+                    <input type="search" name="title" class="inputs" placeholder="请输入关键字进行搜索" value="{weikucms:$title}">
+                    <button type="submit" class="sous">搜索</button>
+                    <!--<input type="submit" class="sous" value="搜索">-->
+
+                </div>
+            </form>
+
+        </div>
+        <div class="content_footer">
+            <div class="foot_left"><strong style="font-size: 14px;">文章分类</strong></div>
+            <div class="foot_right">
+                <ul>
+                    <li class="labers selected">全部</li>
+                    <volist name="labeldata" id="la">
+                    <li class="labers" cid={weikucms:$la.cid} lid={weikucms:$la.id}>{weikucms:$la.lname}</li>
+                    </volist>
+                    <!-- <li>美女</li>
+                    <li>时事</li>
+                    <li>健康</li>
+                    <li>情感</li>
+                    <li>励志</li>
+                    <li>爱情</li>
+                    <li>娱乐</li>
+                    <li class="selected">趣味</li>
+                    <li>猎奇</li>
+                    <li>怀旧</li>
+                    <li>新鲜</li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-body">
+        <if condition="$taskdata eq ''">
+            <div class="of row-item" style="text-align: center;">
+                暂无数据
+            </div>
+            <else/>
+            <volist name="taskdata" id="so">
+                <div class="of row-item">
+                    <a href="{weikucms::U('Medias/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$so['id'],'qid'=>$so['qid']))}">
+                        <div class="fl" style="width:30%;height: 75px;"><img src="{weikucms:$so.pic}" width="100%" height="100%" /></div>
+                    </a>
+                    <div class="fr row-right">
+                        <a href="{weikucms::U('Medias/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$so['id']))}">
+                            <div class='row-title' style="color:#000000;">{weikucms:$so.title}</div>
+                        </a>
+                        <div>
+                            <span class="img_icon"><img src="{weikucms::STATICS}/wapweiui/medias/img/jifen.png" width="100%" /></span><span>{weikucms:$so.commission}</span>
+                           <!-- <span class="img_icon"><img src="{weikucms::STATICS}/wapweiui/medias/img/money.png" width="100%"  /></span><span>30</span>-->
+                            <span class="img_icon Invitation" onclick="doshare({weikucms:$so.id},'{weikucms:$so.qid}','{weikucms:$so.pic}','{weikucms:$so.title}','{weikucms:$so.abstract}','{weikucms:$so.pid}');"><img src="{weikucms::STATICS}/wapweiui/medias/img/forwarding.png" width="100%" /></span>已分享<span class="hlight">{weikucms:$so.number}</span>次</span></span>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </if>
+
+
+        <div class="zw"></div>
+    </div>
+</div>
+<div id="footer">
+    <ul>
+        <a href="{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer1.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>2))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer2.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myCenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer3.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/mybrother',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer4.png" width="35px" ></li>
+        </a>        
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        var url = "{weikucms::U('Wap/Medias/taskcenter',array('token'=>$token,'openid'=>$openid,'task'=>$_GET['task']))}";
+        $('.classers').click(function() {
+            $('.classers.taskon').removeClass('taskon');
+            $(this).addClass('taskon');
+            var cid = $.trim($('.classers.taskon').attr('cid'));
+            $.post(url, {cid:cid}, function(data) {
+                if(data.status==1){
+                    $('.labels').empty();
+                    $('.labels').append(data.fetch);
+                }else{
+                    msg.alert('系统繁忙，请稍后');
+                }
+            
+                /*optional stuff to do after success */
+            },'json');
+        });
+
+
+        $(document).on('touchstart','.labers',function() {
+            $(".labers.selected").removeClass('selected');
+            $(this).addClass('selected');
+            var cid = $.trim($('.labers.selected').attr('cid'));
+            var lid = $.trim($('.labers.selected').attr('lid'));
+            $.post(url, {cid:cid,lid:lid}, function(datas) {
+                if(datas.coders==1){
+                    $('.main-body').empty();
+                    $('.main-body').append(datas.mgs);
+                }else{
+                    msg.alert('系统繁忙，请稍后');
+                }
+                
+                /*optional stuff to do after success */
+            },'json');
+        });
+
+    })
+</script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var is_auth = {weikucms:$tpl['is_auth']};
+    var shareTitle="";
+    var imgUrl="";
+    var descContent="";
+    var shareUrl="";
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+
+    function doshare(id,qid,pic,title,abstract,pid){
+
+        if(is_auth ==1){
+            if(pid == 0){
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/openid/{weikucms:$openid}/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect";
+            }else{
+
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/openid/{weikucms:$openid}/product_id/"+pid+"/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect";
+            }
+
+            shareTitle = title;
+            imgUrl = "<php>echo C('site_url');</php>"+pic;//主题图片
+            descContent = abstract;
+
+        }else{
+
+            if(pid == 0){
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/openid/{weikucms:$openid}/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+            }else{
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/openid/{weikucms:$openid}/product_id/"+pid+"/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+            }
+            shareTitle = title;
+            imgUrl = "<php>echo C('site_url');</php>"+pic;//主题图片
+            descContent = abstract;
+        }
+
+
+        wx.ready(function () {
+            // 在这里调用 API
+            wx.onMenuShareTimeline({
+                title: shareTitle, // 分享标题
+                link: shareUrl, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+
+
+                    // 用户确认分享后执行的回调函数
+                    var url = "{weikucms::U('Medias/sharecount',array('token'=>$token,'openid'=>$openid))}";
+					
+                    $.post(url,{tid:id,pid:pid},function(data){
+                        if(data.code == 0){
+                            alert(data.mgs);
+                            
+                        }else{
+                            alert(data.mgs);
+                            
+                        }
+                    },'json');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title: shareTitle, // 分享标题
+                desc: descContent, // 分享描述
+                link: shareUrl, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    //alert(123);
+                    var url = "{weikucms::U('Medias/sharecount',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,{tid:id,pid:pid},function(data){
+                        if(data.code == 0){
+							alert(data.mgs);
+                            
+                        }else{
+                            alert(data.mgs);
+                            
+                        }
+                    },'json');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+
+
+    }
+
+
+
+
+</script>
+
+

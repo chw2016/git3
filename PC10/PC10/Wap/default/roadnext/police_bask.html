@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="">
+        <meta name="format-detection" content="telphone=no, email=no"/>
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+        <title>{weikucms:$tpl.name}</title>
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+		<script>
+		$(function(){
+            $(document).on('click','.zooms',function(){
+            //$(".zooms").touchstart(function(){
+                if($(this).hasClass("on")){
+                    $(this).removeClass("on");
+                    $(this).next().hide();
+                }else{
+                    $(this).addClass("on");
+                    $(this).next().show();
+                }
+            })
+		})
+
+        function seetes(id){
+            $('.zoom').empty();//清空
+            $.post("{weikucms::U('Roadnext/police',array('token'=>$token,'openid'=>$openid))}",{lid:id},
+                    function(data){
+                        if(data.status ==1){
+                            $('.zoom').append(data.fetch);
+                        }else{
+                            alert('系统繁忙，请稍后！');
+                        }
+                    },'json')
+        }
+			
+		</script>
+	</head>
+	<style>
+	 body{
+	font-family: "微软雅黑";
+	color: #333333;
+	background-color: #e3eee2;
+    }
+	body,ul,li,p,dl,dt,dd,h1,h2,h3,h4,h5{
+	margin: 0px;
+	padding: 0px;
+	}
+	ul{
+	list-style: none;
+      overflow: hidden;
+
+	}
+	a{
+	text-decoration: none;
+	display: inline-block;
+	}
+		.police{
+			width: 90%;
+			margin: 0 auto;
+		   background-color: #fff;
+		}
+		.police_top{
+		    color: #FFFFFF;
+			line-height: 35px;
+            background-color:  #1BB59B;
+		    font-size:13px;
+		    font-weight:initial;
+		}
+		.police_top span{
+
+			margin-left: 10px;
+		}
+		.police_nav{
+			width: 100%;
+		
+		}
+		.police_text{
+			padding: 20px;
+			background-color: #FFFFFF;
+			line-height: 25px;
+			font-size: 14px;     	
+		}
+		.City{
+			display:inline-block;
+			background: rgb(236, 236, 236);
+			width: 100%;
+			
+		}
+		.City span{
+			width:43%;
+			height: 20px;
+			background: #006400;
+			text-align: center;
+			line-height: 20px;
+			color: white;
+			display: block;
+			border-radius: 3px;
+			margin: 5px 10px;
+			font-size: 12px;
+			float: left;
+		}
+		/*.police_span{
+			width: 90%;
+			margin: 0 auto;
+			background: gray;
+		}*/
+		
+		.zoom {
+			width: 100%;
+		}
+		.zooms_min{
+			background: #FFFFFF;
+		}
+		.zooms_max{
+			
+		}
+		.zooms{
+			list-style: none;
+			line-height: 30px;
+			height: 30px;
+			font-size: 12px;
+			color: rgb(53, 105, 102);
+			border: 1px solid #;			
+		}
+		
+		.zoom_img{
+			width: 90%;
+			height: 200px;
+			background: #F0F0F0;
+			display: none;
+            margin: 0 auto;
+			
+		}
+		.zoom_img img{
+			width: 100%;
+			
+		}
+		.zooms_text{
+			margin: 10px;
+		}
+	</style>
+	<body>		
+		<div class="police">
+         <div class="police_top"><span>东莞路况快照</span></div>
+		<div class="police_nav">
+			<div class="police_text">
+			可以查询全市72个主要路口、路段的实时交通状况、快照5-10分钟更新一次。
+			</div>
+		</div>
+			<div class="City">
+                <volist name="line" id="so">
+                    <span class="pol" onclick="seetes('{weikucms:$so.id}')">{weikucms:$so.lname}</span>
+                </volist>
+
+			</div>
+			<div class="zoom" >
+                <div class="zooms_min">
+                    <!--<div class="zooms"><span class="zooms_text">东湖轩(东纵路-罗沙湖)</span></div>
+                    <div class="zoom_img"></div>-->
+                </div>
+			</div>
+				
+			</div>
+		</div>
+
+        <footer>
+            <div style="width: 20%" class="fl">
+                <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+            </div>
+            <div class="fl" style="width:80%">
+                <div class="home_xian  fl"></div>
+                <div class="ds_ib fl w33"><a href="tel:15243666632">一键联系</a></div>
+                <div class="home_xian  fl"></div>
+                <div class="ds_ib fl w33"><a href="#">使用帮助</a></div>
+                <div class="home_xian  ml15 fl"></div>
+                <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Liuyan/index',array('token'=>$token,'openid'=>$openid))}">投诉建议</a></div>
+            </div>
+        </footer>
+	</body>
+</html>

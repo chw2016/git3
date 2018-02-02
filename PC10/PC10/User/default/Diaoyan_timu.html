@@ -1,0 +1,63 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{uuuyi::RES}/css/cymain.css" />
+<div class="content right" style="width:920px; background:none; margin-left:275px; border:none; margin-bottom:30px;" >
+<div class="cLineB">
+<h4 class="left">题目列表 ({uuuyi:$page}) </h4>
+<div class="searchbar right">
+<form method="post" action="">
+</form>
+</div>
+<div class="clr"></div>
+</div>
+
+<div class="cLine">
+<div class="pageNavigator left"> <a href="{uuuyi::U('Diaoyan/addTimu',array('token'=>$token,'id'=> $id))}" title="添加" class="btn btn-primary"><img src="{uuuyi::RES}/images/product/add.png" width="16" class="vm">添加</a></div>
+<div class="clr"></div>
+ <a href="{uuuyi::U('Diaoyan/index',array('token'=>$token))}" class="right  btnGreen" style="margin-top:-37px">返回</a> 
+</div>
+
+<div class="msgWrap">
+
+
+	<form method="post" action="" id="info">
+	<input name="delall" type="hidden" value="">
+	<input name="wxid" type="hidden" value="">
+	<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	<thead>
+	<tr>
+	<th width="30">序号</th>
+	<th width="200">调研题目</th>
+	<th width="200">题目数量</th>
+	<th width="200" class="norightborder">操作</th>
+	<th width="30">PID</th>
+	
+	</tr>
+	</thead>
+	<tbody>
+	<tr></tr>
+	<volist name="data" id="item"> 
+		<tr>
+		<td>{uuuyi:$item.tid}</td>
+		<td>{uuuyi:$item.title}</td>
+		<td>{uuuyi:$item.max}</td>
+		<td class="norightborder">
+			<a href="{uuuyi::U('Diaoyan/setTimu',array('id'=>$item['tid'],'token'=>$token, 'pid'=>$item['pid']))}">修改</a>&nbsp;&nbsp;
+			<a href="{uuuyi::U('Diaoyan/delTimu',array('id'=>$item['tid'],'token'=>$token, 'pid'=>$item['pid']))}">删除</a>
+		</td>
+		<td>{uuuyi:$item.pid}</td>
+		</tr>
+	</volist>
+	</tbody>
+	</table>
+	</form>
+
+
+</div>
+<div class="cLine">
+<div class="pageNavigator right">
+<div class="pages">{uuuyi:$page}</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>

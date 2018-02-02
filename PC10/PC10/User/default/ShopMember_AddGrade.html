@@ -1,0 +1,201 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+<div id="con" style="width: 100%;height: 100%;background-color: white;padding-top: 20px;">
+    <div style="width: 90%;margin: 0 auto;">
+   <div class="cLineB">
+       <div class="title_tab" id="topTab">
+           <ul class="tab_navs title_tab" data-index="0" >
+
+               <li data-index="0" class="tab_nav first js_top " data-id="total">
+                   <a href="{weikucms::U('ShopMember/index',array('token'=>$token,'member_id'=>$member_id))}">门店主页</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/MemberAll',array('token'=>$token,'member_id'=>$member_id))}">所有订单</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/MemberAll',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">今日订单</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/WareList',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">商品管理</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/GradeList',array('token'=>$token,'member_id'=>$member_id))}">会员管理</a>
+               </li>
+
+               <!--<li data-index="1" class="tab_nav  js_top sub" data-id="today">-->
+               <!--<a href="">未处理订单</a>-->
+               <!--</li>-->
+           </ul>
+       </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以了解万普微门店(所有分店)的订单总数、今日的订单量、会员总数和未处理订单，未处理订单将会展示各分店订单的处理情况，有利于了解和管理分店。</li>
+		<li>在这里还可以添加分店、编辑分店、删除分店。</li>
+	</ol>
+</div>
+
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>   添加等级
+        </h4>
+    </div>
+
+    <div class="msgWrap">
+        <form class="form" method="post" id="form" action="">
+            <div class="msgWrap bgfc">
+                <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <th>级别名称：</th>
+
+                        <td>
+                            <input type="text" id="name" name="name" value="{weikucms:$data.name}" class="px require" style="width:400px;" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <TH valign="top">图片：</TH>
+                        <TD>
+                            <input type="text" class="px" id="pic" name="pic" value="{weikucms:$data.pic}" style="width: 400px;" readonly/>
+                            <span class="ke-button-common" id="upload">上传图片</span>
+                        </TD>
+                    </tr>
+
+                    <tr>
+                        <th>级别描述</th>
+                        <td>
+                            <textarea name="info"  cols="30" rows="10" id="info">{weikucms:$data.info}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>积分范围</th>
+                        <td>
+                            <input type="text" value="" id="scope" style="width: 400px;" placeholder="大于多少分"/>
+                            <br/>范围必须为数字
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>是否开启;</th>
+                        <td>
+                            <input type="radio" name="open"  value="1" checked/>是
+                            <input type="radio" name="open" value="0"/>否
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var name = $("#name").val();
+                var pic = $("#pic").val();
+                var open=$("input[name=open]");
+                var info=$("#info").val();
+                var scope=$("#scope").val();
+                var status=0;
+                $.each(open,function(i,o){
+                    if($(o).attr("checked")){
+                        status=$(o).val();
+                    }
+                })
+                if(!name){
+                    notif({
+                        msg: "名称不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(!scope){
+                    notif({
+                        msg: "范围不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! pic){
+                    notif({
+                        msg: "图片不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                $.post("{weikucms::U('ShopMember/AddGrade',array('token'=>$token,'member_id'=>$member_id))}",{name:name,pic:pic,status:status,info:info,scope:scope},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        location.href="{weikucms::U('ShopMember/GradeList',array('token'=>$token,'member_id'=>$member_id))}";
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "warning"
+                        });
+                    }
+                },"json")
+            });
+        });
+
+    </script>
+</div>
+        </div>
+    </div>
+<!--<include file="Public:footer"/>-->

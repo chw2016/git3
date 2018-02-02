@@ -1,0 +1,77 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;">
+<div style="width: 90%;margin: 0 auto;">
+   <div class="cLineB">
+
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>文章排序，数值越大，排在越前。</li>
+
+	</ol>
+</div>
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>品牌文章列表</h4>
+    </div>
+    <a class="btn btn-success btn-sm" href="{weikucms::U('Brand/add_article')}">添加品牌文章</a>
+    <a class="btn btn-success btn-sm" href="{weikucms::U('Brand/set')}">品牌设置</a>
+    <div class="msgWrap">
+
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>标题名字</th>
+                     <!-- <th>分类关键词</th>
+                      <th>分类描述</th>
+                      <th>分类图片</th>-->
+                      <th>状态</th>
+                      <th>排序</th>
+                      <th style="width: 165px;text-align: center;">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo" key="i">
+                  		<tr>
+        					<td>{weikucms:$i}</td>
+                  			<td style="text-indent:{weikucms:$vo['Count']*6}px;">{weikucms:$vo.title}</td>
+                           <!-- <td>{weikucms:$vo.keywords}</td>
+                            <td>{weikucms:$vo.des}</td>
+                            <td><img src="{weikucms:$vo.pic}" alt="图片不存在" style="width: 100px;height: 100px;"/></td>-->
+                            <td><if condition="$vo['status'] eq 0">未核审<else />已核审</else></if></td>
+                            <td>{weikucms:$vo.sort}</td>
+                          	<td class="norightborder">
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Brand/edit_article',array('id'=>$vo[id]))}">编辑</a>
+                              <a class="btn btn-danger btn-sm"  href="{weikucms::U('Brand/del_article',array('id'=>$vo[id]))}">删除</a>
+                             <!--  <a class="btn btn-success btn-sm" style="background-color:#7CFC00;border-radius:8px;" href="/index.php?g=User&amp;m=Shopdoor&amp;a=manager&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="登录分店">分店登录</a> -->
+                          	</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+
+        <div>
+            <ul class="pager">
+                {weikucms:$page}                  </ul>
+        </div>
+  </div>
+    </div>

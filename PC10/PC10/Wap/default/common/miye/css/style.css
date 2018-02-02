@@ -1,0 +1,599 @@
+/*
+* @Author: 星辉
+* @Date:   2015-02-06 10:23:04
+* @Last Modified by:   星辉
+* @Last Modified time: 2015-03-30 14:38:28
+*/
+*{
+    padding:0;
+    margin:0;
+    font-family: "微软雅黑","STHeitiTC-Medium",Verdana,Helvetica;
+    -webkit-text-size-adjust:none;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+
+
+*:hover{
+    -webkit-text-size-adjust:none;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+
+
+*:focus{
+    outline: none;
+}
+
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+li{
+    list-style: none;
+}
+
+.myul{
+    display: flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-box;
+}
+
+
+.myli{
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex:1;
+}
+
+
+.logo{
+    background-image: url(../img/logo.png);
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 70px;
+    margin:5% 0 8% 14%;
+}
+
+.logo.b873d389377626a99006d613c85fb3a6 {
+  background-image: url(../img/logo.png);
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 80px;
+  width: 83%;
+  margin: 5% 0 8% 9%;
+}
+
+.icon{
+    background-size: 60%;
+    background-position: 0 10px;
+    background-repeat: no-repeat;
+}
+
+.form {
+    width: 84%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.inputBox .icon {
+    width: 10%;
+    height: 32px;
+    position: relative;
+    float: left;
+}
+
+.inputBox {
+    position: relative;
+    margin-bottom: 8%;
+    width: 100%;
+    height: 42px;
+    clear: both;
+}
+
+.selectMiList {
+    position: absolute;
+    display: none;
+    background-color: rgb(255, 255, 255);
+    width: 84%;
+    z-index: 2;
+    top: 96%;
+    right: 3%;
+    border: 1px solid rgb(167,213,195);
+    border-top: none;
+    max-height: 170px;
+    overflow: hidden;
+    box-shadow: 0px 6px 4px rgba(0,0,0,.6);
+}
+
+
+.selectMiList1 {
+    position: absolute;
+    display: none;
+    background-color: rgb(255, 255, 255);
+    width: 84%;
+    z-index: 2;
+    top: 96%;
+    right: 3%;
+    border: 1px solid rgb(167,213,195);
+    border-top: none;
+    max-height: 170px;
+    overflow: hidden;
+    box-shadow: 0px 6px 4px rgba(0,0,0,.6);
+}
+
+
+.selectMiListwm {
+    position: absolute;
+    display: none;
+    background-color: rgb(255, 255, 255);
+    width: 84%;
+    z-index: 2;
+    top: 96%;
+    right: 3%;
+    border: 1px solid rgb(167,213,195);
+    border-top: none;
+    max-height: 170px;
+    overflow: hidden;
+    box-shadow: 0px 6px 4px rgba(0,0,0,.6);
+}
+
+
+.form .input {
+    float: left;
+}
+
+.input {
+    border: 1px solid rgb(167,213,195);
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    width: 89%;
+    padding: 10px 0;
+    margin-bottom: 8%;
+}
+
+.input input {
+    width: 92%;
+    position: relative;
+    left: 4%;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: rgb(160,160,160);
+}
+
+span.selectedMi, .selectedShop {
+    color: rgb(160,160,160);
+    font-size: 14px;
+    /* line-height: 32px; */
+    margin-left: 4%;
+}
+
+span.selectedMi1, .selectedShop {
+    color: rgb(160,160,160);
+    font-size: 14px;
+    /* line-height: 32px; */
+    margin-left: 4%;
+}
+
+span.selectedMiwm, .selectedShop {
+    color: rgb(160,160,160);
+    font-size: 14px;
+    /* line-height: 32px; */
+    margin-left: 4%;
+}
+
+.selectShopList {
+    position: fixed;
+    top: 0;
+    /*display: none;*/
+}
+
+.located {
+    margin-left: 4%;
+    color: rgb(43,43,43);
+}
+
+.input.location {
+    width: 63%;
+}
+
+.locate {
+    float: right;
+    background-color: rgb(0,141,88);
+    color: #fff;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    width: 24%;
+    white-space: nowrap;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.inputBox.submit {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-align: center;
+    height: inherit;
+    padding: 10px 0;
+    background-color: rgb(0,141,88);
+    color: #fff;
+}
+
+.input.selectMi:after,
+.input.selectShop:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: 12px;
+    top: 15px;
+    background-image: url(../img/arrow.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+
+.input.selectMiwm:after,
+.input.selectShop:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: 12px;
+    top: 15px;
+    background-image: url(../img/arrow.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+
+.input.selectMi {
+    position: relative;
+}
+
+.input.selectMiwm {
+    position: relative;
+}
+
+li.miList {
+    border-bottom: 1px solid rgb(220,220,220);
+    text-align: center;
+    padding: 10px 0;
+    color: rgb(43,43,43);
+    font-size: 14px;
+}
+
+li.miListwm {
+    border-bottom: 1px solid rgb(220,220,220);
+    text-align: center;
+    padding: 10px 0;
+    color: rgb(43,43,43);
+    font-size: 14px;
+}
+
+li.miList1 {
+    border-bottom: 1px solid rgb(220,220,220);
+    text-align: center;
+    padding: 10px 0;
+    color: rgb(43,43,43);
+    font-size: 14px;
+}
+
+li.miList:last-child {
+    border-bottom: none;
+}
+
+li.miListwm:last-child {
+    border-bottom: none;
+}
+.icon-tag {
+   background-image: url(../img/tags.png)
+}
+
+.icon-tag1 {
+   background-image: url(../img/ujbgfgdddd.png)
+}
+
+.icon-phone {
+  background-image: url(../img/phone.png)
+}
+
+.icon-sign {
+   background-image: url(../img/sign.png)
+}
+
+.icon-map {
+   background-image: url(../img/map.png)
+}
+
+.icon-pen {
+   background-image: url(../img/pen.png)
+}
+
+.blur {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 11;
+    background-color: rgba(0, 0, 0, 0.6);
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+}
+
+.blur section{
+    display: none;
+}
+
+section.selectShopList {
+    position: relative;
+    z-index: 12;
+    background-color: #fff;
+    height: 60%;
+    width: 80%;
+    margin: 20% auto;
+}
+
+section header {
+    background-color: rgb(0,141,88);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    border-top: 1px solid rgb(0,141,88);
+    color: rgb(0,141,88);
+}
+
+.listWrap li {
+    border-bottom: 1px solid rgb(167,213,195);
+    padding: 10px 0;
+    color: rgb(43,43,43);
+    position: relative;
+}
+
+.shopName {
+    margin-left: 10%;
+}
+
+.shopCheck {
+    width: 12px;
+    height: 12px;
+    background-color: rgb(203,203,203);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    right: 10%;
+}
+
+.listWrap {
+    width: 100%;
+    max-height: 70%;
+    overflow: hidden;
+}
+
+.confirm,
+.confirmMap {
+    color: #fff;
+    background-color: rgb(0,141,88);
+}
+
+.selectShopList li.on .shopCheck {
+    background-image: url(../img/check.png);
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+
+.blur.selectShopping{
+    display: block;
+    opacity: 1;
+}
+
+.blur.selectShopping .selectShopList{
+    display: block;
+}
+
+.blur.mapping{
+    display: block;
+    opacity: 1;
+}
+
+.blur.mapping .baiduMap{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#map{
+	width: 100%;
+	height: 90%;
+
+}
+section.baiduMap {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+}
+
+#map{
+    width: 100%;
+    height: 86%;
+}
+
+.blur.tipShow{
+    display: block;
+    opacity: 1;
+}
+
+.blur.tipShow .tips{
+    display: block;
+    position: relative;
+    width: 80%;
+    min-height: 14%;
+    background-color: #fff;
+    margin: 40% auto;
+    z-index: 999;
+}
+
+.tips header{
+    background-color: #fff;
+    color: rgb(43,43,43);
+    border-bottom: 1px solid #ccc;
+}
+
+.tips header.warning{
+    color: rgb(255,38,38);
+}
+
+.tips .tipsContent {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    padding: 10px 0 50px;
+    text-align: center;
+}
+
+.tips .confirmTips{
+    background-color: rgb(0,141,88);
+    color: #fff;
+}
+
+.tips .confirmTips.warning{
+    background-color: rgb(255,38,38);
+}
+
+.dragSelect {
+    width: 94%;
+    background-color: rgba(0,0,0,.6);
+    position: absolute;
+    bottom: 42px;
+    padding: 10px 3%;
+    color: #fff;
+}
+
+.waiteTime {
+    width: 100%;
+    margin: 25% auto 10%;
+    text-align: center;
+    font-size: 12px;
+    color: rgb(160,160,160);
+}
+
+span.time {
+    color: rgb(0,141,88);
+    font-size: 50px;
+    margin-left: 8px;
+}
+
+.text {
+    text-align: center;
+    margin-bottom: 8px;
+    color: rgb(43,43,43);
+}
+
+.redNotice {
+    color: rgb(255,38,38);
+    font-size: 10px;
+    text-align: center;
+    margin-top: 8%;
+}
+
+.cencelOrder {
+    width: 40%;
+    text-align: center;
+    border: 2px solid rgb(0,141,88);
+    height: 38px;
+    line-height: 38px;
+    border-radius: 6px;
+    color: rgb(0, 141, 88);
+    margin-left: 5%;
+}
+
+.continueOrder {
+    width: 40%;
+    text-align: center;
+    border: 2px solid rgb(0, 141, 88);
+    height: 38px;
+    line-height: 38px;
+    border-radius: 6px;
+    background-color: rgb(0, 141, 88);
+    color: #fff;
+    margin-left: 5%;
+}
+
+.myul.orderAction {
+    margin: 16% 0 10%;
+}
+
+.order.logo {
+    width: 80px;
+    height: 80px;
+    margin: 20% auto;
+}
+
+.op0{
+	opacity: 0;
+}
+
+
+.input.adc:after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: 12px;
+    top: 15px;
+    margin-right:6px;
+    background-image: url(../img/arrow.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+

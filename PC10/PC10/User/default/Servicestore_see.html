@@ -1,0 +1,52 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<h4 class="left">评价信息</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Servicestore/index',array('token'=>$token, 'storeId'=>$storeId))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	<div class="clr"></div>
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info">
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th  style="text-align:center;">编号</th>
+                      <th  style="text-align:center;">评价对应的订单</th>
+                      <th  style="text-align:center;">售后服务的员工名</th>
+                      <th  style="text-align:center;">评价的用户名</th>  
+                      <th  style="text-align:center;">评价的分数</th>
+                      <th  style="text-align:center;">评价的信息</th>                                                         
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="appraiseDatas" id="vo">
+                  		<tr>
+        					<td  style="text-align:center;">{weikucms:$vo.id}</td>
+                  			<td   style="text-align:center;">{weikucms:$vo.order_id}</td>
+                  			<td  style="text-align:center;"><div class="answer_text">{weikucms:$vo.staff_id}</div></td>
+                  			<td  style="text-align:center;">{weikucms:$vo.appraise_name}</td>
+                    		<td  style="text-align:center;">{weikucms:$vo.score}</td>
+                    		<td><div style="width:400px;word-wrap:break-word;">{weikucms:$vo.appraise_info}</div></td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+	</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+<include file="Public:footer"/>

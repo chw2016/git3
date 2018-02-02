@@ -1,0 +1,229 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/index',array('token'=>$token))}" <if condition="$hover eq 1" >class="hover"</if>>用户中心设置</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/memberman',array('token'=>$token))}" <if condition="$hover eq 2" >class="hover"</if>>微信会员管理</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/salecard',array('token'=>$token))}" <if condition="$hover eq 3" >class="hover"</if>>会员优惠</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/scoreman',array('token'=>$token))}" <if condition="$hover eq 4" >class="hover"</if>>积分规则</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/userlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/notice',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>会员通知</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/shitimember',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>实体会员</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Integralshop/index',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>积分商城</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>发放优惠券管理,优惠券金额,生效时间等</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="/MemMarket/EditMemberCoupon" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="aid" value="313205">
+                <input type="hidden" name="id" value="">
+                <div class="control-group">
+                    <label for="title" class="control-label">优惠券名称：</label>
+                    <div class="controls">
+                        <input type="text" name="name" id="name" value="" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="time">有效期</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                            <input style="width:172px;" type="text" name="start_date" readonly="" id="start_date" onClick="WdatePicker()" class="daterangepick input-large" data-rule-required="true">
+                        </div>
+                        ~
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                            <input style="width:172px;" type="text" name="end_date" readonly="" id="end_date" onClick="WdatePicker()" class="daterangepick input-large" data-rule-required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="attr_type_normal ">
+                    <div class="control-group">
+                        <label class="control-label">选择人群</label>
+                        <div class="controls">
+                            <label class="radio inline">
+                                <input type="radio" name="user_qun_id" value="0" checked="checked">所有会员
+                            </label>
+                            <label class="radio inline">
+                            <volist name="level_data" id="vo">
+                                <input type="radio" name="user_qun_id" value="{weikucms:$vo.id}" style="margin-left:30px;"> {weikucms:$vo.name}<br/>
+                            </volist>
+                            </label>
+
+                            <a href="{weikucms::U('Usercenter/adduserlevel',array('token'=>$token))}" class="btn btn-success btn-small" style="width: 100px;height: 20px;line-height: 20px;margin-left: 30px;">添加会员等级</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">优惠券类型：</label>
+                    <div class="controls">
+                        <select name="type" id="type">
+                            <option value="1"  <if condition="$signdata['status'] eq 1">selected</if>>金额</option>
+                            <option value="2"  <if condition="$signdata['status'] eq 2">selected</if>>其他类型</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group" id="dmoney">
+                    <label class="control-label" for="sale_money">优惠券金额</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" placeholder="金额" name="sale_money" id="sale_money" value="" class="input-small" data-rule-required="true" data-rule-ismoney="true">
+                            <span class="add-on"><i class="icon-cny"></i></span>
+                        </div>
+                    </div>
+
+
+                 </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">限定数量：</label>
+                    <div class="controls">
+                        <input type="text" name="numbers" id="numbers" value="" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+
+                <div class="control-group daijqan ">
+                    <label class="control-label" for="info">使用说明</label>
+                    <div class="controls">
+                        <textarea class="input-large" name="desc" id="desc" style="display: block;width: 400px;"></textarea>
+                        <br/>
+                        <span class="help-inline" style="padding-left: 0px;">在此说明券的使用方式，如最低消费金额，优惠券打折信息，不与其他优惠同时使用、节假日不可使用等。</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+<script type="text/javascript">
+    $(function(){
+        $("#type").change(function(){
+            if($("#type").val() == 2){
+                $("#dmoney").hide();
+                $("#sale_money").val("");
+            }
+
+            if($("#type").val() == 1){
+                $("#dmoney").show();
+                $("#sale_money").val("");
+            }
+        });
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            var sale_money = $("#sale_money").val();
+            var numbers = $("#numbers").val();
+            var desc = $("#desc").val();
+            var type = $("#type").val();
+            var user_qun_id = $("input[name='user_qun_id']:checked").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            if(!name){
+                notif({
+                    msg: "优惠券名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!start_date || !end_date){
+                notif({
+                    msg: "请选择优惠券日期",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(type == 1) {
+                if (!sale_money) {
+                    notif({
+                        msg: "请输入优惠券的金额",
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }else{
+                sale_money = 0;
+            }
+
+            if(!desc){
+                notif({
+                    msg: "请输入优惠券使用说明",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!numbers){
+                numbers = 0;
+            }
+
+            $.post("{weikucms::U('Usercenter/insertsalecard',array('token'=>$token))}",
+                    {name:name,start_date:start_date,end_date:end_date,type:type,sale_money:sale_money,numbers:numbers,desc:desc,user_qun_id:user_qun_id,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+
+</div>

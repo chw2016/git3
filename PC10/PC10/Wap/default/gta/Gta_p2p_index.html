@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/owl.carousel.js"></script>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/owl.carousel.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style1.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.event.drag-1.5.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.touchSlider.js"></script>
+	</head>
+	<style>
+.Bars {position: relative;width: 60%;border: 1px solid #bababa;padding: 1px;margin: 0 auto; box-shadow: 0 0 20px #bababa inset;} 
+.Bars div { display: block; position: relative;background:#00F; color: #333333;height: 7px; /* 高度 */ } 
+.Bars div{ background:#69cb00} 
+.Bar div span,.Bars div span { position: absolute; width: 200px;/* 宽度 */ text-align: center; font-weight: bold; } 
+	</style>
+	<script>
+	   $(function(){
+	$(".flicking_con").css("left",$(".main_visual").width()/2-$(".flicking_con").width()/2);
+			
+	$(".Basic").height($(window).height());
+})
+			
+			function onMimg(){
+				$("#img1").attr("src","http://www.rudofq.com/./tpl/static/wapweiui/loan/images/ljfu-1.png");
+			}
+			function onMimg2(){
+				$("#img2").attr("src","http://www.rudofq.com/./tpl/static/wapweiui/loan/images/fxyl.png");
+			}
+			$(document).ready(function(){
+			
+				$dragBln = false;
+			
+				$(".main_image").touchSlider({
+					flexible : true,
+					speed : 200,
+					btn_prev : $("#btn_prev"),
+					btn_next : $("#btn_next"),
+					paging : $(".flicking_con a"),
+					counter : function (e){
+				$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+				}
+			});
+			
+			$(".main_image").bind("mousedown", function() {
+				$dragBln = false;
+			});
+			
+			$(".main_image").bind("dragstart", function() {
+				$dragBln = true;
+			});
+			
+			$(".main_image a").click(function(){
+				if($dragBln) {
+					return false;
+				}
+			});
+			
+			timer = setInterval(function(){
+				$("#btn_next").click();
+			}, 3000);
+			
+			$(".main_visual").hover(function(){
+				clearInterval(timer);
+			},function(){
+				timer = setInterval(function(){
+					$("#btn_next").click();
+				},3000);
+			});
+			
+			$(".main_image").bind("touchstart",function(){
+				clearInterval(timer);
+			}).bind("touchend", function(){
+			timer = setInterval(function(){
+				$("#btn_next").click();
+					}, 3000);
+				});
+			
+			});
+	</script>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title"></h1>
+			<!--<div>注册</div>
+			<div>登录</div>-->
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+			<div id="ads">
+				<div class="main_visual">
+<div class="flicking_con">
+    <volist name="flash" id="vo">
+		<a href="#" >{weikucms:$i}</a>
+        </volist>
+	</div>
+<div class="main_image">
+		<ul style="width: 320px; overflow: visible;">
+           <volist name="flash" id="vo">
+            <li style="height: 188px; float: none; display: block; position: absolute; top: 0px; left: 320px; width: 320px;" <if condition="$vo['url']">onclick="location.href='{weikucms:$vo.url}'"</if>>
+            	<img src="{weikucms:$vo.img}" width="100%" height="100%">
+            </li>
+               </volist>
+
+		</ul>
+        <a href="javascript:;" id="btn_prev" style="width: 320px; overflow: visible;"></a>
+        <a href="javascript:;" id="btn_next" style="width: 320px; overflow: visible;"></a>
+	</div>
+</div>
+				
+			<div class="shadow clearfix">
+				<ul class="tabnav">
+					<li>
+						<a href="#">
+							<p class="sprites-icon_sever"></p>
+							<p class="tabnav-title">优质服务</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<p class="sprites-icon_safe"></p>
+							<p class="tabnav-title">安全保证</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<p class="sprites-icon_profit"></p>
+							<p class="tabnav-title">高额收益</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="shadow clearfix mt10 mb10">
+				<div class="h2color index-h2 fl">借贷产品</div>
+				<div class="fr"><a class="morelink" href="{weikucms::U('p2p_list',array('token'=>$token,'openid'=>$openid))}">更多的借贷产品</a></div>
+			</div>
+			<div class="purchase clearfix">
+        <volist name="list" id="vo">
+			<div style="margin-bottom: 5px;" <if condition="$i%2 eq 1">class="purchase_left"<else />class="purchase_right"</if> >
+				<div class="purchase_nav">
+				<div class="purchase_money ellipsis">{weikucms:$vo.title}</div>
+				<div class="purchase_sz ellipsis"></div>
+				<div class="purchase_Month">
+					<div class="purchase_Months">
+					<p>年化收益率<font><?php echo $vo['rate']*100;?>%</font><font ></font></p>
+                        <p>{weikucms:$vo.time_limit}个月</p>
+				    <p>
+				    	<div class="Bars"> 
+							<div style="width:{weikucms:$vo.bili};" >
+							</div> 
+						</div>
+				    </p>
+				   </div>
+				</div>
+				<div class="purchase_icon"><span onclick="location.href='{weikucms::U('p2p_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">申购</span></div>
+			</div>
+		</div>
+          </volist>
+
+
+			<!--<div class="purchase_right">
+				<div class="purchase_nav">
+				<div class="purchase_money ellipsis">XXX理财产品</div>
+				<div class="purchase_sz ellipsis">GDSZ201528FPFPJK270</div>
+				<div class="purchase_Month">
+					<div class="purchase_Months">
+					<p><font>16.50%</font><font>/2个月</font></p>
+				    <p>
+				    	<div class="bar">
+				    		<div class="bar1"></div>
+				    	</div>
+				    </p>
+				    </div>
+				</div>
+				<div class="purchase_icon"><span>申购</span></div>
+			</div>
+			</div>-->
+
+
+		</div>
+		</section>
+		<!--脚部模块-->
+		<footer>
+			<ul class="footertab">
+				<li class="footselect" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+					<a href="{weikucms::U('p2p_index',array('token'=>$token,'openid'=>$openid))}">
+						<p class="sprites-foot_home_select"></p>
+						<p class="tab-title">首页</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('p2p_list',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_money"></p>
+						<p class="tab-title">投资</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_user"></p>
+						<p class="tab-title">账户</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_more"></p>
+						<p class="tab-title">更多</p>
+					</a>
+				</li>
+
+			</ul>
+		</footer>
+	</body>
+</html>

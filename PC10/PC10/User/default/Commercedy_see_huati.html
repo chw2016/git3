@@ -1,0 +1,77 @@
+<include file="Public:head"/> 
+
+
+
+
+
+
+<div class="cLine">
+
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            话题：（评论列表）
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;"
+               href="{weikucms::U('Commercedy/huati_index',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+</div>
+
+
+
+<div class="msgWrap">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            
+
+            <th>评论人姓名</th>
+            <th style="width: 50%">评论内容</th>
+            <th><a href="{weikucms::U('Commercedy/see_huati',array('token'=>$token,'type'=>1,'id'=>$_GET['id']))}">点赞数∨</a></th>
+            <th><a href="{weikucms::U('Commercedy/see_huati',array('token'=>$token,'type'=>2,'id'=>$_GET['id']))}">评论数∨</a></th>
+
+            <th>评论时间</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="info" id="vo">
+        <tr>
+
+            <td>{weikucms:$vo.nickname}</td>
+            <td>{weikucms:$vo.comment}</td>
+
+            <td>{weikucms:$vo.dianzan}</td>
+            <td>{weikucms:$vo.pinglun}</td>
+            </if>
+
+            <td>{weikucms:$vo.comment_time}</td>
+
+
+
+        </tr>
+        </volist>
+
+        </tbody>
+
+    </table>
+
+
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+</div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,80 @@
+<include file="Public:head"/>  
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+        <div class="content">
+<div class="cLineB">
+<h4 class="left">DIY贺卡管理</h4>
+<div class="searchbar right">
+<form method="post" action="">
+<script>
+function selectall(name) {
+	var checkItems=$('.cbitem');
+	if ($("#check_box").attr('checked')==false) {
+		$.each(checkItems, function(i,val){
+			val.checked=false;
+		});
+		
+	} else {
+		$.each(checkItems, function(i,val){
+			val.checked=true;
+		});
+	}
+}
+</script>
+</form>
+</div>
+<div class="clr"></div>
+</div>
+<!--tab start-->
+<div class="tab">
+<ul>
+<li class="tabli id="tab0"><a href="{weikucms::U('Gcard/index',array('token'=>$token))}">贺卡模板管理</a></li>
+<li class="tabli current" id="tab0"><a href="{weikucms::U('Gcard/diy',array('token'=>$token))}">DIY贺卡管理</a></li>
+<li class="tabli" id="tab2"><a href="{weikucms::U('Reply_info/set',array('token'=>$token,'infotype'=>'Gcard'))}">回复配置</a></li>
+</ul>
+</div>
+<!--tab end-->
+<div class="msgWrap">
+<form method="post" action="" id="info">
+<div class="cLine">
+<div class="pageNavigator left" style="color:red;line-height:20px;font-size:14px">  * 以下为用户DIY自制的贺卡，请谨慎操作！</div>
+<div class="clr"></div>
+</div>
+<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+<thead>
+<tr>
+<th width="60">发卡人</th>
+<th width="60">收卡人</th>
+<th width="400">祝福信息</th>
+<th width="120">DIY人身份标示</th>
+<th width="70">贺卡模板编号</th>
+<th width="50" class="norightborder">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr></tr>
+<volist name="list" id="o"> 
+<tr>
+<td>{weikucms:$o.from}</td>
+<td>{weikucms:$o.to}</td>
+<td>{weikucms:$o.say}</td>
+<td>{weikucms:$o.wecha_id}</td>
+<td>贺卡 {weikucms:$o.gid}</td>
+<td class="norightborder"><a href="/index.php?g=Wap&m=Gcard&a=index&token={weikucms:$o.token}&gid={weikucms:$o.gid}&pid={weikucms:$o.id}&wecha_id={weikucms:$o.wecha_id}" target="_blank">预览</a> <a href="javascript:drop_confirm('此为用户DIY自制的贺卡,您确定要删除吗?', '/index.php?g=User&m=Gcard&a=del_diy&token={weikucms:$o.token}&wecha_id={weikucms:$o.wecha_id}&id={weikucms:$o.id}');">删除</a></td>
+</tr>
+</volist>
+</tbody>
+</table>
+<input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+</form>
+
+</div>
+<div class="cLine">
+<div class="pageNavigator right">
+<div class="pages">{weikucms:$page}</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>

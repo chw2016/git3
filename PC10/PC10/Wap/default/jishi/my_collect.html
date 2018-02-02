@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+    </head>
+    <body>
+    	<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+	    	我的收藏
+	    </div>
+	    <!-- 收藏循环体开始 -->
+        <if condition="$collect neq ''">
+        <foreach name="collect" item="item">
+    	<div class="colectLicaishiBox top20 white-bg lisheng-text-color myul boxShadow">
+    		<div class="colectTimeBox">
+    			收藏时间
+    			<div class="colectDate bold">
+                    <php>echo date('m-d', strtotime($item['add_time']));</php>
+    			</div>
+    			<div class="colectTime">
+                    <php>echo date('H:i', strtotime($item['add_time']));</php>
+    			</div>
+    		</div>
+			<div class="produceLicaishiLogowrap">
+				<div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$item['planner']['image']})"></div>
+			</div>
+			<div class="produceLicaishiInfoBox">
+				<div class="pLicaishiName">{weikucms:$item['planner']['name']}</div>
+				<div class="licaishiIFColect icon icon-IFcolect setRight" data-id="{weikucms:$item['planner']['id']}">
+					取消收藏
+				</div>
+
+				<div class="licaishiDengJiBox">
+					<div class="licaishiDengJiWrap  myul" data-zhuanshi="{weikucms:$item['planner']['stars']}">
+					<!-- data-zhuanshi的值是星星个数，后台只需循环遍历出这个值即可 -->
+					</div>
+				</div>
+				<div class="myul">
+					<div class="myli noWrap h7">
+						专业：{weikucms:$item['planner']['specialty_level']}
+					</div>
+					<div class="myli noWrap h7">
+						沟通：{weikucms:$item['planner']['communication_level']}
+					</div>
+					<div class="myli noWrap h7">
+						服务：{weikucms:$item['planner']['service_level']}
+					</div>
+				</div>
+
+			</div>
+		</div>
+        </foreach>
+		<!-- 结束 -->
+            <else/>
+        <div style="text-align: center;padding: 10px;font-size: 12px;">您还没有收藏，请去看看有没有自己喜欢的理财师！</div>
+        </if>
+
+    </body>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".licaishiDengJiWrap").each(function(i,o){
+	     		var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi'))  ,
+	     			di = 0,
+	     			zhuanshi = '<div class="zhuanshi fixBg"></div>';
+	     		for(di; di < d ; di++){
+	     			$(this).append(zhuanshi);
+	     		}
+	     	})
+    	})
+
+        $(".licaishiIFColect").click(function(){
+            var _this   = $(this);
+            var id      = _this.attr('data-id');
+
+            //取消预约
+            $.ajax({
+                url: "{weikucms::U('Jishi/collect',array('token'=>$token,'openid'=>$openid))}",
+                type:"POST",
+                data:{"type" : 1, "id" : id},
+                dataType:"json",
+                success: function(res){
+                    if(res.status == 0){
+                        $("<div class='noWrap' style='color: rgb(118,121,117);position: relative;top: -46px;right: 20px;opacity:1;'>取消成功！</div>").appendTo(_this).animate({
+                            "top":"-60px",
+                            "opacity":"0"}, 300);
+                    }else{
+                        alert(res.info);
+                    }
+					window.location.reload();
+                }
+            });
+
+        });
+
+
+
+
+
+
+
+
+    </script>
+</html>

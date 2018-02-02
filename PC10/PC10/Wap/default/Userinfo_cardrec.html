@@ -1,0 +1,154 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>充值消费记录</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<link href="{weikucms::RES}/css/userinfo/fans.css" rel="stylesheet" type="text/css"> 
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="{weikucms::RES}/css/guajiang/js/jquery.js">\x3C/script>')</script>
+
+
+<style>
+
+.footFix{width:100%;text-align:center;position:fixed;left:0;bottom:0;z-index:99;}
+#footReturn a, #footReturn2 a {
+display: block;
+line-height: 41px;
+color: #fff;
+text-shadow: 1px 1px #282828;
+font-size: 14px;
+font-weight: bold;
+}
+#footReturn, #footReturn2 {
+z-index: 89;
+display: inline-block;
+text-align: center;
+text-decoration: none;
+vertical-align: middle;
+cursor: pointer;
+width: 100%;
+outline: 0 none;
+overflow: visible;
+Unknown property name.-moz-box-sizing: border-box;
+box-sizing: border-box;
+padding: 0;
+height: 41px;
+opacity: .95;
+border-top: 1px solid #181818;
+box-shadow: inset 0 1px 2px #b6b6b6;
+background-color: #515151;
+Invalid property value.background-image: -ms-linear-gradient(top,#838383,#202020);
+background-image: -webkit-linear-gradient(top,#838383,#202020);
+Invalid property value.background-image: -moz-linear-gradient(top,#838383,#202020);
+Invalid property value.background-image: -o-linear-gradient(top,#838383,#202020);
+background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#838383),to(#202020));
+Invalid property value.filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+Unknown property name.-ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+}
+</style>
+</head>
+<body id="fans" >
+<div class="qiandaobanner"> <img src="{weikucms:$homepic}" > </div>
+<div class="cardexplain">
+<li class="nob">
+<div class="beizhu">会员消费记录</div>
+</li>
+<ul class="round">
+<if condition="$cardnum neq false">
+	<li>
+	<TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+				
+				<TH>卡号</TH>
+				<TH>日期</TH>
+				<TH>消费金额</TH>
+       
+				
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+
+				 <volist id="cardrec2" name="cardrec2">
+                <TR>
+                  
+                  <TD align="center">{weikucms:$cardnum}</TD>
+                  <TD align="center">{weikucms:$cardrec2.sign_time|date='Y-m-d',###}</TD>
+                  <TD align="center">{weikucms:$cardrec2.sell_expense}元</TD>
+                
+                 
+                </TR>
+				</volist>
+
+                
+              </TBODY>
+            </TABLE>
+	</li>
+    
+    
+
+    
+</if>
+
+
+
+
+</ul>
+
+<li class="nob">
+<div class="beizhu">会员充值记录</div>
+</li>
+<ul class="round">
+
+    <li>
+	<TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+				
+				<TH>卡号</TH>
+				<TH>日期</TH>
+				<TH>充值金额</TH>
+       
+				
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+
+				 <volist id="cardrec1" name="cardrec1">
+                <TR>
+                  
+                  <TD align="center">{weikucms:$cardnum}</TD>
+                  <TD align="center">{weikucms:$cardrec1.sign_time|date='Y-m-d',###}</TD>
+                  <TD align="center">{weikucms:$cardrec1.add_Balance}元</TD>
+                
+                 
+                </TR>
+				</volist>
+
+                
+              </TBODY>
+            </TABLE>
+	</li>
+
+</ul>
+
+
+</ul>
+
+
+</div>
+</div>
+<div style="height:60px;" id="msg">&nbsp;</div>
+<div class="footFix" id="footReturn"><a href="javascript:void(0)" onClick="location.href='{weikucms::U('Card/vip',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}';"><span>返回会员卡页</span></a></div>
+
+
+</div>
+
+</body>
+</html>

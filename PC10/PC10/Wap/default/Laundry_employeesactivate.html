@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="{weikucms::RES}/laundry/logistics/css/default.css" type="text/css">
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::RES}/laundry/logistics/js/jquery-1.8.2.min.js"></script>
+<meta charset="UTF-8">
+<title>96洗衣店</title>
+<meta name="Keywords" content="96洗衣店">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+</head>
+<body>
+<div class="bookingTips" style="line-height:25px;"> <strong>激活提示</strong>
+  <div style="line-height:20px;">在下面填入相关信息激活以后才能使用员工功能</div>
+</div>
+<div id="baoyangYuyue1">
+  <div class="iconText">
+    <ul>
+      <li class="noAfter">
+        <div class="li-l"><img src="{weikucms::RES}/laundry/logistics/img/icon_40_04.png"></div>
+        <div class="li-r">
+          <input class="input" value="" placeholder="输入姓名" id="name" maxlength="20">
+        </div>
+      </li>
+      <li class="noAfter">
+        <div class="li-l"><img src="{weikucms::RES}/laundry/logistics/img/icon_40_05.png"></div>
+        <div class="li-r">
+          <input class="input" value="" placeholder="输入手机号码" id="tel" type="tel" maxlength="11">
+        </div>
+      </li>
+      
+      <li class="noAfter">
+        <div class="li-l"><img src="{weikucms::RES}/laundry/logistics/img/navigation_03.png"></div>
+        <div class="li-r">
+          <input class="input" placeholder="输入激活密码" id="pwd" type="password">
+        </div>
+      </li>
+
+    </ul>
+  </div>
+  <div class="button clearfix"><a href="javascript:void(0);" id="activate">激活</a></div>
+</div>
+<!-- 提示 -->
+<div id="error_tip" style="display: none" class="cod">
+    <div class="wx_mask"></div>
+    <div class="wx_confirm">
+        <div class="wx_confirm_inner">
+            <div class="wx_confirm_hd">
+                <div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+            </div>
+            <div class="wx_confirm_bd">
+                <div class="wx_confirm_btn">
+                    <button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /提示 -->
+<script type="text/javascript">
+$(function(){
+    $("#activate").click(function(){
+        var name = $("#name").val();
+        var tel = $("#tel").val();
+        var pwd = $("#pwd").val();
+        var openid = "{weikucms:$get['openid']}";
+        if (name == "") {
+            $("#error_tip").show();
+            $("#tip_div").html("请填写姓名");
+            return false;
+        }
+        if (tel == "") {
+            $("#error_tip").show();
+            $("#tip_div").html("请填写手机号码");
+            return false;
+        }
+        if (pwd == "") {
+            $("#error_tip").show();
+            $("#tip_div").html("请填写激活密码");
+            return false;
+        }
+        var url = "{weikucms::U('Laundry/employeesactivate',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{name:name,tel:tel,pwd:pwd,openid:openid},function(data){
+            if(data.status == 1){
+                $("#error_tip").show();
+                $("#tip_div").html(data.info);
+                setTimeout(function(){
+                    window.location.reload();
+                },'2000');
+            }else{
+                $("#error_tip").show();
+                $("#tip_div").html(data.info);
+                setTimeout(function(){
+                    $("#error_tip").hide();
+                },'2000');
+            }
+        },'json');
+        
+    });
+});
+
+function onclose1() {
+    $("#error_tip").hide();
+    return false;
+}
+</script>
+</body>
+</html>

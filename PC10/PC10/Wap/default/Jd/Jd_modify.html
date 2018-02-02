@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>密码修改</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+    <style type="text/css">
+        *{margin: 0;padding :0;}
+        .ceng{width: 100%;height: 90px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+        .col-sm-2.control-label{margin:10px 0 ;color:#2f2f2f;}
+        .form-control{background-color: #f6f6f6;height: 40px;font-size: 13px;}
+        .ceng1{width: 100%;height: 150px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+    </style>
+</head>
+<body style="background-color:#ededed;">
+<form action="{weikucms::U('recom',array('token'=>session('token'),'openid'=>$openid))}" method="post" id="form" />
+<style>
+
+    .ceng_eag {
+        display: block;
+        width: 100%;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #888;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f6f6f6;
+        height: 40px;
+        font-size: 13px;
+    }
+
+</style>
+
+<div class="ceng">
+    <label for="opassword" class="col-sm-2 control-label">旧密码</label>
+    <div class="col-sm-10">
+        <input type="password" value="" name="passwords" class="form-control" id="opassword" placeholder="请输入您旧密码">
+    </div>
+</div>
+<div class="ceng">
+    <label for="newpassword" class="col-sm-2 control-label">新密码</label>
+    <div class="col-sm-10">
+        <input type="password" value="" name="password" class="form-control" id="newpassword" placeholder="请输入您新的密码">
+    </div>
+</div>
+<div class="ceng">
+    <label for="spassword" class="col-sm-2 control-label">确认密码</label>
+    <div class="col-sm-10">
+        <input type="password" value="" name="passwordes" class="form-control" id="spassword" placeholder="请再次输入您新的密码">
+    </div>
+</div>
+
+<div style="height:80px;float:left;"></div>
+</form>
+<if condition="$info['id']">
+    <else/>
+    <div class="foot" style="position: inherit">
+        <span id="put">确认修改</span>
+    </div>
+</if>
+
+<script type="text/javascript">
+    $(function(){
+      /*  $('#opassword').blur(function(){
+            var password = $('#opassword').val();
+            var opassword = "{weikucms:$user['password']}";
+            if(password != opassword ){
+                msg.alert('密码输入错误，请重新输入');
+                return false;
+            }
+        })*/
+        $('#spassword').blur(function(){
+            var newpassword = $('#newpassword').val();
+            var spassword = $('#spassword').val();
+            if(newpassword != spassword ){
+                msg.alert('两次输入的密码不一致');
+                return false;
+            }
+        })
+        $('#put').click(function(){
+            var opassword = $('#opassword').val();
+            var password = $('#newpassword').val();
+            var posturl = "{weikucms::U('Jd/modify',array('token'=>$token,'openid'=>$openid))}";
+            $.post(posturl,{opassword:opassword,password:password},function(data){
+                if(data.status ==1){
+                    msg.alert('修改成功！');
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    msg.alert(data.info);
+                }
+            },'json')
+        })
+
+    });
+
+</script>
+</body>
+</html>

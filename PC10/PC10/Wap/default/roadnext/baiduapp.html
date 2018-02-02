@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/mru/js/main.js"></script>
+    <script src="{weikucms::RES}/mru/js/msg.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    <style>
+        *{font-family: "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;}
+    </style>
+</head>
+<body>
+<div style="text-align: center;margin: 20px;">正在进入地图中,请稍后......</div>
+</body>
+<script>
+
+    function getLngLat(callback){
+        var geolocation = new BMap.Geolocation(),
+                geoc = new BMap.Geocoder();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var pt = r.point;
+                if(typeof callback ==="function"){
+                    callback(pt);
+                }
+            }
+        })
+    }
+    getLngLat(function(r){
+        var lat = r.lat, lng = r.lng;
+        setTimeout("javascript:location.href='http://api.map.baidu.com/marker?location="+lat+","+lng+"&title=我的位置&name=我的位置&content=我的位置&output=html&src=weiba|weiweb'", 1000);
+    });
+</script>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-门店导舰</title> 	
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    </head>
+    <body class="shopNav" style="overflow-x:hidden" >
+    <div class="header">
+    	<div class="wrapHeader myul">
+    		<div class="circle icon_home"></div>
+    		<div class="title">附近门店</div>
+    	</div>
+    </div>
+    <div class="areaBox">
+    
+ 
+ <!--   <volist name="shi" id="v" >
+    
+     <a  href="{weikucms::U('index',array('shiid'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		{weikucms:$v['name']}
+    		
+    	</div>
+    </a>  	
+    </volist>	
+     -->
+
+    
+    <a  href="{weikucms::U('index',array('shi'=>'深圳','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		深圳
+    	</div>
+    </a>  
+        <a  href="{weikucms::U('index',array('shi'=>'广州','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		广州
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'东莞','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		东莞
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'珠海','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		珠海
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'中山','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		中山
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'佛山','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		佛山
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'惠州','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		惠州
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'江门','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		江门
+    	</div>
+    </a> 
+        <a  href="{weikucms::U('index',array('shi'=>'汕头','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		汕头
+    	</div>
+    </a> 
+    
+            <a  href="{weikucms::U('index',array('shi'=>'江门','token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		江门
+    	</div>
+    </a> 
+    
+                <a  href="{weikucms::U('index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+    	<div class="area floatLeft">
+    		所有店
+    	</div>
+    </a> 		
+	
+    
+    	
+    	<div class="clearBoth"></div>
+    </div>
+    <div class="shopListBox">
+
+    
+   
+     <volist name="list" id="v" >
+      <a href="{weikucms::U('show',array('token'=>$_GET['token'],'id'=>$v['id'],'openid'=>$_GET['openid']))}" >
+    	<div class="shopList myul">
+    		<div class="shopPic fixBg"  <if condition="$v['pic']" >  style="background-image:url('{weikucms:$v.pic}')" </if> >
+    			
+    		</div>
+    		<div class="shopInfo">
+    		
+    			<div class="shopName">
+    			
+    				
+    			<if condition="$v['name']" >
+    			
+    			      				     <?php 
+    				         echo mb_substr($v['name'],0,11,'utf-8');
+    				       ?>
+    			<else/>
+    			   无标题
+    			</if>
+    			
+
+    				     
+    				       
+    			</div>
+    	  	 
+    			<div class="shopAddress">
+    			
+    			
+    				<span class="text">
+    				      {weikucms:$v['dz']}
+    				</span>
+    				
+    				  <span class="distance" style="position: absolute;right: 4px;top:-25px;font-size:13px;"  >正在定位</span>
+    				
+    			</div>
+    			<div class="contact">
+    				<span class="tel">
+    				        <?php 
+    				          echo mb_substr($v['dh'],0,14,'utf-8');
+    				       ?>
+    				</span>
+    				<a href="{weikucms:$v['dh']}" >
+    				<span class="icon-tel">
+    					
+    				</span>
+    				</a>
+    			</div>
+    		</div>
+    	</div>
+    	</a>	
+      </volist>
+   
+    </div>
+      <div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+      <input type="hidden" class="shiid"  value="<?php print_r($_GET['shiid']); ?>" />
+       <input type="hidden" class="position_x"  value="<?php print_r($_GET['position_x']); ?>" />
+        <input type="hidden" class="position_y"  value="<?php print_r($_GET['position_y']); ?>" />
+
+    </body>
+    <script>
+    
+    function getLngLat(callback){
+    	var geolocation = new BMap.Geolocation(),
+    		geoc = new BMap.Geocoder();
+    	geolocation.getCurrentPosition(function(r){
+    		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+    			var pt = r.point;
+    			if(typeof callback ==="function"){
+    				callback(pt);
+    			}
+    		}
+    	})
+     }
+        
+    
+     getLngLat(function(r){
+    	var lat = r.lat,
+        
+    		lng = r.lng;
+    
+      	    shiid=$(".shiid").val();
+      	    position_x=$(".position_x").val();
+         	position_y=$(".position_y").val();
+		   	 $.post("{weikucms::U('index',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'shi'=>$_GET['shi']))}",{"lat":lat,"lng":lng,"shiid":shiid,"position_x":position_x,"position_y":position_x},function(html){
+		 		//$(html).appendTo('.shopListBox');
+		 		$(".shopListBox").html(html);
+		 	 },'html');	
+    }); 
+    </script>
+    
+<include file="./tpl/Wap/default/mrufx.html" /> 
+    
+</html>

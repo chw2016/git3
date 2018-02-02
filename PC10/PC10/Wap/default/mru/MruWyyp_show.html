@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title><?php echo (mb_substr(strip_tags($list['zw']), 0, 9, 'utf-8')) ?>-鱼美人</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+    </head>
+    <body class="zhiwei2"  style="overflow-x:hidden;background-color:white;" >
+    <div class="content">
+        <div>
+            <img src="{weikucms::RES}/mru/img/zhiwei-ad.png" width="100%" />
+        </div>
+        <div class='main'>
+            <div class='c8dab00 underline'>{weikucms:$list['zw']}</div>
+            <div class='f14 of'>
+                <div class='fl c222222 row'>
+                    <span>招聘职位：</span>
+                    <span>{weikucms:$list['zw']}</span>
+                </div>
+                <div class='fr c222222 row'>
+                    <span>招聘部门：</span>
+                    <span>{weikucms:$list['bm']}</span>
+                </div>
+            </div>
+            <div class='f14 of'>
+                <div class='fl c222222 row'>
+                
+              
+                    <span>性别要求：</span>
+                    <span>{weikucms:$list['sex']}
+                    
+
+                    </span>
+                </div>
+                <div class='fr c222222 row'>
+                    <span>年龄要求：</span>
+                    <span>{weikucms:$list['age']}</span>
+                </div>
+            </div>
+            <div class='f14 of'>
+                <div class='fl c222222 row'>
+                    <span>学历要求：</span>
+                    <span>{weikucms:$list['xl']}</span>
+                </div>
+                <div class='fr c222222 row'>
+                    <span>工作经验：</span>
+                    <span>
+                    <php>
+                                 switch ($list['jy']){
+									case 1:$list['jy']='一年以上';break;
+									case 2:$list['jy']='二年以上';break;
+									case 3:$list['jy']='三年以上';break;
+                                    case 4:$list['jy']='不限';break;
+			                  }
+			                 echo $list['jy'];
+                    </php>
+                    </span>
+                </div>
+            </div>
+            <div class='f14 of'>
+                <div class='fl c222222 row'>
+                    <span>招聘人数：</span>
+                    <span>{weikucms:$list['sunber']}</span>
+                </div>
+                <div class='fr c222222 row'>
+                    <span>截止日期：</span>
+                    <span>{weikucms:$list['time']}</span>
+                </div>
+            </div>
+            <div class='f14 c222222 mt20'>
+                <div>职位说明:</div>
+<style>
+#aaa2 img{
+	width:100%;
+}
+</style>   
+                <div id="aaa2" >
+                
+                					 <?php
+					    echo $list['content'];
+					 ?>
+              
+                </div>
+            </div>
+        </div>
+        <div class='fixB btnGreen submit' style="border-radius: 5px;" ><a href="{weikucms::U('show2',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid']))}">应聘此职位</a></div>
+        <div class='zwf'></div>
+    </div>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jiameng.js"></script>
+  <include file="./tpl/Wap/default/mrufx.html" />    
+    </body>
+</html>

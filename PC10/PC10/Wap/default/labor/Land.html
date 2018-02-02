@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<title>劳动局</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="js/jquery-1.11.1.min.js"></script> 
+	    <script src="js/msg.js"></script> 
+	    <script src="js/prompt.js"></script> 
+	    <script>
+	    	$(function(){
+			$(document).on('click','.btn',function(){
+				var name=$("#name").val();
+				var pass=$("#pass").val();
+				var flag=$(this).attr('flag');
+				if(flag==1){//重复提交
+                        return false;
+                    }
+                    if(name==''){
+                        show_error_tip('请填写账号');
+                        $("#name").focus();
+                        return false;
+                    }
+                    if(pass==''){
+                        show_error_tip('请填写密码');
+                        $("#pass").focus();
+                        return false;
+                    }
+				msg.confirm('<p><p>'+"账号："+name+'<p><p>'+"密码："+pass);
+			})
+		})
+	    </script>
+	</head>
+	<style>
+		input::-webkit-input-placeholder{
+			color: #cccccc;
+			font-size: 13px;
+		}
+	</style>
+	<body>
+	   <div class="Land">
+			<div class="laodong_yuan">
+				<div class="laodong_img mt5"></div>	
+			</div>
+	</div>
+	<div class="Land_nav clearfix">
+		<span class="Land_img fl"></span>
+		<div class="Land_user fl"> 
+		<input type="text" placeholder="请输入您的账号" id="name"/>
+		</div>
+	</div>
+	<div class="Land_nav clearfix ">
+		<span class="Land_pass fl"></span>
+		<div class="Land_user fl"> 
+		<input type="password" placeholder="请输入您的密码" id="pass" />
+		</div>
+	</div>
+	<div class="w85 clearfix">
+		<font style="color: #c8c8c8;" class="fl">注册账号</font>
+		<font style="color: #e6777e;" class="fr">密码找回</font>
+	</div>
+	<div>
+		<span class="btn" style="width: 70%;font-size: 15px;">登&nbsp;&nbsp;录</span>
+	</div>
+	</body>
+</html>

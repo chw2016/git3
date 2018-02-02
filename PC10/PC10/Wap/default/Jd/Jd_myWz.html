@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>我的上传方案</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/Jd/js/main.js"></script>
+    <script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+</head>
+<style>
+    .opt{
+        display: inline-block;
+        width: 130px;
+        height: 39px;
+        border: 1px solid #CCC;
+        border-radius: 6px;
+        text-align: center;
+        line-height: 39px;
+        box-shadow: 0 1px 6px #FFF;
+        margin-top: 12px;
+        color: #000;
+        margin-right:20px;
+    }
+   /* .opt-btn{
+        display: inline-block;
+        width: 130px;
+        height: 39px;
+        border: 1px solid #CCC;
+        border-radius: 6px;
+        text-align: center;
+        line-height: 39px;
+        box-shadow: 0 1px 6px #FFF;
+        margin-top: 12px;
+        color: #000;
+    }*/
+    .foot {
+        position: fixed;
+        bottom: 0;
+        text-align: center;
+        height: 60px;
+        background-color: #FFF;
+        width: 100%;
+        border-top: 1px solid #CCC;
+        z-index: 5;
+    }
+    .tb {
+  /* width: 100%; */
+  /* height: 40px; */
+  /* float: left; */
+  display: table;
+  clear: both;
+  font-size: 13px;
+}
+</style>
+<script>
+    $(function(){
+        $(".opt-btn").click(function(){
+            msg.alert("<div><php>echo C('site_url');</php>index.php?g=Wap&m=JdPc&a=login&token={weikucms:$token}</div>"+"<div>长按链接，选择复制，将其用QQ或者微信发送至电脑端</div>")
+        })
+    })
+</script>
+<body>
+<empty name="list">
+<div style="width:100%; height:20px; line-height:20px; text-align:center;margin-top:20px;">暂无申请记录。</div>
+</empty>
+<!--<ul class="lica_ul">
+    <foreach name="list" item="v">
+    <li class="he" href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'id'=>$v['id']))}">
+    <div style="width:90%;height:35px;margin-left:10px;float:left;">
+        <span class="name" style="width:25%;">{weikucms:$v.title|mb_substr=###,0,13,'utf-8'}</span>
+        <span class="tel" style="width:45%;">作者；{weikucms:$v.name}</span>
+        <span class="lx">行业：{weikucms:$v.hy}</span>
+    </div>
+    <div class="bz color" style="width:100%;">{weikucms:$v.content|mb_substr=###,0,37,'utf-8'}</div>
+    <div class="tb">
+        <foreach name="v.tag" item="vo">
+        <span class="color{weikucms:$vo.color}" style="color:{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+        </foreach>
+    </div>
+    </li>
+    </foreach>
+
+</ul>-->
+<ul class="lica_ul on" id="searchList" style="margin: 0; margin-bottom:65px;">
+    <foreach name="list" item="v">
+        <a href="{weikucms::U('Wap/Jd/recoms2',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid))}">
+            <li class="he" href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid))}" style="margin-bottom: 10px;">
+            <div style="width:90%;margin-left:10px;float:left;">
+                <span class="name" >{weikucms:$v['title']}</span><!-- {weikucms:$v.title|mb_substr=###,0,100,'utf-8'} -->
+<!--                 <span class="tel" style="width:40%;float: left;margin-left: 10px;">作者：{weikucms:$v.name|mb_substr=###,0,3,'utf-8'}</span>
+                <span class="lx">行业：{weikucms:$v.hy|mb_substr=###,0,3,'utf-8'}</span> -->
+            </div>
+            
+            <div class="bz color" style="width:90%;margin-left: 10px;color:#B2C5DA;">
+		      <div style="width:50%;float:left;" >作者:{weikucms:$v.name|mb_substr=###,0,7,'utf-8'}</div>
+		      <div style="width:50%;float:left;" >行业:{weikucms:$v.hy|mb_substr=###,0,7,'utf-8'}</div>
+		    </div>
+            
+            <div class="bz color" style="width:90%;margin-left: 10px;">
+           	 <?php echo str_substr($v['content'],40,'......') ?>
+            </div>
+            <div class="tb" style="margin-left:6px;" >
+
+               <foreach name="v.tag" item="vo">
+                <span style="border-radius: 4px;" class="color{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+     
+                </foreach>
+          <!--       <span class="color1">售前</span>
+                <span class="color3">实施</span>9FD39E
+                <span class="color2">样板</span> -->
+            </div>
+            <if condition="$v['status'] eq 0" >
+	            <span class="day1" style="position: relative;top: -27px;right: 18px;">待审批</span>
+	        <else/> 
+	            <span class="day1" style="position: relative;top: -27px;right: 18px;border: 1px solid #9FD39E;color: #3FA83D;">已审批</span>
+            </if>
+            </li>
+        </a>
+
+    </foreach>
+   </ul>
+<div style="height:840px;float:left;"></div>
+<div class="foot">
+		<!-- <span onclick="javascript:history.back();">返回</span> -->
+        <div class="opt"><a style="color:#000;" href="{weikucms::U('recomWz',array('token'=>session('token'),'openid'=>$openid))}">我要上传</a></div>
+        <!--<div class="opt-btn">PC上传</div>-->
+</div>
+</body>
+</html>

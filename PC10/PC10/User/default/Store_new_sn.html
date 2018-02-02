@@ -1,0 +1,119 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+
+    <div class="cLineB">
+
+        <div class="cLine">
+
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>
+
+                    <!--<if condition="empty($catid) neq true">-->
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token))}">商品管理</a>
+                    </li>
+                    <!--</if>-->
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/setting',array('token'=>$token))}">商城设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Shoptmpls/index',array('token'=>$token))}">商城模版选择</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/articleindex',array('token'=>$token))}">商城文章</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/flashindex',array('token'=>$token))}">广告轮播</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/sn',array('token'=>$token))}">商城优惠券</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Alipay_config_new/index',array('token'=>$token))}">在线支付设置</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="cLineC" style="line-height: 32px;">
+        <a href="{weikucms::U('Store_new/snset',array('token'=>$token))}" class="btn btn-primary">新增商品优惠券</a>　
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th >编号</th>
+                    <th >优惠券名称</th>
+                    <th >优惠券主题图片</th>
+                    <th >数量</th>
+                    <th >兑换金额</th>
+                    <th >使用开始时间</th>
+                    <th >使用结束时间</th>
+                    <th >使用状态</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+                <volist name="host" id="vo" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$vo.snname}</td>
+                        <td><img src="{weikucms:$vo.pic}" style="width: 100px; height: 80px;"></td>
+                        <td>{weikucms:$vo.num}</td>
+                        <td>{weikucms:$vo.amount}</td>
+                        <td>{weikucms:$vo.starttime|date="Y-m-d",###}</td>
+                        <td>{weikucms:$vo.endtime|date="Y-m-d",###}</td>
+                        <td><if condition="$time lt $vo['starttime']"><span style="color:red">未使用</span>
+                            <elseif condition="($time egt $vo['starttime']) and (($time elt $vo['endtime']))"/>使用中
+                            <else/><span style="color:red">已使用</span></if></td>
+                        <td>
+                            <a href="{weikucms::U('Store_new/sndetails',array('token'=>$token,'sid'=>$vo['id']))}" title="详情" class="btn btn-success btn-sm">详情</a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Store_new/sndel',array('id'=>$vo['id'],'token'=>$token))}')">删除</a>
+
+
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+

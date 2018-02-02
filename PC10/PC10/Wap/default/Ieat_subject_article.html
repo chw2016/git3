@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        {weikucms:$article.article_title}
+    </title>
+
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+    <style>
+        .main { width: 98%; overflow-x: hidden; }
+        img { max-width: 100%; }
+    </style>
+</head>
+
+<body r='158' g='191' b='38'>
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+    <div class="c1">
+        <div class="c2">
+            <div class="c3 logo"></div>
+        </div>
+    </div>
+</div>
+<div class="main" style="padding: 3px;">
+    <php>echo htmlspecialchars_decode($article['article_content']);</php>
+</div>
+
+</body>
+</html>

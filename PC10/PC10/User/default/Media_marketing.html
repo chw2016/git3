@@ -1,0 +1,122 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+		float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+		cursor: pointer;
+    }.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" >任务中心</a>
+            </li>
+			 <li data-index="0" class="tab_nav first js_top borderColor" data-id="marketing">
+                <a href="{weikucms::U('Media/marketing',array('token'=>$token))}" >营销中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/addInfo',array('token'=>$token))}" >消息中心</a>
+            </li>
+			<li data-index="0" class="tab_nav first js_top" data-id="financial">
+				<a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" >用户中心</a>
+			</li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/setCenter',array('token'=>$token))}" >配置中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >统计报表</a>
+            </li>
+            <if condition="$token eq $teToken">
+                <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                    <a href="{weikucms::U('Media/guanggao',array('token'=>$token))}" >广告位设置</a>
+                </li>
+            </if>
+
+        </ul>
+    </div>
+</div>
+<!--添加按钮-->
+<div>
+    <ul>
+        <li><a href="{weikucms::U('Media/addmarketing',array('token'=>$token))}" style="text-decoration: none;"><div class="addstyle" style="margin-left: 0px;background: #1576ad;" >添加活动</div></a></li>
+    </ul>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在此页面可以查看已经添加的营销活动，通过点击编辑按钮查看活动的具体详情或修改活动事项</li>
+        <li>点击添加活动按钮可以新增营销活动</li>
+        <li>点击详情按钮可以查看参加此类营销活动的具体情况</li>
+        <li>点击删除按钮可以删除营销活动</li>
+    </ol>
+</div>
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >序号</th>
+                <th >活动名称</th>
+                <th >创建时间</th>
+                <th >状态</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <volist name="activity" id="vo" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$vo.title}</td>
+                    <td>{weikucms:$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                    <td>
+                        <php>
+                            if(time() < strtotime($vo['starttime'])){
+                            echo "未开始";
+                            }elseif(time() >= strtotime($vo['starttime'])&&time() <= strtotime($vo['endtime'])){
+                            echo "进行中";
+                            }else{
+                            echo "已结束";
+                            }
+                        </php>
+                    </td>
+                    <td >
+                        <a href="{weikucms::U('Media/marketingactor',array('token'=>$token,'mid'=>$vo['id']))}" title="详情" class="btn btn-success btn-sm">详情</a>
+                        <a href="{weikucms::U('Media/addmarketing',array('token'=>$token,'mid'=>$vo['id']))}" title="编辑文本" class="btn btn-success btn-sm">编辑</a>
+                        <!--<a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Service&amp;a=manager&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="编辑文本">编辑</a>-->
+                        <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Media&amp;a=delmarketing&amp;token={weikucms:$token}&amp;mid={weikucms:$vo.id}')" href="#">删除</a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

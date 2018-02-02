@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+	   <title>鱼美人-在线检测</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js/slider.js"></script>
+    </head>
+    <body class="userCenter testing" style="overflow-x:hidden">
+    	<div class="tset">
+    		<div class="titles"><img src="{weikucms::RES}/mru/img/daan.png" alt="biaoti"><span class="fonts">在线检测</span></div>
+            <!--第一题-->
+            <volist name="list" id="v">
+    		<div class="question f14 "  style="height:auto;" data-id={weikucms:$v['id']}><!-- hide -->
+    			<div class="qutitle"  style="font-size:15px;" ><b>第&nbsp{weikucms:$i}&nbsp题&nbsp:{weikucms:$v['name2']}</b></div>
+    			<div class="answer">
+    				<div class="answers">
+    					<div class="answerslsft" style="font-size:15px;" >
+    						<span class="selectimg on" data-item='a'></span>检测结果：{weikucms:$v['title']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+    			</div>
+    		</div>
+    		</volist>
+    	    		   <div style="margin-left:20px;margin-top:40px;" class="">
+    						推荐项目:
+    					</div>
+    					<volist name="list2" id="v" >
+    					<a href="{weikucms::U('MruQianggou/show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$v['id']))}" >
+    		    		
+    		    		<div style="margin-left:20px;" class="">
+    						<span class="selectimg on" data-item='a'></span><?php 
+    				          echo mb_substr($v['title'],0,22,'utf-8');
+    				       ?>
+    					</div>
+    					</div>
+    					</a>
+                        </volist>
+                        <div style="margin-bottom:50px;" ></div>
+<!--     		<div class="question f14 " data-id={weikucms:$v['id']}>hide
+    			<div class="qutitle">第&nbsp1&nbsp题&nbsp</div>
+    			<div class="answer">
+    				<div class="answers">
+    					<div class="answerslsft">
+    						<span class="selectimg on" data-item='a'></span>检测结果：{weikucms:$v['aname']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+    			</div>
+    		</div> -->
+    		
+    		
+    		
+    		
+    
+    		
+            <!--第二题-->
+         <!--    <div class="question f14 hide" data-id='2'>
+                <div class="qutitle">2、在任何情况下，当你过于沉溺于食物中，你会</div>
+                <div class="answer">
+                    <div class="answers">
+                        <div class="answerslsft">
+                            <span class="selectimg on" data-item='A'></span>A、厌烦eeee或者压力挺大
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                    <div class="answers">
+                        <div class="answerslsft">
+                            <span class="selectimg" data-item='B'></span>B、在家人、efasdf得不考虑自己吃了些什么
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                </div>
+            </div>
+ -->        <a href="{weikucms::U('MruQianggou/index',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class='fixBottom btn'>
+                <ul class='myul'>
+                  
+                    <li class='myli '>推荐项目</li>
+                </ul>
+            </div>
+            </a>
+    	</div>
+<include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+</html>

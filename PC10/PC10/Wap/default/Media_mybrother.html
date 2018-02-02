@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>我的小伙伴</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+</head>
+<body style="background-color: #ECEDEE;">
+<div class="myul header h3 red-bg white">
+    <div class="arrowLeft white back"></div>
+    <div class="setMiddle textMiddle">
+        我的小伙伴
+    </div>
+</div>
+
+<if condition="$upname eq ''">
+    <else/>
+    <div class="msgList h4 myul white-bg gray">
+        <div class="msg" style="width: 285px;">
+            <div class="msgTitle">
+                我的推荐人 <span style="padding-left: 15px">{weikucms:$upname['nickname']}</span>
+            </div>
+
+        </div>
+
+    </div>
+</if>
+
+<div class="msgList h4 myul white-bg gray" onclick="window.location.href='{weikucms::U('Media/mybrothers',array('token'=>$token,'openid'=>$openid,'type'=>'1'))}'">
+    <div class="msg" style="width: 285px;">
+        <div class="msgTitle">
+            一级小伙伴 <span style="padding-left: 15px">({weikucms:$iCountOne}人)</span>
+        </div>
+
+    </div>
+    <div class="arrowRight readMsg setRight"></div>
+</div>
+
+<div class="msgList h4 myul white-bg gray" onclick="window.location.href='{weikucms::U('Media/mybrothers',array('token'=>$token,'openid'=>$openid,'type'=>'2'))}'">
+    <div class="msg" style="width: 285px;">
+        <div class="msgTitle">
+            二级小伙伴 <span style="padding-left: 15px">({weikucms:$iCountTwo}人)</span>
+        </div>
+    </div>
+    <div class="arrowRight readMsg setRight"></div>
+</div>
+
+<div class="msgList h4 myul white-bg gray" onclick="window.location.href='{weikucms::U('Media/mybrothers',array('token'=>$token,'openid'=>$openid,'type'=>'3'))}'">
+    <div class="msg" style="width: 285px;">
+        <div class="msgTitle">
+            三级小伙伴  <span style="padding-left: 15px">({weikucms:$iCountThr}人)</span>
+        </div>
+
+    </div>
+    <div class="arrowRight readMsg setRight"></div>
+</div>
+
+</body>
+</html>

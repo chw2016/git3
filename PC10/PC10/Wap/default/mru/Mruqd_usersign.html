@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/calendar.js"></script>
+<?php
+		      include"./tpl/Wap/default/MruTitle.html";
+		?>    
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;" style="overflow-x:hidden">
+<style type="text/css">
+    .Calendar {
+        font-family:Verdana;
+        text-align:center;
+        height: 320px;
+        line-height:1.5em;
+    }
+    .Calendar .icons{
+        display: block;
+        width:40px;
+        height:40px;
+        background: url(http://stc.weimob.com/img/member/imgs/icons4.png) no-repeat center -300px;
+        -webkit-background-size:50px auto;
+    }
+    .Calendar .icons_after{
+        background-position: center -350px;
+    }
+    .Calendar header{
+        font-size:14px;
+        color:#888e8e;
+        line-height:50px;
+        height:50px;
+        background:#ffffff;
+    }
+    .Calendar a{
+        color:#0066CC;
+    }
+    .Calendar table{
+        width:280px;
+        margin:auto;
+        border:0;
+    }
+    .Calendar table thead{color:#acacac;}
+    .Calendar table td {
+        color:#989898;
+        border:1px solid #ecf9fa;
+        width:40px;
+        height:40px;
+        margin:1px;
+        background: #ffffff;
+        -webkit-box-sizing:border-box;
+    }
+    .Calendar thead td, .Calendar td:empty{
+        background:none;
+        border:0;
+    }
+    .Calendar thead td{
+        color:#72bec9;
+        font-size:13px;
+        font-weight:bold;
+    }
+    #idCalendarPre{
+        cursor:pointer;
+        float:left;
+    }
+    #idCalendarNext{
+        cursor:pointer;
+        float:right;
+    }
+
+    #idCalendar td a.checked{
+        display: block;
+        height:100%;
+        border:1px solid #58c4d1;
+        line-height:38px;
+        color:#989898;
+    }
+    #idCalendar td.onToday, #idCalendar td.onToday a{
+        color:#ff3600!important;
+}
+.motify {
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    width: 220px;
+    padding: 0;
+    margin: 0 0 0 -110px;
+    z-index: 9999;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5em;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: "0px 1px 2px rgba(0,0,0,.2)";
+    -moz-box-shadow: "0px 1px 2px rgba(0,0,0,.2)";
+    box-shadow: "0px 1px 2px rgba(0,0,0,.2)";
+}
+.motify .motify-inner {
+    padding: 10px 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+</style>
+<script>
+    /**
+     * 积分签到
+     */
+    function dosignin() {
+        //提交信息
+        $.ajax({
+            type: "post",
+            url: "{weikucms::U('Usercenter/usersign',array('token'=>$token,'openid'=>$openid))}",
+            dataType: "json",
+            success: function(html){
+                if (html.code == 0) {
+                    $(".motify-inner").text(html.msg);
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                        window.location.reload();
+                    },'2000');
+                } else if(html.code == -1) {
+                    url = html.url;
+                    $(".motify-inner").text(html.msg);
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                        window.location.href=url;
+                    },'2000');
+                }else{
+                    $(".motify-inner").text(html.msg);
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                    },'2000');
+                }
+            }
+        });
+
+
+    }
+</script>
+<div class="container integral">
+<div class="motify" style="display: none;"><div class="motify-inner"></div></div>
+    <header>
+        <ul class="tbox tbox_1">
+            <li >
+                <p class="pre">
+                    <label></label>
+
+                </p>
+            </li>
+            <li>
+            
+                <if condition="$signdata eq null">
+                <a href="javascript:void(0)"  style="background-color: #CACACA;color: #B9B5B5;"><label>未开启</label></a>
+                <else/>
+                <if condition="$userissign neq null">
+                    <a href="javascript:void(0)"  ><label>已签到</label></a>
+                    <else/>
+                    <a href="javascript:void(0)"  onclick="dosignin();"><label>点击签到</label></a>
+                </if>
+
+                </if>
+
+            </li>
+            <li>
+                <p class="pre">
+                    <label></label>
+
+                </p>
+            </li>
+        </ul>
+        <nav class="nav_integral">
+            <ul class="box">
+
+                <li>
+                    <a href="#">
+                    <label>签到总次数:{weikucms:$allsigncounts}</label></a>
+                </li>
+                <li><a href="{weikucms::U('Usercenter/usersignlist',array('token'=>$token,'openid'=>$openid))}">
+                    <label>签到记录</label></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="body">
+        <div>
+            <div class="Calendar">
+                <header>
+                    <span id="idCalendarYear">0</span>年 <span id="idCalendarMonth">0</span>月
+                </header>
+                <table cellspacing="0">
+                    <thead>
+                    <tr>
+                        <td>日</td>
+                        <td>一</td>
+                        <td>二</td>
+                        <td>三</td>
+                        <td>四</td>
+                        <td>五</td>
+                        <td>六</td>
+                    </tr>
+                    </thead>
+                    <tbody id="idCalendar">
+                    </tbody>
+                </table>
+            </div>
+            <script language="JavaScript">
+			    var datelocalnow=new Date(); 
+                var datelocalyear=datelocalnow.getFullYear(); 
+                var datelocalmonth=(datelocalmonth="0"+(datelocalnow.getMonth()+1)).substr(datelocalmonth.length-2,2); 
+                var datelocalday=(datelocalday="0"+datelocalnow.getDate()).substr(datelocalday.length-2,2);
+				var cale = new Calendar("idCalendar", {
+                    Year : datelocalyear,
+                    Month : datelocalmonth,
+                    onToday: function(o){ o.className = "onToday"; },
+                    onFinish: function(){
+                        this.Year = datelocalyear;
+                        this.Month = datelocalmonth;
+                        $$("idCalendarYear").innerHTML = this.Year;
+                        $$("idCalendarMonth").innerHTML = this.Month;
+                        var flag = "["+datelocalday+"]";
+                        for(var i = 0, len = flag.length; i < len; i++){
+                            this.Days[flag[i]].innerHTML = "<a href='javascript:void(0);' class='checked'>" + flag[i] + "</a>";
+                        }
+                    }
+                });
+                $$("idCalendarPre").onclick = function(){ location.href = "/Webnewmemintegral/signin/pid/1071/wechatid/osXr8jo2_7zz3s0O5jzstVIlfmNc/date/201408"; }
+                $$("idCalendarNext").onclick = function(){ location.href = "/Webnewmemintegral/signin/pid/1071/wechatid/osXr8jo2_7zz3s0O5jzstVIlfmNc/date/201410"; }
+            </script>
+        </div>
+    </div>
+   </div>
+
+<include file="./tpl/Wap/default/mrufx.html" />  
+</body>
+</html>

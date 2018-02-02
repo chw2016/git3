@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+    <script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/health/js/core.js"></script>
+    <script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+    <style>
+        .vipcard{
+            background-image:url(tpl/Wap/default/common/health/img/vipcard.png);}
+        .guibingka{
+            background-image:url(tpl/Wap/default/common/health/img/guibingka.png);}
+        .huiyuanka{
+            background-image:url(tpl/Wap/default/common/health/img/huiyuanka.png);}
+    </style>
+</head>
+
+<body>
+<div class="top">
+    <div class="circleBorder"><div class="homeBtn"><span class="icon-home"></span></div></div>
+</div>
+<div class="Box CardBg">
+    <div class="CardBox">
+        <div class="Card" data-card='guibingka'>
+            <div class="CardStyle "></div>
+            <div class="CardStyle "></div>
+            <div class="CardStyle "></div>
+        </div>
+    </div>
+    <div class="btn btn-default white-color" onclick="window.location.href='{weikucms::U('HealthMember/userInfo',array('token'=>$token,'openid'=>$openid))}'" style="margin:15px auto;">账号管理</div>
+    <div class="btn btn-default white-color"  onclick="window.location.href='{weikucms::U('HealthMember/reports',array('token'=>$token,'openid'=>$openid))}'" style="margin:15px auto;">查询报告</div>
+    <div class="btn btn-default white-color" onclick="window.location.href='{weikucms::U('HealthMember/quota',array('token'=>$token,'openid'=>$openid))}'" style="margin:15px auto;">指标对比</div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        var CardStyle = $(".CardStyle");
+        var Cardlength = $(".CardStyle").length;
+        var UCard = $(".Card").data("card");
+        var A;
+        CardStyle.eq(Cardlength-1).addClass(UCard);
+        var CardArray = ['vipcard','guibingka','huiyuanka'];
+        /* for(var i=0;i<=(Cardlength-1);i++){
+         if(CardArray[i]==UCard){
+         //console.log(CardArray[i]+"，"+UCard);
+         A = i;
+
+         }
+         }
+         for(var eq0 =0;eq0<3;){
+         if(!eq0==A){
+         eq0=eq0;
+         }
+         }
+         console.log(eq0)
+
+         var CardAft = new Array;
+         for(var a = 0;a<5;a++){
+         for(var b = 0;b<3;b++){
+
+
+         if(CardArray!=undefined){
+         CardAft[a]=CardArray[b];
+         }
+         }
+         }
+         */
+
+        /**/ for(var i=0;i<(Cardlength-1);i++){
+
+            CardStyle.eq(i).addClass(CardArray[i]);
+
+        }
+    });
+    myFadeIn()
+</script>
+</html>
+

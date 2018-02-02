@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="samphay@163.com" name="Author">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>查看图片</title>
+
+<link type="text/css" href="{weikucms::STATICS}/star/photo/css/style.css" rel="stylesheet"/>
+
+<script type="text/javascript" src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/star/photo/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/star/photo/js/jquery.touchSlider.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/star/js/photo.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+//	$("#btn_prev,#btn_next").fadeIn();
+
+//	$dragBln = false;
+
+    $(".main_image").touchSlider({
+        flexible : true,
+        speed : 200,
+        //btn_prev : $("#btn_prev"),
+        //btn_next : $("#btn_next"),
+        paging : $(".flicking_con a"),
+        counter : function (e){
+            $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+        }
+    });
+});
+</script>
+</head>
+<body>
+
+<div class="main_visual">
+	<div class="flicking_con">
+		<a href="#">1</a>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<a href="#">5</a>
+        <a href="#">6</a>
+	</div>
+	<div class="main_image">
+		<ul>
+			<li><span style="background:url({weikucms::STATICS}/star/img/0.jpg) center top no-repeat"></span></li>
+            <li><span style="background:url({weikucms::STATICS}/star/img/1.jpg) center top no-repeat"></span></li>
+            <li><span style="background:url({weikucms::STATICS}/star/img/0.jpg) center top no-repeat"></span></li>
+            <li><span style="background:url({weikucms::STATICS}/star/img/1.jpg) center top no-repeat"></span></li>
+            <li><span style="background:url({weikucms::STATICS}/star/img/0.jpg) center top no-repeat"></span></li>
+             <li><span style="background:url({weikucms::STATICS}/star/img/1.jpg) center top no-repeat"></span></li>
+            
+		</ul>
+		<!--<a href="javascript:;" id="btn_prev"></a>
+		<a href="javascript:;" id="btn_next"></a>-->
+	</div>
+</div>
+<!--main_visual end-->
+
+</body>
+</html>

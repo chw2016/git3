@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Investment.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.min.js" ></script>
+		<script>
+			$(function(){		
+			$(".shadowone li").click(function(){
+				  $(this).addClass("active").siblings().removeClass("active");
+				  var index = $(this).index();
+				  $(".shadowtwo>li").eq(index).show().siblings().hide();
+			});
+
+		});
+		</script>
+		<style>
+			a{
+				text-decoration: none;
+				display: inline-block;
+				color: #CCCCCC;
+			}
+			a:hover{
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title"></h1>
+			<!--<div>注册</div>
+			<div>登录</div>-->
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+			<div class="Gta_Details">
+				<div class="Gta_Details_nav">
+					<div class="Gta_Details_nav_top clearfix">
+						<div class="Gta_Details_nav_top_left fl" style="padding-left: 5px;padding-top: 5px; height: 82px;width: 28%;">
+                            <img src="{weikucms:$info.img}" height="82px"/>
+                        </div>
+						<div class="Gta_Details_nav_top_left_right fr">
+							<p><span>利率：</span><em><?php echo $info['rate']*100;?>%/年</em></p>
+							<p><span>期限：</span><em>{weikucms:$info.time_limit}个月</em></p>
+							<p><span>保障：</span><em>100%本息担保</em></p>
+							<p><span>还款方式：</span><em>
+                            <if condition="$info['huankuan'] eq 1">
+                                先息后本
+                                <elseif condition="$info['huankuan'] eq 2" />
+                                等额本息
+                            </if>
+                            </em></p>
+						</div>
+					</div>
+					<div class="Gta_Details_Complete">
+                        <p><span>最低投资额&nbsp;:</span><span style="color: #d55435;">￥{weikucms:$info.start_price}(元)</span></p>
+						<p><span>借款总金额&nbsp;:</span><span style="color: #d55435;">￥{weikucms:$info.money}(元)</span></p>
+						<p><span>剩余可投额&nbsp;:</span><span  style="color: #d55435;">￥<?php echo $info['money']-$omoney;?>(元)</span>
+                        <p><span>剩余比例&nbsp;:</span><span  style="color: #d55435;"><?php echo round(($info['money']-$omoney)/$info['money'],3)*100;?>%</span>
+						<span class="Bars" style="display: inline-block;"> 
+							<span style="width: 100%;margin-left: 0;"> 
+							</span> 
+						</span></p>
+					</div>
+					<div class="Gta_Details_btn clearfix">
+                        <if condition="$info['money']-$omoney lt $info['start_price']">
+                            <div style="margin-left: 25%" >
+                                <span class=" Gta_Details_btn_left" style="margin-top: -13px;">融资完成</span>
+                            </div>
+                            <else />
+                            <div style="margin-left: 25%" onclick="location.href='{weikucms::U('p2p_touzi1',array('token'=>$token,'openid'=>$openid,'id'=>$info['id']))}'">
+                                <span class=" Gta_Details_btn_left" style="margin-top: -13px;">立即投资</span>
+                            </div>
+                            </if>
+
+					<!--	<div>
+						<span class=" Gta_Details_btn_right">一键投标</span>
+						</div>-->
+					</div>
+				</div>
+			</div>
+			<div class="Tab">
+					<ul class="shadowone" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<li class="active"><a href="#" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">抵押信息</a></li>
+						<li><a href="#" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">借款信息</a></li>
+						<li><a href="#" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">投资记录</a></li>
+					</ul>
+					<ul class="shadowtwo">
+						<!--担保信息-->
+						<li>
+							<div class="shadowtwo_home" style="background-color: #FFF;">
+						 {weikucms:$info.danbao_info}
+						</div>
+
+						</li>
+						<!--借款信息-->
+						<li class="hide">
+							<div class="shadowtwo_home" style="background-color: #FFF;">
+                                {weikucms:$info.loan_info}
+							</div>
+						</li>
+						<!--投资记录-->
+						<li class="hide">
+							<div class="Record">
+								<span class="Record1">投资人姓名</span>
+								<span class="Record2">金额(元)</span>
+								<span class="Record3">投资时间</span>
+							</div>
+                            <volist name="list" id="vo">
+							<div class="Record">
+								<span class="Record1">{weikucms:$vo.name}</span>
+								<span class="Record2">{weikucms:$vo.money}</span>
+								<span class="Record3">{weikucms:$vo.add_time|date='Y-m-d',###}</span>
+							</div>
+                                </volist>
+                            <!--
+							<div class="Record">
+								<span class="Record1">Z*****</span>
+								<span class="Record2">0000</span>
+								<span class="Record3">2015-06-02&nbsp;09:30</span>
+							</div>
+							<div class="Record">
+								<span class="Record1">Z*****</span>
+								<span class="Record2">0000</span>
+								<span class="Record3">2015-06-02&nbsp;09:30</span>
+							</div>	
+							<div class="Record">
+								<span class="Record1">Z*****</span>
+								<span class="Record2">0000</span>
+								<span class="Record3">2015-06-02&nbsp;09:30</span>
+							</div>
+							<div class="Record">
+								<span class="Record1">Z*****</span>
+								<span class="Record2">0000</span>
+								<span class="Record3">2015-06-02&nbsp;09:30</span>
+							</div>-->
+						</li>
+					</ul>
+				</div>
+		</section>
+	</body>
+</html>

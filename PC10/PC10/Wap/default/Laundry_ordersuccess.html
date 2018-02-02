@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣服务</title>
+<link href="{weikucms::RES}/laundry/css/successtwo.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- 订单成功 -->
+    <div class="ftips_info">
+        <span class="ftips_ico success_ico">下单成功！</span>
+    </div>
+    <!-- /订单成功 -->
+    <div id="share" class="fshare">
+        <div class="fshare_goods">
+            <p class="fshare_title">您的订单号为：{weikucms:$order['order_sn']}</p>
+            <p class="ftips_txt">预计快递员将在{weikucms:$order['washing_date']}&nbsp;{weikucms:$order['washing_time']}上门取衣</p>  
+        </div>
+        <div class="fshare_btn">
+            <a id="share_friend" href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}" class="btn_sure btn_sure_mini">返回</a>
+            <a id="back_mall" href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}" class="btn_cancle btn_cancle_mini">去订单中心</a>
+        </div>
+    </div>
+
+<script type="text/javascript">
+        setTimeout(function () {
+            location.href = "{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}";
+        }, 5000);
+</script>
+</body></html>

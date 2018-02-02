@@ -1,0 +1,133 @@
+<html>
+<head>
+	<include file="Public:weiweb"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{weikucms:$tpl['name']}</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+			text-decoration: none;
+			list-style: none;
+		}ol{
+			width: 100%;
+
+		}ol li{
+			width: 95%;
+			border-bottom:1px solid #b8b9bb; 
+			padding: 8px;
+			background: #f2f6f9;
+			margin: 0 auto;
+		}.picture{
+			width: 28%;
+			height: 15%;
+			background: #fff;
+			box-shadow: 2px 2px 2px #d7d7d7; 
+			float: left;
+			margin-left: 4px;
+			text-align: center;
+			padding: 3px;
+		}.picture img{
+			width: 95%;
+			height: 100%;
+		}
+		table{
+			margin-left: 10px;
+			width: 60%;
+			float: right;
+			margin-right: 10px;
+		}table tr{
+			width: 100%;
+			font-family: "Microsoft YaHei";
+			font-size: 13px;
+
+		}table tr td{
+			overflow: hidden;
+			width: 98%;
+			height: 30%;
+		}
+	</style>
+</head>
+<body>
+	<include file="Public:audio"/> 
+	<ol>
+		<volist name="res" id="so">
+		<a href="{weikucms::U('Wap/Sellcar/content',array('id'=>$so[id],'token'=>$token))}">
+			<li class="content1">
+				<div class="picture" style="color:gray;font-family:Microsoft YaHei;">
+					<if condition="$so['imgurl'] eq ''">
+						暂无图片
+						<else />
+						<img src="{weikucms:$so.imgurl}" />
+					</if>
+					
+				</div>
+				<table style="color:#595656;">
+					<tr>
+						<td style="vertical-align:top;">车辆种类：
+						<php>
+                        switch($so['species']){
+                            case 1 : echo "轿车";break;
+                            case 2 : echo "SUV越野车";break;
+                            case 3 : echo "跑车";break;
+                            case 4 : echo "商务车";break;
+                            case 5 : echo "面包车";break;
+                            case 6 : echo "客车";break;
+                            case 7 : echo "货车";break;
+                            case 8 : echo "皮车";break;
+                            case 9 : echo "摩托车";break;
+                            default : echo "工程车";
+                    }
+                    	</php>
+					    </td>
+						
+					</tr>
+					<tr>
+						<td>
+							车身颜色：
+							 <php>
+                        		switch($so['carColor']){
+                            	case 1 : echo "黑色";break;
+                            	case 2 : echo "红色";break;
+                            	case 3 : echo "蓝色";break;
+                            	case 4 : echo "白色";break;
+                            	case 5 : echo "绿色";break;
+                            	case 6 : echo "黄色";break;
+                            	case 7 : echo "银灰色";break;
+                            	case 8 : echo "灰色";break;
+                            	case 9 : echo "橙色";break;
+                            	default : echo "其他";
+                    }
+                    	</php>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							变速器：
+							<if condition="$so.speedM eq 1"> 手动
+                    		<elseif condition="$so.speedM eq 2"/>自动
+                    		<else /> 手自一体
+                    		</if>
+						</td>
+					</tr>
+					<tr>
+						<td style="color:#83878a;vertical-align:bottom;">￥&nbsp;{weikucms:$so.presell}</td>
+						
+					</tr>
+				</table>
+				<div style="clear:both;"></div>
+			</li>
+		</a>
+		</volist>
+	</ol>
+	<script type="text/javascript">
+		$(function(){
+			$('table').css('height',$('.picture').height());
+			$('.picture').css('line-height',$('.picture').height()+'px');
+			$(window).resize(function(){
+				$('table').css('height',$('.picture').height());
+			})
+		})
+	</script>
+</body>
+</html>

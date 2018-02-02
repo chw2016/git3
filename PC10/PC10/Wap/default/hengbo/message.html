@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="恒博物业">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>应聘职位</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/zhiwei.css">
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+    <script type="text/javascript">
+        var urls = "{weikucms::U('Wap/Hengbo/message',array('token'=>$token,'openid'=>$openid))}";
+    </script>
+    <style type="text/css">
+        .cmsg {
+	padding-top: 20px;
+	font-size: 14px;
+        }
+	.xinxi { margin-top: 5px; }
+	.xinxi .icon { width: 20px; display: inline-block; height: 20px; position: relative; top: 5px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+<!--头部-->
+<div class="h-title">
+    <span>应聘职位</span>
+    <span class="rIcon"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/people.png" /></span>
+</div>
+<div class="h-header">
+    <img src="{weikucms::STATICS}/wapweiui/hengbo/img/yinpin.png" />
+</div>
+<!--头部-->
+<div class="zhiwei">
+    {weikucms:$aOffice['info']}
+    <div class="cmsg">	
+	    <div class="xinxi">
+		<span class='icon'><img src="{weikucms::STATICS}/wapweiui/hengbo/img/jb_person.png" width='100%' /></span>
+		<span>联系人：{weikucms:$aXinxi.name}</span>
+	    </div>
+	    <div class="xinxi">
+		<span class='icon'><img src="{weikucms::STATICS}/wapweiui/hengbo/img/jb_phone.png" width='114%' /></span>
+        <a href="tel:{weikucms:$aXinxi.tel}"><span>联系方式：{weikucms:$aXinxi.tel}</span></a>
+	    </div>
+	    <div class="xinxi">
+		<div class='icon' style="float: left"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/jb_location.png" width='100%' /></div>
+        <div class='showMap'>公司地址：<span class='address'>{weikucms:$aXinxi.address}</span></div>
+            </div>
+	    <div class="xinxi" style='clear: both;'>
+		<span class='icon'><img src="{weikucms::STATICS}/wapweiui/hengbo/img/jb_train.png" width='100%' /></span>
+		<span>乘车路线：{weikucms:$aXinxi.line}</span>
+	    </div> 
+    </div>
+</div>
+<div class="mgrDiv"><a href="javascript: void(0)" class="mgrPos">{weikucms:$aData['oname']}</a></div>
+<form id="zhiweiForm">
+    <input type="hidden" name="oid" value="{weikucms:$aData['id']}">
+    <input type="hidden" name="aid" value="{weikucms:$_GET['aid']}">
+    <div class="pinForm">
+        <div class="title">基本资料</div>
+        <!--姓名-->
+        <div class="input uname">
+            <input type="text" name="uname" placeholder="*姓名：" value="{weikucms:$aInfo['name']}">
+        </div>
+
+        <!--性别-->
+        <div class="item">
+            <div class="input selectMi sex">
+					<span class="selectedMi">
+							*性别
+					</span>
+            </div>
+            <input type="hidden" class="sHidden" name="sex" value="{weikucms:$aInfo['sex']}" />
+            <div class="selectMiList">
+                <ul>
+                    <li class="miList">男</li>
+                    <li class="miList">女</li>
+                </ul>
+            </div>
+        </div>
+        <!--出生年月-->
+        <div class="input birth">
+            <input type="text" name="birth" placeholder="*出生年月：" value="{weikucms:$aInfo['barthday']}">
+        </div>
+        <!--电话-->
+        <div class="input phone">
+            <input type="tel" name="phone" placeholder="*联系电话：" value="{weikucms:$aInfo['tel']}">
+        </div>
+        <div style="clear:both;"></div>
+        <!--籍贯-->
+        <div class="input origin">
+            <input type="text" name="origin" placeholder="籍贯：" value="{weikucms:$aInfo['address']}">
+        </div>
+        <!--学历-->
+        <div class="item">
+            <div class="input selectMi education">
+					<span class="selectedMi">
+							请选择学历
+					</span>
+            </div>
+            <div class="selectMiList educationBox">
+                <ul>
+                    <li class="miList">小学</li>
+                    <li class="miList">初中</li>
+                    <li class="miList">高中</li>
+                    <li class="miList">大专</li>
+                    <li class="miList">本科</li>
+                </ul>
+            </div>
+            <input type="hidden" class="sHidden" name="education" value="{weikucms:$aInfo['educational']}" />
+        </div>
+        <!--邮箱-->
+        <div class="input mail">
+            <input type="text" name="mail" placeholder="邮箱：" value="{weikucms:$aInfo['email']}">
+        </div>
+
+        <!--出生年月-->
+        <div class="input work">
+            <textarea name="work" placeholder="工作经历："></textarea>
+        </div>
+
+    </div>
+</form>
+
+<div class="fixBottom posBottom" submit='1'>
+    <a href="{weikucms::U('Hengbo/acres',array('token'=>$token,'openid'=>$openid))}">
+			<span class="myPing">
+				<span class="icon"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/homeBtn.png" width="30px" /></span>
+				<span>首页</span>
+			</span>
+    </a>
+    <a href="javascript: void(0)">
+			<span class="myPing" id="pinBtn">
+				<span class="icon"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/pinBtn.png"  width="30px" /></span>
+				<span>应聘</span>
+			</span>
+    </a>
+</div>
+
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/zhiwei.js"></script>
+</body>
+</html>

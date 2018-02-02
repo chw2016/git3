@@ -1,0 +1,64 @@
+<include file="Public:head"/>  
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+            <div class="cLineB">
+                <div class="title_tab" id="topTab">
+                    <ul class="tab_navs title_tab" data-index="0">
+
+
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                            <a href="{weikucms::U('Panorama/index',array('token'=>$token))}" >全景管理</a>
+                        </li>
+
+
+
+                        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                            <a href="{weikucms::U('Reply_info/set',array('token'=>$token,'infotype'=>'panorama'))}">回复配置</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+<!--tab end-->
+<div class="msgWrap">
+<form method="post" action="" id="info">
+<div class="cLine">
+<div class="pageNavigator"> <a href="{weikucms::U('Panorama/add',array('token'=>$token))}" title="" class="btn btn-primary">添加360全景</a></div>
+<div class="clr"></div>
+</div>
+
+<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+<thead>
+<tr>
+<th width="270">名称</th>
+<th width="120">关键词</th>
+<th width="120">外链代码</th>
+<th width="150" class="norightborder">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr></tr>
+<volist name="list" id="o"> 
+<tr>
+<td>{weikucms:$o.name}</td>
+<td>{weikucms:$o.keyword}</td>
+<td>全景 {weikucms:$o.id}</td>
+<td class="norightborder"><a href="{weikucms::U('Panorama/set',array('token'=>$token,'id'=>$o['id']))}">修改</a> <a href="#" onclick="source_delete('{weikucms::U('Panorama/delete',array('token'=>$token,'id'=>$o['id']))}')">删除</a></td>
+</tr>
+</volist>
+</tbody>
+</table>
+<input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+</form>
+
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,131 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+        	金额结算
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Media/financial',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">用户姓名</label></th>
+                    <td>
+                        <input type="input" class="px" id="username" value="{weikucms:$info.nickname}" name="username" style="width:300px" placeholder="此处填写用户姓名" disabled />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="title">银行卡号</label></th>
+                    <td>
+                        <input type="input" class="px" id="bankno" value="{weikucms:$info.bank_card}" name="bankno" style="width:300px" placeholder="此处填写银行卡号" disabled />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">银行开户行</label></th>
+                    <td>
+                        <input type="input" class="px" id="bank" value="{weikucms:$info.bank_name}" name="bank" style="width:300px" placeholder="此处填写银行卡号" disabled />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">可结算余额</label></th>
+                    <td>
+                        <input type="input" class="px" id="money" value="{weikucms:$info.money}" name="money" style="width:300px" placeholder="此处填写可结算余额" disabled />
+                    </td>
+                </tr>
+				
+				<tr>
+                    <th valign="top"><label for="cid">要结算金额</label></th>
+                    <td>
+                        <input type="input" class="px" id="moneyGo" value="" name="moneyGo" style="width:300px" placeholder="此处填写要结算金额">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                    </th>
+                   
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            结算
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+           // 获取可用金额
+           var money = $('#money').val();
+           var moneyGo = $('#moneyGo').val();
+
+            if(!moneyGo){
+                notif({
+                    msg: "请填写要结算金额",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(isNaN(moneyGo)){
+                notif({
+                    msg: "要结算金额应该为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(Number(moneyGo) > Number(money)){
+                notif({
+                    msg: "要结算金额不能大于剩余金额数",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+            var posturl = "{weikucms::U('Media/counts',array('token'=>$token,'id'=>$_GET['tid']))}";
+            $.post(posturl,
+                    {moneyGo:moneyGo},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+
+        });
+    });
+</script>
+
+

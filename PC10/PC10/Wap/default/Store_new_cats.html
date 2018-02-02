@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta charset="utf-8" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta name="format-detection" content="telephone=no"/>
+<title>{weikucms:$metaTitle}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+<meta name="format-detection" content="telephone=no" />
+<script src="{weikucms::$staticFilePath}/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="{weikucms::$staticFilePath}/js/jquery.lazyload.js" type="text/javascript"></script>
+<script src="{weikucms::$staticFilePath}/js/notification.js" type="text/javascript"></script>
+<script src="{weikucms::$staticFilePath}/js/swiper.min.js" type="text/javascript"></script>
+<script src="{weikucms::$staticFilePath}/js/main.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/wapweiui/distribution/wxsharejs.js"></script>
+<link type="text/css" rel="stylesheet" href="{weikucms::$staticFilePath}/css/touch_index.css">
+<link type="text/css" rel="stylesheet" href="{weikucms::$staticFilePath}/css/style.css" />
+</head>
+<body>
+<div id="top"></div>
+<div id="scnhtm5" class="m-body">
+<div class="menu">
+<a href="{weikucms::U('Store_new/index',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'dopenid'=>$_GET['dopenid']))}"><i></i>所有商品</a>
+<a href="{weikucms::U('Store_new/cart',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'dopenid'=>$_GET['dopenid']))}"><i></i>购物车</a>
+<a href="{weikucms::U('Store_new/my',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'dopenid'=>$_GET['dopenid']))}"><i></i>查物流</a>
+<a href="{weikucms::U('Store_new/my',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'dopenid'=>$_GET['dopenid']))}"><i></i>用户中心</a>
+</div>  
+<!--主体-->
+<volist name="cats" id="hostlist" key="i"> 
+	<php>if ($i > 6) {$k = $i % 6 + 1;} else {$k = $i;}</php>
+	<div class="m-floor">
+	<ul>
+	<li class="tit bgf{weikucms:$k}">
+	<i>{weikucms:$i}F</i>{weikucms:$hostlist.name}
+	</li>
+	<li class="img"><a href="{weikucms::U('Store_new/products',array('token' => $_GET['token'], 'catid' => $hostlist['id'], 'wecha_id' => $wecha_id,'dopenid'=>$_GET['dopenid']))}"><img src="{weikucms:$hostlist.logourl}"/></a></li>
+	<!-- <li class="ad"><a href="/index.php/touch/goods/goodslist/keyword/NEO%09"><img src="style/images/f1-2.jpg"/></a></li> -->
+	</ul>
+	</div>
+</volist> 
+</div>
+<span style="display: none;" id="shareUrl"><php>echo C('site_url');</php>{weikucms::U('Store_new/cats',array('token'=>$token,'dopenid'=>$openid))}</span>
+</body>
+<script>
+    $(function(){
+        var shareTitle = "宏耐微商城";
+        var imgUrl = "";
+        var descContent = "宏耐微商城，物美价廉。";
+        var shareUrl = $("#shareUrl").text();
+        wx_share_out(shareTitle,imgUrl,descContent,shareUrl);
+    });
+
+</script>
+<script type="text/javascript">
+window.shareData = {  
+            "moduleName":"Store",
+            "moduleID":"{weikucms:$cats[0]['id']}",
+            "imgUrl": "{weikucms:$cats[0]['logourl']}", 
+            "timeLineLink": "{weikucms::C('site_url') .  U('Store_new/index',array('token' => $_GET['token']))}",
+            "sendFriendLink": "{weikucms::C('site_url') .  U('Store_new/index',array('token' => $_GET['token']))}",
+            "weiboLink": "{weikucms::C('site_url') .  U('Store_new/index',array('token' => $_GET['token']))}",
+            "tTitle": "{weikucms:$metaTitle}",
+            "tContent": "{weikucms:$metaTitle}"
+        };
+</script>
+{weikucms:$shareScript}
+</html>

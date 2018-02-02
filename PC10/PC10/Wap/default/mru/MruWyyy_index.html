@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-我要预约</title> 			
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+		 <script src="{weikucms::RES}/mru/js/jquery.validate.js"></script> 
+     <script src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script> 
+        
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt" style="overflow-x:hidden">
+        <div class="youhuiquanmain">
+            <div class="tips">
+                您暂时还没有预约成功，请按下面的指示进行操作预约
+            </div>
+            
+        <form action="" method="post" id="form"  >    
+      
+            <div class="select_box" style="text-align:center;">
+             <if condition="$md">
+                   <select id="abc" style=" padding-left:32%;" name="shi">
+                 			<option value="{weikucms:$md['shi']}" >{weikucms:$md['shi']}</option>
+                  </select>
+             <else/>
+             
+              <select id="abc" style=" padding-left:32%;" name="shi">
+                 
+                        <option value="" >请选择市区</option>
+	                    <option value="深圳" >深圳</option>
+	                    <option value="广州" >广州</option>
+	                    <option value="东莞" >东莞</option>
+	                    <option value="珠海" >珠海</option>
+	                    <option value="中山" >中山</option>
+	                    <option value="佛山" >佛山</option>
+	                    <option value="惠州" >惠州</option>
+	                    <option value="江门" >江门</option>
+	                    <option value="汕头" >汕头</option>
+	                    <option value="宁波" >宁波</option>
+	                    <option value="1" >所有门店</option>
+                  
+                    
+                  
+                </select>
+                
+             </if>
+               
+             
+            </div>
+          
+            <scrip>
+            	
+            </scrip>
+            <div class="select_box">
+                <if condition="$md" >
+                   <select style=" padding-left:32%;" class="dian" name="mdian"  >
+                     <option value="{weikucms:$md['id']}" >{weikucms:$md['name']}</option>
+                   </select>
+                <else/> 
+                   <select style=" padding-left:32%;" class="dian" name="mdian"  >
+                     <option value="" >请选择门店</option>
+                   </select>
+                </if>
+            </div>
+            <div class="select_box addresstip" style="height:auto;padding: 0px 0px;" >
+              
+               <div class="dz" style="font-size: 12px;" ></div>
+               <div class="phone" style="font-size: 12px;" ></div> 
+            </div>
+            
+            <div class="select_box">
+                <select style=" padding-left:29%;" id="type"  class="type"  name="type" >
+                    <option value="">请选择预约类型</option>
+                      <option value="项目预约">项目预约</option>
+                      <option value="免费体验预约">免费体验预约</option>
+                      <option value="抢购预约">抢购预约</option>
+                  	  <option value="团购网预约">团购网预约</option>
+                    </select>
+            </div>
+            
+            
+            <div class="select_box">
+                <select style=" padding-left:29%;" class="yy"  name="name" >
+                    <option value="" >请选择预约项目</option>
+                </select>
+            </div>
+            
+
+
+            <div class="select_box">
+           
+                <select  name="time" id="time">
+                
+                  <volist name="Date"  id="v" >
+                
+                    <option value="{weikucms:$v}">{weikucms:$v}</option>
+                  </volist> 
+                </select>
+            </div>
+
+            <div class="select_box">
+          
+                <select name="xs" id="xs" >
+                <volist name="sj" id="v" >
+                    <option value="{weikucms:$v}">{weikucms:$v}:00</option>
+                </volist>
+                </select>
+            </div>
+            
+                        <div class="select_box height_max" style="height: 40px;" >
+         <textarea name="dz" id="dz" value="" placeholder="请输入您的真实名字"  style="text-indent: 5%; padding: 10px 0px;height: 20px; " >{weikucms:$name2}</textarea>
+            </div>
+            
+            
+            <div class="select_box height_max">
+         <textarea name="content" id="content" value="" placeholder="请输入您的留言"  style="text-indent: 5%; padding: 10px 0px;height: 70px; " ></textarea>
+            </div>
+                          <input type="hidden" name="token" class="token"  value="<?php print_r($_GET['token']); ?> " />
+             </form>   
+            <div class="select_box">
+
+              <button class="btn wrap_top" onclick>下一步</button>
+            </div>
+
+            <div class="select_box">
+              <button class="btn wrap_top"  onclick='location.href="http://wpa.qq.com/msgrd?v=3&uin=408820569&site=qq&menu=yes"'  >联系客服</button>
+            </div>
+        </div>
+      
+<script>
+   $("#abc").change(function(){
+	  var id=$("#abc").val();
+	      token=$(".token").val();
+      $.post("{weikucms::U('dian')}",{"id":id,"token":token},function(data){
+    	  if(data.str=="<option value=''>请选择店铺</option>"){
+    		  $(".dian").html("<option value='' >附近周围没有店铺</option>");
+/*     		  $(".dz").html("店铺地址");
+    		  $(".phone").html("联系方式"); */
+    		 // $(".yy").html("<option value='' >该店铺下没有预约活动</option>");
+    	  }else{
+			  $(".dian").html(data.str);
+    	  }
+         
+    	
+      },'json');
+   })
+   
+   
+      $(".dian").change(function(){
+    	  
+	   var id=$(".dian").val();
+	  	 token=$(".token").val();
+	  	  $.post("{weikucms::U('dz')}",{"id":id,"token":token},function(data){
+	  		 
+	  	   
+    	  if(data.dz){
+    		  $(".dz").html(data.dz);
+    		  $(".phone").html(data.dh);
+    	  }else{
+/*     		  $(".dz").html("店铺地址");
+    		  $(".phone").html("联系方式"); */
+    	  }
+    	  
+    	  if(data.str2){
+    		  $(".yy").html(data.str2);
+    	  }else{
+    		 // $(".yy").html("<option value='' >该店铺下没有预约活动</option>");
+    	  }
+         
+    	
+      },'json');
+   })
+   
+      $(".type").change(function(){
+    	  var type=$(this).val();
+    	  var aid = $(".dian").val();
+    	  var token=$(".token").val();
+    	  $.post("{weikucms::U('ajax')}",{"aid":aid,"type":type,"token":token},function(data){
+    		  if(data.str2){
+    			  
+        		  $(".yy").html(data.str2);
+        	  }else{
+        		 // $(".yy").html("<option value='' >该类型下没有预约活动</option>");
+        	  }
+          },'json'); 
+      }) 
+   
+   
+/*       $(".yy").change(function(){
+    	  var id=$(this).val();
+    	  $.post("{weikucms::U('ajax')}",{"id":id},function(data){
+    		  $("#type").html(data.type);
+          },'json');
+      }) */
+   
+   
+  /*  $(".wrap_top").click(function(){
+	   $("#form").submit();
+   }) */
+
+</script>   
+
+
+<script type="text/javascript">
+
+$(function(){
+	/* if($('#form').length > 0){
+		$('#form').validate({
+                //声明
+		rules: {
+			shi : "required",			
+			mdian: "required",
+			name : "required",
+			type : "required",
+			time : "required",
+			xs : "required",
+		
+		},
+                //跳出内容
+		messages: {
+			shi : "请输入市区",			
+			mdian: "请输入门店",
+			name : "请输入预约名称",
+			type : "请输入预约类型",
+			time : "请输入日期",
+			xs : "请输入小时",
+   		},
+               //错误信息
+   		errorPlacement: function(error, element) {  
+   			var tipsContent = error.html();
+		    msg.alert(tipsContent,"知道了");
+		    //error.appendTo(element.parent());  
+		    return false;
+		},
+               //提交方式
+		submitHandler:function(form){
+			form.submit();   //post提交表单
+
+                },    
+		onkeyup: false,
+		onfocusout: false
+	});
+	} */
+	
+	
+	
+	 $(".wrap_top").click(function(){
+			
+		    
+		    if(!$("select[name='shi']").val()){
+		    	alert('市区输入为空');
+		    	return false;
+		    } 
+		    
+		    if(!$("select[name='mdian']").val()){
+		    	alert('门店输入为空');
+		    	return false;
+		    } 
+		    
+		    if(!$("select[name='name']").val()){
+		    	alert('预约名称输入为空');
+		    	return false;
+		    } 
+		    
+		    if(!$("#dz").val()){
+		    	alert('真实姓名输入为空');
+		    	return false;
+		    } 
+		    
+		   var shi      = $("select[name='shi']").val();
+		   var mdian    = $("select[name='mdian']").val();
+		   var name     = $("select[name='name']").val();
+		   var type     = $("#type").val();
+		   var time     = $("#time").val();
+		   var xs       = $("#xs").val();
+		   var dz       = $("#dz").val();
+		   var content  = $("#content").val();
+		   var url      = "{weikucms::U('index3',get(token,openid))}";
+		   var data     = {
+				   shi:shi,
+				   mdian:mdian,
+				   name:name,
+				   type:type,
+				   time:time,
+				   xs:xs,
+				   dz:dz,
+				   content:content
+		   };
+		   $.post(url,data,function(str){
+			     alert(str.str);
+		   },"json");
+		   
+		  //  $('form').trigger('submit'); 
+		})
+
+})
+
+
+</script>             
+<include file="./tpl/Wap/default/mrufx.html" />     
+    </body>
+</html>

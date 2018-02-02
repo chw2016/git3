@@ -1,0 +1,117 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script src="http://v.wapwei.com/./tpl/static/newwapweiui/js/jquery.form.js" type="text/javascript"></script>
+
+<script src="/tpl/User/default/common/o2o/js/WdatePicker.js"></script>
+
+<script>
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#info', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+
+    });
+</script>
+
+
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        修改预售商品
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/yg',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+    <if condition="$isUpdate eq 1">
+        <input type="hidden" name="id" value="{weikucms:$set.id}" />
+    </if>
+    <form method="post" action="" id="formID">
+        <input type="hidden" name="id" value="{weikucms:$tg.id}">
+        <input type="hidden" name="opid" value="{weikucms:$tg.pid}">
+        <div class="msgWrap bgfc">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th><span class="red">*</span>请先选择商品：</th>
+                    <td>
+                        <!--<input type="hidden" name="pid" id="pid" value="{weikucms:$set.id}"/>
+                        <input type="text" name="name" id="name" value="{weikucms:$set.name}" class="px" style="width:400px;" />-->
+                        <select name="pid" id="select">
+                            <option>请选择商品</option>
+                            <volist name="plist" id="vo">
+
+                            <option value="{weikucms:$vo.id}" <if condition="$tg['pid'] eq $vo['id']">selected</if>>{weikucms:$vo.name}</option>
+                                </volist>
+                        </select>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th>预售标题语：</th>
+                    <td><input class="px"  type="text" name="title" value="{weikucms:$tg.title}" style="width:400px;"></td>
+                </tr>
+
+
+
+            <tr>
+                <th><span class="red">*</span>预售价格：</th>
+                <td><input type="text" id="price" name="price" value="{weikucms:$tg.price}" class="validate[required, length[0,20]] px" style="width:100px;" /> 元 </td>
+            </tr>
+
+            <tr>
+                <th>发货时间：</th>
+                <td><input type="text" id="date_1" onclick="WdatePicker()"  name="time" value="{weikucms:$tg.time|date='Y-m-d',###}" /><span class="red" style="margin-left: 20px;"> </td>
+            </tr>
+                <tr>
+                    <th>备注：</th>
+                    <td><input type="text"  value="{weikucms:$tg.note}"   name="note" placeholder="比如填哪里发货" style="width: 500px;" /></td>
+                </tr>
+            <tr>
+                <tr>
+                    <th valign="top"><label for="info">图文详细页内容：</label></th>
+                    <td><textarea name="content" id="info"  rows="5" style="width:590px;height:360px"  onclick="alert(7);" >{weikucms:$tg.content}</textarea></td>
+                </tr>
+                <script>
+
+                </script>
+                <th>&nbsp;</th>
+                <td>
+                    <button type="button" name="button" class="btn btn-primary" id="save">提交修改</button>
+                </td>
+            </tr>
+
+            </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+        <script>
+            $("#save").click(function(){
+                var pid=$("#select").val();
+                if(pid=="请选择商品"){
+                    art.dialog({title:'消息提示', ok:true, width:200, height:100, content:'请选择商品'});
+                    return;
+                }
+                var price=$("#price").val();
+                if(!price){
+                    art.dialog({title:'消息提示', ok:true, width:200, height:100, content:'请填写价格'});
+                    return;
+                }
+                var content= editor.html();
+                $('#info').html(content);
+                $("#formID").submit();
+            });
+
+
+        </script>
+
+<include file="Public:footer" />

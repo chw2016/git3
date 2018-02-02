@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>减肥资讯</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/17.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">减肥资讯</span>
+		</div> -->
+		<!-- 内容 -->
+		<ol class="losefat">
+			
+				<!-- 文章标题 -->
+				<volist name="results" id="so">
+					<li>
+						<a href="{weikucms::U('Wap/Reduce/infoContent',array('id'=>$so['id'],'token'=>$token,'openid'=>$openid))}">
+							<div class="newtitle">
+								<span>{weikucms:$so.title}</span>
+								<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px" />
+							</div>
+							<!-- 内容 -->
+							<div class="lostnews">
+								<!-- {weikucms:$so.description} -->
+								<php>
+									if(strlen($so['description']) > 80){
+										echo htmlspecialchars_decode(mb_substr($so['description'],0,80,'utf-8'))."...";
+									}else{
+										echo htmlspecialchars_decode($so['description']);
+									}
+									
+								</php>
+							</div>
+						</a>
+					</li>
+				</volist>
+		</ol>
+		<script type="text/javascript">
+			$(function(){
+				
+				// 遮罩分享
+				$('.shares').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+					// $(this).children('img').hide();
+				})
+			})
+		</script>
+	</body>
+</html>

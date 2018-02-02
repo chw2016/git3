@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="银波米业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>我的评价</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/zhiwei.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript">
+            var url="{weikucms::U('Hengbo/assess',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid'],'sid'=>$_GET['sid']))}";
+        </script>
+		
+    </head>
+    <body>
+    	<!--头部-->
+		<div class="h-title">
+			<span>我的评价</span>
+		</div>
+    	
+    	<form id="form">
+		<div class="form bx-message pingjia">
+			<div class="pj-sf">
+				<span>维修师傅：</span>
+				<span>{weikucms:$aStaff.staff_name}</span>
+			</div>
+			<div class="pj-level">
+				<span class="level-item level-w on first" data="0">
+					<span><img src="{weikucms::STATICS}/wapweiui/hengbo/img/pj-good.png" /></span>
+					<span class="pj-title rline">好评</span>
+				</span><span class="level-item center " data="1">
+					<span><img src="{weikucms::STATICS}/wapweiui/hengbo/img/pj-normal.png" /></span>
+					<span class="pj-title rline">中评</span>
+				</span><span class="level-item fr last level-w br" data="2">
+					<span><img src="{weikucms::STATICS}/wapweiui/hengbo/img/pj-bad.png" /></span>
+					<span class="pj-title">差评</span>
+				</span>
+			</div>
+			<div>
+				<textarea name="message" placeholder="请输入要评价的内容"></textarea>
+			</div>
+		</div>
+            <input type="hidden" name="staff_id" value="{weikucms:$_GET['sid']}">
+            <input type="hidden" name="oid" value="{weikucms:$_GET['oid']}">
+            <input type="hidden" name="aid" value="{weikucms:$_GET['aid']}">
+		<div class="zhanwei"></div>
+		</form>
+		
+		<div class="fixBottom pinjia" submit='1'>	
+			<a href="javascript: void(0)" class="submit">
+			<div class="myPing pj fl">
+				<span>提交评价</span>
+			</div>
+			</a>
+			<a href="{weikucms::U('Hengbo/index',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+			<div class="myPing later fl">
+				<span>以后再评</span>
+			</div>
+			</a>
+		</div>
+
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/pinjia.js"></script>
+    </body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>{weikucms:$tpl.name}</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <script src="{weikucms::STATICS}/common/edit.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        /*.radius{
+            border-radius: 5px;
+            border: 1px solid #D6D3D3;
+        }*/
+        .editable input{
+            border: 0;
+            background-color: rgba(0, 0, 0, 0);
+            outline: none;
+        }
+        .editable{
+            color: #000;
+        }
+    </style>
+
+</head>
+<body>
+<div class='of ucenter-head bgFF4948'>
+   <a href="{weikucms::U('Medias/myCenter',array('token'=>$token,'openid'=>$openid))}">
+    <div style="width: 28px;float: left"><img src="{weikucms::STATICS}/wapweiui/medias/img/ucenter-bak.png" width="100%" /></div>
+   </a>
+    <div class='fr cFFF f20 bold'>个人资料</div>
+    <div style="  margin-top: 41px;color: #FFF;font-size: 11px;">为方便您提现请填写真实资料，我们将为您保密</div>
+</div>
+<div class='cl of'>
+    <div class='fl bg2E2E2E lside cFFF'>
+        <ul>
+            <li class='ziliaos on'>资料设置</li>
+            <li class='zhuanfus'>账户绑定</li>
+           <!-- <li>媒体绑定</li>-->
+            <li class='share'>邀请设置</li>
+        </ul>
+        <div class='tc'>
+            <div class='mtb20'>
+                <div>我的ID:</div>
+                <div>ypd{weikucms:$users['id']}</div>
+            </div>
+            
+            <div class='mtb20'>
+                <div>专属推广二维码</div>
+                <div><img src="{weikucms:$img}" width="90%" /></div>
+            </div>
+            
+        </div>
+    </div>
+<div class="w66 rside ziliao" style="display: block; float: right">
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>我的姓名（提现使用）</div>
+            <div class='f18 mtb5 radius editable' data-key="nickname">
+                <if condition="$users['nickname'] neq ''">
+                    {weikucms:$users['nickname']}
+                <else/>
+                    {weikucms:$wxusers['nickname']}
+            </if></div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>性别</div>
+            <div class='f18 mtb5 radius editable' data-key="sex">
+                <if condition="$users['sex'] eq ''">请填写您的性别，如：男
+                    <else/>{weikucms:$users['sex']}
+                </if></div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>年龄</div>
+            <div class='f18 mtb5 radius editable' data-key="age">
+            <if condition="$users['age'] eq ''">请填写您的年龄，如：25
+                <else/>{weikucms:$users['age']}
+            </if></div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>身份证号（提现使用）</div>
+            <div class='f18 mtb5 radius editable' data-key="ID_number">
+                <if condition="$users['ID_number'] eq ''">请填写您的身份证号
+                    <else/>{weikucms:$users['ID_number']}
+                </if></div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>联系电话</div>
+            <div class='f18 mtb5 radius editable' data-key="phone">
+                <if condition="$users['phone'] eq ''">请填写您的联系电话
+                    <else/>{weikucms:$users['phone']}
+                </if>
+            </div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>微信号/QQ</div>
+            <div class='f18 mtb5 radius editable' data-key="qq">
+                <if condition="$users['qq'] eq ''">请填写您的微信号或者QQ号
+                <else/>{weikucms:$users['qq']}
+                </if>
+            </div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>我的QQ群</div>
+            <div class='f18 mtb5 radius editable' data-key="qq_group">
+                <if condition="$users['qq'] eq ''">请填写您的QQ群
+                    <else/>{weikucms:$users['qq']}
+                </if>
+            </div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>电子邮箱</div>
+            <div class='f18 mtb5 radius editable' data-key="email">
+                <if condition="$users['email'] eq ''">请填写您的邮箱
+                <else/>{weikucms:$users['email']}
+            </if>
+            </div>
+        </div>
+    </div>
+
+    <div class='rside'>
+        <div class='row'>
+            <div class='mrb5'>收货地址</div>
+            <div class='f18 mtb5 radius editable' data-key="address">
+                <if condition="$users['address'] eq ''">请填写您的收货地址
+                    <else/>{weikucms:$users['address']}
+                </if>
+            </div>
+
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+    <div style="clear:both;"></div>
+    <div class="w66 rside zhangfu" style="display: none; float: right">
+        <div class='rside'>
+            <div class='row'>
+                <div class='mrb5'>开户名</div>
+                <div class='f18 mtb5 radius editable' data-key="alipay_account">
+                    <if condition="$users['alipay_account'] eq ''">请填写银行开户名
+                    <else/>{weikucms:$users['alipay_account']}
+                </if>
+                </div>
+            </div>
+        </div>
+
+        <div class='rside'>
+            <div class='row'>
+                <div class='mrb5'>开户行</div>
+                <div class='f18 mtb5 radius editable' data-key="bank_name">
+                    <if condition="$users['bank_name'] eq ''">请填写开户行
+                        <else/>{weikucms:$users['bank_name']}
+                    </if>
+                </div>
+            </div>
+        </div>
+
+
+        <div class='rside'>
+            <div class='row'>
+                <div class='mrb5'>绑定银行卡</div>
+                <div class='f18 mtb5 radius editable' data-key="bank_card">
+                    <if condition="$users['bank_card'] eq ''">请填写银行卡号
+                    <else/>{weikucms:$users['bank_card']}
+                </if></div>
+                <!--<div class='mrb5'>户名：张三疯</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $('.ziliaos').click(function(){
+            $('.zhuanfus.on').removeClass('on');
+            $('.ziliaos').addClass('on');
+            $('.ziliao').show();
+            $('.zhangfu').hide();
+        });
+        $('.zhuanfus').click(function(){
+            $('.ziliaos.on').removeClass('on');
+            $('.zhuanfus').addClass('on');
+            $('.zhangfu').show();
+            $('.ziliao').hide();
+        });
+        var type = {weikucms:$_GET['type']};
+        if(type==1){
+            $('.ziliaos').trigger('click');
+        }else{
+            $('.zhuanfus').trigger('click');
+        }
+        $('.editable').editable(function(key, val){
+
+            var data = {};
+            data[key] = val;
+            var url1 = "{weikucms::U('Wap/Medias/myhome',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url1,data, function(datas){
+
+            });
+        });
+
+    })
+</script>
+</html>

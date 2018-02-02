@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>{weikucms:$data['test_name']}</title>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/test/css/reset.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/test/css/style.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+<style type="text/css">
+	.subject footer span.edit_act{
+		background: #35B4FF;
+	}
+</style>
+</head>
+
+<body  style="background:#fff;">
+<div class="global">
+	<header id="c-product-header">
+    		{weikucms:$data['test_name']}
+    </header>
+   <!--  <section class="title_top">
+   	<h1>{weikucms:$data['test_name']}</h1>
+   </section> -->
+    
+    <section class="timu">
+    	
+    	<!-- 
+    
+    	<article class="subject" style="display: block;">
+            <header>1、如果给你闻出任何东西气味的能力，你愿意吗?</header>
+            <section class="subject_info subject_next" act_num="1"><i></i>愿意</section>
+            <section class="subject_info subject_next" act_num="5"><i></i>不愿意，那会让自己很烦</section>
+            <section class="subject_info subject_next" act_num="3"><i></i>不知道</section>
+            <footer><span>提交</span></footer>
+        </article>
+        
+    	 -->
+   	<volist name="title" id="value" key="i">
+   	<if condition="$i eq 1">    		
+   		<article class="subject">
+            <header class="MicroS-title">{weikucms:$i}、{weikucms:$value.subject_title}</header>  
+            <if condition="$value.answer_a_con neq null">         
+	            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}"  value="{weikucms:$value.answer_a_score}" sel="A">
+	            	<i></i>{weikucms:$value.answer_a_con}
+	            </section>
+            </if>
+             <if condition="$value.answer_b_con neq null">     
+	            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_b_score}" sel="B">
+	            	<i></i>{weikucms:$value.answer_b_con}
+	            </section>
+            </if>
+             <if condition="$value.answer_c_con neq null ">     
+	            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_c_score}" sel="C">
+	            	<i></i>{weikucms:$value.answer_c_con}
+	            </section>
+	        </if>
+            <if condition="$value.answer_d_con neq null">
+	            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_d_score}" sel="E">
+	            	<i></i>{weikucms:$value.answer_d_con}
+	            </section>
+            </if>
+            
+            <if condition="$value.answer_e_con neq null">
+	            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_e_score}" sel="F">
+	            	<i></i>{weikucms:$value.answer_e_con}
+	            </section>
+            </if>
+            <footer><span style="position:relative;top:10px;">提交</span></footer>
+        </article>
+   <else/> 	
+	   	<if condition="$i neq $count">   	
+	        <article class="subject">
+	            <header class="MicroS-title">{weikucms:$i}、{weikucms:$value.subject_title}</header>  
+	            <if condition="$value.answer_a_con neq null">         
+		            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}"  value="{weikucms:$value.answer_a_score}" sel="A">
+		            	<i></i>{weikucms:$value.answer_a_con}
+		            </section>
+	            </if>
+	             <if condition="$value.answer_b_con neq null">     
+		            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_b_score}" sel="B">
+		            	<i></i>{weikucms:$value.answer_b_con}
+		            </section>
+	            </if>
+	             <if condition="$value.answer_c_con neq null">     
+		            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_c_score}" sel="C">
+		            	<i></i>{weikucms:$value.answer_c_con}
+		            </section>
+		        </if>
+	            <if condition="$value.answer_d_con neq null">
+		            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_d_score}" sel="E">
+		            	<i></i>{weikucms:$value.answer_d_con}
+		            </section>
+	            </if>
+	            
+	            <if condition="$value.answer_e_con neq null">
+		            <section class="subject_info subject_next MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_e_score}" sel="F">
+		            	<i></i>{weikucms:$value.answer_e_con}
+		            </section>
+	            </if>
+	            <footer><div class="_next_">上一题 </div><span style="position:relative;top:10px;">提交</span></footer>
+	        </article>
+	   <else/>
+        	<article class="subject">
+            <header class="MicroS-title">{weikucms:$i}、{weikucms:$value.subject_title}</header>  
+            <if condition="$value.answer_a_con neq null">         
+	            <section class="subject_info MicroS-test" act_num="{weikucms:$i}"  value="{weikucms:$value.answer_a_score}" sel="A">
+	            	<i></i>{weikucms:$value.answer_a_con}
+	            </section>
+            </if>
+             <if condition="$value.answer_b_con neq null">     
+	            <section class="subject_info MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_b_score}" sel="B">
+	            	<i></i>{weikucms:$value.answer_b_con}
+	            </section>
+            </if>
+             <if condition="$value.answer_c_con neq null">     
+	            <section class="subject_info MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_c_score}" sel="C">
+	            	<i></i>{weikucms:$value.answer_c_con}
+	            </section>
+	        </if>
+            <if condition="$value.answer_d_con neq null">
+	            <section class="subject_info MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_d_score}" sel="E">
+	            	<i></i>{weikucms:$value.answer_d_con}
+	            </section>
+            </if>
+            
+            <if condition="$value.answer_e_con neq null">
+	            <section class="subject_info MicroS-test" act_num="{weikucms:$i}" value="{weikucms:$value.answer_e_score}" sel="F">
+	            	<i></i>{weikucms:$value.answer_e_con}
+	            </section>
+            </if>
+            <footer><div class="_next_">上一题 </div><span style="position:relative;top:10px">提交</span></footer>
+        </article>
+	</if>
+  </if>
+</volist>
+</section>
+<input type="hidden" value="{weikucms:$id}" id="id"/> 
+<input type="hidden" value="{weikucms:$token}" id="token"/>   
+<input type="hidden" value="{weikucms:$openid}" id="openid"/> 
+<section class="result" id="result1">
+   	<article>
+           <h1>你的结果分值段：<span id="result"></span></h1>
+           <p id="result_info"></p>
+    </article>
+</section>
+<section class="result_btn">
+   <ul class="result_btn_free"><a href="index.php?g=Wap&m=Test&a=suggest&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$id}" id="advice">我要提建议</a></ul>
+</section>
+</div>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/test/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// 调整提交按钮的位置
+	$('footer>span').css('left',($('footer').width()-190)/2+'px');
+	
+	$(".subject:first").show();
+	
+	var page_num=0;//页数
+	var score = 0;//分数
+	var score_data = new Array();	
+	var select = '';//选项
+	
+	$(".subject section").click(function(){	//单选	
+		$(this).addClass("subject_infon").siblings(".subject_info").removeClass("subject_infon");
+        $(this).attr('is_select',1);
+		$(this).siblings().attr('is_select', 0);
+		if($(this).hasClass("subject_next")){
+			page_num=page_num+1;
+			var now_se=$(this).attr("act_num");			
+			score = score + parseInt($(this).attr("value"));//分数
+			score_data.push(parseInt($(this).attr("value")));//向数组中添加数据
+			//select = select + now_se + "\、" + $(this).attr("sel");//选项		
+			$(this).parent().fadeOut(function(){		
+				$(".subject").eq(now_se).fadeIn().attr("page_on",page_num);
+			});	
+			$(this).siblings("footer").children("span").removeClass("edit_act");		
+		}else{
+			score = score + parseInt($(this).attr("value"));//分数
+			var now_se=$(this).attr("act_num");		
+			//select = select + now_se + "\、" + $(this).attr("sel");//选项		
+			$(this).siblings("footer").children("span").addClass("edit_act");
+		}
+			
+	});
+	
+	//上一题
+	$(".subject footer div").click(function(){
+		$(this).attr('is_select',1);
+		$(this).siblings().data('is_select', 0);
+		$(this).parent().parent().hide().attr("page_on","");
+		page_num=page_num-1;
+		if(page_num == 0){
+			var del_data = score_data.pop();
+			score = score-del_data;
+			$(".subject:first").show();
+		}else{
+			$(".subject").each(function(){
+				if($(this).attr("page_on")==page_num){
+					
+					//返回过来，要将数据中的分数给删除
+					var del_data = score_data.pop();
+					score = score-del_data;
+					$(this).show();	
+					
+				}
+			});		
+		}
+	});	
+	
+	
+	//提交结果
+	$(".subject footer span").click(function(){
+		if($(this).hasClass("edit_act")){
+			var id = $("#id").val();			
+			var url = 'index.php?g=Wap&m=Test&a=test_Result&token='+$("#token").val()+"&openid="+$("#openid").val();
+			
+			select = '';
+			$.each($(".subject section"),function(i,o){
+				if($(o).attr('is_select') == 1){
+					select += $(o).attr("act_num")+'、'+$(o).attr("sel");
+				}
+			});
+			$.post(url,{id:id,score:score,select:select},
+		            function(data){ 
+		                if(data.status == 100){             	
+		                	var info1 = "";
+		                	info1 = info1 + data.min +"~" +data.max;		                	
+		                	$("#result").text(info1);
+		                	$("#result_info").text(data.info);
+		                	$(".timu").hide();
+		                	
+		                	$("#result1").show();
+		                	$(".result article").show();
+		                	$(".result_btn").show();		                	
+		                	
+		                }else if(data.status == 1 ){
+		                	setTimeout(function(){                       	
+		                        window.location.href = data.url;
+		                    },'1000');
+		                }
+		            },'json');
+		}
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/index.css?2014-9-27"  media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/bootstrap_min.css?2014-9-27"  media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/style.css?2014-9-27" media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/themes.css?2014-9-27">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/style.css?2014-9-27">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/resource.css?2014-9-27">
+<link href="{weikucms::STATICS}/newwapweiui/css/notifIt.css?2014-9-27" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/newwapweiui/css/style.css?2014-9-27" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css?2014-9-27" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css?2014-9-27" />
+
+<script src="{weikucms::STATICS}/newwapweiui/js/jquery.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/newwapweiui/js/notifIt.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/newwapweiui/js/jquery.form.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/application.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/bootstrap_min.js"></script>
+
+<script type="text/javascript">
+	function source_delete(url){
+		if(confirm('您确定删除此条记录')){
+			$.post(url,{},function(data){
+				if(data.status == 1){
+					notif({
+						msg: data.info,
+						type: "success"
+					});
+					setTimeout(function(){
+						window.location.href = data.url;
+					},'1000');
+				}else{
+					notif({
+						msg: data.info,
+						type: "error"
+					});
+				}
+			},'json');
+		}else{
+			return;
+		}
+	}
+
+	function go_url(url){
+		$.post(url,{},function(data){
+			if(data == null){
+				window.location.href = url;
+			}else{
+				if(data.status == 1){
+					notif({
+						msg: data.info,
+						type: "success"
+					});
+					setTimeout(function(){
+						window.location.href = data.url;
+					},'1000');
+				}else{
+					notif({
+						msg: data.info,
+						type: "error"
+					});
+					if(data.url != null){
+						setTimeout(function(){
+							window.location.href = data.url;
+						},'1000');
+					}else{
+						setTimeout(function(){
+							window.location.href = url;
+						},'1000');
+					}
+					return false;
+				}
+			}
+
+
+		},'json');
+   }
+
+</script>
+
+<title>{weikucms::C('site_title')}-{weikucms::C('site_name')}</title>
+</head>
+
+<body>
+<!--头部start!-->
+<div id="head">
+
+  <div id="head-box">
+  
+    <div id="head-logo" onClick="window.location='{weikucms::C('site_url')}'">
+
+     </div>
+     <div id="head-user">
+         <a name="zhideng"></a>
+         <div id="user-logo">
+             <if condition="$wecha['headpicurl'] neq null">
+                 <img style="width: 45px; height: 45px;" src="{weikucms:$wecha.headpicurl}" />
+                 <else/>
+                 <img style="width: 45px; height: 45px;" src="<php>echo C('site_url');</php>upload/w_client.jpg" />
+             </if>
+             <if condition="$wecha['headpicurl'] neq null">
+
+             </if>
+
+         </div>
+
+         <div id="user-title">
+<?php
+  $md=M('mru_mdian')->where(array('id'=>$_SESSION['aid']))->find();
+ ?>
+					<span>
+                        <if condition="$wecha['name'] neq null">
+                            <a class="link" href="#">{weikucms:$md['name']}</a>
+                            <else/>
+                            <a class="link" href="#">未授权</a>
+                        </if>
+					</span>
+
+             <if condition="$wecha['is_auth'] eq 1">
+                 <if  condition="$wecha['service_type_info'] eq 0 or $wecha['service_type_info'] eq 1">
+                     <a href="#" class="type icon_subscribe_label">订阅号</a>
+                 </if>
+                 <if  condition="$wecha['service_type_info'] eq 2">
+                     <a href="#" class="type icon_service_label">服务号</a>
+                 </if>
+                 <php> if($wecha['verify_type_info'] < 0){</php>
+                 <a href="#" class="type icon_verify_label fail">未认证</a>
+                 <php>}</php>
+
+                 <php> if($wecha['verify_type_info'] >= 0){</php>
+                 <a href="#" class="type icon_verify_label success">已认证</a>
+                 <php>}</php>
+
+             </if>
+
+
+         </div>
+
+       <div id="user-logut"><span><a class="link" href="{weikucms::U('Branch/mru',array('token'=>$_SESSION['token'],'modulename'=>$_SESSION['modulename']))}">退出</a></span></div>
+     </div>
+     <!--<div id="user-massage" title="你有99个新通知！" style="display:block"><a class="a-num">99</a>-->
+     </div>
+  </div>
+  
+</div>
+<!--头部end!-->
+
+
+  

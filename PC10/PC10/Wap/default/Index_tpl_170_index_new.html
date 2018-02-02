@@ -1,0 +1,185 @@
+<html>
+<head>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/js/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        *:focus{
+            outline: 0px;
+        }
+        body{
+            background: #e5e5e5;
+            max-width:640px;
+            margin: 0 auto;
+            font-family: "Microsoft YaHei";
+            font-size: 12px;
+        }.select{
+             display: -webkit-box;
+             display: flex;
+             width: 90%;
+             margin: 20px auto;
+         }.select .one{
+              width: 18%;
+              margin: 5px 8% 0px 8%;
+          }.select .one .content{
+               border-radius: 6px;
+               text-align: center;
+               padding: 20% 0;
+           }.bg1{background: #419d6e;}
+        .bg2{background: #00b6d6;}
+        .bg3{background: #22b571;}
+        .bg4{background: #009ad5;}
+        .bg5{background: #5cc394;}
+        .bg6{background: #0c96ae;}
+        .select .one p{text-align: center;font-size: 12px;line-height:25px;}
+        #footer{position: fixed;bottom: 0;
+            display: -webkit-box;display: flex;width: 100%;text-align: center;font-size: 14px}
+        #footer .two{background: #fff;
+            width: 25%;margin: 0 1px;padding: 15px 0;}
+    </style>
+</head>
+<body>
+<div class="main_visual">
+    <div class="main_image">
+        <ul>
+
+            <li>
+			<img src="http://v.wapwei.com/upload/c37ba25a6d13dcad4f7925006a30bc7b/image/20141212/20141212090015_60170.png" class="header" style="width: 100%; height:auto;">
+			</li>
+
+        </ul>
+    </div>
+</div>
+<!-- 六个部分 -->
+<!-- 第一行 -->
+<div class="select">
+    <volist name="info" id="vo" offset="0" length="1">
+        <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+        {weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}
+        <else />
+        {weikucms:$vo.url}&openid=
+        <php>echo $_GET['openid'];</php>
+        &wecha_id=
+        <php>echo $_GET['openid'];</php>
+        </if>
+        '">
+            <div class="content bg1">
+                <img src="{weikucms:$vo.img}" style="width:30px;height: 30px;" />
+            </div>
+            <p>{weikucms:$vo.name}</p>
+        </div>
+    </volist>
+
+<volist name="info" id="vo" offset="1" length="1">
+    <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+    {weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}
+    <else />
+    {weikucms:$vo.url}&openid=
+    <php>echo $_GET['openid'];</php>
+    &wecha_id=
+    <php>echo $_GET['openid'];</php>
+    </if>
+    '">
+        <div class="content bg2">
+            <img src="{weikucms:$vo.img}"  style="width:30px;height: 30px;"/>
+        </div>
+        <p>{weikucms:$vo.name}</p>
+    </div>
+</volist>
+
+<volist name="info" id="vo" offset="2" length="1">
+    <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+    {weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}
+    <else />
+    {weikucms:$vo.url}&openid=
+    <php>echo $_GET['openid'];</php>
+    &wecha_id=
+    <php>echo $_GET['openid'];</php>
+    </if>
+    '">
+        <div class="content bg3">
+            <img src="{weikucms:$vo.img}" style="width:30px;height: 30px;"/>
+        </div>
+        <p>{weikucms:$vo.name}</p>
+    </div>
+</volist>
+
+
+</div>
+<!-- 第二行 -->
+<div class="select">
+    <volist name="info" id="vo" offset="3" length="1">
+        <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+        {weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}
+        <else />
+        {weikucms:$vo.url}&openid=
+        <php>echo $_GET['openid'];</php>
+        &wecha_id=
+        <php>echo $_GET['openid'];</php>
+        </if>
+        '">
+        <div class="content bg4">
+            <img src="{weikucms:$vo.img}"  style="width:30px;height: 30px;"/>
+        </div>
+        <p>{weikucms:$vo.name}</p>
+    </div>
+    </volist>
+
+
+<volist name="info" id="vo" offset="4" length="1">
+    <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+    {weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}
+    <else />
+    {weikucms:$vo.url}&openid=
+    <php>echo $_GET['openid'];</php>
+    &wecha_id=
+    <php>echo $_GET['openid'];</php>
+    </if>
+    '">
+        <div class="content bg5">
+            <img src="{weikucms:$vo.img}" style="width:30px;height: 30px;"/>
+        </div>
+        <p>{weikucms:$vo.name}</p>
+    </div>
+</volist>
+
+<volist name="info" id="vo" offset="5" length="1">
+    <div class="one" onclick="window.location.href='<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}    <else />    {weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php> </if>'">
+        <div class="content bg6">
+            <img src="{weikucms:$vo.img}"  style="width:30px;height: 30px;"/>
+        </div>
+        <p>{weikucms:$vo.name}</p>
+    </div>
+</volist>
+
+</div>
+<!-- 高度 -->
+<div style="height:30px;"></div>
+<!-- 
+<div id="footer">
+    <div class="two">首页</div>
+    <div class="two">公众服务</div>
+    <div class="two">涉税服务</div>
+    <div class="two">涉税查询</div>
+</div>
+底部 -->
+<script type="text/javascript">
+    $(function(){
+        $('.header').css('max-width',$('body').width());
+    })
+</script>
+</body>
+</html>

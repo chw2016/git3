@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}-设置中心</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Intel/css/paipai.css">
+    <script src="{weikucms::STATICS}/wapweiui/Intel/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Intel/js/paipai.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+</head>
+<body class="bodys">
+<include file="./tpl/Wap/default/Intel_select2.html" />
+<include file="./tpl/Wap/default/Intel_fx.html" />
+</body>
+<script type="text/javascript">
+    function doAction($Obj){
+		if($Obj.hasClass('flag')){
+			$Obj.css({'right': '3px','background':'#fff'}).removeClass('flag');
+			$Obj.parent().css({'border':'1px solid #8ABFF1','background':'#8ABFF1'});
+		}else{
+			$Obj.css({'right': '39px','background':'#1681e3'}).addClass('flag');
+			$Obj.parent().css({'background':'#fff','border':'1px solid #1681e3'});
+		}
+    }
+
+    <!--初始化配置-->
+    <if condition="!$config['guard']">
+    doAction($('.closes'));
+    </if>
+    <if condition="$config['shake']">
+        $('.pulsation').text({weikucms:$config.shake});
+    </if>
+    <if condition="!$config['road'] eq 1">
+    doAction($('.real'));
+    </if>
+    <if condition="$config['roadrange']">
+        $('.times').text({weikucms:$config.roadrange});
+    </if>
+    <if condition="$config['carType']">
+        $('.cattype.xinghao').val('{weikucms:$config.carType}');
+    </if>
+
+    $(function(){
+        var time = 30000;
+        var equipmentnumName = $('.equipmentnum');
+        var closeName = $('.closes');
+        var pulsationName = $('.pulsations');
+        var real = $('.real');
+        var times = $('.timesl');
+
+        var url = "{weikucms::U('Wap/Intel/setcenter',array('token'=>$token,'openid'=>$openid))}";
+
+        $('#imei').change(function(){
+            window.location.href = "{weikucms::U('Intel/setcenter', array('token' => $token, 'openid' => $openid))}" + "&imei=" + $(this).val();
+        });
+
+        ajaxval(equipmentnumName,url, function(){
+            return {equipmentnum:$('.equipmentnum').text()};
+        });
+        var Timeout = false;
+        var i       = 0;
+        var num     = 30;
+        ajaxval(closeName,url,function(){
+            i = 0;
+            msg.alert('正在设置...', '', time);
+            var data = {};
+            data.type = 'guard';
+            if($('.slider > .circle.closes').hasClass('flag')){
+                data.is_close = 1;
+            }else{
+                data.is_close = 0;
+            }
+            return data;
+        }, function(json, data){
+            getResult(json, data);
+        });
+        ajaxval(pulsationName,url,function(){
+            msg.alert('正在设置...', '', time);
+            var data = {};
+            data.type = 'shake';
+            data.pulsation = $('.pulsation').text();
+            return data;
+        },function(json, data){
+            getResult(json, data);
+        });
+        ajaxval(real,url,function(){
+            msg.alert('正在设置...', '', time);
+            var data = {};
+            data.type = 'road';
+            if($('.slider > .circle.real').hasClass('flag')){
+                data.is_real = 1;
+            }else{
+                data.is_real = 0
+            }
+            return data;
+        }, function(json, data){
+            getResult(json, data);
+        });
+        ajaxval(times,url,function(){
+            msg.alert('正在设置...', '', time);
+            var data    = {};
+            data.type   = 'roadrange';
+            data.times  = $('.times').text();
+            return data;
+        }, function(json, data){
+            getResult(json, data);
+        });
+
+//      $('.cattype').on('blur',function(){
+//          msg.alert('正在设置...', '', time);
+//          var data    = {};
+//          data.type   = 'carType';
+//          data.value  = $('.cattype').val();
+//          data.imei   = $('#imei').val();
+//          if(data.imei == ''){
+//              msg.alert('警告：没有设备');
+//              return false;
+//          }
+//          data.cattype = $("input[name='cattype']").val();
+//          $.post(url,data,function(json){
+//              $('#msgBlur').remove();
+//              if(json.code == 0){
+//                  doAction(real);
+//              }else{
+//                 msg.alert('操作失败');
+//                 return false;
+//              }
+//          },'json')
+//      });
+
+        $('.goBindUnBind').click(function(){
+            window.location.href = $(this).data('href')
+        });
+
+        function getResult(json, data){
+            if(json['code'] != 0){
+                $('#msgBlur').remove();
+                msg.alert('操作失败', '', 1000);
+                return;
+            }
+            i = 0;
+            Timeout = setInterval(function(){
+                i++;
+                ajax(
+                    "{weikucms::U('Wap/Intel/getResult',array('token'=>$token,'openid'=>$openid))}",
+                    data,
+                    function(ret){
+                        if(ret['code'] == 0){
+                            clearTimeout(Timeout)
+                            $('#msgBlur').remove();
+                            doAction(closeName);
+                        }else{
+                            if(i > num){
+                                clearTimeout(Timeout)
+                                $('#msgBlur').remove();
+                              msg.alert('操作失败', '', 1000);
+                            }
+                        }
+                    }
+                );
+            }, 1500);
+        }
+    })
+</script>
+</html>

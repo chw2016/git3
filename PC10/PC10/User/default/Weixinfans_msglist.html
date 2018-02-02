@@ -1,0 +1,67 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/binding.css">
+
+<div class="cLineB">
+  <h4 class="left">微信消息中心<span class="FAQ">粉丝消息一目了然</span></h4>
+ </div>
+<div class="msgWrap">
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>  您可以简单查看粉丝给你说什么了！
+
+    </div>
+    <div class="box-content">
+        <div class="tab-pane fade active in" id="home">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width:80px;">粉丝头像</th>
+					<th style="width: 50px;">昵称</th>
+                    <th style="width: 200px;">消息内容</th>
+                    <th>发送时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="msglist" id="vo">
+                <tr>
+                    <td>
+
+                        <img width="30px" height="30px" src="{weikucms:$vo.headimgurl}">
+
+                    </td>
+					<td>{weikucms:$vo.nickname}</td>
+                    <td>{weikucms:$vo.content}</td>
+                    <td><php>echo date("Y-m-d H:i:s",$vo['add_time']);</php></td>
+                    <td>
+                        <a href="{weikucms::U('Weixinfans/userview',array('id'=>$vo['uid']))}" class="btn btn-mini btn-primary">回复</a>
+                    </td>
+                </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+
+
+<include file="Public:footer"/> 

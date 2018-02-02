@@ -1,0 +1,535 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::RES}/js/card/jquery-1.11.1.min.js"  type="text/javascript" ></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/map.js"></script>
+<!-- <script src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&v=2.0&services=true" type="text/javascript"></script> --> 
+<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0KTKyAakFSgEM7GFn2OxWCjR"></script>  -->
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+                function selectall(name) {
+                    var checkItems=$('.cbitem');
+                    if ($("#check_box").attr('checked')==false) {
+                        $.each(checkItems, function(i,val){
+                            val.checked=false;
+                        });
+
+                    } else {
+                        $.each(checkItems, function(i,val){
+                            val.checked=true;
+                        });
+                    }
+                }
+				
+                function setlatlng(longitude,latitude){
+                    art.dialog.data('longitude', longitude);
+                    art.dialog.data('latitude', latitude);
+                    art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:874,height:700,yesText:'关闭',background: '#000',opacity: 0.87});
+                }
+            </script>
+            <script>
+                KindEditor.ready(function(K){
+                    var editor = K.editor({
+                        allowFileManager:true
+                    });
+                    K('#upload').click(function() {
+                        editor.loadPlugin('image', function() {
+                            editor.plugin.imageDialog({
+                                fileUrl : K('#pic').val(),
+                                clickFn : function(url, title) {
+                                    K('#pic').val(url);
+                                    $("#image_show").attr('src',url).show();
+                                    editor.hideDialog();
+                                }
+                            });
+                        });
+                    });
+                });
+
+
+</script>
+
+  <div class="cLineB"  style=" " >
+ 
+    <h4 onclick='location.href="<?php echo $_SESSION['urlurl']; ?>"'>  
+      返回
+    </h4><!-- 张湘南 -->
+    
+  </div>
+  <div class="cLineB" id="uppict" style="display:none">
+  </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="aaa" >提示信息!</strong>
+        <ol>
+            <li> <if condition="$baoc" >查看 <else/>智能{weikucms:$PZ?'修改':'添加'}</if></li>
+        </ol>
+    </div>
+
+  <div class="msgWrap">
+    <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" id="form">
+      <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+
+          <input type="hidden" class="px" id="id" value="{weikucms:$id}" name="id" >
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION['token']}" name="token">
+
+            <volist name="input" id="vo">
+            
+               <!-- 图片 -->
+                <if condition="$vo['type'] eq 'img'">
+                    <volist name="vo['many']" id="vo">
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                {weikucms:$vo.title}：
+                            </label>
+                        </th>
+                        <td>
+                            <img  id="fenlei_img{weikucms:$i}" class="fenlei_img" src="<?php  print_r($PZ[$vo['name']]) ?>">
+                            <input type="hidden" class="px" id="image{weikucms:$i}" value="<?php  print_r($PZ[$vo['name']]) ?>" imageid="" msg="{weikucms:$vo.msg}" name="{weikucms:$vo.name}" style="width:300px" readonly="readonly">
+                            <span style="margin-top:20px;" class="ke-button-common" id="upload{weikucms:$i}">上传图片</span>
+                            <span class="info_tip"><if condition="$vo['width'] and $vo['height']" >建议图片大小{weikucms:$vo.width}×{weikucms:$vo.height}</if></span> <span><if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请选择{weikucms:$vo.title}</span></if></span>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                        </volist>
+                  <!-- 文本框 --> 
+                    <elseif condition="$vo['type'] eq 'textarea'" />
+                    <TR>
+                        <TH valign="top"><label for="info">{weikucms:$vo.title}：</label></TH>
+                        <TD><textarea name="{weikucms:$vo.name}" id="info"  rows="5" style="width:790px;height:360px"  onfocus="leave();"><?php  print_r($PZ[$vo['name']]) ?></textarea></TD>
+                    </TR>
+                    <script>
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#info', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+
+    });
+</script>
+
+
+<!-- 文本框 2--> 
+<elseif condition="$vo['type'] eq 'textarea_1'" />
+                    <TR>
+                        <TH valign="top"><label for="info">{weikucms:$vo.title}：</label></TH>
+                        <TD><textarea name="{weikucms:$vo.name}" id="info1"  rows="5" style="width:790px;height:360px"  onfocus="leave();"><?php  print_r($PZ[$vo['name']]) ?></textarea></TD>
+                    </TR>
+                    
+<script>
+
+    var editor1;
+    KindEditor.ready(function(K) {
+        editor1 = K.create('#info1', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+
+    });
+</script>
+                   <!-- 地图 --> 
+                    <elseif condition="$vo['type'] eq 'map'" />
+                    <tr>
+                     <th>{weikucms:$vo.title}：</th>
+	                    <td>
+	                  
+				                            经度 <input type="text" id="longitude" style="width:80px;" name="{weikucms:$vo.lng}" size="14" class="px" value="<?php  print_r($PZ[$vo['lng']]) ?>" />
+				                            纬度 <input type="text" style="width:80px;" name="{weikucms:$vo.lat}" size="14" id="latitude" class="px" value="<?php  print_r($PZ[$vo['lat']]) ?>" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a>
+	                            
+	                    </td>
+                    </tr>
+
+                   <!-- 隐藏 --> 
+                     <elseif condition="$vo['type'] eq 'hidden'" />
+                    <input type="hidden" name="{weikucms:$vo.name}" value="">
+                  <!-- 时间 -->
+					<elseif condition="$vo['type'] eq 'time'" />
+
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+                            <input type="input" class="px" id="statdate" msg="{weikucms:$vo.msg}" value="<?php  print_r($PZ[$vo['name']]) ?>" onclick="WdatePicker()" name="{weikucms:$vo.name}">  <if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请选择{weikucms:$vo.title}</span></if>
+                        </td>
+                    </tr>
+                    <!-- 点选框 -->
+                    <elseif condition="$vo['type'] eq 'radio'" />
+
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+
+                            <volist  name="vo['many']"  id="voo" >
+
+                            <input type="radio" id="radio" msg="{weikucms:$vo.msg}"  <if condition="$PZ[$vo['value']] eq $voo['value']" >  checked="checked"</if>   value="{weikucms:$voo.value}"  name="{weikucms:$vo.name}">{weikucms:$voo.content}&nbsp&nbsp
+                            </volist> <if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请选择{weikucms:$vo.title}</span></if>
+                        </td>
+                    </tr>
+                    <!-- 下拉列表 -->
+                    <elseif condition="$vo['type'] eq 'select'" />
+
+                        <tr>
+                            <th>{weikucms:$vo.title}：</th>
+                            <td>
+                                <select  msg="{weikucms:$vo.msg}" name="{weikucms:$vo.name}" >
+                                    <volist   name="vo['many']"  id="voo" >
+                                    <option  value="{weikucms:$voo.value}"  <if condition="$PZ[$vo['value']] eq $voo['value']" >  selected="selected"</if>      >{weikucms:$voo.content}</option>
+                                    </volist>
+                                </select><if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请选择{weikucms:$vo.title}</span></if>
+                            </td>
+                        </tr>
+                   <!-- 复选框 -->     
+                   <elseif condition="$vo['type'] eq 'checkbox'" />
+
+                   
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+                        
+                            <!-- 全选开始 -->
+                        <if condition="$vo['全选']" >  
+                           <a onclick="reverseSelect()" id="aaadd" >全选 </a> &nbsp&nbsp
+							<style>
+							#aaadd{
+							width:100px;	
+							line-height: 42px;
+							height: 42px;
+							text-align: center;
+							color: #FFF; 
+							font-size: 14px; 
+							background: #9e6ab8;
+							border-radius: 3px;
+							box-shadow: 0 0 3px rgba(0,0,0,0.2);
+							border: 1px solid #9e6ab8; 
+							}
+							</style>
+                           <script>
+                           function reverseSelect(){
+                               $(".jhghfg").each(function(){
+                                   if($(this).attr('checked')){$(this).attr('checked',false);}else{$(this).attr('checked',true);}
+                               });
+                            }
+                           </script>
+                         </if>  
+                      <if condition="$vo['已选择的']" > 
+                         <style>
+							#aaadd2{
+							width:100px;	
+							line-height: 42px;
+							height: 42px;
+							text-align: center;
+							color: #FFF; 
+							font-size: 14px; 
+							background: #9e6ab8;
+							border-radius: 3px;
+							box-shadow: 0 0 3px rgba(0,0,0,0.2);
+							border: 1px solid #9e6ab8; 
+							}
+						 </style>
+                       <a onclick="reverseSelect2()" id="aaadd2" >已选择的</a>
+                          <script>
+                           var aaaa = 0;
+                           function reverseSelect2(){
+                        	   if(aaaa == 0){ 
+                        		   aaaa = 1;
+                        		   $(".jhghfg").each(function(){
+                                 	   if(!$(this).attr('checked')){
+                                    	      $(this).next(".jhghfga").hide();
+                                           $(this).hide();
+                                        }	
+                             	   });
+                        	   }else{
+                        		   aaaa = 0;
+                        		   $(".jhghfg").show();
+                           	       $(".jhghfga").show();
+                        	   }
+                            }
+                           
+                           </script> 
+                       </if>  
+                           <!-- 全选结束-->
+                           
+                            <volist  name="vo['many']"  id="voo" >
+                            <input type="checkbox" class="px checkbox jhghfg" name="{weikucms:$vo['name']}[]" 
+                            
+                            <if condition="$PZ" >
+                            
+                             <?php
+                                     $values=explode(',',$PZ[$vo['value']]);
+                                     if(in_array($voo['value'],$values)){
+                              ?>
+                                      checked="checked"
+                              <?php } ?>
+                             <else/> 
+                              <if condition="$voo['checked']" > checked="checked"</if>
+                             </if>
+                             value="{weikucms:$voo.value}"    "><a class="jhghfga" >{weikucms:$voo.content}&nbsp&nbsp</a>
+                            </volist> &nbsp&nbsp请选择{weikucms:$vo.title}
+                        	<div class="class"></div>
+                        </td>
+                    </tr>
+                    <script>
+                        $(function(){
+                        	$(".checkbox").click(function(){
+                            	var check = 0;
+                            	$(".checkbox").each(function(i,o){
+                            		if($(this).is(":checked")){
+                            			check++;
+                            		}
+                            	});
+                            	if(check==0){
+                            		$(".class").html("<input type='hidden' value='' name='{weikucms:$vo.name}' />");
+                            	}else{
+                            		$(".class").html("");
+                            	}
+                            })
+                        })
+                   </script>
+              <!-- 数量 -->
+                 <elseif condition="$vo['type'] eq 'number'" />
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+							<input style="width:60px; height:32px;" type="text" class="px"   msg="{weikucms:$vo.msg}" value="<?php  print_r($PZ[$vo['name']]) ?>"  name="{weikucms:$vo.name}"><if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请镇写{weikucms:$vo.title}</span></if>
+                        </td>
+                    </tr>
+                <!-- 较长的input框 -->
+                <elseif condition="$vo['type'] eq 'longinput'" />
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+							<input style="width:600px; height:32px;" type="text" class="px"  msg="{weikucms:$vo.msg}"  value="<?php  print_r($PZ[$vo['name']]) ?>"  name="{weikucms:$vo.name}">
+							<if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >&nbsp&nbsp请镇写{weikucms:$vo.title}</span></if>
+						</td>
+                    </tr>
+               <!-- 较小的复文本框 -->
+                <elseif condition="$vo['type'] eq 'textarea2'" />
+                    <tr>
+                        <th valign="top" style=""  >{weikucms:$vo.title}：</th>
+                        <td  >
+							  <textarea <if condition="$baoc" > readonly="true" </if> style="margin-top:2px; width:400px; height:30px;" name="{weikucms:$vo.name}"  value="<?php  print_r($PZ[$vo['name']]) ?>"  ><?php  print_r($PZ[$vo['name']]) ?></textarea><if condition="$vo['tishi']" >
+							 
+							  <span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/><span class="tishi" >
+							      <if condition="$baoc eq ''" >
+							       &nbsp&nbsp请镇写{weikucms:$vo.title}
+							      </if>
+							  </span></if>
+                             
+                        </td>
+                </tr>    
+                    
+                
+                <!-- 链接 -->
+                <elseif condition="$vo['type'] eq 'a'" />
+                    <tr>
+                        <th valign="top" style=""  >{weikucms:$vo.title}：</th>
+                        <td  >
+							  <a href="{weikucms:$vo.url}" <if condition="$vo['target']"  >target="_blank"</if>  >{weikucms:$vo.name}</a>
+                        </td>
+                </tr>  
+                 <!-- input框 -->
+                 <else />
+
+
+
+          <tr>
+            <th valign="top"><label for="keyword">{weikucms:$vo.title}</label></th>
+            <td>
+         		 <input <if condition="$baoc" >readonly="readonly"</if>查看 type="{weikucms:$vo.type}" class="px" id="pinzhong" msg="{weikucms:$vo.msg}" value="<?php  echo $PZ[$vo['name']]?$PZ[$vo['name']]:$vo['默认'];  ?>" name="{weikucms:$vo.name}" 
+         		 
+         		 <if condition="$vo['width']" >style="width:{weikucms:$vo.width}px;height:{weikucms:$vo.height}"<else/>style="width:300px; height:26px;"</if>  > 
+         		 
+         		
+         		 <if condition="$vo['tishi']" ><span class="tishi" >&nbsp&nbsp{weikucms:$vo.tishi}</span><else/>
+		         		 <span class="tishi" >
+		         		       <if condition="$baoc eq ''" >
+		         		            &nbsp&nbsp请镇写{weikucms:$vo.title}
+		         		        </if>
+		         		 </span>
+         		 </if>
+         		
+            </td>
+            
+          </tr>
+
+                    </if>
+                </volist>
+
+
+
+
+
+        <tr>
+          <th></th>
+          
+          <td>
+          <if condition="!$baoc" >
+            <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+          </if>
+              <include file="./tpl/User/default/helper/list_btn.html"/>
+            <div class="clr"></div></td>
+        </tr>
+        </TBODY>
+      </table>
+    </form>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<?php if($aid){ ?>
+</div>
+</div>
+<?php } ?>
+<!--底部-->
+</div>
+<div>
+<include file="Public:footer"/>
+<script>
+	
+	$(function(){
+		
+	    if($("tr").hasClass('img')){
+	    	baidu_map();
+	    }
+	
+	    var a=$("tr img").length;
+	    for(i=1;i<=a;i++){
+	        jj(i);
+	    }
+	
+	
+	})
+
+    function jj(i){
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload'+i).click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#image'+i).val(),
+                        clickFn : function(url, title) {
+                            K('#image'+i).val(url);
+                            $('#fenlei_img'+i).attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+    }
+   /**
+    * 提交
+    */
+  
+      /**
+       * 提交
+       */
+      $("#savebtn").click(function(){
+        //  $("#info").val(editor.html());
+            if($("#info").length>0){
+              $("#info").val(editor.html());
+         	 }
+            if($("#info1").length>0){
+                $("#info1").val(editor1.html());
+           	 }
+         var status=1;
+         
+
+  
+      
+        $('input,select').each(function(i,e){
+           if($(e).attr('msg')){
+               if(!$(e).val()){
+                   var msg=$(e).attr('msg');
+/*                    notif({
+                       msg: msg,
+                       type: "warning"
+                   }); */
+                   $(e).siblings(".tishi").html("*"+msg);
+                   $(e).siblings(".tishi").css({'color':'red'});
+                   status=0;
+                }else{
+                	$(e).siblings(".tishi").html('');
+                 
+                	
+                }
+            }
+        });  
+        
+        if($("#radio").attr('msg')){
+            if(!$("#radio:checked").val()){
+           	  var msg=$("#radio").attr('msg');
+	              $("#radio").siblings(".tishi").html("*"+msg);
+	              $("#radio").siblings(".tishi").css({'color':'red'});
+                  status=0;
+              }else{
+            	  $("#radio").siblings(".tishi").html('');
+              } 
+     	  }
+     	  
+     	  if($("#checkbox").attr('msg')){
+               if(!$("#checkbox:checked").val()){
+              	  var msg=$("#checkbox").attr('msg');
+	              $("#checkbox").siblings(".tishi").html("*"+msg);
+	              $("#checkbox").siblings(".tishi").css({'color':'red'});
+/*                     notif({
+                        msg: msg,
+                        type: "warning"
+                    }); */
+                    status=0;
+                }else{
+                	$("#checkbox").siblings(".tishi").html("*"+msg);
+                }
+        	  }
+        
+        if(status==0){
+            
+            return false;
+        }
+
+        
+/*         $('input,select').each(function(i,e){
+        	alert($e("#radio:checked").attr('msg'));
+        });  */
+         
+     /*    alert($("input:checked").val()); */
+         
+        //  
+
+    	  
+    	  
+     
+        
+       if(status==1){
+    	  //点选框js 
+    	 
+    	  
+    	  
+           $("#form").submit();
+       }
+
+    });
+   
+   
+  
+</script>
+
+
+
+
+
+

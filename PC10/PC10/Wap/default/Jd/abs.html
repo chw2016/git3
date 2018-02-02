@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>我的申请顾问</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+    <style type="text/css">
+        *{margin: 0;padding :0;}
+        .ceng{width: 100%;height: 90px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+        .col-sm-2.control-label{margin:10px 0 ;color:#2f2f2f;}
+        .form-control{background-color: #f6f6f6;height: 40px;font-size: 13px;}
+        .ceng1{width: 100%;height: 150px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+        .ceng {width: 100%;
+            background-color: #FFF;
+            height: inherit;
+            overflow: hidden;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        .contents{font-weight: 300;}
+    </style>
+</head>
+<body style="background-color:#ededed;">
+<form action="{weikucms::U('a',array('token'=>session('token'),'openid'=>$openid))}" method="post" id="form" />
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">项目名称：<span class="contents">{weikucms:$info['xm']}</span></label>
+</div>
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">申请人：<span class="contents">{weikucms:$info['name']}</span></label>
+</div>
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">联系手机：<span class="contents">{weikucms:$info['tel']}</span></label>
+</div>
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">项目所属行业：<span class="contents">{weikucms:$info['hy']}</span></label>
+</div>
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">竞争对手：<span class="contents">{weikucms:$info['ds']}</span></label>
+</div>
+<div class="ceng">
+    <label for="firstname" class="col-sm-2 control-label">申请机构：<span class="contents">{weikucms:$info['jg']}</span></label>
+</div>
+
+<div class="ceng1">
+    <label for="firstname" class="col-sm-2 control-label">申请内容</label>
+    <div class="col-sm-10">
+        <textarea name="content" class="form-control" id="firstname" placeholder="请填写申请内容" style="height: 105px;" readonly>{weikucms:$info['content']}</textarea>
+        <!-- <input type="text" name="exper" class="form-control" id="firstname" placeholder="请填写您要推荐人的项目经历"> -->
+    </div>
+</div>
+<input type="hidden" name="adviser_id" value="{weikucms:$data.adviser_id}">
+<input type="hidden" name="time" value="{weikucms:$data.time}">
+<div style="height:80px;float:left;"></div>
+</form>
+
+<div class="foot">
+		<!-- <span onclick="javascript:history.back();">返回</span> -->
+      <a style="color:#000;" href="{weikucms::U('myApply',get1(token,TO,id,openid))}">  <span>返回</span></a>
+</div>
+</body>
+</html>

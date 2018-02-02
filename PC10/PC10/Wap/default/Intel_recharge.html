@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <title>续费</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Intel/css/recharge.css">
+     <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Intel/css/re_common.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Intel/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/jquery.validate.js"></script>
+    <script>
+        $(function(){
+            $(".recharge_li").click(function(){
+                $(this).addClass('active').siblings().removeClass('active');
+                var index=$(this).index();
+                $("recharge_nav>li").eq(index).show().siblings().hide();
+            })
+            $('.taocan').click(function(){
+                $('.taocan.on').removeClass('on')
+                $(this).addClass('on');
+            });
+            $('.buy').click(function(){
+                var cl      = '__on__';
+                var $this   = $(this);
+                var ori     = $this.text();
+                if($this.hasClass(cl)){
+                    return;
+                }
+                var imei    = $.trim($('#imei').val());
+                if(!imei){
+                    return msg.alert('请选择imei', 1000);
+                }
+                var iccid   = $.trim($('#iccid').val());
+                if(!iccid){
+                    return msg.alert('请填写iccid', 1000);
+                }
+                $this.addClass(cl).text('正在下单...');
+                var totalPrice = $('.taocan.on').attr('data-price');
+                $('#totalPrice1').val(totalPrice);
+                $.post('', {
+                    "type"  : $('.taocan.on').attr('data-id'),
+                    "price" : $('.taocan.on').attr('data-price'),
+                    "imei"  : imei,
+                    "iccid" : iccid
+                }, function(data){
+                    $this.removeClass(cl).text(ori);
+                    if(data.status == 0){
+                        $('#orderid').val(data.data.orderid);
+                        $('#from2').submit();
+                        return;
+                    }else{
+                        return msg.alert('失败，请稍后再试');
+                    }
+                }, 'json');
+            })
+        })
+    </script>
+    <style type="text/css" media="screen">
+        .taocan {
+            width: 42%;
+            float: left;
+            border: 1px solid #CCC;
+            height: 96px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            background-color: #FFF;
+            color: green;
+           padding: 5px;
+        }
+        .taocan.on {
+            background-color: #16CA16;
+            color: #FFF;
+        }
+    </style>
+    </head>
+    <body>
+	<div>
+		<ul class="recharge">
+			<li class="active recharge_li">购买套餐充值</li>
+            <!--
+			<li class="recharge_li">欠费充值</li>
+            -->
+		</ul>
+
+
+
+        <ul class="recharge_nav">
+            <li>
+                <form action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" method="POST" id="from2">
+                <input type="hidden" name="order_money" value="" id="totalPrice1">
+                <input type="hidden" name="order_text" value="购买套餐充值">
+                <input type="hidden" name="orderid" value="" id="orderid">
+                <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">
+                <input type="hidden" name="returnurl" value="{weikucms::U('',array('token'=>$token,'openid'=>$_GET['openid']))}">
+                <input type="hidden" name="type" value="Paipai">
+
+                <div class="flow" style="overflow: hidden;">
+                    <div class="taocan on" data-id="1" data-price="398">一年无限流量的续费398元（包一年无限流量翼卡服务）</div>
+                    <div class="taocan" data-id="2" data-price="198">半年2G的续费续费成198元（包一年4GB流量一年翼卡服务）</div>
+                    <div class="taocan" data-id="3" data-price="58">58元/GB流量包</div>
+                </div>
+                <div class="flow">
+                    <span class="recharge_size">imei</span>
+                    <span>
+                        <select name="imei" id="imei" style="width: 70%; border: 0;">
+                            <option value="">请选择imei</option>
+                            <volist name="bindList" id="list">
+                                <option value="{weikucms:$list.imei}">{weikucms:$list.imei}</option>
+                            </volist>
+                        </select>
+                </div>
+                <div class="flow">
+                    <span class="recharge_size">iccid</span>
+                    <span><input type="text" placeholder="请输入iccid" class="tel_input" name="iccid" id="iccid"></span>
+                </div>
+                <div class="flow buy" style="background-color: #00A200; color: #FFF; text-align: center; font-size: 16px; margin-top: 10px;">
+                    <a style="color: #FFF;" href="javascript: void(0)">购买套餐</a>
+                </div>
+                </form>
+            </li>
+            <li class="hide">
+             <form action="" id="from2222">
+                <div class="flow">
+                    <span class="recharge_size">用户手机号</span>
+                    <span><input type="text" placeholder="请输入用户手机号" class="tel_input" name="tel" id="tel"></span>
+                </div>
+                <div class="flow">
+                    <span class="recharge_size">imei</span>
+                    <span><input type="password" placeholder="请输入imei" class="tel_input" name="imei" id="imei"></span>
+                </div>
+                <div class="flow">
+                    <span class="recharge_size">iccid</span>
+                    <span><input type="text" placeholder="请输入iccid" class="tel_input" name="iccid" id="iccid"></span>
+                </div>
+                </form>
+            </li>
+        </ul>
+	</div>
+    </body>
+</html>

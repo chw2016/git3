@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="恒博物业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/zhiwei.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+    </head>
+    <body>
+		<div class="h-title">我的应聘</div>
+		<div class="my-yp">
+            <if condition="$aMessage eq ''">
+                <div class="list-row" style="text-align: center;" >您暂时还没有应聘的信息</div>
+                <else/>
+                <volist name="aMessage" id="vo">
+                <div class="list-row">
+                    <div class="fl yp-date">
+                        <div>投递时间</div>
+                        <div>{weikucms:$vo.add_time|date='m-d',###}</div>
+                        <div>{weikucms:$vo.add_time|date='H:i',###}</div>
+                    </div>
+                    <div class="fl yp-head"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/yinpin-header.png" width="80%" /></div>
+                    <div class="fl yp-name">{weikucms:$vo.office}</div>
+                    <div class="fl yp-btn-div"><span class="yp-btn"><if condition="$vo['stauts'] eq 0">待查看<elseif condition="$vo['stauts'] eq 1"/>已被查看</if></span></div>
+                </div>
+                </volist>
+            </if>
+		</div>
+    </body>
+</html>

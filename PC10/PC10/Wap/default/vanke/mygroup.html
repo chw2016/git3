@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <title>我的团购</title>
+</head>
+<body class="myGroupBuy">
+    <div class="fixTop header headerBg">
+        <div class="logo"></div>
+        <div class="title">/ 我的团购</div>
+    </div>
+    <div class="content">
+        <div class="userInfoBox">
+            <div class="userLogo circle img">
+                <img class="circle" src="{weikucms:$WxvankeUser.profile.avatar_url}" alt=""/>
+            </div>
+            <div class="infoWrap">
+                <div class="nameAndInfo">
+                    <span class="userName">{weikucms:$WxvankeUser.profile.nickname}</span>
+                    <!--
+                    <span class="weChatWrap f14">/微信号:<span class="weChat">15078384575</span></span>
+                    -->
+                </div>
+                <span class="myMoney">
+                    余额:<span class="num">{weikucms:$vankeUser.money|round=2}</span>元
+                </span>
+            </div>
+            <div class="tagName">
+                业主
+            </div>
+        </div>
+        <div class="myGroupBuyWrap" id="myGroupBuyWrap">
+            <div class="slideNav">
+                <ul>
+                    <li class="myGroup" nav=".myGroupWrap">我开的团</li>
+                    <li class="myJoin" nav=".myJoinGroupWrap">我参的团</li>
+                </ul>
+            </div>
+            <div class="slideBox">
+                <ul class="myGroupWrap">
+                    <volist name="own" id="row">
+                    <li class="item">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                <span class="icon-yonghu"></span>
+                            </div>
+                            <span class="groupCount">
+                                {weikucms:$row.tnumber}人团
+                            </span>
+                            <span class="groupCountDetail">
+                                <span class="num">{weikucms:$row.total_buy}</span>/<span class="allNum">{weikucms:$row.tnumber}</span>
+                            </span>
+                            <if condition="$row.status eq 0">
+                            <div class="stateTag">
+                                进行中···
+                            </div>
+                            <elseif condition="$row.status eq 1"/>
+                            <div class="stateTag done">
+                                已成团
+                            </div>
+                            <elseif condition="$row.status eq 2"/>
+                            <div class="stateTag off">
+                                已过期
+                            </div>
+                            </if>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="{weikucms::STATICS}/common/img/wplogo.png" data-original="{weikucms:$row.goods.headpic}" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    {weikucms:$row.goods.name}
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                    {weikucms:$row.add_time}
+                                    </span>
+                                    <!--
+                                    一
+                                    <span class="endDate">
+                                        2015-09-23
+                                    </span>
+                                    -->
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">{weikucms:$row.price}</span>
+                                <!--
+                                <div class="countNum">×{weikucms:$row.tnumber}</div>
+                                -->
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            <a href="{weikucms::U('mygroup_info', array('id' => $row['id']))}">
+                                <div class="btnGroup checkDetail">
+                                    查看详情
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    </volist>
+
+                    <!--
+                    <li class="item done">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                X
+                            </div>
+                            <span class="groupCount">
+                                10人团
+                            </span>
+                            <span class="groupCountDetail">
+                                <span class="num">10</span>/<span class="allNum">10</span>
+                            </span>
+                            <div class="stateTag">
+                                已成团
+                            </div>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="../../common/img/wplogo.png" data-original="../../common/img/img/1.png" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    NEW ZEALAND 新西兰南岛10天漫行新西兰南岛10天
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                        2015-08-23
+                                    </span>
+                                    一
+                                    <span class="endDate">
+                                        2015-09-23
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">1999</span>
+                                <div class="countNum">×4</div>
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            <div class="btnGroup checkDetail">
+                                查看详情
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="item off">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                X
+                            </div>
+                            <span class="groupCount">
+                                10人团
+                            </span>
+                            <span class="groupCountDetail">
+                                <span class="num">8</span>/<span class="allNum">10</span>
+                            </span>
+                            <div class="stateTag">
+                                已过期
+                            </div>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="../../common/img/wplogo.png" data-original="../../common/img/img/1.png" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    NEW ZEALAND 新西兰南岛10天漫行新西兰南岛10天
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                        2015-07-23
+                                    </span>
+                                    一
+                                    <span class="endDate">
+                                        2015-08-23
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">1999</span>
+                                <div class="countNum">×4</div>
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            <div class="btnGroup checkDetail">
+                                查看详情
+                            </div>
+                        </div>
+                    </li>
+                    -->
+
+                </ul>
+                <ul class="myJoinGroupWrap">
+                    <volist name="join" id="row">
+                    <li class="item">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                <span class="icon-yonghu"></span>
+                            </div>
+                            <span class="groupCount">
+                            {weikucms:$row.tnumber}人团
+                            </span>
+                            <!--
+                            <span class="groupCaller f12">
+                                /团长:<span class="weChatName">微信昵称</span>
+                            </span>
+                            -->
+                            <span class="groupCountDetail">
+                                <span class="num">{weikucms:$row.total_buy}</span>/<span class="allNum">{weikucms:$row.tnumber}</span>
+                            </span>
+                            <if condition="$row.status eq 0">
+                            <div class="stateTag">
+                                进行中···
+                            </div>
+                            <elseif condition="$row.status eq 1"/>
+                            <div class="stateTag done">
+                                已成团
+                            </div>
+                            <elseif condition="$row.status eq 2"/>
+                            <div class="stateTag off">
+                                已过期
+                            </div>
+                            </if>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="{weikucms::STATICS}/common/img/wplogo.png" data-original="{weikucms:$row.goods.headpic}" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    {weikucms:$row.goods.name}
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                    {weikucms:$row.add_time}
+                                    </span>
+                                    <!--
+                                    一
+                                    <span class="endDate">
+                                        2015-09-23
+                                    </span>
+                                    -->
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">{weikucms:$row.price}</span>
+                                <!--
+                                <div class="countNum">×{weikucms:$row.tnumber}</div>
+                                -->
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <!--<div class="tapButton">
+                                <div class="circle tipArr"></div>
+                                <span class="text">查看参团人员</span>
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            </div>-->
+                            <a href="{weikucms::U('mygroup_info', array('id' => $row['id']))}">
+                            <div class="btnGroup checkDetail">
+                                查看详情
+                            </div>
+                            </a>
+                        </div>
+                    </li>
+                    </volist>
+                    <!--
+                    <li class="item done">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                X
+                            </div>
+                            <span class="groupCount">
+                                10人团
+                            </span>
+                            <span class="groupCaller f12">
+                                /团长:<span class="weChatName">微信昵称</span>
+                            </span>
+                            <span class="groupCountDetail">
+                                <span class="num">10</span>/<span class="allNum">10</span>
+                            </span>
+                            <div class="stateTag">
+                                已成团
+                            </div>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="../../common/img/wplogo.png" data-original="../../common/img/img/1.png" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    NEW ZEALAND 新西兰南岛10天漫行新西兰南岛10天
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                        2015-08-23
+                                    </span>
+                                    一
+                                    <span class="endDate">
+                                        2015-09-23
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">1999</span>
+                                <div class="countNum">×4</div>
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            <div class="btnGroup checkDetail">
+                                查看详情
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item off">
+                        <div class="headerTop">
+                            <div class="circle icon">
+                                X
+                            </div>
+                            <span class="groupCount">
+                                10人团
+                            </span>
+                            <span class="groupCaller f12">
+                                /团长:<span class="weChatName">微信昵称</span>
+                            </span>
+                            <span class="groupCountDetail">
+                                <span class="num">8</span>/<span class="allNum">10</span>
+                            </span>
+                            <div class="stateTag">
+                                已过期
+                            </div>
+                        </div>
+                        <div class="groupInfoBox">
+                            <div class="picBox img">
+                                <img src="../../common/img/wplogo.png" data-original="../../common/img/img/1.png" alt="" />
+                            </div>
+                            <div class="groupInfo">
+                                <div class="title">
+                                    NEW ZEALAND 新西兰南岛10天漫行新西兰南岛10天
+                                </div>
+                                <div class="text timeDate">
+                                    <span class="startDate">
+                                        2015-07-23
+                                    </span>
+                                    一
+                                    <span class="endDate">
+                                        2015-08-23
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tagName">
+                                <span class="RMB">1999</span>
+                                <div class="countNum">×4</div>
+                            </div>
+                        </div>
+                        <div class="groupPeopleInfoBox">
+                            <div class="btnGroup feedBack">
+                                我要评价
+                            </div>
+                            <div class="btnGroup checkDetail">
+                                查看详情
+                            </div>
+                        </div>
+                    </li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

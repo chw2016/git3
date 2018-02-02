@@ -1,0 +1,141 @@
+ <include file="Public:head" /> 
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#intro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+items : [
+'source','undo','clearhtml','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+
+<script>
+function showChildCats(value){
+	$("#catid").html('<option value="0">请选择...</option>');
+	if(value==0){
+		document.getElementById('catid').disabled=true;
+	}else{
+		$.ajax({
+			url: $('#catUrl').attr("value")+'&parentid='+value,
+			success: function( data ) {
+				document.getElementById('catid').disabled=false;
+				$("#catid").html($("#catid").html()+data);
+			}
+		});
+	}
+}
+function toDecimal(x) {  
+            var f = parseFloat(x);  
+            if (isNaN(f)) {  
+                return;  
+            }  
+            f = Math.round(x*10)/10;  
+            return f;  
+        }  
+function calDiscount(){
+	var price=$('#price').attr('value');
+	var oprice=$('#oprice').attr('value');
+	if(oprice!=0&&oprice!=''){
+		var dis=oprice-price;
+		var discount=10-toDecimal((dis/oprice)*10);
+	}else{
+		discount=10;
+	}
+	$('#discount').attr('value',discount);
+}
+</script>
+ <script>
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#upload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#pic').val(),
+                     clickFn : function(url, title) {
+                         K('#pic').val(url);
+                         $("#image_show").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+
+ </script>
+<input type="hidden" id="catUrl" value="{weikucms::U('Product/ajaxCatOptions',array('token'=>$token))}" />
+
+         
+<!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+
+ </div> 
+ 
+ <!--复制结束--> 
+   <div class="cLineB"> 
+    <h4>活动</h4> 
+
+   </div> 
+   <form class="form" method="post" action="" enctype="multipart/form-data"> 
+
+
+    <div class="msgWrap bgfc"> 
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      <tbody> 
+       <tr> 
+        <th>活动名称：</th> 
+        <td><input type="text" name="name" value="{weikucms:$set.name}" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+
+  <!--     <TR>
+           <TH valign="top"><label for="picurl">商品图片 d：</label></TH>
+
+           <TD><img style="display: none;" id="image_show" class="indexs_img" src=""></TD>
+       </TR>
+        <tr> 
+        <th>上传商品图片：</th>
+        <td>
+            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$set.logourl}" style="width:300px;"   />
+            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+        </td>
+       </tr> --> 
+        <TR>
+                  <TH valign="top"><label for="info">活动详情：</label></TH>
+                  <TD><textarea name="content" id="intro"  rows="5" style="width:590px;height:360px" onfocus="leave();" >{weikucms:$set.content}</textarea></TD>
+                </TR>  
+       <tr>         
+       <th>&nbsp;</th>
+       <td>
+       <input type="hidden" name="token" value="{weikucms:$token}" />
+       <input type="hidden" name="infoid" value="{weikucms:$infoid}" />
+       <input type="hidden" name="id" value="<?php print_r($_GET['id']) ?>" />
+       
+       <button type="submit" id="bsubmit"  class="btn btn-primary">保存</button> &nbsp; </td>
+       </tr>
+       <TR style="height: 150px;">
+
+       </TR>
+      </tbody> 
+     </table> 
+     </div>
+    
+   </form> 
+  </div>
+
+  <include file="Public:footer" />

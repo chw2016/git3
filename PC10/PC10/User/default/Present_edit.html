@@ -1,0 +1,103 @@
+<include file="Public:head"/> 
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>奖品添加</h4>
+
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%"><TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>奖品名称：</th>
+                    <TD>
+                        <input type="input" class="px" value="{weikucms:$data[gname]}" style="width:400px;" name="gname" id="gname"><br />
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>商品中奖总量：</th>
+                    <TD>
+                        <input type="input" class="px" value="{weikucms:$data[tnum]}" style="width:400px" name="tnum" id="tnum"/>
+                        <input type="hidden" class="px" value="{weikucms:$data[id]}" style="width:400px" name="id"/>
+                        <br>中奖总量不能为0
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th valign="top"><span class="red">*</span>中奖概率：</th>
+                    <td><input type="text" value="{weikucms:$data[prob]}" style="width:400px;" name="prob" id="prob">
+                        <br/>中奖概率=单品中奖概率/所有商品概率总和
+                    </td>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>使用规则：</th>
+                    <TD>
+                         <textarea name="ginfo" id="ginfo">{weikucms:$data[ginfo]}</textarea>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <td><button type="submit" class="btn btn-primary" id="submit" >保存</button>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div> 
+
+    <!--活动结束-->
+
+
+
+
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    $(function() {
+        $("#submit").click(function() {
+            var gname = $("#gname").val();
+            var tnum = parseInt($("#tnum").val());
+            var prob = $("#prob").val();
+            var ginfo=$("#ginfo").val();
+            if (!gname) {
+                notif({
+                    msg: "奖品名不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!(/^\d+$/.test(tnum)) || tnum == 0) {
+                notif({
+                    msg: "请输入数字",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!ginfo) {
+                notif({
+                    msg: "奖品说明不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!(/^\d+$/.test(prob))) {
+                notif({
+                    msg: "中奖概率必需为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+
+        })
+    })
+</script>
+<include file="Public:footer"/> 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+        <style type="text/css">
+            .content{
+                padding: 20px;
+                color: rgb(86, 111, 63);
+                line-height: 32px;
+            }
+        </style>
+
+    </head>
+    <body>
+    	<div class="shareimg">
+         <img src="{weikucms::STATICS}/course/img/565651.png" title="分享">
+         <p class="shareimgp">亲恭喜您，分享成功啦！</p>
+         <if condition="$_GET['type'] neq 1">
+            <p class="shareimgpt content">您通过分享内容给朋友，获得金财币 <span>{weikucms:$info['score']}</span> 个！您可以点击<span class="biaoji">我要兑换去</span>获得精美礼品，也可以<span class="biaoji">继续转发</span>其他文章来获得更多的积分哦</p>
+             <else/>
+			 <p class="shareimgpt content">您已转发过了哦，您可以点击<span class="biaoji">我要兑换去</span>获得精美礼品，也可以<span class="biaoji">继续转发</span>其他文章来获得更多的积分哦</p>
+         </if>
+        </div>
+        <div class="navBox myul">
+            <div class="nav myli" onclick="window.location.href='{weikucms::U("Wap/Course/score",array("token"=>$token,"openid"=>$openid))}'">我要兑换</div>
+            <div class="nav myli" onclick="window.location.href='{weikucms::U('Wap/Course/zhuanlist',array('token'=>$token,'openid'=>$openid))}'">继续转发</div>
+        </div>
+
+    </body>
+</html>

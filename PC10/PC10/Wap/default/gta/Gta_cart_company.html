@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+    </head>
+	<script>
+		$(document).ready(function(){
+		    $(".shadow10 span").click(function(){ 
+	        $(this).toggleClass("add_10");
+    	});
+    	
+      	
+          /* $(".btn").click(function(){
+
+           	 $(".body_class").css('display', 'block');
+             $('.Mask').addClass('is-visible');
+         	 i=$(this).textnode;
+          
+           })*/
+          $(".gta_bj_btn").click(function(event) {
+            $(".body_class").css('display', 'none');
+            if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+				event.preventDefault();
+				$(".Mask").removeClass('is-visible');
+			}
+        });
+          $(".btn").click(function(){
+              var company=[];
+              $(".add_10").each(function(e,t){
+                  company[e]=$(t).text();
+              });
+              company.join(',');
+              if(company==''){
+                    show_error_tip('请选择公司');
+                   return false;
+              }
+          //	alert($(".add_10").text());
+              $("input[name=company]").val(company);
+              $("#form").submit();
+          })
+		});
+	</script>
+	<style>
+.type{width: 100%;}.type_one{margin: 10px 5px;font-size: 14px;color: #8cb78e;} .add_10{background-color: #89c058 !important;color: #fff !important;}.shadow10 span{width: 48%;/*height: 50px;*/background-color: #e5f2e5;float: left;margin-left: 5px;border-radius: 5px;line-height: 40px;color: #000;text-align: center;margin-top: 10px;}.shadow10{-webkit-box-shadow:0px 3px 5px rgba(192, 192, 192, 0.6);-moz-box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);background-color: white;padding-bottom: 10px;}/*.shadow10 span:hover{background: #89c058;color: #fff;}*/.add_btn{margin-top: 20px;padding-top: 10px;border-top: 1px solid #CCCCCC;}.add_btn1{width: 30%;display: block;margin: 10px auto;}
+	</style>
+	<script>
+	</script>
+	<body>
+    <form action="" method="post" id="form" >
+        <input type="hidden" name="company" >
+
+    </form>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">购买车险</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+			<div class="type">
+			 <div class="type_one clearfix">
+			 	<span class=" z16">可以勾选多项：</span>
+			 </div>
+			 <div class="shadow10 clearfix">
+			 	<volist name="list" id="vo">
+			 	<span>{weikucms:$vo.name}</span>
+                    </volist>
+			 </div>
+			 <div class="add_btn"><span class="btn type_btn">确认</span></div>
+			<!--显示区域-->
+		<!--	<div class="Mask">
+				<div class="mg0a">
+					<div class="gta_bj"><div class="gta_bj_text"></div>
+					   <div class="gr">
+							<span class="gta_bj_btn">X</span>
+				      </div>
+					</div>
+					<div class="body_classone">
+						  <p>订单已成功提交,</p>
+						  <p>订单号为:000000</p>
+					</div>
+					
+				</div>
+			</div>-->
+			
+		</section>
+		
+	</body>
+</html>

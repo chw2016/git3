@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127739.vshop.weimob.com/ -->
+<html lang="zh-CN">
+<head>
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{weikucms:$metaTitle}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        *:focus{
+            outline: 0px;
+        }
+        .conter{
+            margin: 0px 10px;
+        }
+        .list{
+            width: 100%
+        }
+        .classify{
+            padding: 24px 12px;
+            margin-top: -70px;
+            color: ivory;
+			text-shadow: 0px 3px 1px #111;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+<div class = conter>
+    <ul>
+        <volist name="cats" id="hostlist">
+            <a href="<if condition="$hostlist['parentid'] eq 0">{weikucms::U('Store_new/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'dining'=>$isDining,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}<else/>{weikucms::U('Store_new/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}</if>">
+            <li class="title">
+                <img src="{weikucms:$hostlist.logourl}" class="list">
+                <p class="classify">{weikucms:$hostlist.name}</p>
+            </li>
+            </a>
+        </volist>
+    </ul>
+
+</div>
+</body>
+</html>

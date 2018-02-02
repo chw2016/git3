@@ -1,0 +1,132 @@
+<html>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+<body>
+<input type="text" name="k" value="./upload/feiwjfwefiew.jpg" >
+<input type="text" name="k" value="./upload/feiwjfwefiew222.jpg" >
+<input type="text" name="type" value="1">
+<input type="text" name="name" value="李利">
+<input type="text" name="phone" value="1484486848">
+<input type="text" name="zhiye1" value="木匠">
+<input type="text" name="address" value="万普公司咯">
+<input type="text" name="type" value="2">
+<input type="text" name="name" value="李利2">
+<input type="text" name="phone" value="71484486848">
+<input type="text" name="zhiye1" value="木匠23">
+<input type="text" name="address" value="万普公司咯2">
+
+<input type="button" value="申请贷款提交" class="tijiao" flag="1">
+</body>
+<script>
+    $(".tijiao").click(function(){
+        var pids=[];
+        $("input[name=k]").each(function(e,t){
+            pids[e]=$(t).val();
+        })
+        pids=pids.join(',');
+
+        var type=[];
+        $("input[name=type]").each(function(e,t){
+            type[e]=$(t).val();
+        })
+        type=type.join(',');
+
+        var name=[];
+        $("input[name=name]").each(function(e,t){
+            name[e]=$(t).val();
+        })
+        name=name.join(',');
+
+        var phone=[];
+        $("input[name=phone]").each(function(e,t){
+            phone[e]=$(t).val();
+        })
+        phone=phone.join(',');
+
+
+        var zhiye1=[];
+        $("input[name=zhiye1]").each(function(e,t){
+            zhiye1[e]=$(t).val();
+        })
+        zhiye1=zhiye1.join(',');
+      //  alert(zhiye);
+
+
+        var address=[];
+        $("input[name=address]").each(function(e,t){
+            address[e]=$(t).val();
+        })
+        address=address.join(',');
+
+
+
+
+
+
+
+
+        if($(this).attr('flag')==1){//这里只要求别人提交一次
+            $(this).attr('flag',2);
+
+            var true_name="王吉";
+            var card_num='4303219894966848585X';
+            var zhiye="学生";
+            var seng_now="广东省";
+            var si_now="深圳市";
+            var xian_now="宝安区";
+            var detail_now="盐田新一村了";
+            var seng_home="广东省";
+            var si_home="深圳市";
+            var xian_home="宝安区";
+            var detail_home="盐田新一村了";
+
+            var school="中山大学";
+            var xuewei='3';
+            var school_time="2011-2015";
+            var seng_room="广东省学校";
+            var si_room="深圳市学校";
+            var xian_room="宝安区";
+            var detail_room="盐田新一村了学校";
+
+
+            var url="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid))}";
+
+
+            var data1={
+                pids:pids,
+                type:type,
+                address:address,
+                name:name,
+                phone:phone,
+                zhiye1:zhiye1,
+                true_name:true_name,
+                card_num:card_num,
+                zhiye:zhiye,
+                seng_now:seng_now,
+                si_now:si_now,
+                xian_now:xian_now,
+                detail_now:detail_now,
+                seng_home:seng_home,
+                si_home:si_home,
+                xian_home:xian_home,
+                detail_home:detail_home,
+                school:school,
+                xuewei:xuewei,
+                school_time:school_time,
+                seng_room:seng_room,
+                si_room:si_room,
+                xian_room:xian_room,
+                detail_room:detail_room
+            }
+            $.post(url,data1,function(data){
+                if(data.status==1){
+                    alert(data.id);
+                }else{
+                    alert('失败');
+                }
+            },'json');
+        }
+
+    })
+
+</script>
+</html>

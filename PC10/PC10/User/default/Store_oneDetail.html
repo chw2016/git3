@@ -1,0 +1,68 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<h4 class="left">门店后台管理系统</h4>
+		<div class="clr"></div>
+	</div>
+
+	<div class="box-content">
+        <div class="row-fluid">
+            <ul id="custom_group_navigator_div" class="qb_clearfix unstyled">
+                <li class="list-box"  style="width:1092px; height:800px;">
+                    <div class="list-box__hd list-box__hd_bg_1">{weikucms:$data['order_id']}订单号的详情</div>
+                    
+                        <form method="post"  action="###" id="info">
+							<input name="delall"  type="hidden" value="" />
+							<input name="wxid"  type="hidden" value="" />			
+							<table class="table table-bordered">
+                  				<tr>
+                  					<td>订单号：</td>
+                  					<td>{weikucms:$data['order_id']}</td>
+                  					<td>下单时间：</td>
+                  					<td>{weikucms:$data['order_ok_time']}</td>
+                  				</tr>
+                  				<tr>
+                  					<td>订单的价格：</td>
+                  					<td>{weikucms:$data['order_price']}</td>
+                  					<td>订单的状态：</td>
+                  					<if condition="$data['order_status'] neq 1" >
+                  					<td>未处理</td>
+                  					<else/>
+                  					<td>处理完全</td>
+                  					</if>
+                  				</tr>
+                  				<tr>
+                  					<td style="width:266px;">订单信息：</td>
+                  					<td colspan="3">{weikucms:$data['order_info']}</td>
+                  				</tr>
+                  				<tr>
+                  					<td>下单用户：</td>
+                  					<td>{weikucms:$data['order_user']}</td>
+                  					<td>联系方式：</td>
+                  					<td>{weikucms:$data['order_user_phone']}</td>
+                  				</tr>
+                  				<tr>
+                            <td>是否外送：</td>
+                            <if
+                                condition="$data['is_waisong'] eq 1">
+                            <td>到店自取</td>
+                            <else />
+                            <td>需要外送</td>
+                            </if>
+                  					<td>配送地址：</td>
+                  					<td>{weikucms:$data['order_adress']}</td>
+                  				</tr>
+                  				<tr>
+                  					<td>备注信息：</td>
+                  					<td colspan="3">{weikucms:$data['order_extra_info']}</td>
+                  				</tr>
+              				</table>			
+						</form>                 
+                </li>                   
+            </ul>          
+        </div>
+	</div>
+</div>
+<include file="Public:footer"/>

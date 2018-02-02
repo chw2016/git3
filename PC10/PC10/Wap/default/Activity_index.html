@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="page_full platform_qq">
+<head>
+    <meta charset="utf-8" />
+    <title>{weikucms:$adata.title}</title>
+
+    <meta name="keywords" content="{weikucms:$adata.title}" />
+    <meta name="description" content="{weikucms:$adata.title}" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiactivity/css/main_v4.css"  />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/js/jquery_min.js"></script>
+
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiactivity/js/require.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiactivity/js/easing.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiactivity/js/main_qq.5.0.js" charset="UTF-8"></script>
+</head>
+<body class="page_voice page_index">
+<!--loading-->
+<!--<div class="top sigle_avartar">-->
+    <!--<div class="logo_area group">-->
+       <!--<span class="logo_default"></span>-->
+    <!--</div>-->
+<!--</div>-->
+<!--loading end-->
+<div class="container container_wantyou">
+    <!-- QQ活动入口 开始 -->
+    <div id="the_go_qq_event" class="go_qq_event">
+        <a><img src="{weikucms::STATICS}/wapweiui/weiactivity/images/go_other.png" /></a>
+
+        <div class="wp_yiyuan_box">
+            <div class="img_box">
+                <img src="{weikucms::STATICS}/wapweiui/weiactivity/images/coin.png">
+                <div class="curr_users"><span class="users_all">{weikucms:$sumusers}</span>人在参与</div>
+            </div>
+
+            <div class="box_banner">万普一元定制计划</div>
+        </div>
+        <p class="dream_content"><div class="all_d_title"><span class="dream_title">万普</span>的微信梦想:</div>万普微信公众平台希望通过微信改变世界！</p>
+    </div>
+    <!-- QQ活动入口 结束 -->
+    <!-- 参与人数 开始-->
+    <div class="mod_real_count">
+        <div class="real_count"><div class="num odometer" id="visitCount">{weikucms:$sumusers}</div><span class="text">人一起在为微信梦想加油</span></div>
+        <div class="real_count_desc" data-fragment="live">万普微信助力企业实现行业微信标杆！</div>
+
+
+        <div class="game_data" data-fragment="end" style="display:block;">
+            <div class="data_cell">
+                <span class="num" style="color:rgb(255, 0, 0);"><span id="mywx_times"><php>echo $randdata['r_times']; </php></span><span style="font-size: 10px;color: white;">人已为他转发</span></span>
+                <span class="text" style="color:white;" id="mywxa_name">{weikucms:$randdata.wxa_name}</span>
+            </div>
+        </div>
+
+
+        <div class="redpackets">
+            <i class="shadow shadow_1"></i>
+            <ul>
+            </ul>
+            <i class="shadow shadow_2"></i>
+        </div>
+        <!--
+        <div class="btn_line btn_line_playback" data-fragment="end" style="display:none">
+            <i class="separate_line"></i>
+            <a href="javascript:;" class="btn btn_2" data-action="open-tencentvideo"><i class="icon_play"></i>完整版视频回放</a>
+        </div>
+        -->
+    </div>
+    <!-- 参与人数 结束-->
+
+    <!--学员展示-->
+    <div id="students">
+    </div>
+    <!--学员展示 end-->
+
+    <!-- 叫小伙伴也来玩一把 开始 -->
+    <!--
+    <div class="share_hint" data-fragment="end" style="display:none;">
+      向小伙伴炫耀
+    </div>
+    -->
+    <!-- 叫小伙伴也来玩一把 结束 -->
+</div>
+
+<!--中奖名单-->
+<div class="mod_winners_list" style="display:block;">
+    <div class="mod_title">他们正在参与<span style="float: right;font-size: 12px;line-height: 27px;"><a href="http://v.wapwei.com{weikucms::U('Wap/Activity/guize',array('token'=>$token,'openid'=>$openid))}">查看活动规则></a></span></div>
+    <div class="mod_bd">
+        <div class="winners_box">
+            <ol class="winners_list">
+                <volist name="alldata" id="vo">
+                <li><span class="name">{weikucms:$vo.nickname}</span></li>
+                </volist>
+
+            </ol>
+            <if condition="$mydata neq null">
+                <div class="btn_line"><div class="mydata"> 您的微信公众平台<span class="wxa_name">{weikucms:$mydata.wxa_name}</span>正在参与万普一元定制计划活动,已有<span class="wxa_name"><php>echo $mydata['r_times']; </php></span>个人转发您的公众号哦,您当前的排名在<span class="wxa_name">{weikucms:$rankstr}</span>之间,继续加油吧！</div></div>
+            <else/>
+                <div class="btn_line">
+                    <a href="javascript:;" id="j_btn" class="btn_more">参与活动</a>
+                </div>
+            </if>
+
+        </div>
+    </div>
+</div>
+<!-- 微信摇一摇活动 开始 -->
+
+<!-- 微信摇一摇活动 结束 -->
+
+<!--抽奖接口-->
+<div class="prize_layer" style="display:none;">
+    <div class="pop_box" style="display:block;">
+        <div class="pop_box_inner">
+
+            <div class="pop_title">你的微信梦想</div>
+            <div class="add_comment focus">
+                <input type="text" name="wxa_name" class="inp_text" placeholder="请输入公众号名称/产品名称/公司名称">
+            </div>
+            <input name="openid" type="hidden" value="{weikucms:$openid}">
+            <input name="aid" type="hidden" value="{weikucms:$aid}">
+            <input name="uid" type="hidden" value="{weikucms:$adata.uid}">
+            <input name="token" type="hidden" value="{weikucms:$token}">
+            <div class="add_textarea focus">
+                <textarea class="inp_textarea" name="wxa_desc" placeholder="请输入您想做什么样的微信公众平台/您的微信梦想是什么"></textarea>
+            </div>
+            <i class="separate_line"></i>
+            <div class="btn_line">
+                <a href="javascript:;" id="join_button" class="btn btn_1">告诉大家并转发</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sharetips" style="display: none;">
+    <div class="mask"></div>
+    <div class="share-mod"></div>
+</div>
+
+<div class="mod_footer">
+    <div class="footer_inner">
+        Copyright &copy; 深圳市万普信息科技有限公司.
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#j_btn").click(function(){
+            $(".prize_layer").show();
+        });
+
+
+        var flag = true;
+        var title =  document.title+'火热进行中..';
+        var content =  '我正在参加'+document.title+'求给力转发,有惊喜哦';
+        var timeline_link = "http://v.wapwei.com{weikucms::U('Wap/Activity/myshare',array('token'=>$token,'openid'=>$openid,'type'=>'timeline','auid'=>$mydata['id'],'aid'=>$adata['id']))}";
+        var friend_link = "http://v.wapwei.com{weikucms::U('Wap/Activity/myshare',array('token'=>$token,'openid'=>$openid,'type'=>'friend','auid'=>$mydata['id'],'aid'=>$adata['id']))}";
+        var openid = $("input[name='openid']").val();
+        var aid = $("input[name='aid']").val();
+        var uid = $("input[name='uid']").val();
+        var token = $("input[name='token']").val();
+
+        setInterval(function(){
+            var geturl = "{weikucms::U('Wap/Activity/getCurrent',array('token'=>$token,'openid'=>$openid))}";
+            $.post(geturl,{aid:aid,uid:uid},function(data){
+                if(data.code == 0){
+                    $("#mywxa_name").text("");
+                    $("#mywxa_name").css({"left":"400px"});
+                    $("#mywxa_name").text(data.data.wxa_name).animate({"left":"0px"},2000,'easeInCubic');
+                    $("#mywx_times").text("");
+                    $("#mywx_times").css({"left":"400px"});
+                    //$("#mywxa_name").text(data.data.wxa_name);
+                    $("#mywx_times").text(parseInt(data.data.r_times)).animate({"left":"0px"},2000,'easeInCubic');
+                }
+            },'json');
+        },'5000');
+
+
+        $("#join_button").click(function(){
+            var wxa_name = $("input[name='wxa_name']").val();
+            var wxa_desc = $("textarea[name='wxa_desc']").val();
+            var btn = $(this);
+            if(!openid || !aid || !uid || !token){
+                alert('非法请求！');
+                return false;
+            }
+
+            if(!wxa_name){
+                alert('请输入公众号名称/产品名称/公司名称');
+                return false;
+            }
+
+            if(wxa_name.length > 15){
+                alert('名字太长了,不能超过15个字哦');
+                return false;
+            }
+
+            if(!wxa_desc){
+                alert('请输入您想做什么样的微信公众平台/您的微信梦想是什么');
+                return false;
+            }
+            var url="{weikucms::U('Wap/Activity/joinActivity',array('token'=>$token,'openid'=>$openid))}";
+            btn.text('通信中别打扰...');
+            $.post(url,{openid:openid,aid:aid,uid:uid,token:token,wxa_name:wxa_name,wxa_desc:wxa_desc},function(data){
+                if(data.code == 0){
+                    btn.text('成功参加,转发给朋友吧');
+                    timeline_link = timeline_link+"&auid="+data.auid;
+                    friend_link = friend_link+"&auid="+data.auid;
+                    $(".sharetips").show();
+                }else{
+                    btn.text(data.msg);
+                    flag = false;
+                }
+            },'json');
+        });
+
+
+
+        window.shareData = window.shareData || {
+            "timeLineLink": timeline_link,
+            "sendFriendLink": friend_link,
+            "tTitle":title,
+            "tContent": content,
+            "fTitle": title,
+            "fContent": content,
+            "wContent": content
+        }
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+// 发送给好友
+            WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+                WeixinJSBridge.invoke('sendAppMessage', {
+                    "img_url": '{weikucms::STATICS}/wapweiui/weiactivity/images/yiyuan.png',
+                    "img_width": "130",
+                    "img_height": "168",
+                    "link": window.shareData.sendFriendLink,
+                    "desc": window.shareData.fContent,
+                    "title": window.shareData.fTitle
+                }, function (res) {
+                    if('send_app_msg:cancel' != res.err_msg){
+                        report_self();
+                        $(".sharetips").hide();
+                        $(".prize_layer").hide();
+                    }
+                    _report(1, res.err_msg);
+                })
+            });
+
+// 分享到朋友圈
+            WeixinJSBridge.on('menu:share:timeline', function (argv) {
+                WeixinJSBridge.invoke('shareTimeline', {
+                    "img_url": '{weikucms::STATICS}/wapweiui/weiactivity/images/yiyuan.png',
+                    "img_width": "130",
+                    "img_height": "168",
+                    "link": window.shareData.timeLineLink,
+                    "desc": window.shareData.tContent,
+                    "title": window.shareData.tTitle
+                }, function (res) {
+                    if('share_timeline:cancel' != res.err_msg){
+                       report_self();
+                       $(".prize_layer").hide();
+                       $(".sharetips").hide();
+                    }
+                    _report(1, res.err_msg);
+                });
+            });
+
+// 分享到微博
+
+        }, false);
+
+
+        function report_self(){
+            var url="{weikucms::U('Wap/Activity/selfReport',array('token'=>$token,'openid'=>$openid))}";
+            $.getJSON(url,{aid:aid,uid:uid},function(data){
+                console.log(data.msg);
+            });
+        }
+
+
+        function onBridgeReady(){
+            WeixinJSBridge.call('showOptionMenu');
+        }
+
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        }else{
+            onBridgeReady();
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

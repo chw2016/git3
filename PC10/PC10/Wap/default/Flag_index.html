@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/flag/default.css" type="text/css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <title> {weikucms:$wxuser.name}</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+<style type="text/css">
+    .wx_footer {
+        margin: 45px 0 60px 0;
+    }
+    .wx_footer .wapwei_logo {
+        height: 15px;
+        width: 86px;
+        margin: 15px auto 0 auto;
+        background: url("http://mall.wapwei.com/resource/logo_min.png");
+        background-size: cover;
+        -webkit-background-size: cover;
+    }
+</style>
+
+<body>
+<div class="bookingTips" style="line-height:25px;">
+    <strong>查询提示</strong>
+    <div style="line-height:20px;">请输入公司注册号或者商标名称或者申请人名称进行查询！</div>
+</div>
+<div id="baoyangYuyue1" style="padding-top: 30px;">
+    <div class="iconText"  style="margin-bottom: 30px;">
+        <ul>
+
+            <li class="noAfter">
+                <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/flag/icon_40_04.png"></div>
+                <div class="li-r"><input class="input" value="" placeholder="输入注册号" id="reg_num" maxlength="20"></div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/flag/icon_40_04.png"></div>
+                <div class="li-r"><input class="input" value="" placeholder="输入商标名称" id="flag_name" maxlength="20"></div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/flag/icon_40_04.png"></div>
+                <div class="li-r"><input class="input" value="" placeholder="输入申请人名字" id="apply_person" maxlength="20"></div>
+            </li>
+
+        </ul>
+    </div>
+    <div class="button clearfix"><a href="javascript:void(0);" id="ser_btn">点击查询</a></div>
+
+
+</div>
+<div class="wx_footer">
+    <div class="wapwei_logo"></div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#ser_btn").click(function(){
+            var reg_num = $("#reg_num").val();
+            var flag_name = $("#flag_name").val();
+            var apply_person = $("#apply_person").val();
+            if(!reg_num && !flag_name && !apply_person){
+                alert('请至少输入一项');
+                return false;
+            }
+
+            var btn = $(this);
+            var btntext = btn.text();
+            var url = "{weikucms::U('Wap/Flag/getFlagdata',array('token'=>$token))}";
+            btn.text('系统查询中...');
+            $.post(url,{reg_num:reg_num,apply_person:apply_person,flag_name:flag_name},function(data){
+                if(data.code == 0){
+                    btn.text(data.msg);
+                    setTimeout(function(){
+                        window.location.href="{weikucms::U('Wap/Flag/listdata',array('token'=>$token))}&ids="+data.data;
+                    },'1000');
+                }else{
+                    btn.text(data.msg);
+                    setTimeout(function(){
+                        btn.text(btntext);
+                    },'1000');
+                }
+            },'json');
+        });
+
+    });
+</script>
+
+</body></html>

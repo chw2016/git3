@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Wapwei,Manning,Samphay@163.com">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telphone=no, email=no"/>
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}地图展示</title>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+</head>
+<body>
+<div style="width:100%;height:600px;" id="container"></div>
+<input type='button' value='开始' onclick='run();' />
+</body>
+</html>
+<script type="text/javascript">
+var map = new BMap.Map("container");
+map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+var myP1 = new BMap.Point(116.371801,39.912114);    //起点
+var myP2 = new BMap.Point(116.447804,39.913123);    //终点
+var myIconmove = new BMap.Icon("http://dev.baidu.com/wiki/static/map/API/examples/images/Mario.png", new BMap.Size(32, 70), {    //小车图片
+    //offset: new BMap.Size(0, -5),    //相当于CSS精灵
+    imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+  });
+//var driving2 = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: false}});    //驾车实例
+//driving2.search(myP1, myP2);    //显示一条公交线路
+
+//添加起标志
+//添加终标志
+var point = new BMap.Point(116.401801,39.912114);
+
+//添加起标志
+//添加终标志
+var myIcon = new BMap.Icon("http://api.map.baidu.com/img/dest_markers.png",new BMap.Size(28, 32),  {     offset: new BMap.Size(10, 25),  imageOffset: new BMap.Size(0, 0)  });
+var myIcon2 = new BMap.Icon("http://api.map.baidu.com/img/dest_markers.png",new BMap.Size(28, 32),  {     offset: new BMap.Size(-150, -205),  imageOffset: new BMap.Size(0, -34)  });
+
+var point2 =  new BMap.Point(116.423184,39.930323);
+var marker = new BMap.Marker(point, {icon: myIcon});  // 创建标注
+var marker2 = new BMap.Marker(point2, {icon: myIcon2});  // 创建标注
+map.addOverlay(marker);              // 将标注添加到地图中
+map.addOverlay(marker2);
+marker.setAnimation(BMAP_ANIMATION_DROP ); //跳动的动画
+marker2.setAnimation(BMAP_ANIMATION_DROP ); //跳动的动画
+
+var polyline = new BMap.Polyline([
+new BMap.Point(116.401801,39.912114),
+    new BMap.Point(116.403803,39.912336),
+    new BMap.Point(116.404804,39.912447),
+    new BMap.Point(116.405905,39.918558),
+    new BMap.Point(116.418804,39.926123),
+    new BMap.Point(116.419184,39.929323),
+    new BMap.Point(116.423184,39.930323)
+], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
+map.addOverlay(polyline);
+
+window.run = function (){
+    var driving = new BMap.DrivingRoute(map);    //驾车实例
+    driving.search(myP1, myP2);
+    driving.setSearchCompleteCallback(function(){
+        var pts = driving.getResults().getPlan(0).getRoute(0).getPath();    //通过驾车实例，获得一系列点的数组
+        pts = [                          //创建7个点
+   new BMap.Point(116.401801,39.912114),
+    new BMap.Point(116.403803,39.912336),
+    new BMap.Point(116.404804,39.912447),
+    new BMap.Point(116.405905,39.918558),
+    new BMap.Point(116.418804,39.926123),
+    new BMap.Point(116.418904,39.926223),
+    new BMap.Point(116.419184,39.929323),
+    new BMap.Point(116.423184,39.930323)
+];
+
+
+        var paths = pts.length;    //获得有几个点
+
+        //alert(pts.toString());
+        var carMk = new BMap.Marker(pts[0],{icon:myIconmove});
+        map.addOverlay(carMk);
+        i=0;
+        function resetMkPoint(i){
+            carMk.setPosition(pts[i]);
+            if(i < paths){
+                setTimeout(function(){
+                    i++;
+                    if(i % 4 == 0){
+                        map.centerAndZoom(pts[i], 15);
+                    }
+                    resetMkPoint(i);
+                },500);
+            }else{map.removeOverlay(carMk);}
+        }
+        setTimeout(function(){
+            resetMkPoint(0);
+        },800)
+
+    });
+}
+</script>
+

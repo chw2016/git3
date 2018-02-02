@@ -1,0 +1,76 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/style_2_common.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/xt/style.css" />
+
+<div class="content">
+
+<div class="cLineB">
+  <h4>微喜帖祝福列表</h4>
+  <a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a>
+ </div>
+ <div class="msgWrap form">
+ <UL id="tags">
+              <LI ><A    href="index.php?g=User&m=Xtlist&a=index&token={weikucms::$_GET['token']}&hid={weikucms:$_GET['hid']}">赴宴名单</a></LI>
+              <LI class="selectTag"><A    href="index.php?g=User&m=Xtbless&a=index&token={weikucms::$_GET['token']}&hid={weikucms:$_GET['hid']}">收到祝福</A> </LI>
+              <div class="clr"></div>
+          </UL>
+ 
+<DIV id=tagContent>
+<DIV class="tagContent selectTag" id="tagContent0" style="display: block;">
+<fieldset>
+            <ul class="cateradio">
+                <div class="msgWrap">
+          <form method="post"  action="" id="info" >
+   
+            <table class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                                <thead>
+<tr>
+ 
+<th>姓名</th>
+<th>电话</th>
+                                                <th>祝福语</th>
+                                                 <th>操作</th>
+</tr></thead>
+<tbody>		
+
+  <volist name="info" id="vo">             
+                 
+                <TR>
+             
+                    <TD>{weikucms:$vo.name}</TD>
+                  <TD>{weikucms:$vo.phone}</TD>
+                  <TD>{weikucms:$vo.content}</TD>
+         
+          
+                   <TD class="norightborder"><a href="javascript:drop_confirm('您确定要删除吗?', '{weikucms::U('Xtbless/del',array('id'=>$vo['id']))}');">删除</a></TD>
+          
+                </TR>
+    </volist>
+
+
+							                                                <tr>
+                
+                </tr>
+</tbody></table>
+           </form> 
+            
+           
+          </div>
+            </ul>
+</fieldset>
+</DIV>
+</DIV>		 
+
+  
+
+        <div class="clr"></div>
+          </div>
+  
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,263 @@
+﻿<include file="Public:head"/>
+
+     <div class="cLineB">
+         <div class="title_tab" id="topTab">
+             <ul class="tab_navs title_tab" data-index="0">
+
+                
+                 <li data-index="0" class="tab_nav first js_top " data-id="total">
+                     <a href="{weikucms::U('Home/set',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if>>首页回复配置</a>
+                 </li>
+
+
+
+                 <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('Classify/index',array('token'=>$token))}" <if condition="$hover2 eq 1">class="hover"</if>>分类管理</a>
+                 </li>
+
+                 <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('Tmpls/index',array('token'=>$token))}" <if condition="$hover3 eq 1">class="hover"</if>>微官网风格</a>
+                 </li>
+
+                 <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('Flash/index',array('token'=>$token))}" <if condition="$hover4 eq 1">class="hover"</if>>轮播图</a>
+                 </li>
+
+                 <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('speeddial/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>导航与版权</a>
+                 </li>
+
+                  <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('Article/index',array('token'=>$token))}" <if condition="$hover6 eq 1">class="hover"</if>>文章转发数据统计</a>
+                 </li>
+
+                  <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                     <a href="{weikucms::U('Guide/index',array('token'=>$token))}" <if condition="$hover7 eq 1">class="hover"</if>>APP首次进入引导图</a>
+                 </li>
+
+                 <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                     <a href="#" onclick="window.open('{weikucms::U('Yulan/index',array('token'=>$token))}', 'bindweixin', 'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,title=0,height=1100,width=720');" class="nohover">微官网预览</a>
+                 </li>
+             </ul>
+         </div>
+     </div>
+
+ <div class="alert alert-info">
+     <button type="button" class="close" data-dismiss="alert">×</button>
+     <strong>提示信息!</strong>
+     <ol>
+         <li>微官网版权信息填写的内容将会在微官网页面上快捷工具上展示出来,如左下角+字图标,或者微官网底部导航</li>
+     </ol>
+ </div>
+<div class="msgWrap">
+  <form class="form" method="post"   action=""  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+  <THEAD>
+<TR>
+  <TH valign="top"><label for="keyword">电话：</label></TH>
+  <TD><input type="input" class="px" id="phone" value="{weikucms:$info.phone}" name="phone" style="width:300px" >
+  <span class="info_tip">可为空,填写正确的电话号码即可实现一键拨号</span>
+  </TD>
+  <TD></TD>
+</TR>
+                            </THEAD>
+  <TBODY><input type="hidden" name="id" id="id" value="{weikucms:$info.id}"/>
+  <input type="hidden" name="token" id="token" value="{weikucms:$Think.session.token}"/>
+<TR>
+  <TH valign="top"><label for="keyword">地图导航地址：</label></TH>
+  <TD><input type="input" class="px" id="nav" value="{weikucms:$info.nav}" name="nav" style="width:300px" >
+      <span class="info_tip">可为空,支持百度地图和Google地图以及任何地图链接</span>
+  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">微官网首页地址：</label></TH>
+  <TD><input type="input" class="px" id="mhome" value="{weikucms:$info.mhome}" name="mhome" style="width:300px" >
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">相册地址</label></TH>
+  <TD><input type="input" class="px" id="mphoto" value="{weikucms:$info.mphoto}" name="mphoto" style="width:300px" >
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+
+
+<TR>
+  <TH valign="top"><label for="keyword">版权信息</label></TH>
+  <TD><input type="input" class="px" id="copyright" value="{weikucms:$info.copyright}" name="copyright" style="width:200px" >
+      <span class="info_tip">可为空,显示在微官网底部的版权信息 如填写万普微信即显示万普微信版权所有</span>
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+
+<TR>
+  <TH valign="top"><label for="keyword">背景音乐</label></TH>
+  <TD>
+    <!-- <span id="playbox" class="btn_music" onclick="playbox.init(this).play();"><audio src="" loop id="audio"></audio></span> -->
+    <input type="text" class="px" id="img" value="" name="img" style="width:300px" readonly="readonly">
+    <span class="ke-button-common" id="upload">上传音乐</span></TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">背景音乐显示</label></TH>
+  <TD>
+     <if condition="$info['musicurl'] eq ''">&nbsp;<else /><audio src="{weikucms:$info['musicurl']}" loop id="audio" controls="controls" style="display:block;">您的浏览器不支持该控件</audio></if>
+  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">微官网导航菜单</label></TH>
+  <TD>
+     <select name="ifmenu" id="ifmenu">
+       <option value="1">开启</option>
+       <option value="0">关闭</option>
+     </select>
+  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH></TH>
+  <TD><button type="button" id="bsubmit"  name="button"  class="btn btn-primary" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  </form>
+
+
+
+  </div> 
+
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager : true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('insertfile', function() {
+                editor.plugin.fileDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $("#audio").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+/*KindEditor.ready(function(K) {
+        var editor = K.editor({
+          allowFileManager : true
+        });
+        K('#insertfile').click(function() {
+          editor.loadPlugin('insertfile', function() {
+            editor.plugin.fileDialog({
+              fileUrl : K('#url').val(),
+              clickFn : function(url, title) {
+                K('#url').val(url);
+                editor.hideDialog();
+              }
+            });
+          });
+        });
+      });*/
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+        /*K('#upload2_1').click(function() {
+            editor.loadPlugin('filemanager', function() {
+                editor.plugin.filemanagerDialog({
+                    viewType : 'VIEW',
+                    clickFn : function(url, title) {
+                        K('#img2').val(url);
+                        $(".No2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });*/
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var phone = $("#phone").val();
+            var nav = $("#nav").val();
+            var mhome = $("#mhome").val();
+            var mphoto = $("#mphoto").val();
+            var id = $("#id").val();
+            var token = $("#token").val();
+            var copyright = $("#copyright").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            var music=$("#img").val();
+            var ifmenu=$("#ifmenu").val();
+
+            if(! token){
+                notif({
+                    msg: "token不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('speeddial/index')}",
+                    {id:id,phone:phone,nav:nav,mhome:mhome,mphoto:mphoto,token:token,copyright:copyright,__hash__:__hash__,musicurl:music,ifmenu:ifmenu},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<script src="http://v.wapwei.com/./tpl/Wap/default/common/js/hx/audio.js" type="text/javascript"></script>
+
+ <script>
+
+    window.addEventListener("DOMContentLoaded", function(){
+
+    playbox.init("playbox");
+
+    }, false);
+
+</script>
+<!-- <script src="http://v.wapwei.com/./tpl/Wap/default/common/js/hx/audio.js" type="text/javascript"></script>
+
+ <script>
+
+    window.addEventListener("DOMContentLoaded", function(){
+
+    playbox.init("playbox");
+
+    }, false);
+
+</script> -->
+<include file="Public:footer"/>

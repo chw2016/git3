@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>{weikucms:$tpl['wxname']}</title>
+
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta name="format-detection" content="telephone=no">
+
+<meta charset="utf-8">
+
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/snower.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/common.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/reset.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/font-awesome.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/home-50.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/tangguo/home-menu-2.css" media="all">
+
+<script type="text/javascript" async src="{weikucms::RES}/tangguo/wtj.js"></script><script type="text/javascript" src="{weikucms::RES}/tangguo/maivl.js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/jQuery.js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/jquery_easing.js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/yl3d.js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/50.js"></script>
+
+
+
+    </head>
+
+    <body onselectstart="return true;" ondragstart="return false;" style="">
+	<include file="Public:audio"/> 
+        <style>
+
+	.body{
+
+		max-width:640px;
+
+		margin:auto;
+
+	}
+
+</style>
+
+<div class="body">
+
+	<header>
+
+        <div class="snower">
+
+            <script type="text/javascript"></script>
+
+            <script type="text/javascript" src="{weikucms::RES}/tangguo/snower.js"></script>
+
+        </div>
+
+    </header>  
+
+	<section class="p-index" style="height: 627px; ">
+
+						
+
+		<!--全屏大图-->
+
+        <volist name="info" id="vo">
+
+		<section data-page="2" class="m-page m-page2 hide" data-id="3311" data-type="info_nomore" style="height: 627px; top: 0px; ">
+
+			<div class="m-img m-img01">
+
+				
+
+				<img src="{weikucms:$vo.img}" />
+
+			</div>
+
+			<div class="m-txt m-txt01 hide_poniter">
+
+									<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+
+									<div class="wtxt">
+
+						<h2>{weikucms:$vo.name}</h2>
+
+						<p>{weikucms:$vo.info}</p>
+
+					</div>
+
+				</a>
+
+				<span class="expand"></span>
+
+			</div>
+
+		</section>
+
+         </volist>
+
+		<!--全屏大图end-->
+
+				
+
+		
+
+				
+
+		<!--pageLoading-->
+
+		<section class="pageLoading">
+
+			<img src="{weikucms::RES}/tangguo/v55_load.gif" alt="loading">
+
+		</section>
+
+
+
+	</section>
+
+</div>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/jquery_easing(1).js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/yl3d(1).js"></script>
+
+<script type="text/javascript" src="{weikucms::RES}/tangguo/50(1).js"></script>
+
+<!--
+
+导航菜单
+
+   后台设置的快捷菜单
+
+-->
+
+							<div class="top_bar footer_bar" style="-webkit-transform:translate3d(0,0,0)">
+
+			<nav>
+
+				<ul class="top_menu">
+
+					<li ><a  href="{weikucms:$speeddial.mhome}"><span></span></a></li><!-- 首页：刷新 -->
+
+																<li>
+
+															<a  href="http://site.tg.qq.com/forwardToPhonePage?siteId=1&phone={weikucms:$speeddial.phone}">
+
+								
+
+							<span class="icon-phone"></span><label class="homemenu_text">一键拨号</label></a>
+
+									
+
+								
+
+													</li>
+
+											<li>
+
+															<a  href="{weikucms:$speeddial.nav}">
+
+									<span class="icon-globe "></span><label class="homemenu_text">在线导航</label>
+
+								</a>
+
+													</li>
+
+											<li>
+
+															<a  href="{weikucms:$speeddial.mphoto}">
+
+									<span class="icon-jpy"></span><label class="homemenu_text">相册</label>
+
+								</a>
+
+													</li>
+
+														</ul>
+
+			</nav>
+
+		</div>
+
+	
+
+
+
+
+
+        			<footer style="overflow:visible;">
+
+				
+
+									<span class="weimob-support" style="display:none;">{weikucms:$speeddial.copyright}</span>
+
+							</footer>
+
+				<div mark="stat_code" style="width:0px; height:0px; display:none;">
+
+					</div>
+
+	
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body></html>

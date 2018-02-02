@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/common.css" />
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/font-awesome.min.css" />
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/search_store.css" />
+<script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function(){
+              $(".tel_input").click(function(event) {
+              //	alert($(".tel_input").val());
+              });
+              $(".store_nav").click(function(event) {
+              	if($(this).hasClass('on')){
+              		$(this).removeClass('on');
+              	}else{
+    			$(this).addClass('on')
+              	}
+              });
+	})
+</script>
+    <title>{weikucms:$tpl.name}</title>
+    <style>
+        .store_site p {
+            margin-top: 7px;
+        }
+        .code{
+            margin: 10px 5px;
+            /* background-color: #BEB16F; */
+            border-radius: 5px;
+            color: #000;
+            border: 1px solid #ccc;
+        }
+        .code img{
+            width:100%;
+            height:100%;
+        }
+        .code_nav{
+            padding: 5px;
+        }
+    </style>
+</head>   
+<body>
+<div class="site_header">
+           <img src="tpl/Wap/default/rh/image/rh_logo.png" />
+</div>
+<div class="store_top">
+      <div class="store_message">
+      	  <div class="store_icon" style="background: url({weikucms:$info.logo});background-size: 100% 100%;"></div>
+      </div>
+      <div class="store_site" style="  -webkit-box-flex: 1;">
+      	<p>楼盘：{weikucms:$info.name}</p>
+      	<p>地址：{weikucms:$info.address}</p>
+      	<p>电话：<a href="tel:{weikucms:$info.tel}" style="color: #333333;">{weikucms:$info.tel}</a></p>
+      </div>
+</div>
+<if condition="$info['type'] eq 2">
+<div class="store_p10 store_nav">	
+		<ul class="store_ul">
+			<li><div class="icon_yan"></div></li>
+			<li><a href="{weikucms:$info['yangb']}" style="color:#000;text-decoration: blink;">样板间三维全景</a></li>
+			<!--<li><i class="fa fa-chevron-down"></i></li>-->
+		</ul>
+		<!--<div class="store_room">
+			<ul>
+				<li>2B603</li>
+				<li>2B603</li>
+				<li>2B603</li>
+				<li>2B603</li>
+			</ul>
+		</div>-->
+</div>
+    </if>
+
+<div class="store_p10 store_nav">	
+		<ul class="store_ul">
+			<li><div class="icon_xinxi"></div></li>
+			<li class="cart_imgs"><if condition="$info['type'] eq 2">样板间展示<else />店面展示</if></li>
+		</ul>	
+</div>
+<div class="store_p10 store_nav">
+		<ul class="store_ul">
+			<li><div class="icon_tel"></div></li>
+			<a href="tel:{weikucms:$info.tel}" style="color: #333333;"><li>一键拨号（<span class="tel">{weikucms:$info.tel}</span>）</li></a>
+		</ul>
+
+</div>
+<div class="store_p10 store_nav">
+    <ul class="store_ul" onclick="location.href='http://api.map.baidu.com/marker?location={weikucms:$info.lat},{weikucms:$info.lng}&title={weikucms:$info.address}&name={weikucms:$info.address}&content={weikucms:$info.address}&output=html&src=weiba|weiweb'">
+        <li><div class="icon_tel" style="background: url('tpl/Wap/default/rh/image/b1.png'); background-size: 100%;  width: 20px;  height: 20px;"></div></li>
+        <li>点我导航
+
+        </li>
+    </ul>
+
+</div>
+<if condition="$info['type'] eq 2">
+    <div class="store_p10 store_nav" onclick="location.href='{weikucms::U('yuyue',array('token'=>$token,'name'=>$info['name'],'openid'=>$openid))}'">
+        <ul class="store_ul">
+            <li><div class="icon_yan1" style="background: url('tpl/Wap/default/rh/image/cc1.png'); background-size: 100%;  width: 20px;  height: 20px;"></div></li>
+            <li>预约看样板间</li>
+        </ul>
+
+    </div>
+</if>
+<if condition="($info['type'] eq 2)AND($info['info'])">
+
+    <div class="code">
+        <div class="code_nav">
+                {weikucms:$info.info}
+        </div>
+
+    </div>
+
+</if>
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'previewImage'
+        ]
+    });
+    wx.ready(function () {
+        //图片展示
+        $(document).on('click', '.cart_imgs', function (){
+          //  alert(5);
+            var serverId=[];
+            var pre = '{weikucms::C(site_url)}'
+            <volist name="ims" id="vo">
+            serverId[{weikucms:$key}]=pre+"{weikucms:$vo.img}";
+            </volist>
+            wx.previewImage({
+                current: serverId[0],
+                urls:  serverId
+            });
+        })
+    })
+
+
+</script>
+</html>

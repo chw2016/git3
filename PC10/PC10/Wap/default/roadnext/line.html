@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/press.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/index_1.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/font-awesome.min.css">
+<script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/common/msg.js"></script>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+	<style>
+	.tishi { cursor: pointer; font-size: 14px !important;}
+	</style>
+<script type="text/javascript">
+    $(function(){
+        var x = 0;
+        $(document).on('click','.tishi',function(){
+           if(x==0){
+               $(this).find(".quan").css("display","block");
+               $(this).find(".jie").css("display","none");
+               x=1;
+           }else{
+               $(this).find(".quan").css("display","none");
+               $(this).find(".jie").css("display","block");
+               x=0;
+           }
+        })
+        $(document).on('touchstart','.titlers',function(){
+
+            $('.titlers.cf').removeClass('cf');
+            $(this).addClass('cf');
+            var type = $.trim($(this).attr('type'));
+            var url = "{weikucms::U('Roadnext/line',array('token'=>$token,'openid'=>$openid))}"+"&type="+type;
+            $('._show1_ul2').empty();//清空
+            $.post(url,{type:type},function(data){
+                if(data.status ==1){
+                    $('._show1_ul2').append(data.fetch);
+                    $('._show1_ul2 li:visible:last').css('border-bottom', 0);
+                    timeOut = null;
+                    iPage = 0;
+                }else{
+                    alert('系统繁忙，请稍后！');
+                }
+            },'json')
+
+        })
+        $('._show1_ul2 li:visible:last').css('border-bottom', 0);
+
+    })
+
+    //点击加载更多
+    var iPage = 0;   //定义加载的页数
+    var timeOut = null;  //时间加载器默认为空闲状态
+    $(window).scroll(function(){           //滚动促发
+        var type = $.trim($('.titlers.cf').attr('type'));
+        var diff = Number($(window).height()) + Number(20); //设置促发的高度，其中，Number($(window).height())为计算页面的整个的高度，Number(20)为设置滚动时距离顶部的高度。
+        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+            if(timeOut != null) { return false;}  //判断容器timeOut 是否在运行！
+            iPage++;
+            // 异步加载
+            timeOut = setTimeout(function(){
+                var url = "{weikucms::U('Roadnext/line',array('token'=>$token,'openid'=>$openid))}"+"&type="+type;
+                $.post(url,{"page": iPage,"pLength":0},function(data){
+                    if(data.status == 1){
+                        $('._show1_ul2 li:visible:last').css('border-bottom', '1px solid #808080');
+                        $('._show1_ul2').append(data.fetch);
+                        $('._show1_ul2 li:visible:last').css('border-bottom', 0);
+                    }else{
+                        iPage--;
+                    }
+                },'json');
+            },500);
+        }
+    })
+</script>
+<style type="text/css">
+    *{font-family: "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;}
+    .cf{color: #FFFFFF!important;  background: #0C7C67!important;height: 30px!important;}
+    .top-index {
+        height: 35px;
+        background-color: #1BB59B;
+        box-shadow: 0 2px 1px #1BB59B;
+        margin-bottom: 4px;
+    }
+    .pad5{padding:5px 0 0;}
+    .pad5 span{color: #0000fe;}
+    .tishi.on.quan{
+        display: block;
+    }
+    .tishi.on.jie{
+        display: none;
+    }
+    .jie{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .quan{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    ._show1_ul2 li{
+        border-bottom:1px solid #1BB59B;
+        font-size: 16px !important;
+    }
+
+    .top-li.on {
+        color: #FFF;
+        background-color: #0C7C67;
+    }
+    .top-li{
+        border-left:1px solid #FFF;
+        height: 50px;
+        font-size: 14px;
+    }
+    .myul{
+        display: flex;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -moz-box;
+    }
+    .myli{
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -ms-flex: 1;
+        flex:1;
+    }
+    ._show1_ul2 li {
+        border-bottom:1px solid #1BB59B;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+</style>
+</head>
+<body>
+	<div class="top-index">
+		<ul class="myul">
+            <li class="top-li myli titlers cf" type="1">出行提示</li>
+            <li class="top-li myli titlers" type="2">交通事故</li>
+            <li class="top-li myli titlers" type="3">计划施工</li>
+            <li class="top-li myli titlers" type="4">车友爆料</li>
+		</ul>
+	</div>
+	<div class="high-speed">
+		<div class="up-nr" style="display: block">
+			<div  class="_show1">
+                <if condition="$info">
+				<ul class="_show1_ul2" style="font-size: 14px;">
+
+                    <volist name="info" id="vo">
+                        <if condition="$type eq 2 || $type eq 3">
+                            <li>
+                                <div>{weikucms:$vo.content}</div>
+                                <div class="pad5">桩号区间：<span>{weikucms:$vo.psection}</span></div>
+                                <div class="pad5">站点区间：<span>{weikucms:$vo.ksection}</span></div>
+                                <div style="float: right; color: #93A5A4;">{weikucms:$vo.add_time}</div>
+                                <div style="clear: both;"></div>
+                            </li>
+                        </if>
+                        <if condition="$type eq 1">
+                            <li class="tishi">
+                                <div class="quan" style="display: none;">{weikucms:$vo.content}</div>
+                                <div class="jie">
+                                    <php>
+                                        if(mb_strlen(strip_tags($vo['content']),'utf8') < 50){
+                                        echo $vo['content'];
+                                        }else{
+                                        echo mb_substr(strip_tags($vo['content']),0,50, 'utf8').'...';
+                                        }
+                                    </php>
+                                </div>
+                                <div style="height: 3px;"></div>
+                                <div style="float: right; color: #93A5A4;padding: 3px;">{weikucms:$vo.add_time}</div>
+                                <div style="clear: both;"></div>
+                            </li>
+                        </if>
+                        <if condition="$type eq 4">
+                            <li class="tishi">
+                                <div class="quan" style="display: none;">{weikucms:$vo.content}</div>
+                                <div class="jie">
+                                    <php>
+                                        if(mb_strlen($vo['content'],'utf8') < 50){
+                                        echo $vo['content'];
+                                        }else{
+                                        echo mb_substr($vo['content'],0,50, 'utf8').'...';
+                                        }
+                                    </php>
+                                </div>
+                                <div style="float: right; color: #93A5A4;padding: 3px;">{weikucms:$vo.add_time}</div>
+                                <div style="clear: both;"></div>
+                            </li>
+                        </if>
+                    </volist>
+				</ul>
+                    <else/>
+                    <div style="text-align: center;font-size: 20px;padding: 15px;">暂无数据</div>
+                </if>
+			</div>
+		</div>
+	</div>
+    <div style="clear: both;"></div>
+    <div style="height: 50px;"></div>
+    <footer>
+        <div style="width: 20%" class="fl">
+            <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+        </div>
+        <div class="fl" style="width:80%">
+            <div class="home_xian  fl"></div>
+            <div class="ds_ib fl w33"><a href="tel:0769-83222111">一键联系</a></div>
+            <div class="home_xian  fl"></div>
+            <div class="ds_ib fl w33"><a href="#">使用帮助</a></div>
+            <div class="home_xian  ml15 fl"></div>
+            <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Roadnext/jianyi',array('token'=>$token,'openid'=>$openid))}">投诉建议</a></div>
+        </div>
+    </footer>
+</body>
+</html>

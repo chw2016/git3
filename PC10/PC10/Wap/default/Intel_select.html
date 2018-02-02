@@ -1,0 +1,558 @@
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Intel/css/jquery.mobile-1.3.2.min.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Intel/css/ime.min.css" />
+<style type="text/css" media="screen">
+</style>
+<script src="{weikucms::STATICS}/wapweiui/Intel/js/jquery-1.9.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Intel/js/jquery.mobile-1.3.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Intel/js/jweixin-1.0.0.js"></script>
+<style>
+.devgroup {
+ margin:5px 1px;
+}
+#imei {
+ margin-right:30px;
+}
+#selcarmodel { color: #000; text-decoration: underline; }
+
+</style>
+<script>
+var oid = "oAUA6t-Rq2SdR8ksR0IDxYI7gm2Q";
+var toast=function(msg){
+    $("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>"+msg+"</h3></div>")
+    .css({ display: "block",
+        opacity: 0.90,
+        position: "fixed",
+        padding: "7px",
+        "text-align": "center",
+        width: "270px",
+        left: ($(window).width() - 284)/2,
+        top: $(window).height()/2 })
+    .appendTo( $.mobile.pageContainer ).delay( 1500 )
+    .fadeOut( 800, function(){
+        $(this).remove();
+    });
+};
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+var bdevs = [];
+var added = false;
+var carmodel = "";
+function clearDevs(){
+    $(".devitem").each(function(){
+        $(this).parents( ".ui-btn" ).remove();
+    });
+    bdevs = [];
+    var group = $("#devgroup");
+    group.controlgroup("refresh");
+}
+
+function mbchange(){
+    var pn =$('#pn').val();
+    console.log(pn);
+    if(!pn || pn.length < 11){
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "getdevs",
+        data: {oid:oid,pn:pn} ,
+
+        success:function(data){
+            console.log(data);
+            //clearDevs();
+            //$("#imei").val(""+data);
+
+            for(var i=0; i < data.length; i++){
+                addDev(data[i]);
+            }
+
+        }
+    });
+}
+function _indexof(list, m){
+    for(var i=0; i < list.length; i++) {
+        if(list[i].id == m.id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function delDev(dev){
+    var df = $("#dev_"+dev.id);
+    if(df){
+        df.parents( ".ui-btn" ).remove();
+    }
+
+    bdevs.splice(_indexof(bdevs,dev),1);
+    var group = $("#devgroup");
+    group.controlgroup("refresh");
+}
+
+function addDev(dev){
+            if(_indexof(bdevs,dev) != -1){
+                return;
+            }
+            var group = $("#devgroup"),
+            $el,
+            action = function(){
+
+                $el = $el.parents( ".ui-btn" );
+                $el.remove();
+                bdevs.splice(_indexof(bdevs,dev) ,1);
+                group.controlgroup("refresh");
+            };
+            var dname = dev.id+"(未知车型)";
+            if(dev.carmodel) {
+                dname = dev.id+"("+dev.carmodel+")";
+            }
+
+            $el = $('<input type="button" data-icon="delete"  data-mini="true"  class="devitem" id="dev_'+dev.id+'" value="'+dname+'"/>').bind("click",action);
+
+            group.append( $el );
+            $el.button();
+
+            group.controlgroup( "refresh" );
+            bdevs.push(dev);
+}
+
+
+wx.config({
+    debug: false,
+    appId:'wx0a77220f1ac6caa5',
+    timestamp: 1431512840,
+    nonceStr: '91e0755c-0474-41b8-97d4-a5539036b75e',
+    signature: 'dc85a691a3332590dc0ae9d27c259c1ad33e2764',
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'showMenuItems',
+      'hideAllNonBaseMenuItem',
+      'showAllNonBaseMenuItem',
+      'translateVoice',
+      'startRecord',
+      'stopRecord',
+      'onRecordEnd',
+      'playVoice',
+      'pauseVoice',
+      'stopVoice',
+      'uploadVoice',
+      'downloadVoice',
+      'chooseImage',
+      'previewImage',
+      'uploadImage',
+      'downloadImage',
+      'getNetworkType',
+      'openLocation',
+      'getLocation',
+      'hideOptionMenu',
+      'showOptionMenu',
+      'closeWindow',
+      'scanQRCode',
+      'chooseWXPay',
+      'openProductSpecificView',
+      'addCard',
+      'chooseCard',
+      'openCard'
+    ]
+});
+
+
+function init(){
+    console.log("init");
+     var devs =  [];
+
+     for(var i=0;i<devs.length;i++){
+         addDev(devs[i]);
+     }
+     //mbchange();
+}
+
+$(document).bind('pageinit', function() {
+       init();
+    });
+</script>
+<div data-role="page" id="page1" data-mini="true">
+
+
+
+
+    <div data-role="content">
+    <form action="bind" method="post"  class="validate" data-ajax="false" id="frmbinddev">
+
+
+<section class="sayTitle userInfo">
+    <section class="font">手机号码</section>
+    <input type="tel" class="input paipaiinput" placeholder="请输入手机号码" value="" name="phone" />
+</section>
+<section class="sayTitle userInfo">
+    <section class="font">设备IMEI</section>
+    <input type="text" class="input" placeholder="请输入设备IMEI" value="{weikucms:$imei}" name="imei" readonly/>
+</section>
+<section class="sayTitle userInfo">
+    <section class="font">汽车型号</section>
+    <input type="text" class="input car_models" placeholder="请输入汽车型号 如:宝马X6" value="" name="imei" readonly/>
+    <a href="#carmodelpanel"  id="selcarmodel">选择车型</a>
+</section>
+<section class="sayTitle userInfo">
+    <section class="font">已绑定设备</section>
+    <if condition="$aBindList neq null">
+        <volist name="aBindList" id="list">
+            <div class="carType bindno">
+                <span class='imeiSpan'>{weikucms:$list.imei}</span>
+                <div class="deleteDevice" data-id="{weikucms:$list.id}">×</div>
+            </div>
+        </volist>
+    <else/>
+        <!-- 绑定1 -->
+        <div class="carType bindno">
+            <span class="imeiSpan">暂无设备</span>
+        </div>
+    </if>
+    <!-- 保存 -->
+    <a class="save" href="javascript:void(0);">保&nbsp;&nbsp;&nbsp;存</a>
+</section>
+<style type="text/css" media="screen">
+    input { border: 1px solid #000; }
+
+</style>
+
+
+
+
+</form>
+
+    </div>
+
+    <div data-role="panel" id="carmodelpanel" data-position="right" data-display="overlay">
+            <ul id="cbrands" data-role="listview" data-autodividers="false" data-filter="true"  data-filter-placeholder="查找" data-inset="true" >
+
+
+                <volist name='cartype' id='car'>
+                 <li><a class="cbrand" data-id="{weikucms:$car.id}" href="#" >{weikucms:$car.name}</a></li>
+                </volist>
+                 <!--
+                 <li><a class="cbrand" href="#" >奥迪</a></li>
+
+                 <li><a class="cbrand" href="#" >阿尔法罗密欧</a></li>
+
+                 <li><a class="cbrand" href="#" >阿斯顿·马丁</a></li>
+
+                 <li><a class="cbrand" href="#" >北汽幻速</a></li>
+
+                 <li><a class="cbrand" href="#" >宝骏</a></li>
+
+                 <li><a class="cbrand" href="#" >巴博斯</a></li>
+
+                 <li><a class="cbrand" href="#" >北汽威旺</a></li>
+
+                 <li><a class="cbrand" href="#" >北汽制造</a></li>
+
+                 <li><a class="cbrand" href="#" >布加迪</a></li>
+
+                 <li><a class="cbrand" href="#" >奔驰</a></li>
+
+                 <li><a class="cbrand" href="#" >别克</a></li>
+
+                 <li><a class="cbrand" href="#" >宾利</a></li>
+
+                 <li><a class="cbrand" href="#" >保时捷</a></li>
+
+                 <li><a class="cbrand" href="#" >比亚迪</a></li>
+
+                 <li><a class="cbrand" href="#" >奔腾</a></li>
+
+                 <li><a class="cbrand" href="#" >标致</a></li>
+
+                 <li><a class="cbrand" href="#" >北京汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >本田</a></li>
+
+                 <li><a class="cbrand" href="#" >宝马</a></li>
+
+                 <li><a class="cbrand" href="#" >昌河</a></li>
+
+                 <li><a class="cbrand" href="#" >成功汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >长安</a></li>
+
+                 <li><a class="cbrand" href="#" >长城</a></li>
+
+                 <li><a class="cbrand" href="#" >长安商用</a></li>
+
+                 <li><a class="cbrand" href="#" >东风风度</a></li>
+
+                 <li><a class="cbrand" href="#" >大发</a></li>
+
+                 <li><a class="cbrand" href="#" >东风风行</a></li>
+
+                 <li><a class="cbrand" href="#" >DS</a></li>
+
+                 <li><a class="cbrand" href="#" >东风小康</a></li>
+
+                 <li><a class="cbrand" href="#" >东风风神</a></li>
+
+                 <li><a class="cbrand" href="#" >东南</a></li>
+
+                 <li><a class="cbrand" href="#" >道奇</a></li>
+
+                 <li><a class="cbrand" href="#" >东风</a></li>
+
+                 <li><a class="cbrand" href="#" >大众</a></li>
+
+                 <li><a class="cbrand" href="#" >福汽启腾</a></li>
+
+                 <li><a class="cbrand" href="#" >丰田</a></li>
+
+                 <li><a class="cbrand" href="#" >菲亚特</a></li>
+
+                 <li><a class="cbrand" href="#" >福田</a></li>
+
+                 <li><a class="cbrand" href="#" >法拉利</a></li>
+
+                 <li><a class="cbrand" href="#" >福迪</a></li>
+
+                 <li><a class="cbrand" href="#" >福特</a></li>
+
+                 <li><a class="cbrand" href="#" >观致</a></li>
+
+                 <li><a class="cbrand" href="#" >GMC</a></li>
+
+                 <li><a class="cbrand" href="#" >广汽吉奥</a></li>
+
+                 <li><a class="cbrand" href="#" >广汽传祺</a></li>
+
+                 <li><a class="cbrand" href="#" >悍马</a></li>
+
+                 <li><a class="cbrand" href="#" >黄海</a></li>
+
+                 <li><a class="cbrand" href="#" >红旗</a></li>
+
+                 <li><a class="cbrand" href="#" >华普</a></li>
+
+                 <li><a class="cbrand" href="#" >海马</a></li>
+
+                 <li><a class="cbrand" href="#" >华泰</a></li>
+
+                 <li><a class="cbrand" href="#" >哈飞</a></li>
+
+                 <li><a class="cbrand" href="#" >哈弗</a></li>
+
+                 <li><a class="cbrand" href="#" >金旅</a></li>
+
+                 <li><a class="cbrand" href="#" >九龙</a></li>
+
+                 <li><a class="cbrand" href="#" >江铃</a></li>
+
+                 <li><a class="cbrand" href="#" >金龙</a></li>
+
+                 <li><a class="cbrand" href="#" >吉利汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >Jeep</a></li>
+
+                 <li><a class="cbrand" href="#" >捷豹</a></li>
+
+                 <li><a class="cbrand" href="#" >金杯</a></li>
+
+                 <li><a class="cbrand" href="#" >江淮</a></li>
+
+                 <li><a class="cbrand" href="#" >开瑞</a></li>
+
+                 <li><a class="cbrand" href="#" >凯迪拉克</a></li>
+
+                 <li><a class="cbrand" href="#" >克莱斯勒</a></li>
+
+                 <li><a class="cbrand" href="#" >劳伦士</a></li>
+
+                 <li><a class="cbrand" href="#" >理念</a></li>
+
+                 <li><a class="cbrand" href="#" >雷诺</a></li>
+
+                 <li><a class="cbrand" href="#" >兰博基尼</a></li>
+
+                 <li><a class="cbrand" href="#" >路虎</a></li>
+
+                 <li><a class="cbrand" href="#" >路特斯</a></li>
+
+                 <li><a class="cbrand" href="#" >林肯</a></li>
+
+                 <li><a class="cbrand" href="#" >雷克萨斯</a></li>
+
+                 <li><a class="cbrand" href="#" >铃木</a></li>
+
+                 <li><a class="cbrand" href="#" >劳斯莱斯</a></li>
+
+                 <li><a class="cbrand" href="#" >陆风</a></li>
+
+                 <li><a class="cbrand" href="#" >莲花汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >力帆</a></li>
+
+                 <li><a class="cbrand" href="#" >猎豹汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >迈巴赫</a></li>
+
+                 <li><a class="cbrand" href="#" >迈凯伦</a></li>
+
+                 <li><a class="cbrand" href="#" >MINI</a></li>
+
+                 <li><a class="cbrand" href="#" >玛莎拉蒂</a></li>
+
+                 <li><a class="cbrand" href="#" >马自达</a></li>
+
+                 <li><a class="cbrand" href="#" >MG</a></li>
+
+                 <li><a class="cbrand" href="#" >纳智捷</a></li>
+
+                 <li><a class="cbrand" href="#" >欧朗</a></li>
+
+                 <li><a class="cbrand" href="#" >欧宝</a></li>
+
+                 <li><a class="cbrand" href="#" >讴歌</a></li>
+
+                 <li><a class="cbrand" href="#" >起亚</a></li>
+
+                 <li><a class="cbrand" href="#" >奇瑞</a></li>
+
+                 <li><a class="cbrand" href="#" >启辰</a></li>
+
+                 <li><a class="cbrand" href="#" >瑞麒</a></li>
+
+                 <li><a class="cbrand" href="#" >荣威</a></li>
+
+                 <li><a class="cbrand" href="#" >日产</a></li>
+
+                 <li><a class="cbrand" href="#" >萨博</a></li>
+
+                 <li><a class="cbrand" href="#" >斯巴鲁</a></li>
+
+                 <li><a class="cbrand" href="#" >世爵</a></li>
+
+                 <li><a class="cbrand" href="#" >斯柯达</a></li>
+
+                 <li><a class="cbrand" href="#" >三菱</a></li>
+
+                 <li><a class="cbrand" href="#" >双龙</a></li>
+
+                 <li><a class="cbrand" href="#" >smart</a></li>
+
+                 <li><a class="cbrand" href="#" >双环</a></li>
+
+                 <li><a class="cbrand" href="#" >绅宝</a></li>
+
+                 <li><a class="cbrand" href="#" >思铭</a></li>
+
+                 <li><a class="cbrand" href="#" >上汽大通</a></li>
+
+                 <li><a class="cbrand" href="#" >特斯拉</a></li>
+
+                 <li><a class="cbrand" href="#" >五十铃</a></li>
+
+                 <li><a class="cbrand" href="#" >五菱汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >威麟</a></li>
+
+                 <li><a class="cbrand" href="#" >沃尔沃</a></li>
+
+                 <li><a class="cbrand" href="#" >雪佛兰</a></li>
+
+                 <li><a class="cbrand" href="#" >雪铁龙</a></li>
+
+                 <li><a class="cbrand" href="#" >现代</a></li>
+
+                 <li><a class="cbrand" href="#" >西雅特</a></li>
+
+                 <li><a class="cbrand" href="#" >新凯</a></li>
+
+                 <li><a class="cbrand" href="#" >一汽</a></li>
+
+                 <li><a class="cbrand" href="#" >野马汽车</a></li>
+
+                 <li><a class="cbrand" href="#" >依维柯</a></li>
+
+                 <li><a class="cbrand" href="#" >永源</a></li>
+
+                 <li><a class="cbrand" href="#" >英菲尼迪</a></li>
+
+                 <li><a class="cbrand" href="#" >中兴</a></li>
+
+                 <li><a class="cbrand" href="#" >众泰</a></li>
+
+                 <li><a class="cbrand" href="#" >中华</a></li>
+                 -->
+
+        </ul>
+    </div><!-- /panel -->
+     <div data-role="panel" id="seriespanel" data-position="right" data-display="overlay">
+            <ul id="cseries" data-role="listview" data-autodividers="false" data-filter="true"  data-filter-placeholder="查找" data-inset="true" >
+
+            </ul>
+    </div><!-- /panel -->
+</div>
+<script>
+$("#selcarmodel").click(function(){
+
+});
+$(".cbrand").click(function(){
+    var brand = $(this).text();
+    var pid= $(this).data('id');
+    $.ajax({
+            type: "get",
+            url: "{weikucms::U('Intel/getCarType', array('token' => $token))}",
+            data: {pid:pid} ,
+            dataType: "json",
+            success:function(data){
+                if(data.status == 0){
+                    $("#cseries").empty();
+                    data = data.data;
+                    $(data).each(function(i, obj){
+                        $("#cseries").append('<li data-icon="false" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" class="cserie ui-link-inherit">'+obj.name+'</a></div></div></li>');
+                    })
+                    $( "#seriespanel" ).panel( "toggle" );
+                    $( "#seriespanel" ).trigger( "updatelayout" );
+
+                    $(document).on('click',".cserie",function(){
+                        var serie = $(this).text();
+                        carmodel = brand+"-"+serie;
+                        $('.userInfo').find('.car_models').val(carmodel)
+                        $( "#seriespanel" ).panel( "toggle" );
+                    });
+                }
+
+            }
+        });
+});
+
+$('#pn').keyup(mbchange );
+
+$("#scan").click(function() {
+    wx.scanQRCode({
+        needResult: 1,
+        scanType: ["qrCode","barCode"],
+        success: function (res) {
+        var result = res.resultStr;
+        $("#imei").val(result.split(",")[1]);
+    }
+    });
+});
+/*$('#adddev').click(_adddev);
+$('#binddev').click(binddev);*/
+</script>

@@ -1,0 +1,18 @@
+<foreach name="adviser" item="v">
+       <a href="{weikucms::U('Wap/Jd/adviser',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}">
+        <li class="adviser">
+        <div class="img"><img src="{weikucms:$v.head}"></div>
+			<div style="width:70%;height:35px;margin-left:10px;float:left;">
+                <span class="name">{weikucms:$v.name}</span>
+			</div>
+            <div class="bz" style="margin-left: 10px;color: #7E7C7C;margin-right: 10px;">
+            	    <span style="position: relative;top:-14px;margin-left: 10px;">{weikucms:$v.phone}</span>
+            	<a href="tel:{weikucms:$v.phone}" class='tel'><span class="tel1"></span></a>
+            	<a href="sms:{weikucms:$v.phone}" class='tel'><span style="" class="tel3"></span></a>
+				
+			</div>
+			<span class="span_i"><i class="fa fa-angle-right"></i></span>
+            
+		</li>
+		</a>
+        </foreach>

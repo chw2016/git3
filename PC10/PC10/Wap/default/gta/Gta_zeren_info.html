@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>{weikucms:$tpl.name}-投保选择</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+  <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+     <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+     <script>
+			$(function(){
+				$(".fx_btn").click(function(e){
+                    e.stopPropagation();
+		     	    $(this).toggleClass("fx_btn1");
+                    var total_money=0;
+                    $(".fx_btn1").each(function(e,t){
+                        total_money=total_money*1+($(t).parents('.kk').find('.money').val())*1;
+                    })
+                    $(".total_money").text(total_money);
+                })
+                //提交
+				$(".btn").click(function(){
+					//var money=$("[name=money]").val();
+                   // alert(7);
+                    if($(".fx_btn1").length<=0){
+                        show_error_tip("请选择保险");
+                        return false;
+                    }
+                    var money=[];
+                    var pid=[];
+                    var name=[];
+                    var a=1;
+					$(".fx_btn1").each(function(e,t){
+                        money[e]=$(t).parents('.kk').find('.money').val();
+                        if(!money[e]){
+                            show_error_tip("请填写内容");
+                            a=0;
+                            return false;
+                        }
+                        name[e]=$(t).next().text();
+                        pid[e]=$(t).parents('.kk').find('.money').attr('pid');
+                    })
+                    if(a==0){
+                        return false;
+                    }
+                    money.join(",");
+                    name.join(",");
+                    pid.join(",");
+                    $("input[name=money]").val(money);
+                    $("input[name=name]").val(name);
+                    $("input[name=pid]").val(pid);
+                    $("input[name=info]").val($(".info").val());
+                    $("input[name=total_money]").val($(".total_money").text());
+                    $("#form").submit();
+                   // alert(pid);
+
+				})
+				$(".pa3").not(".fx_btn,.fx_btn1").click(function(){
+					if($(this).parents('.kk').hasClass("on")){
+                        $(this).parents('.kk').removeClass("on");
+					}else{
+                        $(this).parents('.kk').addClass("on");
+					}
+					
+				})
+                $("input").blur(function(){
+                   var val=$(this).val();
+                    if(val>0){
+                    //    alert(8);
+                        $(this).parents(".kk").find(".fx_btn").addClass("fx_btn1");
+                    }else{
+                        $(this).parents(".kk").find(".fx_btn").removeClass("fx_btn1");
+                    }
+                    var total_money=0;
+                    $(".fx_btn1").each(function(e,t){
+                        total_money=total_money*1+($(t).parents('.kk').find('.money').val())*1;
+                    })
+                    $(".total_money").text(total_money);
+                });
+			})
+
+
+		</script> 
+    <style type="text/css">
+       .gta_green textarea{
+           width: 100%;
+           resize: none;
+           background-color:#e5f2e5;
+           height:80px;
+           border-radius:5px;       
+         }
+    </style>
+ </head>
+ <body>
+ <form action="" id="form" method="post">
+        <input type="hidden" name="money" >
+     <input type="hidden" name="pid" >
+     <input type="hidden" name="name" >
+     <input type="hidden" name="info" >
+     <input type="hidden" name="total_money">
+ </form>
+  <header> 
+   <a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a> 
+   <h1 id="h1_title" style="color: #FFFFFF;">投保选择</h1> 
+   <div></div> 
+  </header> 
+  <!--内容模块--> 
+  <section class="contant "> 
+   <div class="shadow clearfix mb10"> 
+    <div class="fl w50"> 
+    <!-- <span class="fx_btn"></span> -->
+     <span class="f14" style="margin-left: 20px;">保险项目</span>
+    </div> 
+    <div class="fr" style="width: 46%;"> 
+     <span class="f14">投保金额</span> 
+    </div> 
+   </div>
+   <div class="gta_nav_kk">
+       <volist name="list" id="vo">
+   <div class="kk"> 
+    <div class="shadow clearfix Insure_top"> 
+     <div> 
+      <div class="fl w50 pa3"> 
+       <span class="fx_btn" style="margin-top: 8px;float: left;"></span> 
+       <span class="f14" style="float: left;margin-left: 5px;">{weikucms:$vo.name}</span>
+      </div> 
+      <div class="fr w46"> 
+       <span class="money_coupon1">
+           <input type="text" placeholder="请输入信息" class="money" onkeyup="this.value=this.value.replace(/\D/g,'')" pid="{weikucms:$vo.id}" />
+           <span class="moneyex">{weikucms:$vo.unit}</span> <span class="moneyxi" style="right: 48px;">|</span> </span>
+      </div>
+     </div> 
+    </div> 
+    <div class="pd10 content nav_gta">
+      {weikucms:$vo.content}
+    </div> 
+   </div> 
+   </volist>
+ <div class="shadow mt10 clearfix">
+     <p style="display:none;text-align: center;margin-bottom: 5px;font-size: 14px;">总保险金额：<b>￥<span class="total_money">0</span></b>元</p>
+        <div class="gta_green">
+        <textarea name="" placeholder="您可以在这里选填保险信息描述" class="info"></textarea>
+      </div>
+   </div>
+     <div class="mt20 "><span class="btn type_btn">我要投保</span></div>
+  </section>   
+ </body>
+
+</html>

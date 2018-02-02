@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="/tpl/Wap/default/wxdj/a/css/common.css">
+	<link rel="stylesheet" href="/tpl/Wap/default/wxdj/a/css/index.css">
+    <script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="tpl/Wap/default/rh/js/jquery.event.drag-1.5.min.js" type="text/javascript" charset="utf-8" ></script>
+       <script src="tpl/Wap/default/rh/js/jquery.touchSlider.js" type="text/javascript" charset="utf-8" ></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/Smaty.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+
+<style>
+.t{width:100%;border:0}
+	      body{ -webkit-user-select:none;
+ 	        -webkit-touch-callout:none;
+}
+
+</style>
+
+    </head>
+<body class="content-bj">
+<form action="" method="post" name="form1">
+	    <div class="code-top" id="a">
+	    	<img src="/tpl/Wap/default/wxdj/a/images/scanSN.png" alt="">
+	    </div>
+	    <div class="code">
+	    	<div class="code-title">
+			<input type="hidden" value="{weikucms:$_GET['secret']}" name="secret">
+	    		<input type="text" style="width: 90%;" placeholder="录入产品序列号" value="" name="sn" id="sn">
+	    	</div>
+
+	    		<input type="submit" name="submit" value="提交" class="code-btn t">
+
+	    </div>
+</form>
+</body>
+<script>
+
+</script>
+<script type="text/javascript" src="/tpl/Wap/default/wxdj/a/js/jquery-1.11.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+		
+		
+	$('.t').click(function(){
+		var sn = $('#sn').val();
+		if(!sn)
+		{
+			alert('必须录入产品序列号！');
+			return false;
+		}
+		if(sn.length<17||sn.length>23)
+		{
+			alert('产品序列号不对！');
+			return false;
+		}
+	});
+	function getSNCode(str){
+    var indexOfOne= str.indexOf(',');
+    var indexOfTwo = str.indexOf('&');
+    return str.substring(indexOfOne + 1, indexOfTwo);
+}
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'scanQRCode',
+            ]
+        });
+        wx.ready(function () {
+
+            //chooseImage
+            $("#a").click(function(){
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                   // desc: 'scanQRCode desc',
+                    success: function (res) {
+                        var url = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                        url=url+"&openid={weikucms:$openid}&token={weikucms:$token}";
+                        $("input[name=sn]").val(getSNCode(url));
+                    }
+                });
+            })
+
+            //图片展示
+
+        })
+
+    </script>
+</html>

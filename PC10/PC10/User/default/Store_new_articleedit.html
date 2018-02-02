@@ -1,0 +1,194 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+
+          <div class="cLineB">
+              <span class="glyphicon glyphicon-picture"></span>
+              <h4>编辑图文内容</h4>
+          </div>
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post"   action=""  enctype="multipart/form-data" >
+          <input type="hidden" id="id" value="{weikucms:$data.id}" />
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+               <TR>
+                  <TH><label for="title">标题：</label></TH>
+                  <TD><input type="input" class="px" id="title" value="{weikucms:$data.title}"    name="title" style="width:300px;" placeholder="此处填写微信图文消息标题"> </TD>
+                </TR>
+               <TR>
+                   <TH><label for="fid">文章分类：</label></TH>
+
+                   <td><select name="fid" id="fid"><option value="0">点击选择（可不选）</option>
+                       <volist name="flDate" id="vo">
+                           <option value="{weikucms:$vo.id}" <if condition="$vo['id'] eq $data['fid']">selected</if>>{weikucms:$vo.name}</option></option>
+                       </volist>
+                   </select></td>
+               </TR>
+                <TR>
+                  <TH valign="top"><label for="text">简介：</label></TH>
+                  <TD>
+                      <textarea  class="px" id="Hfcontent"     name="text" style="width:300px;  height:100px">{weikucms:$data.text}</textarea>
+                      <br />最多输入200个汉字
+                   </TD>
+                </TR>
+
+                <TR>
+                  <TH valign="top"><label for="picurl">封面图片：</label></TH>
+
+                  <TD><img id="image_show" class="indexs_img" src="{weikucms:$data.pic}"></TD>
+                </TR>
+                
+                          <TR>
+                  <TH valign="top"><label for="pic">上传封面图片：</label></TH>
+                  <TD><input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$data.pic}" style="width:300px;"  />
+                      <span class="ke-button-common" id="upload">上传图片</span>
+</TD>
+                </TR>
+
+                <TR>
+                  <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+                  <TD><textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();">{weikucms:$data.info}</textarea></TD>
+                </TR>  
+                 <TR>
+                  <TH valign="top"><label for="url">自定义链接地址：</label></TH>
+                  <TD><input type="input" class="px" id="url" value="{weikucms:$data.url}" name="url" style="width:500px;" placeholder="如果填写了图文详细内容，这里请留空，不要设置！"></TD>
+                </TR>
+               <TR>
+                   <TH valign="top"><label for="url">排序：</label></TH>
+                   <TD><input type="input" class="px" id="sort" value="{weikucms:$data.sort}" name="sort" style="width:100px;" placeholder="值越大，排在越前" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></TD>
+               </TR>
+                <TR>
+                  <TH></TH>
+                  <TD><button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button></TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+  	</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var text = $("#Hfcontent").val();
+            var pic = $("#pic").val();
+            var id = $("#id").val();
+            var info = editor.html();
+            var url = $("#url").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            var fid=$("#fid").val();//分类id
+            var sort=$("#sort").val();
+            if(! title){
+                notif({
+                    msg: "回复标题不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! text){
+                notif({
+                    msg: "回复简介不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! pic){
+                notif({
+                    msg: "您还没上传封面图片哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(url == ''){
+                if(info == ''){
+                    notif({
+                        msg: "详细内容页面不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }
+
+
+
+            $.post("{weikucms::U('Store_new/articleedit',array('token'=>$token))}",
+                    {id:id,title:title,text:text,pic:pic,info:info,url:url,__hash__:__hash__,fid:fid,sort:sort},
+                    function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

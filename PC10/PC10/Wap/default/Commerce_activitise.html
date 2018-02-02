@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>{weikucms:$tpl.name}</title>
+    <link href="{weikucms::STATICS}/wapweiui/activitise/huodong.css" rel="stylesheet" type="text/css">
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+<div class="tst header">
+    <div class="headimag"><img src="{weikucms:$activitise['pic']}" title="主题"></div>
+    <div class="headtext">
+        <p>{weikucms:$activitise['abstract']}</p>
+    </div>
+</div>
+<div class="tst conter">
+    <div class="span" style="padding: 3px 3px;font-size: 13px;">
+        我要送TA：
+    </div>
+    <div class="giftBox myul">
+        <div class="myli">
+            <div class="circle giftWrap">
+                <div class="circle gift">
+                    <img style="display:block;width:100%;height:100%;border-radius:50%;" src="{weikucms:$products['pic']}" alt="商品1">
+                    <div class="border-12 giftCheck" dataid="{weikucms:$products['id']}">
+
+                    </div>
+                </div>
+            </div>
+            <div class="giftName">{weikucms:$products['name']}</div>
+        </div>
+        <div class="myli">
+            <div class="circle giftWrap">
+                <div class="circle gift">
+                    <img style="display:block;width:100%;height:100%;border-radius:50%;" src="{weikucms:$product['pic']}" alt="商品2">
+                    <div class="border-12 giftCheck" dataid="{weikucms:$product['id']}">
+
+                    </div>
+                </div>
+            </div>
+            <div class="giftName">{weikucms:$product['name']}</div>
+        </div>
+    </div>
+    <div class="inputForm">
+        <div class="input">
+            <input type="text" placeholder="请填写你名字" value="" name="myname">
+        </div>
+        <div class="input">
+            <input type="text" placeholder="请填写TA的地址" name="address">
+        </div>
+        <div class="input">
+            <input type="text" placeholder="请填写TA的姓名" name="taname">
+        </div>
+        <div class="input">
+            <input type="tel" placeholder="请填写TA的联系方式" name="tatel">
+        </div>
+        <div class="input textArea">
+            <textarea placeholder="您想对TA说点什么呢？50个字以内都可以哦。" maxlength="50" id="idnfo"></textarea>
+        </div>
+    </div>
+    <div class="btn border-12 submit">
+        免费下单
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        var goodid = null;
+        $(".giftWrap").click(function(){
+            $(".giftWrap .giftCheck").removeClass('on');
+            $(this).find(".giftCheck").addClass('on');
+            goodid = parseInt($(this).find(".giftCheck").attr("dataid"));
+        })
+        $(".submit").click(function(){
+            var myname = $("input[name='myname']").val();
+            var address = $("input[name='address']").val();
+            var taname = $("input[name='taname']").val() ;
+            var tatel = $("input[name='tatel']").val();
+            var info = $("#idnfo").val();
+            if(!goodid){
+                alert("请选择您所需的商品！");
+                return false;
+            }
+            if(!myname){
+                alert("请填写您的姓名！");
+                return false;
+            }
+            if(!address){
+                alert("请填写您要送给Ta的所在地址！");
+                return false;
+            }
+            if(!taname){
+                alert("请填写您要送给Ta的姓名！");
+                return false;
+            }
+            if(!tatel){
+                alert("请填写您要送给Ta的电话号码！");
+                return false;
+            }
+
+            $.post("{weikucms::U('Commerce/activitise',array('token'=>$token,'openid'=>$openid,'branch_id'=>$_GET['branch_id']))}",
+            {goodid:goodid,myname:myname,address:address,taname:taname,tatel:tatel,info:info},function(data){
+                        if(data.status == 0){
+                            alert('预定成功');
+                            window.location.href = "{weikucms::U('Commerce/shopware',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['branch_id']))}";
+                        }else{
+                            alert(data.info);
+                        }
+                    },'json')
+        })
+    })
+</script>
+</html>

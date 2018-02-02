@@ -1,0 +1,862 @@
+<include file="Public:head" xmlns="http://www.w3.org/1999/html"/>
+<script src="{weikucms::STATICS}/jquery.min.js" type="text/javascript"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#intro', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true,
+            /*  items : [
+             'source','undo','clearhtml','hr',
+             'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+             'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut', 'music', 'video'],*/
+            afterBlur: function(){this.sync();}
+        });
+    });
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload0').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#fenlei_img0").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image1').val(),
+                    clickFn : function(url, title) {
+                        K('#image1').val(url);
+                        $("#fenlei_img1").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image2').val(),
+                    clickFn : function(url, title) {
+                        K('#image2').val(url);
+                        $("#fenlei_img2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload3').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image3').val(),
+                    clickFn : function(url, title) {
+                        K('#image3').val(url);
+                        $("#fenlei_img3").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload4').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image4').val(),
+                    clickFn : function(url, title) {
+                        K('#image4').val(url);
+                        $("#fenlei_img4").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload5').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image5').val(),
+                    clickFn : function(url, title) {
+                        K('#image5').val(url);
+                        $("#fenlei_img5").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload6').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image6').val(),
+                    clickFn : function(url, title) {
+                        K('#image6').val(url);
+                        $("#fenlei_img6").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+
+
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        商品设置
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/product',array('token'=>$token,'catid'=>$catid))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+<if condition="$isUpdate eq 1">
+    <input type="hidden" name="id" value="{weikucms:$set.id}" />
+</if>
+<form method="post" action="" id="formID">
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.discount}" />
+<div class="msgWrap bgfc">
+<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tbody>
+    <tr>
+        <th><span class="red">*</span>名称：</th>
+        <td>
+            <input type="hidden" name="pid" id="pid" value="{weikucms:$set.id}"/>
+            <input type="text" name="name" id="name" value="{weikucms:$set.name}" class="px" style="width:400px;" />
+        </td>
+    </tr>
+    <tr>
+        <th>类别：</th>
+        <td><span class="red">{weikucms:$productCatData.name}</span></td>
+    </tr>
+    <if condition="empty($productCatData['color']) neq true">
+        <tr>
+            <th>{weikucms:$productCatData.color}：</th>
+            <td>
+                <table>
+                    <tr>
+                        <volist name="colorData" id="norms" key="i">
+                            <td width="130">
+                                <if condition="(in_array($norms['id'], $colorList))" >
+                                    <input type="checkbox" name="color[]" value="{weikucms:$norms.id}" class="color" id="norms_{weikucms:$norms.id}" atr="{weikucms:$norms.value}" checked/>&nbsp;&nbsp;<label for="norms_{weikucms:$norms.id}">{weikucms:$norms.value}</label>
+                                    <else/>
+                                    <input type="checkbox" name="color[]" value="{weikucms:$norms.id}" class="color" id="norms_{weikucms:$norms.id}" atr="{weikucms:$norms.value}"/>&nbsp;&nbsp;<label for="norms_{weikucms:$norms.id}">{weikucms:$norms.value}</label>
+                                </if>
+                            </td>
+                            <if condition="($i%5 eq 0)" ></tr><tr></if>
+    </volist>
+    </tr>
+</table>
+</td>
+</tr>
+</if>
+<!-- 规格 -->
+<if condition="empty($productCatData['norms']) neq true">
+    <tr>
+        <th>{weikucms:$productCatData.norms}：</th>
+        <td>
+            <table>
+                <tr>
+                    <volist name="formatData" id="norms" key="i">
+                        <td width="130">
+                            <if condition="(in_array($norms['id'], $formatList))" >
+                                <input type="checkbox" name="norms[]" value="{weikucms:$norms.id}" class="norms" id="norms_{weikucms:$norms.id}" atr="{weikucms:$norms.value}" checked/>&nbsp;&nbsp;<label for="norms_{weikucms:$norms.id}">{weikucms:$norms.value}</label>
+                                <else/>
+                                <input type="checkbox" name="norms[]" value="{weikucms:$norms.id}" class="norms" id="norms_{weikucms:$norms.id}" atr="{weikucms:$norms.value}"/>&nbsp;&nbsp;<label for="norms_{weikucms:$norms.id}">{weikucms:$norms.value}</label>
+                            </if>
+                        </td>
+                        <if condition="($i%5 eq 0)" ></tr><tr></if>
+</volist>
+</tr>
+</table>
+</td>
+</tr>
+</if>
+<tr>
+    <td colspan="2">
+        <table id="priceList">
+            <if condition="($productDetailData neq null) ">
+                <tr><th width="130">产品外观</th><th width="130">产品规格</th><th width="130">价格</th><th width="130">LQ</th><th width="130">CQ</th><th width="130">数量</th></tr>
+                <volist name="productDetailData" id="detail">
+                    <input type="hidden" class="editselect" value="{weikucms:$detail.id},{weikucms:$detail.color},{weikucms:$detail.colorName},{weikucms:$detail.format},{weikucms:$detail.formatName},{weikucms:$detail.price},{weikucms:$detail.LQ},{weikucms:$detail.CQ},{weikucms:$detail.num}"/>
+                    <tr class="tnorms">
+                        <td width="130">{weikucms:$detail.colorName}<input type="hidden" value="{weikucms:$detail.color}"/></td>
+                        <td width="130">{weikucms:$detail.formatName}<input type="hidden" value="{weikucms:$detail.format}"/></td>
+                        <td width="130"><input type="text" class="px" style="width:60px;" value="{weikucms:$detail.price}"/></td>
+                        <td width="130"><input type="text" class="px" style="width:60px;" value="{weikucms:$detail.LQ}"/></td>
+                        <td width="130"><input type="text" class="px" style="width:60px;" value="{weikucms:$detail.CQ}"/></td>
+                        <td width="130"><input type="text" class="px" style="width:60px;" value="{weikucms:$detail.num}"/></td>
+                        <td width="130"><input type="hidden" value="{weikucms:$detail.id}"/></td>
+                    </tr>
+                </volist>
+            </if>
+        </table>
+    </td>
+</tr>
+<volist name="attributeData" id="attribute">
+    <tr>
+        <th>{weikucms:$attribute.name}：</th>
+        <td>
+            <input type="text" value="{weikucms:$attribute.value}" class="attribute px" style="width:400px;" atr="{weikucms:$attribute.name}" id="{weikucms:$attribute.id}" aid="{weikucms:$attribute.aid}"/>
+        </td>
+    </tr>
+</volist>
+<tr>
+    <th><span class="red">*</span>价格：</th>
+    <td><input type="text" id="price" name="price" value="{weikucms:$set.price}" class="validate[required, length[0,20]] px" style="width:100px;" /> 元</td>
+</tr>
+<tr>
+    <th><span class="red">*</span>所需LQ币：</th>
+    <td><input type="text" id="LQ" name="price" value="{weikucms:$set.price}" class="validate[required, length[0,20]] px" style="width:100px;" /> </td>
+</tr>
+
+<tr>
+    <th><span class="red">*</span>所需CQ币：</th>
+    <td><input type="text" id="CQ" name="price" value="{weikucms:$set.price}" class="validate[required, length[0,20]] px" style="width:100px;" /> </td>
+</tr>
+
+<!--<tr>
+    <th><span class="red">*</span>会员价：</th>
+    <td><input type="text" id="vprice" name="vprice" value="{weikucms:$set.vprice}" class="px" style="width:100px;" /> 元</td>
+</tr>
+<tr>
+    <th><span class="red">*</span>原价：</th>
+    <td><input type="text" id="oprice" name="oprice" value="{weikucms:$set.oprice}" class="px" style="width:100px;" /> 元</td>
+</tr>-->
+<tr>
+    <th>库存：</th>
+    <td><input type="text" id="num" name="num" value="{weikucms:$set.num}" class="px" style="width:100px;" /></td>
+</tr>
+
+
+<tr >
+    <th>邮费：</th>
+    <td><input type="text" id="mailprice" name="mailprice" value="{weikucms:$set.mailprice}" class="px" style="width:100px;" /> 元</td>
+</tr>
+
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            商品图片：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img0" class="fenlei_img" src="{weikucms:$set.logourl}">
+        <input type="hidden" class="px" id="pic" value="{weikucms:$set.logourl}"  name="pic" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload0">上传图片</span>
+
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片一：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img1" class="fenlei_img" src="{weikucms:$imageList[0].image}">
+        <input type="hidden" class="px" id="image1" value="{weikucms:$imageList[0].image}"  imageid="{weikucms:$imageList[0].id}" name="image1" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload1">上传图片</span>
+
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片二：
+        </label>
+    </th>
+    <td>
+        <img  id="fenlei_img2" class="fenlei_img" src="{weikucms:$imageList[1].image}">
+        <input type="hidden" class="px" id="image2" value="{weikucms:$imageList[1].image}"  imageid="{weikucms:$imageList[1].id}" name="image2" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload2">上传图片</span>
+        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片三：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img3" class="fenlei_img" src="{weikucms:$imageList[2].image}">
+        <input type="hidden" class="px" id="image3" value="{weikucms:$imageList[2].image}"  imageid="{weikucms:$imageList[2].id}" name="image3" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload3">上传图片</span>
+        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片四：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img4" class="fenlei_img" src="{weikucms:$imageList[3].image}">
+        <input type="hidden" class="px" id="image4" value="{weikucms:$imageList[3].image}"  imageid="{weikucms:$imageList[3].id}" name="image4" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload4">上传图片</span>
+        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片五：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img5" class="fenlei_img" src="{weikucms:$imageList[4].image}">
+        <input type="hidden" class="px" id="image5" value="{weikucms:$imageList[4].image}"  imageid="{weikucms:$imageList[4].id}" name="image5" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload5">上传图片</span>
+        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">
+        <label for="keyword">
+            展示图片六：
+        </label>
+    </th>
+    <td>
+        <img id="fenlei_img6" class="fenlei_img" src="{weikucms:$imageList[5].image}">
+        <input type="hidden" class="px" id="image6" value="{weikucms:$imageList[5].image}"  imageid="{weikucms:$imageList[5].id}" name="image6" style="width:300px" readonly="readonly">
+        <span class="ke-button-common" id="upload6">上传图片</span>
+        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+        <span class="info_tip">建议图片大小320×250</span>
+
+    </td>
+
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th><span class="red">*</span>商品简介(规格参数)：</th>
+    <td><textarea name="des" id="des" cols="30" rows="10">{weikucms:$set.des}</textarea></td>
+</tr>
+
+<TR>
+    <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+    <TD><textarea name="intro" id="intro"  rows="5" style="width:590px;height:360px">{weikucms:$set.intro}</textarea></TD>
+</TR>
+<tr>
+    <th>商品排序：</th>
+    <td><input type="text" id="paixu" name="paixu" value="{weikucms:$set.paixu}" class="px" style="width:100px;" />(值越大排在越靠前)</td>
+</tr>
+
+<tr>
+    <th>扩展：</th>
+    <td><input type="radio" name="extend" value="1"   <if condition="$extend"> checked </if>
+        >开<input type="radio" name="extend" value="0" <if condition="$extend"><else />checked</if> >关<br />
+        <p style=" margin-top: 10px;"><input name="add" type="button" value="增加项" style="display: none"></p>
+        <volist name="extend" id="vo">
+            <p class="extendBody" <if condition="$extend"><else />style="display: none;"</if>>属性:<input type="text"  name="extend1" value="{weikucms:$key}" class="px" style="width:300px;" />
+            值:<input  type="text"  name="val1" value="{weikucms:$vo}" class="px" style="width:150px;" /><a href="javascript: void(0);" class='deleteExtend'>删除</a></p>
+        </volist>
+
+        <script type="text/javascript" charset="utf-8">
+            $(function(){
+                $(document).on('click', '.deleteExtend', function(){
+                    $(this).parents('.extendBody').remove();
+                });
+            })
+        </script>
+    </td>
+</tr>
+<tr>
+    <th>&nbsp;</th>
+    <td>
+        <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+    </td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+
+/**
+ * 扩展JS框效果
+ */
+$("input[name=extend]").change(function(){
+
+    if($(this).val()==1){
+        $(this).nextAll().show();
+        $("input=[name=add]").show();
+    }else{
+        $(this).nextAll().hide();
+    }
+
+})
+$("input[name=add]").click(function(){
+
+    var html="<p class='extendBody'>属姓:<input type='text' name='extend1' value='' class='px' style='width:300px;' />值:<input  type='text'  name='val1' value='' class='px' style='width:150px;' /><a href='javascript: void(0);' class='deleteExtend'>删除</a></p>";
+    $(this).parents('td').append(html);
+});
+$(document).ready(function(){
+    var oldselect = [];
+    $(".editselect").each(function(){
+        var t = $(this).val().split(",");
+        //alert(t[0]+'---'+ parseInt(t[1])+'---'+  t[2]+'---'+  t[3]+'---'+  t[4]+'---'+  t[5]+'---'+  t[6]);
+        oldselect[t[1] + '_' + t[3]] = new Array(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7],t[8]);
+    });
+    console.log(oldselect);
+    $(".color").click(function(){
+        var selectValue = [];
+        var html = '';
+        var header = '<tr><th width="130">产品外观</th><th width="130">产品规格</th><th width="130">价格</th><th width="130">LQ</th><th width="130">CQ</th><th width="130">数量</th></tr>';
+        if ($(".norms").html() == null) {
+            $(".color").each(function(){
+                if ($(this).attr('checked')) {
+                    var color = $(this).attr('atr');
+                    var colorid = $(this).val();
+                    selectValue[colorid + '_' + 0] = new Array(0, colorid, color, 0, '', 0, 0, 0,0);
+                }
+            });
+        } else {
+            $(".color").each(function(){
+                if ($(this).attr('checked')) {
+                    var color = $(this).attr('atr');
+                    var colorid = $(this).val();
+                    $(".norms").each(function(){
+                        if ($(this).attr('checked')) {
+                            var norms = $(this).attr('atr');
+                            var normsid = $(this).val();
+                            selectValue[colorid + '_' + normsid] = new Array(0, colorid, color, normsid, norms, 0, 0, 0,0);
+                            //selectValue[colorid + '_' + normsid] = '<tr class="tnorms"><td width="130">' + color + '<input type="hidden" value="' + colorid + '"/></td><td width="130">' + norms + '<input type="hidden" value="' + normsid + '"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td><input type="hidden" value="0"/></td></tr>';
+                        }
+                    });
+                }
+            });
+        }
+        console.log(selectValue);
+        console.log(oldselect);
+        for (var index in selectValue) {
+            if (oldselect[index] != null && oldselect[index] != '') {
+                html += '<tr class="tnorms"><td width="130">' + oldselect[index][2] + '<input type="hidden" value="' + oldselect[index][1] + '"/></td>';
+                html += '<td width="130">' + oldselect[index][4] + '<input type="hidden" value="' + oldselect[index][3] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][5] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][6] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][7] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][8] + '"/></td>';
+                html += '<td><input type="hidden" value="' + oldselect[index][0] + '"/></td></tr>';
+            } else {
+                html += '<tr class="tnorms"><td width="130">' + selectValue[index][2] + '<input type="hidden" value="' + selectValue[index][1] + '"/></td>';
+                html += '<td width="130">' + selectValue[index][4] + '<input type="hidden" value="' + selectValue[index][3] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][5] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][6] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][7] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][8] + '"/></td>';
+                html += '<td><input type="hidden" value="' + selectValue[index][0] + '"/></td></tr>';
+            }
+            //html += selectValue[index];
+        }
+        if (html != '') {
+            $("#priceList").html(header + html);
+        } else {
+            $("#priceList").html('');
+        }
+    });
+    $(".norms").click(function(){
+        var selectValue = [];
+        var html = '';
+        var header = '<tr><th width="130">产品外观</th><th width="130">产品规格</th><th width="130">价格</th><th width="130">LQ</th><th width="130">CQ</th><th width="130">数量</th></tr>';
+        if ($(".color").html() == null) {
+            $(".norms").each(function(){
+                if ($(this).attr('checked')) {
+                    var norms = $(this).attr('atr');
+                    var normsid = $(this).val();
+                    selectValue[0 + '_' + normsid] = new Array(0, 0, '', normsid, norms, 0, 0, 0,0);
+                    //selectValue[colorid + '_' + normsid] = '<tr class="tnorms"><td width="130">' + color + '<input type="hidden" value="' + colorid + '"/></td><td width="130">' + norms + '<input type="hidden" value="' + normsid + '"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td><input type="hidden" value="0"/></td></tr>';
+                }
+            });
+        } else {
+            $(".color").each(function(){
+                if ($(this).attr('checked')) {
+                    var color = $(this).attr('atr');
+                    var colorid = $(this).val();
+                    $(".norms").each(function(){
+                        if ($(this).attr('checked')) {
+                            var norms = $(this).attr('atr');
+                            var normsid = $(this).val();
+                            selectValue[colorid + '_' + normsid] = new Array(0, colorid, color, normsid, norms, 0, 0, 0,0);
+                            //selectValue[colorid + '_' + normsid] = '<tr class="tnorms"><td width="130">' + color + '<input type="hidden" value="' + colorid + '"/></td><td width="130">' + norms + '<input type="hidden" value="' + normsid + '"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td width="130"><input type="text" class="px" style="width:60px;"/></td><td><input type="hidden" value="0"/></td></tr>';
+                        }
+                    });
+                }
+            });
+        }
+        for (var index in selectValue) {
+            if (oldselect[index] != null && oldselect[index] != '') {
+                html += '<tr class="tnorms"><td width="130">' + oldselect[index][2] + '<input type="hidden" value="' + oldselect[index][1] + '"/></td>';
+                html += '<td width="130">' + oldselect[index][4] + '<input type="hidden" value="' + oldselect[index][3] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][5] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][6] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][7] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][8] + '"/></td>';
+                html += '<td><input type="hidden" value="' + oldselect[index][0] + '"/></td></tr>';
+            } else {
+                html += '<tr class="tnorms"><td width="130">' + selectValue[index][2] + '<input type="hidden" value="' + selectValue[index][1] + '"/></td>';
+                html += '<td width="130">' + selectValue[index][4] + '<input type="hidden" value="' + selectValue[index][3] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][5] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][6] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][7] + '"/></td>';
+                html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][8] + '"/></td>';
+                html += '<td><input type="hidden" value="' + selectValue[index][0] + '"/></td></tr>';
+            }
+            //html += selectValue[index];
+        }
+        if (html != '') {
+            $("#priceList").html(header + html);
+        } else {
+            $("#priceList").html('');
+        }
+    });
+    //点击显示隐藏下拉
+    $('#yestour').click(function(){
+        $('.travel').slideDown(600);
+    })
+    $('#notour').click(function(){
+        $('.travel').slideUp(600);
+        if("{weikucms:$set['riqi']}" == ""){
+            setTimeout(function(){
+                $('#starting').val("");
+                $('#destination').val("");
+                $('#fatDate').val("")
+            },800)
+        }
+    })
+    if("{weikucms:$set['riqi']}" != ""){
+        $('#yestour').trigger('click');
+    }
+
+    $("#save").click(function(){
+
+        //扩展参数
+        if($("input[name=extend]").val()==1){
+            var extend1=[];
+            var val1=[];
+            $("input[name=extend1]").each(function(e,t){
+                extend1[e]=$(t).val();
+            });
+            $("input[name=val1]").each(function(e,t){
+                val1[e]=$(t).val();
+            });
+            extend1=extend1.join(',');
+            val1=val1.join(',');
+        }else{
+            var extend1=[];
+        }
+
+
+
+        var starting = $.trim($('#starting').val()),
+                destination = $.trim($('#destination').val()),
+                fatDate = $.trim($('#fatDate').val()),
+                iftour = 0;
+
+        var name = $("#name").val();
+        if (name.length < 1) {
+            art.dialog({title:'消息提示', ok:true, width:300, height:200, content:'名称不能为空'});
+            return false;
+        }
+        var num = $("#num").val();
+        if (isNaN(num)) {
+            art.dialog({title:'消息提示', ok:true, width:300, height:200, content:'库存应该是为正整数'});
+            return false;
+        }
+        var long = $("#long").val();
+        var wide = $("#wide").val();
+        var high = $("#high").val();
+        var price = $("#price").val();
+        var vprice = 0;
+        var oprice = $("#oprice").val();
+        var mailprice = $("#mailprice").val();
+        var pic = $("#pic").val();
+
+        var intro = $("#intro").val();
+        var attribute = [];
+        var i = 0;
+        var str = '';
+        $(".attribute").each(function(){
+            attribute[i]= {'name':$(this).attr('atr'), 'value':$(this).val(), 'aid':$(this).attr('aid'), 'id':$(this).attr('id')};//new Array($(this).attr('atr'), $(this).val());
+            i ++;
+        });
+        var norms = [];
+        var i = 0;
+        var tnum = 0;
+        $(".tnorms").each(function(){
+            tnum += parseInt($(this).children('td').children('input').val());
+
+            norms[i]= {'color':$(this).children('td').eq(0).children('input').val(), 'format':$(this).children('td').eq(1).children('input').val(), 'price':$(this).children('td').eq(2).children('input').val(), 'LQ':$(this).children('td').eq(3).children('input').val(), 'CQ':$(this).children('td').eq(4).children('input').val(), 'num':$(this).children('td').eq(5).children('input').val(), 'id':$(this).children('td').eq(6).children('input').val()};
+            i ++;
+        });
+
+        if (tnum > 0) {
+            num = tnum;
+        }
+        //num = num > tnum ? num : tnum;
+        var image1 = $("#image1").val();
+        var image2 = $("#image2").val();
+        var image3 = $("#image3").val();
+        var image4 = $("#image4").val();
+        var image5 = $("#image5").val();
+        var image6 = $("#image6").val();
+        var des = $("#des").val();
+        var imageid1 = parseInt($("#image1").attr('imageid'));
+        var imageid2 = parseInt($("#image2").attr('imageid'));
+        var imageid3 = parseInt($("#image3").attr('imageid'));
+        var imageid4 = parseInt($("#image4").attr('imageid'));
+        var imageid5 = parseInt($("#image5").attr('imageid'));
+        var imageid6 = parseInt($("#image6").attr('imageid'));
+        if(!pic){
+            alert("商品图片没有添加");return false;
+        }
+        if(!image1 && !image2 && !image3 && !image4 && !image5 && !image6){
+            alert("展示图片必需要添加一项");return false;
+        }
+        if(!des){
+            alert("商品图片不能为空");return false;
+        }
+
+        var images = [];
+        images[0] = {'id':imageid1, 'image':image1};
+        images[1] = {'id':imageid2, 'image':image2};
+        images[2] = {'id':imageid3, 'image':image3};
+        images[3] = {'id':imageid4, 'image':image4};
+        images[4] = {'id':imageid5, 'image':image5};
+        images[5] = {'id':imageid6, 'image':image6};
+        var bili=$("#bili").val();
+        /**
+         * 旅游商品新增
+         */
+        var content=$("textarea[name=content]").val();
+        var day_num=$("#day_num").val();
+        var shoufu=$("#shoufu").val();
+        var fenqi=$("#fenqi").val();
+        var monthly_repayments=$("#monthly_repayments").val();
+        var loan_total_money=$("#loan_total_money").val();
+
+        var paixu=$("#paixu").val();//商品排序
+        var LQ =  $("#LQ").val();
+        var CQ =  $("#CQ").val();
+        var data = {pid:$("#pid").val(),
+            high:high,
+            long:long,
+            wide:wide,
+            extend1:extend1,
+            val1:val1,
+            bili:bili,
+            name:name,
+            des:des,
+            num:num,
+            price:price,
+            vprice:vprice,
+            oprice:oprice,
+            mailprice:mailprice,
+            pic:pic,
+            starting:starting,
+            destination:destination,
+            fatDate:fatDate,
+            iftour:iftour,
+
+            intro:intro,
+            attribute:JSON.stringify(attribute),
+            norms:JSON.stringify(norms),
+            images:JSON.stringify(images),
+            token:'{weikucms:$token}',
+            catid:'{weikucms:$catid}',
+
+            content:content,
+            day_num:day_num,
+            shoufu:shoufu,
+            fenqi:fenqi,
+            monthly_repayments:monthly_repayments,
+            loan_total_money:loan_total_money,
+            paixu:paixu,
+            LQ:LQ,
+            CQ:CQ
+
+        };
+        $.post('index.php?g=User&m=Store_new&a=productSave', data, function(response){
+            if (response.error_code == false) {
+                art.dialog({
+                    title:'消息提示',
+                    content: response.msg,
+                    width:300,
+                    height:200,
+                    lock: true,
+                    ok: function () {
+                        this.time(3);
+                        location.href='index.php?g=User&m=Store_new&a=product&token={weikucms:$token}&catid={weikucms:$catid}'
+                        return false;
+                    },
+                    cancelVal: '关闭'
+                });
+            } else {
+                art.dialog({title:'消息提示', time:2, width:300, height:200, content:response.msg});
+            }
+
+        }, 'json');
+    });
+});
+</script>
+<script>
+    $(function(){
+        $(".del").click(function(){
+            $(this).parent().find("img").attr('src','');
+            $(this).parent().find("input").val('');
+        })
+    })
+</script>
+<script>
+    $(function(){
+
+
+        /*JQuery 限制文本框只能输入数字和小数点*/
+
+        $("#bili").keyup(function(){
+
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));
+
+        }).bind("paste",function(){  //CTR+V事件处理
+
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));
+
+        }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+        $("#bili").blur(function(){
+            var bili=$("#bili").val();
+            if(bili>=1){
+                art.dialog({title:'消息提示', ok:true, width:300, height:200, content:'佣金比例不能大于1'});
+                $("#bili").val('');
+
+            }
+        });
+
+    });
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,220 @@
+<html>
+	<head>
+		<title>肥胖测试</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/3.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/fatTest.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/fatAlert.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 创建遮罩 -->
+		<div id="Mask"></div>
+		<!-- 生日 -->
+		<div id="birth">
+			<div class="choice">
+				请选择年龄
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>年龄</span>
+					<select id="year">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<!--
+				<div class="Eject">
+					<span>月份</span>
+					<select id="month">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="Eject">
+					<span>日期</span>
+					<select id="days">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				-->
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="sure">确定</div>
+			<div class="cancel">取消</div>
+		</div>
+		<!-- 身高 -->
+		<div id="yheight">
+			<div class="choice">
+				请选择身高
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>身高</span>
+					<select id="height">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="hsure">确定</div>
+			<div class="hcancel">取消</div>
+		</div>
+		<!-- 运动 -->
+		<div id="sport">
+			<div class="choice">
+				请选择运动量
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>运动</span>
+					<select id="sports">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="ssure">确定</div>
+			<div class="scancel">取消</div>
+		</div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请选择体重
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>体重</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 创建遮罩 -->
+		<!--头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">肥胖小测试</span>
+		</div> -->
+		<!-- 中部 -->
+		<div id="topMiddle">
+			我们将根据个人资料为您量身定制减肥方案
+		</div>
+		<!-- 总的 -->
+		<div id="all">
+			<!-- 头像 -->
+			<div class="icon">
+				<div class="woman">
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/woman_n.png" />
+					<!-- 加上条线 -->
+					<div class="sline"></div>
+					女性
+				</div>
+				<div class="man">
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/man_n.png" />
+					<!-- 加上条线 -->
+					<div class="sline"></div>
+					男性
+				</div>
+				<!-- 清除浮动 -->
+				<div class="clear"></div>
+			</div>
+			<!-- 年龄 -->
+			<div class="age">
+					<div class="age_left">年龄</div>
+					<div class="age_right">
+						<span>26周岁</span>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+					</div>
+					<div class="clear"></div>
+			</div>
+			<!-- 身高 -->
+			<div class="Height">
+				<div class="Height_left">身高</div>
+				<div class="Height_right">
+					<span>163cm</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- 体重 -->
+			<div class="Weight">
+				<div class="Weight_left">体重</div>
+				<div class="Weight_right">
+					<span>70kg</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- 体重 -->
+			<div class="move">
+				<div class="move_left">运动</div>
+				<div class="move_right">
+					<span>无</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部 -->
+		<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/aimBtn.png" width="90px" height="48px" class="adjust" id="adjust"/>
+		<script type="text/javascript">
+			$(function(){
+				// 点击按钮接收数据
+				$('#adjust').click(function(){
+					var sex;
+					if ($('.woman').hasClass('sexs') ==false && $('.man').hasClass('sexs') ==false) {
+						show_error_tip("请选择性别！");
+						return false;
+					};
+					if ($('.woman').hasClass('sexs')) {
+						sex = 0;
+					};
+					if ($('.man').hasClass('sexs')) {
+						sex = 1;
+					};
+					
+					// 年龄
+					var age = $('.age_right').children('span').text();
+					// 身高
+					var heights = $('.Height_right').children('span').text();
+					// 体重
+					var weights = $('.Weight_right').children('span').text();
+					// 运动量
+					var runs = $('.move_right').children('span').text();
+					// 下面通过ajax提交
+					// alert(sex);return;
+					var url = "{weikucms::U('Wap/Reduce/receiveSch',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{age:age,height:heights,weight:weights,run:runs,sex:sex}, function(data){
+	                            if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+				})
+			})
+		</script>
+	</body>
+</html>

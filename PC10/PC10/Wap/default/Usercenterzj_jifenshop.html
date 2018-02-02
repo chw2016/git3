@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<meta name="keywords" content="牛轧糖、手信、凤梨酥、钟姐食品">
+<meta name="description" content="广州市钟姐食品有限公司官方微店。">
+
+
+
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/a.css">
+
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/c.css">
+<script type="text/javascript" src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.5.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/main.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/dialog.css" media="all" />
+<script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/main.js"></script>
+<script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/dialog_min.js"></script>
+<script type="text/javascript" src="/tpl/Wap/default/common/css/store/shop/js/main.js"></script>
+<style>
+
+    .wechat {
+
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        background-color: #3884FF;
+        border-color: #3884FF;
+        color: #fff;
+        position: fixed;
+        z-index: 900;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+</style>
+
+<!--[if lt IE 9]>
+<![endif]-->
+</head>
+<body class="">
+
+
+
+<link href="/misc/coupons/css/A.coupons.css.pagespeed.cf.pExKim25Oe.css" rel="stylesheet" type="text/css"/>
+<div class="maincontainer">
+    <div class="container mini-innner">
+        <div class="fen_status">
+        </div>
+
+        <div class="row">
+
+        </div>
+
+        <div class="giftlist">
+
+            <volist name="data" id="vo">
+            <div class="giftlist_nav">
+                <a onclick="exchange({weikucms:$vo.id},{weikucms:$vo.integral},{weikucms:$vo.num},{weikucms:$vo.ci},{weikucms:$vo.degree});">
+                    <div class="giftlist_li">
+                        <div class="giftlist_btn"></div>
+                        <dl>
+                            <dt class="autoImg">
+                                <img src="{weikucms:$vo['pic']}" pagespeed_url_hash="330591264" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/>
+                            </dt>
+                            <dd>
+                                <h3> {weikucms:$vo.giftname}</h3>
+                                <p><span>所需积分：</span><b>{weikucms:$vo.integral}</b></p>
+                                <p><span>已领数量：</span><b> {weikucms:$vo.ci}</b> / {weikucms:$vo.num}</p>
+                                <p><span>领取限制：</span><b><span class="hui">每人限兑</span>{weikucms:$vo.degree}<span class="hui">次</span></b></p>
+                            </dd>
+                        </dl>
+                    </div>
+                </a>
+            </div>
+    </volist>
+        </div>
+        <div class="wap_page">
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script type="text/javascript">$(".autoImg").autoIMG();</script>
+<div class="footnav mini-innner">
+
+</div>
+</div>
+
+
+<p class="action">
+    <a href="{weikucms::U('Usercenterzj/reveal',array('token'=>$token,'openid'=>$openid))}" id="goPay" class="wechat">我的礼品</a>
+</p>
+</body>
+<script type="text/javascript" src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.5.1.min.js"></script>
+<script>
+
+    function exchange(exc_id,point,num,ci,degree){
+        confirm('<label>扣除积分：<span>'+point+'</span></lael>', function(){
+            if(ci>=degree){
+                show_error_tip('您兑换次数不足了');
+                return false;
+            }
+            loading(true);
+            var num1=num;
+            if(num1>1) {
+                $.ajax({
+                    url: "{weikucms::U('Wap/Usercenterzj/exchange',array('token'=>$token,'uid'=>$data['id'],'openid'=>$openid))}",
+                    type: "post",
+                    data: {exc_id: exc_id, point: point},
+                    dataType: "JSON",
+                    success: function (res) {
+                        loading(false);
+                        if (0 == res.status) {
+                            show_error_tip(res.info);
+                            setTimeout(function () {
+                                window.location.href = res.url;
+                            }, '1000');
+
+                        } else {
+                            show_error_tip(res.info);
+                            setTimeout(function () {
+                                window.location.href = res.url;
+                            }, '3000');
+
+                        }
+                    }
+                });
+            }else{
+                alert("库存不足");
+                window.location.href="";
+            }
+        });
+    }
+
+</script>
+</html>

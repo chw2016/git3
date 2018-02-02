@@ -1,0 +1,22 @@
+<include file="Product:header" />
+<!--主体-->
+<section class="c_list">
+    <h1>        <if condition="$parentid neq 0">{weikucms:$thisCat.name}</if>        全部分类：    </h1>
+    <volist name="cats" id="hostlist">
+    <dl>
+
+        <dt>
+            <span><a href="<if condition="$hostlist['parentid'] eq 0"> {weikucms::U('Product/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'dining'=>$isDining,'tableid'=>$_GET['tableid']))}  <else />{weikucms::U('Product/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'tableid'=>$_GET['tableid']))} </if>">
+                <img src="{weikucms:$hostlist.logourl}" style="width: 220px;height: 120px;margin-top: 20px;"/>
+                </a>
+            </span>
+
+            <a href="<if condition="$hostlist['parentid'] eq 0"> {weikucms::U('Product/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'dining'=>$isDining,'tableid'=>$_GET['tableid']))}  <else />{weikucms::U('Product/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'tableid'=>$_GET['tableid']))} </if>"> {weikucms:$hostlist.name}
+                <i></i>
+            </a>
+        </dt>
+    </dl>
+    </volist>
+</section>
+</body>
+</html>

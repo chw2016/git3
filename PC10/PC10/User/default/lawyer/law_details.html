@@ -1,0 +1,171 @@
+<include file="Public:head"/>
+<style>
+    .abc1{
+        display: block;
+        /* right: 0px; */
+        /* top: -10px; */
+        height: 39px;
+        /* padding: 0 40px; */
+        line-height: 2;
+        background: #C4E238;
+        width: 50px;
+        height: 25px;
+        text-align: center;
+    }
+</style>
+
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+			{weikucms:$name}的案件详情
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+               <!--  <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder=""> -->
+
+                <tr>
+                    <th valign="top"><label for="key">编号</label></th>
+                    <td>
+                        {weikucms:$info.id}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">案件类型</label></th>
+                    <td>
+                        <php>
+                            if($info['status'] == 1)
+                            {
+                                echo '民事纠纷';
+                            }
+                            else if($info['status'] == 2)
+                            {
+                                echo '刑事案件';
+                            }
+                            else if($info['status'] == 3)
+                            {
+                                echo '行政纠纷';
+                            }
+                        </php>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">纠纷类型</label></th>
+                    <td>
+                        {weikucms:$info.class}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">起诉地点</label></th>
+                    <td>
+                        {weikucms:$info.start_address}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">律师地点</label></th>
+                    <td>
+                        {weikucms:$info.end_address}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">案件详情</label></th>
+                    <td>
+                        {weikucms:$info.case_details}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">是否通过</label></th>
+                    <td>
+                       <php>
+                            if($info['pass'] == 1)
+                            {
+                                echo '通过';
+                            }
+                            else if($info['pass'] == 2)
+                            {
+                                echo '不通过';
+                            }
+                            else if($info['pass'] == 3)
+                            {
+                                echo '审核中';
+                            }
+                        </php>
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">时间</label></th>
+                    <td>
+                        {weikucms:$info.add_time}
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+        <script>
+            //去处理
+            function chuli(str){
+             //   var id="{weikucms:$_GET['id']}";
+
+                var url="{weikucms::U('chuli',array('token'=>$token,'id'=>$_GET['id']))}";
+                if(str==2){//失败还是成功
+                    if($("input[name=kk]:checked").val()==null){
+                        notif({
+                            msg: '请选择成功或者失败',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    var kk=$("input[name=kk]:checked").val();
+                    url=url+"&kk="+kk;
+                }
+                if(str==3){//设置成功交易金额
+                    var money=$("input[name=kk2]").val();
+                  //  $("input[name=kk2]").val().replace(/\D|^0/g,'');
+                    if(money==''){
+                        notif({
+                            msg: '请先填写金额',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    url=url+"&kk="+money;
+                }
+               // alert(kk);return false;
+
+                $.post(url,{str:str},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: '操作成功',
+                            type: "success"
+                        });
+                        location.reload();
+                    }else{
+                        notif({
+                            msg: '操作失败',
+                            type: "error"
+                        });
+                    }
+                },'json');
+            }
+        </script>
+
+
+

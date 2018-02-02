@@ -1,0 +1,240 @@
+<include file="Public:head"/>
+
+
+    <div class="msgWrap">
+        <div class="plugins_wrp">
+            <div class="title_tab app_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+                <li data-index="0" class="tab_nav first js_top  selected" data-id="total">
+                    <a href="{weikucms::U('App/index',array('token'=>$token,'cate_id'=>0))}" <if condition='$cate_id eq 0'>class="hover"</if>>全部应用</a></li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('App/index',array('token'=>$token,'cate_id'=>1))}" <if condition='$cate_id eq 1'>class="hover"</if>>基础应用</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('App/index',array('token'=>$token,'cate_id'=>2))}" <if condition='$cate_id eq 2'>class="hover"</if>>行业应用</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('App/index',array('token'=>$token,'cate_id'=>3))}" <if condition='$cate_id eq 3'>class="hover"</if>>互动营销应用</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('App/index',array('token'=>$token,'cate_id'=>4))}" <if condition='$cate_id eq 4'>class="hover"</if>>微信游戏</a></li>
+                <!--<li class="tab_nav_right">-->
+                    <!--<div class="input-append">-->
+                        <!--<input class="span2" id="appendedInputButton" type="text" placeholder="请输入您要搜索的关键字">-->
+                        <!--<button class="btn" type="button">应用搜索</button>-->
+                    <!--</div>-->
+                <!--</li>-->
+                </ul>
+
+            </div>
+
+            <ul id="js_plugins">
+                <volist name="applist" id="vo">
+                <li class="item_wrp" status="{weikucms:$vo.status}" over="{weikucms:$vo.over}" is_pay="{weikucms:$vo.is_pay}" try_type="{weikucms:$vo.try_type}" app_name="{weikucms:$vo.app_name}" app_id="{weikucms:$vo.id}" is_free="{weikucms:$vo.is_free}" price="{weikucms:$vo.price}">
+                    <div class="plugin_item ">
+                        <div class="plugin_icon"><img src="{weikucms:$vo.pic}" width="94px" height="94px" style="width:94px;height:94px;"></div>
+                        <div class="plugin_status">
+                            <i class="access"></i>
+                            <php>
+                                if($vo['is_free'] == 1){
+                                  echo "<span style='color: #727972;font-size: 14px;font-weight: bold;'>";
+                                }else{
+                                  echo "<span style='color: #09690D;font-size: 15px;font-weight: bold;'> ￥".$vo['price']."/年";
+                                }
+                                if($vo['is_pay'] == 1 && $vo['status']== 1){
+                                        if($vo['over'] == 0){
+                                           echo '已添加</span>' ;
+                                        }else if($vo['over'] == 3){
+                                           echo '已到期</span>' ;
+                                        }else{
+                                        echo '</span>' ;
+                                        }
+                                }else if($vo['is_pay'] == 2 && $vo['status']== 1){
+                                        if($vo['over'] == 0){
+                                        echo '试用中</span>' ;
+                                        }else if($vo['over'] == 2){
+                                        echo '已试用完</span>' ;
+                                    }
+                                }else{
+                                    echo '</span>' ;
+                                }
+                            </php>
+
+                        </div>
+                        <div class="plugin_content">
+                            <h3 class="title">{weikucms:$vo.app_name}</h3>
+                            <p class="desc">{weikucms:$vo.app_des}</p>
+                        </div>
+                    </div>
+                </li>
+                </volist>
+
+            </ul>
+        </div>
+        <div style="padding: 20px 22px;font-size: 15px;color: #ff3922;font-weight: bold;">
+           越来越多的应用将会出现在万普应用市场,尽请期待 ！
+        </div>
+
+</div>
+
+
+<div class="dialog_wrp " id="dialog_wrp" style="width: 720px; display: none; margin-left: -360px; margin-top: -168px;">
+    <div class="dialog">
+        <div class="dialog_hd">
+            <h3>确认信息</h3>
+            <a href="javascript:;" onclick="return false" class="icon16_opr closed pop_closed">关闭</a>
+        </div>
+        <div class="dialog_bd">
+
+            <div class="page_msg simple">
+                <div class="inner group">
+    <span class="msg_icon_wrp">
+        <i class="icon_msg info"></i>
+    </span>
+                    <div class="msg_content">
+
+                    </div>
+
+                    <div id="kefubutton" style="display: none;" class="kefubutton">
+                        <button type="button" class="ktkf_btn" onclick="window.open('http://kefu.qycn.com/vclient/chat/?websiteid=85794&clerkid=851661&clienturl=http%3A%2F%2Fwww.wapwei.com&originPageTitle='+encodeURIComponent(window.document.title)+'&originPageUrl='+encodeURIComponent(document.referrer)+'&originPageLocationUrl='+encodeURIComponent(document.location.href), '_blank', 'toolbar=no,scrollbars=yes,menubar=no,status=no,resizable=yes,location=no,width=650,height=530,top=100,left=200');return false;" style='border:none;cursor:pointer'>
+                            点此联系客服开通
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog_ft">
+
+            <span class="btn btn_primary btn_input"><button type="button" class="js_btn" data-index="0">确认添加</button></span>
+            <span class="btn btn_primary btn_input"><button type="button" class="js_btn try_btn" data-index="1">试用</button></span>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="dialog_wrp" id="dialog_wrp2" style="width: 720px; display: none; margin-left: -360px; margin-top: -168px;">
+    <div class="dialog">
+        <div class="dialog_hd">
+            <h3>联系客服</h3>
+            <a href="javascript:;" onclick="return false" class="icon16_opr closed pop_closed">关闭</a>
+        </div>
+        <div class="dialog_bd">
+
+            <div class="page_msg simple">
+                <div class="inner group">
+                    <div class="msg_content">
+                        尊敬的万普用户您好,您的服务已到期,联系我们的客服继续为您服务 !
+                    </div>
+
+                    <div id="kefubutton" style="display: block;" class="kefubutton">
+                        <button type="button" class="ktkf_btn" onclick="window.open('http://kefu.qycn.com/vclient/chat/?websiteid=85794&clerkid=851661&clienturl=http%3A%2F%2Fwww.wapwei.com&originPageTitle='+encodeURIComponent(window.document.title)+'&originPageUrl='+encodeURIComponent(document.referrer)+'&originPageLocationUrl='+encodeURIComponent(document.location.href), '_blank', 'toolbar=no,scrollbars=yes,menubar=no,status=no,resizable=yes,location=no,width=650,height=530,top=100,left=200');return false;" style='border:none;cursor:pointer'>
+                            联系客服
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="mask" style="display: none;"><iframe frameborder="0" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;" src="about:blank"></iframe></div>
+</div>
+
+<script type="text/javascript">
+    $(".pop_closed").click(function(){
+        $("#dialog_wrp").hide();
+        $("#dialog_wrp2").hide();
+        $(".mask").hide();
+    });
+
+    $(".js_btn").click(function(){
+        if($(this).attr('data-index') == 1){
+            var try_type = $(".try_btn").data('try_type');
+            if(try_type == 0){
+                $("#dialog_wrp").hide();
+                $(".mask").hide();
+            }else{
+                var btn = $(this);
+                var app_id = $(this).data('app_id');
+                btn.text('正在试用开通中..');
+                $.post("{weikucms::U('App/tryapp',array('token'=>$token))}",{uid:<php>echo session('uid');</php>,app_id:app_id,try_type:try_type},function(data){
+                    btn.text(data.msg);
+                    if(data.code==0){
+                        setTimeout(function(){
+                            window.location.reload();
+                        },1000);
+                    }else{
+                        setTimeout(function(){
+                            btn.text('试用'+try_type+'天');
+                        },1000);
+                    }
+                },'json');
+            }
+        }else{
+            var btn = $(this);
+            var app_id = $(this).data('app_id');
+            var try_type = $(".try_btn").data('try_type');
+            if(try_type == 0){
+                btn.text('正在通信开通中..');
+                $.post("{weikucms::U('App/addapp',array('token'=>$token))}",{uid:<php>echo session('uid');</php>,app_id:app_id},function(data){
+                    btn.text(data.msg);
+                    if(data.code==0){
+                        setTimeout(function(){
+                            window.location.reload();
+                        },1000);
+                    }else{
+                        setTimeout(function(){
+                            btn.text('确认开通');
+                        },1000);
+                    }
+                },'json');
+            }else{
+                $("#kefubutton").show();
+            }
+        }
+    });
+
+    $(".item_wrp").each(function(i,o){
+        $(o).click(function(){
+            var try_type = $(o).attr('try_type');
+            var is_pay = parseInt($(o).attr('is_pay'));
+            var over = parseInt($(o).attr('over'));
+            var status = parseInt($(o).attr('status'))?parseInt($(o).attr('status')):0;
+            if(over == 2 || over == 3){
+                $("#dialog_wrp2").show();
+                $(".mask").show();
+                return;
+            }
+
+            if(status == 0 ){
+                if($(o).attr('is_free') == 1){
+                    var content = "尊敬的万普用户你确认开通"+$(o).attr('app_name')+'功能,费用免费';
+                }else{
+                    var content = "尊敬的万普用户你确认开通"+$(o).attr('app_name')+'功能,费用为￥'+$(o).attr('price')+"/年";
+                }
+                if(try_type == 0){
+                    $(".try_btn").data('try_type',try_type);
+                    $(".try_btn").text("免费");
+                }else{
+                    $(".try_btn").data('try_type',try_type);
+                    $(".try_btn").text("试用"+try_type+"天");
+                }
+                $(".msg_content").text(content);
+                $("#dialog_wrp").show();
+                $(".js_btn").data('app_id',$(o).attr('app_id'));
+                $(".mask").show();
+            }else{
+                notif({
+                    msg: '您已经添加了此功能,在我的应用中使用即可',
+                    type: "warning"
+                });
+                return false;
+            }
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

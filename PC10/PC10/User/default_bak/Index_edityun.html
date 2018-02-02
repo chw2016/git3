@@ -1,0 +1,71 @@
+<include file="Public:head"/>
+<div class="content">
+          <div class="cLineB"><h4>云相册</h4></div>
+          <form method="post" action="{weikucms::U('User/Index/upsaveyun')}" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{weikucms:$info.id}">
+          <div class="msgWrap">
+            <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+			    <tr>
+                  <th><span class="red">*</span>云相册AppKey：</th>
+                  <td><input type="text" required="" class="px" name="yunuser" value="{weikucms:$info.yunuser}" tabindex="1" size="25">
+                  <span class="red">请到这里注册</span><a href="http://www.nanoyun.com/" target="_blank"><img src="{weikucms::RES}/images/help.png" class="vm helpimg" title="帮助"></a>
+                  </td>
+                </tr>
+                <tr>
+                  <th><span class="red">*</span>云相册AppSecret：</th>
+                  <td><input type="text" required="" class="px" name="yunpassword" value="{weikucms:$info.yunpassword}" tabindex="1" size="25">
+                  
+                  </td>
+                </tr>
+				<tr>
+                  <th><span class="red">*</span>云相册用户名：</th>
+                  <td><input type="text" required="" class="px" name="yunname" value="{weikucms:$info.yunname}" tabindex="1" size="25">
+                  
+                  </td>
+                </tr>
+				<tr>
+                  <th><span class="red">*</span>云相册域名：</th>
+                  <td><input type="text" required="" class="px" name="yundomain" value="{weikucms:$info.yundomain}" tabindex="1" size="25">
+                  
+                  </td>
+                </tr>
+				<tr>
+                  <th><span class="red">*</span>云相册状态：</th>
+                  <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="yunstatus" id="status1" <if condition="($info.yunstatus eq 1) OR ($info['yunstatus'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="yunstatus" id="status2" <eq name="info.yunstatus" value="0">checked=""</eq> >
+							关闭
+                  </td>
+                </tr>
+				<div style="display:none;">
+				<input type="text" required="" class="px" name="wxname" value="{weikucms:$info.wxname}" tabindex="1" size="25">
+				<input type="text" disabled="disabled" required="" title="无法修改，您可以联系管理员" name="wxid" value="{weikucms:$info.wxid}" class="px" tabindex="1" size="25" style="color:#DDD;">
+				<input type="text" required="" name="weixin" value="{weikucms:$info.weixin}" class="px" tabindex="1" size="25">
+				<input class="px" name="headerpic" value="{weikucms:$info.headerpic}" size="60">
+				<input type="hidden" name="token" value="{weikucms:$info.token}" class="px" tabindex="1" size="40">
+				<input type="text" class="px" id="province" value="{weikucms:$info.province}" name="province" tabindex="1" size="20">
+				<input id="city" value="{weikucms:$info.city}" type="text" name="city" class="px" tabindex="1" size="20">
+				<input type="text" required="" class="px" tabindex="1" value="{weikucms:$info.qq}" name="qq" size="25">
+				<input type="text" required="" name="wxfans" value="{weikucms:$info.wxfans}" class="px" tabindex="1" size="25">
+				<input type="text" required="" name="type" value="{weikucms:$info.typeid}" class="px" tabindex="1" size="25">
+				</div>
+              </thead>
+              
+                <tr>
+                  <td><button type="submit" class="btnGreen" id="saveSetting">保存</button></td>
+                </tr>
+            </table>
+            
+          </div>
+          </form>
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+<include file="Public:footer"/>	

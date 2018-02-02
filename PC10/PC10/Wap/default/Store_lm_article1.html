@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>文章详情页</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+        <style>
+            .bba img{
+                width: 100%;
+            }
+            .bba{
+                width: 100%;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+		<!--<header class="header textMiddle white h3 goodsTitle">
+	    	<div class="setLeft closeIcon"><img src="{weikucms:$staticFilePath}/lm/img/close.png" /></div>
+	    	<span>文章详情页</span>
+	    </header>-->
+		<section class="pageBox">			
+			<div class='pageTitle'>{weikucms:$res.title}</div>
+			<div class="of ltitle">
+				<div class="fl">
+					<span>{weikucms:$res.createtime|date='Y-m-d',###}</span>
+					<span>微信团队</span>
+					<span><a href="#">好易赚</a></span>
+				</div>
+				<div class="fr">
+					<span><img src="{weikucms:$staticFilePath}/lm/img/index_ad.png" width="25px" /></span>
+					<span class="like-number">({weikucms:$res.click})</span>
+				</div>
+			</div>
+			<div class="bba">
+                {weikucms:$res.info|htmlspecialchars_decode}
+			</div>
+		</section>
+
+		<!--留言-->
+		<section class="message">
+			<div class="mTitle">留言</div>
+			<div class="mRowBody">
+				<div class="mRow">
+					<div class="fl user">陌生的鱼<span class="say">说~：</span></div>
+					<div class="fr">2015-01-01</div>
+					<div class="cl sMsg">这里是留言留言留言</div>
+				</div>
+
+				<div class="mRow">
+					<div class="fl user">陌生的鱼<span class="say">说~：</span></div>
+					<div class="fr">2015-01-01</div>
+					<div class="cl sMsg">这里是留言留言留言</div>
+				</div>
+			</div>
+			<div class="mTuiGuang">
+				<span class="dashLine"></span>
+				<span class="tuiguang">推广</span>
+				<span class="dashLine"></span>
+				<div class="mTGAdd"><img src="{weikucms:$staticFilePath}/lm/img/index_ad3.png" width="100%" /></div>
+			</div>
+		</section>
+
+		<div class="fixBottonShare shareMa">
+			<div class="con bg"></div>
+			<div class="con mMessageBody" style="margin-top:10px;">
+				<div class="mItem textMiddle">
+                	<img src="{weikucms:$staticFilePath}/lm/img/ewm.png" width="60" />
+					<div class="h6">扫描获取页面</div>
+				</div>
+				<div class="mItem" style="width:46%;">
+                	<p>文章属性: 非每赞官方认证</p>
+                	<p>微商编号: mz200583 </p>
+                	<p>责任编辑: 美名mmwin</p>
+                	<p>公众号: 天际网(tianjiwang)</p>
+                </div>
+				<div class="mItem textMiddle">
+                	<img src="{weikucms:$staticFilePath}/lm/img/ewm.png" width="60" />
+					<div class="h6">扫描关注公众号</div>
+			</div>
+                <p class="cot">点击关注公众号</p>
+		</div>
+			
+            <div class="fixBottonShare bShareMa"><img src="{weikucms:$staticFilePath}/lm/img/share.png" width="30" class="shareImg" /></div>	
+            
+		<!-- 占位符 -->
+		<div style="height:172px;background:#FFFFFF;"></div>
+		
+    </body>
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>   
+    <script type="text/javascript">
+
+    	$(function(){    		
+    		$(".preSell.off a").click(function(e){
+    			e.preventDefault();
+    		});
+    		/*假如已经结束了的预售不需要点击跳转了，就可以使用以上点击事件的代码，如果还需要，就把上面的代码删了或注释掉。*/
+
+    		if($(".preSell").hasClass('off')){
+    			/*判断preSell里如果有off，就代表活动结束了，下面的代码就是改变按钮文字，若后台已改，此代码亦可删*/    			
+    			$(".preSell.off").find('.toPreBuy').html("已售罄");
+    		}
+    	});
+    </script>
+</html>

@@ -1,0 +1,108 @@
+<include file="Public:head"/>
+
+
+<div class="cLineB">
+    <h4 class="left">微信活动发放管理</h4>
+    <div class="clr"></div> 
+</div>
+
+<div class="cLineB">
+    本次活动中奖人数：<span class="redamount">{weikucms:$count}个</span></div>
+        电话:<input type="text" placeholder="请输入电话号码" id="tel">
+        SN码:<input type="text" placeholder="请输入sn码" id="sn">
+        <button class="btn btn-success btn-sm" id="search">搜索</button>
+                <a class="btn btn-success btn-sm" href="{weikucms::U('Packet/exportSn',array('lid'=>$lid))}">导出数据</a>
+<div class="cLine" style=" padding: 8px 0">
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR style="text-align: center;">
+                    <TH class="select">序号</TH>
+                    <TH>SN码(中奖号)</TH>
+                    <TH>奖项</TH>
+                    <TH>手机号</TH>
+                    <TH>微信昵称</TH>
+                    <TH>中奖时间</TH>
+                    <TH>操作</TH>
+                </TR>
+
+            </THEAD>
+            <TBODY>
+            <volist name="data" id="data" key="k" >
+                <TR style="line-height:30px;height: 43px;line-height: 59px;">
+                    <td class="select">{weikucms:$k}</td>
+                    <td>{weikucms:$data.sn}</td>
+                    <td>{weikucms:$data.gname}</td>
+                    <td>{weikucms:$data.tel}</td>
+                    <td>{weikucms:$data.nickname}</td>
+                    <td>{weikucms:$data.gtime}</td>
+                    <td>
+                        <if condition="$data['status'] eq 0">
+                            <!-- Large modal -->
+                            <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/exchange",array("lid"=>$lid,"gid"=>$data[id]))}'>兑换</a>
+                            <else/>
+                                <span>已领取</span>
+                        </if>
+                    </td>
+                </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form> 
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+<div class="cLine">
+    <script>
+        $(function(){
+            $("#search").click(function(){
+                var tel=$("#tel").val();
+                var sn=$("#sn").val();
+
+                var url="{weikucms::U('Packet/sn',array('id'=>$lid))}";
+                if(tel!=""){
+                    url=url+"&tel="+tel;
+                }
+                if(sn!=""){
+                   url=url+"&sn="+sn;
+                }
+                location.href=url;
+            })
+        })
+    </script>
+</div>
+</div>
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<script>
+
+    function checkAll(form, name) {
+        for (var i = 0; i < form.elements.length; i++) {
+            var e = form.elements[i];
+            if (e.name.match(name)) {
+                e.checked = form.elements['chkall'].checked;
+            }
+        }
+    }
+
+    function changesort(tid, sortval) {
+
+        var image = new Image();
+        image.src = 'index.php?ac=app&op=sort&wxid=gh_423dwjkewad&tid=' + tid + '&sort=' + sortval + '&r=' + Math.random();
+
+    }
+</script>
+<!--底部-->
+</div>
+<include file="Public:footer"/>

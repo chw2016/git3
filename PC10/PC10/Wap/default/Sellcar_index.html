@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <include file="Public:weiweb"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{weikucms:$tpl['name']}</title>
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/sellcar/css/default.css" type="text/css">
+	<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/ga.js">
+		</script>
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery-1.8.2.min.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/common.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.mobile-1.2.0.min.js"></script>
+	<link href="{weikucms::STATICS}/wapweiui/weiweb/sellcar/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar.js/mobiscroll.custom-2.4.5.min.js" type="text/javascript"></script>
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.form.js" type="text/javascript"></script>
+	<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/upfile.js" type="text/javascript"></script>
+		<style type="text/css">
+.demo{width:100%;}
+.demo p{line-height:32px}
+.btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 5px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;cursor:pointer;background-color:#FF8000;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+.btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+.progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+.bar {background-color: #FF8000; display:block; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+.files{height:22px; line-height:22px; margin:5px 0}
+.delimg{margin-left:20px; color:#090; cursor:pointer}
+</style>
+	</head>
+	<body>
+
+<div class="publicList wml100">
+	<div style="border:width:40%;margin:0 auto;padding:3px 0 6px 0;text-align:center;" id="checkimg">
+        <form id="myupload" action="{weikucms::U('Wap/Sellcar/uploadsT',array('token'=>$token))}" method="post" enctype="multipart/form-data">
+				   <div class="demo">
+						<div id="showimg" style="text-align:center;width:100%;height:60px;"></div>
+						<div style="height:10px;"></div>
+						
+						<div class="btn" style="width:100px;">
+							<span>上传图片</span>
+							<input id="fileupload" type="file" name="mypic">
+						</div>
+						<p>说明：只允许上传gif/jpg格式的图片，图片大小不能超过500k。</p>
+						<input type="hidden" value="" id='url' name="imgurl"/>
+				   </div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#upload').click(function(){
+            if ($('#file').val() == "") {
+                alert('请选择文件！');
+                return false;
+            };
+        })
+    })
+</script>
+<div class="publicList wml100">
+    <ul>
+        <li>
+        	<div class="li-l">车辆种类</div>
+			<div class="li-r">
+				<select id="species" class="select">
+					<option value="1" selected>轿车</option>
+					<option value="2">SUV越野车</option>
+					<option value="3">跑车</option>
+					<option value="4">商务车</option>
+					<option value="5">面包车</option>
+					<option value="6">客车</option>
+					<option value="7">货车</option>
+					<option value="8">皮车</option>
+					<option value="9">摩托车</option>
+					<option value="10">工程车</option>
+				</select>
+			</div>
+			</a>
+		</li>
+        <li class="noAfter">
+            <div class="li-l">品牌车型</div>
+            <div class="li-r">		
+            	<input type="text" id="brand" placeholder="请输入品牌车型" value="" class="input" maxlength="20"/>
+             </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">预售价格</div>
+            <div class="li-r">
+				<input id="presell" placeholder="请输入预售价格" value="" class="input" maxlength="20">
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">排量</div>
+            <div class="li-r">
+            	<input id="first" placeholder="汽车排量" value="" class="input" maxlength="11">
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l" style="font-size:12px;">行驶里程(万公里)</div>
+            <div class="li-r">
+            	<input id="mileage" placeholder="输入行驶里程" class="input" value="">
+            </div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">车辆上牌时间</div>
+            <div class="li-r">
+            	<input value="" placeholder="输入车辆上牌时间" class="input" id="sptime" type="date" maxlength="11">
+			</div>
+        </li>
+        <li>
+            <div class="li-l">车身颜色</div>
+            <div class="li-r">
+				<select id="carColor" class="select">
+					<option value="1" selected>黑色</option>
+					<option value="2">红色</option>
+					<option value="3">蓝色</option>
+					<option value="4">白色</option>
+					<option value="5">绿色</option>
+					<option value="6">黄色</option>
+					<option value="7">银灰色</option>
+					<option value="8">灰色</option>
+					<option value="9">橙色</option>
+					<option value="10">其他</option>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">原车用途</div>
+            <div class="li-r" id="caruser">
+            	<!-- #51a351 -->
+				<span style="background:#FF8000;color:#fff;padding:8px;cursor:pointer;border-radius:5px;" val="0">非运营</span>
+				<span style="background:#aaa;color:#fff;padding:8px 16px;cursor:pointer;border-radius:5px;" val="1">运营</span>
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">变速器</div>
+            <div class="li-r" id="speedM">
+            	<span style="background:#FF8000;color:#fff;padding:8px 3px;cursor:pointer;border-radius:5px;" val="1">手动</span>
+				<span style="background:#aaa;color:#fff;padding:8px 3px;cursor:pointer;border-radius:5px;" val="2">自动</span>
+				<span style="background:#aaa;color:#fff;padding:8px 2px;cursor:pointer;border-radius:5px;" val="3">手自一体</span>
+			</div>
+        </li>
+        <li>
+            <div class="li-l">燃油类型</div>
+            <div class="li-r">
+				<select id="gasType" class="select">
+					<option value="1" selected>汽油</option>
+					<option value="2">柴油</option>
+					<option value="3">电力</option>
+					<option value="4">混合动力</option>
+					<option value="5">燃气</option>
+				</select>
+            </div>
+        </li>
+         <li>
+            <div class="li-l">排放标准</div>
+            <div class="li-r">
+				<select id="emission" class="select">
+					<option value="0" selected>未知</option>
+					<option value="1">国一</option>
+					<option value="2">国二</option>
+					<option value="3">国三</option>
+					<option value="4">国三+OBD</option>
+					<option value="5">国四</option>
+					<option value="6">国五</option>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">能否过户</div>
+            <div class="li-r" id="transfer">
+            	<!-- #51a351 -->
+				<span style="background:#FF8000;color:#fff;padding:8px 16px;cursor:pointer;border-radius:5px;" val="1">能</span>
+				<span style="background:#aaa;color:#fff;padding:8px;cursor:pointer;border-radius:5px;" val="0">不能</span>
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">能否按揭</div>
+            <div class="li-r" id="mortgage">
+            	<!-- #51a351 -->
+				<span style="background:#FF8000;color:#fff;padding:8px 16px;cursor:pointer;border-radius:5px;" val="1">能</span>
+				<span style="background:#aaa;color:#fff;padding:8px;cursor:pointer;border-radius:5px;" val="0">不能</span>
+			</div>
+        </li>
+        <li class="noAfter">
+                <div class="li-l">联系方式</div>
+                <div class="li-r">
+                    <input value="" placeholder="请输入联系方式" class="input"
+                           id="contact" type="text" maxlength="11">
+                </div>
+            </li>
+            <li class="noAfter">
+            <div class="li-l">车况描述</div>
+            <div class="li-r">
+            	<textarea id="carcondition" placeholder="请输入车况描述" style="border:1px solid #bbb;" cols="16"></textarea>
+			</div>
+        </li>
+    </ul>
+</div>
+
+<div class="button clearfix">
+	<!-- <button id="saveData">保　存</button> -->
+	<!-- <input type="button" value="保　存" style="background:#FF8000;display:block;width:100%;padding:10px;color:#fff;font-size:15px;border-radius:5px;" id="saveData"> -->
+	<button type="button" id="saveData" name="button" style="background:#FF8000;display:block;width:100%;padding:10px;color:#fff;font-size:15px;border-radius:5px;">保　存</button>
+</div>
+
+<style type="text/css">
+	.green{
+		background:#FF8000 !important;
+	}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		//点击事件
+		$('#caruser').children('span').click(function(){
+			$(this).addClass('green').siblings().removeClass('green').css('background','#aaa');
+		})
+		$('#speedM').children('span').click(function(){
+			$(this).addClass('green').siblings().removeClass('green').css('background','#aaa');
+		})
+		$('#transfer').children('span').click(function(){
+			$(this).addClass('green').siblings().removeClass('green').css('background','#aaa');
+		})
+		$('#mortgage').children('span').click(function(){
+			$(this).addClass('green').siblings().removeClass('green').css('background','#aaa');
+		})
+		//接收数据
+		
+		$('#saveData').click(function(){
+
+			//车辆种类
+			var species=$('#species').val();
+			//品牌车型
+			var brand=$('#brand').val();
+			//预售价格
+			var presell=$('#presell').val();
+			//初次上牌时间
+			var first=$('#first').val();
+			//行驶里程
+			var mileage=$('#mileage').val();
+			//车辆上牌时间
+			var sptime=$('#sptime').val();
+			//车身颜色
+			var carColor=$('#carColor').val();
+			// caruser 原车用途
+			var caruser=$('#caruser').find('.green').attr('val');
+			//speedM变速器
+			var speedM=$('#speedM').find('.green').attr('val');
+			//燃油类型
+			var gasType=$('#gasType').val();
+			//排放标准
+			var emission=$('#emission').val();
+			var contact=$('#contact').val();
+			//能够过户transfer
+			var transfer=$('#transfer').find('.green').attr('val');
+			// alert(transfer);
+			//mortgage能够按揭
+			var mortgage=$('#mortgage').find('.green').attr('val');
+            //上传的图片的路径
+            var imgurl=$('#url').val();
+			// alert(mortgage);
+			//carcondition车况描述
+			var carcondition=$('#carcondition').val();
+
+			if(! first){
+                	alert('初次上牌时间不能为空');
+               	 	return false;
+            	}
+            if(! brand){
+                	alert('品牌车型不能为空');
+               	 	return false;
+            	}
+            if(! presell){
+                	alert('预售价格不能为空');
+               	 	return false;
+            	}
+            if(! sptime){
+                	alert('车辆上牌时间不能为空');
+               	 	return false;
+            	}
+            if(! mileage){
+                	alert('行驶里程不能为空');
+               	 	return false;
+            	}
+            if(! carcondition){
+                	alert('车况描述不能为空');
+               	 	return false;
+            	}
+            $(this).text('正在保存...');
+			var url="{weikucms::U('Wap/Sellcar/saveCar',array('token'=>$token))}";
+		 	$.post(url,{species:species,brand:brand,contact:contact,presell:presell,first:first,mileage:mileage,sptime:sptime,carColor:carColor,caruser:caruser,speedM:speedM,gasType:gasType,emission:emission,transfer:transfer,mortgage:mortgage,carcondition:carcondition,imgurl:imgurl},
+		 		function(data){
+            	if(data.status == 1){
+               		// alert(data.info);
+               		$('#saveData').text(data.info);
+                	setTimeout(function(){
+                    	window.location.href = data.url;
+                	},'1000');
+            	}else{
+               		// alert(data.info);
+               		$('#saveData').text(data.info);
+            	}
+        	},'json');
+	})
+})
+</script>
+	</body>
+</html>

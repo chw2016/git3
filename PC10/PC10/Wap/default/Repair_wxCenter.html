@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{weikucms:$tpl['name']}</title>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/imagescroll.css" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/usercenter_bg.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jscommon.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.touchSlider.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $(".main_visual").hover(function(){
+        $("#btn_prev,#btn_next").fadeIn()
+    },function(){
+        $("#btn_prev,#btn_next").fadeOut()
+    });
+    
+    $dragBln = false;
+    
+    $(".main_image").touchSlider({
+        flexible : true,
+        speed : 200,
+        btn_prev : $("#btn_prev"),
+        btn_next : $("#btn_next"),
+        paging : $(".flicking_con a"),
+        counter : function (e){
+            $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+        }
+    });
+    
+    $(".main_image").bind("mousedown", function() {
+        $dragBln = false;
+    });
+    
+    $(".main_image").bind("dragstart", function() {
+        $dragBln = true;
+    });
+    
+    $(".main_image a").click(function(){
+        if($dragBln) {
+            return false;
+        }
+    });
+    
+    timer = setInterval(function(){
+        $("#btn_next").click();
+    }, 3000);
+    
+    $(".main_visual").hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        },3000);
+    });
+    
+    $(".main_image").bind("touchstart",function(){
+        clearInterval(timer);
+    }).bind("touchend", function(){
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        }, 3000);
+    });
+
+    //调整图片大小
+     $('.main_image>ul>li>img').css({'width':$('.main_image>ul>li').width()+'px','height':'180px'});
+    
+});
+</script>
+</head>
+<body>
+<div id="bigAll">
+        <div class="main_visual">
+            <div class="flicking_con">
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+            </div>
+            <div class="main_image">
+                <ul>
+                    <li><img src="{weikucms::STATICS}/wapweiui/service/images/Userbanner.png"></li>
+                    <li><img src="{weikucms::STATICS}/wapweiui/service/images/Userbanner.png"></li>
+                    <li><img src="{weikucms::STATICS}/wapweiui/service/images/Userbanner.png"></li>
+                </ul>
+                <a href="javascript:;" id="btn_prev"></a>
+                <a href="javascript:;" id="btn_next"></a>
+            </div>
+            <div style="opacity:0.5;width:100%;height:30px;position:absolute;bottom:0px;"></div>
+        </div>
+
+</div>
+<div class="menu-con">
+       <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxEdit&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+            <div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/userInfoMation.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+            <em>用户资料</em>
+        </a>
+        <!--<a href="index.php?g=Wap&amp;m=Repair&amp;a=wxCoupon&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/Coupon.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>优惠券</em>
+        </a>-->
+        <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxScore&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/Integral.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>积分</em>
+        </a>
+        <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxCode&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/myTOT.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>我的二维码</em>
+        </a>
+        <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxWeiquan&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/protectPower.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>维权</em>
+        </a>
+        <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxOrder&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/fixed.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>保修</em>
+        </a>
+        <a href="index.php?g=Wap&amp;m=Repairfan&amp;a=wxWarranty&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" style="padding-top:6px;" >
+        	<div>
+                <img src="{weikucms::STATICS}/wapweiui/service/images/warranty.png" style="overflow:hidden;width:64px;height:64px;border-radius:100%;">
+            </div>
+			<em>电子保修单</em>
+        </a>
+
+    </div>
+
+<!--<div style="width:auto;line-height:24px;border:1px solid #dcdcdc;margin-top:10px;margin-left:1px;background:#f4f3f3;padding:8px 0 8px 20px;font-weight:700;font-family:Microsoft YaHei;">-->
+		<!--<span style="color:#6b6969;">新闻动态</span><br/>-->
+<!--</div>-->
+
+<!--<div style="width:90%;margin:15px auto 10px;">-->
+	<!--<ul>-->
+		<!--<volist id="value" name="newsData" key="i">-->
+			<!--<li class="line" style="position:relative;margin-bottom:2px;">-->
+				<!--<a href="index.php?g=Wap&amp;m=Repair&amp;a=news&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&amp;id={weikucms:$value.id}">-->
+					<!--{weikucms:$i}：{weikucms:$value.title}-->
+					<!--<img src="{weikucms::STATICS}/wapweiui/service/images/jiantou.png" width="18px" heigth="18px" style="position:absolute;top:3px;right:0;"/>-->
+				<!--</a>-->
+			<!--</li>-->
+		<!--</volist>-->
+        <!--<if condition="$isMore eq 1">-->
+            <!--<li class="line" style="position:relative;">-->
+                <!--<a href="index.php?g=Wap&amp;m=Repair&amp;a=moreNews&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&amp;type=2"  style="padding-left:10px;">-->
+                    <!--更多...<img src="{weikucms::STATICS}/wapweiui/service/images/jiantou.png"  style="position:absolute;right:0;top:3px;" width="18px" height="18px"/>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--<else/>-->
+        <!--</if>-->
+	<!--</ul>	-->
+<!--</div>-->
+<div style="height:60px"></div>
+<footer id="footer">
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxhome&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                    	<span class="Order-index">订单</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxCenter&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                    	<span class="My-index">个人中心</span>
+                    </a>
+                    
+              </div>
+        </div>
+    </div>
+</footer>
+<style type="text/css">
+	.gray{
+		border-top:2px solid #ddd;
+		border-left:2px solid #ddd;
+		border-right:2px solid #888;
+		border-bottom:2px solid #888;
+	}
+    .red{
+		border-top:2px solid #888;
+		border-left:2px solid #888;
+		border-right:2px solid #ddd;
+		border-bottom:2px solid #ddd;
+	}.indexMenu a span{
+        color: #fff;
+    }
+	</style>
+	
+<!--<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>-->
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/Swipe.js"></script>
+     <script>
+        $(function() {
+            slider(3000);//参数为自动切换描述
+            searchFun(".searchbar section");
+            tapclassFun(".blockbox > div");
+            tapclassFun(".blockbox:last > div", "tapclasseee");
+            tapclassFun(".yanzhengBtn", "cloecab00");
+            touchNavFun(".navlistbox");
+        });
+    </script>
+</body>
+</html>

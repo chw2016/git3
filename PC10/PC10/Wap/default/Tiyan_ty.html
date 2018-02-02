@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-免费体验</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+		 <script src="{weikucms::RES}/mru/js/jquery.validate.js"></script> 
+    <!--     <script src="{weikucms::RES}/mru/js2/jquery.validate_helper.js"></script> -->
+        
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt">
+        <div class="youhuiquanmain">
+            <div class="tips">
+                您暂时还没有预约成功，请按下面的指示进行操作预约
+            </div>
+            
+        <form action="" method="post" id="form"  >     
+            <div class="select_box">
+                <select id="abc"  name="name"  >
+                    <option value="{weikucms:$list['name']}" >{weikucms:$list['name']}</option>
+              
+                </select>
+            </div>
+            
+                        <div class="select_box">
+                <select  name="type" >
+               
+                    <option value="免费体验预约">免费体验预约</option>
+
+                </select>
+            </div>
+         
+            <div class="select_box">
+                  <input placeholder="请输入您的姓名" name="xm" value="" style="width:100%; height:35px;background-color:rgb(210,217,223); border:none;text-indent: 5%;" />
+			</div>
+            
+            <div class="select_box">
+              <input placeholder="请输入您的联系方式" name="dh" value="" style="width:100%; height:35px;background-color:rgb(210,217,223); border:none;text-indent: 5%;" />
+			</div>
+            
+            
+       <!--      
+            <div class="select_box">
+                <select class="yy"  name="name" >
+                    <option value="" >请先择预约</option>
+                </select>
+            </div>
+             -->
+
+
+         <!--    <div class="select_box">
+           
+                <select name="time" >
+                
+                  <volist name="Date"  id="v" >
+                
+                    <option value="{weikucms:$v}">{weikucms:$v}</option>
+                  </volist> 
+                </select>
+            </div>
+
+            <div class="select_box">
+          
+                <select name="xs" >
+                <volist name="sj" id="v" >
+                    <option value="{weikucms:$v}">{weikucms:$v}:00</option>
+                </volist>
+                </select>
+            </div> -->
+            <div class="select_box height_max">
+               <textarea placeholder="请输入您的留言"  style="text-indent: 5%;" ></textarea>
+          <!--    name="content"    <textarea    name="content"  placeholder="请您写下不少于10字的评价" >  </textarea> -->
+            </div>
+            
+             
+              <input type="hidden" name="token" class="token"  value="<?php print_r($_GET['token']); ?> " />
+              <input type="hidden" name="openid" class="token"  value="<?php print_r($_GET['openid']); ?> " />          
+              <input type="hidden" name="id" class="token"  value="<?php print_r($_GET['id']); ?> " /> 
+             </form>   
+            <div class="select_box">
+            
+              <button class="btn wrap_top submit" >下一步</button>
+            </div>
+
+            <div class="select_box">
+              <button class="btn wrap_top" onclick='location.href="http://wpa.qq.com/msgrd?v=3&uin=1072503126&site=qq&menu=yes"' >联系客服</button>
+            </div>
+        </div>
+      
+<script>
+   
+
+   
+   $(".submit").click(function(){
+	   $("#form").submit();
+   })
+
+</script>   
+
+
+<script type="text/javascript">
+
+$(function(){
+	if($('#form').length > 0){
+		$('#form').validate({
+                //声明
+		rules: {
+			xm : "required",			
+			dh: "required",
+			content : "required",
+		
+		},
+                //跳出内容
+		messages: {
+			xm : "请输入姓名",			
+			dh: "请输入联系方式",
+			content : "请输入留言",
+   		},
+               //错误信息
+   		errorPlacement: function(error, element) {  
+   			var tipsContent = error.html();
+		    msg.alert(tipsContent,"知道了");
+		    //error.appendTo(element.parent());  
+		    return false;
+		},
+               //提交方式
+		submitHandler:function(form){
+			form.submit();   //post提交表单
+
+                },    
+		onkeyup: false,
+		onfocusout: false
+	});
+	}
+
+})
+
+
+</script>             
+<include file="./tpl/Wap/default/mrufx.html" /> 
+    </body>
+</html>

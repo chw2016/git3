@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<title>运动方案</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/8.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+		
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">运动方案</span>
+		</div> -->
+		<!-- 跑步 -->
+		<div class="run">
+			<span id="runtype">{weikucms:$datas.runtype}</span><!-- <span>（大约为<span id="km">{weikucms:$datas.km}</span>km/h）</span> -->
+		</div>
+		<if condition="$Number eq 1">
+		<div id="header">
+			<span style="padding-right:0;color:#FF5757;font-size:14px;text-align:center;">你还没有定制过方案，赶紧去定制吧！</span>
+		</div>
+			<script type="text/javascript">
+					$(function(){
+						
+						$('#adjust').click(function() {
+							window.location.href = "{weikucms::U('Wap/Reduce/scheme',array('token'=>$token,'openid'=>$openid))}";
+						});
+					})
+			</script>
+		<else/>
+		</if>
+		<!-- 计算 -->
+		<div class="count">
+			<span id="kcal">{weikucms:$datas.kcal}</span>千卡/<span id="minute">{weikucms:$datas.minute}</span>分钟
+		</div>
+		<!-- 图片以及内容 -->
+		<div class="contents">
+			<span class="imgs">
+				<img src="{weikucms:$datas.img}" width="250px" height="125px" id="img"/>
+			</span>
+			<div class="notice">
+				注意事项
+			</div>
+			<!-- 内容 -->
+			<ol class="news" id="news">
+				<for start="1" end="$length">
+					<li>
+						<span class="circles"></span>
+						<span>{weikucms:$datas[content][$i-1]}</span>
+					</li>
+ 				</for>
+			</ol>
+		</div>
+		<!-- 按钮 -->
+		<div class="btnB">
+			<a href="#" id="btns">换一组</a>
+		</div>
+		<!-- 邀请好友来 -->
+		<!--
+		<div id="Invitation">
+			分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+		</div>
+		-->
+		<div style="height:10px;"></div>
+		<if condition="$Number eq 1">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/subBtnDing.png" width="90px" height="48px" class="adjust" id="adjust"/> 
+		<else />
+		</if>
+		<script type="text/javascript">
+			$(function(){
+				// 遮罩分享
+				$('#Invitation').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+				})
+				var newli,newspan1,newspan2;
+				// 发送ajax
+				$('#btns').click(function(){
+					var url = "{weikucms::U('Wap/Reduce/randomRun',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{}, function(data){
+						$('#runtype').text(data.runtype);
+						// $('#km').text(data.km);
+						$('#kcal').text(data.kcal);
+						$('#minute').text(data.minute);
+						$('#img').attr('src',data.img);
+						// $('#grams').text(data.grams);
+						// alert(data.content[0]);
+						var getdata = new Array();
+						for(var x in data.content){
+							getdata[x] = data.content[x];
+						};
+						// alert(getdata.length);
+						$('.news').children('li').remove();
+						for (var i = 0; i < getdata.length; i++) {
+							newli = document.createElement('li');
+							newspan1 = document.createElement('span');
+							newspan1.setAttribute('class','circles');
+							newspan2 = document.createElement('span');
+							newspan2.innerHTML = getdata[i];
+							newli.appendChild(newspan1);
+							newli.appendChild(newspan2);
+							document.getElementById('news').appendChild(newli);
+						};
+					},'json');
+				})
+			})
+		</script>
+	</body>
+</html>

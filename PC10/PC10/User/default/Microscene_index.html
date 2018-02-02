@@ -1,0 +1,68 @@
+<include file="Public:head"/>
+
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>可以添加微信场景，每一行为场景为场景的一页</li>
+            <li>可以添加多个微信场景，场景的类型有图片，视频，图文类型，轮播图以及音频背景</li>
+        </ol>
+    </div>
+
+ <div class="cLineC" style="line-height: 32px;">
+ <a href="{weikucms::U('Microscene/add',array('token'=>$token,'pid'=>$pid))}" class="btn btn-primary">添加微场景</a>　
+ <a href="{weikucms::U('Microscene/light',array('token'=>$token))}" class="btn btn-primary" style="float:right;">&nbsp;&nbsp;返&nbsp;&nbsp;回&nbsp;&nbsp;</a>
+</div>
+
+
+ <div class="msgWrap form">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>微场景类型</th>
+            <th>排列顺序</th>
+            <th width="450px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="info" id="vo" key="i">
+            <tr>
+                <td>{weikucms:$i}</td>
+                <td><if condition="$vo['type'] eq 1">视频链接<elseif condition="$vo['type'] eq 2" />轮播图<elseif condition="$vo['type'] eq 3" />图片<elseif condition="$vo['type'] eq 4" />图文搭配<elseif condition="$vo['type'] eq 5" />地理位置及联系方式<else />预约提交</if></td>
+                <td>{weikucms:$vo.sorts}</td>
+                <td>
+                    <!-- <a class="btn btn-success btn-sm" target="_blank" href="{weikucms::U('Wap/Microscene/index',array('id'=>$vo['id'],'token'=>$token))}" title="查看">查看</a> -->
+                     <a href="{weikucms::U('Microscene/edit',array('id'=>$vo['id'],'token'=>$token,'pid'=>$pid))}" title="编辑" class="btn btn-success btn-sm">编辑</a>
+                    <a href="#" onclick="source_delete('{weikucms::U('Microscene/del',array('id'=>$vo['id'],'token'=>$token,'pid'=>$pid))}')" title="删除" class="btn btn-danger btn-sm">删除</a>
+                    <if condition="$vo['appoint'] eq 1">
+                        <a href="{weikucms::U('Microscene/lookup',array('id'=>$vo['id'],'token'=>$token,'pid'=>$pid))}" title="查看人数" class="btn btn-success btn-sm">查看人数</a>
+                    <else />
+                    </if>
+                    
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pager">
+            <if condition="$page eq ''">
+
+            <else />
+                总共
+            </if>
+            {weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+
+ </div>
+
+<include file="Public:footer"/>

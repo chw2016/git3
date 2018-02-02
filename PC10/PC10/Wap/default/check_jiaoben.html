@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>交通在线</title>
+    <meta charset="utf-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="eric.wu" name="author">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/common.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/index.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/traffic.js"></script>
+
+
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+     <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+    <title>日历记事本</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/calendar.css">
+    <script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/lanrenzhijia.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/common/invite.js"></script>
+</head>
+<body class="bj">
+<!-- 头部 -->
+<script type="text/javascript">
+    var url = "{weikucms::U('Check/fengx',array('token'=>$token,'openid'=>$openid))}";
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'uploadImage',
+            'downloadImage',
+            'onMenuShareQZone',
+            'showMenuItems'
+        ]
+    });
+    wx.ready(function(){
+        var title = '交通在线';
+        var link = "{weikucms::U('Check/fengx',array('token'=>$token,'share' = > 1,true,false,true))}";
+        var imgUrl = '{weikucms::STATICS}/wapweiui/check/images/weicha.png}';
+            wx.onMenuShareTimeline({
+                title: 'title', // 分享标题
+                link: 'link', // 分享链接
+                imgUrl: "imgUrl", // 分享图标
+
+                success: function () {
+                    $.post(url,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info)
+                        }else{
+                            msg.alert(rel.info)
+                        }
+                    },'json')
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title: 'title', // 分享标题
+                desc: 'title', // 分享描述
+                link: 'link', // 分享链接
+                imgUrl: 'imgUrl', // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    $.post(url,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info)
+                        }else{
+                            msg.alert(rel.info)
+                        }
+                    },'json')
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            wx.onMenuShareQQ({
+            title: 'title', // 分享标题
+            desc: 'title', // 分享描述
+            link: 'link', // 分享链接
+            imgUrl: 'imgUrl', // 分享图标
+            success: function () {
+                $.post(url,function(rel){
+                    if(rel.status==1){
+                        msg.alert(rel.info)
+                    }else{
+                        msg.alert(rel.info)
+                    }
+                },'json')
+            // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+            // 用户取消分享后执行的回调函数
+            }
+            });
+
+            wx.onMenuShareWeibo({
+                title: 'title', // 分享标题
+                desc: 'title', // 分享描述
+                link: 'link', // 分享链接
+                imgUrl: 'imgUrl', // 分享图标
+                success: function () {
+                    $.post(url,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info)
+                        }else{
+                            msg.alert(rel.info)
+                        }
+                    },'json')
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            wx.onMenuShareQZone({
+                title: 'title', // 分享标题
+                desc: 'title', // 分享描述
+                link: 'link', // 分享链接
+                imgUrl: 'imgUrl', // 分享图标
+                success: function () {
+                    $.post(url,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info)
+                        }else{
+                            msg.alert(rel.info)
+                        }
+                    },'json')
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        )}
+</script>
+</body>
+</html>

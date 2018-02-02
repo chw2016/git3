@@ -1,0 +1,107 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">left:-14px</if>">
+<div class="cLineB">
+      <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+        
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenBranch/index',array('token'=>$token))}&userid={weikucms:$a['userid']}&id={weikucms:$a['kgid']}" <if condition="$hover4 eq 1">class="hover"</if>>幼儿园管理主页</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenBranch/managespecialcourse',array('token'=>$token))}&userid={weikucms:$a['userid']}&id={weikucms:$a['kgid']}">添加课程</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('KindergartenBranch/index',array('token'=>$token))}&userid={weikucms:$a['userid']}&id={weikucms:$a['kgid']}">返回上一页</a>
+            </li>
+        </ul>        
+    </div>
+ 
+</div>
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>提示信息!</strong>
+  <ol>
+    <li>在这里可以添加以及编辑特色课程。</li>
+  </ol>
+</div>
+<div class="box-content">
+ 
+  <div class="cLineB">
+    <h4>所有教课程</h4>
+  </div>
+  <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align:center">编号</th>
+            <th style="text-align:center">幼儿园名称</th>
+            <th style="text-align:center">课程相关照片</th>
+            <th style="text-align:center">课程名称</th>
+            <th style="text-align:center">上课地点</th>
+            <th style="text-align:center">上课时间</th>
+            <th style="text-align:center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="specialcourse" id="vo">
+            <tr>
+              <td style="text-align:center">{weikucms:$vo.id}</td>
+              <td style="text-align:center">{weikucms:$vo.kgname}</td>
+              <td style="text-align:center"><img src="{weikucms:$vo.pic}" style="width: 100px;height: 100px;border-radius: 5px;"/></td>
+              <td style="text-align:center">{weikucms:$vo.name}</td>
+              <td style="text-align:center">{weikucms:$vo.address}</td>
+              <td style="text-align:center">{weikucms:$vo.time}</td>
+              <td class="norightborder" style="text-align:center">
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=KindergartenBranch&amp;a=managespecialcourse&amp;op=1&amp;token={weikucms:$token}&amp;userid={weikucms:$a['userid']}&amp;id={weikucms:$vo.kgid}&amp;course_id={weikucms:$vo.id}" title="编辑">编辑</a>
+                  <a class="btn btn-danger btn-sm" onClick="source_delete('/index.php?g=User&amp;m=KindergartenBranch&amp;a=del_course&amp;token={weikucms:$token}&amp;userid={weikucms:$a['userid']}&amp;id={weikucms:$vo.kgid}&amp;course_id={weikucms:$vo.id}')" href="javascript:;">删除</a>
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=KindergartenBranch&amp;a=check_res&amp;token={weikucms:$token}&amp;userid={weikucms:$a['userid']}&amp;id={weikucms:$vo.kgid}&amp;course_id={weikucms:$vo.id}" title="查看预定">查看预定</a>
+              </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+    <script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var appid = $("#appid").val();
+            var appsecret = $("#appsecret").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            $.post("{weikucms::U('Shopdoor/index')}",
+                    {appid:appid,appsecret:appsecret,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        });
+    });
+
+</script>
+  </div>
+  <div>
+    <ul class="pager">
+      {weikucms:$page}
+    </ul>
+  </div>
+</div>
+<include file="Public:footer"/>

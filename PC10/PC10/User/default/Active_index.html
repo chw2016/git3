@@ -1,0 +1,121 @@
+<include file="Public:head"/>
+<script>
+
+
+    K('#upload_pic').click(function() {
+
+            editor.loadPlugin('image', function() {
+
+                editor.plugin.imageDialog({
+
+                    fileUrl : K('#pic').val(),
+
+                    clickFn : function(url, title) {
+
+                        if(url.indexOf("http") > -1){
+
+                            K('#pic').val(url);
+
+                        }else{
+
+                            K('#pic').val("{weikucms::C('site_url')}"+url);
+
+                        }
+
+                        editor.hideDialog();
+
+                    }
+
+                });
+
+            });
+
+        });
+
+</script>
+<div class="cLineB">
+    <h4 class="left">活动列表</span></h4>
+    <div class="clr"></div>
+</div>
+<div class="cLine">
+    <div class="pageNavigator left">
+        <a href='{weikucms::U("Active/add",array("token"=>$token))}' title='新增活动' class='btn btn-primary'>新增活动</a>
+    </div>
+    <div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR>
+                    <TH>活动名称</TH>
+                    <TH>关键字</TH>
+                    <TH>点击数</TH>
+                    <TH>有效参与人数</TH>
+                    <TH>开始日期</TH>
+                    <TH>截止日期</TH>
+                    <TH>状态</TH>
+                    <TH class="norightborder">操作</TH>
+                </TR>
+            </THEAD>
+            <TBODY>
+                <TR></TR>
+            <volist id="data" name="data">
+                <TR>
+                    <TD>{weikucms:$data.title}</TD>
+                    <TD>{weikucms:$data.keyword}</TD>
+                    <TD>{weikucms:$data.click}</TD>
+                    <TD>{weikucms:$data.join}</TD>
+                    <TD>{weikucms:$data.statdate|date='Y-m-d',###}</TD>
+                    <TD>{weikucms:$data.enddate|date="Y-m-d",###}</TD>                  
+                    <TD>
+                <if condition="$data['status'] eq 0">未开始<elseif condition="$data['status'] eq 1"/>已经开始<else/>已经结束</if>
+
+                </TD>
+
+                <if condition="$data['status'] eq 0">
+                    <TD class="norightborder">
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Active/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Active/edit",array("id"=>$data["id"],"token"=>$token))}'>编辑</a>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Gift/index",array("id"=>$data["id"]))}'>奖品设置</a>
+						                        <br/>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Active/start",array("id"=>$data["id"],"token"=>$token))}'>开始</a>
+                        <a class="btn btn-danger btn-sm" href='{weikucms::U("Active/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+                    	<a class="btn btn-danger btn-sm" href='{weikucms::U("Wap/Forward/index",array("lid"=>$data["id"],"token"=>$token))}'>预览</a>
+					</TD>
+                    <elseif condition="$data['status'] eq 1"/>
+                    <TD class="norightborder">
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Active/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Active/edit",array("id"=>$data["id"],"token"=>$token))}'>编辑</a>
+                        
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Gift/index",array("id"=>$data["id"]))}'>奖品设置</a>
+                    <br/>
+					<a class="btn btn-success btn-sm" href='{weikucms::U("Active/end",array("id"=>$data["id"],"token"=>$token))}'>结束</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Active/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+					<a class="btn btn-danger btn-sm" href='{weikucms::U("Wap/Forward/index",array("lid"=>$data["id"],"token"=>$token))}'>预览</a>
+                    </TD>
+                    <else/>
+                    <TD class="norightborder">
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Active/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Active/edit",array("id"=>$data["id"],"token"=>$token))}'>编辑</a>
+                        
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Gift/index",array("id"=>$data["id"]))}'>奖品设置</a>
+                    <br/>
+					<a class="btn btn-success btn-sm" href='{weikucms::U("Active/start",array("id"=>$data["id"],"token"=>$token))}'>开始</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Active/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+					<a class="btn btn-danger btn-sm" href='{weikucms::U("Wap/Forward/index",array("lid"=>$data["id"],"token"=>$token))}'>预览</a>
+                    </TD>
+                </if>
+                </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form> 
+</div>
+<div>
+    <ul class="pager">{weikucms:$page}</ul>
+</div>
+<include file="Public:footer"/>

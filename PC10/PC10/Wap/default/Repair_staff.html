@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+</head>
+<body>
+<if condition="$type eq 1">
+<div class="pageTitle" style="font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="{weikucms::U('Wap/Repair/home',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">首页</a>&nbsp;>>&nbsp;员工管理
+</div>
+<else/>
+<div class="pageTitle" style="font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="{weikucms::U('Wap/Repair/home',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">首页</a>&nbsp;>>&nbsp;员工管理
+</div>
+</if>
+
+<if condition="$type eq 1">
+	<div class="yxyyList">
+		<ul id="rtable">
+			<if condition="$isNull eq 1">
+				<div class="notContentTips">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>目前还没有出发维修的技师！</p>
+				</div>
+			<else/>
+				<div class="notContentTips">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>您还没添加任何技师哦！</p>
+				</div>
+			</if>
+		</ul>
+	</div>
+	<div class="yxyyList">
+		<ul id="rtable">
+		<volist name="data" id="value">
+			<li id="yy_{weikucms:$value.id}">			
+				<div class="tit">
+					<strong>
+						{weikucms:$value.staff_name}
+					</strong>
+					<!-- <strong>{weikucms:$value.order_id}</strong> --><!-- it is order id, if select it, it is open  -->
+					<span class="state No2">
+						<if condition="$value.staff_status eq 0">未出发
+						<else/>
+							已出发
+						</if>
+					</span>
+				</div>
+				<p>手机号码：{weikucms:$value.staff_telphone}</p>	
+				<a  class="cancel" style="width:100px;border:none;background:#f9b358;color:#fff;border-radius:5px;" href="index.php?g=Wap&m=Repair&a=staffInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">查看详细资料</a>
+			</li>
+	   </volist>
+	  	</ul>
+	</div>
+<else/>
+<div class="yxyyList">
+	<ul id="rtable">
+	<volist name="data" id="value">
+		<li id="yy_{weikucms:$value.id}">			
+			<div class="tit">
+				<strong>
+					{weikucms:$value.staff_name}
+				</strong>
+				<!-- <strong>{weikucms:$value.order_id}</strong> --><!-- it is order id, if select it, it is open  -->
+				
+					<if condition="$value.staff_status eq 0">
+						<span class="state No2">未出发</span>
+						<div style="clear:both;"></div>
+						<p>手机号码：{weikucms:$value.staff_telphone}</p>	
+						<a  class="cancel" style="width:100px;background:#a3ce0f;color:#fff;border:none;border-radius:5px;" href="index.php?g=Wap&m=Repair&a=staffInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">查看详细资料</a>
+					<else/>
+						<span class="state No2">已出发</span>
+						<div style="clear:both;"></div>
+						<p>手机号码：{weikucms:$value.staff_telphone}</p>
+							
+							<a  class="cancel" style="width:100px;bottom:4px;background:#a3ce0f;color:#fff;border:none;border-radius:5px;" href="index.php?g=Wap&m=Repair&a=staffInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}">查看详细资料</a>
+							<a  class="cancel" style="width:100px;bottom:34px;background:#a3ce0f;color:#fff;border:none;border-radius:5px;" href="index.php?g=Wap&m=Repair&a=staffInfo&token={weikucms:$token}&openid={weikucms:$openid}&id={weikucms:$value.id}&type=1">查看地理位置</a> 
+						
+					</if>
+			</div>
+			
+		</li>
+   </volist>
+  	</ul>
+</div>
+</if>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+
+<div class="button clearfix">
+    <div style="width:100%;">
+    	<a href="index.php?g=Wap&m=Repair&a=manStaff&token={weikucms:$token}&openid={weikucms:$openid}" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" class="gray flag">添加新员工</a>  		
+   </div>
+</div>
+
+<!-- <div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div> -->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=home&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=myOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><span class="Order-index">订单</span></a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=recharge&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><span class="My-index">充值</span></a>
+                    
+              </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+function Del(id) {
+	var oid = id;
+	var url = 'index.php?g=Wap&m=Service&a=cancel&token='+$("#token").val()+"&openid="+$("#openid").val();
+	if(confirm("确定取消订单?") ){
+		$.post(url,{id:id},
+            function(data){ 
+                if(data.status == 100){                 	
+                	show_success_tip(data.info);
+                    setTimeout(function(){                        	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 2 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }
+            },'json');
+	
+	}
+}
+
+function detail(id) {
+	var oid = id;
+	var url = 'index.php?g=Wap&m=Service&a=detail&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(url,{id:id},
+          function(data){ 
+              if(data.status == 100){                 	
+                  setTimeout(function(){                        	
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 1 ){
+              	show_error_tip(data.info);
+              	setTimeout(function(){                       	
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 2 ){
+              	show_error_tip(data.info);
+              	setTimeout(function(){                       	
+                      window.location.href = data.url;
+                  },'1000');
+              }
+          },'json');
+
+}
+</script>
+<style type="text/css">
+            .gray{
+                border-top:2px solid #ddd !important;
+                border-left:2px solid #ddd !important;
+                border-right:2px solid #888 !important;
+                border-bottom:2px solid #888 !important;
+            }.red{
+                border-top:2px solid #888 !important;
+                border-left:2px solid #888 !important;
+                border-right:2px solid #ddd !important;
+                border-bottom:2px solid #ddd !important;
+            }.indexMenu a span{
+                 color: #fff;
+            }
+</style>
+<script type="text/javascript">
+	$(function(){
+		$('.flag').mousedown(function(){
+			$(this).removeClass('gray').addClass('red');
+			$(this).children('a').css({'bottom':'2px','right':'2px'});
+		})
+		$('.flag').mouseup(function(){
+			$(this).addClass('gray').removeClass('red');
+			$(this).children('a').css({'top':'0px','left':'0px'});
+		})
+	})
+</script>
+</body>
+</html>

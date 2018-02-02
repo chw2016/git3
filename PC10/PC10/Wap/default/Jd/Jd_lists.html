@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes"/><!-- 页面以应用风格显示 ios -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 页面以应用风格显示 ios -->
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="format-detection" content="email=no" /><!-- 不识别邮件地址 -->
+<title>顾问列表</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<link rel="stylesheet" href="{weikucms::RES}/Jd/css/icon/style.css">
+<script src="{weikucms::RES}/Jd/js/jquery-1.11.2.min.js"></script>
+
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/Jd/js/main.js"></script>
+<style type="text/css">
+	.gw_span{
+		float: left;
+		display: block;
+		width: 23%;
+		height: 40px;
+		line-height: 40px;
+		background-color: #fff;
+		border: 0;
+		font-size:13px;
+		text-align: right;
+	}
+	.tel1{
+		display:  inline-block;
+		height: 27px;
+		width: 27px;
+        background: url("{weikucms::RES}/Jd/images/tel1.png") no-repeat;
+		background-size: 100%;
+		position: relative;
+  		top: 2px;
+	}
+	.tel3{
+		display: inline-block;
+		height: 27px;
+		width: 27px;
+        background: url("{weikucms::RES}/Jd/images/tel3.png") no-repeat;
+		background-size: 100%;
+	}
+
+    .shen{
+        display: inline-block;
+        height: 27px;
+        width: 27px;
+        background: url("{weikucms::RES}/Jd/images/shen.png") no-repeat;
+        background-size: 100%;
+    }
+	.span_i{
+		float: right;
+		display: block;
+		width: 20px;
+		height: 40%;
+		margin-top: -25px;
+
+	}
+	.poab{
+		position: absolute;
+		right: 10px;
+		top: 70px;
+		color: #747474;
+	}
+	.lists_one{
+		  width: 100%;
+		  height: 40px;
+		  border-bottom: 1px solid #ccc;
+	}
+	.lica_ul li div.img {
+		display: block;
+		width: 80px;
+		height: 90px;
+		overflow: hidden;
+		margin-left: 5%;
+		float: left;
+	}
+	select,
+textarea,
+input{
+   -webkit-user-select: auto;
+   -webkit-box-shadow: none;
+   box-shadow: none ;
+   -webkit-appearance: none;
+   border-radius:0;
+   -webkit-border-radius:0;
+}
+.icon_arrow{
+	width: 10px;
+	height: 10px;
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	-webkit-transform: rotate(-45deg);
+	position: absolute;
+	right: 25px;
+	top: 35px;
+}
+.name1{
+	  display: block;
+	  float: left;
+	  font-size: 12px;
+	  height: 35px;
+	  line-height: 35px;
+	  color: #2981DC;
+	  overflow: hidden;
+}
+.fl{
+	float:left;
+	margin-left:10px;
+	position:relative;
+}
+.praise {
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px !important;
+  text-align: center;
+  border-radius: 24px;
+  display: inline-block;
+  color: #fff;
+    background-color: rgba(20, 116, 226, 0.5);
+/*  border: 1px solid #fff;*/
+  display: inline-block;
+  font-size: 16px;
+}
+.arrow-btn{
+    padding: 0 10px;
+}
+.tel2{
+    margin-top: 5px;
+   /* margin-right: 10px;*/
+}
+.praise.icon-thumbs-up.arrow-btn.on{
+    color:red;
+}
+.pab{
+	position: absolute;
+	top: 0;
+	right: -72px;
+}
+</style>
+<script type="text/javascript">
+
+
+    $(function(){
+        $(document).on('touchstart','.arrow-btn',function(){
+       /* $(".arrow-btn").on.click(function(){*/
+            var data=$(this).html();
+            var figure= 0;
+            var thises = $(this);
+            var id = parseInt($(this).attr('data'));
+            var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'adviser'))}";
+            if($(this).hasClass('on')){
+                figure--;
+                
+                $.post(url,{figure:figure,id:id},function(rel){
+                    if(rel.status==1){
+                         data--;
+                         thises.removeClass('on');
+						 thises.html(data);
+                        //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                    }else{
+                        msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                    }
+                },'json')
+            }else{
+                figure++;
+
+                $.post(url,{figure:figure,id:id},function(rel){
+                    if(rel.status==1){
+						 data++;
+                         thises.addClass('on');
+						 thises.html(data);
+                        //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                    }else{
+                        msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                    }
+                },'json')
+            }
+            $(this).html(data);
+        })
+    })
+	</script>
+</head>
+<body  >
+	<div class="top_search">
+	<form action="{weikucms::U('so',get(token,cate,type,openid))}"  method="post" id="form" >
+		<div class="search">
+			<div class="search_input">
+				<input type="text" name="searchwwww" value="<?php echo $_GET['search'] ?>" id="" placeholder="请输入姓名进行搜索">
+				<span class="fa_i" id="search"><!-- goSearch --><i class="fa fa-search"></i></span>
+			</div>
+		</div>
+	</form>	
+	<script type="text/javascript">
+	     $("#search").click(function(){
+	    	 $("#form").submit();
+	     })
+	</script>
+
+
+
+		<div>
+			<span class="gw_span" style="color: #333333;width:25%;">顾问类型：</span>
+			<!-- cate --><select id="aaa" class="form_control4" style="width:75%;font-size:13px;border:0;padding:0;background-color: #fff;">
+                <option value="">请选择顾问类型</option>
+                <foreach name="cate" item="v">
+                	<option <if condition="$_GET['cate'] eq $v['name']" >selected=selected</if> value="{weikucms:$v.name}">{weikucms:$v.name}</option>
+                </foreach>
+		    </select>
+		    <i class="fa fa-sort-desc poab"></i>
+		</div>
+	</div>
+	<ul class="lica_ul limitShoppingBox" style="margin-top:100px;border:0;" id="searchList">
+	<if condition="$adviser" >
+        <foreach name="adviser" item="v">
+       <a href="{weikucms::U('Wap/Jd/adviser',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid,'state'=>$_GET['state']))}">
+        <li class="adviser" style="margin-top: 10px;position: relative; ">
+        <div class="img"><img style="height:93%;" src="{weikucms:$v.head}"></div>
+			<div style="width:60%;height:20px;margin-left:10px;float:left;">
+                <span class="name" style="position: relative; top: -5px;">
+                    {weikucms:$v.name}
+                   <!-- <?php echo str_substr($v['name'],5) ?>-->
+                </span>
+                <span class="name1" style="margin-left: 5px;" >
+<?php
+for($i=0; $i<$v['xin']; $i++){
+    echo '<img style="width: 16px; height: 16px;" src="./tpl/Wap/default/common/Jd/images/star.png" />';
+}
+?>
+                </span>
+			</div>
+            <div class="bz" style="  top: 0px; position: relative; margin-left: 10px;color: #7E7C7C;margin-right: 10px;">
+            <span style="position: relative;top:-15px;margin-left: 10px;color: #9F9F9F;font-size: 13px;">{weikucms:$v.phone}</span>
+                <a class='tel'></a>
+				
+			</div>
+			<div class="fl">
+				<a href="tel:{weikucms:$v.phone}" class='tel'><span class="tel1" ></span></a>
+				<a href="sms:{weikucms:$v.phone}" class='tel'><span class="tel3" ></span></a>
+                <a class='tel'><span class="shen" ></span></a>
+				<span class="praise icon-thumbs-up arrow-btn pab <if condition="$v['praisetype'] eq 1">on</if>" data="{weikucms:$v.id}">{weikucms:$v.praise}</span>
+			</div>
+        <a href="{weikucms::U('Wap/Jd/adviser',array('token'=>$token,'id'=>$v['id'],'openid'=>$openid,'state'=>$_GET['state']))}">
+				<span class="icon_arrow"></span>
+            </a>
+            
+		</li>
+		</a>
+        </foreach>
+      <else/>
+         <li style=" width:100%; margin:0 auto;text-align:center;" >暂无记录</li>
+      </if>  
+	</ul>
+	
+<script>
+   var n=0;
+   var a=0;
+   var timeOut = null;
+   $(document).scroll(function(){
+
+	     //滚动条顶部的偏移==总个文档的高度-窗口的高度
+    	 if($(window).scrollTop()==$(document).height()-$(window).height()){//获取低部
+         if(a!=10){//显示
+        	$("#aaa").show(); 
+         }
+         if(timeOut != null){return;}
+         msg.alert('正在加载数据...', 1000000);
+      	 n++;
+      	 timeOut = setTimeout(function(){//1秒加载一次
+           $.post("{weikucms::U('Jd/lists',array('token'=>$token,'cate'=>$_GET['cate'],'type'=>$_GET['type'],'search'=>$_GET['search']))}",{"n": n},function(html){
+               $('#msgBlur').remove();
+               if($.trim(html) == ''){
+                   return;
+               }
+               timeOut = null;
+        	   $(html).appendTo('.limitShoppingBox');//第五步：拿到class="limitShoppingBox"看效果
+        	
+/*          	    if(!data.str){//隐藏
+        	    	    a=10;
+        	    		$("#aaa").hide(); 
+        	    } */  
+        	},'html');
+      	},1000);   
+     }
+    }) 
+</script> 
+<script type="text/javascript">
+$("#aaa").change(function(){
+	var cate = $(this).val();
+	location.href = "{weikucms::U('lists',get1(cate,'"+cate+"',token,search,type,openid))}";
+})
+
+var searchUrl="{weikucms::U('Wap/Jd/lists',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type'],type))}";
+
+</script>
+</body>
+</html>

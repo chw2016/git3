@@ -1,0 +1,89 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/index',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/ansTotal',array('token'=>$token,'id'=>$id))}" <if condition="$hover1 eq 1">class="hover"</if> >选题答案统计</a>
+            </li>
+
+            
+            <!-- 
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/addSubject',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >微测试题目管理</a>
+            </li>
+           -->
+        </ul>
+    </div>
+</div>
+<div class="cLine">
+<div class="msgWrap">
+ 	<form method="post" action="index.php?ac=vote-manage&amp;id=9878" id="info">
+ 		<input name="delall" type="hidden" value="del">
+  		<input name="wxid" type="hidden" value="gh_423dwjkewad">
+   		<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	     	<thead>
+	       		<tr>
+					<th style="text-align:center;">编号</th>
+					<th style="text-align:center;">姓名</th>
+					<th style="text-align:center;">手机号</th>
+					<th style="text-align:center;">是否中奖</th>
+					<th style="text-align:center;">奖品名称</th>
+					<th style="text-align:center;">单位</th>
+					<th style="text-align:center;">建议</th>
+	           </tr>
+	       </thead>
+	       <tbody>
+			<tr></tr>
+	        <volist id="list" name="list">
+	          <tr>
+	            <td style="text-align:center;">{weikucms:$list.id}</td>
+	            <td style="text-align:center;">{weikucms:$list.name}</td>
+				<td style="text-align:center;">{weikucms:$list.phone}</td>
+				<td style="text-align:center;"><if condition="$list.is_get eq 1">中奖<else/>没中奖</if></td>
+				<td style="text-align:center;">{weikucms:$list.prize_type}</td>
+                <td style="text-align:center;">{weikucms:$list.unio}</td>
+	            <td style="text-align:center;">{weikucms:$list.suggest}</td>  
+	          </tr>
+	       </volist>
+	     </tbody>
+       </table>
+   </form> 
+</div> 
+<div class="cLine">
+  <div class="clr"></div>
+</div>
+</div>
+<script>
+function startOp(url){
+    if(confirm('您确定进行此次操作')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+
+</script>
+
+<include file="Public:footer"/>

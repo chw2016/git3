@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<title>劳动局</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/index.css" />
+		<script src="{weikucms::STATICS}/wapweiui/labor/js/jquery-1.11.1.min.js"></script>
+	    <script src="{weikucms::STATICS}/wapweiui/labor/js/msg.js"></script>
+	    <script src="{weikucms::STATICS}/wapweiui/labor/js/prompt.js"></script>
+	</head>
+	<script>
+		$(function(){
+			$(document).on('touchstart','.btn',function(){
+				var user=$(".laodong_code input").val();
+
+                var role = $('#role').val();
+                alert(role);
+                var url = "{weikucms::U('Labor/chat',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url,{code:user},function(data){
+                    if(data.status==1){
+                        msg.confirm("欢迎进入聊天室");
+                        window.location.href = "{weikucms::U('Room/room',array('token'=>$token,'openid'=>$openid))}"+"&code=" + user + "&role=" +role;
+                    }else{
+                        msg.confirm("系统繁忙！");
+                    }
+                },'json')
+
+			})
+		})
+	</script>
+	<body>
+		<div class="laodong_top">
+			<div class="laodong_yuan">
+				<div class="laodong_img mt5"></div>	
+			</div>
+			<div class="on_line">欢迎进入在线调解！</div>
+		</div>
+		<div class="laodong_nav">
+			<div class="w90"style="color: #CFCFCF;">
+				<p>请在框内输入识别码</p>
+				<div class="laodong_code">
+					<input type="text"   value=""  />
+				</div>
+			</div>
+
+            <div class="w90"style="color: #CFCFCF;">
+                <p>请在选择您的角色</p>
+                <div class="laodong_code">
+                   <select id="role" style="width: 100%;height: 48px;line-height: 48px;border: 0;text-align: center;padding-left: 30%;font-size: 15px;font-family: '微软雅黑', Tahoma, Arial, Helvetica, STHeiti;">
+                       <option value="">请选择您的角色</option>
+                       <option value="0">企业</option>
+                       <option value="1">员工</option>
+                       <option value="2">新区劳动科</option>
+                       <option value="3">大鹏劳动办</option>
+                       <option value="4">南澳劳动办</option>
+                       <option value="5">葵涌劳动办</option>
+                   </select>
+                </div>
+            </div>
+			<div class="laodong_btn">
+				<span class="btn">进入聊天</span>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.shoufuyou.com/order/create?pid=112 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="format-detection" content="telephone=no">
+<title>{weikucms:$tpl.name}</title>
+<link type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style_2.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/index.css">
+
+
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/index.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.touchSlider.js"></script>
+<script type="text/javascript">
+	$(".Loan img").height();
+	$(".Loan_one").css("top",(($(".Loan img").height()/2)-20)+"px");
+window.onload = function(){
+$(".Loan").each(function(i,o){
+			var H = $(this).find("img").height();
+			$(this).find(".Loan_one").css("top",((H/2)-40)+"px");
+	})
+$(".main_visual").css("height",$(".main_image ul li img:first").height());
+$(".main_image ul li").css({
+        height: $(".main_image ul li img:first").height()
+    });
+}
+
+function onMimg(){
+	$("#img1").attr("src","{weikucms::STATICS}/wapweiui/loan/images/ljfu-1.png");
+}
+function onMimg2(){
+	$("#img2").attr("src","{weikucms::STATICS}/wapweiui/loan/images/fxyl.png");
+}
+
+$(function(){
+    $(".main_visual").hover(function(){
+        $("#btn_prev,#btn_next").fadeIn()
+    },function(){
+        $("#btn_prev,#btn_next").fadeOut()
+    });
+
+   	$dragBln = false;
+ 	
+	$(".main_image").touchSlider({
+		flexible : true,
+		speed : 200,
+		btn_prev : $("#btn_prev"),
+	btn_next : $("#btn_next"),
+		paging : $(".flicking_con a"),
+		counter : function (e){
+			$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+		}
+	});
+
+
+	$(".main_image").bind("mousedown", function() {
+		$dragBln = false;
+	});
+
+	$(".main_image").bind("dragstart", function() {
+		$dragBln = true;
+	});
+
+	$(".main_image a").click(function(){
+		if($dragBln) {
+			return false;
+		}
+	});
+
+	timer = setInterval(function(){
+		$("#btn_next").click();
+	}, 3000);
+
+	$(".main_visual").hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		},3000);
+	});
+
+	$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 3000);
+	});
+ 
+});
+</script>
+    <style>
+        .bs {
+            background-size: 100%;
+        }
+        .top-right span{
+            color: #337ab7;
+            text-decoration: none;
+        }
+        #share-wrap{position:fixed;top:0px;left:auto;padding:0px;margin:0 auto;text-align:center;z-index:1100;opacity:1;outline:none;display:block}
+        #share-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            opacity: .8;
+            cursor: pointer;
+            display: block;
+            background-color: #777;
+        }
+        .share-block {
+            display: block!important;
+        }
+        .share_txt {
+            color: #fff;
+            font-size: 2em;
+            float: right;
+            text-align: left;
+        }
+        .share_txt img {
+            border: 0;
+            height: 25px;
+            vertical-align: top;
+            width: 25px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .share_txt p {
+            margin: 0 0 10px;
+        }
+        .mt10 {
+            margin-top: 10px;
+        }
+        .mt20 {
+            margin-top: 20px;
+        }
+       .Loan{
+	   width:100%;
+	   position: relative;
+	   }
+	   .Loan_one{
+	   position: absolute;
+	   right:0px;
+	   }
+
+	   .body_ul li { height: inherit; }
+        .fixB{
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .body_ul li { width: 100%; margin: 0; }
+        .width50 { width: 50% !important; }
+        .bs li{
+            color: #337ab7;
+        }
+
+
+    </style>
+</head>
+<body>
+<!--椤堕儴-->
+
+<div class="top-body">
+    <div class="top-cen width50" style="margin: 0 auto;">
+        <a href="{weikucms::U('pc_index')}" class="logo bs" style="background: url();">
+            <img src="{weikucms::STATICS}/wapweiui/loan/pc/images/logo.png"  height="60px"/>
+        </a>
+        <div class="top-right">
+            <ul>
+                <a class="bs" href="{weikucms::U('pc_cjwt',array('token'=>$token,'openid'=>$openid))}"><li>常见问题</li></a>
+                <a  class="bs" href="{weikucms::U('pc_gywm',array('token'=>$token,'openid'=>$openid))}"><li>关于我们</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="height:auto;margin-left: auto; margin-right: auto;" class="width50">
+<div class="main_visual" style="height: 0px;">
+	<div class="flicking_con">
+		<volist name="imgs" id="vo">
+            <a href="">{weikucms:$i}</a>
+		</volist>
+
+	</div>
+	<div class="main_image">
+		<ul>
+			
+            <volist name="imgs" id="vo">
+			<li ><a><img src="{weikucms:$vo.img}" width="100%" height="100%"></a></li>
+            </volist>
+		</ul>
+        <span href="javascript:;" id="btn_prev"></span>
+        <span href="javascript:;" id="btn_next"></span>
+	</div>
+</div>
+<!--main_visual end-->
+<div class="body_body">
+	<ul class="body_ul">
+        <volist name="fl" id="vo">
+		<a href="{weikucms::U('loan_list',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+		<li class="Loan">
+				<img src="{weikucms:$vo.pic}" width=100%>
+				<div class="Loan_one">
+			<!--<div class="ul_li_div">立即查看</div>-->
+			</div>
+		</li></a>
+            </volist>
+        <if condition="$cp">
+
+        <a href="{weikucms::U('credit_list',array('token'=>$token,'openid'=>$openid))}">
+        	
+        	
+		<li class="Loan">
+			<img src="./tpl/static/wapweiui/loan/images/img_main_2.jpg" width=100%; />
+			<div class="Loan_one">
+			<!--<div class="ul_li_div">立即借款</div>-->
+			  </div>
+		</li>
+        </a>
+            </if>
+		<li style="width: 80%;margin: 0px 35% 10px 10%;">
+			<div class="li_div"></div>
+            <div id="fx_share" style="position: relative; top: -43px; background-color: #FFF; height: 79px; width: 186px; margin: 0 auto;">
+
+            <div class="li_img_cen">
+			<a href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}">
+				<div class="li_img1" onmousedown="onMimg()">
+					<img id="img1" src="{weikucms::STATICS}/wapweiui/loan/images/ljfu.png" style="width:78px;">
+				</div>
+			</a>
+			</div>
+			<div class="li_img_cen_1"  >
+			<a href="{weikucms::U('fx',array('token'=>$token,'openid'=>$openid))}">
+				<div class="li_img1" onmousedown="onMimg2()">
+					<img id="img2" src="{weikucms::STATICS}/wapweiui/loan/images/fxyl-1.png" style="width:78px;">
+				</div>
+			</a>
+			</div>
+                </div>
+		</li>
+	</ul>
+</div>
+    </div>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style(1).css">
+<script>
+    $(function(){
+        var x = 0;
+        $("#more").click(function(){
+            if(x == 0){
+                $("#more1").css("display","block");
+                x=1;
+            }else{
+                $("#more1").css("display","none");
+                x=0;
+            }
+
+
+        })
+
+    })
+</script>
+<style>
+    #more1 li{
+        width: 70px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        font-size: 12px;
+    }
+    .fixB .myli.on .icon5{
+        background-position: 0 7px;
+    }
+
+</style>
+<div class='fixB width50' style="z-index: 999;margin-left: 25%;margin-top: auto;<if condition="$foot_css eq 1">height:53px;</if>" >
+<ul class='myul ptb5 c999999'>
+    <li class='myli <if condition="$foot eq 1">on</if>'>
+        <a href="{weikucms::U('Loan/index',array('token'=>$token,'openid'=>$openid))}">
+            <div class='icon1'></div>
+            <div class="textMiddle">首页</div>
+        </a>
+    </li>
+    <li class='myli <if condition="$foot eq 2">on</if>'>
+        <a href="{weikucms::U('Loan/baoku',array('token'=>$token,'openid'=>$openid))}">
+            <div class='icon2'></div>
+            <div class="textMiddle">爆款</div>
+        </a>
+    </li>
+    <li class='myli <if condition="$foot eq 3">on</if>'>
+        <a href="{weikucms::U('Loan/user_index',array('token'=>$token,'openid'=>$openid))}">
+            <div class='icon3'></div>
+            <div class="textMiddle">我的</div>
+        </a>
+    </li>
+    <li class='myli <if condition="$foot eq 4">on</if>'>
+        <a href="{weikucms::U('Commercedyb/zoneIndex',array('token'=>$token,'openid'=>$openid))}">
+            <div class='icon4'></div>
+            <div class="textMiddle">社区</div>
+        </a>
+    </li>
+    <li class='myli <if condition="$foot eq 5">on</if>' style="position: relative;">
+        <div style="position: absolute;top: -100px;right: 2px;display: none;" id="more1">
+            <ul style="border: 1px solid gray;border-radius: 5px;">
+                <li style="background-color: #FFF;"><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6057">铆钉突击队</a></li>
+                <li><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6058">勾兑勾兑</a></li>
+                <li><a href="http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&token=55cad4ba46c41a8fde9c84274e36fa83&id=6059">帮助</a></li>
+            </ul>
+        </div>
+        <a href="{weikucms::U('Loan/more',array('token'=>$token,'openid'=>$openid))}" id="more7">
+            <!--<a href="javascript:;;" id="more1">-->
+            <div class='icon5'></div>
+            <div class="textMiddle">更多</div>
+        </a>
+    </li>
+</ul>
+</div>
+
+
+
+
+
+<div style="width:100px;height: 40px;float: left;"></div>
+
+<div style="width:100px;height: 35px;float: left;"></div>
+<!----钄楃洊灞�-->
+
+<div id="share-overlay" style="display:none;"></div>
+<div id="share-wrap" style="z-index: 1101;opacity: 1; text-align: center; margin:0 auto;width:100%;outline: none;display: none;">
+    <div class="share_txt" style="font-size:16px;width:55%;margin:10px 0 auto;  margin-top: -49px; ">
+       <!-- <p class="mt10">鏂规硶涓�&nbsp;&nbsp;鐐瑰嚮鍙充笂瑙�img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAOVBMVEX///////////////////////////////////////////////////////////////////////////+0EB4eAAAAEnRSTlMAGBopLC0xQEbj6uvt8Pf4+f6cTTdwAAAAVklEQVRYw+3TSw6AIBAEUVQUxS/e/7Cy6bXJTEwkqXeAWnWHAHzslMUYuGX1BjKBHwSKMTBL4lQN66XzDmnnTASqwxiIMvDKhk0yeod0cSYC1capgFcPTdUS5Jr0Wp0AAAAASUVORK5CYII=" pagespeed_url_hash="3988083293" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">鍥炬爣</p>
+        <p>鐒跺悗 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADcklEQVR42u2aO2uTURiATy1WRSw04CBCFRxUei9NTNN7QqHQJL2kLYiLoIM4tEOxoogIdtC6uKv/QP+BZql1UCeXTg462aKIaYUWS4/PW/wghKTQ5DvJwZzhofCl3znnfd5zT5TWuqpxApwAJ8AJcAKcACfACXACnAAnwAlwAvLR1NRkC8/gyAHf+a8E6OHh4ffNzc2NVStgZmZGJxKJ9fb29mjVChAmJyd3QqHQLZ7VlFNAAtKwAdoH7hcrQJientYDAwMveX6iHAIWQYfDYT06OqqnpqakEaVwF9Tg4GDRAjxGRkZWW1paLpgUEAc9NDQkFfrBAiiyVyjQ83ATXsA7+AzfoWCZY2Njmc7OzklTAtJk3q/g5wsEfxzm4BNogtF9fX0y6+t4PK7Hx8d1KpXat2x65W53d/cj3q/1W0CGbp9d2TbMQgDUQenv788O/BDcgDW6seYznUwmS5IcjUZfs1Se9FNA7pifYwJSZEi1traWMqufhmXQvb29MrNL2b5Awr60tbUF/RKQW0HAy2IJBGGN9Vy6uJTpOxMTE1tdXV3XTAgoNfOX4BeN87Juii166nUTAkoJ/hysE7w3rEzxFUIIUDYJqIOPHR0dpjP/Bk4yBBSirRJwj9lZ9vKmAt+FJahlElRMglKnNQJOwW92fqaCz0AKFMugQrTUaZWAJ2Rkv3H/B1bgMVyFCJyFBjgGap/gV+EiZSs2Ql59Vgmogx9kJl/j03AF6mXCYkncy2BPT48KBoOKZXJvxWGTVOgs8Arq2Qordo/yP1YKiNMlc7eyKxAGJeM1EolIkAc5DO3AbajhMOS9a62Ap1lniZ9wGSTbMksXcxpchxg9JvtMYbWAt7FYTN5bhjP0BMl4sRciH6CRZVRxIeI9t17AN7L9nPcO81fGdbHLqJRxlGU0XxnzNgt4IBnjaOstT8VSqIw7ICdJawV4Nz8meAhyNSbtskyAeZaybqqqUoD29hZVK4C2OAFOQAUEBCwIPlBJAXPelVgFWaANZROQyalom03HLM8bKhB4A8zC9r+132PDpIB07jmeg8jeFxeSBT4vK9QpdUsbstskbTQmIOF9MWIx0kZjAhTH2UWLg18EaaM5AQJbzqR0Ndi0IOhNSEMCpG2F5gz3IyknwAlwApwAJ8AJcAKcACfACXACnAAnIA9/Aaws8FP+zMIHAAAAAElFTkSuQmCC" pagespeed_url_hash="3428687099" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"> 鍙戦�缁欐湅鍙�/p>
+        <p>鎴�<img src="{weikucms:$staticFilePath}/shop/images/a.png" pagespeed_url_hash="1629321881" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"> 鍒嗕韩鍒版湅鍙嬪湀</p>
+        <p class="mt20">鏂规硶浜�&nbsp;&nbsp;閭�濂藉弸鎵簩缁寸爜</p>-->
+        <p style="margin-top: 100px;">请扫描二维码关注</p>
+    </div>
+
+
+    <p style="margin:10px 10%;"><img width="500" height="500" src="{weikucms::STATICS}/wapweiui/loan/images/code_img.png"  ></p>
+
+</div>
+<div style="height: 100px;float: left;"></div>
+
+</body>
+<script>
+    //鎵�湁 A鏍囩閮戒笉璺宠浆寮瑰嚭钄楃洊灞�
+    $("a").not(".flicking_con a,.bs").click(function(){
+
+        var parent5=document.getElementById("share-overlay");
+        $("#share-overlay").removeClass("share-none");
+        parent5.className=parent5.className+" share-block";
+        var parent6=document.getElementById("share-wrap");$("#share-wrap").removeClass("share-none");
+        parent6.className=parent6.className+" share-block";
+        return false;
+
+
+    })
+    $("body").click(function(){
+       $("#share-overlay").removeClass("share-block");
+        $("#share-overlay").addClass('share-none');
+        $("#share-wrap").removeClass();
+        $("#share-wrap").addClass('share-none');
+    });
+</script>
+</html>

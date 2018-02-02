@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{weikucms:$tpl.name}</title>
+		<meta charset="utf-8">
+		<meta content="" name="description">
+		<meta content="" name="keywords">
+		<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+		<meta content="telephone=no, address=no" name="format-detection">
+		<link href="{weikucms::STATICS}/wapweiui/Microscene/css/main.css" rel="stylesheet" />
+        <link href="{weikucms::STATICS}/wapweiui/Microscene/css/round.css" rel="stylesheet" />
+		<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Microscene/js/jquery.event.drag-1.5.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Microscene/js/jquery.touchSlider.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+
+    <script type="text/javascript">
+        window.onload=function(){
+          var id = document.getElementById("loading");
+          setTimeout(function(){document.body.removeChild(id)},1000);
+          if($("#audioBtn").attr("data-src").indexOf("mp3")>1){
+            var url = $("#audioBtn").attr("data-src"); 
+            var auto = is_open=='on' ? 'autoplay' : '';
+            var html = '<audio loop  src="'+url+'" id="media" '+auto+' ></audio>';
+            setTimeout(function(){
+              $("#audioBtn").html(html);
+              $("#audioBtn").show().attr("class",is_open);
+          },500);
+    
+            $("#audioBtn").on('touchstart',function(){
+              var type = $("#audioBtn").attr("class");
+              var media = $("#media").get(0);
+              if(type=="on"){
+                media.pause(); 
+              $("#audioBtn").attr("class","off");
+              }else{
+              media.play();
+              $("#audioBtn").attr("class","on"); 
+                }  
+            })
+            }
+  
+          } 
+    </script>
+    
+		<script type="text/javascript">
+		(function(){
+			var phoneWidth = parseInt(window.screen.width),
+				phoneScale = phoneWidth/640,
+				ua = navigator.userAgent;
+
+			if (/Android (\d+\.\d+)/.test(ua)){
+				var version = parseFloat(RegExp.$1);
+				// andriod 2.3
+				if(version > 2.3){
+					document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+				// andriod 2.3以上
+				}else{
+					document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+				}
+				// 其他系统
+			} else {
+				document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+			}
+		})();
+        		var config = {
+			coverUrl:'',
+			swipeCur: 0,
+			swipeDir:'vertical', // 'vertical' // horizontal
+		}
+    //警示框
+
+    show_error_tip = function(text,time)
+
+    {
+
+      if (typeof(time) == "undefined") { 
+
+        time = 1000;
+
+      }
+
+
+      var wh = $(window).height();
+
+      var ww = $(window).width();
+
+      var top = (wh -48)/2;
+
+      var left = (ww - 160)/2;
+
+      var okImg = "{weikucms::STATICS}/wapweiui/Microscene/imgs/alert.png";
+
+      var tip = '<div id="tips" class="tipsBox" style="z-index:100000;position: fixed;top:'+top+'px;left:'+left+'px;background:#000;opacity:0.9;color:#fff;width:160px;text-align:center;padding:10px;border-radius:10px;"><span><img src='+okImg+' width="39" height="39" style="margin-bottom:8px;"/></span><p>'+text+'</p></div>';
+
+      $('body').append(tip);
+
+  
+
+      if(time>0){
+
+        setTimeout(function(){
+
+            $("#tips").remove();
+
+          }, time);
+
+      }
+
+      return false;
+
+    };
+
+		</script>
+		<script src="{weikucms::STATICS}/wapweiui/Microscene/js/swipe.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/Microscene/js/player.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/Microscene/js/app.js"></script>
+   
+    <style type="text/css">
+        .header{width: 100%;color: #000;font-size: 40px;text-align: center;letter-spacing: 5px;font-weight: bolder;font-family: "Microsoft YaHei";margin-top: 20px;}
+        .data{margin:0 auto;margin-top: 30px;width: 94%;border-radius: 10px;padding: 10px;background: #eff;display: block;color: #000;padding: 15px;font-weight: 100;font-size: 30px;}
+         .data input{border: none;}
+         .data span{letter-spacing: 5px;border-right:1px solid #e1e1e1;padding-right: 20px;}
+         .data .size{width: 20px;height: 20px;}
+         .data .line{width:100%;margin: 20px 0;border: 1px solid #c4c4c4;}
+         .header .more{margin:0 auto;margin-top: 30px;border-radius: 10px;background: #dfd;padding: 10px;width: 94%;}
+         .header .more a{display: block;font-size: 30px;text-align: center;font-weight:100;color: #fff;}
+      </style>
+	</head>
+	<body onselectstart="return true;" ondragstart="return false;">
+    <div id="loading" class="loading">
+      <div class="loadbox">
+        <div class="loadlogo" style="background: url({weikucms::STATICS}/wapweiui/Microscene/imgs/wapwei.png) no-repeat;"></div>
+        <div class="loadbg" style="background: url({weikucms::STATICS}/wapweiui/Microscene/imgs/loadbg.png) no-repeat;"></div>
+      </div> 
+    </div>
+		<div class="container">
+			<div class="loading-img">
+				<!-- 这是开场动画 -->
+				<!-- <img src="http://stc.weimob.com/imgs/loading.gif?v=2014-05-21" /> -->
+        <img src="{weikucms:$bgmu.start}" />
+			</div>
+
+			<div class="swipe" id="swipe">
+				<ul>
+					<volist name="info" id="vo" key="i">
+						<if condition="$i % 2 eq 1">
+						   <if condition="$vo['img_url'] neq ''">
+						      <li>
+						      <!--带按钮的图片需加上class top/middle/bottom ，位置分别在上中下 -->
+					              <div class="top" style="background-image: url({weikucms:$vo.img_url})"></div>
+				              </li>
+                           <elseif condition="$vo['video_url'] neq ''"/>
+                               <li>
+                                <!-- 视频链接 -->
+                                  <div class="top" style="position: relative;background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                      <a href="javascript:void();" data-src="{weikucms:$vo['video_url']}" data-role="video" class="ico_video"></a>
+                                      <div class="ins">{weikucms:$vo.name}</div>
+                                  </div>
+                               </li>
+                           <elseif condition="$vo['txt_img'] neq ''" />
+                               
+                               <li>
+                                <!-- 图文并茂 -->
+                                   <div class="top font" style="background:url({weikucms:$bgmu.bg_url});background-size:cover;display:inline-block;">
+
+                                       <php>
+                                           echo strip_tags(html_entity_decode(htmlspecialchars_decode($vo['txt_img'],ENT_QUOTES)),"<img><i><b><u><span><a>");
+
+                                       </php>
+                                   </div>
+                               </li>
+                               <!-- 图文消息 -->
+                           <elseif condition="($vo['longitude'] neq '') AND ($vo['latitude'] neq '')" />
+                               <li>
+                                <!-- 地图展示 -->
+                                   <div class="top" style="position: relative;background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                       <div style="width:697px;height:400px;border:#ccc solid 1px;position:absolute;" id="dituContent"></div>
+                                       <div class="address">
+                                           <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/position.png" width="30px" height="30px" style="margin:0px 15px"/>
+                                           {weikucms:$vo.address}
+                                       </div>
+                                       <div class="ComSays">
+                                            公司电话
+                                       </div>
+                                       <div class="phone">
+                                            <!--电话号码-->
+                                            <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/phone.png" style="margin-right: 30px"/>
+                                           {weikucms:$vo.relation}
+                                       </div>
+                                       <div class="tel">
+                                           <!--工作时间-->
+                                           <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/clock.png" style="margin-right: 30px"/>
+                                           {weikucms:$vo.worktime}
+
+                                       </div>
+                                       <script type="text/javascript">
+                                           //创建和初始化地图函数：
+                                           function initMap(){
+                                               createMap();//创建地图
+                                               setMapEvent();//设置地图事件
+                                               addMapControl();//向地图添加控件
+                                           }
+
+                                           //创建地图函数：
+                                           function createMap(){
+                                               var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+                                               var point = new BMap.Point("{weikucms:$vo['longitude']}","{weikucms:$vo['latitude']}");//定义一个中心点坐标
+                                               map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+                                               window.map = map;//将map变量存储在全局
+                                           }
+
+                                           //地图事件设置函数：
+                                           function setMapEvent(){
+                                               map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                                               map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                                               map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                                               map.enableKeyboard();//启用键盘上下左右键移动地图
+                                           }
+
+                                           //地图控件添加函数：
+                                           function addMapControl(){
+                                               //向地图中添加缩放控件
+                                               var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                                               map.addControl(ctrl_nav);
+
+                                               //向地图中添加比例尺控件
+                                               var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                                               map.addControl(ctrl_sca);
+                                           }
+
+
+                                           initMap();//创建和初始化地图
+                                       </script>
+                                   </div>
+                               </li>
+                           <elseif condition="$vo['appoint'] eq 1"/>
+                           <li>
+                            
+                            <!-- 立即预约 -->
+                                <div class="top" style="background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                    <div class="header">
+                                      立即预约
+                                      <div class="data">
+                                        <span>姓名</span>
+                                        <input id="names" name="names" placeholder="请输入姓名" type="text"/>
+                                        <div class="line"></div>
+                                        <span>性别</span>
+                                        <input id="man" name="man" type="radio" class="size" value="1"/>&nbsp;<span style="margin-right:16px;border:none;">先生</span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input id="woman" name="man"  type="radio" class="size" value="0" />&nbsp;<span style="border:none;">女士</span> 
+                                        <div class="line"></div>
+                                        <span>电话</span>
+                                        <input id="telphone" name="telphone" placeholder="请输入电话" type="text"/>
+                                        <div class="line"></div>
+                                        <span>营员</span>
+                                        <input id="ok" name="campers" type="radio" class="size" value="1"/>&nbsp;<span style="margin-right:16px;border:none;">是</span>
+                                          &nbsp;&nbsp;&nbsp;
+                                        <input id="no" name="campers"  type="radio" class="size" value="0" />&nbsp;<span style="border:none;">否</span>
+                                        <div class="line"></div>
+                                          <span>人数</span>
+                                          <select id="num">
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                          </select>
+                                          <div class="line"></div>
+                                     <!--   <span>公司</span>
+                                        <input id="company" name="company" placeholder="请输入公司名称" type="text"/>
+                                        <div class="line"></div>
+                                        <span>地区</span>
+                                        &lt;!&ndash; 地区代码 &ndash;&gt;
+                                           <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>
+                                          <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>
+                                          <span id="seachdistrict_div" style="border:none;"><select id="seachdistrict" name="seachdistrict" style="margin-left:150px;margin-top:10px;"></select></span>
+                                          <div style="clear:both;"></div>
+                                        &lt;!&ndash; 地区代码 &ndash;&gt;-->
+                                      </div>
+                                      <!--<div class="more">
+                                        <a href="#" style="color:#222;">点击完善更多信息</a>
+                                      </div>
+                                      <div class="data flags" style="display:none;">
+                                        <span>职位</span>
+                                        <input id="position" name="position" placeholder="请输入职位" type="text"/>
+                                         <div class="line"></div>
+                                        <span>邮箱</span>
+                                        <input id="email" name="email" placeholder="请输入邮箱" type="text"/>
+                                      </div>
+									  -->
+                                      <div class="more Sub" style="background:#73ba5d;color:#fff;">
+                                        <a href="javascript:void(0)" id="subInfo">提交信息</a>
+                                      </div>
+                                    </div>
+                                </div>
+                           </li>
+                           <else />
+
+				       	   </if>
+                        <else />
+                           <if condition="$vo['img_url'] neq ''">
+                              <li>
+					              <div style="background-image: url({weikucms:$vo.img_url})">
+					              <!-- 此处按钮有3个样式，分别为 ico_video/ico_video1/ico_video2 -->
+					    	      <!-- <a href="javascript:void();" data-src="http://www.baidu.com" data-role="video" class="ico_video"></a> -->
+					              </div>
+					          </li>
+                               <!--视频链接-->
+                           <elseif condition="$vo['video_url'] neq ''"/>
+                               <li>
+
+                                   <div style="position: relative;background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                       <a href="javascript:void();" data-src="{weikucms:$vo['video_url']}" data-role="video" class="ico_video"></a>
+                                       <div class="ins">{weikucms:$vo.name}</div>
+                                   </div>
+                               </li>
+
+                           <elseif condition="$vo['txt_img'] neq ''" />
+                               <li>
+                                   <div class="font" style="background:url({weikucms:$bgmu.bg_url});background-size:cover;display:inline-block;">
+                                       <php>
+                                           echo strip_tags(html_entity_decode(htmlspecialchars_decode($vo['txt_img'],ENT_QUOTES)),"<img><i><b><u><span><a>");
+                                       </php>
+                                   </div>
+                               </li>
+                           <elseif condition="($vo['longitude'] neq '') AND ($vo['latitude'] neq '')" />
+                               <li>
+                                   <div style="position: relative;" style="background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                       <div style="width:697px;height:400px;border:#ccc solid 1px;position:absolute;" id="dituContent"></div>
+                                       <div class="address">
+                                           <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/position.png" width="30px" height="30px" style="margin:0px 15px"/>
+                                           {weikucms:$vo.address}
+                                       </div>
+                                       <div class="ComSays">
+                                            公司电话
+                                       </div>
+                                       <div class="phone">
+                                            <!--电话号码-->
+                                            <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/phone.png" style="margin-right: 30px"/>
+                                           {weikucms:$vo.relation}
+                                       </div>
+                                       <div class="tel">
+                                           <!--工作时间-->
+                                           <img src="{weikucms::STATICS}/wapweiui/Microscene/imgs/clock.png" style="margin-right: 30px"/>
+                                           {weikucms:$vo.worktime}
+
+                                       </div>
+                                       <script type="text/javascript">
+                                           //创建和初始化地图函数：
+                                           function initMap(){
+                                               createMap();//创建地图
+                                               setMapEvent();//设置地图事件
+                                               addMapControl();//向地图添加控件
+                                           }
+
+                                           //创建地图函数：
+                                           function createMap(){
+                                               var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+                                               var point = new BMap.Point("{weikucms:$vo['longitude']}","{weikucms:$vo['latitude']}");//定义一个中心点坐标
+                                               map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+                                               window.map = map;//将map变量存储在全局
+                                           }
+
+                                           //地图事件设置函数：
+                                           function setMapEvent(){
+                                               map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                                               map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                                               map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                                               map.enableKeyboard();//启用键盘上下左右键移动地图
+                                           }
+
+                                           //地图控件添加函数：
+                                           function addMapControl(){
+                                               //向地图中添加缩放控件
+                                               var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                                               map.addControl(ctrl_nav);
+
+                                               //向地图中添加比例尺控件
+                                               var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                                               map.addControl(ctrl_sca);
+                                           }
+
+
+                                           initMap();//创建和初始化地图
+                                       </script>
+                                   </div>
+                               </li>
+
+                           <elseif condition="$vo['appoint'] eq 1"/>
+                              <li>
+                                    <!-- 立即预约 -->
+                                <div style="background:url({weikucms:$bgmu.bg_url});background-size:cover;">
+                                    <div class="header">
+                                      立即预约
+                                      <div class="data">
+                                        <span>姓名</span>
+                                        <input id="names" name="names" placeholder="请输入姓名" type="text"/>
+                                        <div class="line"></div>
+                                        <span>性别</span>
+                                        <input id="man" name="man" type="radio" class="size" value="1"/>&nbsp;<span style="margin-right:16px;border:none;">先生</span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input id="woman" name="man"  type="radio" class="size" value="0" />&nbsp;<span style="border:none;">女士</span> 
+                                        <div class="line"></div>
+                                        <span>电话</span>
+                                        <input id="telphone" name="telphone" placeholder="请输入电话" type="text"/>
+                                        <div class="line"></div>
+                                        <span>营员</span>
+                                        <input id="ok" name="campers" type="radio" class="size" value="1"/>&nbsp;<span style="margin-right:16px;border:none;">是</span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input id="no" name="campers"  type="radio" class="size" value="0" />&nbsp;<span style="border:none;">否</span>
+                                        <div class="line"></div>
+                                          <span>人数</span>
+                                          <select id="num">
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                          </select>
+                                          <div class="line"></div>
+                                       <!-- <span>公司</span>
+                                        <input id="company" name="company" placeholder="请输入公司名称" type="text"/>
+                                        <div class="line"></div>
+                                        <span style="margin-left:30px;">地区</span>
+                                        &lt;!&ndash; 地区代码 &ndash;&gt;
+                                          <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>
+
+                                          <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>
+
+                                          <span id="seachdistrict_div" style="border:none;"><select id="seachdistrict" name="seachdistrict" style="margin-left:150px;margin-top:10px;"></select></span>
+
+                                          <div style="clear:both;"></div>
+                                         地区代码 -->
+                                      </div>
+                                     <!-- <div class="more">
+                                        <a href="#" style="color:#222;">点击完善更多信息</a>
+                                      </div>
+                                      <div class="data flags" style="display:none;">
+                                        <span>职位</span>
+                                        <input id="position" name="position" placeholder="请输入职位" type="text"/>
+                                         <div class="line"></div>
+                                        <span>邮箱</span>
+                                        <input id="email" name="email" placeholder="请输入邮箱" type="text"/>
+                                      </div>-->
+                                      <div class="more Sub" style="background:#73ba5d;color:#fff;">
+                                        <a href="javascript:void(0)" id="subInfo">提交信息</a>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>
+                           <else />
+					       </if>
+					    </if>
+					</volist>
+				</ul>
+			</div>
+            <div id="musicWrap" class="music_wrap f-hide">
+				<span class="text move hide">打开</span>
+        <!-- 背景音乐 -->
+                <i id="audioBtn" data-src="{weikucms:$bgmu.mus_url}" class="btn_music on"></i>
+            </div>
+
+			<div id="arrowV" class="arrow_v f-hide"><p></p></div>
+
+			<div id="arrowH" class="arrow_h f-hide">
+				<span class="arrow_l"></span>
+				<span class="arrow_r"></span>
+			</div>
+
+			<div class="lottery" id="lottery"></div>
+			<div class="download_mask" id="downloadMask"><i></i></div>
+		</div>
+        
+<script type="text/javascript">
+        function finishDump(data){
+            if(data){
+                if(data.redirect){
+                    window.location = data.redirect;
+                }else if(data.tel){
+                    var tel_obj = $('<a href="tel:'+data.tel+'"></a>');
+                    $(tel_obj).trigger('click');
+                }
+            }
+        }
+        // shareReport();
+        // FavoriteReport();
+        //点击完善更多信息
+        $('.more').eq(0).bind('click',function(){
+            $('.flags').slideToggle();
+        });
+        //验证手机号码以及电话号码
+         $('#telphone').blur(function(){
+             var telmatch = /\d{3}-\d{8}|\d{4}-\d{7}/;
+              var phomatch = /^1[3,5,8]\d{9}$/;
+              if (!telmatch.test($('#telphone').val())) {          
+                if (!phomatch.test($('#telphone').val())) {
+                  $('#telphone').select();
+                  $('#telphone').focus();
+                  show_error_tip("电话号码格式不正确！");
+                }; 
+              };
+             // return false;
+         })
+         //邮箱的正则表达式
+         // 
+         $('#email').blur(function(){
+            var eMatch = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+            if(!eMatch.test($('#email').val())){
+               show_error_tip("邮箱格式不正确");
+               // return false;
+            }
+         })
+         // 建立随机数(数字)
+         var Digital = new Array('0','1','2','3','4','5','6','7','8','9');
+        // 字母
+        /* var Letter = new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+          'o','p','q','r','s','t','u','v','w','x','y','z');*/
+         //得到地区码
+          function getAreaID(){
+            var area = 0;          
+            if($("#seachdistrict").val() != "0"){
+              area = $("#seachdistrict").val();                
+            }else if ($("#seachcity").val() != "0"){
+              area = $("#seachcity").val();
+            }else{
+              area = $("#seachprov").val();
+            }
+            return area;
+          }
+
+          function showAreaID() {
+            //地区码
+            var areaID = getAreaID();
+            //地区名
+            var areaName = getAreaNamebyID(areaID) ;
+            return areaName;            
+          }
+
+          //根据地区码查询地区名
+          function getAreaNamebyID(areaID){
+            var areaName = "";
+            if(areaID.length == 2){
+              areaName = area_array[areaID];
+            }else if(areaID.length == 4){
+              var index1 = areaID.substring(0, 2);
+              areaName = area_array[index1] + " " + sub_array[index1][areaID];
+            }else if(areaID.length == 6){
+              var index1 = areaID.substring(0, 2);
+              var index2 = areaID.substring(0, 4);
+              areaName = area_array[index1] + " " + sub_array[index1][index2] + " " + sub_arr[index2          ][areaID];
+            }
+            return areaName;
+          }
+          // 上述是获取地域
+        //提交信息另外建立表
+        $('#subInfo').bind('click',function(){
+            
+            // 产生随机数
+            var str = "";
+            for (var i = 0; i < 13; i++) {
+                str += Digital[parseInt(Math.random()*10)];
+            };
+            
+            var name = $('#names').val();
+            //性别
+            if ($('#man').is(":checked")) {
+              var sex = $('#man').val();
+            }else if($('#woman').is(":checked")) {
+              var sex = $('#woman').val();
+            }else{
+              var sex = "";
+            }
+
+            /*营员*/
+            if ($('#ok').is(":checked")) {
+                var campers = $('#ok').val();
+            }else if($('#no').is(":checked")) {
+                var campers = $('#no').val();
+            }else{
+                var campers = "";
+            }
+
+            var num = $('#num').val();
+            var telphone = $('#telphone').val();
+            //var company = $('#company').val();
+            //选填
+            //var position = $('#position').val();
+            //var email = $('#email').val();
+            // 获取省，市，县的
+            //var AddInfo = showAreaID();
+            if (!name) {
+              show_error_tip("姓名不能为空！");
+              return false;
+            };
+
+            if (!sex) {
+              show_error_tip("请选择你的性别");
+              return false;
+            };
+
+            if (!telphone) {
+              show_error_tip("电话号码不能为空！");
+              return false;
+            };
+            
+
+            /*if (!company) {
+              show_error_tip('公司名称不能为空！');
+              return false;
+            };*/
+            $('#subInfo').html("正在保存...");
+            $.post("{weikucms::U('Wap/Microscene/updatedata',array('token'=>$token,'pid'=>$pid))}",{name:name,sex:sex,telphone:telphone,campers:campers,num:num},
+                        function(data){
+                            if(data.status == 1){
+                                $('#subInfo').html("成功成功");
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                               $('#subInfo').html("保存失败");
+                            }
+                  },'json');
+
+            
+        })
+
+	</script>
+
+	</body>
+</html>

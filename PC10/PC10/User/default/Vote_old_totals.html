@@ -1,0 +1,91 @@
+<include file="Public:head"/> 
+  <link href="{weikucms::STATICS}/vote/wap/skins/all.css?v=0.9.1" rel="stylesheet">
+    <link href="{weikucms::STATICS}/vote/wap/vote.css" rel="stylesheet">
+  <script src="{weikucms::STATICS}/vote/wap/js/jquery.js"></script>
+  <script src="{weikucms::STATICS}/vote/wap/jquery.icheck.min.js?v=0.9.1"></script>
+
+<div style="width:70%;margin-left:250px;">
+    
+
+  <div class="layout clear">
+      <div class="skin skin-line">          
+         
+            <div class="skin-section">
+              <h4>{weikucms:$vote.title}</h4>  
+             <h3><a href="{weikucms::U('Vote/index')}" class="" style="margin-top:-27px">返回</a></h3>
+              
+             <p class="modus"> <if condition="$vote['cknums'] eq 1"> 单选<else/>多选</if>投票，<span class="number">共有{weikucms:$count}人参与投票</span></p>
+              <ul class="list">
+              <volist name="vote_item" id="li"> 
+              <if condition="$vote['cknums'] eq 1">
+          <if condition="$vote['type'] eq 'text'">
+              <li>
+                <input tabindex="{weikucms:$i}" type="radio" name="vid" value="{weikucms:$li.id}" id="line-radio-{weikucms:$i}">
+                <label for="line-radio-{weikucms:$i}">{weikucms:$li.item}</label>
+                 
+               <div class="progress-bar orange shine">
+    <span style="width: {weikucms:$li.per|default=2}%">{weikucms:$li.per}%</span> 
+</div>             
+             </li>
+          <else/> <!--img-->
+                <li>
+                <span><img src="{weikucms:$li.startpicurl}" ></span>
+                <input tabindex="{weikucms:$i}" type="radio" name="vid" value="{weikucms:$li.id}" id="line-radio-{weikucms:$i}">
+                <label for="line-radio-{weikucms:$i}">{weikucms:$li.item}</label>
+                 
+                <div class="progress-bar orange shine">
+    <span style="width: {weikucms:$li.per|default=2}%">{weikucms:$li.per}%</span> 
+</div>                   
+              </li>
+          </if>
+                 
+
+              <else/>
+                    <if condition="$vote['type'] eq 'text'">
+              <li>
+                <input tabindex="{weikucms:$i}" type="radio" name="vid" value="{weikucms:$li.id}" id="line-radio-{weikucms:$i}">
+                <label for="line-radio-{weikucms:$i}">{weikucms:$li.item}</label>
+                 
+                <div class="progress-bar orange shine">
+    <span style="width: {weikucms:$li.per|default=2}%">{weikucms:$li.per}%</span> 
+</div>             
+             </li>
+          <else/> <!--img-->
+                <li>
+                <span><img src="{weikucms:$li.startpicurl}" ></span>
+                <input tabindex="{weikucms:$i}" type="radio" name="vid" value="{weikucms:$li.id}" id="line-radio-{weikucms:$i}">
+                <label for="line-radio-{weikucms:$i}">{weikucms:$li.item}</label>
+                 
+                <div class="progress-bar orange shine">
+    <span style="width: {weikucms:$li.per|default=2}%">{weikucms:$li.per}%</span> 
+</div>                 
+              </li>
+          </if>
+              </if>
+                </volist>                  
+        </ul>             
+             
+     </div>
+    
+
+<script>
+  $(document).ready(function(){
+     $('.skin-line input').each(function(){
+       var self = $(this),
+        label = self.next(),
+        label_text = label.text();
+        
+       label.remove();
+       self.iCheck({
+         checkboxClass: 'icheckbox_line-orange',
+         radioClass: 'iradio_line-orange',
+         insert: '<div class="icheck_line-icon"></div>' + label_text
+       });       
+        
+    });
+});
+</script>  
+</div> 
+</div>  
+</div>
+<include file="Public:footer"/>

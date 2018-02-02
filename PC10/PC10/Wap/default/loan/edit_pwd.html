@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/binding.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/passwords.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"  src="{weikucms::STATICS}/wapweiui/loan/js/personal.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+ </head>
+<body>
+
+<!--主体-->
+<div class="password_body">
+	<div class="old_password">
+		<span class="oldpass_span">输入旧密码</span>
+		<div class="oldpass_table">
+		<!-- <div contentEditable=true data-pw=""></div> -->
+			<input type="password" maxlength="6" date-pw="" class="old" placeholder="">
+			
+		</div>
+		<span class="old_ts"><a href="javascript:;;" style="font-size: 13px">如果您忘记安全密码，请拨打客服电话4008622580</a></span>
+	</div>
+	<div class="new_password">
+		<span class="oldpass_span">输入新密码</span>
+		<div class="oldpass_table">
+			<input type="password" maxlength="6" class="new1">
+			
+		</div>
+	</div>
+	<div class="new_password">
+		<span class="oldpass_span">确认新密码</span>
+		<div class="oldpass_table">
+			<input type="password" maxlength="6" class="new2">
+			
+		</div>
+	</div>
+    <!--<input type="button" value="保存" style="margin-left: 35%; background-color:#D50900; width: 80px; color: #FFF; height: 30px;" class="tijiao">-->
+    <div id="btn" class="bin_btn tijiao">
+        确认修改信息
+    </div>
+</div>
+
+<!--尾部-->
+	<section>
+
+        <include file="Loan:foot"/>
+</section>
+</body>
+<script>
+ $(".tijiao").click(function(){
+    var old=$(".old").val();
+     var new1=$(".new1").val();
+     var new2=$(".new2").val();
+     if(!old||!new1||!new2){
+         show_error_tip('请把密码填写完整');
+         return false;
+     }
+     if(new1!=new2){
+         show_error_tip('两次密码不一样');
+         return false;
+     }
+     var url="{weikucms::U('edit_pwd',array('token'=>$token,'openid'=>$openid))}";
+     $.post(url,{old_pwd:old,pwd1:new1},function(data){
+            if(data.status==1){
+                show_success_tip('修改成功');
+                var url2="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url2;
+            }else if(data.status==-1){
+                show_error_tip('密码不对，请重试');
+            }else{
+                show_error_tip('修改失败');
+            }
+     },'json');
+     new1=new1.join('');
+     alert(new1);
+ })
+</script>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/zhongshan/snower.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/zhongshan/reset.css" media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/zhongshan/home-28.css" media="all">
+<script type="text/javascript" async src="{weikucms::RES}/zhongshan/wtj.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/zhongshan/jQuery.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/zhongshan/swipe.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/zhongshan/zepto.js"></script>
+<link rel="stylesheet" href="{weikucms::RES}/hm/plugmenu.css">
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;" style="">
+      <include file="Public:audio"/>  	
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/zhongshan/font-awesome.css" media="all">
+
+<div class="body">
+		<!--
+	幻灯片管理
+	-->
+	<div style="-webkit-transform:translate3d(0,0,0);">
+		<div id="banner_box" class="box_swipe">
+			<ul>
+             <volist name="flash" id="so">
+				<li>
+						  <a href="{weikucms:$so.url|htmlspecialchars_decode}"><img src="{weikucms:$so.img}" width="100%"/></a>
+				</li></volist>
+			</ul>
+
+		</div>
+	</div>
+		<script>
+		$(function(){
+			new Swipe(document.getElementById('banner_box'), {
+				speed:500,
+				auto:3000,
+				callback: function(){
+					var lis = $(this.element).next("ol").children();
+					lis.removeClass("on").eq(this.index).addClass("on");
+				}
+			});
+		});
+	</script>
+			
+<br><header>
+        <div class="snower">
+            <script type="text/javascript"></script>
+            <script type="text/javascript" src="{weikucms::RES}/zhongshan/snower.js"></script>
+        </div>
+    </header>
+    <section>
+        <a href="tel:{weikucms:$speeddial.phone}" class="link_tel icon-phone">{weikucms:$speeddial.phone}</a>
+    </section>
+
+				<!--
+		用户分类管理
+        -->
+		<section>
+			<ul class="list_ul">
+									<volist name="info" id="vo"><li>
+												<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<figure>
+								<div><img src="{weikucms:$vo.img}" /></div>
+								<figcaption style="height:33px; overflow:hidden;">{weikucms:$vo.name}</figcaption>
+							</figure>
+						</a>
+					</li></volist>
+									
+							</ul>
+		</section>
+	</div>
+
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+			<section>
+			<div class="plug-div">
+        <div class="plug-phone">
+            <div class="plug-menu themeStyle"><span class="close"></span></div> 
+               
+                      <div class="themeStyle plug-btn plug-btn1 close">
+							<a  href="tel:{weikucms:$speeddial.phone}">
+								<span style="background-image: url({weikucms::RES}/css/flash/images/img/plugmenu1.png);" ></span>
+							</a>
+						</div>
+                  
+                        <div class="themeStyle plug-btn plug-btn2 close">
+							<a  href="{weikucms:$speeddial.nav}">
+								<span style="background-image: url({weikucms::RES}/css/flash/images/img/plugmenu3.png);" ></span>
+							</a>
+						</div>
+                  
+                        <div class="themeStyle plug-btn plug-btn3 close">
+							<a  href="{weikucms:$speeddial.mhome}">
+							<span style="background-image: url({weikucms::RES}/css/flash/images/img/plugmenu6.png);" ></span></a>
+						</div>
+                  
+                        <div class="themeStyle plug-btn plug-btn4 close">
+							<a  href="{weikucms:$speeddial.mphoto}">
+								<span style="background-image: url({weikucms::RES}/css/flash/images/img/plugmenu7.png);" ></span>
+							</a>
+						</div>
+<div class="plug-btn plug-btn5 close"></div>
+                    </div>
+</div>
+<script src="{weikucms::RES}/hm/zepto.min.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/hm/plugmenu.js" type="text/javascript"></script>
+		</section>
+		
+        			<footer style="overflow:visible;">
+				
+									<span class="weimob-support" style="display:none;">{weikucms:$speeddial.copyright}</span>
+							</footer>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body></html>

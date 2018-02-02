@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <title>会员通知-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script type="text/javascript" src="{weikucms::STATICS}/works/resource/jquery_min.js"></script>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral share">
+
+    <div class="body">
+        <div>
+            <p class="recommend"><span class="icons icons_recommend">&nbsp;</span>会员通知 </p>
+        </div>
+        <ul class="list_integral">
+            <if condition="$result neq null">
+                <volist name="result" id="vo">
+
+                    <li style="line-height: 40px;font-size: 15px;" class="tongzhitit" data-id="{weikucms:$vo.id}"><span style="float: right;"><php>echo date("Y-m-d",$vo['add_time']);</php></span> {weikucms:$vo.title}</li>
+
+                </volist>
+
+
+                <else/>
+                <li style="border: none;line-height: 30px;line-height: 30px;text-align: center;">当前没有通知哦</li>
+            </if>
+
+        </ul>
+    </div>
+
+    <style type="text/css">
+        .masklayer{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            z-index:2000;
+            width:100%;
+            height:100%;
+            background-color:rgba(0,0,0,0.5);
+            text-align:right;
+        }
+        .masklayer.on{
+            display:block;
+        }
+        .masklayer img{
+            margin-top:10px;
+            margin-right:30px;
+            width:160px;
+        }
+    </style>
+    <div id="masklayer" class="masklayer" ontouchmove="return true;" onclick="$(this).toggleClass('on');">
+        <img src='http://stc.weimob.com/img/member/imgs/share.png' alt='' style="width:260px;" />
+    </div>
+</body>
+
+<script type="text/javascript">
+    $(function(){
+        $('.tongzhitit').click(function(){
+
+            var id = $.trim($(this).attr('data-id'));
+            var url = "{weikucms::U('Usercenter/clicks',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{id:id},function(data){
+                if(data.code == 1){
+                    window.location.href = data.urls;
+                }
+            },'json')
+
+        })
+    })
+</script>
+
+
+</html>

@@ -1,0 +1,41 @@
+<volist name="photo" id="v">
+	<div class="main" dateid="{weikucms:$v.id}">
+		<div class="main-img" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">
+			<img src="{weikucms:$v.local_pic}" id="show"/>
+			<div id="picToLike">
+			</div>
+		</div>
+		<div class="main-title">
+			<div class="main-titile-left"></div>
+			<div class="main-titile-right">
+				<span class="icon-thumbs-up" dataid="{weikucms:$v.id}" id="{weikucms:$v.id}">{weikucms:$v.click_num}</span>
+				<span class="icon-chat" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">{weikucms:$v.comment_num}</span>
+			</div>
+		</div>
+	</div>
+</volist>
+
+
+
+/*if (data.msg == 2) {
+            $(".loading").html("已加载全部");
+            return false;
+        }
+        $('.loading').html('正在拼命加载中...').addClass('on');
+        $.each(data.datas, function (m, n) {
+            var urlc = strate_url_of+"&replybuyer_id="+n.create_by+"&friendinfo_id="+n.id+"&userid="+openid;
+            $('.community').append(
+                '<div class="comm-total">'
+                    +'<div class="com-top"><b class="c-name">'+n.nickname+'</b>  - '+n.create_date.substr(0,10) +'</div>'
+                +'<div class="com-middle">'+n.text+'</div>'
+                +'<ul class="com-bottom">'
+                    +'<li replybuyer_id='+n.create_by+' friendinfo_id='+ n.id+' onclick="window.location.href=\''+urlc+'\'" class="bottom-one"><img src="'+comm_img+'">&nbsp;&nbsp;'+ n.community_total+'</li>'
+                +'<li class="bottom-two"><img src="'+icon_img+'">&nbsp;&nbsp;'+ n.praise+'</li>'
+                +'</ul>'
+                +'<div class="clear"></div>'
+
+                +'</div>'
+            );
+            count++;
+            $('.loading').html('点击加载更多').removeClass('on');
+        });*/

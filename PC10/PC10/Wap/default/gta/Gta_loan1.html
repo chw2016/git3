@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+    </head>
+	<style>
+		.shadow25 input{
+			border: 0;
+			background-color: #e5f2e5;
+			color: #91b391;
+			width: 60%;
+		}
+		.pre{
+			position: relative;
+		}
+		.pab{
+			position: absolute;
+			top: 13px;
+			right: 8px;
+		}
+		.shadow40{		
+			-webkit-box-shadow:0px 3px 5px rgba(192, 192, 192, 0.6);
+			-moz-box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+			box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+			background-color: white;
+			padding: 10px;
+			margin-top: 80px;
+		}
+		.tian{
+			width: 40px;
+			height: 40px;
+			background:linear-gradient(top,#499c4e,#367d39);
+			background:-webkit-linear-gradient(top,#499c4e,#367d39);
+			background:-ms-linear-gradient(top,#499c4e,#367d39);
+			background:-moz-linear-gradient(top,#499c4e,#367d39);
+			background:-o-linear-gradient(top,#499c4e,#367d39);
+			color: #fff;
+			display: inline-block;
+			text-align: center;
+			line-height: 40px;
+			border-radius:5px;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+		.Loan{
+			width: 40%;
+			height: 40px;
+			background:linear-gradient(top,#499c4e,#367d39);
+			background:-webkit-linear-gradient(top,#499c4e,#367d39);
+			background:-ms-linear-gradient(top,#499c4e,#367d39);
+			background:-moz-linear-gradient(top,#499c4e,#367d39);
+			background:-o-linear-gradient(top,#499c4e,#367d39);
+			color: #fff;
+			display: inline-block;
+			text-align: center;
+			line-height: 40px;
+			border-radius:5px;
+		}
+	</style>
+	<script>
+		$(function(){
+			$(document).on('touchstart','.Loan',function(){
+				var money=$("[name=money]").val();
+				var day=$("[name=day]").val();
+                var type=$("[name=type]").val();
+
+			//	Loan=[money,day]
+                if(money==''){
+                    show_error_tip('请填写贷款金额!');
+                    $("[name=money]").focus();
+                    return false;
+                }
+                if(day<=''){
+                    show_error_tip('请填写贷款天数!');
+                    $("[name=day]").focus();
+                    return false;
+                }
+                if(type==''){
+                    show_error_tip('请选择贷款类型!');
+                    $("[name=type]").focus();
+                    return false;
+                }
+                $("#form").submit();
+				//alert(Loan);
+			})
+			$(document).on('click','.a1',function(){
+				    $(".File").css("display","block");
+				});
+            $(".File ul li").click(function(){
+                $(".File").css("display","none");
+                $("input[name=type]").val($(this).html());
+           //     $(this).html=
+            })
+		})
+	</script>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">我要贷款</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+            <form action="" id="form" method="post" >
+
+			<div class="shadow">
+			<p class="f14">贷款金额</p>
+			<div class="shadow25 clearfix pre">
+			<input type="tel" placeholder="请填写贷款金额,单位元"  name="money" class="fl" style="width: 100%;color: #000000;" />
+			  <!--<i class="fa fa-chevron-down pab"></i>-->
+			</div>
+			<!--<div class="File">
+				<ul style="margin-right: 9px;">
+					<li>10万以下</li>
+					<li>10万-50万</li>
+					<li>50万以上</li>
+				</ul>
+			</div>-->
+
+			</div>
+                <div class="shadow">
+                    <p class="f14">类型选择</p>
+                    <div class="shadow25 clearfix pre a1">
+                        <input type="tel" placeholder="请选择贷款类型" readonly  name="type" class="fl" style="width: 100%;color: #000000;" />
+                        <i class="fa fa-chevron-down pab"></i>
+                    </div>
+                    <div class="File" style="z-index: 9;">
+                        <ul style="margin-right: 9px;margin-top: -10px;">
+                            <volist name="type_list" id="vo">
+                                <li style="margin-left: 10px;margin-right: 10px;">{weikucms:$vo}</li>
+
+                            </volist>
+
+                        </ul>
+                    </div>
+                </div>
+
+			<div class="shadow40">
+			<p class="f14">货款期限</p>
+			<div class="shadow25 clearfix pre">
+			<input type="tel" placeholder="点击填写货款期限" class="fl" name="day" style="width: 85%;color: #000000;" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+			  	<span class="tian">天</span>
+			</div>
+			</div>
+			<div style="text-align: center;margin-top: 40px ;">
+				<span class="Loan">申请贷款</span>
+			</div>
+                </form>
+		</section>
+		
+	</body>
+</html>

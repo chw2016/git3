@@ -1,0 +1,105 @@
+<include file="Public:head"/>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>  
+<div class="content">
+         
+          <div class="cLineB">
+              <h4 class="left">{weikucms:$truename}的会员卡消费及充值记录</h4>
+                 
+              <div class="clr"></div>
+          </div>
+          <div class="cLineD">
+查询资料[仅支持 <strong> 微信名(如 we ),手机号(如 158)</strong> 的(模糊)查询]
+	<form method="post" action="">
+		<input size="80" value="" name="searchkey" class="px">
+		<button type="submit" name="appidsubmit" value="true" class="btnGreen vm" ><strong>查询</strong></button>
+	</form>
+ </div>
+          <div class="msgWrap">
+          <font color="red">注意:消费金额只能填整数(采取进一取整法,加入消费了 40.22 元,1元=10个积分.那么消费金额去整=50,积分就是 50*10=500个积分)
+           <br />
+           每修改一次,就增加一条新的消费积分记录,请慎用!(只显示最后一次修改记录)
+          </font>
+         
+          <input name="delall"  type="hidden" value="del" />
+           <input name="wxid"  type="hidden" value="gh_423dwjkewad" />
+            <TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+				
+				<TH>编号</TH>
+				<TH>操作时间</TH>
+				<TH>消费金额</TH>
+        <TH>充值金额</TH>
+ 
+				
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+
+				 <volist id="cardre" name="cardre">
+                <TR>
+                  
+                  <TD>{weikucms:$cardre.id}</TD>
+                  <TD>{weikucms:$cardre.sign_time|date='Y-m-d',###}</TD>
+                  <TD>{weikucms:$cardre.sell_expense}</TD>
+                  <TD>{weikucms:$cardre.add_Balance}</TD>
+                
+                 
+                </TR>
+				</volist>
+
+                
+              </TBODY>
+            </TABLE>
+          
+
+           <script>
+   function checkvotethis() {
+var aa=document.getElementsByName('del_id[]');
+var mnum = aa.length;
+j=0;
+for(i=0;i<mnum;i++){
+if(aa[i].checked){
+j++;
+}
+}
+if(j>0) {
+document.getElementById('info').submit();
+} else {
+alert('未选中任何文章或回复！')
+}
+}
+
+   </script>
+          </div>
+            
+
+ 
+ 
+          <div class="cLine">
+            <div class="pageNavigator right">
+                 <div class="pages"></div>
+              </div>
+            <div class="clr"></div>
+          </div>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+function checkAll(form, name) {
+for(var i = 0; i < form.elements.length; i++) {
+var e = form.elements[i];
+if(e.name.match(name)) {
+e.checked = form.elements['chkall'].checked;
+}
+}
+}
+  </script>
+  <!--底部-->
+  	</div>
+<include file="Public:footer"/>  

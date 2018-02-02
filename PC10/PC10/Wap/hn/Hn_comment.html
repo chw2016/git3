@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta content="telephone=no" name="format-detection">
+	<link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/common.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/index.css">
+	<script type="text/javascript" src="tpl/Wap/default/hn/js/jquery-1.1.2.min.js"></script>
+	<script type="text/javascript" src="tpl/Wap/default/hn/js/msg.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".btn").click(function(){
+			var aa=$(".comment-main").val();
+			var pid=$("#curl").val();
+			var comm=$(".comment-center");
+			var wxid=$("#wxid").val();
+			if(wxid == '')
+			{
+				msg.alert('请先注册！');
+			}else
+			if(aa==""){
+				msg.alert("亲,你还没有评论哦~")
+			}else{
+				$.post("{weikucms::U('comment_check',array('token'=>$token, 'openid' => $openid))}",{content:aa,pid:pid},function(data){
+					if(data == 1){
+					
+						msg.alert("评论成功");
+						window.setTimeout("window.location.href=window.location.href",2000);
+						//window.location.href=window.location.href;
+						
+					}else{
+						msg.alert("网络错误");
+					}
+				/*if(data){
+					$.each(data,function(index,array){
+					alert(array);
+					comm.append('<div class="padding10 clearfix">'
+					'<span class="color1979dc">'+array['nickname']+'</span><span>'+array['content']+'</span>'
+					'<div class="mt10">'
+			        '<span class="comment-day">'+array['add_time']+'</span>'
+	        		'</div>'
+					'</div>'); 
+                    });
+				})
+				}*/
+				})
+			}
+		})
+	})
+	</script>
+	<style type="text/css">
+	body{
+		  background: url("images/bg.jpg");
+	}
+	</style>
+    </head>
+    <body>
+   	<div class="theme">
+		<div class="comment-title">
+		<img src="{weikucms:$com.local_pic}" />
+		<!--<div class="theme-size">美好生活</div>-->
+		</div>
+		<input type="hidden" value="{weikucms:$com.id}" id="curl">
+		<input type="hidden" value="{weikucms:$wxid}" id="wxid">
+		<div class="comment">
+			<textarea name="" placeholder="评论" class="comment-main" value=""></textarea>
+		</div>
+		<div class="clearfix">
+			<div class="btn">提交</div>
+		</div>
+	</div>
+	<div class="comment-center clearfix">
+			<volist name="new" id="v">
+		      <div class="padding10 clearfix">
+		        <span class="color1979dc">{weikucms:$v.nickname}:&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{weikucms:$v.content}</span>
+		        <div class="mt10">
+			        <span class="comment-day">{weikucms:$v.add_time|date="Y-m-d H:i:s",###}</span>
+	        		</div>
+		      </div>
+			</volist>
+		       <!-- <div class="padding15 clearfix">
+			        <span class="color1979dc">TheSmile___回复The:</span><span>呵呵哒</span>
+			          <div class="mt10">
+				        <span class="comment-day">2014/09/10&nbsp;14:12:12</span>
+				        <span class="comment-replyer">回复</span>
+			        </div>
+		      </div>
+		      <div class="padding15 clearfix">
+			        <span class="color1979dc">TheSmile___回复The:</span><span>呵呵哒</span>
+			          <div class="mt10">
+				        <span class="comment-day">2014/09/10&nbsp;14:12:12</span>
+				        <span class="comment-replyer">回复</span>
+			        </div>
+		      </div> -->
+	      </div>
+    </body>
+</html>

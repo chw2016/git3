@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>我的注册的顾问</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+</head>
+<style>
+	.colorb2{
+		  font-size: 12px;
+		  display: inline-block;
+		  line-height: 33px;
+		  margin-left: 5px;
+		  color: #b2c5da;
+			}
+</style>
+<body>
+<empty name="list">
+<div style="width:100%; height:20px; line-height:20px; text-align:center;margin-top:20px;">暂无申请记录。</div>
+</empty>
+	<ul class="lica_ul">
+	
+        <foreach name="list" item="v">
+         <a href="{weikucms::U('Jd/recoms',array('token'=>$token,'rid'=>$v['id'],'openid'=>$openid))}">
+            <li style="margin-bottom: 10px;">
+                <div class="img" style="margin-left: 4%;" >
+                    <img style="height:88%;" src="{weikucms:$v.head}">
+                </div>
+                <div style="width:70%;height:35px;margin-left:10px;float:left;">
+                    <span class="name">{weikucms:$v.name|mb_substr=###,0,4,'utf-8'}</span>
+                    <span class="colorb2">{weikucms:$v.phone}</span>
+                    <if condition="$v.status eq 0">
+                    <span class="day1">待审批</span>
+                    <else/>
+                    <span class="day5">已审批</span>
+                    </if>
+                </div>
+                <div class="bz" style="padding-left: 10px;">擅长领域：<?php echo str_substr($v['remark'],11,'......') ?></div>
+            </li>
+         </a>
+        </foreach>
+	</ul>
+
+	<div style="height:170px;float:left;"></div>
+	<div class="foot">
+        <span><a style="color:#000;" href="{weikucms::U('recom',array('token'=>session('token'),'openid'=>$openid))}">顾问注册</a></span>
+	</div>
+</body>
+</html>

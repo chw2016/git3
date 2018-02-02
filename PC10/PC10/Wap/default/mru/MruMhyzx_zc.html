@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-会员注册</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js/jquery.validate.js"></script>
+        <script src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script>
+		
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt" style="overflow-x:hidden">
+    <div class="header">
+    	<div class="wrapHeader myul">
+    		<div class="circle icon_mian_huiyuan"></div>
+    		<div class="title">会员注册</div>
+    	</div>
+    </div>
+    <div class="limitShoppingBox">
+        
+        <div class="user_register">
+            
+            <form action="" method="post" id="form" >
+                <div class="zhuce_span">
+                    <span>手机号</span>  :
+                    <input id="bbb" type="tel" name="phone" value="" placeholder="请输入您的电话号码">
+                </div>
+ 
+                <div class="zhuce_span">
+                    <span>验证码</span>  :
+                    <input type="text" style="width:45%" name="yzm" value="" placeholder="请输入验证码">
+                    <span id="aaa" ><a class="getcode" >获取验证码</a></span>
+                </div>
+                <button class="btn wrap_top">提交</button>
+            </form>
+
+        </div>
+
+    </div>
+<script type="text/javascript">
+
+    $(function(){
+        if($('#form').length > 0){
+            $('#form').validate({
+                //声明
+                rules: {
+                   // tel : "required",
+                    
+                    phone : {//正则验证
+                        required : true,//正则验证
+                        isPhone  : true//正则验证
+                    },
+                    yzm: "required"
+                   
+                },
+                //跳出内容
+                messages: {
+                	
+                	phone: {//正则验证
+                        "required" : "请输入手机",//正则验证
+                        "isPhone"	: "请填写正确的手机"//正则验证
+                    },
+                	//tel: "请输入手机",
+                	yzm: "请输入验证码"
+                },
+                //错误信息
+                errorPlacement: function(error, element) {
+                    var tipsContent = error.html();
+                    msg.alert(tipsContent,"知道了");
+                    //error.appendTo(element.parent());
+                    return false;
+                },
+                //提交方式
+                submitHandler:function(form){
+                    form.submit();   //post提交表单
+
+                },
+                onkeyup: false,
+                onfocusout: false
+            });
+        }
+        //给class="submit" 点击事件 ,触发submit
+        $('.submit').click(function(){
+            $('form').trigger('submit');
+        })
+    })
+$("#aaa").click(function(){
+	var tel=$("#bbb").val();
+    $.post("{weikucms::U('ajax',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}",{"tel":tel},function(data){
+        alert(data.str);
+	},'json');
+})
+
+</script>
+    </body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        *:focus{
+            outline: 0px;
+        }body{
+             background: url({weikucms::STATICS}/works/bg.png) center repeat-y;
+             max-width:640px;
+             margin: 0 auto;
+             font-family: "Microsoft YaHei";
+             font-size: 12px;
+         }#header{
+              display: flex;
+              display: -webkit-box;
+              width: 100%;
+              text-align: center;
+              margin-top: 30px;
+          }#header .chi1{
+               width: 23%;
+               text-align: right;
+               padding-top: 35px;
+           }#header .chi2{
+                width: 23%;
+                text-align: left;
+                padding-top: 35px;
+            }
+
+        #header .chi2 img{
+            -webkit-transform:rotateY(180deg);
+            -moz-transform:rotateY(180deg);
+            -ms-transform:rotateY(180deg);
+            transform:rotateY(180deg);
+        }
+        #header .youhui{
+            width: 61%;
+        }.wo{margin-top: 60px;}
+        .xiaofei{margin-top: 30px;}
+        .wo img,.xiaofei img{margin-left: -20px;-webkit-transform:rotate(-15deg);}
+        .rocket img{
+            position: absolute;;
+            right: 0;
+            /*bottom: 100px;*/
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="chi1" >
+        <img src="{weikucms::STATICS}/works/chi.png" style="width: 60px; margin-right: 10px;" />
+    </div>
+    <div class="youhui" style="margin-left:-10px;">
+        <img src="{weikucms:$set.pic}" style="height: 145px;display: block;width: 100%">
+        <div style="position: relative;top: -45px;left: 0px;width: 100%;height: 30px;background: rgba(0,0,0,0.15);line-height: 30px;font-size: 12px;text-indent: -75px;color: #fff;text-shadow: 2px 2px 4px rgba(0,0,0,1);">优惠券SN码&nbsp;:&nbsp;{weikucms:$set.sn}</div>
+    </div>
+
+    <div class="chi2">
+        <img src="{weikucms::STATICS}/works/chi.png" />
+    </div>
+</div>
+<div class="wo" onclick="window.location.href ='{weikucms::U('Works/poll',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'wid'=>$_GET['wid'],'openid'=>$_GET['openid'],'sid'=>$_GET['sid'],'ishow'=>1))}'" >
+    <img src="{weikucms::STATICS}/works/la.png"  style="width: 215.4px; height: 51px;"/>
+</div>
+<div class="xiaofei">
+    <img src="{weikucms::STATICS}/works/ban.png" style="width: 287px;" onclick="window.location.href ='{weikucms::U('Wap/Store_new/cats',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}'" style="height:40px; margin-top: 25px;"/> 
+</div>
+<div class="rocket">
+    <img src="{weikucms::STATICS}/works/rockets.png" style="width: 192px; margin-top: -52px; margin-right: 25px;"/>
+</div>
+<script type="text/javascript">
+    $(function(){
+        //$('.youhui').children('img').css('width',$('.youhui').width()*0.95 +'px');
+        //$('.chi1').children('img').css('width',$('.chi1').width()*0.75 +'px');
+        $('.chi2').children('img').css('width',$('.chi2').width()*0.75 +'px');
+        //$('.wo').children('img').css('width',$('.wo').width()*0.67 +'px');
+        $('.xiaofei').children('img').css('width',$('.xiaofei').width()*0.85 +'px');
+        //$('.rocket').children('img').css('width',$('.rocket').width()*0.6 +'px');
+    })
+</script>
+</body>
+</html>

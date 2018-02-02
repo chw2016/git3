@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+
+        <include file="Public:head"/>
+        <title>{weikucms:$tpl.name}</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <meta name="Keywords" content="万普微盟" />
+
+        <meta name="Description" content="万普微盟" />
+
+        <style>
+
+            img{width:100%!important;}
+
+        </style>
+
+    </head>
+
+    <body onselectstart="return true;" ondragstart="return false;">
+
+    <div class="img-rounded img-responsive">
+        <if condition="$data.topic neq null">
+            <img src="{weikucms:$data.topic}">
+            <else/>
+            <img src="{weikucms::RES}/images/yuyue/head_pic.jpg">
+        </if>
+
+    </div>
+
+    <div class="content_body">
+
+	<!--普通用户登">
+
+	</a>
+
+</div>
+
+<div class="cardexplain"> 
+
+
+
+<!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
+
+ <volist name="data" id="v">  
+
+	<section class="round1 order_body ">
+		<li style="background-color: #5796CB;">
+			<a href="#" style="display: block;text-align: center;">预约详情</a>
+		</li>
+
+		<div>
+
+			<div class="text text_order">
+
+			<p>联系人：{weikucms:$v.name}</p>				
+            <p>预约状态：
+                <php>
+
+                    if($v['type']==0){
+
+                </php>
+
+                <span class="label label-default" >等待客服回电</span>
+
+                <php>
+
+                    }elseif($v['type']==1){
+
+                </php>
+
+                <span class="label label-primary">预约受理中</span>
+
+                <php>
+
+                    }elseif($v['type']==2){
+
+                </php>
+
+                <span class="label label-success">预约被拒绝</span>
+
+                <php>
+
+                    }
+
+                </php>
+            </p>
+			<p>联系电话：{weikucms:$v.phone}</p>
+			<p>预约时间 ：{weikucms:$v.date} {weikucms:$v.add_time|date='Y-m-d H:i:s',###}</p>
+			<p>提交时间：{weikucms:$v.add_time|date='Y-m-d H:i:s',###}</p>
+			<p>备注：{weikucms:$v.memo}</p>
+
+			<div class="footReturn">
+
+				<!--<a style="color:#fff;" class="submit" href="{weikucms::U('Yuyue/set',array('token'=> $v['token'], 'wecha_id'=> $v['wecha_id'], 'id'=> $v['id'], 'pid'=> $v['pid']))}">删除 </a>-->
+                <button class="showcard2 btn btn-primary mrs submit_btn" token="{weikucms:$v.token}" pid="{weikucms:$v.pid}" id="{weikucms:$v.id}" wecha_id="{weikucms:$v.wecha_id}" type="button">删除订单</button>
+			</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+</volist>
+
+<!--页码-->
+
+    </div>
+
+    <footer class="footer">
+        <span><a href="#">©{weikucms:$tpl.name}-<php>echo C('site_my');</php></a></span>
+    </footer>
+
+    <script type="text/javascript">
+        $(function(){
+            $(".showcard2").click(function () {
+
+                if(confirm('您确定要删除吗?')){
+                    var id=$(this).attr('id');
+                    var wecha_id = $(this).attr('wecha_id');
+                    var pid = $(this).attr('pid');
+                    var token = $(this).attr('token');
+                    var submitData = {
+
+                        id:id,
+
+                        wecha_id:wecha_id,
+
+                        pid: pid,
+
+                        token: token
+
+                    };
+
+                    $.post('index.php?g=Wap&m=Yuyue&a=del&wecha_id='+wecha_id+'&token='+token, submitData,
+
+                            function(data) {
+
+                                if (0 == data.errno) {
+
+                                    errtip(data.msg);
+
+                                    setTimeout('window.location.href=location.href',1000);
+
+                                    // window.location.reload();
+
+                                } else {
+                                    var backurl = 'index.php?g=Wap&m=Yuyue&a=index&token='+token+'&wecha_id='+wecha_id+'&id='+id;
+                                    errtip(data.msg);
+
+                                    setTimeout(function (){
+
+                                        window.location.href=backurl;
+
+                                    },1000)
+
+
+
+
+
+                                }
+
+                            },
+
+                            "json")
+
+                }
+
+            });
+        });
+    </script>
+
+    <div class="del_yes tip" style="visibility: hidden;" id="tip">
+        <div class="textPopup">
+            <h2 id="tip_msg"></h2>
+            <a class="three" href="javascript:;" id="err_close">返回</a>
+        </div>
+        <div class="mask"></div>
+    </div>
+
+  </body>
+
+</html>

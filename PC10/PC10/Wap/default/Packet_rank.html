@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<title>勾搭银泰城，送百万红包</title>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<link type="text/css" rel="stylesheet" href="tpl/Wap/default/common/packet/css/main.css?=0120777" />
+<script src="tpl/Wap/default/common/packet/js/jquery-1.8.3.min.js"></script>
+<script src="tpl/Wap/default/common/packet/js/main.js?=9"></script>
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="text textlogo"></div>
+
+<div class="mid">
+<div class="finger" ></div>
+<div  class="btn btnsmall tap" ><div class="btntext clickme"><div class="box move"></div></div></div>
+</div>
+
+<div class="texttap">
+  <div class="line">
+    <ul class="tips">
+      <li data-tap='rull' class="tap"><div id="guizhe"></div></li>
+      <li data-tap='rank' class="tap"><div id="jiecaobang"></div></li>
+    </ul>
+  </div>
+  
+  <div class="gtip" >
+    <span>已有<span class="person">{weikucms:$count}</span>人参加此游戏</span>
+  </div>
+   
+  
+</div>
+
+
+<!--游戏规则-->
+<div class="showbox rull">
+<div class="close">×</div>
+<div class="showboxtitle">游戏规则</div>
+<div class="showboxcontent">
+    <php>echo str_replace(';','<br/>',$ainfo['info']);</php>
+</div>
+</div>
+
+<!--节操榜-->
+<div class="showbox rank" style='display:block;'>
+<div class="close">×</div>
+  <div class="myrank">
+      <div class="icount">我的节操指数：<span>{weikucms:$integrity}</span>点</div>
+      <div class="iranking">排名：第<span>{weikucms:$row}</span>名</div>
+  </div>
+
+<div class="rankboxtitle">节操指数榜</div>
+<div class="ranklistbox">
+<ul class="ul ranklisttitle">
+<li class="li">排名</li>
+<li class="li">手机号</li>
+<li class="li">节操指数</li>
+</ul>
+    <volist id="user" name="user" key="k">
+<ul class="ul ">
+    <li class="li">{weikucms:$k}</li>
+<li class="li"><php>echo str_replace(substr($user['tel'],3,4),'****',$user['tel']);</php></li>
+<li class="li">{weikucms:$user.integrity}</li>
+</ul>
+        </volist>
+    <div>
+        <ul class="pager" style="text-align: center">{weikucms:$page}</ul>
+    </div>
+</div>
+</div>
+</body>
+</html>

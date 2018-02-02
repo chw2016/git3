@@ -1,0 +1,99 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(document).ready(function(){
+        $(".pxf").attr("value","0");
+        $(".pxf").click(function(){
+            $(this).val($(this).attr("checked")?"1":"0");
+        })
+    })
+
+</script>
+
+<div class="cLineB">
+    <h4>创建聊天室</h4>
+</div>
+<div class="cLineB" id="uppict" style="display:none">
+</div>
+<div class="msgWrap">
+    <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+        <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <tbody>
+            <tr>
+                <input type="hidden" class="px" id="id" value="{weikucms:$info['id']}" name="id">
+            </tr>
+            <tr>
+                <th valign="top"><label for="title">聊天室主题</label></th>
+                <td><input type="text" calss="pc" name="title" id="title" value="{weikucms:$info['title']}"/></td>
+            </tr>
+            <tr>
+                <th valign="top"><label for="bask">备注</label></th>
+                <td><textarea class="px" id="bask" name="bask" style="width:500px;  height:120px">{weikucms:$info['bask']}</textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <td>
+                    <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                    <include file="./tpl/User/default/helper/list_btn.html"/>
+                    <div class="clr"></div></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("#id").val();
+        var title = $("#title").val();
+        var bask = $("#bask").val();
+
+        if(title == ''){
+            notif({
+                msg: '请填写聊天室主题',
+                type: 'warning'
+            });
+            return false;
+        }
+        var url = "{weikucms::U('Room/setmediation',array('token'=>$token))}";
+
+        $.post(url,{
+                    id:id,
+                   title:title,
+                    bask:bask,
+                    __hash__: $("input[name='__hash__']").val()
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = "{weikucms::U('Room/index',array('token'=>$token))}";
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+
+    }
+</script>

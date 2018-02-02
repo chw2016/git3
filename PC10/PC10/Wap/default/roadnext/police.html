@@ -1,0 +1,132 @@
+<html style="overflow-x:hidden"><head>
+<title>莞深高速</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="{weikucms::STATICS}/wapweiui/road/css/style_2.css" rel="stylesheet" type="text/css" media="screen">
+<script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+<style type="text/css">
+	.divborder{
+	border-bottom: 1px solid #bcbcbc;
+	border-top: 1px solid #fafafa;
+	}
+	img{
+	max-width: 273px;
+	}
+	.bigbtn{
+	position: relative;
+	display: inline-block;
+	width: 45%;
+	}
+
+</style>
+
+<script type="text/javascript">
+    var timestamp = Date.parse(new Date());
+
+function openUI(id)
+{
+    //$("#tags>ul").html("<li class='center'>加载中...</li>");*/
+    //$("#tags").css("display", "none");
+
+
+    /*$.getJSON("http://wx.dgjj.gov.cn/dgjj-mobile/wx/queryinfo?id=1", function (json) {
+
+        alert("JSON Data: " + json);
+    });*/
+    // $.getJSON("data/1.json", function (data) { alert('test'); })
+    $.ajax({
+        url: "data/data/" + id + ".txt",
+        type: "get",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (data) {
+            var $jsontip = $("#jsonTip");
+
+            var strHtml = ""; //存储数据的变量
+
+            $jsontip.empty(); //清空内容
+            $.each(data, function (infoIndex, info) {
+
+                strHtml += "<span > &nbsp;<a>" + info["name"] + "(" + info["info"] + ")" + "</a></span>";
+                strHtml += "<div class='center'><img src='" + info["jkbh"] + "?time=" + timestamp + "' style='border:0px;' /></div>";
+
+            })
+            $jsontip.html(strHtml); //显示处理后的数据
+        },
+        error: function () { alert('erro'); }
+    })
+
+}
+//$(function () { alert('test')});
+</script>
+</head>
+<body>
+<section id="content">
+		<aside>
+			<section id="tags">
+<h2>莞深高速路况快照</h2>
+<div class="center divborder"><input title="" class="button bigbtn" onclick="openUI('1')" type="button" value="石碣站">
+									 <input title="" class="button bigbtn" onclick="openUI('2')" type="button" value="莞龙站">
+									 <input title="" class="button bigbtn" onclick="openUI('3')" type="button" value="东莞站">
+									 <input title="" class="button bigbtn" onclick="openUI('4')" type="button" value="上屯站">
+									 <input title="" class="button bigbtn" onclick="openUI('5')" type="button" value="石大路站">
+									 <input title="" class="button bigbtn" onclick="openUI('6')" type="button" value="大朗站">
+									 <input title="" class="button bigbtn" onclick="openUI('7')" type="button" value="黄江站">
+									 <input title="" class="button bigbtn" onclick="openUI('8')" type="button" value="大坪站">
+								 </div>
+<div class="product-alert">可以查询全市72个主要路口、路段的实时交通状况，快照5-10分钟更新一次。</div>
+<div class="center divborder">       <input title="" class="button bigbtn" onclick="openUI('1')" type="button" value="莞城">
+									 <input title="" class="button bigbtn" onclick="openUI('2')" type="button" value="东城">
+									 <input title="" class="button bigbtn" onclick="openUI('3')" type="button" value="万江">
+									 <input title="" class="button bigbtn" onclick="openUI('4')" type="button" value="南城">
+									 <input title="" class="button bigbtn" onclick="openUI('5')" type="button" value="环城路">
+									 <input title="" class="button bigbtn" onclick="openUI('6')" type="button" value="松山湖大道">
+									 <input title="" class="button bigbtn" onclick="openUI('7')" type="button" value="东部快速">
+									 <input title="" class="button bigbtn" onclick="openUI('8')" type="button" value="西部干道">
+</div>
+<div class="center divborder">
+<div id="jsonTip">
+   </div>
+</div>
+		</section>
+		</aside>
+	</section>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("a[href^=#]").click(function () {
+            var href = $(this).attr("href");
+            if ($(href).size() > 0) {
+                var pos = $(href).offset().top;
+                $("html,body").animate({ scrollTop: pos }, 800);
+            }
+            return false;
+        });
+    });
+</script>
+<div style="clear: both;"></div>
+<div style="height: 50px;"></div>
+<footer style="  position: relative;height: 40px;bottom: 0px;background-color: #FAFAFA;width: 100%!important;
+  border: 1px solid #CBD3CB;">
+    <div style="width: 20%" class="fl">
+        <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+    </div>
+    <div class="fl" style="width:80%">
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="tel:0769-83222111">一键联系</a></div>
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="#">使用帮助</a></div>
+        <div class="home_xian  ml15 fl"></div>
+        <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Roadnext/jianyi',array('token'=>$token,'openid'=>$openid))}">投诉建议</a></div>
+    </div>
+</footer>
+
+</body></html>
+

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+     <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+     <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/buy.css">
+     <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+     <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+     <script type="text/javascript">
+         $(function(){
+            $(".icon-outtest").touch(function(){
+                    $(".Mask").removeClass('is-visible')
+                    })
+            $(".alt").touch(function(){
+                var paytype = $(this).attr('data');
+                if(2==paytype){
+                    msg.alert('支付宝支付暂未开通，请选择其他支付！');
+                    return false;
+                }
+                $(this).addClass('icon-check-alt').siblings().removeClass('icon-check-alt')
+                $(this).addClass('border-inherit')
+            })
+             var eq;
+            function check_num(){
+                var num;
+                $(".Mask_password_ul li").each(function(i){
+                    // console.log(i);
+                    num=$(this).children("input").val();
+                    if(num==""){
+                        eq=i;
+                        return false;
+                    }
+                });
+                        // alert("eq"+eq)
+                        return eq;
+            }
+                    // 显示隐藏区域
+            $(function(){
+                $(".go-btn").touch(function(){
+                    var paytype = $('.icon-check-alt').attr('data');
+                    //判断支付方式
+                    if(1 == paytype){//钱包支付
+                        $('.Mask').addClass('is-visible');
+                        $(".Mask_btn").removeClass('outstanding');
+                    }else if(3 == paytype){ //微信支付
+                        var money = $(".monryse").html();
+
+                        var LQ = "{weikucms:$orderinfo['LQ']}";
+                        var CQ = "{weikucms:$orderinfo['CQ']}";
+                        var type = $('.icon-check-alt').attr('data');
+                        var url = "{weikucms::U('pay',array('token'=>$token,'openid'=>$openid,'order_id'=>$_GET['order_id']))}"+"&type="+type;
+                        $.post(url,{money:money,LQ:LQ,CQ:CQ},function(rel){
+                            if(rel.status ==1){
+                                if(rel.wayes == 2){
+                                    $("#orderid").val(rel.infoes);
+                                    $("#totalPrice1").val(money);
+                                    $("#myweipayform").submit();
+                                }else{
+                                    msg.alert(rel.info,function(){
+                                        location.href = "{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}";
+                                    })
+                                }
+                            }else{
+                                msg.alert(rel.info);
+                            }
+                        },'json')
+                    }else if(2 == paytype){ //支付宝
+
+                    }
+
+                })
+            // 数字键盘
+                $(".key_li").touch(function(){
+                    if(eq==6){
+                        // alert("不能输入了")
+                        return false;
+                    }else{
+                        var  values=$(this).html();
+                        var  index=check_num();
+                        if(index==5){
+                        // alert("不能输入了")
+                        eq=6;
+                        // $(".key .key_li ").addClass('select')
+                        $(".Mask_btn").addClass('outstanding');
+                        }else{
+                        $(".Mask_btn").removeClass('outstanding');
+                        }
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                    }
+                })
+                $(".key_del").touch(function(){
+                    var index;
+                    if(eq==6){
+                        index=eq-1;
+                        eq--;
+                    }else{
+                        index=check_num()-1
+                    }
+                    $(".Mask_btn").removeClass('outstanding');
+                    $(".Mask_password_ul").find("li").eq(index).children("input").val("");
+                });
+                // 立即支付
+                $(".btn-Mask").click(function(event) {
+                    var btns = "";
+                    $('.Mask_password_ul_li input').each(function(key,value){
+                        btns += $(this).val();
+                    });
+                    $(".Mask_password_ul_li").find("input").val("");
+                    if(eq==6){
+                        $(".Mask").removeClass('is-visible');
+                        var money = $(".monryse").html();
+
+                        var LQ = "{weikucms:$orderinfo['LQ']}";
+                        var CQ = "{weikucms:$orderinfo['CQ']}";
+                        var type = $('.icon-check-alt').attr('data');
+                        var url = "{weikucms::U('pay',array('token'=>$token,'openid'=>$openid,'order_id'=>$_GET['order_id']))}"+"&type="+type;
+                        $.post(url,{password:btns,money:money,LQ:LQ,CQ:CQ},function(rel){
+                            if(rel.status ==1){
+                                msg.alert(rel.info,function(){
+                                    window.location.href = "{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}";
+                                });
+                            }else{
+                                msg.alert(rel.info);
+                            }
+                        },'json')
+                    }
+                    eq=0;
+                })
+                $(".Mask_abolish").touch(function(){
+                    $(".Mask").removeClass('is-visible');
+                    $(".Mask_btn").removeClass('outstanding');
+                    $("input").val("");
+                    eq=0;
+                })
+            })
+         })
+  	</script>
+    </head>
+    <body>
+                <div class="top-details border-inherit">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                            <if condition="$orderinfo['pay_status'] eq 1">
+                                订单详情
+                                <else/>
+                                立即支付
+                            </if>
+                        </div>
+                </div>
+                <div class="affirm-conter">
+	                <div class="consignee">
+	                	<div class="consignee-title clearfix">
+	                		<span class="fl">收货人：{weikucms:$address['name']}</span>
+	                		<span class="fr">{weikucms:$address['phone']}</span>
+	                	</div>
+	                	<div class="consignee-home mt5">
+	                		收货地址：{weikucms:$address['address']}
+	                	</div>
+	                	<div class="icon-arrow-right">
+	                		<!--<span class="arrow-right"></span>-->
+	                	</div>
+	                </div>
+	                <div class="indent-tab-title">
+            <volist name="orderinfo['details']" id="vo">
+			<div class="commodity mt10">
+				<div class="order-tab-main-content-left">
+					<img src="{weikucms:$vo['produnct']['pic']}">
+				</div>
+				<div class="order-tab-main-content-right space">
+					<div class="order-tab-main-content-right-size">
+                        {weikucms:$vo['produnct']['name']}
+					</div>
+					<div class="order-tab-main-content-right-money clearfix">
+						<!--<span>￥298.0 </span>-->
+						<span class="title-name">LQ{weikucms:$vo['produnct']['LQ']}+CQ{weikucms:$vo['produnct']['CQ']}</span>
+						<div class="quantity">
+							×{weikucms:$vo['num']}
+						</div>
+					</div>
+                    <a href="{weikucms::U('Ynd/evaluateinfo',array('token'=>$token,'openid'=>$openid,'pro_id'=>$vo['pro_id']))}">
+					<div class="btn-comment" >
+						评论
+					</div>
+                    </a>
+				</div>
+			</div>
+            </volist>
+			<!--<div class="commodity mt10">
+				<div class="order-tab-main-content-left">
+					<img src="{weikucms::STATICS}/wapweiui/ynd/images/img3.png">
+				</div>
+				<div class="order-tab-main-content-right space">
+					<div class="order-tab-main-content-right-size">
+						云南白药千草堂螺旋藻精片0.5g*1020片小袋试用天然程海湖螺旋
+					</div>
+					<div class="order-tab-main-content-right-money clearfix">
+						&lt;!&ndash;<span>￥298.0 </span>&ndash;&gt;
+						<span class="title-name">LQ200+CQ400</span>
+						<div class="quantity">
+							×1
+						</div>
+					</div>
+					<div class="btn-comment">
+						评论
+					</div>
+				</div>
+			</div>-->
+			<div class="add-text">
+				合计：
+				<span>￥{weikucms:$orderinfo['money']}</span>
+			</div>
+		</div>
+		<div class="indent-text">
+            <if condition="$orderinfo['log_order']">
+                <p>物流订单编号：{weikucms:$orderinfo['log_order']}</p>
+                <p>物流公司：{weikucms:$orderinfo['log_name']}</p>
+                <else/>
+                <p>发货状态：还未发货</p>
+            </if>
+
+			<!--<p>配送时间：支付后48小时内</p>-->
+		</div>
+         <if condition="$orderinfo['pay_status'] eq 1">
+             <div class="indent-text">
+                 支付状态：已支付
+             </div>
+             <else/>
+             <div>
+                 <div class="indent-text">
+                     <div class="indent-text-top">选择支付方式</div>
+                     <div class="indent-text-main">
+                         <ul class="indent-text-main-ul">
+                             <li class="indent-text-main-ul-li">
+                                 <!-- <span class="alt"></span> -->
+                            <span class="indent-text-main-ul-li-img">
+                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/pay-01.png" alt="">
+                            </span>
+                                 <span class="indent-text-main-ul-li-text">钱包支付</span>
+                             </li>
+                             <li class="indent-text-main-ul-li">
+                                 <!-- <span class="alt"></span> -->
+                            <span class="indent-text-main-ul-li-img">
+                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/pay-02.png" alt="">
+                            </span>
+                                 <span class="indent-text-main-ul-li-text">支付宝</span>
+                             </li>
+                             <li class="indent-text-main-ul-li">
+                                 <!-- <span class="alt"></span> -->
+                            <span class="indent-text-main-ul-li-img">
+                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/pay-03.png" alt="">
+                            </span>
+                                 <span class="indent-text-main-ul-li-text">微信支付</span>
+                             </li>
+                             <div>
+                                 <div class="alt" data="1"></div>
+                                 <div class="alt" data="2"></div>
+                                 <div class="alt" data="3"></div>
+                             </div>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="go-btn">
+                     立即支付
+                 </div>
+             </div>
+         </if>
+
+		  <!-- 弹出框 -->
+              <div class="Mask">
+                        <div class="Mask_pop">
+                        <div class="icon-outtest"></div>
+                        <div class="pass_word">
+                                <div>确认支付</div>
+                                <div>{weikucms:$userinfo['phone']}</div>
+                        </div>
+                        <div class="Mask-title">
+                        <div>
+                            您所购买的商品一共<span class="colorf03e3e monryse">{weikucms:$orderinfo['money']}</span>元
+                        </div>
+                        </div>
+                        <div class="Mask_password">
+                            <ul class="Mask_password_ul">
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password"  readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="Mask_main clearfix">
+                                    <div class="btn-Mask">立即支付</div>
+                                </div>
+                        </div>
+                        <div class="keyboard">
+                                <ul class="key">
+                                    <li class="key_li">1</li>
+                                    <li class="key_li">2</li>
+                                    <li class="key_li">3</li>
+                                    <li class="key_li">4</li>
+                                    <li class="key_li">5</li>
+                                    <li class="key_li">6</li>
+                                    <li class="key_li">7</li>
+                                    <li class="key_li">8</li>
+                                    <li class="key_li">9</li>
+                                    <li class="key_li">&nbsp;</li>
+                                    <li class="key_li">0</li>
+                                    <li class="key_del">×</li>
+                                </ul>
+                        </div>
+              </div>
+	</div>
+
+                <!--微信支付表单-->
+                <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+                    <input type="hidden" name="order_money" value="" id="totalPrice1">      <!--付款金额-->
+                    <input type="hidden" name="order_text" value="订单购买">    <!--订单描述-->
+                    <input type="hidden" name="orderid" value="" id="orderid">                  <!--商户订单号-->
+                    <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">      <!--微信用户openid-->
+                    <input type="hidden" name="returnurl" value="{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$_GET['openid']))}">    <!--支付成功后返回地址-->
+                    <input type="hidden" name="type" value="Ynd_orderpay">       <!--支付订单类型(主要用于weipay的config里的配置key用的)-->
+                </form>
+
+
+    </body>
+</html>

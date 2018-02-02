@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+             <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+             <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/buy.css">
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/prompt.js"></script>
+             <script type="text/javascript">
+             $(function(){
+             	var pay=$(".pay").html();
+             	var sell=$(".sell").html();
+                 $(".icon-outtest").touch(function(){
+                    $(".Mask").removeClass('is-visible')
+                    })
+		$(".icon-plus").touch(function(){
+			var n=$(this).prev(".text").html();
+			var num=parseInt(n)+1;
+			var pay1=$(".pay").html();
+			var sell1=$(".sell").html();
+			var num1=parseInt(pay)+parseInt(pay1);
+			var num2=parseInt(sell)+parseInt(sell1);
+			// $(".count_input").html(num);
+			$(this).prev(".text").html(num);
+			$(".pay").html(num1);
+			$(".sell").html(num2);
+		});
+		$(".icon-minus").touch(function(){
+			var n=$(this).next(".text").html();
+			var num=parseInt(n)-1;
+			var pay1=$(".pay").html();
+			var sell1=$(".sell").html();
+			var num1=parseInt(pay1)-parseInt(pay);
+			var num2=parseInt(sell1)-parseInt(sell);
+			if(num==0){alert("不能为0!"); return}
+			// $(".count_input").html(num);
+			$(this).next(".text").html(num);
+			$(".pay").html(num1);
+			$(".sell").html(num2);
+		})
+		$(".alt").touch(function(){
+            var type = $(this).attr('data-type');
+            if(2 == type){
+                msg.alert('支付宝现暂无开通！');
+                return false;
+            }
+			$(this).addClass('icon-check-alt').siblings().removeClass('icon-check-alt')
+			$(this).addClass('border-inherit')
+		})
+	})
+		 var eq;
+            function check_num(){
+                var num;
+                $(".Mask_password_ul li").each(function(i){
+                    // console.log(i);
+                    num=$(this).children("input").val();
+                    if(num==""){
+                        eq=i;
+                        return false;
+                    }
+                });
+                // alert("eq"+eq)
+                return eq;
+            }
+            $(function(){  
+            $(".rolloff_btn").touch(function(){
+                $("[name=money]").blur();
+                var money=$("[name=money]").val();
+                var flag=$(this).attr('flag');                
+                if(money==''){
+                    show_error_tip('请输入转入金额');
+                    $("[name=money]").focus();
+                    return false;
+                }else{
+                        $('.Mask').addClass('is-visible');
+                         $(".Mask_btn").removeClass('outstanding');
+                }    
+           })
+
+                $(".key_li").touch(function(){
+                    if(eq==6){
+                        // alert("不能输入了")
+                        return false;
+                    }
+                    else{
+                        var  values=$(this).html();
+                        var  index=check_num();
+                        if(index==5){
+                                // alert("不能输入了")
+                                eq=6;
+                                // $(".key .key_li ").addClass('select')
+                                $(".Mask_btn").addClass('outstanding'); 
+                        }else{
+                                 $(".Mask_btn").removeClass('outstanding');
+                        }
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                    }   
+                })
+                $(".key_del").touch(function(){
+                        var index;
+                        if(eq==6){
+                            index=eq-1;
+                            eq--;
+                        }else{
+                            index=check_num()-1
+                        } 
+                         $(".Mask_btn").removeClass('outstanding');
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val("");              
+                });
+                $(".Mask_btn").click(function(event) {   
+                    var btns = ""; 
+                    $('.Mask_password_ul_li input').each(function(key,value){
+                            btns += $(this).val();
+                    });   
+                    $(".Mask_password_ul_li").find("input").val("");
+                    if(eq==6){
+                        $(".Mask").removeClass('is-visible'); 
+                        var money = $(".bank-input").val();
+                        var type = $(".icon-check-alt").attr('data-type');
+                        var url = "{weikucms::U('Ynd/recharge',array('token'=>$token,'openid'=>$openid))}";
+                        $.post(url,{money:money,type:type,password:btns},function(rel){
+                            if(rel.status ==1){
+                                $("#orderid").val(rel.infoes);
+                                $("#totalPrice1").val(money);
+                                $("#myweipayform").submit();
+                            }else{
+                                msg.alert(rel.info);
+                            }
+                        },'json');
+                       
+                       
+                    }
+                    eq=0;
+
+                })
+                $(".Mask_abolish").touch(function(){
+                    $(".Mask").removeClass('is-visible');
+                    $(".Mask_btn").removeClass('outstanding');
+                    // $(".Mask_password_ul_li").find("input").val("");
+                     $("input").val("");
+                     eq=0;
+                 })
+        })  
+  	</script>
+    </head>
+    <body>
+                <div class="top-details border-inherit">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                                    充值
+                        </div>
+                </div>
+                <div class="indent-text mg0">
+			<div class="indent-text-top block">选择支付方式</div>
+			<div class="indent-text-main">
+				<ul class="indent-text-main-ul">
+					<li class="indent-text-main-ul-li">
+						<!-- <span class="alt"></span> -->
+						<span class="indent-text-main-ul-li-img">
+							<img src="{weikucms::STATICS}/wapweiui/ynd/images/pay-03.png" alt="">
+						</span>
+						<span class="indent-text-main-ul-li-text">微信支付</span>
+					</li>
+					<li class="indent-text-main-ul-li">
+						<!-- <span class="alt"></span> -->
+						<span class="indent-text-main-ul-li-img">
+							<img src="{weikucms::STATICS}/wapweiui/ynd/images/pay-02.png" alt="">
+						</span>
+						<span class="indent-text-main-ul-li-text">支付宝</span>
+					</li>
+					<div>
+						<div class="alt icon-check-alt border-inherit" data-type='1'></div>
+						<div class="alt" data-type='2'></div>
+					</div>
+				</ul>
+			</div>
+		</div>
+        <div class="bank f16 mt10">
+            金额<input type="tel"  placeholder="转入金额" class="bank-input" name="money"/>
+        </div>
+         <div class="rolloff_btn">确认充值</div>
+  	<!-- 弹出框 -->
+              <div class="Mask">
+                        <div class="Mask_pop">
+                        <div class="icon-outtest"></div>
+                        <div class="pass_word">
+                                <div class="zepass">请输入你的安全密码</div>
+                        </div>
+                        <div class="Mask_password">
+                            <ul class="Mask_password_ul">
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password"  readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false"/>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="Mask_main clearfix">
+                                    <span class="Mask_abolish">取消</span>
+                                    <span class="Mask_btn">确认</span>
+                                </div>
+                        </div>
+                        <div class="keyboard">
+                                <ul class="key">
+                                    <li class="key_li">1</li>
+                                    <li class="key_li">2</li>
+                                    <li class="key_li">3</li>
+                                    <li class="key_li">4</li>
+                                    <li class="key_li">5</li>
+                                    <li class="key_li">6</li>
+                                    <li class="key_li">7</li>
+                                    <li class="key_li">8</li>
+                                    <li class="key_li">9</li>
+                                    <li class="key_li">&nbsp;</li>
+                                    <li class="key_li">0</li>
+                                    <li class="key_del">×</li>
+                                </ul>
+                        </div>
+              </div>
+                <!--微信支付表单-->
+                <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+                    <input type="hidden" name="order_money" value="" id="totalPrice1">      <!--付款金额-->
+                    <input type="hidden" name="order_text" value="由你定微商系统个人账户充值">    <!--订单描述-->
+                    <input type="hidden" name="orderid" value="" id="orderid">                  <!--商户订单号-->
+                    <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">      <!--微信用户openid-->
+                    <input type="hidden" name="returnurl" value="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$_GET['openid']))}">    <!--支付成功后返回地址-->
+                    <input type="hidden" name="type" value="Ynd_usercz">       <!--支付订单类型(主要用于weipay的config里的配置key用的)-->
+                </form>
+
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

@@ -1,0 +1,236 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<script>
+var editor2;
+
+KindEditor.ready(function(K) {
+
+    editor2 = K.create('#taocan', {
+
+        resizeType : 1,
+
+        allowPreviewEmoticons : false,
+
+        allowImageUpload : true,
+
+        allowFileManager:true,
+
+        afterBlur: function(){this.sync();}
+
+    })
+
+});
+</script>
+
+<script>
+    KindEditor.ready(function(K) {
+
+        var editor = K.editor({
+
+            allowFileManager: true
+
+        });
+
+        K('#upload1').click(function() {
+
+            editor.loadPlugin('image',
+
+            function() {
+
+                editor.plugin.imageDialog({
+
+                    fileUrl: K('#food_pic1').val(),
+
+                    clickFn: function(url, title) {
+
+                        K('#food_pic1').val(url);
+
+                        $("#food_pic_show1").attr('src', url).show();
+
+                        editor.hideDialog();
+
+                        $('#uploadImg img').remove()
+                        $('#uploadImg').append($('<img src='+url+' />'));
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+</script>
+
+<div class="" style="">
+
+  <div class="cLineB">
+
+    <div class="title_tab" id="topTab">
+
+      <ul class="tab_navs title_tab" data-index="0">
+
+        <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today"
+        style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Miye/index',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!--tab start-->
+
+  <div class="alert alert-info">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>
+
+    <strong>提示信息!</strong>
+
+    <ol>
+
+      <li>在这里可以上传icon素材。</li>
+
+    </ol>
+
+  </div>
+
+  <!--tab end-->
+
+  <div class="box-content">
+
+     <div class="msgWrap">
+
+         <form class="form" method="post" id="form" action="">
+             <input type="hidden" name="token" id="token" value="{weikucms:$token}" />
+      <div class="msgWrap bgfc">
+
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+
+          <tbody>
+
+            <tr>
+
+                <td style="width: 100px;">上传图片：</td>
+
+                <td>
+                    <if condition="$icon">
+                        <input type="hidden" class="pic text textMiddle inputQ" name="icon" id="food_pic1" value="{weikucms:$icon[icon]}" style="width: 300px;" />
+                    <else />
+                        <input type="hidden" class="pic text textMiddle inputQ" name="icon" id="food_pic1" value="" style="width: 300px;" />
+                    </if>
+
+                    <span class="ke-button-common" id="upload1">上传图片</span>
+
+                </td>
+
+            </tr>
+            <tr>
+
+                <td>图片预览：</td>
+
+                <td id="uploadImg">
+                    <if condition="$icon">
+                    <img src="{weikucms:$icon['icon']}" />
+                    <input type="hidden" id="op" value="1" />
+                    <else />
+                    <input type="hidden" id="op" value="0" />
+                    </if>
+                </td>
+
+            </tr>
+          <tr>
+
+            <td>&nbsp;</td>
+
+            <td>
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary"> 上传 </button>
+              <button type="button" id="bdelete" name="button" class="btn btn-primary"> 删除 </button>
+           </td>
+
+          </tr>
+
+          </tbody>
+
+
+
+        </table>
+
+      </div>
+
+    </form>
+
+    </div>
+
+    <div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $('#bdelete').click(function(){
+            var url = "{weikucms::U('Miye/iconDelete',array('token'=>$token))}";
+
+            $.post(url,{
+                'token':$('#token').val()
+            },function(data){
+
+                if(data.status == 0) {
+
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+
+                    setTimeout(function () {
+                        window.location.href = data.url;
+                    }, '1000');
+
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+        },'json');
+    });
+
+
+    $('#bsubmit').click(function(){
+            var url = "{weikucms::U('Miye/uploadIcon',array('token'=>$token))}";
+
+            $.post(url,{
+                'token':$('#token').val(),
+                'op':$('#op').val(),
+                'icon':$('#food_pic1').val()
+            },function(data){
+
+                if(data.status == 0) {
+
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+
+                    setTimeout(function () {
+                        window.location.href = data.url;
+                    }, '1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+        },'json');
+    });
+</script>
+
+<include file="Public:footer" />

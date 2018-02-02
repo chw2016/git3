@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css"  />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css"  />
+			<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+			<script>
+				$(function(){
+//					$(".Fixed_height").height($(window).height()-58);
+					$(document).on('click','.on',function(){
+						$(".header_deta").css("display",'block');
+					})
+					$(".header_deta ul li").click(function(){
+						$(".header_deta").css("display",'none');
+					})
+				})
+			</script>
+</head>
+<style>
+	.Safety {
+border-bottom: solid 1px #e4f0e4;
+line-height: 30px;
+padding: 0 10px;
+}
+    .x1 tr{
+        border: 1px solid #333;
+    }
+</style>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">订单详情</h1>
+			<div class="on">&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section style="padding-top:48px">
+			<div class="gta_bj1">
+			<div class="gta_yuanbj1"></div>
+		<div class="gta_bj3 Fixed_height" style="height: 100%;">
+			<!--<div class="shadow40">-->
+			<div class="Safety  pt20 b0">
+				<p
+                        <if condition="($_GET['type'] eq 2)AND($info['lid'])" >
+                        onclick="location.href='{weikucms::U('licai_info',array('token'=>$token,'openid'=>$openid,'id'=>$info['lid']))}'"
+                            <elseif condition="($_GET['type'] eq 3)AND($info['lid'])" />
+                            onclick="location.href='{weikucms::U('life_details',array('token'=>$token,'openid'=>$openid,'id'=>$info['lid']))}'"
+                            <elseif condition="($_GET['type'] eq 4)AND($info['pid'])" />
+                            onclick="location.href='{weikucms::U('p2p_info',array('token'=>$token,'openid'=>$openid,'id'=>$info['pid']))}'"
+                            <elseif condition="($_GET['type'] eq 5)AND($info['products'] eq null)AND($info['pid'])" />
+
+                            <elseif condition="$_GET['type'] eq 8" />
+                            onclick="location.href='{weikucms::U('logistics_index',array('token'=>$token,'openid'=>$openid))}'"
+                            <elseif condition="($_GET['type'] eq 7)AND($info['yid'])" />
+                            onclick="location.href='{weikucms::U('yiwai_item',array('token'=>$token,'openid'=>$openid,'id'=>$info['yid']))}'"
+                            <else />
+                            </if>
+                        >名称：{weikucms:$info.title}</p>
+                <if condition="$_GET['type'] eq 1">
+                    <p>贷款类型：{weikucms:$info.type}</p>
+                <p>申请贷款金额：{weikucms:$info.c_money}</p>
+                <p>贷款期阴(天)：{weikucms:$info.qi_xian}</p>
+                    <elseif condition="$_GET['type'] eq 2" />
+                    <p>年化收益率：<?php echo ($info['rate']*100)."%";?></p>
+                    <p>投资期限：{weikucms:$info.time_limit}个月</p>
+                    <p>预计到期收益：<?php echo round($info['money']*$info['rate']/365*30*$info['time_limit'],2);?>(元)</p>
+                    <p>当前收益：<?php echo round($info['money']*$info['rate']/365*min((time()-$info['add_time'])/3600/24,30*$info['time_limit']),2);?>(元)</p>
+                    <elseif condition="$_GET['type'] eq 3" />
+                    <p>附加险：</p>
+                    <volist name="info['fu_name']" id="vo">
+                        <p  style="margin-left: 48px;">{weikucms:$vo}</p>
+                    </volist>
+
+                 <!--   <p>申请投保金额：{weikucms:$info.start_money}(元)</p>-->
+                    <p>缴费年限：{weikucms:$info.year}</p>
+                    <p>健康状态：<if condition="$info['is_health']">良好<else />不良</if></p>
+                    <elseif condition="$_GET['type'] eq 4" />
+                    <p>年化收益率：<?php echo ($info['rate']*100)."%";?></p>
+                    <p>投资期限：{weikucms:$info.time_limit}个月</p>
+                    <p>还款方式：<if condition="$info['js_type'] eq 1">先息后本<elseif condition="$info['js_type'] eq 2" />等额本息<else /></if></p>
+
+                    <p>预计到期收益： <?php echo round($info['money']*$info['rate']/12*$info['time_limit'],2);?>（元） </p>
+<!--
+                    <p>当前收益：<?php echo round($info['money']*$info['rate']/365*min((time()-$info['add_time'])/3600/24,30*$info['time_limit']),2);?>(元)</p>
+-->
+                    <elseif condition="$_GET['type'] eq 5" />
+                    <if condition="$info['products']">
+                    <p>保险项目：</p>
+                    <volist name="info['products']" id="vo">
+                        <p  style="margin-left: 48px;">{weikucms:$vo.name}&nbsp;&nbsp;{weikucms:$vo.money}万元(保额)</p>
+                        </volist>
+                        <p  style="margin-left: 48px;">申请入保总金额：￥{weikucms:$info.total_money}万元</p>
+                        </if>
+                    <if condition="$info['info']">
+                    <p>补充说明：</p>
+                    <div style="margin-left: 48px;">{weikucms:$info.info}</div>
+                        </if>
+                    <elseif condition="$_GET['type'] eq 6" />
+                    <p>类型：<if condition="$info['type'] eq 1">续保<else />新车投保</if></p>
+                    <p>保险种类：</p>
+                    <volist name="info['oder_info1']" id="vo">
+                        <p style="margin-left: 42px; ">{weikucms:$vo.title}<if condition="$vo['abatement']">({weikucms:$vo.abatement})</if>&nbsp;&nbsp;&nbsp;保额:{weikucms:$vo.money}</p>
+                    </volist>
+
+                    <p>保险公司：</p>
+                    <volist name="info['companys']" id="vo">
+                        <p style="margin-left: 42px;">{weikucms:$vo}</p>
+                    </volist>
+                    <elseif condition="$_GET['type'] eq 7" />
+                    <if condition="$info['title2']">
+                        <p>产品名称：{weikucms:$info.title2}</p>
+                    </if>
+                    <if condition="$info['people_num']">
+                    <p>投保人数：{weikucms:$info.people_num}</p>
+                        </if>
+                    <if condition="$info['zhiye']">
+                    <p>职业类别：{weikucms:$info.zhiye}</p>
+                        </if>
+                    <if condition="$info['items']">
+                    <p>保险项目：</p>
+                    <volist name="info['items']" id="vo">
+                        <p  style="margin-left: 48px;">{weikucms:$vo.name}&nbsp;&nbsp;{weikucms:$vo.money}元(保额)</p>
+                    </volist>
+                        </if>
+                    <elseif condition="$_GET['type'] eq 8" />
+                    <p>保险项目：</p>
+                    <volist name="info['info']" id="vo">
+                        <p  style="margin-left: 48px;">{weikucms:$vo.name}&nbsp;&nbsp;{weikucms:$vo.money}{weikucms:$vo.unit}</p>
+                    </volist>
+
+                    <if condition="$info['content']">
+                        <p>补充说明：</p>
+                        <div style="margin-left: 48px;">{weikucms:$info.content}</div>
+                    </if>
+                    <else />
+                    </if>
+                <if condition="$info['money']">
+                <p>交易金额：{weikucms:$info.money}(元)</p>
+                    </if>
+
+                <p>联系号码：{weikucms:$info.phone}</p>
+				<p>订单号码：{weikucms:$info.orderid}</p>
+				<p>下单时间：{weikucms:$info.add_time|date='Y-m-d H:i:s',###}</p>
+				<p>订单状态：<font style="color: green;">
+                    <if condition="$info['status'] eq 0">
+                        处理中...
+                        <elseif condition="$info['status'] eq 1" />
+                        处理中...
+                        <elseif condition="$info['status'] eq 2" />
+                        交易完成
+                        <elseif condition="$info['status'] eq -2" />
+                        交易失败
+                        <elseif condition="$info['status'] eq 3" />
+                        投资完期
+                        <elseif condition="$info['status'] eq 4" />
+                        已清算
+                        <else />
+                    </if>
+				</font></p>
+<!--
+				<p>订单详情：</p>
+
+-->
+                <if condition="($_GET['type'] eq 4)AND($syjl)" >
+                    <table class="x1">
+                        <tr><th width="10%">期数</th><th width="20%" >本金(元)</th><th width="20%">收益(元)</td><th width="20%">结算时间</th></tr>
+                        <volist name="syjl" id="vo">
+                        <tr><th width="10%">{weikucms:$i}</th><th width="20%" >{weikucms:$vo.bj_money}</th><th width="20%">{weikucms:$vo.sy_money}</td><th width="20%">{weikucms:$vo.add_time|date='Y-m-d',###}</th></tr>
+                            </volist>
+
+                    </table>
+                </if>
+                <if condition="($info['imgs']) AND ($info['imgs']['0'])">
+                <p>上传资料图片</p>
+                <div>
+                	<ul>
+                		<ul>
+                            <volist name="info['imgs']" id="vo">
+                                <li>  <img src="{weikucms:$vo}"
+                                           <?php if($i%2==0){ ?>
+                                    style="float: right;width: 49%;margin-top: 5px;"
+                                          <?php  }else{ ?>
+                                    style="float: left;width: 49%;margin-top: 5px;"
+                                    <?php }?>
+                                        /></li>
+
+                            </volist>
+
+                	</ul>
+                	</ul>
+                    <!--<volist name="info['imgs']" id="vo">
+                        <img src="http://d.hiphotos.baidu.com/zhidao/wh%3D600%2C800/sign=324d313a233fb80e0c8469d106e10316/21a4462309f79052ab867a350ef3d7ca7bcbd51b.jpg" width="45%" style="float: left;" />
+                    </volist>-->
+                </div>
+                    </if>
+			</div>
+			<div class="service">
+				<span><a href="tel:400888888" style="color: #7f7f7f">联系客服</a></span>
+			</div>
+		</div>
+	</div>
+		</section>
+	</body>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'previewImage'
+            ]
+        });
+        wx.ready(function () {
+
+
+
+
+            //图片展示
+
+            $(document).on('click', 'img', function (){
+
+                var urls = [];
+                var $this = $(this);
+                $("img").each(function(e,t){
+                    urls[e]=$(t).attr('src');
+                });
+                wx.previewImage({
+                    current: $this.attr('src'),
+                    urls:  urls
+                });
+            })
+        })
+
+
+    </script>
+</html>

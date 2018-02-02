@@ -1,0 +1,87 @@
+<html><head>
+    <title>我的客户</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<body>
+<style type="text/css">
+.tab-yf-null{
+    width: 100%;
+    text-align: center;
+    padding: initial;
+    color: #414141;
+}
+.tab-customer .tab-yf-box{
+    background: #fff;
+    padding: 0;
+}
+.tab-yj-nav>li.active {
+    border-color: #ff0000;
+    color: #ff0000;
+}
+.tab-customer .tab-yj-nav>li {
+	width:100%;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+</style>
+<div class="tab-yj tab-customer">
+    <ul class="tab-yj-nav">
+        <li class="active">经纪人</li>
+    </ul>
+    <div class="tab-yf-box">
+        <div class="tab-yf-null">
+            <div class="tab-yf-box1">
+            <div class="tab-yf-box-main f14">
+                    <div class="tab-yf-box-main-name">
+                            <div>姓名</div>
+                    </div>
+                    <div class="tab-yf-box-main-name">
+                            <div>电话</div>
+                    </div>
+                    <div class="tab-yf-box-main-time">
+                            <div>日期</div>
+                    </div>
+            </div>
+			<?php foreach($jin as $v){?>
+              <div class="tab-yf-box-main f12">
+                    <div class="tab-yf-box-main-name">
+                            <div><?php echo $v['name']?></div>
+                    </div>
+                    <div class="tab-yf-box-main-name">
+                            <div>
+								<?php echo $v['phone'];?>
+							</div>
+                    </div>
+                    <div class="tab-yf-box-main-time">
+                            <div><?php echo date('Y-m-d',$v['add_time']);?></div>
+                    </div>
+            </div>
+            <?php }?>
+            </div>
+            </div>
+             <button class="ui-btn-lg ui-btn-danger" type="button" id="submitCustomer" style="width: 95%;margin: 0 auto;margin-top: 20px;">推荐经纪人</button>
+            </div>
+</div>
+<div class="space-60"></div>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+</body>
+<script>
+$('#submitCustomer').click(function(){
+	window.location.href="{weikucms::U('code',array('token'=>$token,'openid'=>$openid))}";
+})
+
+</script>
+</html>

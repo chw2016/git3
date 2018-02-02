@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/js/iscroll.js"></script>
+    <style type="text/css">
+        body{
+            background-color: rgb(240,240,240);
+        }
+    </style>
+</head>
+<body >
+<div class="header textMiddle header-green-bg white h3">
+    <div class="setLeft icon-back"  onclick="javascript:history.go(-1);"></div>
+    <span>抽奖活动</span>
+</div>
+<if condition="$data neq null">
+    <volist name="data" id="vo">
+<div class="eventBox white-bg setMiddle">
+    <div class="eventTitle">{weikucms:$vo.title}</div>
+    <div class="eventTime">活动时间：{weikucms:$vo.statdate|date='Y-m-d',###} - {weikucms:$vo.enddate|date='Y-m-d',###}</div>
+
+    <li>
+        <if condition="$vo.type eq 1">
+            <a href="{weikucms::U('Wap/Lottery/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                <elseif condition="$vo.type eq 2"/>
+                <a href="{weikucms::U('Wap/Guajiang/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                    <elseif condition="$vo.type eq 3"/>
+                    <a href="{weikucms::U('Wap/Coupon/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                        <elseif condition="$vo.type eq 4"/>
+                        <a href="{weikucms::U('Wap/Zadan/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                            <else/>
+        </if>
+        <div class="fixBg setMiddle eventPic" style="background-image: url({weikucms:$vo['starpicurl']})"></div></a>
+    <div class="eventContent">
+        {weikucms:$vo.info}……
+    </div>
+</div>
+    </volist>
+    <else/>
+    <div class="eventBox white-bg setMiddle">
+        没有活动
+    </div>
+</if>
+
+</body>
+
+</html>

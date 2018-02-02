@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>个人资料</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/ynd/js/region_select.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+
+            <script type="text/javascript">
+            $(function(){
+                $(".icon-outtest").touch(function(){
+                    $(".Mask").removeClass('is-visible')
+                    })
+                 var eq;
+            function check_num(){
+                var num;
+                $(".Mask_password_ul li").each(function(i){
+                    // console.log(i);
+                    num=$(this).children("input").val();
+                    if(num==""){
+                        eq=i;
+                        return false;
+                    }
+                });
+                // alert("eq"+eq)
+                return eq;
+            }
+                function ajaxblur(data){
+                    var url = "{weikucms::U('Ynd/ajaxuser',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,data,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info);
+                            window.location.href = "{weikucms::U('Ynd/userregister',array('token'=>$token,'openid'=>$openid,'user_id'=>$userinfo['id']))}";
+                        }else{
+                            msg.alert(rel.info);
+                        }
+                    },'json')
+                }
+                // $(".tel").blur(function(event) {
+                //     var  tel  = $(this).val();
+                //     if(tel==''||tel.length!=11){
+                //         msg.alert("请输入正确手机号码");
+                //     }
+                //     ajaxblur({phone:tel});
+                // })
+                // $("#sex").blur(function(event) {
+                //    var  data ={sex:$(this).val()}
+                //     ajaxblur(data);
+                // })
+                // $("[name=password]").keyup(function(event) {
+                //     var keyCode = event.keyCode;
+                //    if(keyCode >= 96 && keyCode <= 105){
+                //    }else{
+                //         var val = $(this).val();
+                //         val  = val.substring(0, val.length -1);
+                //         $(this).val(val);
+                //    }
+                // }).keydown(function(event) {
+                //     var keyCode = event.keyCode;
+                //    if(keyCode >= 96 && keyCode <= 105){
+                //    }else{
+                //         var val = $(this).val();
+                //         val  = val.substring(0, val.length -1);
+                //         $(this).val(val);
+                //    }
+                // })
+                $("[name=password]").click(function(){})
+                $(".btn-user").click(function(){
+                    var location_p = $("#location_p").val();
+                    var location_c = $("#location_c").val();
+                    var  tel  = $(".tel").val();
+                    var  data =$("#sex").val();
+                    var password = $("[name=password]").val();
+                    var email = $("[name=email]").val();
+                    var email_e= /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                       if(tel==''||tel.length!=11){
+                        msg.alert("请输入正确手机号码");
+                        return
+                    }
+                    if(data==''){
+                      msg.alert("请填写性别");
+                      return
+                    }
+                    if(password.length!=6){
+                            msg.alert("请输入六位数密码");
+                            return;
+                        }
+                    if(!email_e.test(email)){
+                        msg.alert("请输入正确邮箱");
+                        return;
+                    }
+                    var data = {
+                        location_p:location_p,location_c:location_c,phone:tel,sex:data,password:password,email:email
+                    }
+                    console.log(password);
+                    var user_id = "{weikucms:$userinfo['id']}";
+                    if(!user_id){
+                        if(password.length!=6){
+                            msg.alert("请输入六位数密码");
+                            return;
+                        }
+                        $('.btn-user').html('提交中...');
+                        var url= "{weikucms::U('Ynd/ajaxuser',array('token'=>$token,'openid'=>$openid))}";
+                        $.post(url,data,function(rel){
+                            if(rel.status==1){
+                                msg.alert(rel.info,function(){
+                                    location.href="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}";
+                                });
+                            }else{
+                                msg.alert(rel.info);
+                            }
+                        },'json');
+                    }else{
+
+                     $('.Mask').addClass('is-visible');
+                    $(".Mask_btn").removeClass('outstanding'); 
+                    $(".key_li").touch(function(){
+                        if(eq==6){
+                            // alert("不能输入了")
+                            return false;
+                        } else{
+                            var  values=$(this).html();
+                            var  index=check_num();
+                            if(index==5){
+                            // alert("不能输入了")
+                            eq=6;
+                            // $(".key .key_li ").addClass('select')
+                            $(".Mask_btn").addClass('outstanding');
+                            }else{
+                            $(".Mask_btn").removeClass('outstanding');
+                            }
+                            $(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                        }
+                    })
+                        $(".key_del").touch(function(){
+                            var index;
+                            if(eq==6){
+                                index=eq-1;
+                                eq--;
+                            }else{
+                                index=check_num()-1
+                            }
+                            $(".Mask_btn").removeClass('outstanding');
+                            $(".Mask_password_ul").find("li").eq(index).children("input").val("");
+                        });
+                        $(".Mask_btn").click(function(event) {
+
+                            var btns = "";
+                            $('.Mask_password_ul_li input').each(function(key,value){
+                                btns += $(this).val();
+                            });
+                            $(".Mask_password_ul_li").find("input").val("");
+                            if(eq==6){
+                                $(".Mask").removeClass('is-visible');
+                                var location_p = $("#location_p").val();
+                                var location_c = $("#location_c").val();
+                                var  tel  = $(".tel").val();
+                                var  data =$("#sex").val();
+                                var password = $("[name=password]").val();
+                                var email = $("[name=email]").val();
+                                var email_e= /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                                if(tel==''||tel.length!=11){
+                                    msg.alert("请输入正确手机号码");
+                                    return
+                                }
+                                if(data==''){
+                                    msg.alert("请填写性别");
+                                    return
+                                }
+                                if(password){
+                                    if(password.length!=6){
+                                        msg.alert("请输入六位数密码");
+                                        return;
+                                    }
+                                }
+
+                                if(!email_e.test(email)){
+                                    msg.alert("请输入正确邮箱");
+                                    return;
+                                }
+                                var datas = {
+                                    opassword:btns,location_p:location_p,location_c:location_c,phone:tel,sex:data,password:password,email:email
+                                }
+
+                                ajaxblur(datas);
+                            }
+                            eq=0;
+                        })
+                        $(".Mask_abolish").touch(function(){
+                            $(".Mask").removeClass('is-visible');
+                            $(".Mask_btn").removeClass('outstanding');
+                            $("input").val("");
+                            eq=0;
+                        })
+                    }
+                    /*var url= "{weikucms::U('Ynd/ajaxuser',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,data,function(rel){
+                        if(rel.status==1){
+                            msg.alert(rel.info,function(){
+                                location.href="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}";
+                            });
+                        }else{
+                            msg.alert(rel.info);
+                        }
+                    },'json')*/
+                   // msg.alert("提交成功");
+                })
+               /* $(".addresses").click(function(){
+                    var url= "{weikucms::U('Ynd/is_user',array('token'=>$token,'openid'=>$openid,'type'=>'addressselect'))}";
+                    $.post(url,{},function(rel){
+                        if(rel.status==1){
+                            alert(5454);
+                            location.href=rel.url;
+                        }else{
+                            msg.alert(rel.info);
+                        }
+                    },'json')
+                })*/
+                $(".contentse").click(function(){
+                    window.location.href = "{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}";
+                })
+
+                $('.seachpw').touch(function(){
+                    var url = "{weikucms::U('Ynd/seachpassword',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,{},function(rel){
+                        if(rel.status ==1){
+                            msg.alert(rel.info,function(){
+                                location.href = "{weikucms::U('userregister',array('token'=>$token,'openid'=>$openid))}";
+                            })
+                        }else{
+                            msg.alert(rel.info);
+                        }
+                    },'json');
+                })
+
+            })
+            </script>
+            <style type="text/css">
+            .main-title-right.w80{
+                width:80%;
+            }
+            .w100{
+                width: 100%;
+            }
+            </style>
+    </head>
+    <body>
+                <div class="top-details">
+                        <div class="arrow-left-details contentse"></div>
+                        <div class="details-center">
+                                    个人资料
+                        </div>
+                </div>
+                <div class="main-content main-img animated fadeInDown">
+                    <div class="main-title clearfix twenty">
+                            <div class="main-title-left">
+                                        <span class="main-title-left-me weight-initial">我的头像</span>
+                            </div>
+                            <div class="main-title-right pr">
+                                        <div class="user-img1">
+                                            <if condition="$op eq 1">
+                                                <img src="{weikucms:$wxUinfo['headimgurl']}"/>
+                                                <else/>
+                                                <if condition="$wxinfo['headimgurl']">
+                                                    <img src="{weikucms:$wxinfo['headimgurl']}"/>
+                                                    <else/>
+                                                    <img src="{weikucms::STATICS}/wapweiui/ynd/images/1.jpg" alt="">
+                                                </if>
+                                            </if>
+
+                                        </div>
+                            </div>
+                    </div>
+                    <div class="main-title clearfix">
+                            <div class="main-title-left">
+                                 <span class="main-title-left-me weight-initial">我的昵称</span>
+                            </div>
+                            <div class="main-title-right">
+                                <span class="main-title-size">
+                                   <if condition="$op eq 1">
+                                       {weikucms:$wxUinfo['nickname']}
+                                       <else/>
+                                       <if condition="$wxinfo['headimgurl']">
+                                           {weikucms:$wxinfo['nickname']}
+                                           <else/>
+                                           我
+                                       </if>
+                                   </if>
+                                </span>
+                            </div>
+                    </div>
+                    <div class="main-title clearfix">
+                            <div class="main-title-left">
+                                 <span class="main-title-left-me weight-initial">会员号</span>
+                            </div>
+                            <div class="main-title-right">
+                                <span class="main-title-size">
+                                    <if condition="$op eq 1">
+                                        {weikucms:$userinfo['uname']}
+                                        <else/>
+                                        {weikucms:$code}
+                                    </if>
+
+                                </span>
+                            </div>
+                    </div>
+                    <div class="main-title clearfix">
+                        <div class="main-title-left">
+                            <span class="main-title-left-me weight-initial">性别（<span class="icon-23"></span>）</span>
+                        </div>
+                        <div class="main-title-right" style="width:73%;text-align:right;">
+                                <span class="main-title-size">
+                                        <select name="sex" id="sex">
+                                            <option value="">请选择性别</option>
+                                            <option value="0" <if condition="$userinfo['sex'] eq 0">selected</if>>男</option>
+                                            <option value="1" <if condition="$userinfo['sex'] eq 1">selected</if>>女</option>
+                                        </select>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="main-title clearfix">
+                            <div class="main-title-left">
+                                 <span class="main-title-left-me weight-initial">手机号码（<span class="icon-23"></span>）</span>
+                            </div>
+                            <div class="main-title-right">
+                                <span class="main-title-size"><input type="text" name="tel" value="{weikucms:$userinfo['phone']}"  placeholder="请填写您的手机号码" class="main-title-size-input tel"/></span>
+                            </div>
+                    </div>
+                    <div class="main-title clearfix">
+                            <div class="main-title-left">
+                                 <span class="main-title-left-me weight-initial">密码</span>
+                            </div>
+                            <div class="main-title-right w80">
+                                <span class="main-title-size"><input type="password" name="password" value="{weikucms:$userinfo['password']}"  placeholder="请填写您的密码,只能输入数字" class="main-title-size-input tel w100" onkeyup="value=value.replace(/[^\d]/g,'')" /></span>
+                            </div>
+                    </div>
+                    <div class="main-title clearfix">
+                            <div class="main-title-left">
+                                 <span class="main-title-left-me weight-initial">邮箱</span>
+                            </div>
+                            <div class="main-title-right">
+                                <span class="main-title-size"><input type="text" name="email" value="{weikucms:$userinfo['email']}"  placeholder="请填写您的邮箱" class="main-title-size-input tel"/></span>
+                            </div>
+                    </div>
+                     <div class="main-title clearfix">
+                            <div class="main-title-left1">
+                            <span class="main-title-left1-title">所在的省：</span>
+                                 <select name="location_p" id="location_p">
+                                 </select>
+                            </div>
+                    </div>
+                     <div class="main-title clearfix">
+                            <div class="main-title-left1">
+                                <span class="main-title-left1-title">所在的市：</span>
+                                 <select name="location_c" id="location_c">
+                                 </select>
+                                 <select name="location_a" id="location_a" class="hide"></select>
+                            </div>
+                    </div>
+            </div>
+            <div class="clearfix">
+                <div class="fr password-w seachpw">忘记密码？</div>
+            </div>
+            <div class="btn-user">
+                   提交
+            </div>
+            <div class="Mask">
+          <div class="Mask_pop">
+          <div class="icon-outtest"></div>
+            <div class="pass_word">
+                    <div>输入安全密码</div>
+            </div>
+            <div class="Mask_password">
+                <ul class="Mask_password_ul">
+                        <li class="Mask_password_ul_li">
+                            <input type="password"  readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                </ul>
+            </div>
+            <div class="Mask_main clearfix">
+                        <span class="Mask_abolish">取消</span>
+                        <span class="Mask_btn">确认修改</span>
+                    </div>
+            </div>
+            <div class="keyboard">
+                    <ul class="key">
+                        <li class="key_li">1</li>
+                        <li class="key_li">2</li>
+                        <li class="key_li">3</li>
+                        <li class="key_li">4</li>
+                        <li class="key_li">5</li>
+                        <li class="key_li">6</li>
+                        <li class="key_li">7</li>
+                        <li class="key_li">8</li>
+                        <li class="key_li">9</li>
+                        <li class="key_li">&nbsp;</li>
+                        <li class="key_li">0</li>
+                        <li class="key_del">×</li>
+                    </ul>
+            </div>
+          </div>    
+                <script type="text/javascript">
+                    $(function(){
+                        var location_pes = "{weikucms:$userinfo['location_p']}";
+                        var location_ces = "{weikucms:$userinfo['location_c']}";
+                        if(location_pes){
+                            new PCAS('location_p', 'location_c', 'location_a', location_pes, location_ces, '');
+                        }else{
+                            new PCAS('location_p', 'location_c', 'location_a', '广东省', '', '');
+                        }
+
+                    })
+
+
+                </script>
+
+    </body>
+</html>

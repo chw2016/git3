@@ -1,0 +1,40 @@
+<include file="Public:head"/>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" style="position:relative;">
+            <li data-index="0" class="tab_nav first js_top " data-id="total" style="padding-left:20px;font-size:14px;">
+                生成二维码
+            </li>
+            <a href="javascript:window.history.back(-1);" class="btn btn-primary" style="height:95%;position:absolute;right:0px;bottom:0px;line-height:36px;padding:0 40px;">返回</a>　
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>此处为唯一员工ID所生成的唯一二维码</li>
+        <li>您可以用移动设备扫描进行关注</li>
+    </ol>
+</div>
+
+<div class="msgWrap form">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th width="50px">员工ID</th>
+            <th width="50px">二维码</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{weikucms:$staff['id']}</td>
+            <td><img src="{weikucms:$imgUrl}"  style="width:150px;height: 150px;"/><!-- <a href="{weikucms::U('Wap/Spread/index',array('id'=>$res['id'],'token'=>$token))}">进入</a> --></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<include file="Public:footer"/>

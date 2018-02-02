@@ -1,0 +1,104 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>微医疗简介</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link href="{weikucms::RES}/css/style/css/hotels.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::RES}/css/style/js/jquery.min.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/css/style/js/iscroll.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+</head>
+<body id="hotelsorder" >
+<div class="banner">
+  <div id="wrapper">
+    <div id="scroller">
+      <ul id="thelist">
+        <li>
+          <p>{weikucms:$pt['title']} </p>
+          <if condition="$pt['piccover'] neq null"> <img src="{weikucms:$pt['piccover']}" width="100%">
+            <else />
+            <img src="{weikucms::RES}/medical/img/yiliao.jpg" width="100%"> </if>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="nav">
+    <div id="prev" onClick="myScroll.scrollToPage('prev', 0,400,1);return false">&larr; prev</div>
+    <ul id="indicator">
+      <li   >1</li>
+    </ul>
+    <div id="next" onClick="myScroll.scrollToPage('next', 0);return false">next &rarr;</div>
+  </div>
+  <div class="clr"></div>
+</div>
+<div class="cardexplain">
+  <!--商家房价及类型-->
+  <ul class="round">
+    <li class="title mb">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><span class="none">医院简介</span></td>
+        </tr>
+      </table>
+    </li>
+	<li>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><div class="yyjj" style="width:100%"><php>echo htmlspecialchars_decode($pt['content'])</php></div></td>
+      </tr>
+    </table>
+	</li>
+  </ul>
+  <!--
+
+<ul class="round">
+<li class="biaotou bradius pad"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>标题</td>
+<td class="yuanjia">联系电话</td>
+
+</tr>
+</table></li>
+<li><span class="noneorder">
+<table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>{weikucms:$pt['title']}</td>
+<td class="yuanjia">{weikucms:$pt['phone']}</td>
+</tr>
+</table>
+</span>
+</li>
+
+</ul>
+-->
+  <ul class="round">
+    <li>
+      <h2>联系电话：</h2>
+      <div class="text"> {weikucms:$pt['phone']} </div>
+    </li>
+    <li>
+      <h2>地址详情：</h2>
+      <div class="text"> {weikucms:$pt['address']} </div>
+    </li>
+    <li> </li>
+  </ul>
+  <ul class="round roundyellow">
+    <li class="userinfo"><a href="http://chabus.duapp.com/mapapi.php?lng={weikucms:$pt.lng}&lat={weikucms:$pt.lat}&title={weikucms:$pt.title}"><span>点击查看地图</span></a></li>
+  </ul>
+  <div class="footReturn"> <a id="showcard"  class="submit" href="{weikucms::U('Medical_setup/content',array('token'=>$_GET['token'],'id'=>$info['id'],'wecha_id'=>$_GET['wecha_id']))}">预约挂号</a>
+  </br>
+   <a id="showcard"  class="submit" href="{weikucms::U('Medical_setup/orders',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}">查看订单</a>
+    <div class="window" id="windowcenter">
+      <div id="title" class="wtitle"><span class="close" id="alertclose"></span></div>
+      <div class="content">
+        <div id="txt"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

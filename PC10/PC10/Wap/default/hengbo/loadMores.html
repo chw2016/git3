@@ -1,0 +1,16 @@
+<volist name="info" id="vo" key="i">
+    <if condition="$i % 2 eq 0">
+        <li>
+            <div class="pic rights">
+                <a onclick="popUp(1, this);" name="img_1"><img src="{weikucms:$vo.local_pic}" style="width: 127px; height: 169px;" /></a>
+            </div><h2><span class="hot"><php>
+            if(mb_strlen($vo['title'],'utf8') < 4){
+            echo $vo['title'];
+            }else{
+	    echo mb_substr($vo['title'],0,4, 'utf8');
+            }
+        </php></span><span class="right">{weikucms:$vo.add_time}</span></h2>
+            <div class="photo"></div></li>
+    <else/>
+    </if>
+</volist>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:weiweb"/>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_145/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_145/theme_orange.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_145/main.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_145/index.css" />
+    <title>{weikucms:$tpl['name']}</title>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+<!--有三个主题css  分别为  theme_orange.css  theme_blue.css  theme_purple.css-->
+<div data-role="container" class="container">
+
+    <header data-role="header"></header>
+    <section data-role="body">
+        <div class="swipe" id="imgSwipe">
+            <ul style="width:10000px;">
+
+                    <volist name="flash" id="so">
+                    <li>
+                    <a onclick="return false;">
+                        <span>
+                            <!-- <img src="http://stc.weimob.com/new/common/index.php?3d=aHR0cDovL2ltZy53ZWltb2IuY29tL3N0YXRpYy8xOC9iMC85Ny9pbWFnZS8yMDE0MDYyMy8yMDE0MDYyMzEzNDc1M18xNjA1Ni5qcGc=" /> -->
+                            <!-- <img src="http://115.28.20.245:3001?3d=aHR0cDovL2ltZy53ZWltb2IuY29tL3N0YXRpYy8xOC9iMC85Ny9pbWFnZS8yMDE0MDYyMy8yMDE0MDYyMzEzNDc1M18xNjA1Ni5qcGc="/> -->
+                            <img src="{weikucms:$so.img}"/>
+                        </span>
+                    </a>
+                    </li>
+                    </volist>
+
+            </ul>
+            <a href="javascript:void(0);" class="swipe_btn prev" onclick="swipe.prev();"></a>
+            <a href="javascript:void(0);" class="swipe_btn next" onclick="swipe.next();"></a>
+        </div>
+        <ul class="link_list">
+            <volist name="info" id="vo">
+            <li>
+                <div>
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>"><p>
+                        <i class="{weikucms:$vo.icon}"></i>
+                    </p>{weikucms:$vo.name}</a>
+                </div>
+            </li>
+            </volist>
+
+        </ul>
+    </section>
+    <footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;">
+        <span>©<php>echo $tpl['name'];echo '-';echo C('site_my');</php></span>
+    </footer>
+</div>
+
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+
+<!--
+分享前控制
+-->
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>
+

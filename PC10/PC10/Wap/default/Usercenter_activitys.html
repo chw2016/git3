@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <title>会员互动-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral share">
+
+    <div class="body">
+        <div>
+            <p class="recommend"><span class="icons icons_recommend">&nbsp;</span>会员活动 </p>
+        </div>
+        <ul class="list_integral">
+            <if condition="$data neq null">
+                <volist name="data" id="vo">
+                <li>
+                <if condition="$vo.type eq 1">
+                    <a href="{weikucms::U('Wap/Lottery/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                <elseif condition="$vo.type eq 2"/>
+                    <a href="{weikucms::U('Wap/Guajiang/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                <elseif condition="$vo.type eq 3"/>
+                    <a href="{weikucms::U('Wap/Coupon/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                <elseif condition="$vo.type eq 4"/>
+                        <a href="{weikucms::U('Wap/Zadan/index',array('id'=>$vo['id'],'token'=>$token,'wecha_id'=>$openid,'openid'=>$openid))}">
+                <else/>
+                </if>
+                    <figure>
+                        <img src="{weikucms:$vo.starpicurl}" class="share_recommend_imgs" />
+                    </figure>
+                </a>
+                <figcaption>
+                    <if condition="$vo['is_start'] eq 1">
+                        <span style="float: right;font-size: 10px;color: rgb(168, 162, 162);">未开始</span>
+                    <elseif condition="$vo['is_start'] eq 2" />
+                        <span style="float: right;font-size: 10px;color: rgb(168, 162, 162);">已结束</span>
+                    <else/>
+                        <span style="float: right;font-size:10px;color: green;">进行中({weikucms:$vo.joinnum}人参与)</span>
+                    </if>
+
+                    <h3>{weikucms:$vo.title}</h3>
+                </figcaption>
+
+            </li>
+            </volist>
+
+
+            <else/>
+                <li>当前没有活动哦</li>
+            </if>
+
+        </ul>
+    </div>
+
+<style type="text/css">
+    .masklayer{
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:2000;
+        width:100%;
+        height:100%;
+        background-color:rgba(0,0,0,0.5);
+        text-align:right;
+    }
+    .masklayer.on{
+        display:block;
+    }
+    .masklayer img{
+        margin-top:10px;
+        margin-right:30px;
+        width:160px;
+    }
+</style>
+<div id="masklayer" class="masklayer" ontouchmove="return true;" onclick="$(this).toggleClass('on');">
+    <img src='http://stc.weimob.com/img/member/imgs/share.png' alt='' style="width:260px;" />
+</div>
+</body>
+
+</html>

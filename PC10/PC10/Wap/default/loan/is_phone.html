@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+
+<title>立即申请</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/channel.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/css/prompt.css">
+<script src="{weikucms::STATICS}/wapweiui/loan/pc/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/loan/pc/js/bootstrap.min.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+<style type="{weikucms::STATICS}/wapweiui/loan/pc/text/css">
+.form-control{
+width: 60%;
+float: left;
+}
+
+</style>
+</head>
+<body>
+
+<!--<div class="header" style="display:block;">
+	<h2 class="title1">立即申请</h2>
+	<button type="button" class="close m-login-close-btn" onclick="closes();">
+		<span>×</span><span class="sr-only">Close</span>
+	</button>
+</div>-->
+
+<div class="text">
+	验证码已发送到{weikucms:$_GET['phone']}，<a href="{weikucms::U('phone',array('token'=>$token,'openid'=>$openid))}">重新输入手机号码</a>
+</div>
+<div class="inputs">
+	<input type="text" class="form-control" id="firstname" placeholder="请输入验证码">
+	<span class="fasong">发送验证码</span>
+</div>
+<div class="btn-sum">
+<button type="button" class="sum-btn">开始使用</button>
+</div>
+</body>
+<script>
+    $(".fasong").click(function(){
+        var phone="{weikucms:$_GET['phone']}";
+        var url="{weikucms::U('is_phone',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{phone:phone},function(data){
+                if(data.status==2){
+                    show_error_tip('请稍等2分钟');
+                }else if(data.status==1){
+                    show_success_tip('验证码发送成功');
+                }else if(data.status==0){
+                    show_error_tip('验证码发送失败');
+                }else{
+
+                }
+
+        },'json');
+    });
+    //开始使用
+    $(".sum-btn").click(function(){
+        var code=$("#firstname").val();
+        var phone="{weikucms:$_GET['phone']}";
+        if(code==''){
+            show_error_tip('请先填写验证码');
+        }
+        var url="{weikucms::U('is_code',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{code:code,phone:phone},function(data){
+            if(data.status==0){
+              show_success_tip('验证成功');
+                var url1="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url1;
+            }else if(data.status==-3){
+                show_error_tip('系统繁忙,请重试!');
+            }else if(data.status==-2){
+                show_error_tip('验证超时,3分钟之内有效!');
+            }else if(data.status==-1){
+                show_error_tip('验证失败!');
+            }else{
+
+            }
+        },'json');
+
+    });
+
+</script>
+</html>

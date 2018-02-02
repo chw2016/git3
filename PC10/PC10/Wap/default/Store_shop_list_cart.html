@@ -1,0 +1,290 @@
+<html class="no-js " lang="zh-CN"><head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cleartype" content="on">
+
+    <title>购物车</title>
+    <script src="{weikucms:$staticFilePath}/lm/js/jquery-1.5.1.min.js"></script>
+    <link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/d.css" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<style>
+    .check.checked {
+        width: 20px;
+        height: 20px;
+        background: url("tpl/Wap/default/common/css/store/lm/img/2x.png") center center no-repeat;
+        background-size: contain;
+    }
+    .block-list-cart .block-item-cart .price-num .num .quantity .response-area {
+        width: 22px;
+        height: 10px;
+        top: -20px;
+    }
+    .check.checked.abc.on{
+        border: 1px solid #ccc;
+
+    }
+    .img_car{display: block;float: left;}
+    .car_null{display: block;text-align: center;margin-top: 20px;float: left;margin-left: 6px;width: 60%}
+</style>
+
+<body class=" body-fixed-bottom">
+<div class="container ">
+    <div class="content clearfix" style="min-height: 100%;">
+
+        <div class="tabber  tabber-n3 tabber-double-11 clearfix">
+            <a class="active" href="http://wap.koudaitong.com/v2/trade/cart?source=&amp;kdt_id=1" style="width: 100%">购物车</a>
+
+        </div>
+
+        <div id="cart-container" class="block block-order" style="border:0;">
+
+
+
+            <ul class="list1 block block-list block-list-cart block-border-none" style="background-color:#f8f8f8;padding:0;">
+                <if condition="$data">
+                <volist name="data" id="vo">
+
+                <li class="block-item block-item-cart relative clearfix abca">
+                <div class="check-container">
+                        <span class="check checked abc" pid="{weikucms:$vo.pid}" style="border:1px solid #ccc;"></span>
+                </div>
+                <div class="name-card name-card-3col clearfix">
+                    <a href="{weikucms::U('Store_shop/product',array('id'=>$vo['pid'],'openid'=>$openid,'token'=>$token))}" class="thumb"><img src="{weikucms:$vo.logourl}"></a>
+                    <div class="detail">
+                        <a href="{weikucms::U('Store_shop/product',array('id'=>$vo['pid'],'openid'=>$openid,'token'=>$token))}">
+                            <h3 class="js-ellipsis" style="height: 32px; margin-top: -10px;"><i style="position: relative;top: 24px">{weikucms:$vo.name}</i></h3>
+
+                            <h3 class="js-ellipsis c1" style="height: 32px;"><i style="position: relative;top: 24px">
+                                <if condition="$vo['norms_new']">{weikucms:$vo.norms_new}</if>
+                            </i></h3>
+
+                        </a>
+                        <p class="ellipsis">
+
+
+
+
+                        </p>
+                    </div>
+                    <div class="right-col price-num">
+                        <div class="price" style="position: relative;top: 0px;right: 6px">￥<span >{weikucms:$vo.price}</span></div>
+
+                        <div class="num">
+                            <div class="quantity" style="right: 42px;top: 8px">
+                                <div class="response-area response-area-minus"></div>
+                            <button class="minus disabled"   type="button"  style="background-image: url('tpl/Wap/default/common/css/store/lm/img/ico_minus@2x.png');">
+                            </button>
+                            <input type="text" class="txt" name="num1[]" value="1" readonly>
+                            <button class="plus" num="{weikucms:$vo.num}" type="button"   style="background-image: url('tpl/Wap/default/common/css/store/lm/img/ico_plus@2x.png');">
+
+                            </button>
+                            <div class="response-area response-area-plus"></div>
+                                <div class="txtCover"></div>
+                            </div>
+                            <span style="position: absolute;right: 15px;top: 28px" onclick="del({weikucms:$vo.id})">删除</span>
+                        </div>
+
+
+                        <div class="error-box"></div>
+                    </div>
+                </div>
+                    <div class="delete-btn"> <span>删除</span> </div>
+
+            </li>
+
+
+                </volist>
+                <else/>
+                    <li style="display:block;margin:110px auto;height:60px;width:205px;font-size:14px;">
+                        <!-- <a href="{weikucms::U('Store_shop/cats',array('openid'=>$openid,'token'=>$token))}">请火速去选择商品！！！</a> -->
+                        <a <if condition="$token neq '589ff5e121279844f49e2f677cb92965'"> href="{weikucms::U('Store_shop/cats',array('openid'=>$openid,'token'=>$token))}"</if> <span class="img_car">
+                                <img src="./tpl/static/wapweiui/images/car.png" width="60px" height="60px">
+                            </span>
+                            <span class="car_null">
+                                购物车为空空的哦~<br/>
+                                赶紧抢购吧！
+                            </span>
+                        </a>
+                    </li>
+                    </if>
+            </ul>
+
+
+
+            <div class="js-bottom-opts bottom-fix" style="padding:0;">
+                <div class="bottom-cart clear-fix">
+                    <div class="select-all checked"><span class="check checked" id="select-all"></span>全选</div>
+                    <div class="total-price">合计：<span class="js-total-price" id="total_price"></span>元</div>
+                    <button  class="js-go-pay btn btn-orange-dark font-size-14" onclick="jiesu()" >结算</button>
+
+                </div>
+            </div>
+        </div>
+    </div>        <div class="footer">
+    <!-- 商家公众微信号 -->
+
+</div>            </div>
+
+
+
+</body>
+
+<script>
+    /**
+     * 页面加载完成得总价值
+     */
+    $(function(){
+        var price=0;
+        $("#cart-container").find("li").each(function(){
+           price=($(this).find(".price").find("span").text())*1+price*1;
+        });
+        $("#total_price").text(price);
+    });
+    /**
+     * 减1
+     */
+    $(".minus").click(function(){
+        if($(this).parents(".abca").find('span:first-child').hasClass('checked')) {
+            var txt = $(this).parent().find("input").val();
+
+            if (txt > 1) {
+                $(this).parent().find("input").val((txt - 1));
+                if ($(this).parents(".abca").find('span:first-child').hasClass('checked')) {
+                    var price = $(this).parents(".right-col").find('span:first-child').text();
+                    var old_price = $("#total_price").text();
+                    $("#total_price").text(old_price * 1 - price * 1);
+                }
+            }
+        }
+
+    })
+    /**
+     * 加1
+     */
+    $(".plus").click(function(){
+        if($(this).parents(".abca").find('span:first-child').hasClass('checked')) {
+            var txt = $(this).parent().find("input").val();
+            var num=$(this).attr('num');
+          //  alert(txt);
+            if(txt*1<num*1){//判断库存为真
+                $(this).parent().find("input").val((txt * 1 + 1));
+                if ($(this).parents(".abca").find('span:first-child').hasClass('checked')) {
+                    var price = $(this).parents(".right-col").find('span:first-child').text();
+                    var old_price = $("#total_price").text();
+                    $("#total_price").text(old_price * 1 + price * 1);
+                }
+            }
+
+        }
+    })
+    /**
+     * 选择商品
+     */
+    $(".check").click(function(){
+        if($(this).hasClass('checked')){
+            $(this).removeClass('checked');
+            var old_price = $("#total_price").text();
+            var price=$(this).parents("li").find('.right-col').find('span:first-child').text();
+            var num=$(this).parents("li").find('.right-col').find('input').val();
+            $("#total_price").text(old_price * 1 - price * num);
+
+        }else{
+            $(this).addClass('checked');
+            var old_price = $("#total_price").text();
+            var price=$(this).parents("li").find('.right-col').find('span:first-child').text();
+            var num=$(this).parents("li").find('.right-col').find('input').val();
+            $("#total_price").text(old_price * 1 +price * num);
+        }
+        jg();
+    })
+    /**
+     * 全选
+     */
+    $("#select-all").click(function(){
+        if($(this).hasClass('checked')){
+            $(".abc").addClass('checked');
+            $("#total_price").text(0);
+        }else{
+            $(".abc").removeClass('checked');
+            $("input").each(function(){
+                $(this).val(0);
+            })
+            $("#total_price").text(0);
+
+        }
+    })
+    /**
+     * 算价格
+     */
+     function jg() {
+        $("#cart-container").find('li').each(function () {
+            if ($(this).find('span:first-child').hasClass('checked')) {
+
+            } else {
+
+            }
+        })
+    }
+    /**
+     * 删除购物车的商品
+     */
+    function del(id){
+        var url="{weikucms::U('Store_shop/cancel_cart',array('openid'=>$openid,'token'=>$token))}";
+
+        $.post(url,{id:id},function(data){
+            location.reload();
+        },'json');
+    }
+    /**
+     * 结算
+     */
+    function jiesu(){
+        var pid=[];
+        var num=[];
+        var price=[];
+        var norms=[];
+        if($("#total_price").text()==0){
+            return false;
+        }
+
+        $("#cart-container").find("li").each(function(i,item){
+
+            if($(this).find('.abc').hasClass('checked')){
+                pid[i]=$(this).find(".checked").attr('pid');//取商品ID
+                num[i]=$(item).find("input").val();//取购买数量
+                price[i]=$(item).find(".price").find('span').text().trim();
+               norms[i]=$(item).find('.c1').find('i').text().trim();
+            }
+        });
+        pid=String(pid.join(','));
+        num=String(num.join(','));
+        price=String(price.join(','));
+        norms=String(norms.join(','));
+
+
+        var url="{weikucms::U('Store_shop/Buy_cart',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'openid'=>$openid,'dopenid'=>$_GET['dopenid'],'type'=>'par'))}";
+        $.post(url,{pid:pid,num:num,price:price,norms:norms},function(data){
+            if(data.status==1){
+                var url1="{weikucms::U('Store_shop/cart_show',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}&pid="+data.pid;
+                location.href=url1;
+            }else{
+               var url2="{weikucms::U('Store_shop/edit_cart',array('uid'=>$openid,'token' => $token,'wecha_id' => $_GET['wecha_id'],'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}&pid="+data.pid;
+                location.href=url2;
+            }
+        },'json');
+    }
+
+
+
+    //去掉空格
+    String.prototype.trim = function() {
+        return this.replace(/^\s+|\s+$/g, "");
+    }
+
+
+
+</script>
+</html>

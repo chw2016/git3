@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>车商通SCRM</title>
+<meta name="Keywords" content="车商通SCRM">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+</head>
+
+
+
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>我的续保询价</div>
+
+<div class="myRenewalRequest">
+	<ul id="rtable">
+		<div class="notContentTips">
+			<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>您还没有续保询价哦！</p>
+		</div>
+		<div class="button fixed clearfix">
+			<a href="javascript:window.location.href='index.php?g=Wap&amp;m=Service&amp;a=secure&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}';">立即询价</a>
+		</div>
+	</ul>
+</div>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"index.php");
+		$('#back a img').attr('src','http://i.16888.com/4/default/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','http://i.16888.com/4/default/foot_back_android.png');
+	}
+});
+</script>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_setAccount', 1]);
+	_maq.push(['_areaid', 49]);
+	_maq.push(['_typeid', 2]);
+	_maq.push(['_uid', 100047]);
+	_maq.push(['_regtime', 1407047043]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+<script type="text/javascript">
+var loading = true;//是否加载中...(防止重复请求)
+var hasnext = true;//是否有下一页（判断条件：当前数量是否为一页的数量）
+var currpage = 1;//当前页
+var totalheight = 0; 
+$(function(){
+    $('#rtable').html('<div class="tip-box center padding95"><img src="'+imgSiteUrl+'loading.gif" width="16" height="16" /><p style="font-size:12px;">正在加载..</p></div>');
+	loadList(currpage);
+});
+var loadList=function(page){
+	if ( page > 1 )
+	{
+		$("#more").remove();
+		$("#rtable").append('<div class="loadMore"><img src="'+imgSiteUrl+'load.gif">正在加载...</div>');
+	}
+	var url = 'ajax.php?mod=user&code=asklist';
+	$.get(url, {'uid':'100047', 'page':page}, function(d){
+		if(d.ret == 100){
+		$('.tip-box,.loadMore').remove();
+			var tr = '';
+			$.each(d.data, function(index, val){
+				tr += '<li><i class="point"></i><div>';
+            	tr += '<i class="arrow-border"></i>';
+                tr += '<i class="arrow"></i>';
+                tr += '<h3><strong>'+val.dateline+'</strong><span class="'+val.class+'">'+val.is_read+'</span></h3>';
+				$.each(val.baoxian,function(i,v){
+					tr += '<p><strong>'+v+'</strong></p>';
+				});
+				
+				tr += '</div></li>';
+			});
+			$("#rtable").append(tr);
+			currpage ++;
+		}
+		//加载完成，设置状态为已完成
+		loading = false;
+		hasnext = d.hasnext;
+		if(page == 1 && d.data.length < 1){
+			$("#rtable").html('<div class="notContentTips"><img src="'+imgSiteUrl+'notContent.png" /><p>您还没有续保询价哦！</p></div><div class="button fixed clearfix"><a href="javascript:window.location.href=\'index.php?mod=baoxian&code=ask\';">立即询价</a></div>');
+                        //window.location.href='index.php?mod=baoxian&code=ask';
+		}else{
+			$('div[class="title clearfix"]').show();
+			//d.ret == 100 && !hasnext && $("#rtable").append('<tr><td colspan=4>已全部加载完成</td></tr>');
+			if(hasnext){
+			    $("#rtable").append('<div style="height:36px;" id="more" t="more"></div>');
+			};
+		}
+	}, 'json');
+}; 
+function loadData(){   
+	totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());   
+	
+	// 说明滚动条已达底部  
+	if(!loading && $(document).height() <= totalheight+10) {
+		loadList(currpage);
+	}
+}   
+$(window).scroll(function() {   
+	hasnext && loadData();  
+});
+</script>
+</body>
+</html>

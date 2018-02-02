@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css?v=456">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.form.js" type="text/javascript"></script>
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+        <script type="text/javascript" src="./Common/js/convertor.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/upfile.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/common/msg.js" type="text/javascript"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+		<style type="text/css">
+			body{
+				background-color: rgb(240,240,240);
+				padding-bottom: 6px;
+			}
+			.demo{width:100%;display: flex;display: -webkit-box;}
+			.demo p{line-height:32px;}
+			.btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 5px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;cursor:pointer;/* background-color:#FF8000;border:1px solid #cccccc; */border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;width: 40%;}
+			.btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+			.progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+			.bar {background-color: #FF8000; display:block; width:0%; height:20px; border-radius: 3px; }
+			.percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+			.files{height:22px; line-height:22px; margin:5px 0}
+			.delimg{margin-left:20px; color:#090; cursor:pointer}
+			#showimg a img{ left: -70px !important;bottom: 102px !important;}
+            .fixBg{
+                background-image:url(../img/logo-bg.jpg);
+                background-position:50%;
+                background-size:cover;
+                background-repeat:no-repeat;
+                font-size: 14px ;!important;
+            }
+            .ptb5 {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 14px;
+            }
+
+		</style>
+        <script>
+            //打开这里定位
+            $(function(){
+               $(".local").click(function(){
+                    $(this).html("正在定位");
+                    var geolocation = new BMap.Geolocation(),
+                        geoc = new BMap.Geocoder();
+                    geolocation.getCurrentPosition(function(r){
+                        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                            var pt = r.point;
+                            geoc.getLocation(pt, function(rs){
+                            var addComp = rs.addressComponents,
+                                address = addComp.province + addComp.city + addComp.district + addComp.street;
+                               // address = (rs.address);
+                            // alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                            $("#located").html(address);
+                        });
+                    }else{
+                        $("#locate").html("定位失败");
+                                setTimeout(function(){ $("#locate").html("定位");},2000);
+                            }
+                        })
+                    })
+            });
+        </script>
+    </head>
+    <body <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">style="position: relative;"</if>>
+    	<div class="bbsHeader header-green-bg" <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">style="background: url({weikucms::STATICS}/wapweiui/loan/images/bg.png);"</if>>
+    		<div class="bbsLogoWrap circle">
+    			<div class="bbsLogo circle fixBg" style="background-image:url({weikucms:$tpl.headpicurl})"></div>
+    		</div>
+    		<div class="bbsInfo setLeft">
+    			<div class="bbsName white">
+    				{weikucms:$tpl.name}微社区
+    			</div>
+    			<div class="bbsMoreInfo">
+    				<span>话题{weikucms:$countComm}</span>
+    				<span style="display:inline;">访问{weikucms:$countMicroUser}</span>
+    			</div>
+    			
+    		</div>
+    		
+    	</div>
+        <volist name="lists" id="list">
+            <a href="{weikucms::U('Wap/Commercedyb/notices',array('token'=>$token,'openid'=>$openid,'type'=>2,'id'=>$list['id']))}">
+                <div class="notice myul">
+                    <div class="icon icon-notice"></div>
+                    <div class="notiveContent">{weikucms:$list.title}</div>
+                </div>
+            </a>
+        </volist>
+
+
+        <div class="border-16 white-bg bbsHav myul">
+			<div class="myli bbsHavItem" id="popular">
+				<div class="bbsIWrap myul">
+					<div class="icon icon-heart"></div>
+					人气榜
+				</div>
+			</div>
+			<div class="myli bbsHavItem" id="stars">
+				<div class="bbsIWrap myul">
+					<div class="icon icon-star"></div>
+					星级榜
+				</div>
+			</div>
+            <div class="myli bbsHavItem" id="stars1">
+                <div class="bbsIWrap myul">
+                    <div class="icon icon-huati"></div>
+                    <a href="{weikucms::U('Wap/Commercedyb/huati_index/',array('token'=>$token,'openid'=>$openid))}" >话题榜</a>
+                </div>
+            </div>
+        </div>
+		<if condition="$countComm eq 0">
+			<div class="bbsBox white-bg">
+				暂无帖子
+			</div>
+		<else/>
+        <form name="load" id="load" action="" method="post">
+            <input type="hidden" name="num" id="num" />
+			<if condition="$only eq 1">
+				<input type="hidden" name="compore" id="compore" value="{weikucms:$compore}"/>
+			<else/>
+				<input type="hidden" name="compore" id="compore" value="0"/>
+			</if>
+            <volist name="comment" id="vo">
+                
+                <div class="bbsBox white-bg">
+                    <if condition="$vo['type'] eq 1">
+                        <div class="topic_new">微话题</div>
+                    </if>
+                    <div class="bbsUserInfo myul">
+                    <if condition="$vo['openid'] eq $openid">
+                        <a href="{weikucms::U('Wap/Commercedyb/userCenter/',array('token'=>$token,'openid'=>$openid))}">
+                    <else />
+                        <a href="javascript:void(0);">
+                    </if>
+                        <div class="circle bbsuserLogo fixBg"
+                        <if condition="$vo['token'] eq $vo['openid']">
+                            style="background-image:url({weikucms:$tpl.headpicurl})"
+                            <else />
+                             style="background-image:url({weikucms:$vo['headimg']})"
+                        </if>
+                                >
+                        </div>
+                        </a>
+                        <div class="bbsUserMoreInfo">
+                            <div class="bbsUserName">
+                                <if condition="$vo['token'] eq $vo['openid']">
+                                    {weikucms:$tpl.name}
+                                    <else />
+                                    {weikucms:$vo['nickname']}
+                                </if>
+                            </div>
+                            <div class="bbsGrade myul">
+
+                            <div class="icon icon-grade">
+                                
+                            </div>
+                        
+                           <div class="bbsGradeDetail crown-yellow-bg white">{weikucms:$vo.lvl}</div>
+                            </div>
+                        </div>
+                        <if condition="$vo['openid'] eq $openid">
+                            <div class="deletes">
+                                <a href="javascript:void(0);" data-url="{weikucms::U('Wap/Commercedyb/deletes',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'did'=>$vo['id']))}">删除</a>
+                            </div>
+                        <else/>
+                        </if>
+                    </div>
+                    <if condition="$vo['type'] eq 1">
+                        <a  href="{weikucms::U('Wap/Commercedyb/lookUpDetails1',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['id']}">
+                        <else />
+                            <a  href="{weikucms::U('Wap/Commercedyb/lookUpDetails',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['id']}">
+                    </if>
+                    <div class="bbsContent">
+                        <if condition="$vo['title']"><span class="topic_shap">#{weikucms:$vo.title}#<br></span></if>
+
+                        <?php echo html_entity_decode($vo['content']);?>
+                    </div>
+                    <if condition="$vo['img_url'] eq ''">
+                    <else/>
+                        <div class="bbsPic fixBg" style="background-image:url({weikucms:$vo.img_url})" data-url="{weikucms:$vo.img_url}"></div>
+                    </if>
+                    </a>
+                    <div class="postAddress">{weikucms:$vo.address}</div>
+                    <div class=" bbsAction myul">
+						<div class="timeshows">
+                        <php>
+                            if(intval(time()-strtotime($vo['add_time'])>3600))
+                            {
+                                echo date("Y-m-d H:i",strtotime($vo['add_time']));
+                            }elseif(intval(time()-strtotime($vo['add_time'])<60)){
+                                echo intval(time()-strtotime($vo['add_time']))."秒前";
+                            }else{
+                                echo intval(intval((time()-strtotime($vo['add_time']))/60))."分钟前";
+                            }
+                        </php>
+                        </div>
+                        <div class=" border-20 bbsBtn bbsLike <if condition='$vo["zan"] eq 1'>on<else/></if>">
+                        <!-- 显示是否是以及帖子的ID号码 -->
+                            <input type="hidden" class="myzan" value="{weikucms:$vo['zan']}-{weikucms:$vo['id']}" />
+                            <div class="icon icon-like "></div>
+                            <div class="likeCount">{weikucms:$vo.dianzan}</div>
+                        </div>
+                        <div class=" border-20 bbsBtn bbsReply">
+                            <div class="icon icon-reply "></div>
+                            <div id="replyCount">{weikucms:$vo.pinglun}</div>
+                        </div>
+                        <if condition="$vo['type'] eq 1">
+	                        <div class="zhuanfa border-20 bbsBtn bbsReply" onclick="window.location.href='{weikucms::U('Wap/Commercedyb/lookUpDetails1',array('token'=>$token,'openid'=>$openid,'iszhuanfa'=>1,'articleId'=>$vo['id']))}'">
+	                        </div>
+                        </if>
+                    </div>
+                    <div class="replyInputBox">
+                        <volist name="vo.comments" id="so">
+                            <if condition="$so['comment'] neq ''">
+                                 <div class="RPBItem myul">
+                                    <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$so['headimg']})"></div>
+                                    <div class="reContent" data-id="{weikucms:$so['id']}" data-openid="{weikucms:$so['openid']}">
+                                        <span class="nickname">{weikucms:$so['nickname']}</span>：{weikucms:$so.comment}
+                                    <input type="hidden" name="replayId" class="replayId" />
+                                    </div>
+                                    <if condition="$openid eq $so['openid']">
+                                        <div class="delYouComment" data-openid="{weikucms:$openid}" data-url="{weikucms::U('Wap/Commercedyb/delComment',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                                        删除
+                                        </div>
+                                    <else/>
+                                    </if>
+                                </div>
+                             <else/>
+                             </if>
+                        </volist>
+                        <if condition="$vo['totalCount'] gt 3">
+                            <a class="lookUpMore" href="{weikucms::U('Wap/Commercedyb/lookUpDetails',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['id']}">查看全部{weikucms:$vo.totalCount}条回复</a>
+                        <else />
+                        </if>
+                        <div class="reInputReply myul hide">
+                            <div class="inputReplyBox">
+                                <input type="text" placeholder="请输入回复内容" />
+                            </div>
+                            <span class="replayBtn" data-replay="{weikucms:$vo.openid}" data-id="{weikucms:$vo.id}">
+                                回复
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </form>    
+		</if>
+
+		<div class="loadMore" id="loadMore">加载中...</div>
+		<div style="height:46px"></div>
+        <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">
+        <include file="Loan:foot"/>
+            </if>
+        <div class="postTextBox" <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">style="bottom: 51px;"</if>>
+            <span class="postTextBox1">我要发帖</span><span class="postTextBox2">发布话题</span>
+        </div>
+        <if condition="($showtips eq 1)AND($token neq '55cad4ba46c41a8fde9c84274e36fa83')">
+           <div onclick="window.location.href='{weikucms::U('Wap/Commercedyb/user_edit',array('openid'=>$openid,'token'=>$token))}'" style="width:100%;height:25px;line-height:25px;text-align:center;background-color:rgba(255, 11, 11, 0.6);position:fixed;top:0px;font-size:12px;color:white;">点击完善资料可以获取更多优惠哦</div>
+        </if>
+
+        <div onclick="window.scrollTo(0,0);" style="height: 40px;line-height: 40px;width: 40px;text-align: center;background-color: rgba(179, 179, 179, 0.6);position: fixed;bottom: 58px;font-size: 15px;color: white;right: 18px;border-radius: 50%;z-index:999999">
+            ↑
+        </div>
+        <div class="postEditBox">
+            <div class="PEBHead myul">
+                <div class="PEBClose PEBAction myli textMiddle">
+                    取消
+                </div>
+                <div class=" PEBOk PEBAction myli textMiddle btn-green-bg white">
+                    发送
+                </div>
+            </div>
+            <div id="title" style="display: block;" class="topic_title">
+                <input name="title" id="topictitle" placeholder="输入话题名字">
+            </div>
+            <div class="PEBContent">
+
+                <textarea name="postTie" id="postTie" placeholder="说两句吧.."></textarea>
+            </div>
+            <!-- <span class="icon-camera addImg" id="chooseImage"></span> -->
+            <div class="showIcon">
+                <div style="margin-left:0px;width:18%;padding:3px 0 6px 0;text-align:center;" id="checkimg">
+                    <form id="myupload" action="{weikucms::U('Wap/Commercedyb/uploadsT',array('token'=>$token,'openid'=>$openid))}" method="post" enctype="multipart/form-data">
+                       <div class="demo">
+                            
+                            <div class="btn" style="width:45px;">
+                                <span class="icon-camera addImg" id="chooseImage"></span>
+                                <span class="fixColor">最大3M</span>
+                                <input id="fileupload" type="file" name="mypic">
+                            </div>
+                            <div id="showimg" style="text-align:left;width:60%;height:60px;margin-left:20px;"></div>
+                            <input type="hidden" value="" id='url' name="imgurl"/>
+                       </div>
+                    </form>
+                </div>
+                <!-- 表情图片位置 -->
+                <div class="smile">
+                    <div class="content">
+                        <div id="smileScroll" class="smiles">
+                            <for start="0" end="105">
+                                <img class="smilesImg" src="./Common/qqMagic/{weikucms:$i}.gif" data-url = "./Common/qqMagic/{weikucms:$i}.gif"/>
+                            </for>
+                        </div>
+                    </div>
+                </div>
+                <!-- 地理位置 -->
+                <div class="local" id="located">
+                    
+                </div>
+            </div>
+            
+        </div>
+        <!-- 分享到朋友圈以及好友 -->
+        <if condition="$tpl['is_auth'] eq 1">
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/commercedyb/token/{weikucms:$token}/dopenid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+        <else/>
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/commercedyb/token/{weikucms:$token}/dopenid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+        </if>
+
+    </body>
+    <script type="text/javascript">
+        var shareTitle="";
+        var imgUrl="";
+        var descContent="";
+        var shareUrl="";
+        function tips(message,time){
+            if(typeof(time) == "undefined"){
+                time = 1000;
+            };
+            msg.alert(message,time)
+        }
+    $(function(){
+	
+       <if condition="$is_subscribe eq 0">
+
+           setTimeout(function(){
+               if(confirm('亲,您还没关注我们的公众号,赶快去关注下吧!')){
+                    window.location.href = "{weikucms::U('Home/Nofind/isnotsub',array('token'=>$token,'openid'=>$openid,'from_openid'=>$_GET['from_openid']))}";
+               }else{
+                    return false;
+               }
+           },'10000');
+
+        </if>  
+
+    	// 发帖
+        var express= "{weikucms:$express}";
+        var arrayexpress = express.split(",");
+//发贴
+    	$(".postTextBox1").click(function(){
+            $("#title").hide();
+            $(".local").trigger('click');
+            if($(".postEditBox").hasClass('on')){
+                 $("body").removeClass('fixTop');
+                $(".postEditBox").removeClass('on');
+            }else {
+                $("body").addClass('fixTop')
+                $(".postEditBox").addClass('on');
+            }
+        });
+        //发话题
+        $(".postTextBox2").click(function(){
+		
+            $(".local").trigger('click');
+            if($(".postEditBox").hasClass('on')){
+                $("body").removeClass('fixTop');
+                $(".postEditBox").removeClass('on');
+            }else {
+                $("body").addClass('fixTop')
+                $(".postEditBox").addClass('on');
+            }
+        });
+        $("body").on('touchend','.PEBClose',function(event){
+             //   $(".PEBClose").click(function(event) {
+            $(".postEditBox").removeClass('on');
+        });
+        // 点赞按钮
+        /*$(".bbsLike").click(function(event) {
+            
+           
+        });*/
+
+        //点击表情出现表情
+        /*$(".smile").click(function(event) {
+            event.stopPropagation();
+            $(this).find('.content').toggle();
+            //点击空白处或者自身隐藏弹出层，下面分别为滑动和淡出效果。  
+        });*/
+        $(document).click(function (event) {
+            event.stopPropagation();
+            $('.smile').find('.content').hide()
+        });  
+        $('.smile').click(function (event) {
+            event.stopPropagation();
+            $(this).find('.content').show()
+        });
+         
+         
+         
+         // 点击微笑图片
+        $('.smilesImg').click(function(){
+            var url = $(this).data('url');
+            strings = url.substr(17,3);
+            if (strings.indexOf('g') > 0) {
+                strings = url.substr(17,1);
+            }else if(strings.indexOf('.') > 0){
+                strings = url.substr(17,2);
+            }
+            // 获取到了前面的每张图片的序列名称
+            var getContent = $('#postTie').val();
+            $('#postTie').val(getContent+"["+strings+"]");
+        })
+        // 点击使得回复出现边框样式
+        $("#load").on("click",".bbsReply",function(){
+            if($(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').hasClass('hide')){
+				$(this).addClass("on");
+                $(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').removeClass('hide');
+            }else{
+				$(this).removeClass('on');
+                $(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').addClass('hide');
+            }
+        })
+
+        // 点击赞发生的事情
+        $("#load").on("click",".bbsLike",function(){
+             if($(this).hasClass('on')){
+                $(this).removeClass('on');
+            }else{
+                $(this).addClass('on');
+            }
+        	var _THIS = $(this);
+        	var likeVal = _THIS.find('input').val();
+        	url = "{weikucms::U('Wap/Commercedyb/zan',array('token'=>$token,'openid'=>$openid))}";
+        	$.post(url,{openid:"{weikucms:$openid}",like:likeVal},function(data){
+                console.log(data);
+        		if(data.status == 0){
+        			//tips(data.info);
+        			var cut = likeVal.split('-');
+                     var $Count = _THIS.find('.likeCount');
+                    var iCount = parseInt($Count.text());
+        			if (cut[0] == 1) {
+        				_THIS.removeClass('on');
+						iCount -= 1;
+						_THIS.find('input').val("0-"+cut[1]);
+        			}else{
+        				_THIS.addClass('on');
+						iCount += 1;
+						_THIS.find('input').val("1-"+cut[1]);
+        			}
+                    $Count.text(iCount);
+        		}else{
+        			msg.alert(data.info,1000);
+        		}
+                
+        	},'json');
+        })
+
+        // 点击回复发生的事情
+        $("#load").on("click",'.replayBtn',function(){
+        	var _this = $(this);
+        	
+            var content = _this.prev().find('input').val();
+            if(!content){
+                msg.alert("评论内容不能为空！",1000);
+                return false;
+            }
+            var iRlyId = $(this).attr('replay_id');
+            if(typeof(iRlyId) == 'undefined' || !iRlyId){
+                // 如果值为空的情况下
+                 _this.unbind('click'); 
+                var url= "{weikucms::U('Wap/Commercedyb/comments',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                $.post(url,{content:content,replay:"{weikucms:$openid}",id:_this.data('id')},function(data){
+                    if (data.status == 0) {
+                        msg.alert(data.info);
+                        setTimeout(function(){
+                            window.location.reload(); 
+                        },0);
+                    }else{
+                        msg.alert(data.info,1000);
+                    }
+                },'json');
+                
+            }else{
+
+                // 如果值不为空的情况下
+                var url= "{weikucms::U('Wap/Commercedyb/replayData',array('token'=>$_GET['token'],'openid'=>$openid))}";
+                // 获取点赞情况
+                var ifzan = _this.parents('.replyInputBox').prev().find('.bbsBtn').find('input').val();
+                ifzan = ifzan.split('-');
+                ifzan = ifzan[0]; 
+                // 获取文章的openid;
+                
+                $.post(url,{content:content,replay:"{weikucms:$openid}",id:_this.data('id'),pid:iRlyId,articleOpenid:_this.data('replay'),ifzan:ifzan},function(data){
+                    if (data.status == 0) {
+                        tips(data.info);
+                        setTimeout(function(){
+                            // window.location.href = data.url;
+                            window.location.reload(); 
+                        },0);
+                    }else{
+                       //
+                       msg.alert(data.info,1000);
+                    }
+                },'json');
+            }
+            
+        	
+        })
+
+        // 发帖
+        $('.PEBOk').click(function(){
+            var title=$("input[name=title]").val();
+
+            if(!$("#title").is(":hidden")){
+				if(!$("#topictitle").val()){
+					msg.alert("话题标题不能为空哦!");
+					return false;
+				}	
+			}
+        	var showimg = $('#postTie').val(),img,position;
+        		if (document.getElementById('showimg').hasChildNodes() == false) {
+        			img = '';
+        		}else{
+        			img = $('#showimg').find('a').attr('href');
+        		}
+        		url = "{weikucms::U('Wap/Commercedyb/sendLetter',array('token'=>$_GET['token'],'openid'=>$openid))}";
+        		
+            //地理位置 
+            position = $('.local').text();
+            //打开这里
+            if(position == "正在定位") {
+                msg.alert("正在定位...",1000);
+                return false;
+            }else if(position === "定位失败"){
+                position = "";
+            }
+
+            if (!showimg) {
+                    msg.alert("说点什么吧！否则发毛帖。",1000);
+                    return false;
+                }
+        	$.post(url,{title:title,img:img,showimg:showimg,openid:"{weikucms:$openid}",position:position},function(data){
+        		if (data.status == 0) {
+    			tips(data.info);
+
+                    $.ajaxSetup ({
+                        cache: false    
+                    });
+    				setTimeout(function(){
+                        window.location.href = data.url;
+    				},1500);
+    			}else{
+    				msg.alert(data.info,1000);
+    			}
+        	},'json');
+        })
+        // 我的社区跳转位置
+        $('#myZone').click(function(){
+        	window.location.href = "{weikucms::U('Wap/Commercedyb/myZone',array('token'=>$_GET['token'],'openid'=>$openid))}";
+        })
+        // 人气榜
+        $('#popular').click(function(){
+        	window.location.href = "{weikucms::U('Wap/Commercedyb/popular',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+        })
+        // 星级榜
+        $('#stars').click(function(){
+        	window.location.href = "{weikucms::U('Wap/Commercedyb/stars',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+        })
+		
+		
+
+
+        // 点击删除
+        $("#load").on("click",'.deletes > a',function(){
+		    var _THIS = $(this);
+            if(confirm('您确定要删除此帖么？') == true){
+                $.post(_THIS.data('url'),{},function(data){
+                    if (data.status == 0) {
+                        msg.alert(data.info,1000);
+                        _THIS.parents('.bbsBox').remove();
+                    }else{
+                        msg.alert(data.info,1000);
+                    }
+                },'json');
+            }
+        })
+        
+        // 删除自己的评论
+        $("#load").on("click",'.delYouComment',function(e){
+            e.stopPropagation();
+            var _THIS = $(this);
+            if(confirm('您确定要删除此评论么？') == true){
+                $.post(_THIS.data('url'),{},function(data){
+                    if (data.status == 0) {
+                        msg.alert(data.info,1000);
+                        window.location.reload();
+                        // _THIS.parents('.RPBItem').remove();
+                    }else{
+                        msg.alert(data.info,1000);
+                    }
+                },'json');
+            }
+        })
+
+        // 点击评论回复那个人
+       $("#load").on("click",'.RPBItem',function(){
+            if($(this).find('.reContent').data('openid') != "{weikucms:$openid}"){
+                $Replay = $(this).find('.replayId');
+                if($(this).parent().find('.reInputReply').hasClass('hide')){
+                    $(this).parent().find('.reInputReply').removeClass('hide');
+                    
+                    var replayIDs =$(this).find('.reContent').data('id');
+                    $(this).parent().find('.reInputReply').find(".replayBtn").attr('replay_id',replayIDs);
+                }else{
+                    $(this).parent().find('.reInputReply').addClass('hide');
+                    $Replay.val("");
+                }
+            }
+        })
+       
+        //点击加载更多
+        $(window).scroll(function(){
+            var diff = Number($(window).height()) + Number(20);
+            if($(document).height() - $(window).scrollTop() < diff){
+                // 异步加载
+                setTimeout(function(){
+                    var url = "{weikucms::U('Wap/Commercedyb/loadMore',array('token'=>$token,'openid'=>$openid))}",
+                    length = $('.bbsBox').size(),
+                    _This = $('#loadMore');
+                    $.post(url,{bbs:length},function(data){
+                        if(data.status == 0){
+                            
+                            $('.bbsBox:last').after($(data.fetch));
+                        }else{
+                            _This.show().text(data.info);
+                            _This.off('scroll');
+                        }
+                    },'json');
+                },500);
+            }
+           /* console.log("文档高度:"+$(document).height()+",窗口距顶高度："+$(window).scrollTop()+",差距:"+($(document).height()-$(window).scrollTop()));*/
+        })
+        
+        shareTitle="{weikucms:$share.title}";
+        imgUrl="{weikucms:$share.pic}";
+        descContent="{weikucms:$share.descript}";
+        shareUrl = $("#shareUrl").text();
+
+        wx.config({
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+				'previewImage'
+            ]
+        });
+		//图片预览
+		wx.ready(function(){
+			    //图片展示
+				$('#load').on('click',".bbsPic",function(event){
+                    event.stopPropagation();
+                    event.preventDefault();
+					var picUrl = $(this).data("url");
+						picUrl = '<php>echo C('site_url');</php>'+picUrl;
+					 var imgList = [picUrl];
+			            wx.previewImage({
+			                current: imgList[0],
+			                urls:  imgList
+			            });
+				})
+                 // 在这里调用 API
+                wx.onMenuShareTimeline({
+                    title: shareTitle, // 分享标题
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        var url = "{weikucms::U('Wap/Commercedyb/shareSuccess',array('token'=>$token,'openid'=>$openid))}";
+                        $.post(url,{},function(data){
+                            if(data.status == 0){
+                                msg.alert(data.info,1000);
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },0)
+                            }else{
+                                msg.alert(data.info,1000);
+                            }
+                        },'json');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle, // 分享标题
+                    desc: descContent, // 分享描述
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                      var url = "{weikucms::U('Wap/Commercedyb/shareSuccess',array('token'=>$token,'openid'=>$openid))}";
+                        $.post(url,{},function(data){
+                            if(data.status == 0){
+                                msg.alert(data.info,1000);
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },0)
+                            }else{
+                                msg.alert(data.info,1000);
+                            }
+                        },'json');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+			
+			})
+    })
+    </script>
+</html>

@@ -1,0 +1,87 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            查看帖子
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Commercedy/postShow',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">发帖人昵称</label></th>
+                    <td>
+                    	<if condition="$info['nickname'] eq ''">
+							暂无名称
+                    	<else/>
+                    		{weikucms:$info.nickname}
+                    	</if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="title">发帖人头像</label></th>
+                    <td>
+                    	<if condition="$info['headimg'] eq ''">
+                    		暂无头像
+                    	<else/>
+                    		<img src="{weikucms:$info.headimg}" width="100px" />
+                    	</if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">级别</label></th>
+                    <td>
+                        {weikucms:$info.lvl}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">帖子内容</th>
+                    <td>
+						{weikucms:$info.content}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="pic">帖子图片</label></th>
+                    <td>
+                    	<if condition="$info['img_url'] eq ''">
+                    		暂无图片
+                    	<else/>
+                    		<img src="{weikucms:$info.img_url}" width="120px" />
+                    	</if>
+                    </td>
+                    
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="starttime">发帖时间</label></th>
+                    <td>
+                        {weikucms:$info.add_time}
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>

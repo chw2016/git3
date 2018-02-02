@@ -1,0 +1,69 @@
+ <include file="Public:head" /> 
+ <script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+  <div class="content">
+  <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+<script> 
+ function current(text){    
+   document.getElementById("uppict").style.display="block";
+	var kjname = document.getElementById("kjname");
+	kjname.value=text;    
+}
+ function leave(){    
+   document.getElementById("uppict").style.display="none";
+   
+}  
+//回调    
+function stopUpload(responseText,text){    
+    var spanObj = document.getElementById(text);   
+    spanObj.value = "上传成功";    
+    spanObj.value = responseText;    
+}
+</script>
+<form id="upForm" action="uppict.php" method="post" enctype="multipart/form-data" target="upload_target" >    
+图片上传区:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图片：<input type="file" name="myfile" id="myfile" />  
+ <input type="hidden" name="kjname" id="kjname"/>   
+<input type="submit" name="submitBtn" value="上传" />    
+</form>
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe> 
+ </div> 
+ 
+ <!--复制结束-->  
+   <div class="cLineB"> 
+    <h4><if condition="$isDining neq 1">商品分类<else/>菜品分类</if>设置</h4> 
+    <a href="{weikucms::U('Product/cats',array('token'=>$token,'parentid'=>$parentid,'dining'=>$isDining))}" class="right  btnGreen" style="margin-top:-27px">返回</a> 
+   </div> 
+   <form class="form" method="post" action="" enctype="multipart/form-data"> 
+    <input type="hidden" name="id" value="{weikucms:$set.id}" /> 
+     
+    <div class="msgWrap bgfc"> 
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      <tbody> 
+       <tr> 
+        <th><span class="red">*</span>名称：</th> 
+        <td><input type="text" name="name" value="{weikucms:$set.name}" class="px" style="width:400px;" onfocus="leave();"/></td> 
+       </tr> 
+       <tr> 
+        <th><span class="red">*</span>Logo地址：</th> 
+        <td><input type="text" name="logourl" id="logourl" value="{weikucms:$set.logourl}" id="pic" class="px" style="width:400px;" onfocus="current('logourl');" /></td> 
+       </tr>
+       
+        <tr> 
+        <th><span class="red">*</span>简介：</th> 
+        <td><textarea name="des" class="px" style="width:400px;height:80px;" onfocus="leave();">{weikucms:$set.des}</textarea></td> 
+       </tr>
+       <tr>         
+       <th>&nbsp;</th>
+       <td>
+       <if condition="$isDining neq 1"><input type="hidden" value="0" name="dining" /><else/><input type="hidden" value="1" name="dining" /></if>
+       <input type="hidden" value="{weikucms::$parentid}" name="parentid" />
+       <button type="submit" name="button" class="btnGreen">保存</button> &nbsp; <a href="{weikucms::U('Product/cats',array('token'=>$token))}" class="btnGray vm">取消</a></td> 
+       </tr> 
+      </tbody> 
+     </table> 
+     </div>
+    
+   </form> 
+  </div> 
+  <include file="Public:footer" />

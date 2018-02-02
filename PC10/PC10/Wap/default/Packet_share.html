@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<title>{weikucms:$title}</title>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<link type="text/css" rel="stylesheet" href="tpl/Wap/default/common/packet/css/main.css?=2014" />
+<script src="tpl/Wap/default/common/packet/js/jquery-1.8.3.min.js"></script>
+<script src="tpl/Wap/default/common/packet/js/main.js?=2014"></script>
+
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="text textlogo"></div>
+
+<div class="mid">
+<div class="logo" ></div>
+<div data-tap='help' id="helpget" class="btn btnlarge tap"  ><div class="btntext helphim"><div class="box move"></div></div></div>
+</div>
+<div data-tap='goda' class="text bottom tap textok"></div>
+<div class="texttap">
+  <div class="line">
+    <ul class="tips">
+      <li data-tap='rull' class="tap"><div id="guizhe"></div></li>
+      <li data-tap='rank' class="tap"><div id="jiecaobang"></div></li>
+      <!-- <li data-tap='goda' class="tap">求勾搭</li> -->
+    </ul>
+  </div>
+  
+  <div class="gtip" >
+    <span>已有<span class="person">{weikucms:$ainfo[click]}</span>人参加此游戏</span>
+  </div>
+   
+  
+</div>
+
+
+<!--游戏规则-->
+<div class="showbox rull">
+<div class="close">×</div>
+<div class="showboxtitle">游戏规则</div>
+    <div class="showboxcontent">
+        <span style="font-size: 12px;">活动日期:{weikucms:$ainfo[statdate]|date='Y年m月d日',###}</span>-<span style="font-size: 12px;">{weikucms:$ainfo[enddate]|date="Y年m月d日",###}</span>
+        <br>
+        <span style="font-size: 12px;word-wrap: break-word;">活动规则:
+            <br/>
+            <php>echo str_replace(';','<br/>',$ainfo[info]);</php>
+            </span>
+    </div>
+</div>
+
+<?php if(!empty($rank)):?>
+<!--节操榜-->
+<div class="showbox rank">
+    <div class="close">×</div>
+
+    <div class="rankboxtitle">节操指数榜</div>
+    <div class="ranktitlebox">
+        <ul class="ul ranklisttitle">
+            <li class="li">排名</li>
+            <li class="li">手机号</li>
+            <li class="li">节操指数</li>
+        </ul></div>
+
+    <div class="ranklistbox">
+        <volist id="rank" name="rank" key="k">
+            <ul class="ul ">
+                <li class="li">{weikucms:$k}</li>
+                <li class="li"><php>echo substr_replace($rank['tel'],'****',3,4);</php></li>
+                <li class="li">{weikucms:$rank.integrity}</li>
+            </ul>
+        </volist>
+    </div>
+
+</div>
+<?php endif;?>
+
+
+<!--分享提示-->
+<div class="showbox share">
+</div>
+<div class="showbox checkpublic">
+</div>
+
+    <script>
+	    $(function(){
+		    var key="{weikucms:$uid}"+"{weikucms:$lid}";
+            var url="<php>echo C('site_url');</php>{weikucms::U('Packet/integrity',array('uid'=>$uid,'lid'=>$lid))}";
+			if(localStorage.getItem(key) == key){
+			      $("#helpget").fadeOut(50);
+			      $('.bottom').fadeIn(50);
+                   return false;
+			}
+			$("#helpget").click(function(){
+		    
+			if(localStorage.getItem(key) != key){
+                localStorage.setItem(key,key);
+                $.post(url, function(data) {
+                    if (data.status == 1) {
+					  if($(".tap").data('tap')=='help'){
+					      $("#helpget").fadeOut(50);
+					      $('.bottom').fadeIn(50);
+		                  
+					   }
+                       alert("恭喜,您已经帮好友捡回节操!");
+                    }else{
+                        localStorage.removeItem(key);
+                    }
+                }, 'json');
+            }else{
+				
+                alert("您已经帮好友捡过节操了!");
+			}
+		  });
+		
+		});
+        
+
+            
+
+    </script>
+</body>
+</html>

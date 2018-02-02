@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>{weikucms:$tpl.name}资讯</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/index.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/font-awesome.min.css">
+</head>
+<body>
+<div class="top-index">
+    <ul>
+        <volist name="classify" id="vo">
+            <a href="{weikucms::U('Road/traffic',array('token'=>$token,'openid'=>$openid,'cid'=>$vo['id']))}">
+                <li class="top-li <if condition="$vo['id'] eq $_GET['cid']">on</if>">{weikucms:$vo.cname}</li>
+            </a>
+            <!--<li class="top-li">同行指南</li>
+            <li class="top-li">事故处理</li>
+            <li class="top-li">路线指引</li>
+            <li class="top-li">收费政策</li>-->
+        </volist>
+    </ul>
+</div>
+
+<volist name="information" id="so">
+    <div class="nr">
+        <div class="spadding">
+            <a href="{weikucms::U('Road/trafficinfo',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['cid'],'id'=>$so['id']))}" >
+                <div class="nr-img"><img src="{weikucms:$so.pic}"> </div>
+                <div class="nr-text">
+                    <span class="text-text" style="color: #000;">
+                        <php>
+                            if(mb_strlen($so['title'],'utf8') < 26){
+                            echo $so['title'];
+                            }else{
+                            echo mb_substr($so['title'],0,26, 'utf8').'...';
+                            }
+                        </php>
+                    </span><br/>
+                    <span class="text-day">{weikucms:$so.add_time}</span>
+                </div>
+            </a>
+                <div class="nr-fx"><i class="fa fa-angle-right" ></i></div>
+
+        </div>
+    </div>
+</volist>
+
+
+</body>
+</html>

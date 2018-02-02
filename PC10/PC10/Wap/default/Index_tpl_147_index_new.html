@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:weiweb"/>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_147/main.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_147/index.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_147/nav88.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_147/nav88_1.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_147/theme_blue.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_147/slide_photo.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_147/main.js"></script>
+    <title>{weikucms:$tpl['name']}</title>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+<div  data-role="container"  class="body index">
+
+    <header data-role="header" id="left">
+        <div class="slide_photo">
+            <span class="left"></span>
+            <ul>
+                <volist name="flash" id="so">
+                    <li>
+                        <div></div>
+                        <a onclick="return false;">
+
+                            <img src="{weikucms:$so.img}" />
+                        </a>
+                    </li>
+                </volist>
+
+            </ul>
+            <span class="right"></span>
+        </div>
+    </header>
+    <nav class="classify"  >
+        <div class="classify_iscroll">
+            <ul>
+                <volist name="info" id="vo">
+                <li>
+                    <a href="{weikucms::U('Wap/Index/lists',array('token'=>$token,'classid'=>$vo['id']))}">
+                        <label>{weikucms:$vo.name}</label>
+                        <span class="{weikucms:$vo.icon}"></span>
+
+
+                    </a>
+                </li>
+                </volist>
+            </ul>
+            <div class="clickme"></div>
+            </div>
+    </nav>
+    <script>
+        $(function() {
+            var classify = $(".classify");
+            var scroll_content = classify.find(".classify_iscroll");
+            var ul = classify.find("ul");
+            var width = document.documentElement.clientWidth / 5;
+            $(".classify ul").children("li").width(width);
+            ul.width(width * ul.children("li").length);
+            new iScroll(scroll_content[0], {
+                onBeforeScrollStart: function(e) {
+                    e.preventDefault();
+                    scroll_content.css("overflow", "visible");
+                }
+            });
+            var ClickOrTouchEvent = ("ontouchend" in document.documentElement ? "touchend" : "click");
+            classify.find("ul>li.have").each(function() {
+                $(this).on(ClickOrTouchEvent, function() {
+                    $(this).find(".sub").toggleClass("show");
+                });
+            });
+        });
+    </script>
+    <footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;color: white;">
+        <span>©<php>echo $tpl['name'];echo '-';echo C('site_my');</php></span>
+    </footer>
+</div>
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>
+

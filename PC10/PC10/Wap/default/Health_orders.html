@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://wap.koudaitong.com/v2/trade/order/list?type=topay&spm=h1_h1_sc1 -->
+<html class="no-js " lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <script type="text/javascript">
+    window.l_createElement = document.createElement;
+    window.l_Function = window.Function;
+    window.l_open = window.open;
+    window.l_adoptNode = document.adoptNode;
+    window.l_defineProperty = Object.defineProperty;
+</script>
+
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cleartype" content="on">
+    <!-- dns prefetch -->
+
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            height: 15px;
+            width: 86px;
+            margin: 15px auto 0 auto;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+    <title>订单</title>
+
+    <!-- meta viewport -->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_0479aca844.css" onerror="_cdnFallback(this)">    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/order_list_1f27f8aa2c.css" onerror="_cdnFallback(this)">        </head>
+
+<body class=" ">
+        <!-- container -->
+    <div class="container ">
+                <div class="content">
+                <div id="order-list-container">
+
+        <div class="b-list">
+            <volist name="data" id="data">
+        <li class="block block-order animated"><div class="header">
+    <span class="font-size-12">订单号：{weikucms:$data[orderid]}</span>
+</div>
+            <volist name="data[info]" id="d">
+                <hr class="margin-0 left-10">
+<div class="block block-list block-border-top-none block-border-bottom-none">
+    <div class="block-item name-card name-card-3col clearfix">
+        <a href="{weikucms::U('Health/shopdetail',array('token'=>$token,'openid'=>$openid,'id'=>$d[pid]))}" class="thumb">
+            <img src="{weikucms:$d[pic]}">
+        </a>
+        <div class="detail">
+            <a href="{weikucms::U('Health/shopdetail',array('token'=>$token,'openid'=>$openid,'id'=>$d[pid]))}"><h3>{weikucms:$d[name]}.</h3></a>
+        </div>
+        <div class="price-num">
+            <div class="price">¥&nbsp;<span>{weikucms:$d[price]}</span></div>
+            <div class="num">
+                ×<span class="num-txt">{weikucms:$d[num]}</span>
+            </div>
+        </div>
+    </div>
+</div>
+</volist>
+
+<hr class="margin-0 left-10">
+<div class="bottom">
+    商品总价：<span class="c-orange">￥{weikucms:$data[totalmoney]}</span>
+    <div class="opt-btn">
+        <?php if($data[paid]==0):?>
+        <a class="btn btn-yellow btn-in-order-list" href="javascript:;" gid="{weikucms:$data[id]}" onclick="return cancel(this)">取消</a>
+        <a class="btn btn-red btn-in-order-list" href="javascript:;" orderid="{weikucms:$data[orderid]}" order_money="{weikucms:$data[totalmoney]}" onclick="buy(this)">付款</a>
+        <?php else:?>
+        <span>已支付</span>
+        <?php endif;?>
+    </div>
+</div>
+
+        </li>
+        </volist>
+        </div><div class="list-finished">已经没有更多订单了！</div></div>
+    </div>           </div>
+
+
+        <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+            <input type="hidden" name="order_money" value="">
+            <input type="hidden" name="order_text" value="">
+            <input type="hidden" name="orderid" value="">
+            <input type="hidden" name="openid" value="{weikucms:$openid}">
+            <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store_new&a=my&openid={weikucms:$openid}">
+            <input type="hidden" name="type" value="Health_order">
+        </form>
+
+
+    `<script src="tpl/Wap/default/common/shop/js/jquery-1[1].2.6.js"></script>
+    <script>
+        function cancel(obj){
+            var id=$(obj).attr("gid");
+            $.post("{weikucms::U('Health/cancel',array('token'=>$token,'openid'=>$openid))}&id="+id,function(data){
+                alert("删除成功");
+				location.reload();
+            },"json")
+        }
+    </script>
+
+        <script>
+            function buy(obj){
+                var orderid=$(obj).attr("orderid");
+                var order_money=$(obj).attr("order_money");
+                $("input[name=order_money]").val(order_money);
+                $("input[name=orderid]").val(orderid);
+                $("#myweipayform").submit();
+            }
+        </script>
+        <div class="wx_footer">
+            <div class="wapwei_logo"></div>
+        </div>
+</body></html>

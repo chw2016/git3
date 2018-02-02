@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		 <title>鱼美人-消费提醒</title>     
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/style.css">
+		<script src="{weikucms::RES}/mru/js5/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js5/main.js"></script>
+		<script src="{weikucms::RES}/mru/js5/msg.js"></script>
+    </head>
+    <body class="userCenter" style="overflow-x:hidden">
+        <div class='msgBody'>
+            <div class="head"></div>
+            <div class='detail'>
+                <div>服务提醒通知</div>
+                <div class='ca6a6a6 f14'>{weikucms:$time}</div>
+                <div>尊敬的用户，你好！</div>
+                <div class='cff9120 indent'>{weikucms:$time}到<span class="c0092fc">{weikucms:$dname}</span>成功消费以下内容:</div>
+                <div class='indent cff9120'><span class="c8dab00">{weikucms:$list['title']}</span>&nbsp;&nbsp;&nbsp;&nbsp;1件</div>
+                <!-- <div class='indent cff9120'><span class="c8dab00">面部刮痧</span>&nbsp;&nbsp;&nbsp;&nbsp;1/20</div> -->
+                <div class='f14' style='padding-left: 10px;'>
+                您对本次服务满意吗？鱼美人期待您的<a class="c0092fc" href="{weikucms::U('index',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid'],'id'=>$list['id']))}">评价</a>
+                </div>
+                <a href="#">
+                <div class='showDetail f14'>
+                    <span>详情:
+                          {weikucms:$list['content']}
+                    </span>
+                    <span class='rarr'></span>
+                </div>
+                </a>
+            </div>
+        </div>
+<include file="./tpl/Wap/default/mrufx.html" />          
+    </body>
+</html>

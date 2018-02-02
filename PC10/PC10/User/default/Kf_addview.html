@@ -1,0 +1,50 @@
+<include file="Public:head"/>
+
+<div class="cLineB">
+  <h4 class="left">添加微信客服<span class="FAQ">微信端收发信息轻松方便</span></h4>
+ </div>
+<div class="msgWrap">
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>  您可以轻松时时收到您的微信公众号粉丝给您发的信息啦,先用一个个人微信关注您的公众账号，如果您已关注，此步骤略过，按照如下要求绑定您的微信客服吧！
+
+    </div>
+    <div class="box-content">
+        <div class="tab-pane fade active in" id="home">
+            <h5 style="color: #368ee0;">第一步<span class="step_tip">关注您自己的公众账号</span></h5>
+            <div>
+                <img width="180px" height="180px" src="./upload/weixin_qrcode/{weikucms:$Think.session.fakeid}.png" />
+            </div>
+            <hr/>
+            <h5 style="color: #368ee0;">第二步<span class="step_tip">发送绑定信息到公众您的公众账号</span></h5>
+            <div class="kefu_info">
+                用您的个人微信发送内容<span class="label label-success" style="padding: 10px 5px;margin:0px 5px;font-size: 16px;">{weikucms::$token}@wapwei</span>到您的微信公众账号进行绑定。
+            </div>
+            <hr/>
+            <h5 style="color: #368ee0;">当前绑定状态
+                <if condition="$has_kefu eq 1">
+                    已绑定您的个人微信<span class="step_tip label label-info" style="margin:0px 5px;">{weikucms::$is_kefu['nickname']}</span>当系统没有智能回复后将会把用户消息转到此个人微信上 <button class="btn btn btn-danger">解除绑定</button>
+                    <else/>
+                    <span class="step_tip label label-info" style="margin-left: 5px;">未绑定</span>
+                </if>
+
+
+            </h5>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+
+
+<include file="Public:footer"/> 

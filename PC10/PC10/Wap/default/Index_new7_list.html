@@ -1,0 +1,49 @@
+<html>
+<head>
+<include file="Public:weiweb"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/list_new7/css/style.css" media="all" />
+<title>{weikucms:$tpl['name']}</title>
+</head>
+<body style="background:#eee;">
+<ul class="lnk" style="margin:0 auto;width:95%;padding:8px;">
+	<volist name="result" id="so">
+		<li style="float:left; margin-top:10px;">
+			<if condition="$so['url']">
+				
+				<a  href="{weikucms:$so['url']}" title="{weikucms:$so['title']}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}" title="{weikucms:$so['title']}">
+				
+				</if>
+				
+				<div class="img">
+					<div style="border:1px solid #6B8E23;border-radius:5px;box-shadow:0.5px 0.5px 0.5px #6B8E23;">
+						<img src="{weikucms:$so['pic']}" width="150" height="90" title="{weikucms:$so['title']}" style="border-radius:5px;"/>
+					</div>
+				</div>
+				
+				<h2 style="margin-top:6px;text-align:center;font-size:12px;">{weikucms:$so.title}</h2>
+				
+				
+				<div class="commentNum"></div>
+				
+				</a>
+						
+			
+		</li>
+</volist>
+	<div style="clear:both"></div>
+</ul>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+<script type="text/javascript">
+	$(function(){
+		$('.lnk>li:even').css('float','left');
+		$('.lnk>li:odd').css('float','right');
+		$('img').css({'width':$('ul').width()*0.46,'height':$('ul').width()*0.276});
+	})
+</script>
+</body>
+</html>

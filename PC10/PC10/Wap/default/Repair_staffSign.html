@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/service/css/resource.css">
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jQuery.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/map.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/css/api" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/css/getscript"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/service/css/bmap.css">
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+  #thisnext{
+    padding: 5px 0 !important;
+  }
+</style>
+
+<style type="text/css">
+	#bottom td a{
+		color: #fff;
+		display: block;
+		font-size: 20px;
+	}
+</style>
+<script type="text/javascript">
+    $(function(){
+    	if(document.body.scrollHeight > $(window).height()){
+    		$('#bottom').css({'width':$(window).width(),'left':0,'bottom':-(document.body.scrollHeight-$(window).height())});
+    	}else{
+    		$('#bottom').css({'width':$(window).width(),'left':0});
+    	}
+        
+    })
+</script>
+</head>
+
+
+
+<body>
+<if condition="$isNull eq 1">
+<div class="yxyyList">
+	<ul id="rtable">
+		<div class="notContentTips">
+			<img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png"><p>目前还没出发维修，不需要签到！</p>
+		</div>
+	</ul>
+</div>
+<else/>
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+            <div class="li-l">搜索经纬度</div>
+            <div class="li-r">
+               <input type="text" id="suggestId" class="input-xlarge" name="place" data-rule-required="true" value="{weikucms:$staffInfo.staff_place}">
+               <button class="btn" type="button" id="positioning" style="border-radius:5px;width:60px;background:red;color:white;">搜索</button>
+           </div>
+        </li>
+        <li class="noAfter">
+        	<div id="l-map" style="overflow: hidden; position: relative; z-index: 0; color: rgb(0, 0, 0); text-align: left; background-image: url(http://api.map.baidu.com/images/bg.png);width:100%;height:200px;"><div id="platform" style="overflow: visible; position: absolute; z-index: 0; left: -98px; top: 37px; cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div style="position: absolute; z-index: -1; left: 401px; top: 123px; display: block;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource" style="position: absolute; border: none; width: 128px; height: 128px; left: 96px; top: -38px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(1)" style="position: absolute; border: none; width: 128px; height: 128px; left: -160px; top: -166px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(2)" style="position: absolute; border: none; width: 128px; height: 128px; left: -32px; top: -38px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(3)" style="position: absolute; border: none; width: 128px; height: 128px; left: 96px; top: -166px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(4)" style="position: absolute; border: none; width: 128px; height: 128px; left: -160px; top: -38px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(5)" style="position: absolute; border: none; width: 128px; height: 128px; left: -32px; top: -166px;"></div><div id="mask" class=" BMap_mask" style="position: absolute; left: 98px; top: -37px; z-index: 9; overflow: hidden; -webkit-user-select: none; width: 605px; height: 320px;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 800;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 700;"><span class="BMap_Marker BMap_noprint" unselectable="on" style="position: absolute; padding: 0px; margin: 0px; border: 0px; cursor: pointer; width: 23px; height: 25px; left: 396px; top: 39px; z-index: -7979488; background: url(http://api.map.baidu.com/images/blank.gif);" title=""></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 600;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 500;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 400;"><span class="BMap_Marker" unselectable="on" style="position: absolute; padding: 0px; margin: 0px; border: 0px; width: 0px; height: 0px; left: 406px; top: 64px; z-index: -7979488;"><div style="position: absolute; margin: 0px; padding: 0px; width: 23px; height: 25px; left: -10px; top: -25px; overflow: hidden;"><img src="{weikucms::STATICS}/wapweiui/service/images/marker_red.png" style="border:none;left:0px; top:0px; position:absolute;"></div></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"></div></div><div style="position: absolute; z-index: -1; left: 401px; top: 123px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(6)" style="position: absolute; border: none; width: 256px; height: 256px; left: 96px; top: 90px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(7)" style="position: absolute; border: none; width: 256px; height: 256px; left: -416px; top: -166px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(8)" style="position: absolute; border: none; width: 256px; height: 256px; left: -160px; top: 90px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(9)" style="position: absolute; border: none; width: 256px; height: 256px; left: 96px; top: -166px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(10)" style="position: absolute; border: none; width: 256px; height: 256px; left: -416px; top: 90px;"><img src="{weikucms::STATICS}/wapweiui/service/images/saved_resource(11)" style="position: absolute; border: none; width: 256px; height: 256px; left: -160px; top: -166px;"></div></div><div id="zoomer" style="position: absolute; z-index: 0; top: 28px; left: 279px; overflow: hidden; visibility: hidden; cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default; width: 60px; height: 46px;"><div class="BMap_zoomer" style="top: 0px; left: 0px; background-position: -7px -7px;"></div><div class="BMap_zoomer" style="top: 0px; right: 0px; background-position: 0px -7px;"></div><div class="BMap_zoomer" style="bottom: 0px; left: 0px; background-position: -7px 0px;"></div><div class="BMap_zoomer" style="bottom: 0px; right: 0px; background-position: 0px 0px;"></div></div><div class=" anchorBL" style="height: 32px; position: absolute; z-index: 10; bottom: 0px; right: auto; top: auto; left: 1px;"><a title="到百度地图首页" target="_blank" href="http://map.baidu.com/?sr=1" style="outline: none;"><img style="border:none;width:77px;height:32px" src="{weikucms::STATICS}/wapweiui/service/images/copyright_logo.png"></a></div><div unselectable="on" class=" BMap_cpyCtrl anchorBL" style="cursor: default; white-space: nowrap; bottom: 2px; right: auto; top: auto; left: 81px; position: absolute; z-index: 10;"><span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-family: arial, simsun; display: inline; background: none;" _cid="1">© 2014 Baidu</span></div><div unselectable="on" class=" BMap_stdMpCtrl BMap_stdMpType0 BMap_noprint anchorTL" style="width: 52px; height: 226px; bottom: auto; right: auto; top: 10px; left: 10px; position: absolute; z-index: 1100;"><div class="BMap_stdMpPan"><div class="BMap_button BMap_panN" title="向上平移"></div><div class="BMap_button BMap_panW" title="向左平移"></div><div class="BMap_button BMap_panE" title="向右平移"></div><div class="BMap_button BMap_panS" title="向下平移"></div><div class="BMap_stdMpPanBg BMap_smcbg"></div></div><div class="BMap_stdMpZoom" style="height: 167px; width: 52px;"><div style="height: 167px; width: 37px;"><div class="BMap_button BMap_stdMpZoomIn" title="放大一级"><div class="BMap_smcbg"></div></div><div class="BMap_button BMap_stdMpZoomOut" title="缩小一级"><div class="BMap_smcbg"></div></div></div><div class="BMap_stdMpSlider" style="height: 133px;"><div class="BMap_stdMpSliderBgTop" style="height: 124px;"><div class="BMap_smcbg"></div></div><div class="BMap_stdMpSliderBgBot" style="top: 124px;"><div class="BMap_smcbg"></div></div><div class="BMap_stdMpSliderMask" title="放置到此级别"></div><div class="BMap_stdMpSliderBar" title="拖动缩放" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default; top: 29px;"><div class="BMap_smcbg"></div></div></div><div class="BMap_zlHolder"><div class="BMap_zlSt"><div class="BMap_smcbg"></div></div><div class="BMap_zlCity"><div class="BMap_smcbg"></div></div><div class="BMap_zlProv"><div class="BMap_smcbg"></div></div><div class="BMap_zlCountry"><div class="BMap_smcbg"></div></div></div></div></div><div unselectable="on" class=" BMap_scaleCtrl BMap_noprint anchorBL" style="bottom: 18px; right: auto; top: auto; left: 81px; width: 88px; position: absolute; z-index: 10;"><div class="BMap_scaleTxt" unselectable="on">1&nbsp;公里</div><div class="BMap_scaleBar BMap_scaleHBar"><img style="border:none" src="{weikucms::STATICS}/wapweiui/service/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleLBar"><img style="border:none" src="{weikucms::STATICS}/wapweiui/service/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleRBar"><img style="border:none" src="{weikucms::STATICS}/wapweiui/service/images/mapctrls11.png"></div></div><div unselectable="on" class=" BMap_omCtrl BMap_noprint anchorBR quad4" style="width: 15px; height: 15px; bottom: 0px; right: 0px; top: auto; left: auto; position: absolute; z-index: 10;"><div class="BMap_omOutFrame" style="width: 149px; height: 149px;"><div class="BMap_omInnFrame" style="bottom: auto; right: auto; top: 8px; left: 8px; width: 139px; height: 139px;"><div class="BMap_omMapContainer"></div><div class="BMap_omViewMv" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div class="BMap_omViewInnFrame"><div></div></div></div></div></div><div class="BMap_omBtn BMap_omBtnClosed" style="bottom: 0px; right: 0px; top: auto; left: auto;"></div></div></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">经度</div>
+            <div class="li-r">
+                <input type="text" value="{weikucms:$staffInfo.latitude}" id="lat" name="position_y">
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">纬度</div>
+            <div class="li-r">
+                <input type="text" value="{weikucms:$staffInfo.longitude}" id="lng" name="position_x">
+            </div>
+        </li>      
+    </ul>
+</div>
+<input id="id" value="{weikucms:$staffInfo.id}" type="hidden"/>
+<div class="button clearfix">
+    <div style="width:100%;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="sign">签到</a>
+   </div>
+</div>
+</if>
+
+<!--<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>-->
+
+<script type="text/javascript">
+    $(function(){
+    	var adr = $("#suggestId").val();
+    	var lat = $("#lat").val();
+    	var lng = $("#lng").val();
+    	var data = {'lng':lng,'lat':lat,'adr':adr};
+        baidu_map(data);
+    });
+
+</script>
+
+<script>
+$(function(){
+	$("#sign").click(function(){
+		var place = $("#suggestId").val();
+		var lat = $("#lat").val();
+		var lng = $("#lng").val();
+		var id = $("#id").val();
+		var url="index.php?g=Wap&m=Repair&a=staffSign&token="+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,{place:place,lat:lat,lng:lng,id:id},
+        function(data){ 
+        	
+          if(data.status == 100){ 
+        	  show_success_tip(data.info);
+              setTimeout(function(){                            
+                  window.location.href = data.url;
+              },'1000');
+          }else if(data.status == 1 ){
+            show_error_tip(data.info);
+          }else if(data.status == 2 ){
+            show_error_tip(data.info);
+          }
+      },'json');
+	});
+});
+
+</script>
+</body>
+</html>

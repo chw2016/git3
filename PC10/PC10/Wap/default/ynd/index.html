@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <title>由你定</title>
+    <meta charset="utf-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="eric.wu" name="author">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="{weikucms::STATICS}/wapweiui/ynd/css/reset.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/ynd/css/paging.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/ynd/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/default.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/Smaty.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/TouchSlide.1.1.source.js"></script>
+    <script>
+        $(function(){
+        	//设置分页内容屏幕的高度
+        	// $(".return").height($(".widget_wrap").height());
+            var center = $(".hd").width();
+            $(".hd").css("left","-webkit-calc(50% - "+center/2+"px)")
+            $(".return").height($(window).height());
+            $(".widget_wrap").height($(window).height())
+        	$(".rotate_body").height($(".main").height())
+        	function show(){
+        			$('.container').removeClass('animate') 		
+        	}
+        	//显示分页
+        	$(".icon-menu").click(function(){
+        		$('.container').addClass('animate');
+        		$(".rotate_body").css("-webkit-transform","rotateY(-60deg) translate3d(180px, 0, 0)").height($(".main").height());
+        		$(".widget_wrap").addClass('wrap-none');
+        	})
+        	//从分页返回主页面
+        	$(".return").click(function(){
+		$(".sideBar>.widget_wrap").css("position","absolute");
+		$(".widget_wrap").removeClass('wrap-none');
+		$(".rotate_body").css("-webkit-transform","inherit");
+		setTimeout(show,350).show();      		
+        	})	
+        	$(".level2").touch(function(){
+        		$(this).toggleClass('on');
+        	})
+        	// $("a").click(function(){
+		// $(".loadingLogoWrap").waiting(function(){
+
+		// },100);
+  //       	})
+        })
+
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.seacher').blur(function(){
+                var seach = $('.seacher').val();
+                //var url = "{weikucms::U('result',array('token'=>$token,'openid'=>$openid))}"+"&seach="+seach;
+                location.href = "{weikucms::U('result',array('token'=>$token,'openid'=>$openid))}"+"&seach="+seach;
+            })
+        })
+    </script>
+    <style type="text/css">
+        body{
+              background-color: #FF7600;
+        }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <div data-role="container" class="container glist">
+        <div class="rotate_body">
+            <header data-role="header">               
+		<div class="top-seek">
+			<div class="positionab-left icon-menu"></div>
+			<div class="header-center">
+				<span class="icon-search"></span>
+				<span class="input-color">
+					<input type="text" placeholder="请输入您所需要的搜索的物品" class="header-input seacher">
+				</span>
+			</div>
+		</div>
+            </header>
+            <!-- 内容模块 -->
+            <div class="main">
+		<div id="slideBox" class="slideBox line-bottom">
+            <div class="bd">
+                <div class="tempWrap carousel">
+                <ul  class="carousel-ul">
+                    <volist name="phone" id="pic">
+                        <li class="carousel-ul-li">
+                            <a class="pic" href="#"><img src="{weikucms:$pic.pic}"></a>
+                        </li>
+                    </volist>
+                     <!--   <li class="carousel-ul-li">
+                            <a class="pic" href="#"><img src="{weikucms::STATICS}/wapweiui/ynd/images/logo.png"></a>
+                        </li>
+                        <li class="carousel-ul-li">
+                            <a class="pic" href="#"><img src="{weikucms::STATICS}/wapweiui/ynd/images/logo.png"></a>
+                        </li>
+                        <li class="carousel-ul-li">
+                            <a class="pic" href="#"><img src="{weikucms::STATICS}/wapweiui/ynd/images/logo.png"></a>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="hd">
+                <ul><li class="">1</li><li class="">2</li><li class="">3</li><li class="on">4</li><li class="">5</li><li class="">6</li><li class="">7</li><li class="">8</li></ul>
+            </div>
+        </div>
+         <volist name="list" id="pd">
+             <a href="{weikucms::U('Ynd/shop',array('token'=>$token,'openid'=>$openid,'cat_id'=>$_GET['cat_id'],'pro_id'=>$pd['id']))}">
+                 <div class="commodity-main">
+                     <div class="commodity-main-left">
+                         <img src="{weikucms:$pd.pic}" alt="">
+                     </div>
+                     <div class="commodity-main-right">
+                         <div class="commodity-main-right-title">
+                             {weikucms:$pd.name}
+                         </div>
+                         <div class="commodity-main-right-title" style="padding-top:5px;">
+                             规格：{weikucms:$pd.norms}
+                         </div>
+                         <!--<div class="mt5">
+                             <span class="fprice">建议放单价：￥{weikucms:$pd.fprice} 元</span>
+                         </div>-->
+
+                         <div class="mt5">
+                             <span class="Price">参考零售价：￥{weikucms:$pd.price} 元</span>
+                         </div>
+                         <div class="commodity-main-right-title" style="padding-top:5px;">
+                             (LQ{weikucms:$pd.LQ} + CQ{weikucms:$pd.CQ})
+                         </div>
+                     </div>
+                 </div>
+             </a>
+         </volist>
+
+
+		<!--<a href="details.html">
+			<div class="commodity-main">
+				<div class="commodity-main-left">
+					<img src="{weikucms::STATICS}/wapweiui/ynd/images/img3.png" alt="">
+				</div>
+				<div class="commodity-main-right">
+					<div class="commodity-main-right-title">
+						云南白药千草堂螺旋藻精片0.5g*1020片小袋试用天然程海湖螺旋
+					</div>
+					<div class="through">
+						￥358.0
+					</div>
+					<div class="mt5">
+						<span class="Price">￥298.0</span>
+					</div>
+				</div>
+			</div>
+		</a>-->
+	</div>
+	<div class="loadingLogoWrap" style="width: 30px; height: 30px; position: fixed; top: 48%; left: 48%;"></div>
+            <!--脚部模块-->
+		<footer>
+			<ul class="footertab">
+				<li class="footselect">
+					<a href="{weikucms::U('Ynd/index',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-232"></p>
+						<p class="tab-title colorf57d8e">首页</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('Ynd/shoping',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-uniE624"></p>
+						<p class="tab-title">购物车</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-uniE628"></p>
+						<p class="tab-title">我的</p>
+					</a>
+				</li>
+			</ul>
+		</footer>
+		<script type="text/javascript">
+		    TouchSlide({
+		        slideCell:"#slideBox",
+		        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		        mainCell:".bd ul",
+		        effect:"leftLoop",
+		        autoPage:true,//自动分页
+		        autoPlay:true //自动播放
+		    });
+		</script>
+        </div>
+</div>
+    <!--分类导航菜单-->
+    <div data-role="widget" data-widget="sideBar" class="sideBar" id="sideBar" onclick="menuNav(0);">
+        <div class="widget_wrap">
+            <ul>
+                <volist name="classfiy" id="vo">
+
+                    <li  class="on level2" ><a href="javascript:;" class="level1">{weikucms:$vo.name}</a></li>
+                    <ol>
+                        <volist name="vo['dclassfiy']" id="so">
+                            <li><a href="{weikucms::U('Ynd/index',array('token'=>$token,'openid'=>$openid,'cat_id'=>$so['id']))}">{weikucms:$so.name}</a></li>
+                        </volist>
+
+                    </ol>
+                </volist>
+            </ul>
+            <div class="return">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

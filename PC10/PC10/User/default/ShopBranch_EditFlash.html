@@ -1,0 +1,124 @@
+<include file="Public:public"/>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+
+
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+<div style="width: 90%;margin: 0 auto;">
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        添加图片
+    </h4>
+</div>
+
+    <form class="form" method="post" id="form" action="">
+        <div class="msgWrap bgfc">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th>轮播标题：</th>
+
+                    <td>
+                        <input type="text" id="title" name="title" class="px require" style="width:300px;" value="{weikucms:$data.title}"/>
+                    </td>
+                </tr>
+
+                <!--<tr>
+                    <th>跳转地址：</th>
+                    <td>
+                        <input type="text" id="url" name="url" class="px require" style="width:300px;"  value="{weikucms:$data.url}"/>
+                    </td>
+                </tr>-->
+
+
+                <TR>
+                    <TH valign="top">店铺图片：</TH>
+                    <TD>
+                        <input type="text" class="px" id="pic" name="pic" style="width: 400px;" readonly value="{weikucms:$data.pic}"/>
+                        <span class="ke-button-common" id="upload">上传图片</span>
+                        <span style="font-size: 12px; color:#9FA39D;">建议图片大小为：640px*155px。</span>
+                    </TD>
+                </TR>
+
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">修改图片</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title=$("#title").val();
+           /* var url=$("#url").val();*/
+            var pic=$("#pic").val();
+
+            if(!title){
+                notif({
+                    msg: "标题不能为空",
+                    type: "warning"
+                })
+            }
+
+            if(! pic){
+                notif({
+                    msg: "图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('ShopBranch/EditFlash',array('token'=>$token,'branch_id'=>$branch_id,'id'=>$id))}",{title:title,pic:pic/*,url:url*/},function(data){
+                if(data.status==1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    location.href="{weikucms::U('ShopBranch/Flash',array('token'=>$token,'branch_id'=>$branch_id))}";
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "warning"
+                    });
+                }
+            },"json")
+        });
+    });
+
+</script><include file="Public:footer" />

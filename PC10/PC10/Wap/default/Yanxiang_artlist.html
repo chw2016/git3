@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <head>
+    	<title>研祥动态</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+        <style type="text/css" media="screen">
+            body { font-family: '微软雅黑'; }
+            .article-list { color: #000; }
+            .article-list li .left .circle { border-radius: 0; border: 1px solid #BEBDBD;; }
+            .article-list li .middle .content { margin-top: 5px; font-size: 14px; }
+            .article-list li .right .jianjiao { width: 13px; height: 13px; }
+            .article-list li { padding: 15px 10px; }
+        </style>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<!--<header id="c-product-header">
+    		研祥动态
+    	</header>
+		-->
+    	<ul class="article-list">
+            <volist name="info" id="vo">
+
+                <a href="{weikucms::U('Wap/Yanxiang/status',array('id'=>$vo['id']))}">
+        
+                    <li>
+
+                        <div class="left">
+                            <div class="circle">
+                                <img width="100%" height="75px" src="http://www.wapwei.com/Public/home/img/logo.png" />
+                            </div>
+                        </div>
+                        <div class="middle">
+                            <div style="color: #00B2FF;">{weikucms:$vo.times}</div>
+                            <div class="content">{weikucms:$vo.title}</div>
+                        </div>
+                        <div class="right">
+                            <div class="jianjiao"></div>
+                        </div>
+
+                    </li>
+                </a>
+            </volist>
+    	</ul>
+    	<script type="text/javascript">
+    		window.onload = function(){
+    			//$('.circle').css('height', $('.circle').width()+'px');
+    			// $('.circle').css('line-height', $('.circle').height()+'px');
+    			$('.day,.month,.year').css('top', ($('.circle').height()-$('.day').height()-$('.year').height())/2+'px');
+
+    			//$('.middle>.content').css('top', ($('.middle').height()-$('.content').height())/2+'px');
+
+    			$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height())/2+'px');
+				var a = setTimeout(function(){
+                    $("#loading").hide(0).remove();
+                },1200);
+    		}
+    	</script>
+    </body>
+</html>

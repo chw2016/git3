@@ -1,0 +1,80 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+		float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+		
+    }.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+
+			<li data-index="0" class="tab_nav first js_top borderColor" data-id="financial" style="padding-left: 10px;">
+				邀请记录
+			</li>
+            <li style="background-color: #1576AD;color: white;float: right;width:10%;font-size: 15px">
+                <a href="{weikucms::U('user_index',array('token'=>$token))}" style="color: white;text-decoration:none;">返&nbsp&nbsp回</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>会员编号</th>
+                <th>微信昵称</th>
+                <th>微信图像</th>
+                <th>真实姓名</th>
+                <th>手机号码</th>
+                <th>绑定关系时间</th>
+                <th>下属级别</th>
+
+            </tr>
+            </thead>
+            <volist id="vo" name="list" >
+                <volist name="vo" id="vo1">
+                    <tr>
+                        <td>{weikucms:$vo1.id}</td>
+                        <td>{weikucms:$vo1.member_sn}</td>
+                        <td>{weikucms:$vo1.nickname}</td>
+                        <td><img src="{weikucms:$vo1.headimgurl}" width="70px" height="70px" /></td>
+                        <td>{weikucms:$vo1.name}</td>
+                        <td>{weikucms:$vo1.phone}</td>
+                        <td>{weikucms:$vo1.t_add_time|date='Y-m-d H:i:s',###}</td>
+                        <td><if condition="$vo1['jibie']">{weikucms:$vo1.jibie}<else />第三级</if></td>
+                    </tr>
+                </volist>
+
+            </volist>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

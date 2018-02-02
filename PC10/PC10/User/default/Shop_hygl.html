@@ -1,0 +1,168 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+    .title_tab .tab_nav a.bbc{
+        border-bottom: 3px solid #459ae9;
+    }
+</style>
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top first" data-id="today">
+                <a href="{weikucms::U('Shop/hygl',array('token'=>$token))}" class="bbc">会员管理中心</a>
+
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top first" data-id="today">
+                <a href="{weikucms::U('Shop/czjl',array('token'=>$token))}">充值记录</a>
+
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+
+
+<div class="box-content">
+
+		 
+    <div class="msgWrap">
+        <form action="" method="post" id="form1">
+            <table>
+                <tr>
+				 <td style="margin-top: 10px;">编号：</td>
+                    <td><input type="text" style="width: 100px;" id="id" value="{weikucms:$id}" name="id" ></td>
+                    <td style="margin-top: 10px;">联系人：</td>
+                    <td><input type="text" style="width: 100px;" id="buyname" value="{weikucms:$name}" name="name"></td>
+
+                    <td >日期：</td>
+                    <td>
+                        <input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="statdate" name="stat_time" <if condition="$stat_time">value="{weikucms:$stat_time|date='Y-m-d h:i:s',###}"</if> readonly />
+                        到
+                        <input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="statdate1" name="end_time" <if condition="$stat_time">value="{weikucms:$end_time|date='Y-m-d h:i:s',###}"</if> readonly />
+
+                    </td>
+					
+                    <td>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-success btn-sm" href="javascript:;" id="search" style="position: relative;top:-5px;">搜索</a>
+                    </td>
+
+
+                </tr>
+
+            </table>
+        </form>
+	<form method="post"  action="###" id="info" >
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>注册日期</th>
+                      <th>微信昵称</th>
+                      <th>真实名字</th>
+                      <th>生日</th>
+                      <th>余额</th>
+                      <th>等级</th>
+                      <th>累计积分</th>
+                      <th>消费积分</th>
+                      <th>积分余额</th>
+                      <th>得意币</th>
+                      <th>发帖数</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.id}</td>
+
+                  			<td>{weikucms:$vo.add_time|date='Y-m-d h:i:s',###}</td>
+                            <td>{weikucms:$vo.name}</td>
+                            <td>{weikucms:$vo.turename}</td>
+                            <td>{weikucms:$vo.birth_day}</td>
+                            <th><a href="{weikucms::U('Shop/ye',array('token'=>$token,'openid'=>$vo['openid'],'money'=>$vo['money']))}">{weikucms:$vo.money}</a></th>
+                  			    <td>{weikucms:$vo.dengji}</td>
+                            <td>{weikucms:$vo.leijijifen}</td>
+                            <td>{weikucms:$vo.xiaofeijifen}</td>
+
+                            <td><a href="{weikucms::U('Shop/jifen',array('token'=>$token,'openid'=>$vo['openid'],'score'=>$vo['score']))}">{weikucms:$vo.score}</a></td>
+                            <td><a href="{weikucms::U('Shop/dyb',array('token'=>$token,'openid'=>$vo['openid'],'dyb'=>$vo['dyb']))}">{weikucms:$vo.dyb}</a></td>
+                            <td>{weikucms:$vo.fatie}</td>
+<!--
+                            <td><a href="{weikucms::U('Shop/fatie',array('token'=>$token,'openid'=>$vo['openid'],'fatie'=>$vo['fatie']))}">{weikucms:$vo.fatie}</a></td>
+-->
+                            <td><if condition="$vo['status'] eq 1"><font color="green">正常</font><else/><font color="black">黑名单</font></if></td>  
+                          	<td class="norightborder">
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('User/Shop/viewuser',array('id'=>$vo['id'],'token'=>$token))}">查看</a>
+                              <if condition="$vo['status'] eq 1">
+                              <a class="btn btn-danger btn-sm dell"   nid="{weikucms:$vo[id]}"  >加入黑名单</a>
+                              <else/>
+                              <a class="btn btn-success btn-sm huifu"   nid="{weikucms:$vo[id]}"  >恢复</a>
+                              </if>    
+                             
+                          	</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+	</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+<script>
+    function DelNag(obj){
+        var id=$(obj).attr("nid");
+        var url="{weikucms::U('Shop/DelNag',array('token'=>$token))}";
+        $.post(url,{id:id},function(data){
+            if(data.status==1){
+                location.reload();
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "warning"
+                });
+            }
+        },"json")
+    }
+    //搜索
+    $("#search").click(function(){
+        $("#form1").submit();
+    });
+    $(".dell").click(function(){
+        if(confirm("确定此操作？")){
+            var id=$(this).attr('nid');
+            var url="{weikucms::U('Shop/del_user',array('token'=>$token))}&id="+id;
+            location.href=url;
+
+        }
+
+    });
+
+    $(".huifu").click(function(){
+        if(confirm("确定此操作？")){
+            var id=$(this).attr('nid');
+            var url="{weikucms::U('Shop/huifu_user',array('token'=>$token))}&id="+id;
+            location.href=url;
+
+        }
+
+    });
+
+
+</script>
+
+<include file="Public:footer"/>

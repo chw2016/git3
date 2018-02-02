@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>预售</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+    </head>
+    <body>
+	<!--	<header class="header textMiddle white h3">
+	    	<div class="setLeft icon-back"></div>
+	    	<span>预售</span>
+	    </header>-->
+		<section class="publicBox">
+            <include file="Store_lm:flash" />
+            <include file="Store_lm:nav" />
+		</section>
+		<!-- 预售列表 -->
+		<section class="preSellList">
+            <if condition="$list">
+            <volist name="list" id="vo">
+			<div class="preSell">
+				<div class="preSellInfo">
+					<div class="preTitle">
+						{weikucms:$vo.name}
+					</div>
+					<div class="preState">
+						<span>{weikucms:$vo.title}</span>
+						<span class="setRight">
+							<span class="preSold">已售{weikucms:$vo.mnum}</span>
+							<span class="preAssessment">
+								评价{weikucms:$vo.cnum}条
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="preImg">
+					<a href="{weikucms::U('Store_lm/yg_article',array('id'=>$vo['id'],'openid'=>$openid,'token'=>$token))}">
+                        <img src="{weikucms:$vo.logourl}" width="100%" alt="">
+                        </a>
+					<div class="setBottom">
+						<span>{weikucms:$vo.time|date='m',###}月{weikucms:$vo.time|date='d',###}日 {weikucms:$vo.note}</span>
+						<span class="setRight">
+							准时发货|消费权益保障金|质量保证
+						</span>
+					</div>
+				</div>
+				<div class="preSellAction">
+					<span class="preSellPrice">
+						预购价
+						<span class="RMB">
+							{weikucms:$vo.price}
+						</span>				
+					</span>
+					<span class="preToSellPrice">
+						零售价{weikucms:$vo.oprice}
+					</span>
+					<a href="{weikucms::U('Store_lm/product_yg',array('id'=>$vo['pid'],'openid'=>$openid,'token'=>$token,'tid'=>$vo['id']))}" class="setRight toPreBuy">
+						现在预购
+					</a>
+				</div>
+			</div>
+                </volist>
+            <else />
+                暂没有预告商品
+            </if>
+				<!-- 假如预售活动结束了就可以在preSell里加上off 若完成开发上线时请把本注释删除-->
+
+            <if condition="$list">
+                <volist name="olist" id="vo">
+                    <div class="preSell off">
+                        <div class="preSellInfo ">
+                            <div class="preTitle">
+                                {weikucms:$vo.name}
+                            </div>
+                            <div class="preState">
+                                <span>{weikucms:$vo.title}</span>
+						<span class="setRight">
+							<span class="preSold">已售{weikucms:$vo.mnum}</span>
+							<span class="preAssessment">
+								评价{weikucms:$vo.cnum}条
+							</span>
+						</span>
+                            </div>
+                        </div>
+                        <div class="preImg">
+                            <img src="{weikucms:$vo.logourl}" width="100%" alt="">
+                            <div class="setBottom">
+                                <span>{weikucms:$vo.time|date='m',###}月{weikucms:$vo.time|date='d',###}日 {weikucms:$vo.note}</span>
+						<span class="setRight">
+							准时发货|消费权益保障金|质量保证
+						</span>
+                            </div>
+                        </div>
+                        <div class="preSellAction">
+					<span class="preSellPrice">
+						预购价
+						<span class="RMB">
+							{weikucms:$vo.price}
+						</span>
+					</span>
+					<span class="preToSellPrice">
+						零售价{weikucms:$vo.oprice}
+					</span>
+                            <a class="setRight toPreBuy">
+                                现在预购
+                            </a>
+                        </div>
+                    </div>
+                </volist>
+                <else />
+                暂没有预告商品
+            </if>
+
+
+        </section>
+
+
+
+
+		<!-- 占位符 -->
+		<div style="height:52px;"></div>
+        <include file="Store_lm:foot" />
+    </body>
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>   
+    <script type="text/javascript">
+
+    	$(function(){    		
+    		$(".preSell.off a").click(function(e){
+    			e.preventDefault();
+    		});
+    		/*假如已经结束了的预售不需要点击跳转了，就可以使用以上点击事件的代码，如果还需要，就把上面的代码删了或注释掉。*/
+
+    		if($(".preSell").hasClass('off')){
+    			/*判断preSell里如果有off，就代表活动结束了，下面的代码就是改变按钮文字，若后台已改，此代码亦可删*/    			
+    			$(".preSell.off").find('.toPreBuy').html("已售罄");
+    		}
+    	});
+    </script>
+</html>

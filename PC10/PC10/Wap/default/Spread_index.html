@@ -1,0 +1,210 @@
+<include file="Public:head" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+	*{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}body{
+		font-size: 12px;
+		color: #555;
+		font-family:arial,"microsoft yahei",Verdana,Arial,Helvetica,sans-serif;
+	}#head{
+		margin: 10px auto 0;
+		width: 90%;
+		text-align: right;
+	}.head-inline{
+		width: 100%;
+		/*position: relative;*/
+		display: block;
+	}.clear{
+		clear: both;
+	}#foot{
+		margin: 20px auto 0;
+		width: 95%;
+	}form{
+		width: 100%;
+		margin: 10px auto;
+	}	
+	#foot form .form-element{
+		display: block;
+		margin: 30px auto 0;
+		widows: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+	}#foot form .txt-element{
+         width: 100%;
+         height: 40px;
+         border-radius: 5px;
+         margin: 0 auto;
+         border: none;
+         line-height: 40px;
+         padding-left: 5px;
+         font-size: 14px;
+	}#ensure{
+		text-align: center;
+		background: #83cf51;
+		border-radius:5px;
+		color: #fff;
+		text-decoration: none;
+		font-size: 16px;
+		font-weight: bold;
+		padding: 10px 40px;
+		display: block;
+		margin: 0 auto;
+	}#bom{
+		display: block;
+		padding: 10px;
+		background: #FAA61A;
+		/*width: 100%;*/
+		font-size: 15px;
+		color: #fff;
+		position: relative;
+	}#bom .triangle1{
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-left: 10px solid #83cf51;
+		margin-right: 20px; 
+  		font-size:0px;
+  		position: absolute;
+	}
+    #head .head-inline span{
+         width: 100%;
+         height: 40px;
+         border-radius: 5px;
+         margin: 0 auto;
+         border: 1px solid #ccc;
+         line-height: 40px;
+         padding-left: 5px;
+         font-size: 14px;
+	}
+</style>
+<title>{weikucms:$tpl['name']}</title>
+<body>
+	<div id="bom">
+        活动名称:{weikucms:$res.activityname}
+	</div>
+	<!--<div id="head">-->
+		<!--<span class="head-inline" style="font-size: 15px;line-height: 30px;">{weikucms:$count}&nbsp;人已经参与</span>-->
+	<!--</div>-->
+
+    <if condition="$userdata">
+        <div class="info" style="padding:10px 12px;color: rgb(236, 94, 94);font-size:14px;">
+             中奖说明  :  {weikucms:$res.prize}
+        </div>
+    </if>
+	<div id="foot">
+		<form action="" method="" name="myfrom" target="_top" enctype="multipart/form-data">
+			<span class="form-element">
+				<input type="text" name="username" value="{weikucms:$userdata.username}" id="username" class="txt-element" placeholder="请在此处填写您的姓名"/>
+			</span>
+			<span class="form-element">
+				<input type="text" name="phone" value="{weikucms:$userdata.phone}" class="txt-element" id="phone" placeholder="请在此处填写您的电话号码" />
+			</span>
+            <php>
+                if(date("Y-m-d",time()) >= trim($res['startdate']) && date("Y-m-d",time()) <= trim($res['enddate'])){
+            </php>
+                <if condition="$userdata">
+                <span class="form-element" style="text-align:center;">
+                    <a href="javascript:void(0)" style="text-align: center;
+    background: #0089cf;
+    border-radius: 5px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 40px;
+    display: block;
+    margin: 0 auto;">您已参与过活动哦</a>
+                </span>
+                <else/>
+                <span class="form-element" style="text-align:center;">
+                    <a href="javascript:void(0)" id="ensure" style="text-align: center;
+    background: #0089cf;
+    border-radius: 5px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 40px;
+    display: block;
+    margin: 0 auto;">确定提交</a>
+                </span>
+                </if>
+            <php>}else if(date("Y-m-d",time()) < trim($res['startdate'])){</php>
+                <span class="form-element" style="text-align:center;">
+                    <a href="javascript:void(0)" style="text-align: center;
+    background:#0089cf;
+    border-radius: 5px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 40px;
+    display: block;
+    margin: 0 auto;">活动还没开始哦</a>
+                </span>
+			
+			<php>}else if(date("Y-m-d",time()) > trim($res['enddate'])){</php>
+                 <span class="form-element" style="text-align:center;">
+                    <a href="javascript:void(0)" style="text-align: center;
+    background: #0089cf;
+    border-radius: 5px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 40px;
+    display: block;
+    margin: 0 auto;">活动已结束噢</a>
+                </span>
+            <php>}</php>
+		</form>
+		<div style="width:100%;"> 
+			<img src="{weikucms::STATICS}/spread_huodong.jpg" style="width:100%;">
+		</div>
+	</div>
+
+	
+	<script type="text/javascript">
+		$(function(){
+			$('#ensure').bind('click',function(){
+				
+				var username=$('#username').val();
+				var phone=$('#phone').val();
+				
+				if(! username){
+                	alert('用户名不能为空');
+               	 	return false;
+            	}
+                if(!/^[\u4e00-\u9fa5]+$/.test(username)){
+                    alert('请输入中文名字');
+                    return false;
+                }
+            	var partten = /^1[3,5,8]\d{9}$/;
+
+				if(!partten.test(phone)){
+					alert('您填写的手机号码有误！');
+					phone.select();
+					phone,focus();
+					return false;
+				}
+	
+
+				 var url = "{weikucms::U('Wap/Spread/saveActive',array('id'=>$id,'token'=>$token,'openid'=>$openid))}";
+				
+				 $.post(url,{username:username,phone:phone},function(data){
+                    if(data.status == 1){
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        alert(data.info);
+                    }
+                 },'json');
+			});
+		});
+	</script>
+	<include file="Public:footer"/>
+</body>
+</html>

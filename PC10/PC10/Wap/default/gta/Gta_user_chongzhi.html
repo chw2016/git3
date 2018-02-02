@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/a.css">
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/b.css">
+<script type="text/javascript" src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+<style>
+	.footer_xianshi ul{
+		display:-webkit-box;
+		  background-color: rgb(114, 114, 114);
+		 height: 40px;
+  		line-height: 40px;
+	}
+	.footer_xianshi ul li{
+		  text-align: center;
+		  color: #fff;
+	}
+          .footer_ul{
+          	width:20%;
+          text-align: center;
+           display: inline-block;
+           overflow: hidden;
+           height: 30px;
+  	line-height: 35px;
+          }
+          .footer_ul1{
+          	width:20%;
+          text-align: center;
+           display: inline-block;
+           overflow: hidden;
+           height: 30px;
+  	line-height: 35px;
+          }
+          .footer_ul2{
+          	width:50%;
+          text-align: center;
+           display: inline-block;
+           overflow: hidden;
+           height: 30px;
+  	line-height: 35px;
+          }
+          .itemdetail{
+          	text-align:left;
+          }
+          #chongzhi {
+	  width: 300px;
+	  margin: 0 auto;
+	  padding: 0 0 20px 0;
+	  color: #666;
+	}
+	.footer_shuju{
+		background-color: #ccc;
+		  border-bottom: 1px solid #736D6D;
+		  color: #000;
+	}
+</style>
+<![endif]-->
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+    <div class="container itemdetail mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack"  onclick="javascript:history.go(-1);"></a></div>
+                    <div class="wx_bar_tit">账户充值</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-md-12 p0 tal">
+                <div id="chongzhi">
+                    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+                        <input type="hidden" name="order_text" value="会员充值">
+                        <input type="hidden" name="openid" value="{weikucms:$openid}">
+                        <input type="hidden" id="order_id" name="orderid" value="">
+                        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Gta&a=user_index&openid={weikucms:$openid}">
+                        <input type="hidden" name="type" value="Gta_chongzhi">
+
+                       <span><input onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="请输入您要充值的金额" type="tel" id="money" name="order_money" style="height: 30px;width: 100%;line-height: 30px;
+                padding: 5px 0px;margin-bottom: 15px;border-radius: 5px;border: 1px solid #C0C0C0;font-size: 14px;text-indent: 10px;"> </span>
+                        </form>
+                    <p class="note">
+                        温馨提示：
+                        <br>1、储值金额永久有效且适用于{weikucms:$tpl.name}；
+                    </p>
+<!--
+                    <input type="hidden" value="200" name="money"/>
+-->
+                    <br/>
+                    <div class="sbout"><button rel="wxjspay" class="btn btn-success btn-block J_payBtn" type="button" onclick="zhufu()" id="wx" flag="1">微信支付</button></div>
+
+                </div>
+            </div>
+        </div>
+        <if condition="$list">
+        <div class="footer_xianshi">
+        	    <ul>
+        	    	<li style="width:20%">序号</li>
+        	    	<li  style="width:20%">金额(元)</li>
+        	    	<li  style="width:50%">冲值时间</li>
+        	    </ul>
+        </div>
+        <volist name="list" id="vo">
+        <div class="footer_shuju">
+	        <span class="footer_ul">{weikucms:$i}</span>
+	        	<span class="footer_ul1">{weikucms:$vo.money}</span>
+	         <span class="footer_ul2">{weikucms:$vo.add_time|date='Y-m-d H:i:s',###}</span>
+        </div>
+            </volist>
+            </if>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+       function zhufu(){
+         //  var flag=$("")
+            var money = $("#money").val();
+
+            var btn = $("#wx");
+           var flag=$("#wx").attr('flag');
+           if(flag==0){
+               show_error_tip("请稍等");
+               return false;
+           }
+            if(!money){
+                show_error_tip("请输入金额");
+                return false;
+            }
+           $("#wx").attr('flag','0');
+           var url="{weikucms::U('user_chongzhi',array('token'=>$token,'openid'=>$openid))}";
+           $.post(url,{money:money},function(data){
+                if(data.status==1){
+                    $("#order_id").val(data.id);
+                    $("#myweipayform").submit();
+                }else{
+                    show_error_tip("订单生成失败");
+                    $("#wx").attr('flag','1');
+                    return false;
+                }
+           },'json')
+           // $("#myweipayform").submit();
+
+        }
+
+</script>
+
+</body>
+</html>

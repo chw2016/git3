@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new5/css/style.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new5/css/style_1.css" media="all" />
+		<!-- <link rel="stylesheet" type="text/css" href="http://stc.weimob.com/css/template/home-13.css?2014-02-25-11" media="all" /> -->
+		<style type="text/css">
+			.body{
+				max-width:640px;
+				margin:auto;
+				min-height:100%;
+				background-color:#f4f4f4;
+				position:relative;
+			 }
+		</style>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/channel_new5/js/new_5_1.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/channel_new5/js/new_5_2.js"></script>
+<!-- <script type="text/javascript" src="http://stc.weimob.com/src/template/zepto.js?2014-02-25-11"></script> -->
+<title>{weikucms:$tpl['name']}</title>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        
+<link rel="stylesheet" type="text/css" href="http://293885.m.weimob.com/wm-xin-a/font-awesome.css?v=2014082115" media="all" />
+
+<div class="body" style="padding-bottom:52px;">
+		<!--
+	幻灯片管理
+	-->
+	<div style="-webkit-transform:translate3d(0,0,0);">
+		<div id="banner_box" class="box_swipe">
+			<ul>
+				<volist name="flash" id="vo">
+					<li>
+												<a onclick="return false;">
+																<img src="{weikucms:$vo.img}" alt="dsf" style="width:100%;" />
+								</a>
+					</li>
+				</volist>
+									<!-- <li>
+												<a onclick="return false;">
+																<img src="http://img.weimob.com/static/3f/75/26/image/20140821/20140821110041_13012.png" alt="dsf" style="width:100%;" />
+																	</a>
+														</li>
+									<li>
+												<a onclick="return false;">
+																<img src="http://img.weimob.com/static/3f/75/26/image/20140821/20140821110104_61164.png" alt="dsds" style="width:100%;" />
+																	</a>
+														</li> -->
+							</ul>
+			<ol>
+				<li class="on"></li>
+				<volist name="flash" id="vo" offset="1">
+					<li style="margin-right:3px;"></li>
+				</volist>
+			</ol>
+		</div>
+	</div>
+		<script>
+		$(function(){
+			new Swipe(document.getElementById('banner_box'), {
+				speed:500,
+				auto:3000,
+				callback: function(){
+					var lis = $(this.element).next("ol").children();
+					lis.removeClass("on").eq(this.index).addClass("on");
+				}
+			});
+		});
+	</script>
+<br/>        		<!--
+		用户分类管理
+		-->
+		<script type="text/javascript">
+			window.onload=function(){
+			var color="#";
+			var dfdf=document.getElementById('list').getElementsByTagName('li');
+			for(var j=0;j<dfdf.length;j++){
+				for(var i=0;i<6;i++){
+					color+='0123456789abcdef'[Math.floor(Math.random()*16)];
+				}
+				dfdf[j].style.background=color;
+				color="#";
+			}
+			
+		}
+		</script>
+		<section>
+            <ul class="list_font" id="list">
+            	<volist name="info" id="vo">
+            		<li>
+					<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+				     <div><span class="icon-smile" style="font-size:15px;"></span></div>
+                             <div>
+                                <p>{weikucms:$vo.name}</p>
+                            </div>
+                        </a>
+                    </li>
+            	</volist>
+                                    
+            </ul>
+        </section>
+    
+</div>        			
+			<footer style="overflow:visible;">
+				<div class="weimob-copyright" style="padding-bottom:50px;">
+					<span class="weimob-support" >&copy;万普提供</span>
+				</div>
+			</footer>
+				<div mark="stat_code" style="width:0px; height:0px; display:none;">
+					</div>
+		<if condition="$res_1['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body>
+</html>
+

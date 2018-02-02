@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>个人中心</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+
+</head>
+<body>
+<div class='relative ucenter'>
+    <div class='abs'><img src="{weikucms:$homepic['pic']}" width="100%" style="display: inherit;"></div>
+     <div class='abs umain'>
+         <div class='fl main-head cFFF'>
+             <div class='header'><img src="{weikucms:$wxusers['headimgurl']}" width='100%' height='100%' /></div>
+             <div class='f25 mtb5'>
+                {weikucms:$wxusers['nickname']}
+             </if></div>
+             <div>加入平台第{weikucms:$day}天</div>
+         </div>
+
+     </div>
+     <div class='abs data cFFF tc'>
+         <span class='w24 inlineblock'>
+             <div>任务数量</div>
+             <div>{weikucms:$itask}</div>
+         </span>
+         <span class='w24 inlineblock'>
+             <div>总阅读量</div>
+             <div>{weikucms:$iclick}</div>
+         </span>
+         <span class='w24 inlineblock'>
+             <div>成交量</div>
+             <div>{weikucms:$iDeal}</div>
+         </span>
+
+     </div>
+</div>
+<!--<div class='bgC2A794 cFFF tc padtb10'>全国徽商排名1205/超过85%的徽商</div>-->
+<div class='bgFF4948 cFFF h55 tc umsg btb2FFF'>
+    <!--<div class='inlineblock msg w50 fl br2FFF'>-->
+        <a href="{weikucms::U('Medias/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}">
+            <span class='f16' style="color: #ffffff;">系统消息</span>
+			<img src="{weikucms::STATICS}/wapweiui/medias/img/news.png" width="20px" />
+            <span class='inlineblock icon relative'>
+                
+               <!-- <span class='iconNum abs' style="color: #FFFFFF;">{weikucms:$iInfo}</span>-->
+            </span>
+        </a>
+   <!-- </div>-->
+    <!--<div class='inlineblock msg fr w48'>
+        <a href="{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>2))}" >
+            <span class='f16' style="color: #FFFFFF;">任务消息</span>
+            <span class='inlineblock icon relative'>
+                <img src="{weikucms::STATICS}/wapweiui/medias/img/message.png" width="100%" />
+                <span class='iconNum abs' style="color: #FFFFFF;">{weikucms:$iInfos}</span>
+            </span>
+        </a>
+    </div>-->
+</div>
+
+<div class='bgFF4948 cFFF h55 tc umsg bg272B36'>
+    <div class='inlineblock msg w50 fl'>
+        <a href="{weikucms::U('Wap/Medias/myhome',array('token'=>$token,'openid'=>$openid,'type'=>1))}">
+            <span class='f16' style="color: #FFFFFF;">资料设置</span>
+        </a>
+    </div>
+    <div class='inlineblock msg fr w48'>
+        <a href="{weikucms::U('Wap/Medias/myhome',array('token'=>$token,'openid'=>$openid,'type'=>2))}">
+            <span class='f16' style="color: #FFFFFF;">帐户绑定</span>
+        </a>
+    </div>
+</div>
+
+<table class='tc'>
+    <tr>
+        <td>
+            <a href="{weikucms::U('Medias/myincome',array('token'=>$token,'openid'=>$openid))}">
+                <img src="{weikucms::STATICS}/wapweiui/medias/img/income.png" width='30px' /><span class='iconTip' style="color: #000000;">我的收入</span>
+            </a>
+        </td>
+        <td>
+            <a href="{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+                <img src="{weikucms::STATICS}/wapweiui/medias/img/task.png" width='30px' /><span class='iconTip' style="color: #000000;">我的任务</span>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{weikucms::U('Medias/mybrother',array('token'=>$token,'openid'=>$openid))}" style="color: #000000;">
+                我的团队
+            </a>
+        </td>
+        <td>
+            <a href="" style="color: #000000;">
+                转发招募
+            </a>
+        </td>
+    </tr>
+</table>
+
+<div class="zw"></div>
+<div id="footer">
+    <ul>
+        <a href="{weikucms::U('Medias/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer1.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>2))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer2.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/myCenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer3.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Medias/mybrother',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer4.png" width="35px" ></li>
+        </a>
+    </ul>
+</div>
+
+</body>
+</html>

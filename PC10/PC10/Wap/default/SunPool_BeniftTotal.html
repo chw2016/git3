@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/style.css">
+		<script src="{weikucms::RES}/sunpool/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/main.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/core.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/iscroll.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/jquery.ld.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/sunshine.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/irr.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/pace.js"></script>
+        <script src="{weikucms::STATICS}/chart/esl.js"></script>
+        <script>
+            var keyongmianji;
+            var flag = true;
+        </script>
+        <script>
+            $(function(){
+                $(".rongliang").val(localStorage.getItem("keyongmianji"));
+				$(".rl").val(localStorage.getItem("rl"));
+            });
+        </script>
+        <script src="{weikucms::RES}/sunpool/js/xiaoyipinggu.js"></script>
+        <style>
+            .label{
+                top:-1px;
+            }
+        </style>
+    </head>
+    <body>
+   		<div class="header textMiddle white">
+   			效益分析
+   		</div>
+   		<div class="havBox myul border-26 overFloatHidden hide">
+   			<div class="hav myli textMiddle ">
+   				按用电量
+   			</div>
+   			<div class="hav myli textMiddle on">
+   				按安装面积
+   			</div>
+   		</div>
+
+   		<div class="inputWrap marginTop20 white-bg border-14">
+
+			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						<font color="red">*</font>安装容量：
+   					</div>
+   					<div class="input">
+   						<input class="rongliang" type="hidden">
+						<input type="tel" class="rl" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label" style="top: -1px;">kW</div>
+   					</div>
+   				</div>
+   			</div>
+
+            <div class="inputItem setMiddle">
+                <div class="inputItemName"><font color="red">*</font>屋顶类型：</div>
+                <div class="textMiddle input-b myul">
+                    <div class="wudingStyle myul on" msg="1">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>水泥屋顶</div>
+                    </div>
+                    <div class="wudingStyle myul" msg="2">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>斜屋顶</div>
+                    </div>
+                    <div class="wudingStyle myul" msg="3">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>彩钢瓦</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inputItem setMiddle">
+                <div class="inputItemName">朝向：</div>
+                <div class="textMiddle input-b myul">
+                    <div class="directionStyle myul on" msg="n">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>南</div>
+                    </div>
+                    <div class="directionStyle myul" msg="dn">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>东南</div>
+                    </div>
+                    <div class="directionStyle myul" msg="d">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>东</div>
+                    </div>
+                    <div class="directionStyle myul" msg="xn">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>西南</div>
+                    </div>
+
+                </div>
+                <div class="textMiddle input-b myul">
+
+                    <div class="directionStyle myul" msg="x">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>西</div>
+                    </div>
+                    <div class="directionStyle myul" msg="pp">
+                        <div class="circle iRadioWrap">
+                            <div class="circle iRadio"></div>
+                        </div>
+                        <div>平铺（0°）</div>
+                    </div>
+                    <div class="directionStyle myul">
+
+                    </div>
+                    <div class="directionStyle myul">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <span id="angle" style="display: none"></span>
+                <span id="tuoliu" style="display:none"></span>
+                <span id="sunshine" style="display:none"></span>
+            </div>
+            <div class="inputItem setMiddle" onclick="">
+                <div class="inputItemName"><font color="red">*</font>所在地区：</div>
+                <input type="hidden" class="area" name="info[area]"  id="area" value="">
+                <select class="pc-select-area" name="area-1" id="area-1" width="100" >
+                    <option value="">请选择菜单</option></select>
+                <select class="pc-select-area" name="area-2" id="area-2" width="100" onchange="getAngle();getsunshine()">
+                    <option value="">请选择菜单</option></select>
+                <script type="text/javascript">
+                $(function(){
+                    var $ld5 = $(".pc-select-area");
+                    $ld5.ld({
+                        ajaxOptions : {"url" : "http://www.solarstock.cn/api.php?op=get_linkage&act=ajax_select&keyid=1"},
+                        defaultParentId : 0,
+                        style : {"width" : 120}
+                    })
+                    var ld5_api = $ld5.ld("api");
+                    ld5_api.selected();
+                    $ld5.bind("change",onchange);
+                    function onchange(e){
+                        var $target = $(e.target);
+                        var index = $ld5.index($target);
+                        $("#area-3").remove();
+                        $("#area").val($ld5.eq(index).show().val());
+                        index ++;
+                        $ld5.eq(index).show();								}
+                })
+            </script>
+            </div>
+
+            <div class="inputItem setMiddle">
+   				<div class="inputItemName">用电属性</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="electStyle myul on">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>商业用电</div>
+					</div>
+					<div class="electStyle myul">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>工业用电</div>
+					</div>
+					<div class="electStyle myul">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>居民用电</div>
+					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						发电自用比例
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="bili" value="100" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label" style="top:-1px;">%</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						<font color="red">*</font>当地电价：
+   					</div>
+   					<div class="input">
+   						<input type="number" id="dianjia" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">元/度</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c" >
+   					<div class="inputLabel">
+   						运维成本：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="ywcb" value="3" value="100" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">%</div>
+   					</div>
+   				</div>
+   			</div>
+
+			<div class="inputItem setMiddle">
+   				<div class="inputItemName">贷款类型：</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="moneyStyle myul on" msg="1" onclick="checkXtztr(1);">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>等额本金</div>
+					</div>
+					<div class="moneyStyle myul" msg="2" onclick="checkXtztr(1);">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>等额本息</div>
+					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						贷款比例：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="daikuan" value="0"  onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">%</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						贷款利率：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="lilv" value="0" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">%</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						贷款年限：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="nianxian" value="0" maxlength="2" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">年</div>
+   					</div>
+   				</div>
+   			</div>
+            <div style="display: none;" id="xtztr" value="0"></div>
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						国家补贴：
+   					</div>
+   					<div class="input">
+   						<input type="number" id="guojiabutie" value="0.42" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">元/度</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						补贴年限：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="butienianxian1" value="20" maxlength="2" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">年</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						地方补贴：
+   					</div>
+   					<div class="input">
+   						<input type="number" id="difangbutie" value="0" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">元/度</div>
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						补贴年限：
+   					</div>
+   					<div class="input">
+   						<input type="tel" id="butienianxian" value="0" maxlength="2" onblur="checkXtztr(2)" onkeyup="value=value.replace(/[^\d.]/g,'')">
+   						<div class="label">年</div>
+   					</div>
+   				</div>
+   			</div>
+
+
+   		</div>
+
+		<!-- 计算结果 -->
+		<div class="resultBox" style="display: none;">
+		   <div class="resultItem myul">
+				<div class="resultItemName">
+                    安装容量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="rl">
+						0
+					</div>
+					<div class="resultUnit">
+						kW
+					</div>
+				</div>
+			</div>					
+			<div class="resultItem myul" >
+				<div class="resultItemName">
+                    总发电量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="zfdl">
+						0
+					</div>
+					<div class="resultUnit">
+				 	  度
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    系统总投入：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="ztr">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+		    <!--	
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    光伏综合电价：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="gfdj1">
+						0
+					</div>
+					<div class="resultUnit">
+				 	  度
+					</div>
+				</div>
+			</div>
+			-->
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    发电净收入：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="fdzsr1">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    回本时间：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="hsnx1">
+						0
+					</div>
+					<div class="resultUnit">
+						年
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    年收益率：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result" id="irr">
+						0
+					</div>
+					<div class="resultUnit">
+						%
+					</div>
+				</div>
+			</div>
+			
+			<!--<div class="resultItem myul">-->
+				<!--<div class="resultItemName">-->
+					<!--回报年限-->
+				<!--</div>-->
+				<!--<div class="resuleContent myul">-->
+					<!--<div class="result">-->
+						<!--0-->
+					<!--</div>-->
+					<!--<div class="resultUnit">-->
+						<!--年-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="resultItem myul">-->
+				<!--<div class="resultItemName">-->
+					<!--年收益率-->
+				<!--</div>-->
+				<!--<div class="resuleContent myul">-->
+					<!--<div class="result">-->
+						<!--0-->
+					<!--</div>-->
+					<!--<div class="resultUnit">-->
+						<!--%-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<div class="resultNotice myul">
+				<div>备注：请如实填写电站所在地的相关数值,初始数值仅供参考。电网电价为自发自用业主用电价格。计算公式中已包含各地脱硫上网电价。</div>
+			</div>
+		</div>
+
+
+        <!--最近25年的记录-->
+        <table class="year-form" id="25years" style="font-size:10px;display: none;">
+            <tr>
+                <th style="width:10%">年</th>
+                <th style="width:10%">发电</th>
+                <th style="width:10%">光伏</th>
+                <th style="width:10%">收益</th>
+                <th style="width:10%">成本</th>
+                <th style="width:10%">运维</th>
+                <th style="width:10%">资本</th>
+                <th style="width:10%">累计</th>
+            </tr>
+            <tr ><td align='center' class='year'></td><td align='center'id='00'></td><td align='center'id='01'></td><td align='center'id='02'></td><td align='center'id='03'></td><td align='center'id='04'></td><td align='center'id='05'></td><td align='center'id='06'></td></tr><tr ><td align='center' class='year'>1</td><td align='center'id='10'></td><td align='center'id='11'></td><td align='center'id='12'></td><td align='center'id='13'></td><td align='center'id='14'></td><td align='center'id='15'></td><td align='center'id='16'></td></tr><tr ><td align='center' class='year'>2</td><td align='center'id='20'></td><td align='center'id='21'></td><td align='center'id='22'></td><td align='center'id='23'></td><td align='center'id='24'></td><td align='center'id='25'></td><td align='center'id='26'></td></tr><tr ><td align='center' class='year'>3</td><td align='center'id='30'></td><td align='center'id='31'></td><td align='center'id='32'></td><td align='center'id='33'></td><td align='center'id='34'></td><td align='center'id='35'></td><td align='center'id='36'></td></tr><tr ><td align='center' class='year'>4</td><td align='center'id='40'></td><td align='center'id='41'></td><td align='center'id='42'></td><td align='center'id='43'></td><td align='center'id='44'></td><td align='center'id='45'></td><td align='center'id='46'></td></tr><tr ><td align='center' class='year'>5</td><td align='center'id='50'></td><td align='center'id='51'></td><td align='center'id='52'></td><td align='center'id='53'></td><td align='center'id='54'></td><td align='center'id='55'></td><td align='center'id='56'></td></tr><tr ><td align='center' class='year'>6</td><td align='center'id='60'></td><td align='center'id='61'></td><td align='center'id='62'></td><td align='center'id='63'></td><td align='center'id='64'></td><td align='center'id='65'></td><td align='center'id='66'></td></tr><tr ><td align='center' class='year'>7</td><td align='center'id='70'></td><td align='center'id='71'></td><td align='center'id='72'></td><td align='center'id='73'></td><td align='center'id='74'></td><td align='center'id='75'></td><td align='center'id='76'></td></tr><tr ><td align='center' class='year'>8</td><td align='center'id='80'></td><td align='center'id='81'></td><td align='center'id='82'></td><td align='center'id='83'></td><td align='center'id='84'></td><td align='center'id='85'></td><td align='center'id='86'></td></tr><tr ><td align='center' class='year'>9</td><td align='center'id='90'></td><td align='center'id='91'></td><td align='center'id='92'></td><td align='center'id='93'></td><td align='center'id='94'></td><td align='center'id='95'></td><td align='center'id='96'></td></tr><tr ><td align='center' class='year'>10</td><td align='center'id='100'></td><td align='center'id='101'></td><td align='center'id='102'></td><td align='center'id='103'></td><td align='center'id='104'></td><td align='center'id='105'></td><td align='center'id='106'></td></tr><tr ><td align='center' class='year'>11</td><td align='center'id='110'></td><td align='center'id='111'></td><td align='center'id='112'></td><td align='center'id='113'></td><td align='center'id='114'></td><td align='center'id='115'></td><td align='center'id='116'></td></tr><tr ><td align='center' class='year'>12</td><td align='center'id='120'></td><td align='center'id='121'></td><td align='center'id='122'></td><td align='center'id='123'></td><td align='center'id='124'></td><td align='center'id='125'></td><td align='center'id='126'></td></tr><tr ><td align='center' class='year'>13</td><td align='center'id='130'></td><td align='center'id='131'></td><td align='center'id='132'></td><td align='center'id='133'></td><td align='center'id='134'></td><td align='center'id='135'></td><td align='center'id='136'></td></tr><tr ><td align='center' class='year'>14</td><td align='center'id='140'></td><td align='center'id='141'></td><td align='center'id='142'></td><td align='center'id='143'></td><td align='center'id='144'></td><td align='center'id='145'></td><td align='center'id='146'></td></tr><tr ><td align='center' class='year'>15</td><td align='center'id='150'></td><td align='center'id='151'></td><td align='center'id='152'></td><td align='center'id='153'></td><td align='center'id='154'></td><td align='center'id='155'></td><td align='center'id='156'></td></tr><tr ><td align='center' class='year'>16</td><td align='center'id='160'></td><td align='center'id='161'></td><td align='center'id='162'></td><td align='center'id='163'></td><td align='center'id='164'></td><td align='center'id='165'></td><td align='center'id='166'></td></tr><tr ><td align='center' class='year'>17</td><td align='center'id='170'></td><td align='center'id='171'></td><td align='center'id='172'></td><td align='center'id='173'></td><td align='center'id='174'></td><td align='center'id='175'></td><td align='center'id='176'></td></tr><tr ><td align='center' class='year'>18</td><td align='center'id='180'></td><td align='center'id='181'></td><td align='center'id='182'></td><td align='center'id='183'></td><td align='center'id='184'></td><td align='center'id='185'></td><td align='center'id='186'></td></tr><tr ><td align='center' class='year'>19</td><td align='center'id='190'></td><td align='center'id='191'></td><td align='center'id='192'></td><td align='center'id='193'></td><td align='center'id='194'></td><td align='center'id='195'></td><td align='center'id='196'></td></tr><tr ><td align='center' class='year'>20</td><td align='center'id='200'></td><td align='center'id='201'></td><td align='center'id='202'></td><td align='center'id='203'></td><td align='center'id='204'></td><td align='center'id='205'></td><td align='center'id='206'></td></tr><tr ><td align='center' class='year'>21</td><td align='center'id='210'></td><td align='center'id='211'></td><td align='center'id='212'></td><td align='center'id='213'></td><td align='center'id='214'></td><td align='center'id='215'></td><td align='center'id='216'></td></tr><tr ><td align='center' class='year'>22</td><td align='center'id='220'></td><td align='center'id='221'></td><td align='center'id='222'></td><td align='center'id='223'></td><td align='center'id='224'></td><td align='center'id='225'></td><td align='center'id='226'></td></tr><tr ><td align='center' class='year'>23</td><td align='center'id='230'></td><td align='center'id='231'></td><td align='center'id='232'></td><td align='center'id='233'></td><td align='center'id='234'></td><td align='center'id='235'></td><td align='center'id='236'></td></tr><tr ><td align='center' class='year'>24</td><td align='center'id='240'></td><td align='center'id='241'></td><td align='center'id='242'></td><td align='center'id='243'></td><td align='center'id='244'></td><td align='center'id='245'></td><td align='center'id='246'></td></tr><tr ><td align='center' class='year'>25</td><td align='center'id='250'></td><td align='center'id='251'></td><td align='center'id='252'></td><td align='center'id='253'></td><td align='center'id='254'></td><td align='center'id='255'></td><td align='center'id='256'></td></tr><tr ><td align='center' class='year'>合计</td><td align='center' id='sum'></td><td align='center' id='sum1'></td><td align='center' id='sum2'></td><td id='sum3'></td><td id='sum4'></td><td id='sum5'></td><td id='266'></td></tr>      </table>
+            <!--最近25年的记录-->
+
+
+        <div  class="main" id="main" style="height:500px;display: none;"></div><div style="color:red;font-size:12px;margin-top:-25px;margin-left:270px;display:none;" id="bz2">备注：以上数据仅供参考。</div>
+        <div  class="line main" id="line" style="height:500px;display: none;"></div><div style="color:red;font-size:12px;margin-top:-30px;margin-left:270px;display:none;margin-bottom:20px;" id="bz3">备注：以上数据仅供参考。</div>
+
+        <!--环境效益表-->
+        <!-- 环境效益表 -->
+        <table class="free_table free_price1" style="font-size:10px;display: none;">
+            <tr>
+                <th>系统容量(kwp)</th>
+                <th>节约标准煤(ton)</th>
+                <th>减排CO2(ton)</th>
+                <th>减排SO2(kg)</th>
+                <th>减排NxOy(kg)</th>
+                <th>减排烟尘(kg)</th>
+                <th>相当种植树木(棵)</th>
+            </tr>
+            <tr>
+                <th  id="xtrl1"></th>
+                <th  id="jybzm1"></th>
+                <th id="jpco1"></th>
+                <th id="jpso1"></th>
+                <th  id="jpnxoy1"></th>
+                <th  id="jpyc1"></th>
+                <th  id="zzsm1"></th>
+            </tr>
+        </table>
+        </div>	<div style="color:red;font-size:12px;margin-top:-15px;margin-left:225px;display:none;margin-bottom:10px;" id="bz4">备注：以上数据仅供参考。</div>
+        <!--环境效益表结束-->
+        <div class="actionHavBox myul">
+   			<div class="actionHav myli" onclick="show_jisuan();getData();">
+   				计算
+   			</div>
+   			<div class="actionHav myli" onclick="Erect()">
+   				我要安装
+   			</div>
+   		</div>
+
+	<script type="text/javascript">
+		mySelector($(".electStyle"),"on",1);
+		mySelector($(".moneyStyle"),"on",1);
+	</script>
+
+    <script type="text/javascript">
+        mySelector($(".wudingStyle"),"on",1);
+        mySelector($(".directionStyle"),"on",1);
+        mySelector($(".electStationStyle"),"on",1);
+    </script>
+   <script src="{weikucms::RES}/sunpool/js/area.js"></script>
+   <script src="{weikucms::RES}/sunpool/js/location.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+         showLocation();
+
+      });
+   </script>
+        <script>
+            $(function(){
+                $("input").click(function(){
+                    if($(this).val()==0){
+                        $(this).val('');
+                    }
+                });
+            })
+            function Erect(){
+                location.href="{weikucms::U('SunPool/ErectInfo',array('token'=>$token,'openid'=>$openid))}";
+            }
+
+            function show_jisuan(){
+                var nianxian=$("#nianxian").val();
+                var daikuan = $("#daikuan").val();
+                if(daikuan>0){
+                     if(nianxian<=0){
+                         alert('请输入正确的贷款年限');
+                         $(".resultBox").hide();
+                         $("#nianxian").val('');
+                          $("#nianxian").focus();
+                         return false;
+                     }
+                    var lilv=$("#lilv").val();
+                    if(lilv<=0){
+                        alert('贷款利率不能为0');
+                        flag = false;
+                        $("#lilv").val('');
+                        $("#lilv").focus();
+                        return false;
+                    }
+                }
+
+
+                var ywcb=$("#ywcb").val();//运维成本
+                if(ywcb>=0&&ywcb<=100){
+
+                }else{
+                    alert('运维成本填写1-100之间');
+                    $(".resultBox").hide();
+                    $("#ywcb").focus();
+                    return false;
+                }
+                var lilv=$("#lilv").val();//贷款利率
+                if(lilv>=0&&lilv<=100){
+
+                }else{
+                    alert('贷款利率填写1-100之间');
+                    $(".resultBox").hide();
+                    $("#lilv").focus();
+                    return false;
+                }
+                $("#rl").text($(".rl").val());
+                $("#ztr").text(localStorage.getItem('xtztr'));//系统总投入
+                $("#zfdl").text($("#sum").text());
+                var c1= $('select#area-1 option:selected').val();
+                var c2=$('select#area-2 option:selected').val();
+                var c4=$("#dianjia").val().trim();
+                var rliang = $(".rl").val()
+				var dianjia = $("#dianjia").val();
+
+				var bili = $("#bili").val();
+
+				if(bili > 100 || bili < 0){
+					alert('请输入正确的发电自用比例1-100之间');
+					$(".resultBox").hide();
+					return false;	
+				}
+				if(daikuan > 100 || daikuan < 0){
+					alert('请输入正确的贷款比例1-100之间');
+					$(".resultBox").hide();
+					return false;	
+				}
+                if(c1 != '' && c2 != '' && c4 != '' && rliang !='') {
+                    $(".resultBox").show();
+                }else{
+					$(".resultBox").hide();
+					return false;
+				}
+				if(dianjia == ''){
+					alert('请输入正确的电价');
+					$(".resultBox").hide();
+					return false;
+				}
+
+
+
+            }
+        </script>
+		<!--		<div style="width:95%;height:20px;line-height:20px;text-align:center;font-size:12px;padding:5px;0px;color:rgb(190, 186, 186)">万普微信技术支持</div>   -->
+    </body>
+</html>

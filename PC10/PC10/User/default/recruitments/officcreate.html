@@ -1,0 +1,99 @@
+<include file="Public:public"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+<div class="cLineB">
+    <h4>添加职位</h4>
+</div>
+<div class="cLineB" id="uppict" style="display:none">
+</div>
+<div class="msgWrap">
+    <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+        <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <TBODY>
+            <tr>
+                <input type="hidden" class="px" id="id" value="{weikucms:$messages['id']}" name="id">
+                <input type="hidden" class="px" id="token" value="{weikucms:$messages['token']}" name="token">
+            </tr>
+            <tr>
+                <th valign="top"><label for="oname">职位名称</label></th>
+                <td>
+                    <input type="input" class="px" id="oname" value="{weikucms:$messages['oname']}" name="oname" style="width:300px">
+                </td>
+                <td></td>
+            </tr>
+
+
+            <tr>
+                <th></th>
+                <td><button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                    <include file="./tpl/User/default/helper/list_btn.html"/>
+                    <div class="clr"></div></td>
+            </tr>
+            </TBODY>
+        </table>
+    </form>
+</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        //地区
+        var id = $('#id').val();
+        var token = $('#token').val();
+        var oname = $('#oname').val();
+        var __hash__ = $("input[name = '__hash__']").val();
+
+
+        if(oname == ''){
+            notif({
+                msg: '请填写职位名称',
+                type: 'warning'
+            });
+            return false;
+        }
+
+        var url = null;
+        if(id ==''){
+            url = "{weikucms::U('Recruitments/officAdd',array('token'=>$token,'aid'=>$_GET['aid']))}";
+        }else{
+            url = "{weikucms::U('Recruitments/officEdit',array('token'=>$token,'aid'=>$_GET['aid']))}";
+        }
+        $.post(url,{
+                    id:id,
+                    token:token,
+                    oname:oname,
+                    __hash__:__hash__
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+
+                },'json');
+    }
+</script>

@@ -1,0 +1,115 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+  
+  <div class="cLineB">
+    <h4 style="position:relative;">
+        用户数据查询
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Reduce/index',array('token'=>$token,'pid'=>$pid))}">
+            返回
+        </a>
+    </h4>
+</div>  
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以根据相应的条件查询用户信息</li>
+	</ol>
+</div>
+
+
+<div class="box-content">
+      <table class="table table-bordered">
+      <form action="" method="post">
+      	<tr>
+      		<th>体重状况：</th>
+      		<td>
+      			 <select name="bsale" id="health">
+      			 	<option value="偏瘦" <if condition="$bsale eq '偏瘦'">selected</if>>偏瘦</option>
+      			 	<option value="健康" <if condition="$bsale eq '健康'">selected</if> >健康</option>
+      			 	<option value="偏胖" <if condition="$bsale eq '偏胖'">selected</if>  >偏胖</option>
+      			 	<option value="肥胖" <if condition="$bsale eq '肥胖'">selected</if> >肥胖</option>
+      			 </select>
+      		</td>
+      		
+      	</tr>
+
+      	<tr>
+      		<th>体重范围：</th>
+      		<td>
+      			<input type="text" name="weightMin" id="weightMin" value="{weikucms:$weightMin}" style="width: 120px" placeholder="请输入体重数" /> &nbsp;&nbsp;到&nbsp;&nbsp;
+      			<input type="text" name="weightMax" id="weightMax" value="{weikucms:$weightMax}" style="width: 120px" placeholder="请输入体重数" />
+      		</td>
+      		
+      	</tr>
+      	<tr>
+      		<th>BMI范围：</th>
+      		<td>
+      			<input type="text" name="BMIMin" id="BMIMin" value="{weikucms:$BMIMin}" /> &nbsp;&nbsp; 到 &nbsp;&nbsp;
+      			<input type="text" name="BMIMax" id="BMIMax" value="{weikucms:$BMIMax}" />
+      		</td>
+      		<td>
+      			<button type="submit" id="BMIrange" name="weightrange" class="btn btn-primary">查询</button>
+      		</td>
+      	</tr>
+      	</form>
+      </table> 
+    <div class="cLineB">
+        <h4>所有用户</h4>
+    </div>
+		
+    <div class="msgWrap">
+		
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>微信昵称</th>
+                      <th>性别</th>
+                      <th>年龄</th>
+                      <th>身高</th>
+                      <th>体重</th>
+                      <th>运动情况</th>
+                      <th>健康状况</th>
+                      <th>BMI值</th>
+                      <th>详细</th>
+                  </tr>
+                  </thead>
+                  <tbody id="human">
+                  <volist name="info" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.nikename}</td>
+        					<td>
+	                  			<if condition="$vo['sex'] eq 1">
+	                  				男
+	                  			<else/>
+	                  				女
+	                  			</if>
+                  			</td>
+                  			<td>{weikucms:$vo.age}</td>
+                  			<td>{weikucms:$vo.height}</td>
+                  			<td>{weikucms:$vo.weight}</td>
+                  			<td>{weikucms:$vo.run}</td>
+                  			
+                    		<td>{weikucms:$vo.health}</td>
+                          	<td>
+                             	{weikucms:$vo.BMI}
+                          	</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="{weikucms::U('User/Reduce/weightview',array('openid'=>$vo['openid'],'token'=>$token))}" title="编辑图文自定义回复">体重记录</a>
+                                <a class="btn btn-success btn-sm" href="{weikucms::U('User/Reduce/loserecordview',array('openid'=>$vo['openid'],'token'=>$token))}" title="编辑图文自定义回复">减肥记录</a>
+                            </td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+<include file="Public:footer"/>

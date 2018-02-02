@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<title>劳动局</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/msg.js"></script>
+		<script type="text/javascript" src="js/prompt.js"></script>
+		<script>
+			$(function(){
+				$(document).on('click','.user_header_edit',function(){
+					$(".user_input").css("display",'block');
+					$(".user_btn").css("display",'block');
+				})
+				$(document).on('click','.user_btn',function(){
+					var user=$("[name=user]").val();
+					var user1=$("[name=user1]").val();
+					var user2=$("[name=user2]").val();
+					var user3=$("[name=user3]").val();
+					var user4=$("[name=user4]").val();
+					var user5=$("[name=user5]").val();
+					var user6=$("[name=user6]").val();
+                    var lid=$("input[name=lid]").val();
+                    var user8=$("input[name=user8]").val();
+                    var  user9=$("input[name=user9]").val();
+                    var  user7=$("input[name=user7]").val();
+                    var flag=$(this).attr('flag');                
+                    if(flag==1){//重复提交
+                        return false;
+                    }
+                    if(user==''){
+                        show_error_tip('请填写用人单位');
+                        $("[name=user]").focus();
+                        return false;
+                    }
+                    if(user1==''){
+                        show_error_tip('请填写组织机构代码');
+                        $("[name=user1]").focus();
+                        return false;
+                    }
+                    if(user2==''){
+                        show_error_tip('请填写注册基金');
+                        $("[name=user2]").focus();
+                        return false;
+                    }
+                     if(user3==''){
+                        show_error_tip('请填写行页类型');
+                        $("[name=user3]").focus();
+                        return false;
+                    }
+                      if(user4==''){
+                        show_error_tip('请填写单位类型');
+                        $("[name=user4]").focus();
+                        return false;
+                    }
+                       if(user5==''){
+                        show_error_tip('请填写负责人');
+                        $("[name=user5]").focus();
+                        return false;
+                    }
+                          if(user6==''||user6.length!=11){
+                        show_error_tip('请填写正确的联系方式');
+                        $("[name=user6]").focus();
+                        return false;
+                    }
+                    if(user7==''||user7.length!=18){
+                        show_error_tip('请填写正确的身份证');
+                        $("[name=user7]").focus();
+                        return false;
+                    }
+                    if(user8==''){
+                        show_error_tip('请填写联系人');
+                        $("[name=user8]").focus();
+                        return false;
+                    }      
+                    if(user9==''||user9.length!=11){
+                        show_error_tip('请填写正确联系方式');
+                        $("[name=user9]").focus();
+                        return false;
+                    }
+                    $(this).attr('flag',1);
+                    $(".user_btn span").text('提交中');
+                   msg.confirm('<p style=font-size:19px;>信息已提交成功</p>')
+				})
+			})
+		</script>
+	</head>	
+	<style>
+		body{
+			background-color: #f2f0ee;
+		}
+	</style>
+	<body>
+	<div class="user_header clearfix">	
+		<div class="user">
+			<div class="user_one">
+				<div class="user_two">
+                <img src="images/User.png"  />
+                </div>
+                </div>
+    
+             </div>
+          <div class="user_header_name">名字</div>
+          <div class="user_header_edit ">
+          	<span>编辑</span>
+          </div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>用人单位机构</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">用人单位：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">组织机构代码：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user1"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">注册资金：</div>
+			<div class="user_input pr" ><input type="text" value=""  class="user_input_color" name="user2"/><div class="user_money">万元</div></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">行业类型：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user3"/></div>
+		</div>
+		<div class=" user_name" >
+			<div class="black">单位类型：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user4"/></div>
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>法定代表</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">负责人：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user5"/></div>
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">联系方式：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user6" onkeyup="value=this.value.replace(/\D+/g,'')"/></div>
+		</div>
+		<div class="user_name" >
+			<div class="black">身份证号码：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user7" onkeyup="value=this.value.replace(/\D+/g,'')"/></div>
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>单位信息</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">联系人：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user8"/></div>
+		</div>
+		<div class=" user_name" >
+			<div class="black">联系方式：</div>
+			<div class="user_input" ><input type="text" value=""  class="user_input_color" name="user9" onkeyup="value=this.value.replace(/\D+/g,'')"/></div>
+		</div>
+	</div>
+	</div>
+	
+<div class="mt10 mb10 user_btn">
+				<span class="btn" style="width: 90px;">完成</span>
+		</div>
+	</body>
+</html>

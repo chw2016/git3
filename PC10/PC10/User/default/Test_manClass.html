@@ -1,0 +1,96 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script src="{weikucms::STATICS}/vote/common.js"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+
+<div class="cLineB">
+  <h4><if condition="$type neq 1">添加微测试分类<else/>编辑微测试分类</if></h4>
+</div>
+<div class="msgWrap bgfc">
+	<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+			<tr>
+				<th width="120">测试活动分类名：</th>
+				<td>
+					<input type="text" name="name" id="name" value="{weikucms:$data['class_name']}" class="px">
+				</td>
+			</tr>
+			
+			<tr> 
+		        <th>测试分类的情况：</th>		        
+		        <td>
+		        	<select name="classify" id="classify">
+		        		<option disabled="disabled">请选择</option>
+		        		<option <if condition="$data['class_status'] eq 0">selected</if>  value="0" >每道题目对应一个分数</option>
+	        			<option value="1" <if condition="$data['class_status'] eq 1">selected</if>>每个选项对应一个分数</option>
+				   </select>
+		        </td>
+	       </tr>
+			
+			<tr>
+				<td colspan="2">
+					<div style="float:left;padding-left:100px;">
+						<button  name="button" type="button" id="bsubmit" class="btn btn-primary">保存</button>
+					</div>
+					<div style="float:left; padding-left:40px;">
+						<a href="{weikucms::U('Test/index',array('token'=>$token))}" class="btn btn-primary">取消</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		<input type="hidden" id="type" value="{weikucms:$type}"/>
+	</table>  	
+	</form>
+ </div> 
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){       	
+            var name = $("#name").val();
+            var classify = $("#classify").val();
+            if(! name){
+                notif({
+                    msg: "商品名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            var type = $("#type").val();
+            if (type == 1) {
+            	var url = "{weikucms::U('Test/manClass', array('token'=>$token,'type'=>$type, 'id'=>$id))}";
+            } else {
+            	var url = "{weikucms::U('Test/manClass', array('token'=>$token,'type'=>$type))}";
+            }
+            $.post(url,
+                    {name:name,classify:classify},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

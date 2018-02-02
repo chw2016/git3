@@ -1,0 +1,236 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#gt_image').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#pic_image").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>自主添加,一次填写信息</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="/MemMarket/EditMemberCoupon" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="id" id="id" value="{weikucms:$flagdata.id}">
+                <div class="control-group">
+                    <label for="title" class="control-label">类别：</label>
+                    <div class="controls">
+                        <input type="text" name="type" id="type" value="{weikucms:$flagdata.type}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">注册号：</label>
+                    <div class="controls">
+                        <input type="text" name="reg_num" id="reg_num" value="{weikucms:$flagdata.reg_num}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">商标名称：</label>
+                    <div class="controls">
+                        <input type="text" name="flag_name" id="flag_name" value="{weikucms:$flagdata.flag_name}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="cover">商标图片</label>
+                    <div class="controls">
+                        <div id="image_upload" class="">
+                            <img id="pic_image" style="max-height:50px;" <if condition="$flagdata['img'] neq null">src="{weikucms:$flagdata.img}"<else/>src="./upload/flagimg/{weikucms:$flagdata.reg_num}.gif"</if> >
+                            <input type="hidden" <if condition="$flagdata['img'] neq null">value="{weikucms:$flagdata.img}"<else/>value="./upload/flagimg/{weikucms:$flagdata.reg_num}.gif"</if> name="img" id="pic">
+                            <span class="help-inline">
+                                <button name="button" id="gt_image" class="btn btn-primary" type="button">选择图片</button>
+                                </span></div>
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">申请日期：</label>
+                    <div class="controls">
+                        <input type="text" name="apply_date" id="apply_date" value="{weikucms:$flagdata.apply_date}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">初审日期：</label>
+                    <div class="controls">
+                        <input type="text" name="first_date" id="first_date" value="{weikucms:$flagdata.first_date}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">异议截止日期：</label>
+                    <div class="controls">
+                        <input type="text" name="first_under_date" id="first_under_date" value="{weikucms:$flagdata.first_under_date}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">注册日期：</label>
+                    <div class="controls">
+                        <input type="text" name="reg_date" id="reg_date" value="{weikucms:$flagdata.reg_date}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">截止日期：</label>
+                    <div class="controls">
+                        <input type="text" name="under_date" id="under_date" value="{weikucms:$flagdata.under_date}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">申请人：</label>
+                    <div class="controls">
+                        <input type="text" name="apply_person" id="apply_person" value="{weikucms:$flagdata.apply_person}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">代理组织：</label>
+                    <div class="controls">
+                        <input type="text" name="agent_station" id="agent_station" value="{weikucms:$flagdata.agent_station}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">初审期号：</label>
+                    <div class="controls">
+                        <input type="text" name="first_num" id="first_num" value="{weikucms:$flagdata.first_num}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">初审页码：</label>
+                    <div class="controls">
+                        <input type="text" name="first_yema" id="first_yema" value="{weikucms:$flagdata.first_yema}" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+
+                <div class="control-group daijqan ">
+                    <label class="control-label" for="info">使用商品</label>
+                    <div class="controls">
+                        <textarea class="input-large" name="used_goods" id="used_goods" style="display: block;width: 400px;">{weikucms:$flagdata.used_goods}</textarea>
+                        <br/>
+
+                    </div>
+                </div>
+
+                <div class="control-group daijqan ">
+                    <label class="control-label" for="info">备注</label>
+                    <div class="controls">
+                        <textarea class="input-large" name="remark" id="remark" style="display: block;width: 400px;">{weikucms:$flagdata.remark}</textarea>
+                        <br/>
+
+                    </div>
+                </div>
+
+                <div class="control-group daijqan ">
+                    <label class="control-label" for="info">商品组别</label>
+                    <div class="controls">
+                        <textarea class="input-large" name="goods_class" id="goods_class" style="display: block;width: 400px;">{weikucms:$flagdata.goods_class}</textarea>
+                        <br/>
+
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var type = $("#type").val();
+                var id = $("#id").val();
+                var reg_num = $("#reg_num").val();
+                var flag_name = $("#flag_name").val();
+                var img = $("#pic").val();
+                var apply_date = $("#apply_date").val();
+                var first_date = $("#first_date").val();
+                var first_under_date = $("#first_under_date").val();
+                var reg_date = $("#reg_date").val();
+                var under_date = $("#under_date").val();
+                var apply_person = $("#apply_person").val();
+                var agent_station = $("#agent_station").val();
+                var first_num = $("#first_num").val();
+                var first_yema = $("#first_yema").val();
+                var used_goods = $("#used_goods").val();
+                var remark = $("#remark").val();
+                var goods_class = $("#goods_class").val();
+                var __hash__ =  $("input[name='__hash__']").val();
+
+                if(!reg_num){
+                    notif({
+                        msg: "注册号不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+                $.post("{weikucms::U('Flag/edit',array('token'=>$token))}",
+                        {id:id,type:type,reg_num:reg_num,flag_name:flag_name,img:img,apply_date:apply_date,
+                            first_under_date:first_under_date,reg_date:reg_date,under_date:under_date,
+                            apply_person:apply_person,agent_station:agent_station,first_num:first_num,
+                            first_yema:first_yema,used_goods:used_goods,remark:remark, goods_class:goods_class,
+                            first_date:first_date,__hash__:__hash__},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+    </script>
+
+</div>

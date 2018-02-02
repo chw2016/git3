@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE9"/>
+<meta name="keywords" content="后台管理系统" />
+<meta name="description" content="后台管理系统" />
+<meta name="renderer" content="webkit"><!--强制:极速模式-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- 避免IE:使用兼容模式 -->
+
+<title>后台管理系统</title>
+<script type="text/javascript">
+var URL = "__APP__/";
+//alert(URL);
+</script>
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+</head>
+
+<body>
+<dl class="loginBox">
+	<dt>后 台 管 理 登 录</dt>
+	<dd><label for="用户名称">用户名称：</label><input type="text" id="username" class="check" placeholder="您的用户名…"></dd>
+	<dd><label for="用户密码">用户密码：</label><input type="password" id="password" class="check" placeholder="您的密码…"></dd>
+	<dd><input type="submit" id="btn-login" value="确定"></dd>
+	<dd id="msg_tips" style="display:none;"></dd>
+</dl>
+</body>
+</html>
+<script> 
+
+$('#btn-login').click(function(){
+
+var username = $('#usrename').val();
+var pass = $('#password').val();
+ if(username == null || usrenme==''){
+    alert('用户名不能为空');
+
+ }
+ if(pass == null || pass == ''){
+	 alert('密码不能为空');
+	 
+ }
+
+ if(pass > 6){
+	 alert('密码长度不能大于6');
+ }
+
+ $.post(URL,{usrename:username,password:pass},function(data){
+   var d = parseJOSN(data);
+	 if(d.status==1){
+		 alert(d.info);
+		 window.location.href = '';
+	 }else{
+	     alert(d.info);
+	   }
+ 
+ 
+ });
+	 
+
+})
+  
+
+</script>

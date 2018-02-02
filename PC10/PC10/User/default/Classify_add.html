@@ -1,0 +1,550 @@
+<include file="Public:head" />
+<script src="{weikucms::RES}/js/jscolor.js"></script>
+<div class="">
+<div class="cLineB">
+    <h4>
+        添加文章分类
+    </h4>
+</div>
+<script>
+    $(document).ready(function() {
+        getSection();
+        $("#pp").change(function() {
+            if($("#pp").val() == "新版商城3.0"){
+                $("#url").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Store_new&a=cats&token={weikucms:$_SESSION['token']}");
+            }else{
+                getCatid();
+            }
+
+        });
+        function getSection() {
+
+            getCatid();
+
+        }
+        function getCatid() {
+            $("#select").empty();
+            $("<option></option>").val("").text("请选择").appendTo($("#select"));
+            $.getJSON("__URL__/getCatid", {
+                        pp: $("#pp").val()
+                    },
+                    function(data) {
+                        $.each(data,
+                                function(i, item) {
+                                    if ($("#pp").val() == "微汽车" || $("#pp").val() == "微会员"
+                                            || $("#pp").val() == "微房产" || $("#pp").val() == "微医疗"
+                                            || $("#pp").val() == "微美容" || $("#pp").val() == "微喜帖"
+                                            || $("#pp").val() == "微食品"
+                                            || $("#pp").val() == "微健身"
+                                            || $("#pp").val() == "微政务"
+                                            || $("#pp").val() == "微旅游"
+                                            || $("#pp").val() == "微教育"
+                                            || $("#pp").val() == "微花店") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}" + item['url'] + "{weikucms:$_SESSION['token']}").text(item['cname']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "刮刮卡") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Guajiang&a=index&token={weikucms:$_SESSION['token']}&type=2&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "微投票") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Vote&a=index&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "大转盘") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Lottery&a=index&token={weikucms:$_SESSION['token']}&type=1&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "优惠券") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Coupon&a=index&token={weikucms:$_SESSION['token']}&type=3&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+                                    if ($("#pp").val() == "砸金蛋") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Zadan&a=index&token={weikucms:$_SESSION['token']}&type=4&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "微预约") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Yuyue&a=index&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "微相册") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Photo&a=index&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+
+                                    if ($("#pp").val() == "微表单") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Selfform&a=index&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+                                    if ($("#pp").val() == "微信墙") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Wxq&a=register&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['title']).appendTo($("#select"));
+                                    }
+                                    if ($("#pp").val() == "微全景") {
+                                        $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Panorama&a=index&token={weikucms:$_SESSION['token']}&id=" + item['id']).text(item['name']).appendTo($("#select"));
+                                    }
+
+                                });
+                    });
+        }
+    });
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('filemanager', function() {
+                editor.plugin.filemanagerDialog({
+                    viewType : 'VIEW',
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#click_icon").click(function(e){
+            $('#icon_btn').css({
+                top:e.pageY - 370,
+                left:e.pageX- 330
+            }).show();
+           $('#icon_btn').css({'position':'absolute','left':'76px','top':'50px'}).show();
+        
+        })
+        $(".tile-themed i").each(function(){
+            $(this).click(function(){
+                var thisclass = $(this).attr('class');
+                $(".ico_bg i").attr("class",thisclass);
+                $("#icon").val(thisclass);
+                $('#icon_btn').hide();
+            });
+        });
+    });
+</script>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+    <form class="form" method="post" action="{weikucms::U('Classify/insert')}"
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        分类名称：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="name" value="" name="name" style="width:300px" placeholder="此处填写分类名称">
+                </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        分类描述：
+                    </label>
+                </TH>
+                <TD>
+                    <textarea id="info" value="" name="info" style="width:300px"></textarea>
+                    <br />
+                    <div class="alert alert-info" style="width: 263px;">
+                        最多输入30个汉字,可以为空
+                    </div>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        所属分类：
+                    </label>
+                </TH>
+                <TD>
+                    <!-- 新添加的二级分类 -->
+                    <!-- 新添加的二级分类 -->
+                    <!-- 新添加的二级分类 -->
+                    <select name="pid" id="pid">
+                            <option value="0">根分类</option>
+                       <volist name="info" id="vo">
+                        <!-- 将父类级别的提交到 -->
+                          <option style="text-indent:{weikucms:$vo['Count']*20}px;" value="{weikucms:$vo.id}"><php>echo str_repeat('&nbsp;',$vo['Count']*6);</php><neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.name} </option>
+                       </volist>
+                    </select> 
+                      <!-- 新添加的二级分类 -->
+                      <!-- 新添加的二级分类 -->
+                      <!-- 新添加的二级分类 -->
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        分类图片：
+                    </label>
+                </TH>
+                <TD>
+                    <img style="display: none;" class="fenlei_img" src="">
+                    <input type="hidden" class="px" id="img" value="" name="img" style="width:300px" readonly="readonly">
+                    <span class="ke-button-common" id="upload">上传图片</span>
+                    <span class="ke-button-common" id="upload2" style="margin-left: 5px;">万普推荐图标</span>
+                    <span class="info_tip">建议图片尺寸 100X100像素</span>
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+			
+			<TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        图标背景色：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input"  class="color" value="FFFFFF" name="color" id="color" style="width:100px" placeholder="此处选择图标背景色">
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+                </TR>
+				
+            <TR>
+                <TH valign="top"><label for="keyword">更换图标 ：</label></TH>
+                <TD>
+                    <div class="i-cont">
+                    <div class="ico_bg"><i class="icon-collapse-top" id="icon_i"></i></div>
+                    <input type="hidden" id="icon" name="icon" value="icon-collapse-top" />
+                    <a href="javascript:;" id="click_icon" class="btn btn-primary" style="font-size:10px;">换一个</a>
+                    <div id="icon_btn" class="icons-cont">
+                        <div class="tab-content">
+                            <div class="tab-pane fade active in" id="ico_all">
+                                <ul class="icon_list">
+                                    <li class="tile-themed"> <i class="icon-compass"></i></li><li class="tile-themed"> <i class="icon-collapse"></i></li><li class="tile-themed"> <i class="icon-collapse-top"></i></li><li class="tile-themed"> <i class="icon-expand"></i></li><li class="tile-themed"> <i class="icon-file"></i></li><li class="tile-themed"> <i class="icon-file-text"></i></li><li class="tile-themed"> <i class="icon-thumbs-up"></i></li><li class="tile-themed"> <i class="icon-thumbs-down"></i></li><li class="tile-themed"> <i class="icon-xing"></i></li><li class="tile-themed"> <i class="icon-xing-sign"></i></li><li class="tile-themed"> <i class="icon-youtube-play"></i></li><li class="tile-themed"> <i class="icon-dropbox"></i></li><li class="tile-themed"> <i class="icon-stackexchange"></i></li><li class="tile-themed"> <i class="icon-instagram"></i></li><li class="tile-themed"> <i class="icon-flickr"></i></li><li class="tile-themed"> <i class="icon-adn"></i></li><li class="tile-themed"> <i class="icon-bitbucket-sign"></i></li><li class="tile-themed"> <i class="icon-tumblr"></i></li><li class="tile-themed"> <i class="icon-tumblr-sign"></i></li><li class="tile-themed"> <i class="icon-long-arrow-down"></i></li><li class="tile-themed"> <i class="icon-long-arrow-up"></i></li><li class="tile-themed"> <i class="icon-long-arrow-left"></i></li><li class="tile-themed"> <i class="icon-long-arrow-right"></i></li><li class="tile-themed"> <i class="icon-apple"></i></li><li class="tile-themed"> <i class="icon-android"></i></li><li class="tile-themed"> <i class="icon-skype"></i></li><li class="tile-themed"> <i class="icon-foursquare"></i></li><li class="tile-themed"> <i class="icon-trello"></i></li><li class="tile-themed"> <i class="icon-female"></i></li><li class="tile-themed"> <i class="icon-gittip"></i></li><li class="tile-themed"> <i class="icon-sun"></i></li><li class="tile-themed"> <i class="icon-moon"></i></li><li class="tile-themed"> <i class="icon-archive"></i></li><li class="tile-themed"> <i class="icon-vk"></i></li><li class="tile-themed"> <i class="icon-weibo"></i></li><li class="tile-themed"> <i class="icon-renren"></i></li><li class="tile-themed"> <i class="icon-adjust"></i></li><li class="tile-themed"> <i class="icon-anchor"></i></li><li class="tile-themed"> <i class="icon-archive"></i></li><li class="tile-themed"> <i class="icon-asterisk"></i></li><li class="tile-themed"> <i class="icon-ban-circle"></i></li><li class="tile-themed"> <i class="icon-bar-chart"></i></li><li class="tile-themed"> <i class="icon-barcode"></i></li><li class="tile-themed"> <i class="icon-beaker"></i></li><li class="tile-themed"> <i class="icon-beer"></i></li><li class="tile-themed"> <i class="icon-bell"></i></li><li class="tile-themed"> <i class="icon-bell-alt"></i></li><li class="tile-themed"> <i class="icon-bolt"></i></li><li class="tile-themed"> <i class="icon-book"></i></li><li class="tile-themed"> <i class="icon-bookmark"></i></li><li class="tile-themed"> <i class="icon-bookmark-empty"></i></li><li class="tile-themed"> <i class="icon-briefcase"></i></li><li class="tile-themed"> <i class="icon-bug"></i></li><li class="tile-themed"> <i class="icon-building"></i></li><li class="tile-themed"> <i class="icon-bullhorn"></i></li><li class="tile-themed"> <i class="icon-bullseye"></i></li><li class="tile-themed"> <i class="icon-calendar"></i></li><li class="tile-themed"> <i class="icon-calendar-empty"></i></li><li class="tile-themed"> <i class="icon-camera"></i></li><li class="tile-themed"> <i class="icon-camera-retro"></i></li><li class="tile-themed"> <i class="icon-certificate"></i></li><li class="tile-themed"> <i class="icon-check"></i></li><li class="tile-themed"> <i class="icon-check-empty"></i></li><li class="tile-themed"> <i class="icon-check-minus"></i></li><li class="tile-themed"> <i class="icon-check-sign"></i></li><li class="tile-themed"> <i class="icon-circle"></i></li><li class="tile-themed"> <i class="icon-circle-blank"></i></li><li class="tile-themed"> <i class="icon-cloud"></i></li><li class="tile-themed"> <i class="icon-cloud-download"></i></li><li class="tile-themed"> <i class="icon-cloud-upload"></i></li><li class="tile-themed"> <i class="icon-code"></i></li><li class="tile-themed"> <i class="icon-code-fork"></i></li><li class="tile-themed"> <i class="icon-coffee"></i></li><li class="tile-themed"> <i class="icon-cog"></i></li><li class="tile-themed"> <i class="icon-cogs"></i></li><li class="tile-themed"> <i class="icon-collapse"></i></li><li class="tile-themed"> <i class="icon-collapse-alt"></i></li><li class="tile-themed"> <i class="icon-collapse-top"></i></li><li class="tile-themed"> <i class="icon-comment"></i></li><li class="tile-themed"> <i class="icon-comment-alt"></i></li><li class="tile-themed"> <i class="icon-comments"></i></li><li class="tile-themed"> <i class="icon-comments-alt"></i></li><li class="tile-themed"> <i class="icon-compass"></i></li><li class="tile-themed"> <i class="icon-credit-card"></i></li><li class="tile-themed"> <i class="icon-crop"></i></li><li class="tile-themed"> <i class="icon-dashboard"></i></li><li class="tile-themed"> <i class="icon-desktop"></i></li><li class="tile-themed"> <i class="icon-download"></i></li><li class="tile-themed"> <i class="icon-download-alt"></i></li><li class="tile-themed"> <i class="icon-edit"></i></li><li class="tile-themed"> <i class="icon-edit-sign"></i></li><li class="tile-themed"> <i class="icon-ellipsis-horizontal"></i></li><li class="tile-themed"> <i class="icon-ellipsis-vertical"></i></li><li class="tile-themed"> <i class="icon-envelope"></i></li><li class="tile-themed"> <i class="icon-envelope-alt"></i></li><li class="tile-themed"> <i class="icon-eraser"></i></li><li class="tile-themed"> <i class="icon-exchange"></i></li><li class="tile-themed"> <i class="icon-exclamation"></i></li><li class="tile-themed"> <i class="icon-exclamation-sign"></i></li><li class="tile-themed"> <i class="icon-expand"></i></li><li class="tile-themed"> <i class="icon-expand-alt"></i></li><li class="tile-themed"> <i class="icon-external-link"></i></li><li class="tile-themed"> <i class="icon-external-link-sign"></i></li><li class="tile-themed"> <i class="icon-eye-close"></i></li><li class="tile-themed"> <i class="icon-eye-open"></i></li><li class="tile-themed"> <i class="icon-facetime-video"></i></li><li class="tile-themed"> <i class="icon-female"></i></li><li class="tile-themed"> <i class="icon-fighter-jet"></i></li><li class="tile-themed"> <i class="icon-film"></i></li><li class="tile-themed"> <i class="icon-filter"></i></li><li class="tile-themed"> <i class="icon-fire"></i></li><li class="tile-themed"> <i class="icon-fire-extinguisher"></i></li><li class="tile-themed"> <i class="icon-flag"></i></li><li class="tile-themed"> <i class="icon-flag-alt"></i></li><li class="tile-themed"> <i class="icon-flag-checkered"></i></li><li class="tile-themed"> <i class="icon-folder-close"></i></li><li class="tile-themed"> <i class="icon-folder-close-alt"></i></li><li class="tile-themed"> <i class="icon-folder-open"></i></li><li class="tile-themed"> <i class="icon-folder-open-alt"></i></li><li class="tile-themed"> <i class="icon-food"></i></li><li class="tile-themed"> <i class="icon-frown"></i></li><li class="tile-themed"> <i class="icon-gamepad"></i></li><li class="tile-themed"> <i class="icon-gear"></i></li><li class="tile-themed"> <i class="icon-gears"></i></li><li class="tile-themed"> <i class="icon-gift"></i></li><li class="tile-themed"> <i class="icon-glass"></i></li><li class="tile-themed"> <i class="icon-globe"></i></li><li class="tile-themed"> <i class="icon-group"></i></li><li class="tile-themed"> <i class="icon-hdd"></i></li><li class="tile-themed"> <i class="icon-headphones"></i></li><li class="tile-themed"> <i class="icon-heart"></i></li><li class="tile-themed"> <i class="icon-heart-empty"></i></li><li class="tile-themed"> <i class="icon-home"></i></li><li class="tile-themed"> <i class="icon-inbox"></i></li><li class="tile-themed"> <i class="icon-info"></i></li><li class="tile-themed"> <i class="icon-info-sign"></i></li><li class="tile-themed"> <i class="icon-key"></i></li><li class="tile-themed"> <i class="icon-keyboard"></i></li><li class="tile-themed"> <i class="icon-laptop"></i></li><li class="tile-themed"> <i class="icon-leaf"></i></li><li class="tile-themed"> <i class="icon-legal"></i></li><li class="tile-themed"> <i class="icon-lemon"></i></li><li class="tile-themed"> <i class="icon-level-down"></i></li><li class="tile-themed"> <i class="icon-level-up"></i></li><li class="tile-themed"> <i class="icon-lightbulb"></i></li><li class="tile-themed"> <i class="icon-location-arrow"></i></li><li class="tile-themed"> <i class="icon-lock"></i></li><li class="tile-themed"> <i class="icon-magic"></i></li><li class="tile-themed"> <i class="icon-magnet"></i></li><li class="tile-themed"> <i class="icon-mail-forward"></i></li><li class="tile-themed"> <i class="icon-mail-reply"></i></li><li class="tile-themed"> <i class="icon-mail-reply-all"></i></li><li class="tile-themed"> <i class="icon-male"></i></li><li class="tile-themed"> <i class="icon-map-marker"></i></li><li class="tile-themed"> <i class="icon-meh"></i></li><li class="tile-themed"> <i class="icon-microphone"></i></li><li class="tile-themed"> <i class="icon-microphone-off"></i></li><li class="tile-themed"> <i class="icon-minus"></i></li><li class="tile-themed"> <i class="icon-minus-sign"></i></li><li class="tile-themed"> <i class="icon-minus-sign-alt"></i></li><li class="tile-themed"> <i class="icon-mobile-phone"></i></li><li class="tile-themed"> <i class="icon-money"></i></li><li class="tile-themed"> <i class="icon-moon"></i></li><li class="tile-themed"> <i class="icon-move"></i></li><li class="tile-themed"> <i class="icon-music"></i></li><li class="tile-themed"> <i class="icon-off"></i></li><li class="tile-themed"> <i class="icon-ok"></i></li><li class="tile-themed"> <i class="icon-ok-circle"></i></li><li class="tile-themed"> <i class="icon-ok-sign"></i></li><li class="tile-themed"> <i class="icon-pencil"></i></li><li class="tile-themed"> <i class="icon-phone"></i></li><li class="tile-themed"> <i class="icon-phone-sign"></i></li><li class="tile-themed"> <i class="icon-picture"></i></li><li class="tile-themed"> <i class="icon-plane"></i></li><li class="tile-themed"> <i class="icon-plus"></i></li><li class="tile-themed"> <i class="icon-plus-sign"></i></li><li class="tile-themed"> <i class="icon-plus-sign-alt"></i></li><li class="tile-themed"> <i class="icon-power-off"></i></li><li class="tile-themed"> <i class="icon-print"></i></li><li class="tile-themed"> <i class="icon-pushpin"></i></li><li class="tile-themed"> <i class="icon-puzzle-piece"></i></li><li class="tile-themed"> <i class="icon-qrcode"></i></li><li class="tile-themed"> <i class="icon-question"></i></li><li class="tile-themed"> <i class="icon-question-sign"></i></li><li class="tile-themed"> <i class="icon-quote-left"></i></li><li class="tile-themed"> <i class="icon-quote-right"></i></li><li class="tile-themed"> <i class="icon-random"></i></li><li class="tile-themed"> <i class="icon-refresh"></i></li><li class="tile-themed"> <i class="icon-remove"></i></li><li class="tile-themed"> <i class="icon-remove-circle"></i></li><li class="tile-themed"> <i class="icon-remove-sign"></i></li><li class="tile-themed"> <i class="icon-reorder"></i></li><li class="tile-themed"> <i class="icon-reply"></i></li><li class="tile-themed"> <i class="icon-reply-all"></i></li><li class="tile-themed"> <i class="icon-resize-horizontal"></i></li><li class="tile-themed"> <i class="icon-resize-vertical"></i></li><li class="tile-themed"> <i class="icon-retweet"></i></li><li class="tile-themed"> <i class="icon-road"></i></li><li class="tile-themed"> <i class="icon-rocket"></i></li><li class="tile-themed"> <i class="icon-rss"></i></li><li class="tile-themed"> <i class="icon-rss-sign"></i></li><li class="tile-themed"> <i class="icon-screenshot"></i></li><li class="tile-themed"> <i class="icon-search"></i></li><li class="tile-themed"> <i class="icon-share"></i></li><li class="tile-themed"> <i class="icon-share-alt"></i></li><li class="tile-themed"> <i class="icon-share-sign"></i></li><li class="tile-themed"> <i class="icon-shield"></i></li><li class="tile-themed"> <i class="icon-shopping-cart"></i></li><li class="tile-themed"> <i class="icon-sign-blank"></i></li><li class="tile-themed"> <i class="icon-signal"></i></li><li class="tile-themed"> <i class="icon-signin"></i></li><li class="tile-themed"> <i class="icon-signout"></i></li><li class="tile-themed"> <i class="icon-sitemap"></i></li><li class="tile-themed"> <i class="icon-smile"></i></li><li class="tile-themed"> <i class="icon-sort"></i></li><li class="tile-themed"> <i class="icon-sort-by-alphabet"></i></li><li class="tile-themed"> <i class="icon-sort-by-alphabet-alt"></i></li><li class="tile-themed"> <i class="icon-sort-by-attributes"></i></li><li class="tile-themed"> <i class="icon-sort-by-attributes-alt"></i></li><li class="tile-themed"> <i class="icon-sort-by-order"></i></li><li class="tile-themed"> <i class="icon-sort-by-order-alt"></i></li><li class="tile-themed"> <i class="icon-sort-down"></i></li><li class="tile-themed"> <i class="icon-sort-up"></i></li><li class="tile-themed"> <i class="icon-spinner"></i></li><li class="tile-themed"> <i class="icon-star"></i></li><li class="tile-themed"> <i class="icon-star-empty"></i></li><li class="tile-themed"> <i class="icon-star-half"></i></li><li class="tile-themed"> <i class="icon-star-half-empty"></i></li><li class="tile-themed"> <i class="icon-star-half-full"></i></li><li class="tile-themed"> <i class="icon-subscript"></i></li><li class="tile-themed"> <i class="icon-suitcase"></i></li><li class="tile-themed"> <i class="icon-sun"></i></li><li class="tile-themed"> <i class="icon-superscript"></i></li><li class="tile-themed"> <i class="icon-tablet"></i></li><li class="tile-themed"> <i class="icon-tag"></i></li><li class="tile-themed"> <i class="icon-tags"></i></li><li class="tile-themed"> <i class="icon-tasks"></i></li><li class="tile-themed"> <i class="icon-terminal"></i></li><li class="tile-themed"> <i class="icon-thumbs-down"></i></li><li class="tile-themed"> <i class="icon-thumbs-down-alt"></i></li><li class="tile-themed"> <i class="icon-thumbs-up"></i></li><li class="tile-themed"> <i class="icon-thumbs-up-alt"></i></li><li class="tile-themed"> <i class="icon-ticket"></i></li><li class="tile-themed"> <i class="icon-time"></i></li><li class="tile-themed"> <i class="icon-tint"></i></li><li class="tile-themed"> <i class="icon-trash"></i></li><li class="tile-themed"> <i class="icon-trophy"></i></li><li class="tile-themed"> <i class="icon-truck"></i></li><li class="tile-themed"> <i class="icon-umbrella"></i></li><li class="tile-themed"> <i class="icon-unchecked"></i></li><li class="tile-themed"> <i class="icon-unlock"></i></li><li class="tile-themed"> <i class="icon-unlock-alt"></i></li><li class="tile-themed"> <i class="icon-upload"></i></li><li class="tile-themed"> <i class="icon-upload-alt"></i></li><li class="tile-themed"> <i class="icon-user"></i></li><li class="tile-themed"> <i class="icon-volume-down"></i></li><li class="tile-themed"> <i class="icon-volume-off"></i></li><li class="tile-themed"> <i class="icon-volume-up"></i></li><li class="tile-themed"> <i class="icon-warning-sign"></i></li><li class="tile-themed"> <i class="icon-wrench"></i></li><li class="tile-themed"> <i class="icon-zoom-in"></i></li><li class="tile-themed"> <i class="icon-zoom-out"></i></li><li class="tile-themed"> <i class="icon-eur"></i></li><li class="tile-themed"> <i class="icon-gbp"></i></li><li class="tile-themed"> <i class="icon-krw"></i></li><li class="tile-themed"> <i class="icon-renminbi"></i></li><li class="tile-themed"> <i class="icon-rupee"></i></li><li class="tile-themed"> <i class="icon-usd"></i></li><li class="tile-themed"> <i class="icon-yen"></i></li><li class="tile-themed"> <i class="icon-align-center"></i></li><li class="tile-themed"> <i class="icon-align-justify"></i></li><li class="tile-themed"> <i class="icon-align-left"></i></li><li class="tile-themed"> <i class="icon-align-right"></i></li><li class="tile-themed"> <i class="icon-bold"></i></li><li class="tile-themed"> <i class="icon-columns"></i></li><li class="tile-themed"> <i class="icon-copy"></i></li><li class="tile-themed"> <i class="icon-cut"></i></li><li class="tile-themed"> <i class="icon-eraser"></i></li><li class="tile-themed"> <i class="icon-file"></i></li><li class="tile-themed"> <i class="icon-file-alt"></i></li><li class="tile-themed"> <i class="icon-file-text"></i></li><li class="tile-themed"> <i class="icon-file-text-alt"></i></li><li class="tile-themed"> <i class="icon-font"></i></li><li class="tile-themed"> <i class="icon-indent-left"></i></li><li class="tile-themed"> <i class="icon-indent-right"></i></li><li class="tile-themed"> <i class="icon-italic"></i></li><li class="tile-themed"> <i class="icon-link"></i></li><li class="tile-themed"> <i class="icon-list"></i></li><li class="tile-themed"> <i class="icon-list-alt"></i></li><li class="tile-themed"> <i class="icon-list-ol"></i></li><li class="tile-themed"> <i class="icon-list-ul"></i></li><li class="tile-themed"> <i class="icon-paper-clip"></i></li><li class="tile-themed"> <i class="icon-paste"></i></li><li class="tile-themed"> <i class="icon-rotate-left"></i></li><li class="tile-themed"> <i class="icon-rotate-right"></i></li><li class="tile-themed"> <i class="icon-save"></i></li><li class="tile-themed"> <i class="icon-strikethrough"></i></li><li class="tile-themed"> <i class="icon-table"></i></li><li class="tile-themed"> <i class="icon-text-height"></i></li><li class="tile-themed"> <i class="icon-text-width"></i></li><li class="tile-themed"> <i class="icon-th"></i></li><li class="tile-themed"> <i class="icon-th-large"></i></li><li class="tile-themed"> <i class="icon-th-list"></i></li><li class="tile-themed"> <i class="icon-underline"></i></li><li class="tile-themed"> <i class="icon-unlink"></i></li><li class="tile-themed"> <i class="icon-angle-down"></i></li><li class="tile-themed"> <i class="icon-angle-left"></i></li><li class="tile-themed"> <i class="icon-angle-right"></i></li><li class="tile-themed"> <i class="icon-angle-up"></i></li><li class="tile-themed"> <i class="icon-arrow-down"></i></li><li class="tile-themed"> <i class="icon-arrow-left"></i></li><li class="tile-themed"> <i class="icon-arrow-right"></i></li><li class="tile-themed"> <i class="icon-arrow-up"></i></li><li class="tile-themed"> <i class="icon-caret-down"></i></li><li class="tile-themed"> <i class="icon-caret-left"></i></li><li class="tile-themed"> <i class="icon-caret-right"></i></li><li class="tile-themed"> <i class="icon-caret-up"></i></li><li class="tile-themed"> <i class="icon-chevron-down"></i></li><li class="tile-themed"> <i class="icon-chevron-left"></i></li><li class="tile-themed"> <i class="icon-chevron-right"></i></li><li class="tile-themed"> <i class="icon-chevron-sign-down"></i></li><li class="tile-themed"> <i class="icon-chevron-sign-left"></i></li><li class="tile-themed"> <i class="icon-chevron-sign-right"></i></li><li class="tile-themed"> <i class="icon-chevron-sign-up"></i></li><li class="tile-themed"> <i class="icon-chevron-up"></i></li><li class="tile-themed"> <i class="icon-circle-arrow-down"></i></li><li class="tile-themed"> <i class="icon-circle-arrow-left"></i></li><li class="tile-themed"> <i class="icon-circle-arrow-right"></i></li><li class="tile-themed"> <i class="icon-circle-arrow-up"></i></li><li class="tile-themed"> <i class="icon-double-angle-down"></i></li><li class="tile-themed"> <i class="icon-double-angle-left"></i></li><li class="tile-themed"> <i class="icon-double-angle-right"></i></li><li class="tile-themed"> <i class="icon-double-angle-up"></i></li><li class="tile-themed"> <i class="icon-hand-down"></i></li><li class="tile-themed"> <i class="icon-hand-left"></i></li><li class="tile-themed"> <i class="icon-hand-right"></i></li><li class="tile-themed"> <i class="icon-hand-up"></i></li><li class="tile-themed"> <i class="icon-backward"></i></li><li class="tile-themed"> <i class="icon-eject"></i></li><li class="tile-themed"> <i class="icon-fast-backward"></i></li><li class="tile-themed"> <i class="icon-fast-forward"></i></li><li class="tile-themed"> <i class="icon-forward"></i></li><li class="tile-themed"> <i class="icon-fullscreen"></i></li><li class="tile-themed"> <i class="icon-pause"></i></li><li class="tile-themed"> <i class="icon-play"></i></li><li class="tile-themed"> <i class="icon-play-circle"></i></li><li class="tile-themed"> <i class="icon-play-sign"></i></li><li class="tile-themed"> <i class="icon-resize-full"></i></li><li class="tile-themed"> <i class="icon-resize-small"></i></li><li class="tile-themed"> <i class="icon-step-backward"></i></li><li class="tile-themed"> <i class="icon-step-forward"></i></li><li class="tile-themed"> <i class="icon-stop"></i></li><li class="tile-themed"> <i class="icon-youtube-play"></i></li><li class="tile-themed"> <i class="icon-bitbucket"></i></li><li class="tile-themed"> <i class="icon-bitcoin"></i></li><li class="tile-themed"> <i class="icon-css3"></i></li><li class="tile-themed"> <i class="icon-dribbble"></i></li><li class="tile-themed"> <i class="icon-facebook"></i></li><li class="tile-themed"> <i class="icon-facebook-sign"></i></li><li class="tile-themed"> <i class="icon-flickr"></i></li><li class="tile-themed"> <i class="icon-foursquare"></i></li><li class="tile-themed"> <i class="icon-github"></i></li><li class="tile-themed"> <i class="icon-github-alt"></i></li><li class="tile-themed"> <i class="icon-github-sign"></i></li><li class="tile-themed"> <i class="icon-gittip"></i></li><li class="tile-themed"> <i class="icon-google-plus"></i></li><li class="tile-themed"> <i class="icon-google-plus-sign"></i></li><li class="tile-themed"> <i class="icon-html5"></i></li><li class="tile-themed"> <i class="icon-instagram"></i></li><li class="tile-themed"> <i class="icon-linkedin"></i></li><li class="tile-themed"> <i class="icon-linkedin-sign"></i></li><li class="tile-themed"> <i class="icon-linux"></i></li><li class="tile-themed"> <i class="icon-maxcdn"></i></li><li class="tile-themed"> <i class="icon-pinterest"></i></li><li class="tile-themed"> <i class="icon-pinterest-sign"></i></li><li class="tile-themed"> <i class="icon-trello"></i></li><li class="tile-themed"> <i class="icon-twitter"></i></li><li class="tile-themed"> <i class="icon-twitter-sign"></i></li><li class="tile-themed"> <i class="icon-windows"></i></li><li class="tile-themed"> <i class="icon-youtube"></i></li><li class="tile-themed"> <i class="icon-youtube-sign"></i></li><li class="tile-themed"> <i class="icon-ambulance"></i></li><li class="tile-themed"> <i class="icon-h-sign"></i></li><li class="tile-themed"> <i class="icon-hospital"></i></li><li class="tile-themed"> <i class="icon-medkit"></i></li><li class="tile-themed"> <i class="icon-plus-sign-alt"></i></li><li class="tile-themed"> <i class="icon-stethoscope"></i></li><li class="tile-themed"> <i class="icon-user-md"></i></li></ul></div>
+                        </div>
+                        <!-- <div id="closeTanChu" style="color:#000">关闭</div> -->
+                    </div>
+                </div>
+                    <span class="info_tip" style="padding: 5px 0px;"> 该图标用于二级页面右上角的缩略菜单和部分模板的首页主菜单 </span>
+                </TD>
+
+            <TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        选择功能模块
+                    </label>
+                </TH>
+                <TD>
+                    <select name="pp" id="pp" onfocus="leave();">
+                        <option value="">
+                         请选择
+                        </option>
+                        <optgroup label="|__行业应用">
+                        <option value="微房产">
+                            微房产
+                        </option>
+                        <option value="微汽车">
+                            微汽车
+                        </option>
+                        <option value="微医疗">
+                            微医疗
+                        </option>
+                        <option value="微美容">
+                            微美容
+                        </option>
+                        <option value="微喜帖">
+                            微喜帖
+                        </option>
+                        <option value="微食品">
+                            微食品
+                        </option>
+                        <option value="微健身">
+                            微健身
+                        </option>
+                        <option value="微政务">
+                            微政务
+                        </option>
+                        <option value="微旅游">
+                            微旅游
+                        </option>
+                        <option value="微教育">
+                            微教育
+                        </option>
+                        <option value="微花店">
+                            微花店
+                        </option>
+
+                        </optgroup>
+                        <optgroup label="|__微信活动">
+                            <option value="微投票">
+                                微投票
+                            </option>
+                            <option value="刮刮卡">
+                                刮刮卡
+                            </option>
+                            <option value="大转盘">
+                                大转盘
+                            </option>
+                            <option value="优惠券">
+                                优惠券
+                            </option>
+                            <option value="砸金蛋">
+                                砸金蛋
+                            </option>
+                        </optgroup>
+                        <optgroup label="|__会员中心">
+                            <option value="微会员">
+                                微会员
+                            </option>
+                        </optgroup>
+                        <optgroup label="|__平台基础应用">
+                            <option value="微预约">
+                                微预约
+                            </option>
+                            <option value="微相册">
+                                微相册
+                            </option>
+                            <option value="微表单">
+                                微表单
+                            </option>
+                            <option value="微信墙">
+                                微信墙
+                            </option>
+                            <option value="微全景">
+                                微全景
+                            </option>
+                        </optgroup>
+                        <optgroup label="|__商城">
+                            <option value="新版商城3.0">
+                                新版商城3.0
+                            </option>
+                        </optgroup>
+                    </select>
+                    <span class="info_tip"> 此项可通过可以选填</span>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        选择子模块
+                    </label>
+                </TH>
+                <TD>
+                    <select name="select" id="select" onchange="selurl();" onfocus="leave();">
+                        <option value="">
+                            请选择
+                        </option>
+                    </select>
+                    <span class="info_tip"> 此项可通过可以选填</span>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        分类链接地址 ：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="url" value="" name="url" style="width:500px" placeholder="" >
+                     <span class="info_tip"> 此项可通过 以上 选择功能模块 和 选择子模块自动生成url地址也可以按自己的需要填写自定义链接</span>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        排序：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="sorts" value="10" name="sorts" style="width:200px" placeholder="填写数字,数字越大排序越靠前">
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <!--  <TR>
+               <TH valign="top">
+                   <label for="keyword">
+                       分类层次：
+                   </label>
+               </TH>
+               <TD>
+                   <input type="input" class="px" id="pid" value="10" name="pid" style="width:120px" placeholder="请填写数字,最小为0">
+               </TD>
+               <TD>
+                   &nbsp;
+               </TD>
+                        </TR> -->
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        是否显示：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="radio" class="px" value="1" name="status" checked
+                            />
+                    是
+                    <br />
+                    <input type="radio" class="px" value="0" name="status" />
+                    否
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var info = $("#info").val();
+            var img = $("#img").val();
+            var icon = $("#icon").val();
+            var color = $("#color").val();
+            var pp = $("#pp").val();
+            var select =$("#select").val();
+            var url = $("#url").val();
+            var sorts = $("#sorts").val();
+            var status = $('input:radio[name="status"]:checked').val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            // var pid=$("#pid").val();
+            var pid=$('#pid').val();
+            if(! name){
+                notif({
+                    msg: "分类名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! info){
+                notif({
+                    msg: "分类描述不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! img){
+                notif({
+                    msg: "还没上传分类图片啊",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! icon){
+                notif({
+                    msg: "请选择图标",
+                    type: "warning"
+                });
+                return false;
+            }
+           /* if(! pid){
+                notif({
+                    msg: "请填写分类层次",
+                    type: "warning"
+                });
+                return false;
+            }*/
+           $.post("{weikucms::U('Classify/insert',array(token=>$token))}",
+                    {name:name,info:info,img:img,icon:icon,color:color,pp:pp,select:select,url:url,sorts:sorts,status:status,__hash__:__hash__,pid:pid},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+<include file="Public:footer" />

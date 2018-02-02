@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
+<title>{weikucms:$tpl['name']}</title>
+
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+</head>
+<body>
+<div id="div1">
+	<div class="publicList wml100" style="text-align:center;">		
+		<ul>
+			<li class="noAfter">
+				<div>
+					<a href="javascript:void(0);">员工登录使用</a>
+				</div>
+			</li>
+		</ul>
+		<input type="hidden" value="{weikucms:$token}" id="token" />
+		<input type="hidden" value="{weikucms:$openid}" id="openid"/>
+	</div>
+	
+	<div class="publicList wml65">
+		
+		<ul class="noAfter _boxcj">
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">手机号码</div>
+				<div class="li-r">
+					<input class="input" id="username" placeholder="登录帐号" maxlength="20">
+				</div>
+			</li>
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">登录密码</div>
+				<div class="li-r">
+					<input class="input" id="password" type="password" maxlength="20">
+				</div>
+			</li>		
+		</ul>
+		
+		
+		
+	</div>
+	
+	<div class="button clearfix">
+	    <div style="width:100%;">
+	        <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="bindBtn">登　录</a>
+	    </div>
+	</div>
+</div>
+<script>
+$(function(){
+	$("#bindBtn").click(function(){
+		var username = $("#username").val();
+		var password = $("#password").val();
+		
+		if(!username) {
+			show_error_tip('请输入用户名！'); 
+            return false;
+		}
+		
+		if(!password) {
+			show_error_tip('请输入用户密码！'); 
+            return false;
+		}
+		
+		var url="index.php?g=Wap&m=Repair&a=staffIndex&token="+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,{username:username,password:password},
+        function(data){ 
+          if(data.status == 100){                   
+              setTimeout(function(){                            
+                  window.location.href = data.url;
+              },'1000');
+          }else if(data.status == 1 ){
+            show_error_tip(data.info);
+          }else if(data.status == 2 ){
+            show_error_tip(data.info);
+          }
+      },'json');
+		
+	});
+	
+});
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

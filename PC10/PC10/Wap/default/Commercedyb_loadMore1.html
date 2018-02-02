@@ -1,0 +1,55 @@
+<volist name="article.comments" id="so">
+    <if condition="$so['comment'] neq ''">
+        <div class="RPBItem myul">
+            <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$so['headimg']})"></div>
+            <div class="reContent" data-openid="{weikucms:$so.openid}" data-id="{weikucms:$so['id']}">
+                {weikucms:$so['nickname']}：{weikucms:$so.comment}
+                <!--图片开始-->
+                <if condition="$so['img']">
+                    <img src="{weikucms:$so.img}"  height="40px">
+                </if>
+                <!--图片结束-->
+                <input type="hidden" name="replayId" class="replayId" />
+            </div>
+
+            <!--点赞开始-->
+
+            <div replayid="{weikucms:$so.id}" class=" border-20 bbsBtn bbsLike <if condition='$so["isme_zan"] eq 1'>on<else/></if>">
+    <!-- 显示是否是以及帖子的ID号码 -->
+    <input type="hidden" value="{weikucms:$so['isme_zan']}-{weikucms:$article['id']}" />
+    <div class="icon icon-like "></div>
+    <div class="likeCount" >{weikucms:$so.dianzan}</div>
+    </div>
+    <div class=" border-20 bbsBtn bbsReply" type="1">
+        <div class="icon icon-reply "></div>
+        <div id="replyCount1" class="a1">{weikucms:$so.pinglun}</div>
+    </div>
+
+
+    <!--点赞结束-->
+
+    <if condition="$openid eq $so['openid']">
+        <div class="delYouComment" data-openid="{weikucms:$openid}" data-url="{weikucms::U('Wap/Commercedyb/delComment',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+            删除
+        </div>
+        <else/>
+    </if>
+
+    <!--这里是非话题评论-->
+    <!--         <div class="reInputReply myul hide abc" style="padding-top: 39px; margin-left: -1000px;" >
+                 <div class="inputReplyBox">
+                     <input type="text" placeholder="请输入回复内容" />
+                 </div>
+             <span class="replayBtn" data-replay="{weikucms:$article.openid}" data-id="{weikucms:$article.id}" replay_id="{weikucms:$so.id}">
+                 回复
+             </span>
+             </div>-->
+    <!--这里是非话题评论结束-->
+
+    </div>
+    <else/>
+    </if>
+
+
+
+</volist>

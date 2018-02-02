@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+         <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+      <!--  <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />-->
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+        <style>
+        .Insurance.fr.on font{
+
+        }
+        .type{
+            width: 100%;
+        }
+        .type_one{
+            margin: 10px 5px;
+            font-size: 14px;
+            color: #8cb78e;
+        }
+        .fx_btn{
+            background: url({weikucms::STATICS}/wapweiui/gta/images/sprites/fx.png) no-repeat;
+            background-size: 100%;
+            width: 15px;
+            height: 15px;
+            display: -webkit-inline-box;
+
+        }
+        .fx_btn1{
+            background: url({weikucms::STATICS}/wapweiui/gta/images/sprites/fx_01.png);
+            background-size: 100%;
+            width: 15px;
+            height: 15px;
+            display: -webkit-inline-box;
+        }
+        .gta_arrow{
+            width:8px;
+            height:8px;
+            border-right: 2px solid #FFf;
+            border-bottom: 2px solid #fff;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            margin: 2px;
+
+        }
+        .mg0a{
+            margin-top:16%;
+        }
+        .gta_bj{
+            width: 300px;
+            height: 70px;
+            background:url({weikucms::STATICS}/wapweiui/gta/images/sprites/gta_bj_03.png) no-repeat;
+            background-size: 100%;
+            margin:0 auto;
+            position: relative;
+        }
+        .car_type p{
+            margin: 5px;
+        }
+        .car_type p input{
+            background-color: #000000;
+        }
+        .Insurance{
+            width: 115px;
+            line-height: 40px;
+            background-color: #e5f2e5;
+            border-radius: 20px;
+            color: #a2c0a2;
+            border: 1px solid #CCCCCC;
+        }
+        .Insurance span{
+            margin-left: 10px;
+            padding: 6px;
+            background-color: #327a36;
+            display: initial;
+            border-radius: 50%;
+            box-shadow: 0px -2px 2px rgba(66, 66, 66, 0.85) inset
+        }
+        .type_btn{
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            width: 150px;
+        }
+        .pt20{
+            padding-top: 20px;
+            border-top: 1px solid #CCCCCC;
+        }
+        .z16{
+            font-size:16px
+        }
+        .Mask{
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0,0,0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            z-index: 9999;
+        }
+        .Mask.is-visible{
+            opacity: 1;
+            visibility: visible;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+            transition: opacity 0.3s 0s, visibility 0s 0s;
+        }
+        .body_classone{
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+            background-color: rgba(238, 239, 238, 1);
+            width: 300px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+        /*'	.body_classone span p{
+                margin:20px auto ;
+                font-size: 14px;
+                text-align: center;
+            }'*/
+        .triangle-right {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 50px solid rgba(0,0,0, 0.4);
+            border-left: 50px solid transparent;
+
+        }
+        .triangle-right1 {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 45px solid #39843d;
+            border-left: 45px solid transparent;
+
+        }
+        .gta_bj_text{
+            font-size: 14px;
+            text-align: center;
+            color: #000;
+            line-height: 70px;
+        }
+        .gta_bj_btn{
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            border: 1px solid #fff;
+            color: #fff;
+            background-color: #39843d;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .gr{
+            position: absolute;
+            right: 5px;
+            top: 10px;
+        }
+        .bf70{
+            width: 80%;
+            margin: 0 auto;
+            -webkit-box-shadow:0px 3px 5px rgba(192, 192, 192, 0.6);
+            -moz-box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+            box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+            background-color: white;
+            border-radius: 5px;
+            padding-bottom: 5px;
+        }
+        .gta_size{
+            width: 80%;
+            margin: 0 auto;
+            padding-bottom: 5px;
+        }
+        .gta_size p{
+            padding:5px 0px;
+            border-top: 1px solid #CCCCCC;
+            color: #808080;
+            font-size: 14px;
+        }
+        .gta_size p span{
+            margin-left: 0px;
+        }
+        .mg80{
+            margin: 0 auto;
+            width: 80%;
+            margin-top: 20px;
+        }
+        .mg80 span{
+            display: block;
+        }
+        .btn12{
+            color: white;
+            width: 40%;
+            line-height: 30px;
+            text-align: center;
+            background: -webkit-linear-gradient(top, #4b9a50,#3c843f 46%,#337738); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(top, #4b9a50,#3c843f 46%,#337738); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(top, #4b9a50,#3c843f 46%,#337738); /* Firefox 3.6 - 15 */
+            background: linear-gradient(top, #4b9a50,#3c843f 46%,#337738);
+            border-radius: 5px;
+        }
+        .type_one1{
+        	 color: #fff;
+        	 margin: 10px 5px;
+            font-size: 14px;
+        }
+        .type_one1 span{
+        	display: inline-block;
+        	width: 49%;
+        }
+        .c00{
+        	color: #000000;
+        }
+        .toubao{
+        	float: right;
+        	margin-top: 10px;
+        	  width: 130px;
+        	border: 1px solid #ccc;
+        	border-radius: 5px;
+        	background-color: #E5F2E5;
+        	padding: 5px;
+        	color: #a2c0a2;
+        }
+        .File {
+  position: absolute;
+  right: 5px;
+  top: 52px;
+  display: none;
+}
+.File ul li {
+  padding: 4px;
+  padding: 5px 30px;
+  text-align: center;
+ }
+ .arrow_xia{
+ 	color: green;
+ 	font-size: 18px;
+ 	position: absolute;
+ 	right: 25px;
+ 	top: 20px;
+ }
+ input{
+ 	border: 0;
+ }
+ input::-webkit-input-placeholder{
+ 	color: #a2c0a2;
+ }
+        </style>
+
+    </head>
+	<script>
+		$(document).ready(function(){
+            //关闭弹出框
+            $(".gta_bj_btn").click(function(event) {
+                $(".body_class").css('display', 'none');
+                if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+                    event.preventDefault();
+                    $(".Mask").removeClass('is-visible');
+
+                }
+            });
+            $(".a1").click(function(event) {
+               // alert(7);
+                $(".gta_bj_btn").trigger('click');
+                /*$(".body_class").css('display', 'none');
+                if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+                    event.preventDefault();
+                    $(".Mask").removeClass('is-visible');
+
+                }*/
+            });
+            function test(){
+                location.href="{weikucms::U('cart_one',array('token'=>$token,'openid'=>$openid))}"
+            }
+
+	         
+		  $(".fx_btn").click(function(){
+		    		$(this).toggleClass("fx_btn1");
+		    })
+            //提交
+		    $(".type_btn").click(function(){
+                var type=$("[name=che]:checked").val();
+              //  alert(type);
+                if(typeof(type)=='undefined'){
+                    show_error_tip("是新车还是续保?");
+                    return false;
+                }
+
+               // var name_one="{weikucms:$name_one}";
+
+                /*if(name_one==''){
+                    show_error_tip("至少选择一种基本险");
+                    setInterval(test,3000);
+                    return false;
+                }*/
+               // alert($(".a3").length);
+                var money=[];
+                var title=[];
+                var abatement=[];
+                var b1=0;
+                $(".gta_size").html('');//清空
+                $(".a3").each(function(e,t){
+                    money[e]=$(t).find(".toubao").text();
+                    title[e]=$(t).find(".f14").text();
+                    if(money[e]!='不投'&&money[e]!='请选择投保'){
+                      //  alert(7);
+                        $(".gta_size").append("<p><span>"+$(t).find(".f14").text()+"</span></p>");
+                        b1=1;
+                    }
+                    if($(t).find(".fx_btn1").length>0){
+                         abatement[e]='不计免赔';
+                    }else{
+                      abatement[e]='';
+                    }
+                })
+                if(b1==0){
+                    show_error_tip("请选择保险?");
+                    return false;
+                }
+                 money.join(',');
+                 title.join(',');
+                 abatement.join(',');
+              //  alert(title);
+               // return false;
+              /*  $(".gta_size").html('');
+                <volist name="name_one" id="vo">
+                $(".gta_size").append("<p><span>{weikucms:$vo}</span></p>");
+                        </volist>
+
+
+                var two_name=[];
+                $(".aon").each(function(e,t){
+                    two_name[e]=$(t).attr('name');
+                    $(".gta_size").append(" <p><span>"+two_name[e]+"</span></p>");
+                });
+                two_name.join(',');*/
+
+                var other=$("[name=textarer]").val();
+                if(other!=''){
+                    $(".gta_size").append(" <p><span>"+other+"(其他)</span></p>");
+                }
+                $(".gta_size p:first").css("border","0px");
+
+                //改变第一个样式
+
+                //显示
+                  $(".body_class").css('display', 'block');
+                   $('.Mask').addClass('is-visible');
+
+              //  alert(name_one);
+              //  $("input[name=name]").val(name);
+               // $("#form").submit();
+    });
+            $(".Insurance").click(function(){
+        	if($(this).find("font").html()=="已投保"){
+        		$(this).find("span").css("background-color","#327a36");
+        		$(this).find("font").html("投保(推荐)");
+        		$(this).css({"background":"#e5f2e5","color":"#a2c0a2"});
+                $(this).removeClass('aon');
+        		$()
+        	}else{
+        		$(this).find("span").css("background-color","#FED219");
+        		$(this).find("font").html("已投保");
+        		$(this).css({"background":"#efda81","color":"#fff"});
+                $(this).addClass('aon');
+        	}
+        	
+        })
+            //跳转到基本险
+           /* $(".jump").click(function(){
+
+
+              //  var url="{weikucms::U('cart_one',array('token'=>$token,'openid'=>$openid))}";
+                var two_name=[];
+                $(".aon").each(function(e,t){
+                    two_name[e]=$(t).attr('name');
+                });
+                two_name.join(',');
+                $("input[name=name_two]").val(two_name);
+                var other=$("[name=textarer]").val();
+                $("input[name=other]").val(other);
+                $("#form").submit();
+            })*/
+
+
+            //确认选择
+            $(".a2").click(function(){
+              //  alert(8);
+               /* var two_name=[];
+                $(".aon").each(function(e,t){
+                    two_name[e]=$(t).attr('name');
+                });
+                two_name.join(',');*/
+                var money=[];
+                var title=[];
+                var abatement=[];
+               // $(".gta_size").html('');//清空
+                $(".a3").each(function(e,t){
+                    money[e]=$(t).find(".toubao").text();
+                    title[e]=$(t).find(".f14").text();
+                    if(money[e]!='不投'&&money[e]!='请选择投保'){
+                    }
+                    if($(t).find(".fx_btn1").length>0){
+                        abatement[e]='不计免赔';
+                    }else{
+                        abatement[e]='';
+                    }
+                })
+                money.join(',');
+                title.join(',');
+                abatement.join(',');
+                var type=$("[name=che]:checked").val();
+                var url="{weikucms::U('cart_company',array('token'=>$token,'openid'=>$openid))}&money="+money+"&title="+title+"&abatement="+abatement+"&type="+type;
+                location.href=url;
+            })
+            //选择投保
+            $(document).on('click','.toubao',function(){
+				    $(this).next().toggle();
+				})
+                $(document).on('click','.File ul li',function(){
+                    $(".File").css("display","none");
+                    $(this).parent().parent().prev().html($(this).html());
+                })
+});
+	</script>
+	<style>
+	</style>
+	<script>
+	</script>
+	<body>
+    <form action="" method="post" id="form" >
+        <input type="hidden" name="name_two" >
+        <input type="hidden" name="other" >
+    </form>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">购买车险</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+		<div style="background-color: #337838;  height: 46px; line-height: 46px;">
+			<div class="type_one1">
+				<span class="clearfix gta_che">
+				新车投保<input type="radio" value="che" class="fl mt5" id="che" name="che" style=" margin-left: 40%;width: 18px; height: 18px;margin-top: 14px;margin-right: 8px;"/>
+				</span>
+				<span class="clearfix gta_che">
+				续保<input type="radio" value="che1" class="fl mt5" id="che1"name="che" style=" margin-left: 40%;width: 18px; height: 18px;margin-top: 14px;margin-right: 8px;"/>
+				</span>
+			</div>
+		</div>
+			<div class="type">
+			 <div class="type_one clearfix">
+			 <!--	<span class="fl z16" style="margin-left: 10px;">投保种类</span>-->
+			 	<span class="fl bb1" style="margin-right: 6px;" >基本险<!--<a href="#" class="gta_arrow"></a>--></span>
+			 </div>
+			</div>
+            <volist name="list" id="vo">
+			<div class="a3 shadow clearfix <if condition="$i neq 1">mt10</if>" style="position: relative;">
+				<div class="car_type fl">
+					<p class="f14">{weikucms:$vo.name}</p>
+					<p><span class="fx_btn fx_btn1 fl" style="margin-top: 1px;"></span><font class="ml10 fl" style="color: #818181;">不计免赔</font></p>
+				</div>
+			<i class="fa fa-sort-down arrow_xia"></i>
+					<div class="toubao">请选择投保</div>
+					<div class="File" style="z-index: 999;">
+				<ul style=" margin-right: 7px;">
+
+                    <volist name="vo['content']" id="vo1">
+                        <li >{weikucms:$vo1}</li>
+                        </volist>
+                    <li >不投</li>
+				</ul>
+		
+				</div>
+            <?php if(in_array($vo['name'],session('cart_name'))){?>
+                <!--<div class="Insurance fr aon" name="{weikucms:$vo.name}" style="color: rgb(255, 255, 255); background: rgb(239, 218, 129);">
+                <font style="margin-left: 10px;">已投保</font>
+                <span style="background-color: rgb(254, 210, 25);"><a href="#" class="gta_arrow"></a></span>
+                </div>-->
+               
+            <?php }else{?>
+                <!--<div class="Insurance fr" name="{weikucms:$vo.name}">
+                    <font style="margin-left: 10px;">投保(推荐)</font>
+                    <span><a href="#" class="gta_arrow"></a></span>
+                </div>-->
+            <?php }?>
+                      
+
+			</div>
+        </volist>
+			<div class="type">
+			 <div class="type_one clearfix">
+			 	<!--<span class="fl z16">投保种类</span>-->
+			 	<span class="fl jump" >附加险<!--<a href="#" class="gta_arrow"></a>--></span>
+			 </div>
+			</div>
+
+
+   <!--         <volist name="list" id="vo">
+                <div class="shadow clearfix <if condition="$i neq 1">mt10</if>">
+				<div class="car_type fl">
+					<p class="f14">{weikucms:$vo.name}</p>
+					<p class="mr10">
+						<span class="fx_btn fx_btn1 fl" style="margin-top: 1px;"></span><font class="ml10 fl" style="color: #818181;">不计免赔</font></p>
+				</div>
+
+                <?php if(in_array($vo['name'],session('cart_name_two'))){?>
+                <div class="Insurance fr aon" name="{weikucms:$vo.name}" style="color: rgb(255, 255, 255); background: rgb(239, 218, 129);">
+                    <font style="margin-left: 10px;">已投保</font>
+                    <span style="background-color: rgb(254, 210, 25);"><a href="#" class="gta_arrow"></a></span>
+                </div>
+                <?php }else{?>
+                <div class="Insurance fr" name="{weikucms:$vo.name}">
+                    <font style="margin-left: 10px;">投保(推荐)</font>
+                    <span><a href="#" class="gta_arrow"></a></span>
+                </div>
+                <?php }?>
+                
+
+			</div>
+                </volist>-->
+                <volist name="list1" id="vo">
+			<div class="a3 shadow clearfix <if condition="$i neq 1">mt10</if>" style="position: relative;">
+				<div class="car_type fl">
+					<p class="f14">{weikucms:$vo.name}</p>
+					<p><span class="fx_btn fx_btn1 fl" style="margin-top: 1px;"></span><font class="ml10 fl" style="color: #818181;">不计免赔</font></p>
+				</div>
+			<i class="fa fa-sort-down arrow_xia"></i>
+					<!--<input type="text" value="" class="toubao" placeholder="请选择投保" />-->
+					<div class="toubao">请选择投保</div>
+					<div class="File" style="z-index: 999;">
+				<ul style=" margin-right: 7px;">
+                    <li >不投</li>
+                    <volist name="vo['content']" id="vo1">
+                        <li >{weikucms:$vo1}</li>
+                    </volist>
+				</ul>
+		
+				</div>
+            <?php if(in_array($vo['name'],session('cart_name'))){?>
+                <!--<div class="Insurance fr aon" name="{weikucms:$vo.name}" style="color: rgb(255, 255, 255); background: rgb(239, 218, 129);">
+                <font style="margin-left: 10px;">已投保</font>
+                <span style="background-color: rgb(254, 210, 25);"><a href="#" class="gta_arrow"></a></span>
+                </div>-->
+               
+            <?php }else{?>
+                <!--<div class="Insurance fr" name="{weikucms:$vo.name}">
+                    <font style="margin-left: 10px;">投保(推荐)</font>
+                    <span><a href="#" class="gta_arrow"></a></span>
+                </div>-->
+            <?php }?>
+                      
+
+			</div>
+        </volist>
+			<div class="mgin10 clearfix">
+				<font class="fl">其他附加险</font><a  class="gtr_bi fr d1"></a>
+			</div>
+            <script>
+                $(".d1").click(function(){
+                    $(".gta_text").focus();
+                })
+            </script>
+			<div class="shadow mt10 clearfix">
+				<div class="gta_green">
+				<input type="text" placeholder="请填写保险名字" name="textarer" class="gta_text" value="<?php echo session('cart_other');?>"/>
+				</div>
+				<p class="mt10"><span class="fx_btn fx_btn1 fl" style="margin-top: 1px;"></span><font class="ml10 fl" style="color: #818181;">不计免赔</font></p>
+			</div>
+			<div class="mt20 pt20">
+				<span class="btn type_btn">下一步</span>
+			</div>
+
+            <!--显示区域-->
+            <div class="Mask">
+                <div class="mg0a">
+                    <div class="gta_bj"><div class="gta_bj_text">您刚刚选择了下面这些车险:</div>
+                        <div class="gr">
+                            <span class="gta_bj_btn">X</span>
+                        </div>
+                    </div>
+                    <div class="body_classone">
+                        <div class="bf70">
+                            <div class="gta_size">
+                               <!-- <p style="border:0px"><span>车辆损失险</span></p>-->
+<!--
+                                <p><span>第三者这人险</span></p>
+-->
+
+                            </div>
+                        </div>
+                        <div class="mg80 clearfix">
+                            <span class="btn12 fl a2">确认选择</span>
+                            <span class="btn12 fr a1">重新选择</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+		</section>
+		
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/calendar.css">
+	<script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+	<script src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/lanrenzhijia.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/gjlog/js/garden.js"></script>
+    </head>
+    <body class="bj" onload="initial();">
+   	<!--  头部 -->
+   	<div class="header">
+ 		<img src="{weikucms::STATICS}/wapweiui/gjlog/images/guoyuan.png" alt="">
+   	</div>
+	<!-- tab -->
+   	<div class="tab-calendar">
+   		<ul class="tab-calendar-ul">
+   			<li class="tab-calendar-ul-li">
+   				<p class="temperature">27°C/29°C</p>
+   				<p class="weather">雷阵雨</p>
+   				<div  id="weather">
+   					
+   				</div>
+   			</li>
+   			<li class="tab-calendar-ul-li">
+   				<p>离下一个节气还</p>
+   				<p>有<span>5</span>天<span class="terms">（冬至）</span></p>
+   				<div class="icon-calendar2">
+   					
+   				</div>
+   			</li>		
+   		</ul>
+   	</div>
+   	<!-- 日历区域 -->
+   	<form name="CLD" class="content">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datetable">
+		    <thead>
+		    <tr>
+		      <td colSpan=7><span>公历</span>
+		        <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
+		        <script>
+		            for(i=1900;i<2050;i++) document.write('<option>'+i);
+		        </script>
+		         </select><span>年</span>
+		         <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">
+		        <script>
+		            for(i=1;i<13;i++) document.write('<option>'+i);
+		        </script>
+		        </select><span>月</span>
+		        </font><span id="GZ"></span>
+		      </td>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <tr style="background:#eee;">
+		      <td width="54">日</td>
+		      <td width="54">一</td>
+		      <td width="54">二</td>
+		      <td width="54">三</td>
+		      <td width="54">四</td>
+		      <td width="54">五</td>
+		      <td width="54">六</td>
+		    </tr>            
+		    <script>
+		    var gNum;
+		    for(i=0;i<6;i++) {
+		       document.write('<tr align="center">');
+		       for(j=0;j<7;j++) {
+		          gNum = i*7+j;
+		          document.write('<td class="everyRow" id="GD' + gNum +'"><font id="SD' + gNum +'" size=2 face="Arial Black"');
+		          if(j == 0) document.write('color="red"');
+		          if(j == 6) document.write('color="#000080"');
+		          document.write('></font><br/><font id="LD' + gNum + '" size=2 style="font-size:9pt"></font></td>');
+		       }
+		       document.write('</tr>');
+		    }
+
+                $('.everyRow').click(function(){
+                    var D= $(this).find('font:first').text();
+										 alert(D);
+                        
+                })
+
+		   </script>
+		   </tbody>
+		</table>
+
+	</form>
+	<div class="bottom">
+		<div class="bootm-main">
+			<div class="bootm-main-title">宜</div>
+			<div class="bootm-main-nav">
+				<ul class="bootm-main-nav-ul">
+					<li class="bootm-main-nav-ul-li">嫁娶</li>
+					<li class="bootm-main-nav-ul-li">裁衣</li>
+					<li class="bootm-main-nav-ul-li">订盟</li>
+					<li class="bootm-main-nav-ul-li">挽面</li>
+				</ul>
+			</div>
+		</div>
+		<div class="bottom-content">
+			<p class="bootm-content-text">柑橘提醒：</p>
+			<p class="bootm-content-size"><volist name="user" id="ts">{weikucms:$ts[tip_info]}</volist></p>
+		</div>
+		<div class="bootm-main">
+			<div class="bootm-main-title coloreb3a3a">忌</div>
+			<div class="bootm-main-nav">
+				<ul class="bootm-main-nav-ul">
+					<li class="bootm-main-nav-ul-li">嫁娶</li>
+					<li class="bootm-main-nav-ul-li">裁衣</li>
+					<li class="bootm-main-nav-ul-li">订盟</li>
+					<li class="bootm-main-nav-ul-li">挽面</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    </body>
+</html>

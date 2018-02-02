@@ -1,0 +1,97 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/saler',array('token'=>$token, 'type'=>0))}" <if condition="$hover4 eq 1">class="hover"</if>>所有推广员</a>
+            </li>
+           
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/saler',array('token'=>$token, 'type'=>1))}" <if condition="$hover5 eq 1">class="hover"</if>>添加推广员</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #B098FB;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('Repair/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>返回上一层</a>
+            </li>
+                       
+        </ul>                
+    </div>  
+	<div class="clr"></div>
+</div>
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered" >
+                  <thead>
+                  <tr>
+                      <th style="text-align:center;">序列号</th>
+                      <th style="text-align:center;">推广员的工号</th>
+                      <th style="text-align:center;">推广员的名字</th>
+                      <th style="text-align:center;">推广员的职位</th>
+                      <th style="text-align:center;">推广员的联系方式</th>
+                      <th style="text-align:center;">操作</th>                       
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" key="i" id="vo">
+                  		<tr>
+        					<td style="text-align:center;">{weikucms:$i}</td>
+                  			<td style="text-align:center;">{weikucms:$vo.saler_nid}</td>
+                  			<td style="text-align:center;"><div class="answer_text">{weikucms:$vo.saler_name}</div></td>
+                  			<if condition="$vo.saler_job eq 0">
+                  				<td style="text-align:center;">普通</td>
+                  			<elseif condition="$vo.saler_job eq 1"/>
+                  				<td style="text-align:center;">业务经理</td>
+                  			<else/>
+                  			</if>            		
+                    		<td style="text-align:center;">{weikucms:$vo.saler_tel}</td>
+                    		<td class="norightborder" style="text-align:center;">
+                              <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=saler&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="编辑文本">编辑</a>
+                              <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Repair&amp;a=del&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="#">删除</a>
+                             <!--  <a class="btn btn-success btn-sm" style="background-color:#7CFC00;border-radius:8px;" href="/index.php?g=User&amp;m=Shopdoor&amp;a=manager&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="登录分店">分店登录</a> -->
+                          	</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+<script type="text/javascript">
+function operate(url){
+    if(confirm('您确定进行此操作')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+</script>
+<include file="Public:footer"/>

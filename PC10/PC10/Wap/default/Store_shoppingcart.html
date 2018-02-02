@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{weikucms:$storeName}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--,target-densitydpi=device-dpi-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=0" />	
+<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_common.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/es/css/shoppingCart.css" rel="stylesheet" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/es/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/wapweiui/es/js/am.js" type="text/javascript"></script>
+
+</head>
+<body onload="shoppingCartInit()">
+<input type="hidden" id="localeLanguage" value="zh" />
+<input type="hidden" id="common_message_serverCannotConnection" value="由于网络故障无法连接服务器，请稍后重试" />
+<input type="hidden" id="shoppingCart_message_successful" value="优惠代码已使用成功" />
+<input type="hidden" id="shoppingCart_message_message1" value="您的订单已享受优惠，该优惠不可与其他优惠共享，若需使用其他优惠，请先取消订单内优惠后再进行使用！" />
+<input type="hidden" id="shoppingCart_message_failToUsePromotionCode" value="使用优惠代码出错" />
+<input type="hidden" id="shoppingCart_message_chooseProductFirst" value="您还没有订餐,请先选择菜品" />
+<input type="hidden" id="login_instruction" value="友情提示" />
+<input type="hidden" id="shoppingCart_message_enjoyCertainSpecialOffer" value="你有可享优惠未选择，是否选择优惠" />
+<input type="hidden" id="shoppingCart_message_selectSpecialOffer" value="选择优惠" />
+<input type="hidden" id="shoppingCart_message_giveUpSpecialSffers" value="放弃优惠" />
+<input type="hidden" id="menu_confirm2" value="确定" />
+<input type="hidden" id="userInfo_canael" value="取消" />
+<input type="hidden" id="shoppingCart_message_oneOrder" value="每单只能使用一项优惠码优惠" />
+<input type="hidden" id="shoppingCart_message_promotionCannotEmpty" value="优惠代码为空" />
+<input type="hidden" id="shoppingCart_message_failToSave" value="保存订单失败" />
+<input type="hidden" id="shoppingCart_message_lookAtMenuFirst" value="购物车内为空，请先浏览菜单点餐" />
+<input type="hidden" id="shoppingCart_message_failToConfirmOrder" value="确认订单失败" />
+<input type="hidden" id="shoppingCart_message_confirmToDeleteProduct" value="您是否要删除该菜品" />
+<input type="hidden" id="shoppingCart_message_failToReviseOrder" value="更改订单失败" />
+<input type="hidden" id="shoppingCart_message_beyondMaximumQuantity" value="优惠选取超出" />
+<input type="hidden" id="shoppingCart_message_selectOneFirst" value="请先选择一个优惠" />
+<input type="hidden" id="shoppingCart_message_failToAddOffer" value="添加优惠出错" />
+<input type="hidden" id="shoppingCart_message_usePromotionCode" value="优惠代码已使用成功" />
+<input type="hidden" id="shoppingCart_message_specialOffer" value="您还未满足优惠使用条件，请满足条件后再使用优惠" />
+<input type="hidden" id="shoppingCart_message_unitPrice" value="单价：" />
+<input type="hidden" id="shoppingCart_message_subtotal" value="小计：" />
+<input type="hidden" id="shoppingCart_message_setMealDetail" value="套餐详情" />
+<input type="hidden" id="shoppingCart_message_specialOfferDetail" value="优惠详情" />
+<input type="hidden" id="shoppingCart_message_quantity" value="份" />
+<input type="hidden" id="shoppingCart_message_addToShoppingCart" value="加入购物车" />
+<input type="hidden" id="shoppingCart_message_noSpecialOffer" value="目前没有可享受优惠" />
+<input type="hidden" id="shoppingCart_message_message21" value="优惠代码：" />
+<input type="hidden" id="shoppingCart_message_message23" value="项优惠，每单最多可选1项，每项最多可用1次" />
+<input type="hidden" id="shoppingCart_message_used" value="已使用" />
+<input type="hidden" id="shoppingCart_yuan" value="元" />
+<input type="hidden" id="shoppingCart_html_deliverFee" value="外送费:" />
+<input type="hidden" id="shoppingCart_html_subtotal" value="小计:" />
+<input type="hidden" id="shoppingCart_message_voucher" value="【券】" />
+<input type="hidden" id="token"	value="{weikucms:$token}"/>
+<input type="hidden" id="wecha_id"	value="{weikucms:$wecha_id}"/>
+<input type="hidden" id="storeId" value="{weikucms:$storeId}"/>	
+
+	<input type="hidden" id="localeLanguage" value="zh">
+	<div class="page-app shoppingCart">
+		<div class="page-header_box">
+			<div class="page-header_boxInner">
+				<div class="page-header">
+					<a class="head-button-left backhome page-button bright" href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}"><span class="icon"></span>首页</a>
+					<a class="page-button bright menu" href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}">
+						<span class="icon"></span> <span class="text" >商品</span>
+					</a>
+					<p>购物车</p>
+				</div>
+			</div>
+		</div>
+		<div class="page-header_boxPH"></div>
+		<div class="shoppingCart-overview">
+			<div class="amount">
+				<div class="tag">总金额:</div>
+				<p class="total">
+					<span>{weikucms:$totlePrice}</span>元
+				</p>
+			</div>
+		</div>
+		
+		
+		<ul class="shoppingCart-list">
+		
+			<php>foreach($cartData as $k=>$v){</php>
+			<li>
+				<div class="delete" id="delItem_<php>echo $k;</php>"></div>
+				<div class="widget-num">
+					<div class="left am-clickable" id="minusItem_<php>echo $k;</php>"></div>
+					<div class="right am-clickable" id="addItem_<php>echo $k;</php>"></div>
+					<div class="text" id="num_<php>echo $k;</php>"><php>echo $v['cnt'];</php></div>
+				</div>
+				<div class="name"><php>echo $v['shownamecn'];</php></div>
+				<div class="desc">
+					单价：<span class="price"><php>echo $v['price'];</php></span>
+					小计：<span class="subtotle"><php>echo $v['subtotal'];</php></span>
+				</div>
+			</li>
+		<php>}</php>
+		</ul>
+		
+		
+		
+		<ul class="shoppingCart-list1" style="display: none;">			
+		</ul>
+		<div class="shoppingCart-overview bottom">
+			<div class="amount">
+				<div class="tag">总金额:</div>
+				<p class="total">
+					<span>{weikucms:$totlePrice}</span>元
+				</p>
+				<p class="subtotal">(小计:<span>{weikucms:$totlePrice}</span>元 外送费:0.0元)</p>
+			</div>
+		</div>
+		<div class="page-button submit" id="myordersub" style="margin-top:36px;">
+			<span class="text">进入结算</span>
+		</div>
+		<div class="clear" style="height: 50px;"></div>
+	</div>
+	<!-- 删除项目的弹出框 -->
+	<div class="page-comfirm" style="display: none;" id="globle-confirm">
+			<div class="page-comfirmBox">
+				<div class="container">
+					<div class="title">
+					</div>
+					<div class="content"></div>
+					<div class="buttons">
+						<div class="page-button">
+						</div>
+						<div class="page-button bright">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+	<script src="{weikucms::STATICS}/wapweiui/es/js/shoppingcart.js" type="text/javascript"></script>
+	<script type="text/javascript"> 
+		var order = {weikucms:$JsonCartData};
+		var xMasCodes = [];
+		var xMasPromDirect = "";	
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('.right').click(function(){
+				var id = event.currentTarget.id;
+				var idx = id.split("_")[1];		
+
+				order[idx].cnt++;
+				var cnt = order[idx].cnt;
+				$(this).next().text(cnt);
+				var total = parseFloat($(".total").children("span").html());
+				total = total + parseFloat(order[idx].price);
+				$(".total").children("span").html(total);
+				$(".total").next().find("span").html(total);
+				var subtotle = parseFloat($(this).parent().next().next().find(".subtotle").html());
+				subtotle = subtotle + parseFloat(order[idx].price);
+				order[idx].subtotal = subtotle;
+				
+				$(this).parent().next().next().find(".subtotle").html(subtotle);
+				//$(this).parent().next(".desc").children("span").html(1213);
+				
+			});
+			$('.left').click(function(){
+				var id = event.currentTarget.id
+				var idx = id.split("_")[1];
+				var cnt = order[idx].cnt;
+				if(cnt >1){
+					order[idx].cnt--;
+					cnt = order[idx].cnt;
+					$(this).next().next().text(cnt);
+					var total = parseFloat($(".total").children("span").html());
+					total = total - parseFloat(order[idx].price);
+					$(".total").children("span").html(total);
+					$(".total").next().find("span").html(total);
+					var subtotle = parseFloat($(this).parent().next().next().find(".subtotle").html());
+					subtotle = subtotle - parseFloat(order[idx].price);
+					order[idx].subtotal = subtotle;
+					
+					$(this).parent().next().next().find(".subtotle").html(subtotle);
+				}else{
+					if(cnt == 1){
+						//order[idx].cnt--;
+						order[idx] = null;
+						$(this).next().next().text(0);
+						$(this).parent().parent('li').remove();
+					}else{
+						$(this).parent().parent('li').remove();
+					}
+				}
+			});
+
+            var setStorageByKey = function(key, val) {
+                if (localStorage) {
+                    if (localStorage.getItem(key))
+                        localStorage.removeItem(key)
+                    localStorage.setItem(key, val)
+                }
+            }
+
+			$('.delete').click(function(){
+                //sc = new shoppingCart();
+				var id = event.currentTarget.id;
+                //order[idx] = null;
+                // alert(idx);
+                var total = parseFloat($(".total").children("span").html());
+                total = total - parseFloat($(this).next().next().next().find(".subtotle").html());
+                $(".total").children("span").html(total);
+                $(".total").next().find("span").html(total);
+                $(this).parent('li').remove();
+                var a=JSON.parse(localStorage.getItem('PHHS_meal'));
+                var idx = id.split("_")[1];
+                   // console.log(t);
+                    var productId = idx;
+                     //   localStorage.getItem('PHHS_meal')
+                        ///cart.addMealItem(t.mealData, 1, t.cnt);
+                        var mealItem = getStorageByKey("PHHS_meal");
+                        mealItem = mealItem ? mealItem : [];
+                        var totalCnt = getStorageByKey("PHHS_count");
+                        var totalCnt = totalCnt ? totalCnt : 0;
+                        var totalPrice = getStorageByKey("PHHS_price");
+                        var totalPrice = totalPrice ? totalPrice : 0;
+                        var deleteName = '';
+                        for (var i = 0; i < mealItem.length; i++) {
+                            if (mealItem[i].mealData.productId == productId) {
+                                totalCnt -= mealItem[i].cnt
+                                totalPrice = totalPrice - mealItem[i].cnt * mealItem[i].mealData.price
+                                 var removeItem = mealItem.splice(i, 1)
+                                deleteName = removeItem[0].mealData.shownamecn;
+                                setStorageByKey("PHHS_meal", JSON.stringify(mealItem));
+                                setStorageByKey("PHHS_count", totalCnt)
+                                setStorageByKey("PHHS_price", totalPrice)
+                                break;
+                            }
+                        }
+
+                        var order = JSON.parse(localStorage.getItem('PHHS_order'));
+                        var orderList = typeof(order.productList) != 'undefined' ? order.productList : {};
+                        //console.log(orderList)
+                        for(var j = 0; j < orderList.length; j++){
+                            if(orderList[j]['name'] == deleteName){
+                                orderList.splice(j, 1);
+                            }
+                        }
+                        //delete order.productList;
+                        order.productList = orderList;
+                        removeStorageByKey("PHHS_order")
+                        setStorageByKey("PHHS_order", JSON.stringify(order));
+			})
+			
+			$("#myordersub").click(function() {
+				if (order) {
+					var data = JSON.stringify(order)
+					$.post("index.php?g=Wap&m=Store&a=save&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val(), {orderData:data}, function(data){
+						location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+					},"json");
+					
+					
+					
+//					$.ajax({
+//						url : "index.php?g=Wap&m=Store&a=save&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val(),
+//						type : "POST",
+//						data : {orderData:data},
+//						dataType : "json",
+//						timeout : 40000,
+//						success : function() {	
+//						alert(1231);						
+//							location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+//						},
+//						error : function(ret) {							
+//							//location.href = "index.php?g=Wap&m=Store&a=settlement&id="+$("#storeId").val()+"&token="+$("#token").val()+"&wecha_id="+$("#wecha_id").val();
+//						}
+//					})
+				}
+			})
+
+		});
+		
+	</script>
+
+
+</html>

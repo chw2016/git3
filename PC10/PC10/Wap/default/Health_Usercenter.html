@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- saved from url=(0071)http://wap.koudaitong.com/v2/showcase/usercenter?kdt_id=1&spm=h1_sc1_h1 -->
+<html class="no-js  mobile" lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="keywords" content="万普">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_0479aca844.css" onerror="_cdnFallback(this)">    
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/showcase_66ba8222c8.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/base_49a730abe0.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/showcase_ddb08a6630.css" onerror="_cdnFallback(this)">
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            margin: 15px auto 0 auto;
+            height: 15px;
+            width: 86px;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+</head>
+<body class=" " style="background: white">
+        <!-- container -->
+    <div class="container ">
+        <div class="header">
+    <!-- ▼顶部通栏 -->
+    <div class="js-mp-info share-mp-info">
+        <a class="page-mp-info" href="{weikucms::U('Store_new/cats',array('token' => $_GET['token'], 'catid' => $hostlist['id'], 'wecha_id' => $wecha_id))}">
+            <img class="mp-image" width="30" height="30" src="{weikucms:$tpl.headpicurl}"/>
+            <i class="mp-nickname">
+                {weikucms:$tpl.name}
+            </i>
+        </a>
+        <div class="links">
+            <!--<a class="mp-homepage" href="{weikucms::U('Store_new/cart',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}">-->
+                <!--<span class="icon-cart" style="font-size: 18px;margin-right: 15px;"></span>-->
+                <!--<if condition="$totalProductCount neq 0" >-->
+                <!--<i class="cart_com"  id="cart_com" >-->
+                    <!--{weikucms:$totalProductCount}-->
+                <!--</i>-->
+                <!--</if>-->
+            <!--</a>-->
+            <a class="js-open-follow follow-mp" href="{weikucms::U('Store_new/userCenter',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}">
+                <span class="icon-my" style="font-size: 18px;"></span>
+            </a>
+        </div>
+    </div>
+    <!-- ▲顶部通栏 -->
+</div>
+        <div class="content ">
+        <div class="content-body">
+        <!-- 等级/积分 -->
+<div class="custom-level">
+    <?php if(is_null($userinfo['headimgurl'])):?>
+    <img class="custom-level-img js-lazy " data-src="tpl/Wap/default/common/shop/images/FiYLczBtyO94aDYsLJgwo2WaXdpC.png" src="tpl/Wap/default/common/shop/images/logo.jpg">
+    <?php else:?>
+    <img class="custom-level-img js-lazy " data-src="tpl/Wap/default/common/shop/images/FiYLczBtyO94aDYsLJgwo2WaXdpC.png" src="{weikucms:$userinfo[headimgurl]}" alt="您还没有头像">
+    <?php endif;?>
+    <div class="custom-level-title-section js-custom-level-title-section">
+        <h5 class="custom-level-title"></h5>
+        <?php if(empty($member)):?>
+        <span class="js-custom-level">亲，您还不是会员哦</span>
+        <?php else:?>
+        尊贵的<span class="js-custom-level">客户:{weikucms:$member.xm}</span>
+        您的会员余额:<span class="js-custom-point">{weikucms:$member.je]}</span>
+        <br>
+        <?php endif;?>
+    </div>
+</div>
+
+        <div class="order-related">
+    <ul class="uc-order list-horizon clearfix">
+                <li style="width: 50%">
+            <a class="link clearfix" href="{weikucms::U('Health/orders',array('act'=>0,'token'=>$token,'openid'=>$openid))}" target="_blank">
+                <p class="title-num c-black font-size-16">{weikucms:$no}</p>
+                <p class="title-info c-black font-size-12">待付款</p>
+            </a>
+        </li>
+        <li style="width: 50%">
+            <a class="link clearfix" href="{weikucms::U('Health/orders',array('act'=>1,'token'=>$token,'openid'=>$openid))}" target="_blank">
+                <p class="title-num c-black font-size-16">{weikucms:$yes}</p>
+                <p class="title-info c-black font-size-12">已经付款</p>
+            </a>
+        </li>
+
+
+
+    </ul>
+    <div class="block block-list list-vertical">
+        <a class="block-item link clearfix" href="{weikucms::U('Health/orders',array('act'=>2,'token'=>$token,'openid'=>$openid))}" target="_blank">
+            <p class="title-info c-black font-size-14">全部订单</p>
+        </a>
+    </div>
+
+            <div class="block block-list list-vertical">
+                <a class="block-item link clearfix" href="{weikucms::U('Health/carts',array('token'=>$token,'openid'=>$openid))}" target="_blank">
+                    <p class="title-info c-black font-size-14">我的购物车</p>
+                </a>
+            </div>
+        <!--<?php if(!empty($user)):?>-->
+            <!--<div class="block block-list list-vertical">-->
+        <!--<a class="block-item link clearfix" href="{weikucms::U('Usercenter/index',array('token'=>$token,'openid'=>$wecha_id))}" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">会员中心</p>-->
+        <!--</a>-->
+    <!--</div>-->
+            <!--<?php endif;?>-->
+            <!--<div class="block block-list list-vertical">-->
+        <!--<a class="block-item link clearfix" href="{weikucms::U('Store_new/orders',array('act'=>2,'token'=>$token,'wecha_id'=>$wecha_id))}" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">优惠券</p>-->
+        <!--</a>-->
+    <!--</div>-->
+            <!--<div class="block block-list list-vertical">-->
+        <!--<a class="block-item link clearfix" href="{weikucms::U('Store_new/orders',array('act'=>2,'token'=>$token,'wecha_id'=>$wecha_id))}" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">积分</p>-->
+        <!--</a>-->
+
+
+    <!--<div class="block block-list list-vertical">-->
+        <!--<a class="block-item link clearfix" href="http://wap.koudaitong.com/v2/trade/order/list?type=gift_receive" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">我收到的礼物</p>-->
+        <!--</a>-->
+        <!--<a class="block-item link clearfix" href="http://wap.koudaitong.com/v2/showcase/coupon/list" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">我的优惠券</p>-->
+        <!--</a>-->
+        <!--<a class="block-item link clearfix" href="http://wap.koudaitong.com/v2/showcase/promocode/list" target="_blank">-->
+            <!--<p class="title-info c-black font-size-14">我的优惠码</p>-->
+        <!--</a>-->
+    <!--</div>-->
+    </div>
+    </div>
+
+</body></html>

@@ -1,0 +1,165 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+			<ul class="tab_navs title_tab" data-index="0">
+				<li data-index="0" class="tab_nav first js_top " data-id="total">
+					<a href="{weikucms::U('Laundry/index',array('token'=>$token))}">洗衣店管理主页</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以添加/删除/查看洗衣袋信息。</li>
+		</ol>
+	</div>
+	<div class="box-content">
+		<div class="cLineB">
+			<h4 style="display: inline;">所有洗衣袋</h4>
+			<input value="{weikucms:$data['base_ver_num']}" type="text" id="bag_num" name="bag_num" style="margin-top: 10px" placeholder="输入要增加的数量，每次不超过10个~">
+			<button type="button" class="add btn btn-round btn-success">点击增加洗衣袋</button>
+			<a style="margin-left: 909px;margin-top:-75px" class="btn btn-danger btn-sm" onClick="del('/index.php?g=User&amp;m=Laundry&amp;a=del_all&amp;token={weikucms:$token}')" href="javascript:;">删除所有洗衣袋</a>
+		</div>
+		<div class="cLineB">
+			<form method="post" action="{weikucms::U('Laundry/bag',array('token'=>$token))}">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" style="display: inline; margin-left: 15px">洗衣袋编码：</label>
+					<input value="<if condition="$arr['bag_sn'] neq ''">{weikucms:$arr['bag_sn']}<else /></if>" type="text" id="bag_sn" name="bag_sn" style="margin-top:10px;width:151px" placeholder="在这里输入洗衣袋编码~">
+					<label class="col-sm-2 control-label" style="display: inline; margin-left: 68px">洗衣袋管理员：</label>
+					<input value="<if condition="$arr['bag_manager_name'] neq ''">{weikucms:$arr['bag_manager_name']}<else /></if>" type="text" id="bag_manager_name" name="bag_manager_name" style="margin-top:10px;width:151px" placeholder="在这里输入洗衣袋管理员名称~">
+					<label class="col-sm-2 control-label" style="display: inline; margin-left: 68px">洗衣袋管理员：</label>
+					<select style="margin-top: 10px;width:151px" name="is_recive" id="is_recive">
+						<option value="">所有洗衣袋</option>
+						<option value="0" <if condition="$arr['is_recive'] eq 0">selected</if>>未被领取</option>
+						<option value="1" <if condition="$arr['is_recive'] eq 1">selected</if>>已被领取</option>
+					</select>
+					<button type="submit" class="search btn btn-round btn-success">点击搜索</button>
+				</div>
+			</form>
+		</div>
+		<div class="msgWrap">
+			<form method="post" action="###" id="info">
+				<input name="delall" type="hidden" value="" />
+				<input name="wxid" type="hidden" value="" />
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="text-align: center">洗衣袋编号</th>
+							<th style="text-align: center">洗衣袋二维码</th>
+							<th style="text-align: center">洗衣袋管理员名称</th>
+							<th style="text-align: center">洗衣袋状态</th>
+							<th style="text-align: center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="bag" id="vo">
+						<tr>
+							<td style="text-align: center">{weikucms:$vo.bag_sn}</td>
+							<td style="text-align: center">
+								<img src="{weikucms:$vo.bag_qrcode}" style="width: 100px; height: 100px; border-radius: 5px;" />
+							</td>
+							<td style="text-align: center">{weikucms:$vo.bag_manager_name}</td>
+							<td style="text-align: center">
+								<if condition="$vo['is_recive'] eq 0">未被领取<elseif condition="$vo['is_recive'] eq 1" />已被领取<else /></if>
+							</td>
+							<td class="norightborder" style="text-align: center">
+								<a class="btn btn-danger btn-sm" onClick="del('/index.php?g=User&amp;m=Laundry&amp;a=del&amp;token={weikucms:$token}&amp;bag_id={weikucms:$vo.id}')" href="javascript:;">删除</a>
+							</td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+			</form>
+<script type="text/javascript">
+    var flag = true;
+    $(function() {
+        $(".add").click(function() {
+            var bag_num = $("#bag_num").val().trim();
+            if (bag_num == "") {
+                notif({
+                    msg: '数量不能为空',
+                    type: "warning"
+                });
+            } else {
+                if (bag_num > 10) {
+                    notif({
+                        msg: '每次输入数量不能大于10',
+                        type: "warning"
+                    });
+                } else {
+                    $(".add").text('正在生成中…');
+                    if (flag == true) {
+                        flag = false;
+                        $.post("{weikucms::U('Laundry/addbag',array('token'=>$token))}", {
+                            bag_num: bag_num
+                        },
+                        function(data) {
+                            if (data.status == 1) {
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function() {
+                                    window.location.href = data.url;
+                                },
+                                '1000');
+                            } else {
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                            flag = true;
+                            $(".add").text('点击增加洗衣袋');
+                        },
+                        'json');
+                    } else {
+                        notif({
+                            msg: '正在处理中..',
+                            type: "warning"
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    function del(url) {
+        if (confirm('警告！此举动会删除洗衣袋的信息！')) {
+            $.post(url, {},
+            function(data) {
+                if (data.status == 1) {
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function() {
+                        window.location.href = data.url;
+                    },
+                    '1000');
+                } else {
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },
+            'json');
+        } else {
+            return;
+        }
+    }
+    
+</script>
+		</div>
+		<div>
+			<ul class="pager">{weikucms:$page}
+			</ul>
+		</div>
+	</div>
+	<include file="Public:footer" />

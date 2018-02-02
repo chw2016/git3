@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>我的购物车</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+             <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+             <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+        <style type="text/css">
+            .inputprice{
+                line-height: 26px;
+                border: 1px solid #7B7B7B;
+                height: 26px;
+                padding: 0 5px;
+                width: 50px;
+            }
+        </style>
+             <script type="text/javascript">
+            $(function(){
+                function length(){
+                    return $(".commodity-yuan.opt").length;
+                }
+                $(".commodity-yuan").touch(function(){
+                    if($(this).hasClass('opt')){
+                        $(this).removeClass('opt');
+                        $(this).find(".select").removeClass('pitch');
+                    }else{
+                        $(this).addClass('opt');
+                        /*
+//                        LQ
+                        $(this).nextAll(".order-tab-main-content-right").find(".lqqq").html();
+
+//                        CQ
+                        $(this).next(".order-tab-main-content-right").find(".cqqq").html();
+                      $(this).nextAll(".order-tab-main-content-right").find(".cqqq").html();
+                        $(".LQ").html( $(this).nextAll(".order-tab-main-content-right").find(".lqqq").html())
+                        $(".CQ").html( $(this).nextAll(".order-tab-main-content-right").find(".cqqq").html())
+                        */
+                        $(this).find(".select").addClass('pitch');
+
+
+
+                    }
+                        getTotalCQANDLQ();
+
+                    var index = length();
+                    // alert(index);
+                    if(index==0){
+                          $(".bottom-money").css("display","none");  
+                    }else{
+                          $(".bottom-money").css("display","inline-block");
+                    }
+                })
+
+                $(".icon-jia").touch(function(){
+                    var n=$(this).prev(".count_input").html();
+                    var num=parseInt(n)+1;
+                    // $(".count_input").html(num);
+                    $(this).prev(".count_input").html(num);
+                    getTotalCQANDLQ();
+                      /*var text=0;
+                       $(".count_input").each(function(a,b){
+                           text += parseInt($(this).text());
+                       });
+                      var etext=0;
+                       $(".cqqq").each(function(a,b){
+                           etext += parseInt($(this).html());
+                        });
+                      var eetext=0;
+                       $(".lqqq").each(function(a,b){
+                           eetext += parseInt($(this).html());
+                        });
+
+                       $('.CQ').html(parseInt($('.plr').html()) * parseInt( $(this).parents(".clearfix").prev(".user-cart").find(".cqqq").html()));
+                       $('.LQ').html(parseInt($('.plr').html()) * parseInt( $(this).parents(".clearfix").prev(".user-cart").find(".lqqq").html()));
+*/
+                  });
+                $(".icon-jian").touch(function(){
+                    var n=$(this).next(".count_input").html();
+                    var num=parseInt(n)-1;
+                    if(num==0){alert("不能为0!"); return}
+                    // $(".count_input").html(num);
+                    $(this).next(".count_input").html(num);
+                    getTotalCQANDLQ();
+
+                   /* var text=0;
+                    $(".count_input").each(function(a,b){
+                        text += parseInt($(this).text());
+                    });
+                    var etext=0;
+                    $(".cqqq").each(function(a,b){
+                        etext += parseInt($(this).html());
+                    });
+                    var eetext=0;
+                    $(".lqqq").each(function(a,b){
+                        eetext += parseInt($(this).html());
+                    });
+
+                    $('.CQ').html(parseInt($('.plr').html()) * parseInt( $(this).parents(".clearfix").prev(".user-cart").find(".cqqq").html()));
+                    $('.LQ').html(parseInt($('.plr').html()) * parseInt( $(this).parents(".clearfix").prev(".user-cart").find(".lqqq").html()));
+*/
+
+                })
+                $(".del").touch(function(){
+                    var ysid = $('.del').attr('data-id');
+                    var url = "{weikucms::U('Ynd/del_shop',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(url,{ysid:ysid},function(rel){
+                        if(rel.status = 1){
+                            msg.alert(rel.info);
+                            location.href = "{weikucms::U('Ynd/shoping',array('token'=>$token,'openid'=>$openid))}";
+                        }else{
+                            msg.alert(rel.info);
+                            location.href = "{weikucms::U('Ynd/shoping',array('token'=>$token,'openid'=>$openid))}";
+
+                        }
+                    },'json')
+
+                    //$(this).parents(".indent-tab-title").remove(".indent-tab-title");
+                })
+            })
+        $(".commodity-yuan1").touch(function(){
+            if($(this).hasClass('opt')){
+                $(".commodity-yuan").removeClass('opt');
+                $(".commodity-yuan").find(".select").removeClass('pitch')
+                 $(this).removeClass('opt');
+                $(this).find(".select").removeClass('opt')
+                 $(".bottom-money").css("display","none");
+            }else{
+                $(".commodity-yuan").addClass('opt');
+                $(".commodity-yuan").find(".select").addClass('pitch')
+                 $(this).addClass('opt');
+                $(this).find(".select").addClass('opt')
+                 $(".bottom-money").css("display","inline-block")
+            }
+        })
+            $(".btn-close1").touch(function(){
+                var address = "{weikucms:$address}";
+                if(!address){
+                    location.href = "{weikucms::U('Ynd/addressselect',array('token'=>$token,'openid'=>$openid))}";
+                }
+                var pro_id=[];
+                var num=[];
+                var shop_id = [];
+                $(".opt").each(function(e,t){
+                    //  alert($(this).attr("data-id"));
+                    pro_id[e]=$(t).attr("data-id");
+                    num[e]=$(t).parents('.border-inherit').find('.plr').text();
+                    shop_id[e] = $(t).attr("data-shopid");
+                })
+                num=num.join(',');
+                pro_id=pro_id.join(',');
+                shop_id=shop_id.join(',');
+                var menoy = $('.summoney').val();
+                var LQ = $('.LQ').html();
+                var CQ = $('.CQ').html();
+               var url = "{weikucms::U('Ynd/shoporder',array('token'=>$token,'openid'=>$openid))}";
+                if(pro_id){
+                  var param={
+                        pro_id:pro_id,
+                        num:num,
+                        menoy:menoy,
+                        shop_id:shop_id,
+                        LQ:LQ,
+                        CQ:CQ
+                    }
+                   /* console.log(param);
+                    return false;*/
+                    $.post(url,param,function(rel){
+                        if(rel.status == 1){
+                            msg.alert(rel.info,function(){
+                                location.href = "{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}";
+                            })
+                        }else{
+                            msg.alert(rel.info);
+                        }
+                    },'json')
+                }
+
+        })
+    </script>
+        <script>
+            function getTotalCQANDLQ(callback){
+                var lq = cq = 0;
+                var num = 1;
+                $('.commodity-yuan.opt').each(function(i,obj){
+                    num = parseInt($(obj).parents('.commodity').find('.plr').text());
+                    lq += parseInt($(obj).parents('.commodity').find('.lqqq').text()) * num ;
+                    cq += parseInt($(obj).parents('.commodity').find('.cqqq').text()) * num;
+                })
+                if(typeof(callback) == 'function'){
+                    callback(lq, cq);
+                }else{
+                    $('.bottom-money .LQ').text(lq);
+                    $('.bottom-money .CQ').text(cq);
+                }
+            }
+        </script>
+    </head>
+    <body>
+                <div class="top-details border-inherit">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                                    我的购物车
+                        </div>
+                </div>
+                <div class="trade-conter">
+                    <volist name="list" id="vo">
+                        <div class="indent-tab-title mb-space">
+                                <div class="commodity mt10 border-inherit ">
+                                    <div class="commodity-yuan" data-id="{weikucms:$vo['shopinfo']['id']}" data-shopid="{weikucms:$vo.id}">
+                                        <div class="select" >
+
+                                         </div> 
+                                    </div> 
+                                    <div class="order-tab-main-content-left">
+                                        <img src="{weikucms:$vo['shopinfo']['pic']}">
+                                    </div>
+                                    <div class="order-tab-main-content-right">
+                                        <div class="order-tab-main-content-right-size">
+                                            {weikucms:$vo['shopinfo']['name']}
+                                        </div>
+                                        <div class="order-tab-main-content-right-money clearfix user-cart">
+                                                    <span>参考零售价：￥{weikucms:$vo['shopinfo']['price']}</span>
+                                                   <!-- <span class="through f12">￥358.0</span>-->
+                                        </div>
+                                        <div class="order-tab-main-content-right-money clearfix user-cart" style="color:#4d4d4d; ">
+                                            (LQ<b class="lqqq">{weikucms:$vo['shopinfo']['LQ']}</b>+CQ<b class="cqqq">{weikucms:$vo['shopinfo']['CQ']}</b>)
+                                        </div>
+                                                <div class="clearfix">
+                                                        <div class="tab-left" data-LQ="{weikucms:$vo['shopinfo']['LQ']}" data-CQ="{weikucms:$vo['shopinfo']['CQ']}">
+                                                                <span class="icon-jian"></span>
+                                                                <span class="count_input counter plr">{weikucms:$vo['num']}</span>
+                                                                <span class="icon-jia"></span>
+                                                        </div>
+                                                        <div class="del" data-id="{weikucms:$vo.id}">删除</div>
+                                            </div>
+                                </div>
+                                </div>
+                        </div>
+                    </volist>
+
+                    <!--脚部模块-->
+                    <div class="bottom1">
+                        <div class="bottom1-main-left">
+                            <span class="commodity-yuan1"><div class="pitch"></div></span>
+                            <span class="bottom1-main-left-size">全选</span>
+                        </div>
+                        <div class="bottom1-main-right">
+                            <span class="bottom-money"style="margin-right: 0px;display: none;">应支付金额：
+                                <input type="number" class="inputprice summoney" name="wprice" value=""/>
+                                (LQ<span class="LQ">
+                                    {weikucms:$lq}
+                                </span>+CQ<span class="CQ">
+                                    {weikucms:$cq}
+                                </span>)</span>
+                            <span class="btn-close1" style="padding: 5px 10px;">订购</span>
+                        </div>
+                    </div>
+
+        <footer>
+            <ul class="footertab">
+                <li class="footselect">
+                    <a href="{weikucms::U('Ynd/index',array('token'=>$token,'openid'=>$openid))}">
+                        <p class="icon-232"></p>
+                        <p class="tab-title">首页</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{weikucms::U('Ynd/shoping',array('token'=>$token,'openid'=>$openid))}">
+                        <p class="icon-uniE624 colorf57d8e"></p>
+                        <p class="tab-title colorf57d8e">购物车</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}">
+                        <p class="icon-uniE628"></p>
+                        <p class="tab-title">我的</p>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,230 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+    .list-box__total{
+        font-size: 21px;
+    }
+</style>
+
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/store',array('token'=>$token))}" >积分商城活动管理</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/reveal',array('token'=>$token))}" >兑换记录</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function dongchu(){
+        /*'ShopOrder/export_order',array('token'=>$token)*/
+        var url = "{weikucms::U('Integralshop/duihuan_order',array('token'=>$token))}";
+        if(url){
+            $("#seach").attr('action',url);
+            $("#seach").submit();
+            location.href= url;
+        }else{
+            $("#seach").attr('action','');
+            return false;
+        }
+
+    }
+</script>
+<style type="text/css">
+    .fromstyle{width: 100%;}
+    .fones{float: left;}
+    .fones input{width: 60%;}
+    .tows{float: left;margin-right:5%;}
+    .tows input{width: 60%;}
+</style>
+<!--按需查找-->
+<div class="fromstyle">
+    <!--<form action="{weikucms::U('ServicestoreNew/reveal',array('token'=>$token))}" method="post">
+        <div class="fromones">
+            <div class="fones">会员编号：<input name="truename" value="{weikucms:$truename}" type="text"/></div>
+            <div class="fones">电话：<input name="phone" value="{weikucms:$phone}" type="text"/></div>
+            <div class="fones">礼品编号：<input name="giftkey" value="{weikucms:$giftkey}" type="text"/></div>
+            <div class="fones">日期：<input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="statdate" name="statdate" value="{weikucms:$statdate}" readonly/>
+                到 &nbsp<input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="enddate" name="enddate"  value="{weikucms:$enddate}" readonly/>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+
+        <div class="fromtews">
+            <div class="tows">店铺：
+                <select name="shop_id">
+                    <option value="0">全部</option>
+                    <volist name="info" id="shop">
+                        <option value="{weikucms:$shop.id}" <if condition="$shop_id eq $shop['id']">selected</if>>{weikucms:$shop.username}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="tows">兑换状态：
+                <select name="is_use">
+                    <option value="0">全部</option>
+                    <option value="1"<if condition="$is_use eq 1">selected</if>>未兑换</option>
+                    <option value="2" <if condition="$is_use eq 2">selected</if>>已兑换</option>
+                </select>
+            </div>
+            <div class="tows">兑换码：<input name="snnum" value="{weikucms:$snnum}" type="text"/></div>
+            <div class="tows">
+                <button type="submit" class="btn btn-success btn-sm" id="seach">搜索</button>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </form>-->
+</div>
+
+<!--<div class="row-fluid" >
+    <ul id="custom_group_navigator_div1" class="qb_clearfix unstyled">
+        <li class="list-box" style="width: 15%">
+            <div class="list-box__hd list-box__hd_bg_2">礼品送出总数</div>
+            <div class="list-box__bd">
+                <div class="list-box__count">
+                    <strong class="list-box__total" id="NewToday3"><if condition="$giftcount">{weikucms:$giftcount}<else />0</if></strong>
+                </div>
+            </div>
+        </li>
+
+        <li class="list-box" style="width: 15%">
+            <div class="list-box__hd list-box__hd_bg_1">已兑换积分总数</div>
+            <div class="list-box__bd">
+                <div class="list-box__count">
+                    <strong class="list-box__total" id="NewToday2"><if condition="$scorecount">{weikucms:$scorecount}<else />0</if></strong>
+                    <div class="list-box__trend" id="NewToday13" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                </div>
+            </div>
+        </li>
+
+
+        <li class="list-box" style="width: 15%">
+            <div class="list-box__hd list-box__hd_bg_1">兑换人数总数</div>
+            <div class="list-box__bd">
+                <div class="list-box__count">
+                    <strong class="list-box__total" id="NewToday72"><if condition="$mancount">{weikucms:$mancount}<else />0</if></strong>
+                    <div class="list-box__trend" id="NewToday182" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                </div>
+
+
+            </div>
+        </li>
+    </ul>
+</div>-->
+
+<div class="msgWrap">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>礼品名字</th>
+            <th>库存数量</th>
+            <th>剩余数量</th>
+            <th>会员名字</th>
+            <th>会员电话</th>
+            <th>操作者工号</th>
+
+            <th>操作者</th>
+            <th>领取时间</th>
+            <th>兑换状态</th>
+            <th>操作</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo" key="i">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.giftname}</td>
+                <td>{weikucms:$vo.num}</td>
+                <td>{weikucms:$vo.yusum}</td>
+                <td>{weikucms:$vo.name}</td>
+                <td>{weikucms:$vo.phone}</td>
+                <td>{weikucms:$vo.staffID}</td>
+
+                <td>{weikucms:$vo.staffIDs}</td>
+                <td>{weikucms:$vo.time|date="Y年m月d日",###}</td>
+                <td>
+                    <php>
+                        if($vo['is_use'] ==1){
+                        echo '未使用';
+                        }elseif($vo['is_use'] ==2){
+                        echo '已使用';
+                        }elseif($vo['is_use'] ==3){
+                        echo '已兑换，但未归还';
+                        }else{
+                        echo '其它';
+                        }
+                    </php>
+                </td>
+                <if condition="$vo[is_lock] eq 0">
+                        <if condition="$vo['is_use'] eq 1">
+                            <td><a  class="btn btn-success btn-sm b1" href="{weikucms::U('ServicestoreNew/duihuan',array('token'=>$token,'id'=>$vo['id']))}" >确认兑换</a></td>
+                            <else />
+                            <td><a  class="btn btn-danger btn-sm "  >已兑换</a></td>
+                        </if>
+                    <else/>
+                        <if condition="$vo['is_use'] eq 1">
+                            <td><a  class="btn btn-success btn-sm b2" href="{weikucms::U('ServicestoreNew/on_uses',array('token'=>$token,'id'=>$vo['id']))}" >确认使用</a></td>
+                            <elseif condition="$vo['is_use'] eq 3" />
+                            <td><a  class="btn btn-success btn-sm b3" href="{weikucms::U('ServicestoreNew/duihuans',array('token'=>$token,'id'=>$vo['id']))}" >使用完成</a></td>
+                            <else/>
+                            <td><a  class="btn btn-danger btn-sm " >使用完毕</a></td>
+                        </if>
+                </if>
+
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+
+</div>
+
+</div>
+<script>
+    $(".b1").click(function(){
+        var url=$(this).attr('href');
+        if(confirm('确定兑换吗？')){
+            //alert(7);
+        }else{
+            return false;
+        }
+    })
+    $(".b2").click(function(){
+        var url=$(this).attr('href');
+        if(confirm('确定使用吗？')){
+            //alert(7);
+        }else{
+            return false;
+        }
+    })
+    $(".b3").click(function(){
+        var url=$(this).attr('href');
+        if(confirm('确定使用完成吗？')){
+            //alert(7);
+        }else{
+            return false;
+        }
+    })
+</script>
+
+
+<include file="Public:footer"/>

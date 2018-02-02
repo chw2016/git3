@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+            $(function(){
+                $(".icon-outtest").touch(function(){
+                    $(".Mask").removeClass('is-visible')
+                    })
+                $(".indent-top-ul-li").touch(function(){
+                    $(this).addClass('tab-top-active').siblings().removeClass('tab-top-active');
+                    var index=$(this).index();
+                    $(".indent-tab-ul>li").eq(index).show().siblings().hide();
+                })
+                $(".commodity-yuan").touch(function(){
+                	if($(this).hasClass('opt')){
+                		$(this).removeClass('opt');
+                		$(this).find(".select").removeClass('pitch')
+                	}else{
+                		$(this).addClass('opt');
+                		$(this).find(".select").addClass('pitch');
+                	}
+                })
+            })
+            var eq;
+            function check_num(){
+                var num;
+                $(".Mask_password_ul li").each(function(i){
+                    // console.log(i);
+                    num=$(this).children("input").val();
+                    if(num==""){
+                        eq=i;
+                        return false;
+                    }
+                });
+                // alert("eq"+eq)
+                return eq;
+            }
+            
+	$(function(){  
+		$(".btn-Mask").touch(function(){
+			$('.Mask').addClass('is-visible');
+			$(".Mask_btn").removeClass('outstanding');   
+		})
+
+	$(".key_li").touch(function(){
+		if(eq==6){
+			// alert("不能输入了")
+			return false;
+		}
+                    else{
+			var  values=$(this).html();
+			var  index=check_num();
+			if(index==5){
+			// alert("不能输入了")
+			eq=6;
+			// $(".key .key_li ").addClass('select')
+			$(".Mask_btn").addClass('outstanding'); 
+			}else{
+			$(".Mask_btn").removeClass('outstanding');
+			}
+			$(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                    }   
+	})
+	$(".key_del").touch(function(){
+		var index;
+		if(eq==6){
+			index=eq-1;
+			eq--;
+		}else{
+			index=check_num()-1
+		} 
+		$(".Mask_btn").removeClass('outstanding');
+		$(".Mask_password_ul").find("li").eq(index).children("input").val("");              
+	});
+	$(".Mask_btn").click(function(event) {      
+		$(".Mask_password_ul_li").find("input").val("");
+		if(eq==6){
+			$(".Mask").removeClass('is-visible');  
+		}
+		eq=0;
+	})
+	$(".Mask_abolish").touch(function(){
+		$(".Mask").removeClass('is-visible');
+		$(".Mask_btn").removeClass('outstanding');
+		$("input").val("");
+		eq=0;
+	})
+        $('.sureshou').touch(function(){
+            var order_id = $(this).attr('data');
+            var url = "{weikucms::U('take_delivery',array('token'=>$token,'openid'=>$openid))}&order_id="+order_id;
+            $.post(url,{},function(rel){
+                if(rel.status == 1){
+                    alert('确认成功！');
+                    location.href = "{weikucms::U('record',array('token'=>$token,'openid'=>$openid))}";
+                }else{
+                    alert('系统繁忙，请稍后！');
+                    location.href = "{{weikucms::U('record',array('token'=>$token,'openid'=>$openid))}}";
+
+                }
+            },'json');
+        });
+   })
+   </script>
+        <style>
+            .shop-text{
+                text-align: left;
+            }
+            .shop-text div{
+                padding: 10px;
+                border-bottom: 1px solid #e6e6e6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="top-details">
+            <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+            <div class="details-center">
+                        我的订单
+            </div>
+        </div>
+        <div class="indent-top">
+                <ul class="indent-top-ul">
+                    <li class="indent-top-ul-li <if condition="$_GET[type] eq ''">tab-top-active</if> " onclick="location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}'">全部</li>
+                    <li class="indent-top-ul-li <if condition="$_GET[type] eq '1'">tab-top-active</if> " onclick="location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">待付款</li>
+                    <li class="indent-top-ul-li <if condition="$_GET[type] eq '2'">tab-top-active</if> " onclick="location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid,'type'=>2))}'">待收货</li>
+                   <!-- <li class="indent-top-ul-li <if condition="$_GET[type] eq '3'">tab-top-active</if> " onclick="location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid,'type'=>3))}'">待评价</li>-->
+                </ul>
+        </div>
+
+        <div class="indent-tab">
+            <ul class="indent-tab-ul">
+                <!--全部-->
+                <if condition="$_GET['type'] eq ''">
+                	<li>
+                    <volist name="list" id="vo">
+                       <div class="indent-tab-title">
+                					<!--<div class="trade">交易成功</div>-->
+                           <a href="{weikucms::U('recordinfo',array('token'=>$token,'openid'=>$openid,'order_id'=>$vo['id']))}">
+                           <volist name="vo['info']" id="so">
+                                <div class="commodity">
+                                    <div class="order-tab-main-content-left">
+                                        <img src="{weikucms:$so['shop']['pic']}" />
+                                    </div>
+                                    <div class="order-tab-main-content-right">
+                                        <div class="order-tab-main-content-right-size">
+                                            {weikucms:$so['shop']['name']}
+                                        </div>
+                                        <div class="order-tab-main-content-right-money clearfix">
+                                            参考零售价：￥{weikucms:$so['shop']['price']}
+                                            <div class="quantity">
+                                                ×{weikucms:$so.num}
+                                            </div>
+                                        </div>
+                                        <div class="order-tab-main-content-right-size">
+                                            (LQ{weikucms:$so['shop']['LQ']} + CQ{weikucms:$so['shop']['CQ']})
+                                        </div>
+                                    </div>
+                                </div>
+                           </volist>
+                           </a>
+                        <div class="size-right">
+                            <div class="shop-text">
+                                <div> 购买时间：{weikucms:$vo.add_time}</div>
+                                <div> 支付时间：<if condition="$vo['pay_time']">{weikucms:$vo.pay_time}<else/><span style="color: red;">未支付</span></if></div>
+                                <div> 实际扣除：(LQ{weikucms:$vo['LQ']} + CQ{weikucms:$vo['CQ']})</div>
+                            </div>
+                            <div class="total">
+                                实际总计：￥{weikucms:$vo.money}
+                            </div>
+                            <span class="indent-btn">
+                                <a href="{weikucms::U('recordinfo',array('token'=>$token,'openid'=>$openid,'order_id'=>$vo['id']))}">
+                                    <span class="colorf57789">详情</span>
+                                </a>
+                            </span>
+                            <span class="indent-btn">
+                                <a href="http://m.kuaidi100.com/index_all.html?type=圆通&postid=123546&callbackurl={weikucms::U('Ynd_record',array('token'=>$token,'openid'=>$openid))}">
+                                    <span class="colorf57789">查看物流</span>
+                                </a>
+                            </span>
+                            <!--<span class="indent-btn">
+                                <a href="{weikucms::U('Ynd/evaluateinfo',array('token'=>$token,'openid'=>$openid,'pro_id'=>$vo['pro_id']))}">
+                                    <span class="colorf57789">评论</span>
+                                </a>
+                            </span>-->
+                        </div>
+                       </div>
+                     </volist>
+                	</li>
+                    <elseif condition="$_GET['type'] eq '1'"/>
+                    <!--待付款的-->
+                    <li class="account">
+                    <volist name="list" id="vo">
+                        <div class="indent-tab-title">
+                            <a href="{weikucms::U('recordinfo',array('token'=>$token,'openid'=>$openid,'order_id'=>$vo['id']))}">
+                            <volist name="vo['info']" id="so">
+                            <div class="commodity mt10">
+                                <!--<div class="commodity-yuan">
+                                    <div class="select">
+                                    </div>
+                                </div>-->
+                                <div class="order-tab-main-content-left">
+                                    <img src="{weikucms:$so['shop']['pic']}" />
+                                </div>
+                                <div class="order-tab-main-content-right">
+                                    <div class="order-tab-main-content-right-size">
+                                        {weikucms:$so['shop']['name']}
+                                    </div>
+                                    <div class="order-tab-main-content-right-money clearfix">
+                                        参考零售价：￥{weikucms:$so['shop']['price']}
+                                        <div class="quantity">
+                                            ×{weikucms:$so.num}
+                                        </div>
+                                    </div>
+                                    <div class="order-tab-main-content-right-size">
+                                        (LQ{weikucms:$so['shop']['LQ']} + CQ{weikucms:$so['shop']['CQ']})
+                                    </div>
+                                </div>
+                            </div>
+                            </volist>
+                            </a>
+                            <!--<volist name="vo['info']" id="so">
+                                <div class="commodity mt10">
+
+                                    <div class="order-tab-main-content-left">
+                                        <img src="{weikucms:$so['shop']['pic']}" />
+                                    </div>
+                                    <div class="order-tab-main-content-right">
+                                        <div class="order-tab-main-content-right-size">
+                                            {weikucms:$so['shop']['name']}
+                                        </div>
+                                        <div class="order-tab-main-content-right-money clearfix">
+                                            零售建议价：￥{weikucms:$so['shop']['price']}
+                                            <div class="quantity">
+                                                ×{weikucms:$so.num}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </volist>-->
+                            <div class="size-right">
+                                <div class="shop-text">
+                                    <div> 购买时间：{weikucms:$vo.add_time}</div>
+                                    <if condition="$vo['pay_time']">
+                                        <div> 支付时间：{weikucms:$vo.pay_time}</div>
+                                    </if>
+                                    <div> 实际扣除：(LQ{weikucms:$vo['LQ']} + CQ{weikucms:$vo['CQ']})</div>
+                                </div>
+                                <div class="total">
+                                    实际付款：￥{weikucms:$vo.money}
+                                </div>
+                                <!--<span class="indent-btn">取消订单</span>-->
+                                <span class="indent-btn payment" onclick="location.href='{weikucms::U('recordinfo',array('token'=>$token,'openid'=>$openid,'order_id'=>$vo['id']))}'">付款</span>
+                            </div>
+                        </div>
+                    </volist>
+                        <!--<div class="bottom">
+                            <span class="bottom-money">合计：￥298.0</span>
+                            <span class="btn-close">结算</span>
+                        </div>-->
+
+                    </li>
+                    <elseif condition="$_GET['type'] eq '2'"/>
+                    <!--待收货-->
+                    <li>
+                        <volist name="list" id="vo">
+                        <div class="indent-tab-title">
+                            <a href="{weikucms::U('recordinfo',array('token'=>$token,'openid'=>$openid,'order_id'=>$vo['id']))}">
+                            <volist name="vo['info']" id="so">
+                            <div class="commodity mt10">
+                                <div class="order-tab-main-content-left">
+                                    <img src="{weikucms:$so['shop']['pic']}" />
+                                </div>
+                                <div class="order-tab-main-content-right">
+                                    <div class="order-tab-main-content-right-size">
+                                        {weikucms:$so['shop']['name']}
+                                    </div>
+                                    <div class="order-tab-main-content-right-money clearfix">
+                                        零售建议价：￥{weikucms:$so['shop']['price']}
+                                        <div class="quantity">
+                                            ×{weikucms:$so.num}
+                                        </div>
+                                    </div>
+                                    <div class="order-tab-main-content-right-size">
+                                        (LQ{weikucms:$so['shop']['LQ']} + CQ{weikucms:$so['shop']['CQ']})
+                                    </div>
+                                </div>
+                            </div>
+                            </volist>
+                                </a>
+                            <div class="size-right">
+                                <div class="shop-text">
+                                    <div> 购买时间：{weikucms:$vo.add_time}</div>
+                                    <if condition="$vo['pay_time']">
+                                        <div> 支付时间：{weikucms:$vo.pay_time}</div>
+                                    </if>
+                                    <div> 实际扣除：(LQ{weikucms:$vo['LQ']} + CQ{weikucms:$vo['CQ']})</div>
+                                </div>
+                                <div class="total">
+                                    实际付款：￥{weikucms:$vo.money}
+                                </div>
+	            					<span class="indent-btn">
+	            						<a href="http://m.kuaidi100.com/index_all.html?type=圆通&postid=123546&callbackurl={weikucms::U('Ynd_record',array('token'=>$token,'openid'=>$openid))}">
+                                            <span class="colorf57789">查看物流</span>
+                                        </a>
+	            					</span>
+                                <span class="indent-btn payment btn-Mask sureshou" data="{weikucms:$vo['id']}">确认收货</span>
+                            </div>
+                        </div>
+                            </volist>
+
+                    </li>
+                    <elseif condition="$_GET['type'] eq '3'"/>
+                    <!--待评价-->
+                    <li>
+                        <div class="indent-tab-title">
+                            <div class="commodity mt10">
+                                <div class="order-tab-main-content-left">
+                                    <img src="{weikucms::STATICS}/wapweiui/ynd/images/img3.png" />
+                                </div>
+                                <div class="order-tab-main-content-right">
+                                    <div class="order-tab-main-content-right-size">
+                                        云南白药千草堂螺旋藻精片0.5g*1020片小袋试用天然程海湖螺旋
+                                    </div>
+                                    <div class="order-tab-main-content-right-money clearfix">
+                                        ￥298.0
+                                        <div class="quantity">
+                                            ×1
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="comment.html">
+                                <div class="size-right">
+                                    <span class="indent-btn payment">评价</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="indent-tab-title">
+                            <div class="commodity mt10">
+                                <div class="order-tab-main-content-left">
+                                    <img src="{weikucms::STATICS}/wapweiui/ynd/images/img3.png" />
+                                </div>
+                                <div class="order-tab-main-content-right">
+                                    <div class="order-tab-main-content-right-size">
+                                        云南白药千草堂螺旋藻精片0.5g*1020片小袋试用天然程海湖螺旋
+                                    </div>
+                                    <div class="order-tab-main-content-right-money clearfix">
+                                        ￥298.0
+                                        <div class="quantity">
+                                            ×1
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="comment.html">
+                                <div class="size-right">
+                                    <span class="indent-btn payment">评价</span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                </if>
+            </ul>
+        </div>
+                 <!-- 弹出框 -->
+     <!-- <div class="Mask">
+          <div class="Mask_pop">
+            <div class="pass_word">
+                    <div>确认收货</div>
+                    <div>183****5689</div>
+            </div>
+            <div class="Mask-title">
+                <div>
+                    289元
+                </div>
+                <div>
+                    云南白药千草堂螺旋藻精片0.5g...
+                </div>
+            </div>
+            <div class="Mask_password">
+                <ul class="Mask_password_ul">
+                        <li class="Mask_password_ul_li">
+                            <input type="password"  readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                        <li class="Mask_password_ul_li">
+                            <input type="password" readonly="false"/>
+                        </li>
+                </ul>
+            </div>
+            <div class="Mask_main clearfix">
+                        <span class="Mask_abolish">取消</span>
+                        <span class="Mask_btn">确认收货</span>
+                    </div>
+            </div>
+            <div class="keyboard">
+                    <ul class="key">
+                        <li class="key_li">1</li>
+                        <li class="key_li">2</li>
+                        <li class="key_li">3</li>
+                        <li class="key_li">4</li>
+                        <li class="key_li">5</li>
+                        <li class="key_li">6</li>
+                        <li class="key_li">7</li>
+                        <li class="key_li">8</li>
+                        <li class="key_li">9</li>
+                        <li class="key_li">&nbsp;</li>
+                        <li class="key_li">0</li>
+                        <li class="key_del">×</li>
+                    </ul>
+            </div>
+          </div>-->
+        <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

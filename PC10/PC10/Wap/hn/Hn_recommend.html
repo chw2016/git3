@@ -1,0 +1,106 @@
+<html><head>
+    <title>推荐买房</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
+<body>
+
+<header class="header-top">
+    推荐买房
+</header>
+<section class="ucenter-main animated fadeInDown">
+    <div class="space-10"></div>
+    <ul class="um-list um-list-form" id="J_TJJJRPhone">
+        <li><label for="customer_name" class="label">姓名</label><input type="text" placeholder="请输入客户的姓名" id="customer_name"></li>
+        <li><label for="customer_phone" class="label">手机</label><input type="text" placeholder="请输入客户的手机号码" id="customer_phone" pattern="[0-9]*"></li>
+        <!--<li class="li-phone" style="display:none;"><label for="customer_phone2" class="label">手机2</label><input type="text" placeholder="请输入手机号码2" id="customer_phone2" pattern="[0-9]*"><i class="icon-remove"></i></li>-->
+    </ul>
+    <div class="space-10"></div>
+    <ul class="um-list um-list-form" id="J_chooseProject">
+        <li><label class="label">意向楼盘</label><input type="text" placeholder="请选择客户意向的楼盘" id="customer_project" readonly="readonly" class="color-blue" data-ids="" value=""><i class="icon-arrow-gray"></i></li>
+    </ul>
+    <div class="space-10"></div>
+    <ul class="um-list um-list-form">
+        <li><label for="customer_mark" class="label">备注</label><input type="text" placeholder="选填" id="customer_mark"></li>
+    </ul>
+    <p class="um-tips"><em>提示：</em>请务必提交真实的客户信息，若多次提交虚假信息，您的账号会被禁用。</p>
+</section>
+<div class="space-20"></div>
+<aside class="account-submit">
+    <input type="hidden" id="waid" value="293">
+    <input type="hidden" id="uid" value="1141259">
+    <input type="hidden" id="submitUrl" value="{weikucms::U('recommend_check',array('token'=>$token,'openid'=>$openid))}">
+    <input type="hidden" id="Url" value="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}">
+    <button class="ui-btn-lg ui-btn-danger" type="button" id="J_submitCustomer">马上推荐</button>
+</aside>
+
+<div class="space-20"></div>
+
+
+<section class="dialog-choose-project animated fast slideInUp" style="display:none;">
+    <div class="dcp-main">
+        <div class="ui-form ui-border-t">
+			<if condition="$id neq ''">
+			<div class="ui-form-item ui-form-item-switch ui-border-b">
+                    <span>{weikucms:$re_house.title}</span>
+                    <label class="ui-checkbox">
+                        <input type="checkbox" class="cur_house" value="{weikucms:$re_house.id}">
+                    </label>
+                </div>
+			<else/>
+            <div class="ui-form-item ui-form-item-switch ui-border-b">
+                    <span>待定</span>
+                    <label class="ui-checkbox">
+                        <input type="checkbox" class="cur_house" value="0">
+                    </label>
+            </div>
+			<volist name="house" id="v">
+			<div class="ui-form-item ui-form-item-switch ui-border-b">
+                    <span>{weikucms:$v.title}</span>
+                    <label class="ui-checkbox">
+                        <input type="checkbox" class="cur_house" value="{weikucms:$v.id}">
+                    </label>
+            </div>
+			</volist>
+			</if>
+				</div>
+        <div class="space-50"></div>
+        <div class="space-50"></div>
+    </div>
+</section>
+<aside class="account-submit account-submit-fixed" style="display:none;">
+    <!--<p class="um-tips"><em>提示：</em>最多只能选择3个项目</p>-->
+    <div class="ui-btn-group-tiled ui-btn-wrap">
+        <button class="ui-btn-lg ui-btn-danger" id="J_submitProjectChoose">确认</button> <button class="ui-btn-lg" id="J_cancelProjectChoose">取消</button>
+    </div>
+</aside>
+
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+
+
+/*$('#J_submitCustomer').click(function(){
+	alert(12);
+	$('#J_submitCustomer').text('提交中...');
+	var customer_name = $('#customer_name').val();
+	var customer_phone = $('#customer_phone').val();
+	var customer_phone2 = $('#customer_phone2').val();
+	var cur_house = $('#cur_house').val();
+	var customer_mark = $('#customer_mark').val();
+	$.post("{weikucms::U('recommend_check',array('token'=>$token,'openid'=>$openid))}",{customer_name:customer_name,customer_phone:customer_phone,customer_phone2:customer_phone2,cur_house:cur_house,customer_mark:customer_mark},function(data){
+		alert(cur_house);
+	},'json')
+	
+})*/
+</script>
+</body></html>

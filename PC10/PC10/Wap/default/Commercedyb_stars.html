@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<style type="text/css">
+			body{
+				background-color: rgb(240,240,240);
+				padding-bottom: 6px;
+			}
+          .fixBg{
+                background-image:url(../img/logo-bg.jpg);
+                background-position:50%;
+                background-size:cover;
+                background-repeat:no-repeat;
+                font-size: 14px ;!important;
+            }
+            .ptb5 {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 14px;
+            }
+		</style>
+                <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            wx.config({
+                appId: '{weikucms:$signPackage.appId}',
+                timestamp: {weikucms:$signPackage.timestamp},
+                nonceStr: '{weikucms:$signPackage.nonceStr}',
+                signature: '{weikucms:$signPackage.signature}',
+                jsApiList: [
+                    'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+                ]
+            });
+            wx.ready(function () {
+                // 在这里调用 API
+                wx.hideOptionMenu();
+            });
+
+        </script>
+    </head>
+    <body>
+    	<div class="bbsHeader header-green-bg" <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">style="background: url({weikucms::STATICS}/wapweiui/loan/images/bg.png);"</if>>
+    		<div class="bbsLogoWrap circle">
+    			<div class="bbsLogo circle fixBg" style="background-image:url({weikucms:$tpl.headpicurl})"></div>
+    		</div>
+    		<div class="bbsInfo setLeft">
+    			<div class="bbsName white">
+    				{weikucms:$tpl.name}微社区
+    			</div>
+    			<div class="bbsMoreInfo">
+    				<span>话题{weikucms:$count}</span>
+    				<span>访问{weikucms:$countMicroUser}</span>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="rankBox white-bg">
+    		<div class="myul rankItem rankItemTittle">
+    			<div class="icon icon-crown rankIcon"></div>
+    			<div class="rankName">
+    				排名
+    			</div>
+    			<div class="ranNum">
+    				积分数
+    			</div>
+    		</div>
+            <volist name="info" id="vo">
+                <div class="myul rankItem ">
+                    <div class="rankIcon border-4">{weikucms:$i}</div>
+                    <div class="circle suserlogo fixBg" <if condition="$vo['headimgurl'] eq ''"><else/>style="background-image:url({weikucms:$vo.headimgurl})"</if>></div>
+                    <div class="rankName">
+                        <if condition="$vo['name'] eq ''">
+                            游客
+                        <else/>
+                            {weikucms:$vo.name|substr=0,16}
+                        </if> 
+                    </div>
+                    <div class="bbsGrade bbsInlineGrade myul">
+                            <div class="icon icon-grade">
+                                
+                            </div>
+                            <div class="bbsGradeDetail crown-yellow-bg white">{weikucms:$vo.lvl}</div>
+                        </div>
+                    <div class="ranNum">
+                        {weikucms:$vo.score}
+                    </div>
+                </div>
+            </volist>
+    	</div>
+        <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">
+            <include file="Loan:foot"/>
+        </if>
+    </body>
+</html>

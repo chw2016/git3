@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)http://trade.koudaitong.com/wxpay/pay?order_no=E20141125220141517232&forbid_wxpay=1 -->
+<html class="no-js " lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_1728f7a531.css" onerror="_cdnFallback(this)">    
+<link rel="stylesheet" href="tpl/Wap/default/common/shop/css/trade_8c1bc19b80.css" onerror="_cdnFallback(this)">
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            height: 15px;
+            width: 86px;
+            margin: 15px auto 0 auto;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+</head>
+
+<body class=" ">
+        <!-- container -->
+    <div class="container js-page-content wap-page-order">
+                <div class="content confirm-container">
+    <div class="app app-order">
+        <div class="app-inner inner-order" id="js-page-content">
+                        <!-- 通知 -->
+                        <!-- 商品列表 -->
+            <div class="block block-order block-border-top-none">
+    <hr class="margin-0 left-10">
+    <div class="block block-list block-border-top-none block-border-bottom-none">
+        
+        <div class="block-item name-card name-card-3col clearfix">
+            <a href="{weikucms::U('Store_new/product',array('token'=>$token,'wecha_id'=>$wecha_id,'id'=>$data[parid]))}" class="thumb"><img class="js-view-image" src="{weikucms:$data[logourl]}" alt="口袋通“VIP俱乐部”付费通道"></a>
+            <div class="detail">
+                <a href="{weikucms::U('Store_new/product',array('token'=>$token,'wecha_id'=>$wecha_id,'id'=>$data[parid]))}"><h3>{weikucms:$data['name']}</h3></a>
+                <p class="c-gray ellipsis">
+                    {weikucms:$data['attr']}                 </p>
+            </div>
+            <div class="price-num">
+                <div class="price">¥&nbsp;<span>
+                    {weikucms:$data[price]}
+                </span></div>
+                <div class="num">×<span class="num-txt">{weikucms:$data[total]}</span></div>
+                            </div>
+                    </div>
+            </div>     
+    <hr class="margin-0 left-10">
+    <div class="bottom">商品总价：
+        <span>¥&nbsp;
+            <?php echo $data['total']*$data['price'];?>
+    </span>
+        &nbsp;&nbsp;&nbsp;
+    <span>邮费:￥
+        {weikucms:$data[mailpay]}
+    </span>
+
+    </div>
+</div>            <!-- 物流 -->
+                        <div class="block express" id="js-logistics-container">
+
+                <div class="js-logistics-content logistics-content js-express">
+                <div class="">
+                <div class="block block-form block-border-top-none block-border-bottom-none"
+                <if condition="$_GET['token'] eq '5e06d4d7477b35508c07d8ec81250286' AND $_GET['area'] eq 1">
+                style="display: none;"
+                </if>
+                >
+    <div class="js-order-address block-item-express-panel" style="padding-left:0;">
+        <div class="opt-wrapper"><a href="{weikucms::U('Store_new/edit',array('wecha_id'=>$data[wecha_id],'token'=>$token,'id'=>$data[id]))}" class="btn btn-xxsmall btn-grayeee butn-edit-address js-butn-edit-address">修改</a></div>
+        <ul>
+            <if condition="$_GET['token'] eq '5e06d4d7477b35508c07d8ec81250286'">
+            <li>发票邮寄地址</li>
+            </if>
+            <li>
+            <span>
+                    姓名:{weikucms:$data[truename]}
+            </span>
+                <br/>
+                电话:{weikucms:$data[tel]}</li>
+            <li>地址:{weikucms:$data[address]} </li>
+            <!--<li>sa dfddfs</li>-->
+        </ul>
+    </div>
+
+
+
+</div>
+                    <div class="block express" id="js-logistics-container">
+                <div class="js-logistics-content logistics-content js-express"><div class=""><div class="block block-form block-border-top-none block-border-bottom-none">
+    <div class="js-order-address block-item-express-panel" style="padding-left:0;">
+        <ul>
+            <?php if(!empty($coupon) AND !$disableYHQ):?>
+            <li>
+                <input type="checkbox"  id="coupon">优惠券:
+                <select style="width: 200px;border: 1px solid #ccc;border-radius: 5px;" id="con">
+                    <volist name="coupon" id="cou">
+                        <option value="{weikucms:$cou.amount}" style="width: 200px;" sid="{weikucms:$cou.id}">{weikucms:$cou.amount}元优惠券</option>
+                    </volist>
+                </select>
+            </li>
+            <?php endif;?>
+            <br/>
+            <?php if(!empty($change) && !empty($user) &&$change['score']!=0):?>
+            <li>
+                <input type="checkbox" id="score" >积分:
+                &nbsp;&nbsp;&nbsp;<input type="text" value="0" id="usescore" style="width: 100px;border: 1px solid #ccc;border-radius: 5px;"/>您当前积分<span id="youscore">{weikucms:$user.score}</span>
+            </li>
+
+            <br/>
+            <li>
+               &nbsp;注:积分兑换比例 &nbsp;{weikucms:$change.score}积分=1元
+            </li>
+            <?php endif;?>
+            <!--<li>sa dfddfs</li>-->
+        </ul>
+    </div>
+
+
+
+</div>
+ 
+
+
+</div></div>
+                <div class="js-logistics-content logistics-content js-self-fetch hide"></div>
+            </div>
+                        <!-- 支付 -->
+            <div class="js-step-topay">
+
+                <div class="js-used-coupon block" style="display: none;">
+                </div>
+
+                <div class="block">
+                    <div class="js-order-total block-module order-total animated">
+<strong class="js-real-pay c-orange js-real-pay-temp">
+    需付：￥<span id="paytotal">
+       <?php echo $data[total]*$data[price]+$data[mailpay];?>
+    </span>
+</strong></div>
+                </div>
+                <div class="action-container" id="confirm-pay-way-opts"><div style="margin-bottom: 10px;">
+                    <!--<button type="button" class="btn btn-block btn-large  btn-green"  onclick="return pay()">安全支付</button></div><div style="margin-bottom: 10px;">-->
+                    <?php if($data['paid']==0):?>
+                    <button type="button" data-pay-type="baiduwap" class="btn btn-block btn-large btn-green" id="wxpay" paytype="Weixin" onclick="return wxpay()">微信支付</button>
+                    <?php else:?>
+                    <button type="button" data-pay-type="baiduwap" class="btn btn-block btn-large btn-green">该订单已经支付</button>
+                    <?php endif;?>
+                </div>
+                </div>
+                <!--<div class="center action-tip js-pay-tip">支付完成后，如需退换货请及时联系卖家</div>-->
+            </div>
+        </div>
+        <div class="app-inner inner-order peerpay-gift" style="display:none;" id="sku-message-poppage">
+</div>
+    </div>
+</div>
+
+    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+        <input type="hidden" name="order_money" value="<?php echo $data['total']*$data['price']+$data[mailpay];?>">
+        <input type="hidden" name="order_text" value="{weikucms:$data['name']}">
+        <input type="hidden" name="orderid" value="{weikucms:$data['orderid']}">
+
+        <input type="hidden" name="openid" value="{weikucms:$openid}">
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store_new&a=my&openid={weikucms:$openid}">
+        <input type="hidden" name="type" value="Store_new_goods_order">
+
+    </form>
+
+<div id="js-self-fetch-modal" class="modal order-modal"></div>
+
+
+
+</div>
+    </div>            </div>
+
+    <!-- JS -->
+    <script type="text/javascript" src="tpl/Wap/default/common/shop/js/jquery-1[1].2.6.js"></script>
+      <script type="text/javascript">
+            function pay(){
+                var orderid="{weikucms:$data[orderid]}";
+                var orderName="{weikucms:$data[name]}";
+                var price="{weikucms:$data[total]}"*"{weikucms:$data[price]}";
+                location.href="{weikucms::U('Wap/Alipay/pay',array('token'=>$token,'wecha_id'=>$wecha_id))}"+"&orderid="+orderid+"&orderName="+orderName+"&price="+price;
+            }
+
+            function wxpay(){
+                 var score=$("#score").attr("checked");
+                 var coupon=$("#coupon").attr("checked");
+				 var sid=$("#con option:selected").attr('sid');
+                 var youscore=parseInt($("#youscore").html());
+                 var usescore=parseInt($("#usescore").val());
+                 var pay=parseInt($("#paytotal").html());//需要支付金额
+                 var change="{weikucms:$change[score]}";//兑换比例
+				 var url="{weikucms::U('Store_new/change',array('token'=>$token,'wecha_id'=>$wecha_id,'id'=>$data['id']))}";
+                 var  preg=/^\d+$/;
+                if(score){
+                     if(usescore>youscore || !preg.test(usescore)){
+                         alert("您的积分不够");
+                         return false;
+                     }else{
+                         var dif=usescore/change;//积分抵消金额
+						 url+="&score="+dif;
+                     }
+                 }else{
+                     var dif=0;
+                 }
+                 if(coupon){
+                     var con=$("#con").val();//优惠券抵消金额
+					 url+="&sid="+sid;
+                 }else{
+                     var con=0;
+                 }
+                var total=pay-dif-con;
+				if(total<0){
+				   alert("支付金额不能小于0");return false;
+				}
+                $.post(url,function(data){
+                    if(data.status==0){
+                       return false;
+                    }
+                },"json");
+                $("input[name=order_money]").val(total);
+                 $("#myweipayform").submit();
+            }
+      </script>
+      <include file="./tpl/Wap/default/Store_shop_bottom.html" />
+</body></html>

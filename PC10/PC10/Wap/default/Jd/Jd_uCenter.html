@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes"/><!-- 页面以应用风格显示 ios -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 页面以应用风格显示 ios -->
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="format-detection" content="email=no" /><!-- 不识别邮件地址 -->
+<title>个人中心</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/login.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    var h=window.screen.height;
+    $('.cen').height(h-150);
+})
+</script>
+    <style>
+        .top span.tels {
+            text-align: center;
+            height: 20px;
+            display: inline-block;
+            float:inherit;
+            width:inherit;
+        }
+        .top span img {
+        width: 100%;
+        border: 0;
+        height:inherit;
+        }
+    </style>
+</head>
+<body>
+	<div class="top">
+        <span class="imgs" style="width: 80px;">
+            <if condition="$User">
+                <img src="{weikucms:$User.head}">
+                <else/>
+                <img src="{weikucms::RES}/Jd/images/login.png">
+            </if>
+        </span><!-- {weikucms:$wxusers['headimgurl']} -->
+        <div style="text-align: center;">
+            <span class="tels" style="margin-top:12px;font-size:16px;vertical-align: super;">{weikucms:$user.name}</span>
+            <if condition="$User.grade eq 1">
+            <span style="  width: 10%;display: inline-block;"><img src="{weikucms::RES}/Jd/images/vip.png" alt=""/></span>
+            </if>
+        </div>
+		<!-- <span class="tels" style="color:#a4bef0;">15000556650</span> -->
+	</div>
+	<div class="cen">
+		<div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('myApply',array('token'=>session('token'),'openid'=>$openid))}">我的顾问申请</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+		</div>
+		<div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('myAdviser',array('token'=>session('token'),'openid'=>$openid))}">我的顾问注册</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+		</div>
+		<div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('myWz',array('token'=>session('token'),'openid'=>$openid))}">我的方案上传</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+		</div>
+        <div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('Jd/myconment',array('token'=>$token,'openid'=>$openid))}">我的资料</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+        </div>
+        <div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('Jd/modify',array('token'=>$token,type=>1,'openid'=>$openid))}">修改密码</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+        </div>
+
+        <div class="div_span">
+            <span><a style="display:block; width:100%; color:#000;" href="{weikucms::U('Jd/login',array('token'=>$token,type=>1,'openid'=>$openid))}">注销</a></span>
+			<span class="div_span right">
+				<i class="fa fa-angle-right"></i>
+			</span>
+        </div>
+
+		<div style="height: 200px;" ></div>
+
+	</div>
+	
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>{weikucms:$info.title}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.mgs.js"></script>
+    <style>
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; }
+        #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+        .text img{
+            width: 100%;
+        }
+    </style>
+    <!--<script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').each(function(i,o){
+                $(this).click(function(){
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+            })
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                // $(this).children('img').hide();
+            })
+        })
+    </script>-->
+
+
+</head>
+
+<body id="activity-detail">
+<!-- 	-->
+<div class="page-bizinfo">
+    <div class="header">
+     <!--   <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:20px;">{weikucms:$info.title}</h1>-->
+       <!-- <p class="activity-info">
+                    <span id="post-date" class="activity-meta no-extra">
+                        2015-06-10                    </span>
+                    <span class="activity-meta">
+                        如多分期爱美丽                    </span>
+
+        </p>-->
+    </div>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+    <div id="img-content">
+        <!--<div class="media" id="media">
+        </div>-->
+        <div class="text">
+
+        {weikucms:$info.info}
+
+        </div>
+
+
+
+
+        <footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;">
+            <span>{weikucms:$tpl.name}-万普微信</span>
+        </footer>
+
+    </div>
+
+</div>
+<include file="Loan:foot"/>
+</body>
+
+</html>

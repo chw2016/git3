@@ -1,0 +1,80 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>我的订单</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/a.css">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+
+
+    <![endif]-->
+</head>
+<body>
+<!--<div class="my-top-bar">
+    <div class="my-bar order-bar">
+        <a id="btn-back" href="javascript:history.go(-1);" class="my-bar-btn pull-left"><span class="icon-chevron-left"></span></a>    <a href="/u/home" class="my-bar-btn pull-right"><span class="icon-user my-bg-icon"></span></a>
+        <h1>订单列表</h1>
+    </div>
+</div>-->
+<div class="my-container" style="padding-top:20px; padding-bottom:10px;">
+
+
+    <volist name="list" id="vo">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="order-top">
+<span class="pull-right">
+<span style="color:#CCCCC">
+<if condition="$vo['paystatus'] eq 0">
+    未付款
+    <elseif condition="$vo['paystatus'] eq -1" />
+        已取消
+    <elseif condition="$vo['paystatus'] eq 1" />
+    已付款
+    <else />
+
+</if>
+</span></span>
+            <span class="order-num">订单号：<span>{weikucms:$vo.orderid}</span></span></div>
+        <div class="row">
+            <a href="{weikucms::U('no_credit',array('token'=>$token,'openid'=>$openid,'id'=>$vo['cid']))}" style="display:block;">
+                <div class="col-xs-4"><img src="{weikucms:$vo.pic}" width="100%"></div>
+                <div class="col-xs-8" style="padding-left:0px;">
+                    <div class="order-pname">{weikucms:$vo.title}</div>
+                    <div class="order-ptype"></div>
+                    <span style="font-size:12px; color:#999;">出游日期：{weikucms:$vo.date_time}</span>
+                </div>
+            </a>
+        </div>
+        <hr style="margin-top:5px; margin-bottom:5px;">
+        <div class="order-price">
+            <span class="order-price-right">金额：<span style="font-size:18px; color:#FF0000">¥{weikucms:$vo.shoufu}</span></span>
+
+
+        </div>
+        <hr style="margin-top:5px; margin-bottom:5px;">
+        <div class="row order-btn-group">
+            <div class="col-xs-4"><a  class="btn btn-order-info order-detail-btn" href="{weikucms::U('order_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">订单明细</a></div>
+
+        </div>
+        <hr hidden="" style="margin-top:5px;margin-bottom:5px;">
+
+
+    </div>
+</div>
+
+    </volist>
+
+</div>
+
+
+
+</body>
+</html>

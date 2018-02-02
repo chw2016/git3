@@ -1,0 +1,389 @@
+<include file="Public:public"/>
+
+<style>
+    #append:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border-left: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        transform: rotate(45deg);
+        left: -10px;
+        top:10px;
+    }
+    .infos{
+        padding:20px 50px;
+        background-color:#FFF;
+    }
+</style>
+<div class="infos">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        <if condition="$task['id'] eq ''">添加任务<else/>编辑任务</if>
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Medias/index',array('token'=>$token,'aid'=>$_GET['aid']))}">
+            返回
+        </a>
+    </h4>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#content', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+    });
+</script>
+
+
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+<table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+<input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+<tr>
+    <th valign="top"><label for="key">任务编号</label></th>
+    <td>
+        <if condition="$task['key'] neq ''">
+            <input type="input" class="px" id="key" value="{weikucms:$task['key']}" name="key" style="width:300px" placeholder="此处填写改任务的编号">
+            <else/>
+            <input type="input" class="px" id="key" value="{weikucms:$data}" name="key" style="width:300px" placeholder="此处填写改任务的编号">
+        </if>
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="title">任务名称</label></th>
+    <td>
+        <input type="input" class="px" id="title" value="{weikucms:$task['title']}" name="title" style="width:300px" placeholder="此处填写任务的名称">
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="cid">任务大类</label></th>
+    <td>
+        <select id="cid">
+            <option value="">请选择</option>
+            <volist id="so" name="classification">
+                <option value="{weikucms:$so.id}" <if condition="$so.id eq $task['cid']">selected="selected"<else/></if>>{weikucms:$so.cname}</option>
+            </volist>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <th valign="top">任务标签</th>
+    <script type="text/javascript">
+        $(function(){
+            var lid = "{weikucms:$task['lid']}";
+            lid = lid.substr(1);
+            lid = lid.substring(0,lid.length-1);
+
+            var all  = lid.split('|');
+
+            $('.lab').each(function(){
+                for(var i = 0;i < all.length;i++){
+                    if ($(this).html().indexOf(all[i]) > 0) {
+                        $(this).find('input').attr('checked','checked');
+
+                    }
+                }
+            })
+        })
+    </script>
+    <td>
+        <div style="width: 600px;" id="labelsid">
+            <volist id="so" name="label" key="i">
+                <div style="width:98px; float: left;" class="lab" >
+                    <input name="labels" value="{weikucms:$so.id}" type="checkbox"/><span>{weikucms:$so.lname}</span>
+                </div>
+            </volist>
+            <div style="clear: both"></div>
+        </div>
+    </td>
+</tr>
+<script type="text/javascript">
+    $(function(){
+        $('#cid').change(function(){
+            $('input[name=labels]').children().remove();
+            $.post("{weikucms::U('Media/ajaxPid',array('token'=>$token))}",{cid:$(this).val()},function(data){
+                $('#labelsid').html(data.option)
+            },'json');
+        })
+
+    });
+</script>
+
+<tr>
+    <th valign="top"><label for="pic"> 任务主题图片：</label></th>
+    <td>
+        <if condition="$tid neq '' ">
+            <img style="display: block;" id="image_show" class="indexs_img" src="{weikucms:$task['pic']}">
+            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$task['pic']}" style="width:300px;"   />
+            <span class="ke-button-common" id="upload" style="margin-left: 5px;margin-top: 10px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;line-height: 52px;">建议图片大小为：640px*427px</span>
+            <else/>
+            <img style="display: none;" id="image_show" class="indexs_img" src="">
+            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="" style="width:300px;"   />
+            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px; ">建议图片大小为：640px*427px</span>
+        </if>
+    </td>
+    <td>
+        &nbsp;
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="starttime">截止时间</label></th>
+    <td>
+        <input type="input" class="px" id="starttime" value="{weikucms:$task['starttime']}" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+        到
+        <input type="input" class="px" id="endtime" value="{weikucms:$task['endtime']}" name="endtime" onClick="WdatePicker()" style="width:175px;">
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="abstract">任务简介：</label></th>
+    <td valign="top"><textarea class="px" id="abstract" name="abstract" style="width: 560px; height: 240px;"rows="5">{weikucms:$task['abstract']}</textarea></td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="content">详细内容：</label></th>
+    <td valign="top"><textarea class="px" id="content" name="content" style="width: 560px; height: 360px;"onfocus="leave();">{weikucms:$task['content']}</textarea></td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="pid">任务商品：</label></th>
+    <td>
+        <select id="pid">
+            <option value="">请选择</option>
+            <volist id="vo" name="product">
+                <option value="{weikucms:$vo.id}" <if condition="$vo.id eq $task['pid']">selected="selected"<else/></if>>{weikucms:$vo.name}</option>
+            </volist>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="commission">积分：</label></th>
+    <td>
+        <input type="number" class="px" id="commission" value="{weikucms:$task['commission']}" name="commission" style="width:60px" placeholder="如：60"><span style="padding: 5px; font-size: 15px;">分</span>
+    </td>
+</tr>
+
+
+
+<tr>
+    <th valign="top"><label for="is_recommend">是否推荐：</label></th>
+    <td>
+        <select id="is_recommend">
+            <option value="">请选择</option>
+            <option value="1" <if condition="$task['is_recommend'] eq 1">selected="selected"<else/></if>>是</option>
+            <option value="2" <if condition="$task['is_recommend'] eq 2">selected="selected"<else/></if>>否</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <th valign="top"><label for="is_task">推荐任务：</label></th>
+    <td>
+        <php> $aTasks = explode('|',$task['is_task']);</php>
+        <volist name="aTask" id="tasks">
+            <input type="checkbox" name="is_tasks" value="{weikucms:$tasks.id}" class="check" <php>if(in_array($tasks['id'],$aTasks)){ echo 'checked';}</php>/>{weikucms:$tasks.title}
+        </volist>
+    </td>
+    <td>
+        <input type="hidden" name="is_task" value="{weikucms:$task['is_task']}" class="check" />
+    </td>
+</tr>
+
+
+<tr>
+    <th>
+    </th>
+    <td>
+        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+            保存
+        </button>
+        <div class="clr">
+        </div>
+    </td>
+</tr>
+
+
+</table>
+</form>
+</div>
+
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+
+            var qid = {weikucms:$_GET['aid']};
+            var id = $("#id").val();
+            var key = $("input[name='key']").val();
+            var title = $("#title").val();
+            var cid = $("#cid").val();
+            var lid = '|';
+            $("input[name='labels']").each(function() {
+                if ($(this).is(":checked")) {
+                    lid += $(this).val() + "|";
+                };
+            });
+            var pic = $("#pic").val();
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            var abstract = $("#abstract").val();
+            var content = editor.html();
+            var pid = $("#pid").val();
+            var commission = $("#commission").val();
+            var is_recommend = $("#is_recommend").val();
+            var status = 0;
+            var is_tasks = "|";
+            $("input[name='is_tasks']").each(function() {
+                if ($(this).is(":checked")) {
+                    is_tasks += $(this).val() + "|";
+                };
+            });
+            $("input[name='is_task']").val(is_tasks);
+            if(!title){
+                notif({
+                    msg: "任务名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!cid){
+                notif({
+                    msg: "请选择大类！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!lid){
+                notif({
+                    msg: "请选择任务标签！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!pic){
+                notif({
+                    msg: "请上传任务主题图片！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!starttime){
+                notif({
+                    msg: "请填写任务开始时间！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!endtime){
+                notif({
+                    msg: "请填写任务结束时间！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!abstract){
+                notif({
+                    msg: "请填写任务简介！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!content){
+                notif({
+                    msg: "请填写任务详细内容！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!commission){
+                notif({
+                    msg: "请填写任务佣金！",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!is_recommend){
+                notif({
+                    msg: "请选择是否推荐！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var url = "{weikucms::U('Medias/set_task',array('token'=>$token,'aid'=>$_GET['aid']))}";
+            $.post(url, {id:id,qid:qid,key:key,title:title,cid:cid,lid:lid,pic:pic,starttime:starttime,endtime:endtime,commission:commission,abstract:abstract,content:content,pid:pid,is_recommend:is_recommend,status:status,is_task:is_tasks},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+
+        });
+    });
+</script>
+
+

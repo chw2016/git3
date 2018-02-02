@@ -1,0 +1,551 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>问卷调查</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/font/style.css" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+
+
+
+</head>
+
+<style>
+
+    .myNew{
+
+        /*border: 1px solid red;*/
+
+        width: 60px;
+
+        height: 14px;
+
+        position: absolute;
+
+        font-size: 12px;
+
+        color: gray;
+
+        text-align: center;
+
+    }
+
+    .item { width: 25%; }
+
+</style>
+
+<body r='0' g='195' b='255'>
+
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+    <input type="hidden" value="1" id="bEditTitle" />
+
+<div class="main wenjuan">
+
+    <div class="WenJuanBox">
+
+        <div class="WenJuanBoxHead myul">
+
+            <div class="WenJuanNum"></div>
+
+            <div class="WenJuanHeadText">Ieat信息发掘</div>
+
+        </div>
+
+
+
+        <div class="WenJuanBoxContent">
+
+            <volist name="ing" id="vo">
+
+            <div class="WJBCTextItem myul">
+
+                <div class="TITile">{weikucms:$vo.name}：</div>
+                <php> 
+                $selectOne = explode('|',$vo['select']);
+                </php>
+                <div class="WJBResultGood 
+<php>if($selectOne[0]==$vo['value'])echo'On';</php>
+                ">{weikucms:$selectOne[0]}</div>
+                <div class="WJBResultBad
+<php>if($selectOne[1]==$vo['value'])echo'On';</php>
+                ">{weikucms:$selectOne[1]}</div>
+
+            </div>
+
+            </volist>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="WenJuanBox">
+
+        <div class="WenJuanBoxHead myul">
+
+            <div class="WenJuanNum"></div>
+
+            <div class="WenJuanHeadText">主观横向对比</div>
+
+        </div>
+
+
+
+        <div class="WenJuanBoxContent">
+
+
+            <volist name="sub" id="vo">
+
+            <div class="ZhuGuanItem myul">
+              
+                <div class="myNew" style="width:auto">{weikucms:$vo['select'][1]}{weikucms::floor(($vo['select']['bad']/($vo['select']['better']+$vo['select']['bad']))*100)}%</div>
+
+                <div class="Bad Result ">
+
+                    <div class="Count red " style="width:{weikucms::($vo['select']['bad']/($vo['select']['better']+$vo['select']['bad']))*100}%"></div>
+
+                </div>
+
+                <div class="ItemName red">{weikucms::mb_substr($vo['name'],0,2,'utf-8')}</div>
+
+
+
+                <div class="Good Result red">
+
+                    <div class="Count red" style="width:{weikucms::($vo['select']['better']/($vo['select']['better']+$vo['select']['bad']))*100}%"></div>
+
+                </div>
+
+                <div class="myNew" >{weikucms:$vo['select'][0]}{weikucms::ceil(($vo['select']['better']/($vo['select']['better']+$vo['select']['bad']))*100)}%</div>
+
+            </div>
+
+            </volist>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <div class="WenJuanBox">
+
+        <div class="WenJuanBoxHead myul">
+
+            <div class="WenJuanNum"></div>
+
+            <div class="WenJuanHeadText">十项评分问卷</div>
+
+        </div>
+
+
+
+        <div class="WenJuanBoxContent">
+
+            <volist name="ten" id="vo" key="k">
+
+            <div class="WTItem">
+
+                <div class="WTCircle myul">
+
+                    <div class="WTGood" style="background-image:url({weikucms:$vo.pic});width: 100%;border-radius: 50%;background-position:50% 50%;"></div>
+
+                    <!--<div class="WTBad" style="background-image:url(img/2.jpg)"></div>-->
+
+                </div>
+
+                <div class="WTSelector myul" idk="{weikucms:$vo.id}">
+
+                    <span>{weikucms:$vo.name}：</span>
+
+                    <div class="WTSelect WTG myul">
+                        <php>
+                            $selectTwo = explode('|',$vo['select']);
+                        </php>
+                        <input  name="check{weikucms:$k}" type="radio" value="{weikucms:$selectTwo[0]}"
+<php>if($selectTwo[0]==$vo['value'])echo "checked='checked'";</php>
+                        readonly>{weikucms:$selectTwo[0]}
+
+                    </div>
+
+                    <div class="WTSelect WTB myul">
+
+                        <input name="check{weikucms:$k}" type="radio" value="{weikucms:$selectTwo[1]}"
+<php>if($selectTwo[1]==$vo['value'])echo "checked='checked'";</php>
+                         readonly>{weikucms:$selectTwo[1]}
+
+                    </div>
+
+                </div>
+
+                <div class="WTDescrib">
+
+                    {weikucms:$vo.des}
+
+                </div>
+
+
+
+            </div>
+
+            </volist>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <div class="WenJuanBox">
+
+        <div class="WenJuanBoxHead myul">
+
+            <div class="WenJuanNum"></div>
+
+            <div class="WenJuanHeadText">主观横向评分问卷</div>
+
+        </div>
+
+
+
+        <div class="WenJuanBoxContent">
+
+            <div class="DescribeText">{weikucms:$subTitle}</div>
+
+            <volist name="sub" id="vo" key="k">
+
+            <div class="r R ZhuGuanItem myul" idk="{weikucms:$vo.id}">
+
+                <div class="Bad CheckBox">
+
+                    <input name="ZhuGuan{weikucms:$k}" type="radio" value="{weikucms:$vo['select'][0]}">{weikucms:$vo['select'][0]}
+
+                </div>
+
+                <div class="R ItemName red">{weikucms::mb_substr($vo['name'],0,2,'utf-8')}</div>
+
+                <div class="Good CheckBox ">
+
+                    <input name="ZhuGuan{weikucms:$k}" type="radio" value="{weikucms:$vo['select'][1]}">{weikucms:$vo['select'][1]}
+
+                </div>
+
+            </div>
+
+            </volist>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+    <div class="WenJuanBox">
+
+        <div class="WenJuanBoxHead myul">
+
+            <div class="WJPost" onclick="sub()">提交</div>
+
+        </div>
+
+    </div>
+
+
+    <div style="height:300px"></div>
+
+
+</div>
+
+
+
+<div class="havbox wenjuan">
+
+
+
+    <div class="hav myul" style="overflow-x: auto; overflow-y: hidden;">
+
+        <include file="./tpl/Wap/default/Ieat_home_btn.html" />
+        <!--
+        <div data-tap="item" class="item tap itemBtn opacity" style="margin-left:0%;" onclick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-shophome"></span>
+
+                        <span class="smallText">商家介绍</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+
+
+        <div data-tap="item" class="item tap itemBtn opacity" style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/msgWall',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-liuyanqiang"></span>
+
+                        <span class="smallText">留言墙</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+
+
+        <div data-tap="item" class="item tap itemBtn opacity tapon" style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/investigation',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-wenjuan"></span>
+
+                        <span class="smallText">问卷调查</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+        <div data-tap="item" class="item tap itemBtn opacity" style="margin-left:0%;" onclick="location.href='{weikucms::U('Ieat/restaurantUnio',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-shoplist"></span>
+
+                        <span class="smallText">商家列表</span>
+
+                    </div></div></div>
+
+
+
+        </div>
+
+        -->
+
+
+<!--         <div data-tap="item" class="item tap opacity " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/act',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e">
+
+                    <div class="item-logo s f">
+
+                        <span class="icon icon-youhui"></span>
+
+                        <span class="smallText">优惠活动</span>
+
+                    </div></div></div>
+
+
+
+        </div> -->
+
+
+
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+<script>
+
+    function sub(){
+
+        var ten = {};
+
+        var Str = {};
+
+        var subjective = {};
+
+        var key1 = true;
+
+        var key2 = true;
+
+        $(".WTSelector").each(function(i,o){
+
+            var id = $(o).attr("idk");
+
+            if($(o).children().eq(1).children().is(":checked")){
+
+                ten[id] = $(o).children().eq(1).children().val();
+
+            }else if($(o).children().eq(2).children().is(":checked")){
+
+                ten[id] = $(o).children().eq(2).children().val();
+
+            }else{
+
+                key1 = false;
+
+            }
+
+        });
+
+        Str[0] = ten;
+
+        $(".r").each(function(i,o){
+
+            var id = $(o).attr("idk");
+
+            if($(o).children().eq(0).children().is(":checked")){
+
+                subjective[id] = $(o).children().eq(0).children().val();
+
+            }else if($(o).children().eq(2).children().is(":checked")){
+
+                subjective[id] = $(o).children().eq(2).children().val();
+
+            }else{
+
+              key2 = false;
+            }
+
+        });
+
+
+
+
+
+        Str[1] = subjective;
+
+        Str = JSON.stringify(Str);
+        // console.log(key1);
+        // console.log(key2);
+        if(key2 == false){
+
+            alert("不能有空选项");
+
+            return false;
+
+        }
+
+        var url = "{weikucms::U('Ieat/investigation',array('token'=>$token,'openid'=>$openid))}&cat_id={weikucms:$get['cat_id']}";
+
+        $.post(url,{Str:Str},function(data){
+
+            if(data.status == 1){
+
+                alert(data.info);
+
+                window.location.reload();
+
+            }else{
+
+                alert(data.info);
+
+            }
+
+        },'json');
+
+    }
+
+</script>
+
+<script>
+
+    Panel($(".IntroduceBox"),$(".IntroduceHead"),$(".IntroduceContent"));
+
+    //myFadeIn(50);
+
+    $(function(){
+
+        var num = $(".WenJuanNum").length;
+
+        for(var i = 1; i <= num; i++){
+
+            if(i<=9){
+
+                numhtml= "0"+i;
+
+                $(".WenJuanNum").eq(i-1).html(numhtml)
+
+            }else{
+
+                numhtml=i;
+
+                $(".WenJuanNum").eq(i-1).html(numhtml)
+
+            }
+
+        }
+
+    })
+
+</script>
+
+</html>
+

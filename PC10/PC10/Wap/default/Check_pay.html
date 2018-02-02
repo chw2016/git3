@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>交通在线</title>
+	<meta charset="utf-8">
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<meta content="eric.wu" name="author">
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/common.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/index.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/traffic.js"></script>
+    </head>
+    <body class="bj">
+    	<!-- 头部 -->
+    	<header>
+    		<div class="header-top">
+    			<div class="icon-chevron-with-circle-left" onclick="window.location.href='{weikucms::U('Check/inndex',array('token'=>$token,'openid'=>$openid))}'">
+
+    			</div>
+                <div class="header-img">
+    				<img src="{weikucms::STATICS}/wapweiui/check/images/user.png" alt="">
+    			</div>
+    			<div class="header-text">
+    				<p>提倡六大文明交通行为</p>
+    				<p>摒弃六大交通陋习</p>
+    				<p>抵制六大危险驾驶行为</p>
+    			</div>	
+    		</div>
+    	</header>
+    	<!-- 内容 -->
+    	<content>
+    		<div class="text">
+    			<div class="text-left">违章处理：罚款<span class="colorf16666">2455</span>元</div>
+    			<div class="text-right">扣520分</div>
+    		</div>
+    		<div class="text-main">
+    			<p>违章地点：<span class="site">滚珠丝归市场19号接打动东大</span></p>
+    			<p>时间：<span class="time">2015-09-29</span></p>
+    			<p>违章驾驶员：<span class="name">王大大</span></p>
+    			<p>违章处理：<span>罚款2000元</span></p>
+    			<p>违法行为描述：<span class="describe">你开的车版本太低</span></p>
+    			<p>数据来源：<span class="source">王修年</span></p>
+                <p>帐户于额：<span class="edourde">{weikucms:$hyye}</span></p>
+    		</div>
+
+
+                <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+
+                <input type="hidden" name="order_money" value="520" id="totalPrice1">
+                <input type="hidden" name="order_text" value="交通支付">
+                <input type="hidden" name="orderid" value="{weikucms:$checkid}" id="orderid">
+
+                <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}" >
+
+                <input type="hidden" name="returnurl" value="{weikucms::U('Check/qued',array('token'=>$this->token,'openid'=>$this->openid))}">
+
+                <input type="hidden" name="type" value="jiaotong_check">
+
+                <div class="pay_area" id="pay_area" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+                    <input name="xuni" type="radio" value="1" class="zhangh" />使用虚拟账户
+                    <br />
+                    <input name="xuni" type="radio" value="2" checked="checked" class="zhangh" />使用在线支付
+                    <div class="btn-pay">
+                        支付
+                    </div>
+                </div>
+            </form>
+
+    	</content>
+
+        <p class="ts" style="display:none">{weikucms:$cheng}</p>
+
+    <script type="text/javascript">
+        var ts = $('.ts').text();       /*提示查询付费成功*/
+        if(ts!=''){
+            msg.alert(ts);
+        }
+
+        $(function(){
+            $('.btn-pay').touch(function(){
+                 var zhanh = $('.zhangh:checked').val();
+                if(zhanh == 1){
+                    var  site       =   $('.site').text();
+                    var  site_time  =   $('.time').text();
+                    var  name       =   $('.name').text();
+                    var  dispose    =   $('.colorf16666').text();
+                    var  describe   =   $('.describe').text();
+                    var  source     =   $('.source').text();
+                    var  doudrce     =   $('.edourde').text();
+                    var  checkdid  =  $('#orderid').val();
+                    if(parseInt(doudrce) > parseInt(dispose)) {
+                        location.href = "{weikucms::U('Check/xunizhif',array('token'=>$token,'openid'=>$openid))}" + "&site=" + site + "&site_time=" + site_time + "&name=" + name + "&dispose=" + dispose + "&describe=" + describe + "&source=" + source + '&cph=' + "{weikucms:$cph}" + '&checkid=' + checkdid
+                    }else{
+                        msg.alert('帐户于额不足');
+                    }
+                  }else{
+                    $('#myweipayform').submit();
+                }
+
+
+            })
+        })
+    </script>
+    </body>
+</html>

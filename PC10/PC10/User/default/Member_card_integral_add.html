@@ -1,0 +1,105 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="./tpl/static/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="./tpl/static/kindeditor/plugins/code/prettify.css" />
+<script src="./tpl/static/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="./tpl/static/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="./tpl/static/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : false,
+items : [
+'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+ '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'link', 'unlink','baidumap']
+});
+});
+</script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+          <div class="cLineB"><h4>发布礼品券 <span class="FAQ">发布积分兑换礼品信息</span></h4></div>
+         
+          <form method="post" action="" enctype="multipart/form-data">
+          <div class="msgWrap form">
+            <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <tbody>
+				<tr>
+              		<th>礼品名称：</th>
+              		<td><input type="input" class="px" id="title" value="" name="title" style="width:300px;"> </td>
+              	</tr>
+				<tr>
+					<th>兑换礼品所需积分：</th>
+					<td><input type="input" class="px" id="integral" value="" name="integral" style="width:50px;"> 积分				　
+				</td>
+				</tr>
+              	<tr>
+					<th>有效期：</th>
+					<td><input type="input" class="px" id="statdate" value="" onclick="WdatePicker()" name="statdate"> （含）到 
+					<input type="input" class="px" id="enddate" value="" name="enddate" onclick="WdatePicker()">（含）</td>
+				</tr>
+              	<tr>
+              		<th valign="top">使用说明：</th>
+              		<td><textarea name="info" id="info" rows="5" style="width: 410px; height: 250px; display: none;"></textarea></td>
+              		</tr>
+
+              	<tr>
+              		<th></th>
+              		<td><button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button>　<a href="javascript:history.go(-1);" class="btn btn-primary">取消</a></td>
+              		</tr>
+                <TR style="height: 150px;">
+
+                </TR>
+              	</tbody>
+            </table>
+            
+          </div>
+          </form>
+          
+        </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var integral = $("#integral").val();
+            var statdate = $("#statdate").val();
+            var enddate = $("#enddate").val();
+            var info = editor.html();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! title){
+                notif({
+                    msg: "礼品券名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+
+            $.post("{weikucms::U('Member_card/integral_add')}",
+                    {info:info,title:title,statdate:statdate,enddate:enddate,integral:integral,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

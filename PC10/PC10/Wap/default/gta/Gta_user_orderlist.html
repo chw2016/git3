@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{weikucms:$tpl.name}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js">
+        </script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/Smaty.js"></script>
+        <script>
+            $(function() {
+
+
+
+               // var old_type=$(this).attr('type');
+                $(document).on('click', '.on',function() {
+                    //alert(8);
+                    $(".header_deta").toggle();
+                }) 
+                $(".header_deta ul li").click(function(){
+
+                    $(".header_deta").css("display", 'none');
+                    $(".my_dd").html($(this).html());
+                    $(".loadingLogoWrap").waiting(function(){
+
+                    },16);
+                    var type=$(this).attr('type');
+
+                    var url="{weikucms::U('user_orderlist',array('token'=>$token,'openid'=>$openid))}&type="+type;
+                    location.href=url;
+                })
+            })
+        </script>
+        <style>
+            .clearfix span{
+                margin-bottom: 4px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <!--头部模块-->
+        <header>
+            <a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo">
+            </a>
+            <h1 id="h1_title" style="color: #FFFFFF;display: block;">
+                我的订单
+            </h1>
+          <div class="on" style="width: 65px;text-align: left;">
+                <font class="my_dd">
+                    <if condition="$_GET['type'] eq 1">
+                            贷款订单
+                        <elseif condition="$_GET['type'] eq 2" />
+                        理财订单
+                        <elseif condition="$_GET['type'] eq 3" />
+                        人寿保险单
+                        <elseif condition="$_GET['type'] eq 4" />
+                        p2p投资单
+                        <elseif condition="$_GET['type'] eq 5" />
+                        财产险订单
+                        <elseif condition="$_GET['type'] eq 6" />
+                        车险订单
+                        <elseif condition="$_GET['type'] eq 7" />
+                        意外险订单
+                        <elseif condition="$_GET['type'] eq 8" />
+                        责任险订单
+                        <else />
+                        订单类型
+                    </if>
+
+                </font>
+                <i class="fa fa-angle-down">
+                </i>
+            </div>
+             <div class="header_deta">
+            <ul>
+                <li type="1">
+                    贷款订单({weikucms:$my_order.1})
+                </li >
+                <li type="2">
+                    理财订单({weikucms:$my_order.2})
+                </li>
+                <li type="3">
+                    人寿保险订单({weikucms:$my_order.3})
+                </li>
+                <li type="4">
+                    p2p投资单({weikucms:$my_order.4})
+                </li>
+                <li type="5">
+                    财产险订单({weikucms:$my_order.5})
+                </li>
+                <li type="6">
+                    车险订单({weikucms:$my_order.6})
+                </li>
+                <li type="7">
+                    意外险订单({weikucms:$my_order.7})
+                </li>
+                <li type="8">
+                    责任险订单({weikucms:$my_order.8})
+                </li>
+            </ul>
+        </div>
+        </header>
+        <!--内容模块-->
+        <section style="padding-top:48px">
+            <if condition="$list">
+            <div class="MY_bj">
+               <volist name="list" id="vo">
+                <div class="shadow_arrow mb10">
+                    <div class="MY_top clearfix">
+                        <span class="MY_insure">
+                            <font>
+							
+							 <if condition="$vo['status'] eq 0" >
+                                    新订单
+                                    <elseif condition="$vo['status'] eq 1" />
+                                    处理中
+                                    <elseif condition="$vo['status'] eq 2" />
+                                    待录佣
+                                    <elseif condition="$vo['status'] eq 3" />
+                                    待处理
+                                    <elseif condition="$vo['status'] eq 4" />
+                                    待核审
+                                    <elseif condition="$vo['status'] eq 5" />
+                                    交易成功
+                                    <elseif condition="$vo['status'] eq -2" />
+                                    交易失败
+                                    <else />
+                                </if>
+                          <!--  <if condition="$vo['status'] eq 0">
+                                    订单处理中
+                                <elseif condition="$vo['status'] eq 1" />
+                                    订单处理中
+                                    <elseif condition="$vo['status'] eq 2" />
+                                    完成交易
+                                    <elseif condition="$vo['status'] eq '-2'" />
+                                    交易失败
+                                    <elseif condition="$vo['status'] eq '3'" />
+                                    投资完期
+                                    <elseif condition="$vo['status'] eq '4'" />
+                                    已清算
+                                    <else />
+                                    </if> -->
+                            </font>
+                        </span>
+                        <span>
+                            <if condition="$vo['title']">
+                                名称：{weikucms:$vo.title}（{weikucms:$vo.typename}）
+                                <else />
+                                {weikucms:$vo.typename}
+                                </if>
+                        </span>
+                        <span>
+                            订单号：{weikucms:$vo.orderid}
+                        </span>
+                        <span>
+                            下单时间：{weikucms:$vo.add_time|date='Y-m-d H:i:s',###}
+                        </span>
+                        <div class="my_line">
+
+                            <div class="look_insure" onclick="location.href='{weikucms::U('user_order_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'type'=>$vo['type']))}'">
+                                查看订单详情
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                    </volist>
+
+            </div>
+                <else />
+             <div style="margin-top: 50%;text-align: center;font-size: 18px;">
+               <p>您没有任何<if condition="$_GET['type'] eq 1"> 贷款订单
+                   <elseif condition="$_GET['type'] eq 2 " />
+                   理财订单
+                   <elseif condition="$_GET['type'] eq 3 " />
+                   人寿保险订单
+                   <elseif condition="$_GET['type'] eq 4 " />
+                   p2p投资订单
+                   <elseif condition="$_GET['type'] eq 5 " />
+                   财产险订单
+                   <elseif condition="$_GET['type'] eq 6 " />
+                   车险订单
+                   <elseif condition="$_GET['type'] eq 7 " />意外险订单
+                   <elseif condition="$_GET['type'] eq 8 " />
+                   物流险订单
+                   <else/>
+               </if></p>
+                <p>请点击右上角查看其他订单类型</p>
+              </div>
+                </if>
+        </section>
+        <div class="loadingLogoWrap" style="width: 30px; height: 30px; position: fixed; top: 48%; left: 48%;"></div>
+    </body>
+
+
+    <script>
+
+        var n=0;
+
+        var a=0;
+
+        var timeOut = null;
+
+        $(document).scroll(function(){
+
+            //滚动条顶部的偏移==总个文档的高度-窗口的高度
+
+            var diff = Number($(window).height()) + Number(20);
+           // alert(diff);
+
+            if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+
+                if(timeOut != null) { return false;}  //判断容器timeOut 是否在运行！
+                n++;
+                if($(".mb10").length>=5){
+                    $(".loadingLogoWrap").waiting(function(){
+                     //   alert(1);
+                    },16);
+                }
+                timeOut = setTimeout(function(){//1秒加载一次
+                    var url="{weikucms::U('user_orderlist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+
+                    $.post(url,{"n": n},function(html){
+                       // alert(html);
+                        if(html!=''){
+                            $(".loadingLogoWrap").waitingDone();
+                            $(html).appendTo('.MY_bj');//第五步：拿到class="limitShoppingBox"看效果
+                            timeOut=null;
+                        }else{
+                            $(".loadingLogoWrap").waitingDone();
+                        }
+                    },'html');
+
+                },1000);
+
+            }
+
+        })
+
+    </script>
+</html>

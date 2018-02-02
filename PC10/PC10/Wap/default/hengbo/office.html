@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="恒博物业">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>应聘职位</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+
+</head>
+<body>
+<!--头部-->
+<div class="h-title">
+    <span>应聘职位</span>
+    <span class="rIcon">
+        <a href="{weikucms::U('Hengbo/mymessage',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+            <img src="{weikucms::STATICS}/wapweiui/hengbo/img/people.png" />
+        </a>
+    </span>
+</div>
+<div class="h-header">
+    <img src="{weikucms::STATICS}/wapweiui/hengbo/img/ping.png" />
+</div>
+<!--头部-->
+<div class="positionBody">
+    <if condition="$aOffice eq ''"><div class="list" style="font-size: 13px;">该区域暂时没有要招聘的岗位</div></if>
+    <volist name="aOffice" id="vo" key="i">
+        <a href="{weikucms::U('Hengbo/message',array('token'=>$token,'openid'=>$openid,'aid'=>$vo['aid'],'mid'=>$vo['id']))}">
+            <div class="list">
+                <span class="li">{weikucms:$i}</span>
+                <span class="position">{weikucms:$vo.office_name}</span>
+            </div>
+        </a>
+    </volist>
+</div>
+<a href="{weikucms::U('Hengbo/mymessage',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['id']))}">
+    <div class="fixBottom bottomPing" submit='1'>
+        <span class="lIcon"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/myping_icon.png" /></span>
+        <span class="myPing">我的应聘</span>
+    </div>
+</a>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new2/css/style_1.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new2/css/style_2.css" media="all" />
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/channel_new2/js/control.js"></script>
+<title>{weikucms:$tpl['name']}</title>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        <div class="body" id="body">
+	<div class="bg">
+				<img src="http://stc.weimob.com/img/template/lib/v84_bg.png" width="100%" height="100%;">
+			</div>
+	<div class="bg_black"></div>
+		<header style="overflow:hidden;">
+	<div class="clearfix">
+		<div id="focus_Box">
+			<span class="prev">&nbsp;</span>
+			<span class="next">&nbsp;</span>
+			<ul>
+				<volist name="flash" id="vo">
+					<li>
+											<a onclick="return false;">
+							<img src="{weikucms:$vo.img}" /></a>			
+					</li>
+				</volist>		
+			</ul>
+		</div>
+	</div>
+</header>
+	<section class="section_body">
+		<div class="list" >
+			<ul >
+				<volist name="info" id="vo">
+					<li>
+						<div>
+						<span class="transparent-layer"></span>
+						<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>" class="tbox">
+							<span class="icon icon-smile"></span>
+							<span class="title">{weikucms:$vo.name}</span>
+						</a>	
+						</div>  
+					</li>
+				</volist>
+			</ul>
+		</div>
+		
+	</section>
+</div>
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+
+<!--
+分享前控制
+-->
+	
+        			<footer style="overflow:visible;">
+				<div class="weimob-copyright" style="padding-bottom:50px;">
+											<span class="weimob-support" >©万普提供</span>
+									</div>
+			</footer>
+				<div mark="stat_code" style="width:0px; height:0px; display:none;">
+					</div>
+		<if condition="$res_1['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body>
+</html>

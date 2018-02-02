@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+</script> 
+</head>
+<body>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/api"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/getscript"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/convertor.js"></script>
+<div class="bookingTips" style="line-height:25px;">
+	<strong>预约提示</strong>
+    <div style="line-height:20px;">预约可享受9折优惠预约可享受9折优惠预约可享受9折优惠！</div>
+</div>
+<div id="baoyangYuyue1">
+	<div class="iconText">
+		<ul>
+			<li>
+				<a href="javascript:void(0);">
+					<div class="li-l">
+						<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_01.png">
+					</div>
+					<div class="li-r">
+						<select name="project" id="project" class="select" style="width:100%">
+							<option value="0">维修</option>
+							<option value="1">保养</option>							
+							<option value="2">其它</option>
+						</select>
+					</div>
+				</a>
+			</li>
+			<li class="cutover" >
+		       	<span style="font-size:16px;">
+		       		<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_19.png" width="20px;" height="20px;">
+		       		<span style="padding-left:16px;">最近门店：</span>
+		       	</span>
+		       	<span style="font-size:16px;" id="storeplace"></span>
+		       	<br/>
+		       	<span style="font-size:16px; padding-left:23px;" id="place"></span>
+		        <div id="switch" style="background-color:#83cf51;">
+		        	<!-- <span id="getplace">获取位置</span> -->
+					<a href="javascript:void(0);" id="getplace">获取位置</a>	
+				</div>
+				<input type="hidden" id="longitude" value=""/>
+				<input type="hidden" id="latitude" value=""/>
+			</li>	
+			<li>
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_02.png">
+				</div>
+				<div class="li-r">
+					<input class="input" placeholder="选择到店时间" id="yytime" readonly="" max="{weikucms:$time}" value="{weikucms:$data['insurance_time']}">
+				</div>
+			</li>
+			<!-- <li>
+				<div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_17.png"></div>
+				<div class="li-r">
+					<select name="serviceId" id="serviceId" class="select" style="width:100%">
+						<option value="0">选择服务顾问</option>
+						<volist name="serviceInfo" id="value">
+							<option value="{weikucms:$value.id}">{weikucms:$value.name}</option>
+						</volist>
+					</select>
+				</div>
+			</li>
+			-->
+			</ul>
+		</div>
+				<div class="textarea clearfix">
+					<textarea name="reason" cols="" rows="" id="curkm" placeholder="写下需要售后服务相关信息，我们很重视您提供的信息！"></textarea>
+				</div>
+				<!-- 
+				<div class="li-r">
+					<textarea rows="3" cols="35" placeholder="输入相关信息" id="curkm"></textarea>
+					 <input class="input" placeholder="输入当前里程" id="curkm" pattern="[0-9]*" type="tel" maxlength="7">
+				</div>
+				-->
+		<div class="iconText">	
+			<ul>
+			<li class="noAfter">
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/addVehicle.png">
+				</div>
+				<div class="li-r">
+					<input class="input" value="{weikucms:$carData['car_licence']}" placeholder="输入车牌号" id="licence" maxlength="20">
+				</div>
+			</li>
+			<li class="noAfter">
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png">
+				</div>
+				<div class="li-r">
+					<input class="input" value="{weikucms:$carData['car_username']}" placeholder="输入联系人" id="name" maxlength="20">
+				</div>
+			</li>
+			<li class="noAfter">
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_05.png">
+				</div>
+				<div class="li-r">
+					<input class="input" value="" placeholder="输入手机号码" id="phone" type="tel" maxlength="11">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="button clearfix"><a href="javascript:void(0);" id="save">确定预约</a></div>
+	<p style="padding-bottom:10px; font-size:16px; text-align:center;">预约成功后可获得一定的积分哦！</p>
+	
+</div>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+<input type="hidden" id="cid" value="{weikucms:$cid}"/>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+<script src="{weikucms::STATICS}/wapweiui/service/js/zepto.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery.mobile-1.2.0.min.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/mobiscroll.custom-2.4.6.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var oldByKm = '0';
+var serviceId = "0";
+var isUser = 1;//是否是用户，不是用户则会选择车型、填写车牌，提交后会注册用户信息、绑定等
+oldByKm = parseInt(oldByKm);
+
+$(function(){	
+	var cid = $("#cid").val();
+	var stepMinute = '15';
+	var cury 	= new Date().getFullYear();//当前的年份	
+	var curm 	= new Date().getMonth() + 1;
+	var curH    = new Date().getHours();
+	var minDay = new Date().getDate();
+	var curd    = parseInt(minDay); 
+	
+	var disMonth = '';
+	//var dmArr    = eval('('+disMonth+')');
+	var disHours = '[]';
+	var disMs   = '[]';
+	var msArr   = eval('('+disMs+')');
+	var hArr    = eval('('+disHours+')');
+
+	var disDays = '["8\/03","8\/04","8\/09","8\/10","8\/16","8\/17","8\/23"]';
+	var dArr    = eval('('+disDays+')');
+	var disDayHours = '["8\/05\/0","8\/05\/1","8\/05\/2","8\/05\/3","8\/05\/4","8\/05\/5","8\/05\/6","8\/05\/7","8\/05\/12","8\/05\/18","8\/05\/19","8\/05\/20","8\/05\/21","8\/05\/22","8\/05\/23","8\/06\/0","8\/06\/1","8\/06\/2","8\/06\/3","8\/06\/4","8\/06\/5","8\/06\/6","8\/06\/7","8\/06\/12","8\/06\/18","8\/06\/19","8\/06\/20","8\/06\/21","8\/06\/22","8\/06\/23","8\/07\/0","8\/07\/1","8\/07\/2","8\/07\/3","8\/07\/4","8\/07\/5","8\/07\/6","8\/07\/7","8\/07\/12","8\/07\/18","8\/07\/19","8\/07\/20","8\/07\/21","8\/07\/22","8\/07\/23","8\/08\/0","8\/08\/1","8\/08\/2","8\/08\/3","8\/08\/4","8\/08\/5","8\/08\/6","8\/08\/7","8\/08\/12","8\/08\/18","8\/08\/19","8\/08\/20","8\/08\/21","8\/08\/22","8\/08\/23","8\/11\/0","8\/11\/1","8\/11\/2","8\/11\/3","8\/11\/4","8\/11\/5","8\/11\/6","8\/11\/7","8\/11\/12","8\/11\/18","8\/11\/19","8\/11\/20","8\/11\/21","8\/11\/22","8\/11\/23","8\/12\/0","8\/12\/1","8\/12\/2","8\/12\/3","8\/12\/4","8\/12\/5","8\/12\/6","8\/12\/7","8\/12\/12","8\/12\/18","8\/12\/19","8\/12\/20","8\/12\/21","8\/12\/22","8\/12\/23","8\/13\/0","8\/13\/1","8\/13\/2","8\/13\/3","8\/13\/4","8\/13\/5","8\/13\/6","8\/13\/7","8\/13\/12","8\/13\/18","8\/13\/19","8\/13\/20","8\/13\/21","8\/13\/22","8\/13\/23","8\/14\/0","8\/14\/1","8\/14\/2","8\/14\/3","8\/14\/4","8\/14\/5","8\/14\/6","8\/14\/7","8\/14\/12","8\/14\/18","8\/14\/19","8\/14\/20","8\/14\/21","8\/14\/22","8\/14\/23","8\/15\/0","8\/15\/1","8\/15\/2","8\/15\/3","8\/15\/4","8\/15\/5","8\/15\/6","8\/15\/7","8\/15\/12","8\/15\/18","8\/15\/19","8\/15\/20","8\/15\/21","8\/15\/22","8\/15\/23","8\/18\/0","8\/18\/1","8\/18\/2","8\/18\/3","8\/18\/4","8\/18\/5","8\/18\/6","8\/18\/7","8\/18\/12","8\/18\/18","8\/18\/19","8\/18\/20","8\/18\/21","8\/18\/22","8\/18\/23","8\/19\/0","8\/19\/1","8\/19\/2","8\/19\/3","8\/19\/4","8\/19\/5","8\/19\/6","8\/19\/7","8\/19\/12","8\/19\/18","8\/19\/19","8\/19\/20","8\/19\/21","8\/19\/22","8\/19\/23","8\/20\/0","8\/20\/1","8\/20\/2","8\/20\/3","8\/20\/4","8\/20\/5","8\/20\/6","8\/20\/7","8\/20\/12","8\/20\/18","8\/20\/19","8\/20\/20","8\/20\/21","8\/20\/22","8\/20\/23","8\/21\/0","8\/21\/1","8\/21\/2","8\/21\/3","8\/21\/4","8\/21\/5","8\/21\/6","8\/21\/7","8\/21\/12","8\/21\/18","8\/21\/19","8\/21\/20","8\/21\/21","8\/21\/22","8\/21\/23","8\/22\/0","8\/22\/1","8\/22\/2","8\/22\/3","8\/22\/4","8\/22\/5","8\/22\/6","8\/22\/7","8\/22\/12","8\/22\/18","8\/22\/19","8\/22\/20","8\/22\/21","8\/22\/22","8\/22\/23"]';
+	var dhArr   = eval('('+disDayHours+')');
+	var disHourMins = '["8\/05\/8\/1","8\/05\/8\/3","8\/05\/9\/1","8\/05\/9\/3","8\/05\/10\/1","8\/05\/10\/3","8\/05\/11\/1","8\/05\/11\/2","8\/05\/11\/3","8\/05\/13\/0","8\/05\/13\/1","8\/05\/13\/3","8\/05\/14\/1","8\/05\/14\/3","8\/05\/15\/1","8\/05\/15\/3","8\/05\/16\/1","8\/05\/16\/3","8\/05\/17\/1","8\/05\/17\/3","8\/06\/8\/1","8\/06\/8\/3","8\/06\/9\/1","8\/06\/9\/3","8\/06\/10\/1","8\/06\/10\/3","8\/06\/11\/1","8\/06\/11\/2","8\/06\/11\/3","8\/06\/13\/0","8\/06\/13\/1","8\/06\/13\/3","8\/06\/14\/1","8\/06\/14\/3","8\/06\/15\/1","8\/06\/15\/3","8\/06\/16\/1","8\/06\/16\/3","8\/06\/17\/1","8\/06\/17\/3","8\/07\/8\/1","8\/07\/8\/3","8\/07\/9\/1","8\/07\/9\/3","8\/07\/10\/1","8\/07\/10\/3","8\/07\/11\/1","8\/07\/11\/2","8\/07\/11\/3","8\/07\/13\/0","8\/07\/13\/1","8\/07\/13\/3","8\/07\/14\/1","8\/07\/14\/3","8\/07\/15\/1","8\/07\/15\/3","8\/07\/16\/1","8\/07\/16\/3","8\/07\/17\/1","8\/07\/17\/3","8\/08\/8\/1","8\/08\/8\/3","8\/08\/9\/1","8\/08\/9\/3","8\/08\/10\/1","8\/08\/10\/3","8\/08\/11\/1","8\/08\/11\/2","8\/08\/11\/3","8\/08\/13\/0","8\/08\/13\/1","8\/08\/13\/3","8\/08\/14\/1","8\/08\/14\/3","8\/08\/15\/1","8\/08\/15\/3","8\/08\/16\/1","8\/08\/16\/3","8\/08\/17\/1","8\/08\/17\/3","8\/11\/8\/1","8\/11\/8\/3","8\/11\/9\/1","8\/11\/9\/3","8\/11\/10\/1","8\/11\/10\/3","8\/11\/11\/1","8\/11\/11\/2","8\/11\/11\/3","8\/11\/13\/0","8\/11\/13\/1","8\/11\/13\/3","8\/11\/14\/1","8\/11\/14\/3","8\/11\/15\/1","8\/11\/15\/3","8\/11\/16\/1","8\/11\/16\/3","8\/11\/17\/1","8\/11\/17\/3","8\/12\/8\/1","8\/12\/8\/3","8\/12\/9\/1","8\/12\/9\/3","8\/12\/10\/1","8\/12\/10\/3","8\/12\/11\/1","8\/12\/11\/2","8\/12\/11\/3","8\/12\/13\/0","8\/12\/13\/1","8\/12\/13\/3","8\/12\/14\/1","8\/12\/14\/3","8\/12\/15\/1","8\/12\/15\/3","8\/12\/16\/1","8\/12\/16\/3","8\/12\/17\/1","8\/12\/17\/3","8\/13\/8\/1","8\/13\/8\/3","8\/13\/9\/1","8\/13\/9\/3","8\/13\/10\/1","8\/13\/10\/3","8\/13\/11\/1","8\/13\/11\/2","8\/13\/11\/3","8\/13\/13\/0","8\/13\/13\/1","8\/13\/13\/3","8\/13\/14\/1","8\/13\/14\/3","8\/13\/15\/1","8\/13\/15\/3","8\/13\/16\/1","8\/13\/16\/3","8\/13\/17\/1","8\/13\/17\/3","8\/14\/8\/1","8\/14\/8\/3","8\/14\/9\/1","8\/14\/9\/3","8\/14\/10\/1","8\/14\/10\/3","8\/14\/11\/1","8\/14\/11\/2","8\/14\/11\/3","8\/14\/13\/0","8\/14\/13\/1","8\/14\/13\/3","8\/14\/14\/1","8\/14\/14\/3","8\/14\/15\/1","8\/14\/15\/3","8\/14\/16\/1","8\/14\/16\/3","8\/14\/17\/1","8\/14\/17\/3","8\/15\/8\/1","8\/15\/8\/3","8\/15\/9\/1","8\/15\/9\/3","8\/15\/10\/1","8\/15\/10\/3","8\/15\/11\/1","8\/15\/11\/2","8\/15\/11\/3","8\/15\/13\/0","8\/15\/13\/1","8\/15\/13\/3","8\/15\/14\/1","8\/15\/14\/3","8\/15\/15\/1","8\/15\/15\/3","8\/15\/16\/1","8\/15\/16\/3","8\/15\/17\/1","8\/15\/17\/3","8\/18\/8\/1","8\/18\/8\/3","8\/18\/9\/1","8\/18\/9\/3","8\/18\/10\/1","8\/18\/10\/3","8\/18\/11\/1","8\/18\/11\/2","8\/18\/11\/3","8\/18\/13\/0","8\/18\/13\/1","8\/18\/13\/3","8\/18\/14\/1","8\/18\/14\/3","8\/18\/15\/1","8\/18\/15\/3","8\/18\/16\/1","8\/18\/16\/3","8\/18\/17\/1","8\/18\/17\/3","8\/19\/8\/1","8\/19\/8\/3","8\/19\/9\/1","8\/19\/9\/3","8\/19\/10\/1","8\/19\/10\/3","8\/19\/11\/1","8\/19\/11\/2","8\/19\/11\/3","8\/19\/13\/0","8\/19\/13\/1","8\/19\/13\/3","8\/19\/14\/1","8\/19\/14\/3","8\/19\/15\/1","8\/19\/15\/3","8\/19\/16\/1","8\/19\/16\/3","8\/19\/17\/1","8\/19\/17\/3","8\/20\/8\/1","8\/20\/8\/3","8\/20\/9\/1","8\/20\/9\/3","8\/20\/10\/1","8\/20\/10\/3","8\/20\/11\/1","8\/20\/11\/2","8\/20\/11\/3","8\/20\/13\/0","8\/20\/13\/1","8\/20\/13\/3","8\/20\/14\/1","8\/20\/14\/3","8\/20\/15\/1","8\/20\/15\/3","8\/20\/16\/1","8\/20\/16\/3","8\/20\/17\/1","8\/20\/17\/3","8\/21\/8\/1","8\/21\/8\/3","8\/21\/9\/1","8\/21\/9\/3","8\/21\/10\/1","8\/21\/10\/3","8\/21\/11\/1","8\/21\/11\/2","8\/21\/11\/3","8\/21\/13\/0","8\/21\/13\/1","8\/21\/13\/3","8\/21\/14\/1","8\/21\/14\/3","8\/21\/15\/1","8\/21\/15\/3","8\/21\/16\/1","8\/21\/16\/3","8\/21\/17\/1","8\/21\/17\/3","8\/22\/8\/1","8\/22\/8\/3","8\/22\/9\/1","8\/22\/9\/3","8\/22\/10\/1","8\/22\/10\/3","8\/22\/11\/1","8\/22\/11\/2","8\/22\/11\/3","8\/22\/13\/0","8\/22\/13\/1","8\/22\/13\/3","8\/22\/14\/1","8\/22\/14\/3","8\/22\/15\/1","8\/22\/15\/3","8\/22\/16\/1","8\/22\/16\/3","8\/22\/17\/1","8\/22\/17\/3"]';
+	var mArr   = eval('('+disHourMins+')');
+	
+	var yHour	= curH;
+	var curh	= parseInt(yHour);
+	var maxY    = cury;
+	var maxM	= curm + 1;
+	var maxD    = 30 ;
+	
+	var startDate = '';
+    var opt = {
+        'datetime': {
+            preset: 'datetime',
+			dateOrder: 'yymd',
+			dateFormat:'yy年m月dd日',
+			timeWheels:'HHii',
+			timeFormat:'HH:ii',
+			width:10,
+            stepMinute: parseInt(stepMinute),
+			minDate: new Date(cury, curm, curd, curh),
+			maxDate : new Date(maxY, maxM, maxD, 23, 59), 
+			sDate : startDate,
+			invalid: {disableMonth:disMonth, daysOfMonth:dArr, disableHours:hArr, hoursOfDay:dhArr, minutesOfHour:mArr, disableMins:msArr}
+        }
+    };
+	
+	//alert(opt.datetime.minDate);
+
+
+    $('#yytime').scroller('destroy').scroller($.extend(opt['datetime'], {
+        theme: 'ios',
+        mode: 'scroller',
+        display: 'bottom'        
+    }));
+	$('#yytime').next().click(function(){$('#yytime').focus();});
+
+	$("#save").click(function(){
+		var loading = 0;
+		if(loading){
+			return false;
+		}
+		var project 	= $('#project').val();
+		var yytime  	= $('#yytime').val();
+		var curkm  		= $('#curkm').val();
+		var name  		= $('#name').val();
+		var phone  		= $('#phone').val();
+		
+		if( !project ){
+			show_error_tip('请选择服务项目');
+			return false;
+		}
+		if( !yytime ){
+			show_error_tip('请选择到店时间'); 
+			return false;
+		}
+		if( !name ){
+			show_error_tip('请输入联系人'); 
+			return false;
+		}else if ( !checkName( name ) ) {
+			show_error_tip('姓名请输入<br />至少2位中文字符');
+			return false;
+		}
+		
+		if( !phone ){
+			show_error_tip('请输入手机号码'); 
+			return false;
+		}
+		else if ( !checkPhone( phone ) ) {
+			show_error_tip('手机号码输入格式不正确');
+			return false;
+		}
+	
+		var params  = {'cid' : cid};
+		params['project']  	= $('#project').val();
+		params['yytime']	= $('#yytime').val();
+		params['curkm'] = $('#curkm').val();
+		params['store']	= $('#storeplace').text();	
+		params['name']	= $('#name').val();		
+		params['phone'] = $('#phone').val();		
+		var url = 'index.php?g=Wap&m=Service&a=appoint&type=3&token='+$("#token").val()+"&openid="+$("#openid").val();
+		$.post(url,params,
+	            function(data){ 
+	                if(data.status == 100){                 	
+	                	show_success_tip(data.info);
+	                    setTimeout(function(){                        	
+	                        window.location.href = data.url;
+	                    },'1000');
+	                }else if(data.status == 1 ){
+	                	show_error_tip(data.info);
+	                	setTimeout(function(){                       	
+	                        window.location.href = data.url;
+	                    },'1000');
+	                }else if(data.status == 2 ){
+	                	show_error_tip(data.info);
+	                	setTimeout(function(){                       	
+	                        window.location.href = data.url;
+	                    },'1000');
+	                }
+	            },'json');		
+		});
+	});
+</script>
+<script>
+$("#getplace").click(function(){
+	var getLocation_Loading = 0;
+	var locationAddress = '';//存储定位后的地址详情字符串
+	baiduGetLocaltion();
+})
+
+</script>
+
+
+<script type="text/javascript">
+var getLocation_Loading = 0;
+var locationAddress = '';//存储定位后的地址详情字符串
+
+function baiduGetLocaltion(){
+	if(getLocation_Loading){
+		alert("正在定位，请稍候...");
+		return false;
+	}
+	getLocation_Loading = 1;
+	$("#span_geo").html("正在定位，请稍候...");
+	$('.fault_box h1').remove();
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+	    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+	       // alert('您的位置：'+r.point.lng+','+r.point.lat);
+			$("#longitude").val(r.point.lng);
+			$("#latitude").val(latitude);
+	    	convertor(r.point.lng, r.point.lat,1,0);
+	    }
+	    else {
+			getLocation_Loading = 0;
+			alert("定位失败，请重试！");
+	    	$("#span_geo").html("定位失败，请重试！");
+	    }
+	},{enableHighAccuracy: true})
+}
+
+//坐标校准
+var convertor=function(long,Lati,type,revise){
+	//var xx = 116.397428;
+	//var yy = 39.90923;
+	if(revise)
+	{
+		var gpsPoint = new BMap.Point(long,Lati);
+		//需要校准
+		BMap.Convertor.translate(gpsPoint,0,function(point){
+			//alert(point.lng + "," + point.lat);
+			//获取地理位置信息
+			getLocation(point.lng,point.lat,type);
+		});
+	}
+	else
+	{
+		getLocation(long,Lati,type);
+	}
+};
+
+//根据坐标获取地理位置信息 后台
+var getLocation=function(long,Lati,type){
+	var point = new BMap.Point(long,Lati);
+	var gc = new BMap.Geocoder();
+	
+	var long = long;
+	var Lati = Lati;
+	//alert(long+"纵坐标"+Lati)
+	var url = 'index.php?g=Wap&m=Service&a=appoint&type=4&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(
+		url,
+		{long:long,Lati:Lati},
+		function(data){
+			if(data.status == 100){                 	
+            	show_success_tip(data.info);
+                $("#storeplace").text(data.name);
+                $("#place").text("门店地址为：" + data.address);
+            }
+		},
+		'json'
+	);
+};
+</script>
+</body>
+</html>

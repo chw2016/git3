@@ -1,0 +1,21 @@
+<volist name="list" id="v" >
+        <a href="{weikucms::U('show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}">
+        <div class='rowlist of'>
+            <div class='fl lhead'><img src="{weikucms:$v['pic']}" /></div>
+            <div class='fl rmsg'>
+                <div><span class='c8eab03'>姓名：</span>
+                         <?php 
+    				          echo mb_substr($v['name'],0,12,'utf-8');
+    				       ?>
+                </div>
+                <div><span class='c8eab03'>所在地：</span>
+                           <?php 
+    				          echo mb_substr($v['dz'],0,20,'utf-8');
+    				       ?>
+                </div>
+                <div><span class='c8eab03'>专家简介：</span>查看 <!-- {weikucms:$v['content']} --> </div>
+            </div>
+            <div class='CLleft'></div>
+        </div>
+        </a>
+       </volist>

@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+
+
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.5.1.min.js"></script>
+
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.11.1.min.js"></script>
+
+
+<style>
+    .tab-content img{
+        width: 100%;
+    }
+    .home {
+        float: left;
+        display: inline-block;
+        width: 50px;
+        height: 45px;
+        color: #333;
+        font-size: 14px;
+        background: url(/tpl/Wap/default/common/css/store/shop/images/ico_home@2x.png) no-repeat scroll center center;
+        background-size: 24px 24px;
+        text-indent: -10000px;
+        vertical-align: top;
+    }
+</style>
+
+
+<![endif]-->
+</head>
+<body class="">
+
+
+<style>#detail img{display:block;width:100%;max-width:100%}</style>
+<div class="maincontainer">
+    <div class="container wx_wrap mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" href="javascript:history.go(-1);"></a></div><!--这里写固定的商品地址，避免点击下面的tab切换后返回返回好几次都不能回到产品页-->
+                    <div class="wx_bar_tit">商品详情</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt10">
+                <div class="content_wrap">
+                    <ul class="nav nav-tabs" id="myTab">
+
+                        <li id="mycomment1" onclick="setab('mycomment',1,3,'active')"><a  >商品评价</a></li>
+
+                        <li id="mycomment2" onclick="setab('mycomment',2,3,'active')" ><a >商品简介</a></li>
+                        <li id="mycomment3" onclick="setab('mycomment',3,3,'active')" ><a >图文详情</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="conmycomment1" style="display: none">
+                            <volist name="list" id="vo">
+                            <div class="comment_list temp_address_click">
+                                <h3><img width="40" src="{weikucms:$vo['pic']}" pagespeed_url_hash="1219333179" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></h3>
+                                <ul class="selected" id="showmydelivery">
+                                    <li id="choosetype">{weikucms:$vo['content']}</li>
+                                    <li id="choosetext"><strong>{weikucms:$vo['name']}</strong>  &nbsp;&nbsp;&nbsp;{weikucms:$vo['addtime']|date='Y-m-d h:i:s',###}</li>
+                                </ul>
+                            </div>
+                            </volist>
+                            <div class="clear"></div>
+                    </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="conmycomment2" style="display: none" >
+                                {weikucms:$product['des']}
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="conmycomment3" style="display: none">
+                                    {weikucms:$product['intro']}
+                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(function(){
+       var num={weikucms:$num};
+        $("#conmycomment"+num).show();
+        $("#mycomment"+num).addClass('active');
+
+    })
+    function setab(name,cursel,n,classname) {
+
+        for (i = 1; i <= n; i++) {
+
+            var menu = document.getElementById(name + i);
+
+            var con = document.getElementById("con" + name + i);
+
+            //等于的显示，不等于的不显示
+
+            menu.className = i == cursel ? classname : "";
+
+            con.style.display = i == cursel ? "block" : "none";
+
+        }
+    }
+</script>
+
+    <div class="footnav mini-innner">
+        <div class="shopnav js-navmenu nav-on-bottom style-2">
+            <div class="nav-menu has-menu-3">
+                <a href="{weikucms::U('Store_shop/cats',array('token' => $_GET['token'],'wecha_id' => $_GET['openid']))}" class="home" >主页</a>
+                <div class="divide">&nbsp;</div>
+                <div class="one"><a class="mainmenu js-mainmenu1" href="{weikucms::U('Store_shop/show',array('token'=>$token,'id'=>$_GET['id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"><i class="arrow-weixin"></i>我要下单</a><div class="submenu js-submenu">
+                    <span class="arrow before-arrow"></span>
+                    <span class="arrow after-arrow"></span>
+                    <ul>
+<!--
+                        <li><a href="{weikucms::U('Store_shop/cats',array('token' => $_GET['token'],'wecha_id' => $_GET['openid']))}">商城首页</a></li>
+-->
+
+
+
+
+
+                    </ul>
+                </div>
+                </div>
+                <div class="divide">&nbsp;</div>                                <div class="one"><a class="mainmenu js-mainmenu" href="javascript:void(0);"><i class="arrow-weixin"></i>分类</a><div class="submenu js-submenu">
+                <span class="arrow before-arrow"></span>
+                <span class="arrow after-arrow"></span>
+                <ul>
+
+
+                    <volist name="foot" id="vo">
+
+                        <if condition="$i eq 1"><else /><li class="line-divide"></li> </if>                                                               <li><a href="{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$vo['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">{weikucms:$vo.name}</a></li>
+
+
+
+                    </volist>
+
+
+                </ul>
+            </div>
+            </div>
+                <div class="divide">&nbsp;</div>                                <div class="one"><a class="mainmenu js-mainmenu" href="javascript:void(0);"><i class="arrow-weixin"></i>会员服务</a><div class="submenu js-submenu">
+                <span class="arrow before-arrow"></span>
+                <span class="arrow after-arrow"></span>
+                <ul>
+
+                    <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Store_shop/orders',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">我的订单</a></li>
+
+
+                    <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Usercenterzj/index',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">会员中心</a></li>
+                    <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Store_shop/list_cart',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">购物车</a></li>
+
+
+
+
+
+                </ul>
+            </div>
+            </div>
+
+
+            </div>
+        </div>
+        <script type="text/javascript" src="{weikucms:$staticFilePath}/shop/js/nav.js"></script>
+    </div>
+</div>
+
+
+
+</body>
+</html>

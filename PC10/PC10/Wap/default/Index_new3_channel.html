@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new3/css/style_1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new3/css/style_2.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new3/css/style_3.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new3/css/style_4.css" />
+		<title>{weikucms:$tpl['name']}</title>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        		<div data-role="container" class="container channel">		
+			<header data-role="header"></header>
+			<section data-role="body">
+				<ul class="list_ul">
+					<volist name="info" id="vo">
+						<li>
+					<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>" class="tbox">
+															
+							<div>
+								<span class="icon_span icon-phone">
+									<img src="{weikucms:$vo.img}">
+								</span>
+							</div>
+							<div>
+								<h3>{weikucms:$vo.name}</h3>
+								<p>{weikucms:$vo.info}</p>
+							</div>
+						</a>
+					</li>
+					</volist>
+				</ul>
+			</section>
+			<footer data-role="footer">
+									<div class="copyright" ><a href="javascript::" style="color:#000000;">©万普提供</a></div>
+					
+
+	
+			<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+			<if condition="$res_1['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body>
+</html>

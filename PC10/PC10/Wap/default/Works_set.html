@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/works/resource/main.css" media="all" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+    <script type="text/javascript" src="{weikucms::STATICS}/works/resource/jquery_min.js"></script>
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/service/js/jquery.form.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/resource/aSelect.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/resource/aLocation.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/resource/dater_min.js"></script>
+
+    <title>{weikucms:$tpl['name']}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!--定位-->
+    <script type="text/javascript" src="{weikucms::STATICS}/works/GetLocation.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/api"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/getscript"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/works/convertor.js"></script>
+    <!--/定位-->
+    <script>
+        $(function(){
+            var getLocation_Loading = 0;
+            var locationAddress = '';//存储定位后的地址详情字符串
+            baiduGetLocaltion();
+        });
+    </script>
+
+
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+
+<script>
+$(function(){
+
+
+$("#btnbaocun").click(function(){
+    var obj = {
+
+        worksname:$("#worksname").val(),
+        reason: $("#reason").val(),
+        openid: $("#openid").val(),
+        phone: $("#phone").val(),
+        token: $("#token").val(),
+        name: $("#name").val(),
+        age: $("#age").val(),
+
+        img: $("#url").val(),
+        mid:$("#mid").val(),
+        addtime:$("#addtime").val()
+
+    }
+	
+
+    if(obj.worksname.length<=0){
+        alert("请输入作品名");
+        return;
+    }
+    if(obj.reason.length<=0){
+        alert("请输入推荐作品的理由");
+        return;
+    }
+
+    if(obj.name.length<=0){
+        alert("请输入小小设计师者的姓名");
+        return;
+    }
+    if(obj.age.length<=0){
+        alert("请输入小小设计师者的年龄");
+        return;
+    }
+
+    var partten = /^1[3,5,8]\d{9}$/;
+    if(!partten.test(obj.phone)){
+        alert("请输入正确的号码");
+        return;
+    }
+
+    if(obj.img.length<=0){
+        alert("请上传图片！");
+        return;
+    }
+    var address = $(".online").text();
+    if(address == '正在定位，请稍后…' || address == '定位失败，请刷新重试！'){
+        if(!$("#Js-address").val()){
+            alert("定位失败哦,请输入详细地址");
+            return false;
+        }else{
+            address = $("#Js-address").val();
+        }
+    }
+
+
+
+
+    //loading(true);
+    var btn = $('#btnbaocun');
+    btn.attr("id","");
+    btn.text('保存信息中...');
+    $.ajax({
+        url: "{weikucms::U('Works/entry',array('token'=>$token,'openid'=>$openid))}",
+        type:"POST",
+        data:{ worksname:$("#worksname").val(),
+            reason: $("#reason").val(),
+            openid: $("#openid").val(),
+            phone: $("#phone").val(),
+            token: $("#token").val(),
+            name: $("#name").val(),
+            age: $("#age").val(),
+            img: $("#url").val(),
+            mid:$("#mid").val(),
+            addtime:$("#addtime").val(),
+            addear:address},
+        dataType:"json",
+
+        success: function(data){
+            //loading(false);
+            if(data.status = 1){
+                btn.text('保存成功！');
+                btn.attr("href","javascript:submit1();");
+
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },2000)
+            }else{
+                btn.text('保存失败！');
+            }
+			btn.attr("id","btnbaocun");
+			
+        }
+    });
+
+});
+
+})
+
+</script>
+<div class="container info_tx">
+    <div class="body pt_10">
+        <ul class="list_ul_card">
+
+                <input type="hidden" name="openid" id="openid" value="{weikucms:$_GET['openid']}"/>
+            <php>
+                echo "<input type='hidden' name='addtime' id='addtime' value='".time()."'/>";
+            </php>
+
+                <input type="hidden" name="token" id="token" value="{weikucms:$_GET['token']}"/>
+                <li data-card>
+                <div id="form1">
+                    <img src="{weikucms::STATICS}/works/shouye.png" style="width: 100%;display: block;">
+
+                    <div class="forms">
+                        <dl>
+                            <dt>作品名： </dt>
+                            <dd>
+                                <input type="text" name="worksname" id="worksname" value="" placeholder="请为你家宝贝的佳作起个名字吧" maxlength="30" class="input">
+                            </dd>
+
+                        </dl>
+
+                        <dl>
+                            <dt>推荐理由： </dt>
+                            <dd>
+                                <input type="text" name="reason" id="reason" value="" placeholder="这就是我家宝贝的拿手佳作！"  class="input">
+                            </dd>
+                        </dl>
+
+
+                        <dl>
+                            <dt style="background:#faebb2;">
+                                小小设计师（必填）
+                            </dt>
+                        </dl>
+
+                        <dl>
+                            <dd>
+                                <div class="group_input input">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <th>姓名：</th>
+                                            <td><input type="text" name="name" id="name" placeholder="小小设计师的大名" maxlength="30" class="input" style="line-height: 25px; margin-left: -20px;" value=""></td>
+                                        </tr>
+                                        <tr>
+                                            <th>年龄：</th>
+                                            <td><input type="number" name="age" id="age" placeholder="小小设计师今年几岁啦" maxlength="30" class="input" style="line-height: 25px;  margin-left: -20px;" value=""></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>联系方式：</th>
+                                            <td><input type="tel" name="phone" id="phone" placeholder="请输入监护人的手机号" maxlength="30" class="input" style="line-height: 25px;" value=""></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </dd>
+
+                        </dl>
+
+                        <!-- 系统字段性别可修改-->
+                        <dl>
+                            <div id="J_shipDateTemplateWrapper">
+                                <div class="m_input J_shipTimeContainer borderS">
+                                    <label>所在城市</label>
+                                    <div class="selectBox  selectcont y_hover">
+                                        <select name="online" id="online" class="group_input input" style="width: 300px; height: 30px;">
+
+                                        </select>
+                                        <div class="online" style="position: relative;bottom:25px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dl>
+                        <dl>
+                            <dt>详细地址:</dt>
+                            <dd><input type="text" name="addear" id="Js-address" value="" placeholder="请输入详细地址" maxlength="100"  class="input"/></dd>
+                        </dl>
+
+
+                        <dl>
+                            <dt>你所参加的比赛名称</dt>
+                            <dd>
+                                <div class="box select_box">
+                                    <div>
+                                        <select name="mid"  class="select" id="mid">
+                                            <volist name="set" id="vo" key="i">
+                                                <option value="{weikucms:$vo.id}"<if condition="$vo['id'] eq $_GET['mid']  ">selected</if>>{weikucms:$vo.name}</option>
+                                            </volist>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt> 作品图片：</dt>
+                            <dd>
+                                <div class="publicList wml100">
+                                    <div style="border: width:40%; margin: 0 auto; padding: 3px 0 6px 0; text-align: center;" id="checkimg">
+                                        <div class="li-r">
+                                            <form id="myupload" action="/index.php?g=Wap&m=Works&a=uploadsT&token=$_GET['token']" method="post" enctype="multipart/form-data">
+                                                <div class="demo">
+                                                    <span id="bar" style="padding-left:20px;font-size: 12px;">上传图片</span>
+                                                    <div id="showimg" style="margin-left:50px;">
+
+                                                    </div>
+                                                    <div class="btn" style="margin-left:30px; width:100px;">
+                                                        <input id="fileupload" type="file" name="mypic" style="height:30px; margin-left: auto;">
+                                                    </div>
+                                                    <p>提示：1.只允许上传gif/jpg格式的图片。<br/>2.图片大小不能超过1M。</p>
+                                                    <input type="hidden" value="" id='url' />
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#upload').click(function(){
+                                            if ($('#file').val() == "") {
+                                                alert('请选择文件！');
+                                                return false;
+                                            };
+                                        })
+                                    })
+                                </script>
+                            </dd>
+
+                        </dl>
+
+                        <dl>
+                            <dt style="background:#faebb2;">
+                            <div>
+                                <p style="text-align: center;">报名信息一经确认以后不能更改</p>
+                                <p style="text-align: center;">请确认以上信息是否正确</p>
+                            </div>
+                            </dt>
+                        </dl>
+                </div>
+
+
+                    </div>
+                </li>
+                <div class="pt_10 pb_10">
+                    <a href="javascipt:;" id="btnbaocun" class="button">确认并分享</a>
+                </div>
+
+
+        </ul>
+    </div>
+</div>
+
+
+
+<script src="{weikucms::STATICS}/works/upfile.js" type="text/javascript"></script>
+</body>
+
+</html>

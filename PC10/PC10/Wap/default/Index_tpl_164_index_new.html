@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <include file="Public:weiweb"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_164/zepto.css"/>
+
+<style type="text/css">
+	#score{
+		letter-spacing: 5px;
+		text-align: center;
+		padding: 8px;
+		width: 50%;
+		background: #fff;
+		font-family: "Microsoft YaHei";
+		
+		border-radius: 5px;
+		font-weight:800;
+		font-size: 16px;
+	}#score a{
+		display: block;
+		color: #E7338A;
+	}
+</style>
+<div class="body">
+				<!--
+		用户分类管理
+        -->
+		<section>
+			
+				
+			
+			<div id="score">
+				<a href="{weikucms::U('Wap/WechatConferencemarking/index',array('token'=>$token,'openid'=>$openid))}">我要打分</a>
+			</div>
+			<div id="imagesUp"></a>
+		</section>
+	</div>       			
+			<!-- <footer style="overflow:visible;">
+				<div style="padding-bottom:-30px;text-align:center;">
+											<span class="weimob-support" >©万普提供</span>
+				</div>
+			</footer> -->
+	<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	<script type="text/javascript">
+		$(function(){
+			var im_w = $('.body').width()+'px';
+			var im_h = $('.body').width()*8/5+'px';
+			$('body').css({'background-size':im_w+" "+im_h,'color':'#ccc','height':$(window).height()+'px'});
+			$('#score').css({'margin':'0 auto','margin-top':$(window).height()*0.65+'px'});
+			var i = 0;
+			setInterval(function(){
+				if(i%2 == 0){
+					$('#imagesUp').css('margin-top','10px');
+				}else{
+					$('#imagesUp').css('margin-top','0px');
+				}
+				i++;
+			},'500')
+		})
+	</script>
+	</body>
+</html>
+

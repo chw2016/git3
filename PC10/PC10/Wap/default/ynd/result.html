@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('.seacher').blur(function(){
+                    var seach = $('.seacher').val();
+                    //var url = "{weikucms::U('result',array('token'=>$token,'openid'=>$openid))}"+"&seach="+seach;
+                    location.href = "{weikucms::U('result',array('token'=>$token,'openid'=>$openid))}"+"&seach="+seach;
+                })
+            })
+        </script>
+    </head>
+    <body>
+    	<div class="top-seek">
+    		<!--<div class="arrow-left" onclick="javascript:history.back(-1);"></div>-->
+            <div class="arrow-left" onclick="location.href='{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}'"></div>
+    		<div class="header-center">
+    			<span class="icon-search"></span>
+    			<span class="input-color">
+    				<input type="text" placeholder="螺旋藻" class="header-input seacher" value="{weikucms:$seach}">
+    			</span>
+    		</div>
+    	</div>
+    	<div class="commodity-content">
+
+            <if condition="$list">
+            <volist name="list" id="vo">
+                <div class="commodity-main">
+                    <div class="commodity-main-left">
+                        <img src="{weikucms:$vo.pic}" alt="">
+                    </div>
+                    <div class="commodity-main-right">
+                        <div class="commodity-main-right-title">
+                           <!-- <span>【1斤包邮】</span>-->
+                            {weikucms:$vo.name}
+                        </div>
+                        <div class="commodity-main-right-title" style="padding-top:5px;">
+                            规格：{weikucms:$vo.norms}
+                        </div>
+                        <div class="mt5">
+                            <span class="Price">参考零售价：￥{weikucms:$vo.price} 元</span>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+                <else/>
+                <div style="text-align: center;padding: 15px;">
+                    暂无您想要找的产品！
+                </div>
+            </if>
+
+    		<!--<div class="commodity-main">
+    			<div class="commodity-main-left">
+    				<img src="{weikucms::STATICS}/wapweiui/ynd/images/2.png" alt="" />
+    			</div>
+    			<div class="commodity-main-right">
+    				<div class="commodity-main-right-title">
+    					<span>【1斤包邮】</span>
+    					野生特级海螺旋藻出口/裙带菜海藻菜干货250g
+    				</div>
+    				<div class="through">
+    					￥358.0
+    				</div>
+    				<div class="mt5">
+    					<span class="Price">￥298.0</span>
+    					<span class="people">75付款</span>
+    				</div>
+    			</div>
+    		</div>-->
+    	</div>
+        <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

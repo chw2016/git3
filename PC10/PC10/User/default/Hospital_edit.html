@@ -1,0 +1,114 @@
+<include file="Public:head"/>
+
+<div class="cLineB"><h4>新增分院<span class="FAQ"></span></h4></div>
+
+
+<div class="box-content">
+    <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+        <div class="control-group">
+            <label class="control-label">分院名称:</label>
+            <div class="controls">
+                <input type="text" name="name" id="name" value="{weikucms:$data[name]}" data-rule-required="true" data-rule-rangelength="[1,16]" style="width: 400px;">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">分院编码</label>
+            <div class="controls">
+                <input type="text" name="code" id="code" value="{weikucms:$data[code]}" data-rule-required="true" data-rule-rangelength="[6,16]" style="width: 400px;">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">分院导航地址</label>
+            <div class="controls">
+                <input type="text" name="mapuri" id="mapuri"  value="{weikucms:$data[mapuri]}" data-rule-required="true" data-rule-equalto="#new_password" style="width: 400px;">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分院地址</label>
+            <div class="controls">
+                <input type="hidden" value="{weikucms:$data[id]}" id="hid"/>
+                <input type="text" name="address" id="address" value="{weikucms:$data[address]}" data-rule-required="true" data-rule-equalto="#new_password" style="width: 400px;">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分院描述</label>
+            <div class="controls">
+                <textarea name="desc" id="desc" cols="30" rows="10" style="width: 400px;">{weikucms:$data[desc]}</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions" id="btn_box">
+            <button id="bsubmit" type="button" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var code = $("#code").val();
+            var mapuri = $("#mapuri").val();
+            var address = $("#address").val();
+            var desc=$("#desc").val();
+            var id=$("#hid").val();
+            if(! name){
+                notif({
+                    msg: "请输入分院名称",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! code){
+                notif({
+                    msg: "请输入分院编码",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! mapuri){
+                notif({
+                    msg: "请输入分院导航地址",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! address){
+                notif({
+                    msg: "请输入分院地址",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! desc){
+                notif({
+                    msg: "请输入分院描述",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('Hospital/edit')}",{id:id,name:name,code:code,desc:desc,address:address,mapuri:mapuri},function(data){
+                if(data.status==1){
+                    alert(data.info);
+                    location.href="{weikucms::U('Hospital/index',array('token'=>$token))}";
+                }else{
+                    alert(data.info);
+
+                }
+            },'json');
+
+        });
+    });
+
+</script>
+</div>

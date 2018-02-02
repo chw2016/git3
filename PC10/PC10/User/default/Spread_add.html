@@ -1,0 +1,266 @@
+<include file="Public:head" />
+
+<div class="cLineB">
+    <h4 style="position:relative;">
+        添加微信推广
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Spread/index',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('filemanager', function() {
+                editor.plugin.filemanagerDialog({
+                    viewType : 'VIEW',
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#click_icon").click(function(e){
+            $('#icon_btn').css({
+                top:e.pageY - 370,
+                left:e.pageX- 330
+            }).show();
+           $('#icon_btn').css({'position':'absolute','left':'76px','top':'50px'}).show();
+        
+        })
+        $(".tile-themed i").each(function(){
+            $(this).click(function(){
+                var thisclass = $(this).attr('class');
+                $(".ico_bg i").attr("class",thisclass);
+                $("#icon").val(thisclass);
+                $('#icon_btn').hide();
+            });
+        });
+    });
+</script>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+    <form class="form" method="post" action=""
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        关键字：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="name" value="" name="name" style="width:300px" placeholder="此处填写关键字，例如“首页”">
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top">
+                    <label for="title">
+                        活动名称：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="active" value="" name="active" style="width:300px" placeholder="此处填写活动名称">
+                </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        活动简介：
+                    </label>
+                </TH>
+                <TD>
+                    <textarea id="info" value="" name="info" style="width:300px"></textarea>
+                    <br />
+                    <div class="alert alert-info" style="width: 263px;">
+                        最多输入30个汉字,可以为空
+                    </div>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        图文图片：
+                    </label>
+                </TH>
+                <TD>
+                    <img style="display: none;" class="fenlei_img" src="">
+                    <input type="hidden" class="px" id="img" value="" name="img" style="width:300px" readonly="readonly">
+                    <span class="ke-button-common" id="upload">上传图片</span>
+                    <span class="info_tip">建议图片大小720x400</span>
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+           
+            <TR>
+               <th>截至时间：</th>
+                <td><input type="input" class="px" id="startdate" value="" onClick="WdatePicker()" name="statdate" style="width:175px;"/>
+                到
+                <input type="input" class="px" id="enddate" value="" name="enddate" onClick="WdatePicker()" style="width:175px;"></td>
+            </TR>
+            <!-- <TR>
+                 <TH valign="top">
+                    <label for="gift">
+                        奖品名称：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="giftname" value="" name="name" style="width:300px" placeholder="此处填写奖品名称">
+                    <span class="info_tip" style="color:#f00">多个奖品请用逗号隔开(逗号为英文状态下)</span>
+                </TD> 
+            </TR> -->
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var active = $("#active").val();
+            var img = $("#img").val();
+            var info = $("#info").val();
+            var startdate = $("#startdate").val();
+            var enddate =$("#enddate").val();
+         
+            if(! name){
+                notif({
+                    msg: "关键字不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! active){
+                notif({
+                    msg: "活动不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! info){
+                notif({
+                    msg: "活动简介不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! img){
+                notif({
+                    msg: "还没上传分类图片",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! startdate){
+                notif({
+                    msg: "开始日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! enddate){
+                notif({
+                    msg: "结束日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            // alert(1);
+           $.post("{weikucms::U('Spread/addForm',array('token'=>$token))}",
+                    {name:name,active:active,img:img,info:info,startdate:startdate,enddate:enddate},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+<include file="Public:footer" />

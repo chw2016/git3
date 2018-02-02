@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_175/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_175/css/index.css">
+    </head>
+    <body>
+    	<div class="bg">
+    		<div class="header">
+			创业大赛
+		</div>
+    	</div>
+    	<div class="main">
+    		<div class="conter">
+                 <volist name="info" id="vo" offset="0" length="1">
+    			<div class="main-img" onclick="window.location.href='<if condition="$vo['url'] neq ''">{weikucms:$vo.url}</if>'">
+    				<div class="main-img-left">
+    					<img src="{weikucms::STATICS}/wapweiui/weiweb/new_175/images/img1.png" />
+    				</div>
+    				<div class="main-img-right">
+    					<p class="main-img-right-size">{weikucms:$vo.name}</p>
+    					<p>{weikucms:$vo.info}</p>
+    				</div>
+    			</div>
+                </volist>
+    			<volist name="info" id="vo" offset="1" length="1">
+                <div class="main-img" onclick="window.location.href='<if condition="$vo['url'] neq ''">{weikucms:$vo.url}</if>'">
+                    <div class="main-img-left">
+                        <img src="{weikucms::STATICS}/wapweiui/weiweb/new_175/images/img2.png" />
+                    </div>
+                    <div class="main-img-right">
+                        <p class="main-img-right-size">{weikucms:$vo.name}</p>
+                        <p>{weikucms:$vo.info}</p>
+                    </div>
+                </div>
+                </volist>
+    			<volist name="info" id="vo" offset="2" length="1">
+                <div class="main-img" onclick="window.location.href='<if condition="$vo['url'] neq ''">{weikucms:$vo.url}</if>'">
+                    <div class="main-img-left">
+                        <img src="{weikucms::STATICS}/wapweiui/weiweb/new_175/images/img3.png" />
+                    </div>
+                    <div class="main-img-right">
+                        <p class="main-img-right-size" >{weikucms:$vo.name}</p>
+                        <p>{weikucms:$vo.info}</p>
+                    </div>
+                </div>
+                </volist>
+    		</div>
+    	</div>
+    </body>
+</html>

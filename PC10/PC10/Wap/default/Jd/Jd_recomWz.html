@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>方案上传</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+<style type="text/css">
+*{margin: 0;padding :0;}
+.ceng{width: 100%;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+.col-sm-2.control-label{margin:10px 0 ;color:#2f2f2f;}
+.form-control{background-color: #f6f6f6;height: 40px;font-size: 13px;}
+.ceng_eag{
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #888;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f6f6f6;
+  height: 40px;
+  font-size: 13px;
+}
+.poab{
+	  position: absolute;
+  right: 30px;
+  top: 13px;
+  color: #747474;
+	}
+	.poab1{
+		position: absolute;
+		top: 68px;
+		right: 10px;
+		color: #747474;
+	}
+select{
+   -webkit-user-select: auto;
+   -webkit-box-shadow: none;
+   box-shadow: none ;
+   -webkit-appearance: none;
+   border-radius:0;
+   -webkit-border-radius:0;
+}
+.opt-btn{
+    display: inline-block;
+    width: 130px;
+    height: 39px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 39px;
+    box-shadow: 0 1px 6px #FFF;
+    margin-top: 12px;
+    color: #000;
+}
+.foot {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    height: 60px;
+    background-color: #FFF;
+    width: 100%;
+    border-top: 1px solid #CCC;
+    z-index: 5;
+}
+#put{
+    display: inline-block;
+    width: 130px;
+    height: 39px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 39px;
+    box-shadow: 0 1px 6px #FFF;
+    margin-top: 12px;
+    color: #000;
+    margin-right:20px;
+}
+</style>
+
+    <script>
+        $(function(){
+            $(".opt-btn").click(function(){
+                msg.alert("<div><php>echo C('site_url');</php>index.php?g=Wap&m=JdPc&a=login&token={weikucms:$token}</div>"+"<div>长按链接，选择复制，将其用QQ或者微信发送至电脑端</div>")
+            })
+        })
+    </script>
+</head>
+<body style="background-color:#ededed;">
+<form action="{weikucms::U('recomWz',array('token'=>session('token'),'openid'=>$openid))}" method="post" id="form" />
+	<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">方案名称</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="title" class="form-control" value="{weikucms:$info['title']}" readonly id="firstname" placeholder="请填写方案名称">
+                <else/>
+                <input type="text" name="title" class="form-control" id="firstname" placeholder="请填写方案名称">
+            </if>
+
+      	</div>
+	</div>
+	
+	
+		<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">方案类型</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="type" class="form-control" id="firstname" readonly value="{weikucms:$info['type']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="type" class="ceng_eag">
+                    <option>请选择方案类型</option>
+                    <option value="标准方案" >标准方案</option>
+                    <option  value="售前方案"  >售前方案</option>
+                    <option  value="实施方案"  >实施方案</option>
+                    <option  value="市场方案"  >市场方案</option>
+                     <option  value="样板方案"  >样板方案</option>
+                </select>
+            </if>
+
+ 
+      	</div>
+	</div>
+	
+	
+	<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">方案所属行业</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="hy" class="form-control" id="firstname" readonly value="{weikucms:$info['hy']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="hy" class="ceng_eag">
+                    <option>请选择行业</option>
+                                  <volist name="types" id="v" >
+                       <option value="{weikucms::$v['industry']}" >{weikucms::$v['industry']}</option>
+                    </volist>
+                </select>
+            </if>
+      	</div>
+	</div>
+	<div class="ceng">
+    <label for="firstname"  class="col-sm-2 control-label">方案作者</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="name" value="{weikucms:$info['name']}" readonly class="form-control" id="firstname" placeholder="请填写方案作者">
+                <else/>
+                <input type="text" name="name" class="form-control" id="firstname" placeholder="请填写方案作者">
+            </if>
+
+      	</div>
+	</div>
+	
+	
+	<div class="ceng">
+	    <label for="firstname"  class="col-sm-2 control-label">方案链接</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="url" class="form-control" id="firstname" placeholder="建议上传360或百度云盘，并提供链接地址" readonly value="{weikucms:$info['url']}">
+                <else/>
+                <input type="text" name="url" class="form-control" id="firstname" placeholder="建议上传360或百度云盘，并提供链接地址">
+            </if>
+
+      	</div>
+	</div>
+	<div class="ceng">
+	    <label for="firstname"  class="col-sm-2 control-label">方案亮点</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <textarea name="ld" class="form-control" id="firstname" placeholder="请填写方案亮点" readonly>{weikucms:$info['ld']}</textarea>
+                <else/>
+                <textarea name="ld" class="form-control" id="firstname" placeholder="请填写方案亮点"></textarea>
+            </if>
+
+         	<!--<input type="text" name="ld" class="form-control" id="firstname" placeholder="请填写方案亮点">-->
+      	</div>
+	</div>
+	<div class="ceng">
+	    <label for="firstname"  class="col-sm-2 control-label">联系手机</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="tel" class="form-control" id="firstname" placeholder="请填写联系手机" readonly value="{weikucms:$info['tel']}">
+                <else/>
+                <input type="text" name="tel" class="form-control" id="firstname" placeholder="请填写联系手机">
+            </if>
+
+      	</div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">方案内容</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <textarea name="content" class="form-control" id="firstname" placeholder="请填写方案内容" readonly>{weikucms:$info['content']}</textarea>
+                <else/>
+                <textarea name="content" class="form-control" id="firstname" placeholder="请填写方案内容"></textarea>
+            </if>
+
+    <!--      	<input type="text" name="content" class="form-control" id="firstname" placeholder="请填写方案内容"> -->
+      	</div>
+	</div>
+	<div class="ceng" >
+		<label for="firstname" class="col-sm-2 control-label">标签</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                {weikucms:$info['tag']}
+                <else/>
+                <volist name="tag" id="v" >
+                    <input name="tags[]" type="checkbox" value="{weikucms:$v['id']}"  style="margin-left: 10px;"/><font>{weikucms:$v['name']}</font>
+                </volist>
+            </if>
+
+
+    <!--      	<input type="text" name="content" class="form-control" id="firstname" placeholder="请填写方案内容"> -->
+      	</div>
+	</div>
+	
+		<div class="ceng">
+	    <label for="firstname"  class="col-sm-2 control-label">推荐人</label>
+      	<div class="col-sm-10">
+         	<input type="text" name="" value="{weikucms:$name}" class="form-control" id="firstname" >
+      	</div>
+	</div>
+	
+	
+	<div style="height:80px;float:left;"></div>
+    </form>
+	<div class="foot">
+		<div id="put">确认上传</div>
+        <div class="opt-btn">PC上传</div>
+	</div>
+    <script type="text/javascript">
+$(function(){
+        var sub=0;
+        $('#put').click(function(){
+        $('#form').find('input').each(function(){
+            if($(this).val()==''){
+                msg.alert($(this).attr('placeholder'));
+                sub=0;
+                return false;
+            }else{
+                sub=1;
+            }
+        });
+        if(sub==1) $('#form').submit();
+        });
+
+});
+
+    </script>
+</body>
+</html>

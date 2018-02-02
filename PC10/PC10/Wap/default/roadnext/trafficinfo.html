@@ -1,0 +1,33 @@
+<if condition="$type eq 1">
+        <volist name="information" id="so" offset="0">
+            <div class="nr">
+                <div class="spadding">
+                    {weikucms:$so.content}
+                </div>
+            </div>
+        </volist>
+    <else/>
+        <volist name="information" id="so">
+            <div class="nr">
+                <div class="spadding">
+                    <a href="{weikucms::U('Roadnext/trafficinfo',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['cid'],'id'=>$so['id']))}" style="width: 70%;" >
+                        <!--<div class="nr-img"><img src="{weikucms:$so.pic}"> </div>-->
+                        <div class="nr-text" style="width: 100%;">
+                        <div class="span1">
+                            <php>
+                                if(mb_strlen($so['title'],'utf8') < 15){
+                                echo $so['title'];
+                                }else{
+                                echo mb_substr($so['title'],0,15, 'utf8').'...';
+                                }
+                            </php>
+                        </div>
+                            <!--<div style="color: rgb(159,153,165)">{weikucms:$so.add_time}</div>-->
+                        </div>
+                    </a>
+                    <div class="nr-fx"><img src="{weikucms:$so.pic}" style="height: 58px;width: 100%;"></div>
+
+                </div>
+            </div>
+        </volist>
+</if>

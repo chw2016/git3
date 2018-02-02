@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta content="telephone=no" name="format-detection">
+	<link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/common.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/index.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/icon/style.css">
+	<script type="text/javascript" src="tpl/Wap/default/hn/js/jquery-1.1.2.min.js"></script>
+	<style type="text/css">
+	body{
+		background-color:#fff;
+	}
+	.top{height:20px;}
+	.wo{float:right;color:#333;}
+	.t{float:left;color:#333;}
+	.t a{color:#333;margin-left:10px;}
+	</style>
+    </head>
+    <body>
+    		<img src="tpl/Wap/default/hn/img/bj2.jpg" />
+			<input type="hidden" value="{weikucms::U('addNum',array('token'=>$token))}" id="url">
+			<input type="hidden" value="{weikucms::U('comm',array('token'=>$token))}" id="curl">
+    	</div>
+	<div class="top">
+		<div class="right"><ul><li class="t"><a href="javascript:history.go(-1);">返回</a></li><li class="wo"><a href="{weikucms::U('wo',array('token'=>$token,'openid'=>$openid))}" style="  margin-right: 10px;">我的照片以及评论</a></li></ul></div>
+	</div>
+	<!--
+	<volist name="all" id="v">
+	<div class="main" dateid="{weikucms:$v.id}">
+		<div class="main-img">
+			<img src="{weikucms:$v.local_pic}" />
+		</div>
+	</div>
+	<div class="main-title">
+			<div class="main-titile-left"></div>
+			<div class="main-titile-right" style="margin-right: 10px;">
+				<span class="icon-thumbs-up" dataid="{weikucms:$v.id}" id="{weikucms:$v.id}">{weikucms:$v.click_num}</span>
+			</div>
+	</div>
+	<div class="padding10 clearfix">
+		        <span class="color1979dc">{weikucms:$v.nickname}:&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{weikucms:$v.content}</span>
+		        <div class="mt10">
+			        <span class="comment-day">{weikucms:$v.add_time|date="Y-m-d H:i:s",###}</span>
+	        		</div>
+	</div>
+	</volist>-->
+
+	<volist name="p" id="v">
+	<div class="main" dateid="{weikucms:$v.id}">
+		<div class="main-img" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">
+			<img src="{weikucms:$v.local_pic}" />
+		</div>
+	</div>
+	<div class="main-title">
+			<div class="main-titile-left"></div>
+			<div class="main-titile-right" style="  margin-right: 10px;">
+				<span class="icon-thumbs-up" dataid="{weikucms:$v.id}" id="{weikucms:$v.id}">{weikucms:$v.click_num}</span>
+			</div>
+	</div>
+	</volist>
+	<volist name="com" id="v">
+	
+	<div class="padding10 clearfix">
+		        <span class="color1979dc">{weikucms:$v.nickname}:&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{weikucms:$v.content}</span>
+		        <div class="mt10">
+			        <span class="comment-day">{weikucms:$v.add_time|date="Y-m-d H:i:s",###}</span>
+	        		</div>
+		      </div>
+	</volist>
+	
+    </body>
+	</html>
+</html>

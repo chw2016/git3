@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no,address=no,email=no" />
+    <meta name="mobileOptimized" content="width" />
+    <meta name="handheldFriendly" content="true" />
+    <meta http-equiv="Cache-Control" content="max-age=0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/distribution/mod.broker.css"/>
+    <script style="text/javascript" src="{weikucms::STATICS}/jquery.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/distribution/wxsharejs.js"></script>
+</head>
+
+<body style="background:#e7e7e7 url(none);">
+
+<script>
+    function ref(){
+        window.location.reload();
+    }
+</script>
+<section class="main animated">
+<div class="main-box">
+<div class="home-info border-box fn-clear">
+    <div style="width: 20px;height: 20px;float: right;" onclick="javascript:ref()">
+        <img src="{weikucms::STATICS}/wapweiui/distribution/img/spinner.png" style="width: 20px;height: 20px;" >
+    </div>
+    <figure class="figure-box" >
+        <if condition="($wxusersInfo['headimgurl'] neq '') and ($wxusersInfo['headimgurl'] neq null)">
+        <img src="{weikucms:$wxusersInfo['headimgurl']}" alt="">
+        <else />
+        <img src="{weikucms::STATICS}/wapweiui/distribution/img/header.png" alt="">
+        </if>
+    </figure>
+    <h5 style="color: #000;">{weikucms:$userInfo['name']}</h5>
+    <div class="user-info">
+        <label style="color: #000;">总佣金</label>
+        <p><i class="icon icon-money"></i><span style="color: #000;" onclick="window.location.href='{weikucms::U('Distribution/commission',array('token'=>$token,'openid'=>$openid))}'"><if condition="$allMycommission neq 0">{weikucms:$allMycommission}<else />0</if></span></p>
+    </div>
+    <div class="info-border"></div>
+    <div class="user-info">
+        <label style="color: #000;">邀请人数</label>
+        <p><i class="icon icon-users"></i><span style="color: #000;" onclick="window.location.href='{weikucms::U('Distribution/myclient',array('token'=>$token,'openid'=>$openid))}'"><if condition="$myClients neq 0">{weikucms:$myClients}<else />0</if></span></p>
+    </div>
+    <div class="info-border"></div>
+    <div class="user-info">
+        <label style="color: #000;">浏览历史</label>
+        <p><i class="icon icon-users"></i><span style="color: #000;" onclick="window.location.href='{weikucms::U('Distribution/clienthistory',array('token'=>$token,'openid'=>$openid))}'"><if condition="$history neq 0">{weikucms:$history}<else />0</if></span></p>
+    </div>
+</div>
+<style>
+    #tip{
+        color: white;
+        /* margin-left: 660px; */
+        display: inline-block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        font-size: 12px;
+        left: 77%;
+        text-align: center;
+        top: 21px;
+        line-height: 15px;
+        background: red;
+        border-radius: 50%;
+    }
+    .ico {
+       background-image: url("{weikucms::STATICS}/wapweiui/distribution/img/ico.png");
+        display: inline-block;
+    }
+    span.ico.icon-shangcheng {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 0 -27px;
+    }
+
+    span.ico.icon-huoban {
+        width: 25px;  height: 25px;  position: absolute;  background-size: cover;  background-repeat: no-repeat;
+        background-position: 0 -79px;
+        left: 41%;
+    }
+
+    span.ico.icon-caifu {
+        width: 25px;  height: 25px;  position: absolute;  background-size: cover;  background-repeat: no-repeat;
+        background-position: 0 -130px;
+        left: 29%;
+    }
+
+    span.ico.icon-yaoqinghaoyou {
+        width: 25px;  height: 25px;  position: absolute;  background-size: cover;  background-repeat: no-repeat;
+        background-position: 0 0px;
+        left: 43%;
+        top: 34%;
+    }
+
+    span.ico.icon-hongbao {
+        width: 25px;  height: 25px;  position: absolute;  background-size: cover;  background-repeat: no-repeat;
+        background-position: 0 -105px;
+        left: 43%;
+    }
+
+    span.ico.icon-liulanjilu {
+        width: 25px;  height: 25px;  position: absolute;  background-size: cover;  background-repeat: no-repeat;
+        background-position: 0 -54px;
+        left: 29%;
+        top: 37%;
+    }
+</style>
+<ul class="home-nav fn-clear">
+    <li class="nav-recommend "><a href="{weikucms::U('Store_new/cats',array('token'=>$token,'wecha_id'=>$openid,'dopenid'=>$openid,'openid'=>$openid))}"><span class="ico icon-shangcheng"></span>微商城</a></li>
+    <li class="nav-rule "><a href="{weikucms::U('Distribution/myclient',array('token'=>$token,'openid'=>$openid))}"><span class="ico icon-huoban"></span>我的伙伴</a></li>
+    <li class="nav-commission "><a href="{weikucms::U('Distribution/commission',array('token'=>$token,'openid'=>$openid))}"><p><span class="ico icon-caifu"></span>我的财富</p></a></li>
+    <li class="nav-rule-detail "><a href="#" onclick="alert('点击右上角按钮分享给你的朋友吧')"><span class="ico icon-yaoqinghaoyou"></span>邀请好友</a></li>
+    <li class="nav-commission "><a href="{weikucms::U('Distribution/clienthistory',array('token'=>$token,'openid'=>$openid))}"><p><span class="ico icon-liulanjilu"></span>浏览记录</p></a></li>
+</ul>
+<div class="sale-box">
+<!--
+    https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx969b1ea58140b14a&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/allshareindex/token/f17f0d1e02a8976cf065163525547260/id/2579/dopenid/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
+-->
+<!--
+<span style="display: none;" id="shareUrl"><php>echo C('site_url');</php>{weikucms::U('Distribution/register',array('token'=>$token,'dopenid'=>$openid))}</span>
+-->
+<if condition="$tpl['is_auth'] eq 1">
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/allshareindex/token/{weikucms:$token}/dopenid/{weikucms:$openid}/&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+    <else />
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/allshareindex/token/{weikucms:$token}/dopenid/{weikucms:$openid}/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+</if>
+
+</div>
+</div>
+</section>
+
+<footer class="foot"><a>&copy; Powered by <a href="http://www.wapwei.com/">万普微信</a></a></footer>
+<script src="{weikucms::STATICS}/wapweiui/distribution/seed.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/distribution/mod.jjr.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="宏耐微商";
+    var imgUrl="";
+    var descContent="宏耐微商，最轻松的赚钱商人。";
+    var shareUrl="";
+
+    $(function() {
+        shareUrl = $("#shareUrl").text();
+    });
+
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+
+    wx.ready(function () {
+        /*document.querySelector('#checkJsApi').onclick = function () {
+            wx.checkJsApi({
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ],
+                success: function (res) {
+                   // alert(JSON.stringify(res));
+                }
+            });
+        };*/
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+               
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+	<div class="cLineB">
+		<h4 class="left">修改导航栏</h4>
+
+		<div class="searchbar">
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody> 
+			       <tr> 
+				        <th>导航名称：</th>
+				        
+				        <td>
+				        	<input type="text" id="name" name="name" value="{weikucms:$nag.name}" class="px require" style="width:400px;" />
+				        </td>
+			       </tr>
+
+                   <tr>
+                       <th>导航链接：</th>
+
+                       <td>
+                           <input type="text" id="linkurl" name="linkurl" value="{weikucms:$nag.linkurl}" class="px require" style="width:400px;" />
+                       </td>
+                   </tr>
+
+                   <tr>
+				           <TH valign="top">导航图片：</TH>
+				           <TD>
+                               <input type="text" class="px" id="pic" name="pic" style="width: 400px;" readonly value="{weikucms:$nag.pic}"/>
+                               <span class="ke-button-common" id="upload">上传图片</span>
+				           </TD>
+			        </tr>
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+       			<button type="button" id="bsubmit" name="button" class="btn btn-primary">修改导航栏</td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var pic = $("#pic").val();
+            var linkurl = $("#linkurl").val();
+            var id="{weikucms:$id}";
+            if(!name){
+                notif({
+                    msg: "导航名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! pic){
+                notif({
+                    msg: "图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! linkurl){
+                notif({
+                    msg: "链接地址不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Shop/EditNag',array('token'=>$token))}",{id:id,name:name,pic:pic,linkurl:linkurl},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        location.href="{weikucms::U('Shop/navigation',array('token'=>$token))}";
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "warning"
+                        });
+                    }
+            },"json")
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

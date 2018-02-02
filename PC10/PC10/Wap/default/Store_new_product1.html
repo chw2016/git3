@@ -1,0 +1,869 @@
+<html class="no-js  mobile" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <script src="{weikucms::$staticFilePath}/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="{weikucms::$staticFilePath}/js/notification.js" type="text/javascript"></script>
+    <script src="{weikucms::$staticFilePath}/js/main.js" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="{weikucms::$staticFilePath}/css/style_touch.css">
+
+    
+	<meta charset="utf-8" />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="cleartype" content="on" />
+    <!-- dns prefetch -->
+
+    <title>{weikucms:$tpl.name}</title>
+    <style>
+        #content {
+            display: none;
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0
+        }
+
+        #imgs {
+            -webkit-transition-property: -webkit-transform;
+            -webkit-transition-duration: 0.5s;
+            -webkit-transition-timing-function: ease-out;
+            -webkit-transform: translate3d(0px,0px,0px);
+            height: 100%
+        }
+
+        #imgs li {
+            float: left;
+            text-align: center;
+            height: 100%;
+            padding-top: 65px
+        }
+
+        #imgs img {
+            width: 94%;
+            -webkit-transform: translate3d(0px,0px,0px)
+        }
+
+        .bg {
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #000;
+            opacity: 0.8;
+            position: absolute;
+            display: none
+        }
+
+        .close {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            right: 3%;
+            top: 20px;
+            color: #fff;
+            cursor: pointer;
+            background: #999;
+            border-radius: 3px;
+            padding: 5px 8px
+        }
+
+        .s_count {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            right: 3%;
+            top: 25px;
+            color: #fff;
+            margin-right: 60px
+        }
+        .infodetail img{
+            max-width: 300px;
+        }
+    </style>
+    <!-- _global -->
+    <script >
+
+        //base_head_script.js
+        function viewportMeta() {
+            var e = parseInt(window.screen.width),
+                    t = e / 640,
+                    i = navigator.userAgent;
+            if (/Android (\d+\.\d+)/.test(i)) {
+                var a = parseFloat(RegExp.$1);
+                document.write(a > 2.3 ? '<meta name="viewport" content="width=640, minimum-scale = ' + t + ", maximum-scale = " + t + ', target-densitydpi=device-dpi">': '<meta name="viewport" content="width=640, target-densitydpi=device-dpi">')
+            } else document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">')
+        }
+        
+    </script>
+    <!-- meta viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/base_49a730abe0.css" onerror="_cdnFallback(this)" />
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/showcase_ddb08a6630.css" onerror="_cdnFallback(this)" />
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/goods_6da84cb1dd.css" onerror="_cdnFallback(this)" />
+</head>
+<body class=" body-fixed-bottom">
+<!-- container -->
+<div class="container wap-goods internal-purchase">
+<div class="header">
+    <!-- ▼顶部通栏 -->
+    <div class="js-mp-info share-mp-info">
+        <a class="page-mp-info" href="<if condition="$token neq '2c65564f384e6cb4c3c23029d09ac340'">{weikucms::U('Store_new/cats',array('token' => $_GET['token'], 'catid' => $hostlist['id'], 'wecha_id' => $wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}</if>">
+            <img class="mp-image" width="30" height="30" src="{weikucms:$tpl.headpicurl}"/>
+            <i class="mp-nickname">
+                {weikucms:$tpl.name}
+            </i>
+        </a>
+        <div class="links">
+            <!--<a class="mp-homepage" href="{weikucms::U('Store_new/cart',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}">-->
+                <!--<span class="icon-cart" style="font-size: 18px;margin-right: 15px;"></span>-->
+                <!--<if condition="$totalProductCount neq 0" >-->
+                <!--<i class="cart_com"  id="cart_com" >-->
+                    <!--{weikucms:$totalProductCount}-->
+                <!--</i>-->
+                <!--</if>-->
+            <!--</a>-->
+            <a class="js-open-follow follow-mp" href="{weikucms::U('Store_new/userCenter',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">
+               <span class="icon-my" style="font-size: 18px;">
+               </span>
+            </a>
+        </div>
+    </div>
+    <!-- ▲顶部通栏 -->
+</div>
+
+<link type="text/css" href="tpl/Wap/default/common/shop/css/style.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{weikucms::$staticFilePath}/css/idangerous.swiper.css">
+<style>
+    /* Demo Styles */
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    .swiper-container {
+        width: 660px;
+        height: 250px;
+        color: #fff;
+        text-align: center;
+    }
+    .swiper-slide {
+        width: 500px;
+        height: 100%;
+    }
+    .red-slide {
+        background: #ca4040;
+    }
+    .blue-slide {
+        background: #4390ee;
+    }
+    .orange-slide {
+        background: #ff8604;
+    }
+    .green-slide {
+        background: #49a430;
+    }
+    .pink-slide {
+        background: #973e76;
+    }
+    .swiper-slide .title {
+        font-style: italic;
+        font-size: 42px;
+        margin-top: 80px;
+        margin-bottom: 0;
+        line-height: 45px;
+    }
+    .pagination {
+        position: absolute;
+        z-index: 20;
+        left: 10px;
+        bottom: 10px;
+    }
+    .swiper-pagination-switch {
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 8px;
+        background: #222;
+        margin-right: 5px;
+        opacity: 0.8;
+        border: 1px solid #fff;
+        cursor: pointer;
+    }
+    .swiper-visible-switch {
+        background: #aaa;
+    }
+    .swiper-active-switch {
+        background: #fff;
+    }
+</style>
+<div class="content js-mini-height">
+    <div class="content-body">
+        <!--<volist name='imageList' id='img'>-->
+            <!--<li><span style="background:url('<php>echo C('site_url');</php>{weikucms:$img.image}') center top no-repeat;background-size:cover"></span></li>-->
+        <!--</volist>-->
+        <div class="js-image-swiper custom-image-swiper custom-goods-swiper" style="height: 250px;">
+            <div class="swiper-container" style="width: 100%;">
+                <div class="swiper-wrapper">
+                    <volist name='imageList' id='img'>
+                        <div class="swiper-slide" style="background: url(<php>echo C('site_url');</php>{weikucms:$img.image}) no-repeat;width: 100%;">
+                        </div>
+                    </volist>
+                </div>
+                <div class="pagination"></div>
+            </div>
+        </div>
+        <script src="{weikucms::$staticFilePath}/css/idangerous.swiper.js"></script>
+        <script>
+            var mySwiper = new Swiper('.swiper-container',{
+                pagination: '.pagination',
+                paginationClickable: true,
+                moveStartThreshold: 100
+            })
+        </script>
+        <!-- 公用商品名和价格 -->
+        <div class="goods-header">
+            <h2 class="title">{weikucms:$product.name}</h2>
+            <div class="goods-price">
+                <div class="current-price">
+                    <span>￥&nbsp;</span>
+                    <i class="js-goods-price price">{weikucms:$product.price}</i>
+                </div>
+                <div class="original-price">
+                </div>
+            </div>
+        </div>
+        <div class="js-trade-reward trade-reward">
+        </div>
+        <!-- 内部购买 -->
+        <hr class="with-margin" />
+        <div class="sku-detail adv-opts" style="border-top:none;">
+            <div class="sku-detail-inner adv-opts-inner">
+                <if condition="$colorData">
+                <dl>
+                    <dt>
+                        {weikucms:$catData.color}：
+                    </dt>
+                    <!--样式-->
+                    <dd>
+                        <volist name="colorData" id="detail">
+                            <if condition="$detail['logo'] neq ''"><img src="{weikucms:$detail['logo']}"><else/>{weikucms:$detail['colorName']}&nbsp;&nbsp;</if>
+                        </volist>
+                    </dd>
+
+                </dl>
+                </if>
+                <if condition="$formatData">
+                <dl>
+                    <dt>
+                        {weikucms:$catData.norms}
+                    </dt>
+                    <!--<volist name="formatData" id="detail" key="formatId">-->
+                    <!--<li style="cursor:pointer" class="norms" id="norms_{weikucms:$detail['format']}">{weikucms:$detail['formatName']}</li>-->
+                    <!--</volist>-->
+                    <dd>
+                        <volist name="formatData" id="detail">
+                            {weikucms:$detail['formatName']}&nbsp;&nbsp;
+                        </volist>
+                        <!--L、XL、XXL、XXXL-->
+                    </dd>
+                </dl>
+                 </if>
+                <dl>
+                    <dt>
+                        库存：
+                    </dt>
+                    <dd>
+                        {weikucms:$product.num}
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        运费：
+                    </dt>
+                    <dd>
+                        ￥{weikucms:$product.mailprice}
+                    </dd>
+                </dl>
+				
+
+            </div>
+
+        </div>
+        <div class="js-components-container components-container">
+            <!--<div class="custom-store">-->
+            <!--<a class="custom-store-link clearfix" href="http://wap.koudaitong.com/v2/showcase/homepage?alias=juhos0">-->
+            <!--<div class="custom-store-name">-->
+            <!--起码口袋通-->
+            <!--</div> <span class="custom-store-enter">进入店铺</span> </a>-->
+            <!--<!---->
+            <!--<div class="custom-store-row">-->
+            <!--<a href="tel:057189988550"><div class="phone-area"></div></a>-->
+            <!--<div class="address-area">-->
+            <!--浙江省杭州市西湖区文三路478号华星时代广场A座22楼            </div>-->
+            <!--</div>-->
+            <!---->
+            <!--</div>-->
+            <!--<div class="custom-recommend-goods js-custom-recommend-goods hide clearfix">-->
+            <!--<div class="custom-recommend-goods-title">-->
+            <!--<a class="js-custom-recommend-goods-link" href="">推荐商品</a>-->
+            <!--</div>-->
+            <!--<ul class="custom-recommend-goods-list js-custom-recommend-goods-list clearfix">-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!-- 富文本内容区域 -->
+            <!-- 商品图文介绍部分 开始 -->
+            <div class="custom-richtext" style="margin-bottom: 50px;">
+                {weikucms:$product.intro}
+            </div>
+        </div>
+
+
+
+        <div class="js-bottom-opts bottom-opts">
+            <a href="javascript:;" class="js-buy-it btn btn-orange-dark btn-block  btn-block-small" id="onxian" style="float:left;margin-left: 15px;">我要去购买</a>
+            <!--<a href="javascript:;" class="js-add-cart btn btn-yellow btn-block  btn-block-small" onclick="add_cart();">加入购物车</a>-->
+            <span class="wechat_box" id="wechat_box"></span>
+        </div>
+    </div>
+    <!--<div class="modal modal-login js-modal-login">-->
+    <!--<div class="account-form login-form">-->
+    <!--<form class="js-login-form " method="GET" action="http://wap.koudaitong.com/v2/buyer/auth/login.jsonp">-->
+    <!--<h2 class="js-login-title form-title big"> <span>请先登录账号</span> </h2>-->
+    <!--<!-- 表单主体 -->
+    <!--<ul class="block block-form margin-bottom-normal">-->
+    <!--<li class="block-item"> <label>手机号码</label> <input type="tel" name="phone" maxlength="11" class="js-login-phone" autocomplete="off" placeholder="请输入您的手机号" value="" /> </li>-->
+    <!--<li class="block-item"> <label>登录密码</label> <input type="password" name="password" autocomplete="off" maxlength="20" class="js-login-pwd" placeholder="请填写您的密码" /> </li>-->
+    <!--<li class="relative block-item auth-hide js-auth-code-li"> <label>验证码</label> <input type="tel" name="code" class="js-auth-code" placeholder="请输入短信验证码" maxlength="6" /> <button type="button" class="btn btn-green btn-auth-code font-size-12 js-auth-code-btn" data-text="获取验证码"> 获取验证码 </button> </li>-->
+    <!--</ul>-->
+    <!--<div class="action-container">-->
+    <!--<button type="submit" class="js-submit btn btn-green btn-block" disabled="disabled">登录</button>-->
+    <!--<button type="button" class="js-login-cancel btn btn-block btn-white">返回</button>-->
+    <!--</div>-->
+    <!--<div class="action-links">-->
+    <!--<p class="center"> <a class="js-login-mode c-blue" data-login-mode="signup" href="javascript:;">注册账号</a> <span class="division-span"></span> <a href="" class="js-forget-password forget-password">忘记密码</a>-->
+    <!--<!--                    <span>|</span>-->
+    <!--<a href="" class="js-login-cancel login-cancel">取消</a>-->
+    <!-- </p>
+<!--</div>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<!--<div class="js-footer" style="min-height: 1px;">-->
+    <!--<div class="footer">-->
+        <!--<div class="footer">-->
+            <!--<div class="copyright">-->
+                <!--&lt;!&ndash;<div class="ft-links">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="http://wap.koudaitong.com/v2/showcase/homepage?kdt_id=1" target="_blank">店铺主页</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="http://wap.koudaitong.com/v2/showcase/usercenter?kdt_id=1" target="_blank">会员中心</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--<div class="ft-copyright">-->
+                    <!--<a href="http://koudaitong.com/" target="_blank">由&nbsp;<span class="company">万普微信</span>&nbsp;免费技术支持</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!-- fuck taobao -->
+<div id="js-fuck-taobao" class="fullscreen-guide fuck-taobao hide">
+    <span class="js-close-taobao guide-close">&times;</span>
+    <span class="guide-arrow"></span>
+    <div class="guide-inner">
+        <div class="step step-1"></div>
+        <div class="js-step-2 step"></div>
+    </div>
+</div>
+</div>
+<!-- JS -->
+<script src="{weikucms::$staticFilePath}/js/zepto_074c70c23a.js" onerror="_cdnFallback(this)"></script>
+<script src="{weikucms::$staticFilePath}/js/base_68071514fb.js" onerror="_cdnFallback(this)"></script>
+<div class="motify" style="display: none;"><div class="motify-inner"></div></div>
+<!--购买加入购物车，或购买的页面  开始-->
+<!--<script id="tmpl-sku" type="text/template">-->
+<!--<div class="goods-header layout-title sku-box-shadow">-->
+<!--<div class="js-cancel">-->
+<!--<div class="cancel-img"></div>-->
+<!--</div>-->
+<!--<div class="thumb"><img src="" alt=""></div>-->
+<!--<div class="goods-base-info clearfix">-->
+<!--<h2 class="title">{weikucms:$product.name}</h2>-->
+<!--<div class="goods-price clearfix">-->
+<!--<div class="current-price">-->
+<!--<span class='price-name font-size-18'>￥</span><i class="js-goods-price price vertical-middle">{weikucms:$product.price}</i>-->
+<!--</div>-->
+<!--<div class="original-price vertical-middle font-size-14 line-through">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="adv-opts layout-content">-->
+<!--<div class="goods-models js-sku-views"></div>-->
+<!--<div class="confirm-action content-foot"></div>-->
+<!--</div>-->
+<!--</script>-->
+<!-- 结束-->
+<script src="{weikucms::$staticFilePath}/js/u_b.js" onerror="_cdnFallback(this)"></script>
+<script src="{weikucms::$staticFilePath}/js/sku_a2b162a15c.js" onerror="_cdnFallback(this)"></script>
+<script src="{weikucms::$staticFilePath}/js/main_d7a097e190.js" onerror="_cdnFallback(this)"></script>
+<script src="{weikucms::$staticFilePath}/js/index_7acc19b6c1.js" onerror="_cdnFallback(this)"></script>
+<!--<script id="tmpl-side-qrcode" type="text/template">-->
+<!--<div class="section-detail">-->
+<!--<h3 class="shop-detail">手机扫码购买</h3>-->
+<!--<% if(type === 'url') { %>-->
+<!--<p class="text-center weixin-title">微信“扫一扫”立即购买</p>-->
+<!--<% } else if (type === 'weixin') { %>-->
+<!--<p class="text-center weixin-title">微信“扫一扫”关注购买</p>-->
+<!--<% } %>-->
+<!--<p class="text-center qr-code">-->
+<!--<img width="158" height="158" src="<%=img %>">-->
+<!--</p>-->
+<!--</div>-->
+<!--</script>-->
+<script src="{weikucms::$staticFilePath}/js/goods_d860eaf3e9.js" onerror="_cdnFallback(this)"></script>
+<a id="global-cart" class="hide" href="http://wap.koudaitong.com/v2/trade/cart?kdt_id=1"> <img width="50" height="50" src="http://static.koudaitong.com/v2/image/setting/shopping-cart/2x/s1.png" /> </a>
+<script>
+    window.refreshCartIcon = function(){
+        !!$ && $.ajax({
+            url: window._global.url.wap + '/trade/cart/count.jsonp',
+            type: 'GET',
+            timeout: 5000,
+            dataType : "jsonp",
+            success: function(resp) {
+                if(parseInt(resp.code)===0) {
+                    var count = parseInt(resp.data);
+                    if(count>0) {
+                        $('#global-cart').removeClass('hide');
+                    } else {
+                        $('#global-cart').addClass('hide');
+                    }
+                }
+            }
+        });
+    };
+
+    refreshCartIcon();
+
+</script>
+
+
+<div id="gotobuy" class="sku-layout sku-box-shadow" style="overflow: hidden; visibility: visible; opacity: 1; bottom: 0px; left: 0px; right: 0px; height: auto; position: fixed; z-index: 1100;display: none;">
+    <div class="goods-header layout-title sku-box-shadow">
+        <div class="js-cancel" id="oncha">
+            <div class="cancel-img"></div>
+        </div>
+        <div class="thumb"><img src="{weikucms:$product.logourl}" alt=""></div>
+        <div class="goods-base-info clearfix">
+            <h2 class="title" style="font-size: 14px;">{weikucms:$product.name}</h2>
+            <div class="goods-price clearfix">
+                <div class="current-price">
+                    <span>原价:</span>
+                    <i class="js-goods-price2 price" style="font-size: 12px;">￥{weikucms:$product.price}</i>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>会员价:</span>
+                    <i class="js-goods-vprice price" style="color: #94341D;font-size: 12px;">￥{weikucms:$product.vprice}</i>
+                    <!--<span class="price-name font-size-18">原价￥</span><i class="js-goods-price price vertical-middle">{weikucms:$product.price}</i>-->
+                    <!--<span class="price-name font-size-18">会员价￥</span><i class="js-goods-price price vertical-middle">{weikucms:$product.price}</i>-->
+                </div>
+                <div class="original-price vertical-middle font-size-14 line-through">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="adv-opts layout-content" style="height:auto;">
+        <div class="goods-models js-sku-views">
+
+            <if condition="$colorData">
+                <div class="i-row">
+                    <div class="model-title sku-sel-title">{weikucms:$catData.color}：</div>
+                    <div class="c">
+                        <ul class="model-list sku-sel-list">
+                            <volist name="colorData" id="detail" key="colorId">
+                                <li style="cursor:pointer" class="color btn sku-btn" id="color_{weikucms:$detail['color']}">
+                                    <if condition="$detail['logo'] neq ''"><img src="{weikucms:$detail['logo']}"><else/>{weikucms:$detail['colorName']}</if>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </if>
+
+            <if condition="$formatData">
+                <div class="i-row">
+                    <div class="model-title sku-sel-title">{weikucms:$catData.norms}：</div>
+                    <div class="c">
+                        <ul id="shoe_size_list" class="model-list sku-sel-list">
+                            <volist name="formatData" id="detail" key="formatId">
+                                <li style="cursor:pointer;" class="btn sku-btn norms" id="norms_{weikucms:$detail['format']}">{weikucms:$detail['formatName']}</li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </if>
+
+            <volist name="productDetail" id="pro">
+                <input type=hidden id="color_{weikucms:$pro.color}_norms_{weikucms:$pro.format}" value="{weikucms:$pro.num}" did="{weikucms:$pro.id}" price="{weikucms:$pro.price}" vprice="{weikucms:$pro.vprice}" class="hidden"/>
+            </volist>
+
+
+            <dl>
+                <dt class="model-title sku-num">
+                    <label>
+                        库存
+                    </label>
+                </dt>
+                <dd>
+                    <span id="stock" style="display: inline-block;line-height: 50px;">{weikucms:$product.num}</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="model-title sku-num">
+                    <label>
+                        数量
+                    </label>
+                </dt>
+                <dd>
+                    <dl class="quantity-view">
+                        <div class="quantity">
+                            <div class="response-area response-area-minus" onclick="plus_minus({weikucms:$product.id}, -1,{weikucms:$product.price});">
+                            </div>
+                            <button class="minus" type="button" >
+                            </button>
+                            <input type="number" class="txt" id="buy_num" name="goods[num]"  value="1">
+                            <button class="plus" type="button">
+                            </button>
+                            <div class="response-area response-area-plus"  onclick="plus_minus({weikucms:$product.id}, 1,{weikucms:$product.price});">
+                            </div>
+                            <div class="txtCover">
+                            </div>
+                        </div>
+                    </dl>
+                </dd>
+            </dl>
+            <div></div>
+        </div>
+        <?php if($productDetail):?>
+        <div class="confirm-action content-foot">
+            <!--<a href="javascript:;" onClick=" $.ajax({
+            url:"{weikucms::U('Store_new/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id']))}"+ '&count='+count + '&did=' + did,
+            dataType:"json",
+            success: function(data) {
+                if(data.status==0){
+                    location.href = "{weikucms::U('Store_new/address',array('token'=>$token))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+                } else {
+                    location.href = "{weikucms::U('Store_new/show',array('token'=>$token))}"+ '&pid=' + data.data.pid+'&wecha_id='+data.data.wecha_id;
+                }
+            }
+        });()" class="buynow">-->
+            <a href="javascript:;" onClick="QuickBuy()" class="js-confirm-it btn btn-block btn-orange-dark butn-buy">下一步</a>
+        </div>
+        <?php else:?>
+        <div class="confirm-action content-foot">
+            <!--<a href="javascript:;" onClick="QuickBuy()" class="buynow">-->
+            <a href="javascript:;" onClick="parents()" class="js-confirm-it btn btn-block btn-orange-dark butn-buy">下一步</a>
+        </div>
+        <?php endif;?>
+    </div>
+</div>
+<div id="hidediv" style="display:none;width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; z-index: 1000; opacity: 1; transition: none 0.2s ease; -webkit-transition: none 0.2s ease; background-color: rgba(0, 0, 0, 0.901961);"></div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#onxian").click(function(){
+            $("#hidediv").show();
+            $("#gotobuy").fadeIn();
+        });
+        $("#oncha").click(function(){
+            $("#hidediv").hide();
+            $("#gotobuy").fadeOut();
+        });
+
+    });
+
+    function parents(){
+        var count=parseInt($("#buy_num").val());
+        var stock=parseInt($("#stock").html());
+        if(count>stock){
+            alert("库存不足");
+			return false;
+        }
+        var url="{weikucms::U('Store_new/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'did'=>$id,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}"+ '&count='+count+"&type=par";
+        $.ajax({
+            url:url,
+            dataType:"json",
+            success: function(data) {
+                if(data.status==0){
+                    location.href = "{weikucms::U('Store_new/address',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+                } else {
+                    location.href = "{weikucms::U('Store_new/show',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&pid=' + data.data.pid+'&wecha_id='+data.data.wecha_id;
+                }
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    //var detailinfo = new Swiper('.detailinfo .views',{pagination: '.detailinfo .tabs',autoplay:false});
+    var SysSecond;
+    var InterValObj;
+    var buyDetailId = '';
+    $(document).ready(function() {
+        $(".color").first().addClass('active');
+        $(".norms").first().addClass('active');
+        var frist_id = $(".color").first().attr('id');
+        var nextid_frist = $(".norms").first().attr('id');
+        buyDetailId = frist_id + "_" + nextid_frist;
+        if(buyDetailId !="undefined_undefined"){
+            $("#stock").text($("#"+buyDetailId).val());
+            $(".js-goods-price2").text("￥"+$("#"+buyDetailId).attr('price'));
+            $(".js-goods-vprice").text("￥"+$("#"+buyDetailId).attr('vprice'));
+        }
+        SysSecond = parseInt($("#remainSeconds").html()); //这里获取倒计时的起始时间
+        InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
+        $(".color").click(function(){
+            if ($(this).attr('class') != 'color btn sku-btn active') {
+                $(this).addClass('active').siblings().removeClass('active');
+                var id = $(this).attr('id');
+                var nextid = 'norms_0';
+                $('.norms').each(function(){
+                    if ($(this).attr('class') == 'btn sku-btn norms active') {
+                        nextid = $(this).attr('id');
+                    }
+                });
+                if ($("#" + id + "_" + nextid).val() != null && $("#" + id + "_" + nextid).val() != '') {
+                    buyDetailId = id + "_" + nextid;
+                    $("#stock").text($("#" + buyDetailId).val());
+                    $(".js-goods-price2").text("￥"+$("#" + buyDetailId).attr('price'));
+                    $(".js-goods-vprice").text("￥"+$("#" +buyDetailId).attr('vprice'));
+                } else {
+                    $("#stock").text(0);
+                }
+            } else {
+                buyDetailId = "";
+                $(this).removeClass('active');
+            }
+        });
+        $(".norms").click(function(){
+            if ($(this).attr('class') != 'btn sku-btn norms active') {
+                $(this).addClass('active').siblings().removeClass('active');
+                var id = $(this).attr('id');
+                var nextid = 'color_0';
+                $('.color').each(function(){
+                    if ($(this).attr('class') == 'color btn sku-btn active') {
+                        nextid = $(this).attr('id');
+                    }
+                });
+                if ($("#" + nextid + "_" + id).val() != '' && $("#" + nextid + "_" + id).val() != null) {
+                    buyDetailId = nextid + "_" + id;
+                    $("#stock").text($("#" + buyDetailId).val());
+                    $(".js-goods-price2").text("￥"+$("#" + buyDetailId).attr('price'));
+                    $(".js-goods-vprice").text("￥"+$("#" +buyDetailId).attr('vprice'));
+                } else {
+                    $("#stock").text(0);
+                }
+            } else {
+                buyDetailId = "";
+                $(this).removeClass('active');
+            }
+        });
+    });
+
+    //将时间减去1秒，计算天、时、分、秒
+    function SetRemainTime() {
+        if (SysSecond > 0) {
+            SysSecond = SysSecond - 1;
+            var second = Math.floor(SysSecond % 60);             // 计算秒
+            var minite = Math.floor((SysSecond / 60) % 60);      //计算分
+            var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+            var day = Math.floor((SysSecond / 3600) / 24);        //计算天
+            $("#remainTime").html('&nbsp;&nbsp;还剩'+day + "天" + hour + "小时" + minite + "分" + second + "秒");
+        } else {//剩余时间小于或等于0的时候，就停止间隔函数
+            window.clearInterval(InterValObj);
+            //这里可以添加倒计时时间为0后需要执行的事件
+        }
+    }
+    //加减
+    function plus_minus(rowid, number,price) {
+        var num = parseInt($('#buy_num').val());
+        num = num + parseInt(number);
+        if (num > parseInt($('#stock').text())) {
+            num = parseInt($('#stock').text());
+        }
+        if (num <= 0) {
+            return false;
+        }
+        $('#buy_num').attr('value',num);
+    }
+    function add_cart() {
+        $("#btn_add_cart").attr("disable", false);
+        var count = parseInt($('#buy_num').val());
+        var did = parseInt($("#" + buyDetailId).attr('did'));
+        if ($('.hidden').eq(0).val() != null && $('.hidden').eq(0).val() != '' && $('.hidden').eq(0).val() != 'undefined') {
+            if (isNaN(did)) {
+                $(".motify-inner").text('请选择颜色与尺码');
+                $(".motify").show();
+                setTimeout(function(){
+                    $(".motify").hide();
+                },'2000');
+            }
+        } else {
+            did = 0;
+        }
+        if (count > parseInt($("#stock").text())) {
+            $(".motify-inner").text('抱歉，您的购买量超过了库存了');
+            $(".motify").show();
+            setTimeout(function(){
+                $(".motify").hide();
+            },'2000');
+        }
+        $.ajax({
+            url: "{weikucms::U('Store_new/addProductToCart',array('token'=>$token,'id'=>$product['id'],'wecha_id'=>$_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}" + '&count='+count + '&did=' + did,
+            success: function(data) {
+                if(data){
+                    var datas=data.split('|');
+                    $('.cart_com').text(datas[0]);
+                    $("#btn_add_cart").attr("disable", true);
+                    $(".motify-inner").text('加入购物车成功');
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                    },'2000');
+                } else {
+                    $(".motify-inner").text('抱歉，您的请求不正确');
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                    },'2000');
+                }
+            }
+        });
+    }
+    function QuickBuy() {
+        var count = parseInt($('#buy_num').val());
+        var did = parseInt($("#" + buyDetailId).attr('did'));
+        if ($('.hidden').eq(0).val() != null && $('.hidden').eq(0).val() != '' && $('.hidden').eq(0).val() != 'undefined') {
+            if (isNaN(did)) {
+                $(".motify-inner").text('请选择颜色与尺码');
+                $(".motify").show();
+                setTimeout(function(){
+                    $(".motify").hide();
+                },'2000');
+                return false;
+            }
+        } else {
+            did = 0;
+        }
+        if (count > parseInt($("#stock").text())) {
+            $(".motify-inner").text('抱歉，您的购买量超过了库存了');
+            $(".motify").show();
+            setTimeout(function(){
+                $(".motify").hide();
+            },'2000');
+            return false;
+        }
+		$.ajax({
+            url:"{weikucms::U('Store_new/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&count='+count + '&did=' + did+"&type=son",
+            dataType:"json",
+            success: function(data) {
+                if(data.status==0){
+                    location.href = "{weikucms::U('Store_new/address',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+                } else {
+                    location.href = "{weikucms::U('Store_new/show',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&pid=' + data.data.pid+'&wecha_id='+data.data.wecha_id;
+                }
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $("#wechat_box").click(function(){
+            var url = "{weikucms::U('Wap/Duokf/sendkfmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+            $.post(url,{},function(data){
+                if(data.code == 0){
+                    $(".motify-inner").text(data.msg);
+                    $(".motify").show();
+                    setTimeout(function(){
+                        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+                        });
+                    },'2000');
+
+                }else{
+                    $(".motify-inner").text(data.msg);
+                    $(".motify").show();
+                    setTimeout(function(){
+                        $(".motify").hide();
+                    },'2000');
+                    return false;
+                }
+            },'json');
+        });
+    });
+</script>
+<if condition="$tpl['is_auth'] eq 1">
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/dopenid/{weikucms:$openid}/type/cats/catid/0/product_id/{weikucms::$_GET['id']}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+    <else />
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/dopenid/{weikucms:$openid}/type/cats/catid/0/product_id/{weikucms::$_GET['id']}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+</if>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="{weikucms:$product.name}-{weikucms:$tpl['name']}商城";
+    var imgUrl="{weikucms:$product.logourl}";
+    var descContent="{weikucms:$product.logourl}";
+    var shareUrl="";
+
+    $(function() {
+        shareUrl = $("#shareUrl").text();
+    });
+
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

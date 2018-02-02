@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+	<meta http-equiv="Cache-Control" content="max-age=0">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="Description" content="新带客通经纪人">
+	<meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/common.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi1.css">
+    </head>
+    <body>
+    	<div class="book-bj" style="background: url({weikucms:$wei.back_pic});background-size: cover;">
+	    	<div class="book-title">
+	    		<div class="book-main">
+	    			<div class="book-main-left" data-href="{weikucms:$wei.info3}">
+	    				<span class="book-main-left-size wei">微楼书</span>
+	    			</div>
+	    			<div class="book-main-right">
+	    				<div class="book-main-right-top jianjie">简介</div>
+	    				<div class="book-main-right-bottom">
+	    					<div class="book-main-right-bottom-size-left xiangce">相册</div>
+	    					<div class="book-main-right-bottom-size-right quwei">区位</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="footer-book">
+				点击右上角可单独分享此楼书哦！
+			</div>
+	    	</div>
+    	</div>
+    </body>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+	$('.jianjie').click(function(){
+		window.location.href="{weikucms::U('title',array('token'=>$token,'openid'=>$openid,'id'=>$wei['id']))}";
+	})
+	$('.xiangce').click(function(){
+		window.location.href="{weikucms::U('title1',array('token'=>$token,'openid'=>$openid,'id'=>$wei['id']))}";
+	})
+	$('.quwei').click(function(){
+		window.location.href="{weikucms::U('title2',array('token'=>$token,'openid'=>$openid,'id'=>$wei['id']))}";
+	})
+	$('.wei').click(function(){
+		window.location.href="{weikucms:$wei.info3}";
+	})
+</script>
+<script>
+    var cur="<?php echo C('site_url');?>";
+function shareConfig(){
+
+        return config={
+            'shareTitle':'{weikucms:$wei.title}微楼书',
+            'imgUrl':cur+"{weikucms:$wei.back_pic}"
+        }
+    }
+</script>
+</html>

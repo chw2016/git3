@@ -1,0 +1,339 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css" />
+<div class="">
+    <div class="cLineB">
+        <!--tab start-->
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+             <if condition="$_GET['mru'] eq 1 " >
+
+                 <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Mrupl/index',array('token'=>$_GET['token']))}">返回</a>
+
+                </li>
+             <else/>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+
+                </li>
+             </if>
+
+             <if condition="$_GET['mru'] eq 1 " >
+                <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                    <a href="{weikucms::U('Mrupl/index',array('token'=>$_GET['token']))}" class="nohover">返回</a>
+                </li>
+             <else/>
+                 <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                    <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" class="nohover">返回</a>
+                </li>
+             </if>   
+            </ul>
+        </div>
+        <!--tab end-->
+    </div>
+
+    <!--<div class="cLine">-->
+        <!--<div class="title_tab">-->
+            <!--<h4 style="position:relative;">-->
+                <!--订单详情-->
+            <!--</h4>-->
+        <!--</div>-->
+        <!--<div class="clr"></div>-->
+    <!--</div>-->
+    <div>
+        <form action="" method="post">
+        <table>
+            <tr>
+                <th>
+                    姓名：
+                </th>
+                <td>
+                    <input type="text" class="" name="truename" id="truename" value="{weikucms:$param.truename}"/>
+                </td>
+
+
+                <th>
+                    手机号码：
+                </th>
+                <td>
+                    <input type="text" class="" name="tel" id="tel" value="{weikucms:$param.tel}"/>
+                </td>
+
+                <th>　　订单号：</th>
+                <td>
+                    <input type="text" class="" name="orderid" id="orderid" value="{weikucms:$param.orderid}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>付款方式：</th>
+                <td>
+                    <select name="paid" id="paid">
+                        <option value="-1" <if condition="$param.paid eq -1">selected</if>>全部</option>
+                        <option value="0" <if condition="$param.paid eq 0">selected</if>>未付款</option>
+                        <option value="1" <if condition="$param.paid eq 1">selected</if>>已付款</option>
+                    </select>
+                </td>
+
+                <th>发货状态：</th>
+                <td>
+                    <select name="sent" id="sent">
+                        <option value="0" <if condition="$param.sent eq 0">selected</if> >请选择</option>
+                        <option value="1" <if condition="$param.sent eq 1">selected</if> >未发</option>
+                        <option value="2" <if condition="$param.sent eq 2">selected</if> >已发</option>
+                    </select>
+                </td>
+
+                <th>　　处理状态：</th>
+                <td>
+                    <select name="handled" id="handled">
+                        <option value="0" <if condition="$param.handled eq 0">selected</if> >请选择</option>
+                        <option value="2" <if condition="$param.handled eq 2">selected</if> >未处理</option>
+                        <option value="1" <if condition="$param.handled eq 1">selected</if> >已处理</option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <th>下单时间：</th>
+                <td>
+                    <input type="input" class="px" id="statdate" value="{weikucms:$param.statdate}" onclick="WdatePicker()" name="statdate">&nbsp;&nbsp;到&nbsp;&nbsp;
+                </td>
+                <td>
+                    <input type="input" class="px" id="enddate" value="{weikucms:$param.enddate}" name="enddate" onclick="WdatePicker()" > </td>
+
+                </td>
+
+                <td>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp
+                    <button type="submit" id="submit" name="button" class="btn btn-primary">
+                        筛选
+                    </button>
+                </td>
+            </tr>
+            <tr><td>&nbsp</td></tr>
+        </table>
+        <input type="hidden" name="token" value="{weikucms:$token}">
+        </form>
+    </div>
+
+
+        <div class="row-fluid" >
+            <ul id="custom_group_navigator_div1" class="qb_clearfix unstyled">
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_2">今日订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday3">
+                            <if condition="$stat['today_num']">
+                            <php>echo sprintf("%.2f", $stat['today_num']);</php>
+                            <else />
+                            0
+                            </if>
+                            </strong>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">今日订单总额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday2">
+                            <if condition="$stat['today_price']">
+                            <php>echo sprintf("%.2f", $stat['today_price']);</php>元
+                            <else />
+                            0
+                            </if>
+                            </strong>
+                            <div class="list-box__trend" id="NewToday13" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">本月订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday72">{weikucms:$stat.month_num}</strong>
+                            <div class="list-box__trend" id="NewToday182" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">本月订单金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday4">
+                            <if condition="$stat['month_price']">
+							<php>echo sprintf("%.2f", $stat['month_price']);  </php>元
+                            <else />
+                            0
+                            </if></strong>
+                            <div class="list-box__trend" id="NewToday15" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+                 <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">总订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday73">
+                            <php>echo $stat['total_num']</php>
+                            </strong>
+                            <div class="list-box__trend" id="NewToday183" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">总订单金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday5">
+                            <if condition="$stat['total_price']">
+                            <php>echo sprintf("%.2f", $stat['total_price']);</php>
+                            <else />
+                            0
+                            </if>
+                            </strong>
+                            <div class="list-box__trend" id="NewToday16" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+
+
+
+
+
+
+    <div class="msgWrap">
+        <form method="post" action="" id="info">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th >编号</th>
+                    <th >订单号</th>
+                    <th >姓名</th>
+                    <th >电话</th>
+                    <th >数量</th>
+                    <th width="70px">总额(元）</th>
+                    <th width="95px">付款/发货状态</th>
+                    <th >付款方式</th>
+                    <th >状态</th>
+                    <th >创建时间</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr></tr>
+
+                <volist name="orders" id="o" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$o.orderid}</td>
+                        <td>{weikucms:$o.truename} <if condition="$isDining eq 1"><span style="color:#f60">[<if condition="$o.diningtype eq 1">点餐<elseif condition="$o.diningtype eq 2" />外卖<elseif condition="$o.diningtype eq 3" />预定<else /></if>]</span></if></td>
+                        <td>{weikucms:$o.tel}</td>
+                        <td>{weikucms:$o.totalCount}</td>
+                        <td><if condition="$o['is_cart'] eq 1">{weikucms:$o.price}<else />{weikucms:$o.priceCount}</if></td>
+                        <td><if condition="$o.paid eq 1"><span style="color:green">已付款</span><else/><span style="color:red">未付款</span></if> / <if condition="$o.sent eq 2"><span style="color:green">已发货</span><else/><span style="color:red">未发货</span></if></td>
+
+                        <td>
+                            <if condition="$o['paymode'] eq 0"><span style="color:green">微信支付</span>
+                                <elseif condition="$o['paymode'] eq 1" /><span style="color:green">微信支付</span>
+                                <else /><span style="color:green">货到付款</span></if>
+                        </td>
+                        <td><if condition="$o.handled eq 1"><span style="color:green">已处理</span><else/><span style="color:red">未处理</span></if></td>
+                        <td>{weikucms:$o.time|date="Y-m-d H:i:s",###}</td>
+                        <td class="norightborder">
+                            <if condition="$_GET['mru'] eq 1 " >
+                            <a href="{weikucms::U('Store_new/mru',array('token'=>$token,'id'=>$o['id']))}" title="详情" class="btn btn-success btn-sm">鱼美人订单详细</a>
+                            <else/>
+                            <a href="{weikucms::U('Store_new/orderInfo',array('token'=>$token,'id'=>$o['id']))}" title="详情" class="btn btn-success btn-sm">详细</a>
+                            </if>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Store_new/deleteOrder',array('token'=>$token,'id'=>$o['id'],'dining'=>$isDining))}');">删除</a>
+
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+            <input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+        </form>
+
+        <!--<script>-->
+            <!--function showIntroDetail(id){-->
+                <!--art.dialog.open('{weikucms::U('Store_new/orderInfo',array('token'=>$token,'dining'=>$isDining))}&id='+id,{lock:false,title:'订单详情',width:1000,height:620,yesText:'关闭',background: '#000',opacity: 0.87});-->
+            <!--}-->
+        <!--</script>-->
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+<include file="Public:footer"/>
+<!--<script type="text/javascript">-->
+    <!--$(function(){-->
+        <!--$("#bsubmit").click(function(){-->
+            <!--var truename = $("#truename").val();-->
+            <!--var tel = $("#tel").val();-->
+            <!--var paid = $("#paid").val();-->
+            <!--var sent = $("#sent").val();-->
+            <!--var statdate = $("#statdate").val();-->
+            <!--var enddate = $("#enddate").val();-->
+
+            <!--var posturl = "{weikucms::U('Store_new/orders',array('token'=>$token))}";-->
+            <!--$.post(posturl,-->
+                    <!--{truename:truename,tel:tel,paid:paid,sent:sent,statdate:statdate,enddate:enddate},-->
+                    <!--function(data){-->
+                        <!--if(data.status == 1){-->
+                            <!--notif({-->
+                                <!--msg: data.info,-->
+                                <!--type: "success"-->
+                            <!--});-->
+                            <!--setTimeout(function(){-->
+                                <!--window.location.href = data.url;-->
+                            <!--},'1000');-->
+                        <!--}else{-->
+                            <!--notif({-->
+                                <!--msg: data.info,-->
+                                <!--type: "error"-->
+                            <!--});-->
+                        <!--}-->
+                    <!--},'json');-->
+            <!--// window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";-->
+        <!--});-->
+    <!--});-->
+
+<!--</script>-->

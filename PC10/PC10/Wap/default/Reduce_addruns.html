@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<title>运动记录</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/18.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js">
+		</script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">运动记录</span>
+		</div> -->
+		<!-- 日期与记录 -->
+		<div class="record dates">
+			<span>{weikucms:$date}</span>
+		</div>
+		<!-- 体重记录 -->
+		<div class="weightRecord">
+			<table>
+				<tr>
+					<td>
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/cheng.png" width="29px" height="14px" />
+					</td>
+					<td style="width:32%;" class="sportsname">{weikucms:$result.sport_name}</td>
+					<td style="width:50%;">
+						<input type="text" name="runtime" id="runtime" placeholder="运动时间" />min
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 保存按钮 -->
+		<a href="#" id="saves"><div class="bot">保存</div></a>
+		<script type="text/javascript">
+			$(function(){
+				// 点击保存按钮添加
+				$('#saves').click(function(){
+					var runtime = $('#runtime').val();
+					var sportname = $('.sportsname').text();
+					if (!runtime) {
+						show_error_tip("请输入体重！");
+						return false;
+					};
+					if (isNaN(runtime)) {
+						show_error_tip("您输入的不是数字！");
+						return false;
+					};
+					
+					var url = "{weikucms::U('Wap/Reduce/addappectRun',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{runtime:runtime,sportname:sportname},function(data){
+							 if(data.status == 1){
+	                                show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				
+				})
+			})
+		</script>
+	</body>
+</html>

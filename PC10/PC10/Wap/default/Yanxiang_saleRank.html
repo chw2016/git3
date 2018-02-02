@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>销售排行榜</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<link type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/style.css" rel="stylesheet"/>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			.allcircle{
+				background:#004eff;width: 80%;color: #fff;border-radius:50%;-webkit-border-radius:50%;-o-border-radius:50%;-ms-border-radius:50%;-moz-border-radius:50%;font-weight: bold;text-align: center !important;
+			}
+			.graycolor{
+				background: #b3b3b3 !important;
+			}
+			.Remai{color: #f00;font-size: 16px;margin-top: 5px;}
+			.Remai span:before{
+				content:"￥";
+			}.Remais span:before{content:"￥";}
+			.DOWN{color: #4c4c4c;}
+		</style>
+	</head>
+	<body>
+		<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+		<!--<header class="xinpin-banner">
+    		<div class="left">
+    			<!-- <img src="imgs/left-lan.jpg" width="25px" height="15px" /> 
+    		</div>
+    		<div class="middle">
+    			销售排行榜
+    		</div>
+    		<div class="right">
+    			<!-- <img src="imgs/shopping.jpg" width="25px" height="24px"/> 
+    		</div>
+    	</header>
+		-->
+    	  <ul class="article-list">
+		        <a href="javascript:void(0)">
+				<!-- 分配数据 -->
+					<volist name="info" id="vo">
+			       		<if condition="$i eq 1 OR $i eq 2 OR $i eq 3">
+			       			<if condition="$i eq 1">
+			       				<li class="UP" onclick="window.location.href='{weikucms::U('Store_new/product',array('token' => $_GET['token'], 'id' => $vo['productid'], 'wecha_id' => $_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}'">
+					         		<div class="right">
+					    				<div class="allcircle">{weikucms:$i}</div>
+					    			</div>
+					    			<div class="left">
+					    				<div class="circle no-circle">
+					    					<img src="{weikucms:$vo.img}" />
+					    				</div>
+					    			</div>
+					    			<div class="middle">
+					    				<div class="title">{weikucms:$vo.name}</div>
+					    				<div class="content Introduction">
+					    					{weikucms:$vo.xing}
+					    				</div>
+					    				<div class="Remai">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+				    			</li>
+				    		
+					    		<li class="DOWN" style="padding:10px !important;display:none;">
+					         		<div class="right">
+					    				<div class="allcircle">1</div>
+					    			</div>
+					    			<div class="left">
+					    				{weikucms:$vo.name}
+					    			</div>
+					    			<div class="middle" style="text-align:right;">
+					    				<div class="Remais">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+					    		</li>
+			       			<else/>
+			       				<li class="UP" style="display:none;" onclick="window.location.href='{weikucms::U('Store_new/product',array('token' => $_GET['token'], 'id' => $vo['productid'], 'wecha_id' => $_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}'">
+					         		<div class="right">
+					    				<div class="allcircle">{weikucms:$i}</div>
+					    			</div>
+					    			<div class="left">
+					    				<div class="circle no-circle">
+					    					<img src="{weikucms:$vo.img}" />
+					    				</div>
+					    			</div>
+					    			<div class="middle">
+					    				<div class="title">{weikucms:$vo.name}</div>
+					    				<div class="content Introduction">
+					    					{weikucms:$vo.xing}
+					    				</div>
+					    				<div class="Remai">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+				    			</li>
+				    		
+					    		<li class="DOWN" style="padding:10px !important;">
+					         		<div class="right">
+					    				<div class="allcircle">{weikucms:$i}</div>
+					    			</div>
+					    			<div class="left">
+					    				{weikucms:$vo.name}
+					    			</div>
+					    			<div class="middle" style="text-align:right;">
+					    				<div class="Remais">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+					    		</li>
+			       			</if>
+				    	<else/>
+				    			<li class="UP" style="display:none;" onclick="window.location.href='{weikucms::U('Store_new/product',array('token' => $_GET['token'], 'id' => $vo['productid'], 'wecha_id' => $_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}'">
+					         		<div class="right">
+					    				<div class="allcircle graycolor">{weikucms:$i}</div>
+					    			</div>
+					    			<div class="left">
+					    				<div class="circle no-circle">
+					    					<img src="{weikucms:$vo.img}" />
+					    				</div>
+					    			</div>
+					    			<div class="middle">
+					    				<div class="title">{weikucms:$vo.name}</div>
+					    				<div class="content Introduction">
+					    					{weikucms:$vo.xing}
+					    				</div>
+					    				<div class="Remai">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+				    			</li>
+				    		
+					    		<li class="DOWN" style="padding:10px !important;">
+					         		<div class="right">
+					    				<div class="allcircle graycolor">{weikucms:$i}</div>
+					    			</div>
+					    			<div class="left">
+					    				{weikucms:$vo.name}
+					    			</div>
+					    			<div class="middle" style="text-align:right;">
+					    				<div class="Remais">热卖价：<span></span>{weikucms:$vo.price}元</div>
+					    			</div>
+					    		</li>
+				    	</if>	
+		       		</volist>
+		        </a>
+         </ul>
+         <script type="text/javascript">
+         		$(function(){
+         			$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height())/2+'px');
+	    			// 里面的图片
+	    			$('.circle>img').css({'width': $('.circle').width()+'px','max-height':'45px'});
+	    			// li的高度
+	    			$('.article-list>a>.UP').css('height', Number($('.title').height())+Number($('.content').height())+Number(20)+'px');
+	    			// 隐藏框的长度
+	                $('.hideProduct').css('width',$(window).width()*0.3+'px');
+	                $('.hideProduct>a>li').css({'padding':'5px','line-height':'18px'});
+	         		})
+         			// 圆圈的高度
+         			$('.article-list a li .right .allcircle').css('height',$('.article-list a li .right .allcircle').width()+'px');
+         			// 里面的字体的行高
+         			$('.allcircle').css('line-height',$('.article-list a li .right .allcircle').height()+'px');
+         			// 下面的li的高度
+         			$('.article-list>a>.DOWN').css('height', Number($('.title').height())+'px');
+         			// 点击li触发的事件
+         			// 点击偶数的li发生的事情
+						var a = setTimeout(function(){	
+                    		$("#loading").hide(0).remove();
+                		},1200);
+         			$('.article-list>a>li:odd').each(function(){
+         				$(this).bind('click',function(){
+         					$('.article-list>a>li:even').slideUp();
+         					$('.article-list>a>li:odd').slideDown();
+         					$(this).prev().slideDown();
+         					$(this).hide();
+         				})
+         			})
+         			
+         </script>
+	</body>
+</html>

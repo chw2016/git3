@@ -1,0 +1,100 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/css/cymain.css" />
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::RES}/laundry/css/laundry.css">
+<div class="customers"></div>
+<div class="content right" style=""$brand_id">
+    left:0px
+    <else />
+    </if>
+    ">
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+                <li data-index="0" class="tab_nav first js_top "
+                    data-id="total">
+                    <a
+                        href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">
+                        &brand_id={weikucms:$brand_id}
+                        <else />
+                        </if>
+                        ">洗衣店管理主页
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里可以对商城商品进行查看/删除等操作。</li>
+        </ol>
+    </div>
+    <div class="box-content">
+        <div class="msgWrap">
+            <form method="post" action="###" id="info">
+                <input name="delall" type="hidden" value="" />
+                <input name="wxid" type="hidden" value="" />
+                <if condition="$brand_id"> <input id="key"
+                    type="hidden" value="1" /> <else /> <input
+                    id="key" type="hidden" value="0" /> </if>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">商品名称</th>
+                            <th style="text-align: center">本店价格</th>
+                            <th style="text-align: center">市场价格</th>
+                            <th style="text-align: center">商品添加时间</th>
+                            <th style="text-align: center">商品简介</th>
+                            <th style="text-align: center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="brand" id="vo">
+                        <tr>
+                            <td style="text-align: center">{weikucms:$vo.brand_name}</td>
+                            <td style="text-align: center">{weikucms:$vo.brand_tel}</td>
+                            <td style="text-align: center">{weikucms:$vo.brand_zone}</td>
+                            <td style="text-align: center">{weikucms:$vo.brand_address}</td>
+                            <td style="text-align: center">{weikucms:$vo.brand_account_balance}</td>
+                            <td class="norightborder"
+                                style="text-align: center">
+                                <a class="Detail btn btn-success btn-sm"
+                                    title="品牌服务商信息详情"
+                                    id="{weikucms:$vo.id}">信息详情</a>
+                                <a class="Bill btn btn-success btn-sm"
+                                    title="品牌服务商账单"
+                                    href="/index.php?g=User&amp;m=Laundry&amp;a=bill&amp;token={weikucms:$token}&amp;<if condition="$brand_id">
+                                    brand_id={weikucms:$vo.id}
+                                    <else />
+                                    b_id={weikucms:$vo.id}
+                                    </if>
+                                    ">品牌服务商账单
+                                </a>
+                                <if condition="$brand_id"> <else />
+                                <a class="btn btn-success btn-sm"
+                                    href="/index.php?g=User&amp;m=WechatConferencemarking&amp;a=manageteacher&amp;token={weikucms:$token}&amp;actid={weikucms:$vo.actid}&amp;id={weikucms:$vo.id}"
+                                    title="充值">充值</a> <a
+                                    class="btn btn-success btn-sm"
+                                    href="/index.php?g=User&amp;m=Laundry&amp;a=brandmanage&amp;op=1&amp;token={weikucms:$token}&amp;brand_id={weikucms:$vo.id}"
+                                    title="充值">编辑</a> </if>
+                            </td>
+                        </tr>
+                        </volist>
+                    </tbody>
+                </table>
+            </form>
+            <script type="text/javascript">
+
+</script>
+        </div>
+        <div>
+            <ul class="pager">{weikucms:$page}
+            </ul>
+        </div>
+    </div>
+    <include file="Public:footer" />

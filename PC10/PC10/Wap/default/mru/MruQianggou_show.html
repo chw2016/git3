@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title><?php echo (mb_substr(strip_tags($list['title']), 0, 9, 'utf-8')) ?>-鱼美人</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+        <style>
+            .item.gPrice {
+                height: 60px;
+                line-height: inherit;
+            }
+        </style>
+    </head>
+    <body class="limiting"  style="overflow-x:hidden;background-color:white;" >
+	    <div class="banner"> 
+			<img style="width:100%;height:100%" <if condition="$list['pic']" >src="{weikucms:$list.pic}"<else/> src="{weikucms::RES}/mru/img/shop.png"</if>alt="">
+		</div>
+		<div class="content">
+			<div class="item gPrice">
+                <div><?php echo (mb_substr(strip_tags($list['title']), 0, 30, 'utf-8')) ?></div>
+				<span class="RMB nowPrice">{weikucms:$list['price3']}</span>
+				<span class="RMB oldPrice">{weikucms:$list['price2']}</span>
+                <div style="  position: absolute;right: left;left: 0;bottom: 10px;color: #C6D582;"><if condition="$list['num']" >{weikucms:$list.num}<else/>0</if>人已抢购</div>
+				      <if condition="$list['state']  eq 1 ">
+                       
+                      <a href="{weikucms::U('hb',array('id'=>$list['id'],'token'=>$_GET['token'],'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}" > 
+                      <else/>
+                      <a href="#" >
+                      </if>
+				
+				<div class="setRight border-4 textMiddle buyNow">
+					 {weikucms:$list['state']?'立即抢购':'已结束'} 
+				</div>
+				       </a>
+			</div>
+			<div class="item detail">
+				<div class="title">
+				   {weikucms:$mdian}
+				</div>
+<style>
+#aaa2 img{
+	width:100%;
+}
+</style>
+                <a  href="{weikucms::U('fx',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid'],'hy'=>'1'))}"  >
+				<div class="textRight" style="clear:both;display:table;width: 100%;">
+					<!--<span class="num"><if condition="$list['num']" >{weikucms:$list.num}<else/>0</if></span>人抢购-->
+                    <div class="setRight border-4 textMiddle buyNow" style="width: 30%;position: inherit;float:right;  border: 1px solid #FF6B00;color: #FFB30F;background-color: #FFF;">
+                        邀请好友购买
+                    </div>
+				</div>
+                    </a>
+			</div>
+<!-- 			<a  href="{weikucms::U('fx',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid']))}"  >
+			<div class="item share">
+				<span class="text">
+					分享
+				</span>
+				<div class="arrowRight setRight"></div>
+			</div>
+			</a> -->
+	<!--	<a  href="{weikucms::U('fx',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid'],'hy'=>'1'))}"  >
+			<div class="item invite" style="clear:both;display:table;">
+				<span class="text" style="float: right;margin-right: 20px;">
+					邀请好友购买
+				</span>
+				<div class="arrowRight setRight"></div>
+			</div>
+		</a>-->
+		</div>
+		
+		
+						<div id="aaa2"  style="width:90%;
+margin: 0 auto;" >
+				 {weikucms::$list['content']}
+									
+				</div>
+				
+				
+				
+<!-- <include file="./tpl/Wap/default/mrufx.html" />  	 -->
+	
+<script src="{weikucms::STATICS}/jquery.min.js" ></script>
+<script src="{weikucms::STATICS}/common/invite.js" ></script>
+
+<script>
+		/* $(function(){
+			$('.ons').invite();
+                        $('.ons2').invite({"bg":'tpl/static/wapweiui/images/lj.png'});//自定义图片
+		}) */
+</script>
+	 <include file="./tpl/Wap/default/mrufx.html" /> 
+    </body>
+</html>

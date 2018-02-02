@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/media/style.css" />
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+<div id="contents" class="contents two">
+    <div class="set">
+        <ul>
+            <li><img src="{weikucms::STATICS}/media/img/1.png" title="图片"><div class="ftl">姓名</div></li>
+            <li>
+                <if condition="$actors['id'] neq ''">
+                    <input type="text" id="aname" name="aname" value="{weikucms:$actors['aname']}" readonly="readonly"/>
+                    <else/>
+                    <input type="text" id="aname" name="aname" value="{weikucms:$nusers['nickname']}" placeholder="请输入您的姓名"/>
+                </if>
+            </li>
+        </ul>
+    </div>
+    <div class="set">
+        <ul>
+            <li><img src="{weikucms::STATICS}/media/img/2.png" title="图片" style="width:14px;"><div class="ftl">电话</div></li>
+            <li>
+                <if condition="$actors['id'] neq ''">
+                    <input type="tel" id="phone" name="phone" value="{weikucms:$actors['phone']}" readonly="readonly"/>
+                    <else/>
+                    <input type="tel" id="phone" name="phone" value="" placeholder="请输入您的电话"/>
+                </if>
+            </li>
+        </ul>
+    </div>
+    <div class="set">
+        <ul>
+            <li><img src="{weikucms::STATICS}/media/img/3.png" title="图片"><div class="ftl">地址</div></li>
+            <li>
+                <if condition="$actors['id'] neq ''">
+                    <input type="text" id="address" name="address" value="{weikucms:$actors['address']}" readonly="readonly"/>
+                    <else/>
+                    <input type="text" id="address" name="address" value="" placeholder="请填写您的具体详细地址"/>
+                </if>
+            </li>
+        </ul>
+    </div>
+    <div class="set">
+        <ul>
+            <li><img src="{weikucms::STATICS}/media/img/4.png" title="图片"><div class="ftl">备注</div></li>
+            <li>
+                <if condition="$actors['id'] neq ''">
+                    <textarea rows="3" style="width:98%;border-radius: 5px;border: none;" id="content;">{weikucms:$actors['content']}</textarea>
+                    <else/>
+                    <textarea rows="3" style="width:98%;border-radius: 5px;border: none;"  id="content" placeholder="您有什么好的建议，可以发给我们！"></textarea>
+                </if>
+            </li>
+        </ul>
+    </div>
+    <input type="hidden" name="id" id="id" value="{weikucms:$actors['id']}">
+    <input type="hidden" name="openid" id="openid" value="{weikucms:$_GET['openid']}"/>
+    <input type="hidden" name="token" id="token" value="{weikucms:$_GET['token']}"/>
+
+</div>
+<div id="foot" class="foots">确认参与</div>
+<script type="text/javascript">
+    $(function(){
+        $("#foot").click(function(){
+            var id = $("#id").val();
+            var aname = $("#aname").val();
+            var phone = $("#phone").val();
+            var address = $("#address").val();
+            var content = $("#content").val();
+            var token = $("#token").val();
+            var openid = $("#openid").val();
+            if( !aname ){
+                alert('您的姓名不能为空');
+                return false;
+            }
+            if( !phone ){
+                alert('您的联系方式不能为空');
+                return false;
+            }
+            if( !address ){
+                alert('您的地址不能为空');
+                return false;
+            }
+			var btn = $('#foot');
+            btn.unbind('click');
+            btn.text('保存信息中...');
+			//console.log(1);
+            //return false;
+            var url = "{weikucms::U('Media/actor',array('token'=>$token,'openid'=>$openid,'mid'=>$_GET['mid']))}";
+            $.post(url,{id:id,aname:aname,phone:phone,address:address,content:content,token:token,openid:openid},
+                    function(data){
+                        if(data.code == 1){
+                            btn.text('保存成功！');
+                            alert(data.msg);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                            btn.attr("id","foot");
+                        }else if(data.code == 2){
+                            alert(data.msg);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            btn.text('保存失败！');
+                        }
+
+                    },'json');
+
+        });
+    })
+</script>
+</body>
+</html>

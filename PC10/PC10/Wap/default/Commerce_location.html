@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="{weikucms::RES}/commerce/css/style.css" />
+		<script src="{weikucms::RES}/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/js/area.js"></script>
+		<script src="{weikucms::RES}/commerce/js/location.js"></script>
+		<script src="{weikucms::RES}/commerce/js/getLocation.js"></script>
+    </head>
+    <body class="dark-green-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg">
+                <div class="top myul light-green-bg">
+                    <div class="homeBox left">
+                        <div class="icon person home  white" onclick="window.location.href='{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                    </div>
+                    <div class="titleBox middle">
+                        <div class="title white"></div>
+                    </div>
+                    <div class="PersonBox right myul">
+                        <div class="icon person userCenter  white" onclick="window.location.href='{weikucms::U('MemberCenter/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                    </div>
+                </div>
+		    </div>
+			<!---->
+			
+			<!-- 自动定位 -->
+			<div class="autoLocationBox">
+				<div class="circle circle-normal getlocation white icon"></div>
+				<div class="cityName white">点击自动定位</div>
+			</div>
+			<!---->
+			
+			<!-- 三级联动 -->
+			<div class="locationBox">
+				<div class="selectSwrap white-border border15">
+					<select id="loc_province" class="select" ></select>
+				</div>
+				<div class="selectSwrap white-border border15">
+					<select id="loc_city" class="select"></select>
+				</div>
+				<div class="selectSwrap white-border border15">
+					<select id="loc_town" class="select"></select>
+				</div>
+				<div class=" btnSelect lighter-green-bg dark-black border15" onclick="return search()">
+					我确定好了
+				</div>
+				<input type="hidden" name="location_id" />
+				<input type="hidden" name="latitude" id="latitude" value=""/>
+				<input type="hidden" name="longitude" id="longitude" value=""/>
+
+			</div>
+			<!---->
+
+			
+
+			
+    </body>
+    <script type="text/javascript">
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+
+   $(function(){
+	  GetLocation($(".getlocation"),$(".cityName"));
+	})
+    </script>
+    <script type="text/javascript">
+	$(document).ready(function() {
+		showLocation();
+	});
+</script>
+
+    <script>
+        function search(){
+            //$("select").find("option:selected").text();
+            var lat = $("#latitude").val();
+            var lng =  $("#longitude").val();
+            if(lat && lng){
+                <if condition="$token eq 'a5114ab1a60c81d04e86447a0bd123be'">
+                    var url="{weikucms::U('Commerce/ShopList',array('token'=>$token,'openid'=>$openid,'access'=>search))}"+"&lat="+lat+"&lng="+lng+"&isset=1";
+                <else/>
+                    var url="{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid,'access'=>search))}"+"&lat="+lat+"&lng="+lng;
+                </if>
+                location.href=url;
+            }else{
+                var province=$("#loc_province").find("option:selected").text();
+                var city=$("#loc_city").find("option:selected").text();
+                var town=$("#loc_town").find("option:selected").text();
+                if(province=="请选择省份" || city=="请选择城市" || town=="请选择地区"){
+                      alert("请选择需要定位的区域!");
+                      return false;
+                }
+                var address=province+city+town;
+                var url="http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=3f79545087f36aa6a72575d57a22baee&callback=showLocation";
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: url,
+                    dataType: "jsonp",
+                    jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+                    jsonpCallback: "showLocation",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+                    success: function (data) {
+                        var lat=data.result.location.lat;
+                        var long=data.result.location.lng;
+                        <if condition="$token eq 'a5114ab1a60c81d04e86447a0bd123be'">
+                            var url="{weikucms::U('Commerce/ShopList',array('token'=>$token,'openid'=>$openid,'access'=>search))}"+"&lat="+lat+"&lng="+lng+"&isset=1";
+                        <else/>
+                            var url="{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid,'access'=>search))}"+"&lat="+lat+"&lng="+lng;
+                        </if>
+                        location.href=url;
+                    }
+                });
+            }
+        }
+    </script>
+</html>

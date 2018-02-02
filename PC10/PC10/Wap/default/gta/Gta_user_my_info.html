@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/region_select.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+
+    <style>
+        .code{
+                padding: 5px;
+                background-color: rgb(54, 124, 59);
+                border-radius: 3px;
+                color: #fff;
+                display:inline-block;
+        }
+        select{
+                border: 0;
+                outline: none;
+                width: 96% !important;
+                height: 100%;
+                -webkit-appearance: none;
+                background-color: rgb(227, 240, 227);
+                margin-left: 5px;
+        }
+        .arrow-icon{
+                position: absolute;
+                font-size: 16px;
+                right: 10px;
+                top: 6px;
+        }
+    </style>
+        </head>
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">个人资料</h1>
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+
+		<section class="contant ">
+            <form action="" method="post" id="form">
+                <div class="shadow40 mb10">
+                    <p class="f14">会员编号</p>
+                    <div class="Fill_name"><input type="text" readonly value="{weikucms:$info.member_sn}" placeholder="" name="member_sn" style="width: 85%"></div>
+                </div>
+		<div class="shadow40 mb10">
+			<p class="f14">真实姓名</p>
+			<div class="Fill_name"><input type="text" value="{weikucms:$info.name}"  <if condition="$info['cart']">readonly</if> placeholder="请填写您的姓名" name="name" style="width: 85%"></div>
+		</div>
+                <div class="shadow40 mb10">
+                    <p class="f14">身份证号码</p>
+                    <div class="Fill_name"><input type="text" readonly value="{weikucms:$info.cart}" <if condition="$info['cart']">readonly</if> placeholder="身份证号码保存之后无法修改,请录入真实的" name="cart" style="width: 85%"></div>
+                </div>
+		<div class="shadow40 mb10">
+			<p class="f14">手机号码</p>
+			<div class="Fill_name"><input type="tel" value="{weikucms:$info.phone}" placeholder="请填写您的手机号码" style="width: 85%" name="phone" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+		</div>
+                <div class="shadow40 mb10">
+                    <p class="f14">银行卡开户行</p>
+                    <div class="Fill_name"><input type="text" value="{weikucms:$info.bank_name}" placeholder="请填写您的银行卡开户行" style="width: 85%" name="bank_name" ></div>
+                </div>
+                <div class="shadow40 mb10">
+                    <p class="f14">请选择省</p>
+                    <div class="Fill_name"><select name="location_p" id="location_p">
+                    </select>
+                    <i class="fa fa-sort-down arrow-icon"></i>
+                    </div>
+                </div>
+                <div class="shadow40 mb10">
+                    <p class="f14">请选择市</p>
+                    <div class="Fill_name"><select name="location_c" id="location_c" >
+                    </select>
+                    <i class="fa fa-sort-down arrow-icon"></i>
+                    </div>
+                </div>
+                <div class="shadow40 mb10">
+                    <p class="f14">请选择区</p>
+                    <div class="Fill_name"><select name="location_a" id="location_a">
+                    </select>
+                    <i class="fa fa-sort-down arrow-icon"></i>
+                    </div>
+                </div>
+                <div class="shadow40 mb10">
+                    <p class="f14">银行卡号码</p>
+                    <div class="Fill_name"><input type="tel" value="{weikucms:$info.bank_num}" placeholder="请填写您的银行卡号码" style="width: 85%" name="bank_num" maxsize="19" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+                </div>
+                     <div class="shadow40 mb10" style="padding-top:1px">
+                      <p class="f14">手机验证</p>
+                    <div class="Fill_name" style="width:60%;margin-left:10px;display: inline-block;"><input type="tel" value="" placeholder="请填写您收到的验证码" style="width: 85%" name="code" maxsize="19" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+                    <span class="code" flag="1">点击获取验证码</span>
+                </div>
+                </div>
+                <div class="shadow40 mb10" style="padding-top:1px; text-align: center; padding-bottom: 2px;">
+                    <input type="radio" name="xy" checked style="margin-top: 2px; margin-right: 5px;" > <sapn class="f14" onclick="location.href='{weikucms::U('xy',array('token'=>$token,'openid'=>$openid))}'">请点击阅读<国泰安综合金融用户协议></sapn>
+                </div>
+
+	<div class="mt20 " style="text-align: center;">
+				<span class="btn add_btn1 abb" flag="0" style="display: inline-block;">提交</span>
+        <span class="btn add_btn1" flag="0" style="display: inline-block;"  onclick="location.href='{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}'">返回</span>
+			</div>
+                </form>
+		</section>
+		
+	</body>
+    <script>
+        $(function(){
+            $(document).on('click','.abb',function(){
+                var name=$("[name=name]").val();
+                var phone=$("[name=phone]").val();
+                var bank_name=$("input[name=bank_name]").val();
+                var bank_num=$("input[name=bank_num]").val();
+                var flag=$(this).attr('flag');
+                var cart=$("input[name=cart]").val();
+                var sheng=$("#location_p").val();
+                var shi=$("#location_c").val();
+                var qu=$("#location_a").val();
+
+                if($("input[name=xy]:checked").length<=0){
+                    show_error_tip('请先阅读并且同意协议');
+                    return false;
+                }
+                // alert(cart.length);
+                if(cart.length>0){
+                    if(cart.length!=15&&cart.length!=18){
+                        show_error_tip('您身份证位数不对');
+                        $("input[name=cart]").focus();
+                        return false;
+                    }
+
+                }
+                if(flag==1){
+                    return false;
+                }
+                if(bank_name){
+                    if(!bank_num){
+                        show_error_tip('请填写银行卡号');
+                        $("input[name=bank_num]").focus();
+                        return false;
+                    }
+                }
+                /* if(bank_num){
+                 if(bank_num.length!=19){
+                 show_error_tip('银行卡位数不对');
+                 $("input[name=bank_num]").focus();
+                 return false;
+
+                 }
+                 }*/
+
+                if(name==''){
+                    show_error_tip('请填写姓名');
+                    $("[name=name]").focus();
+                    return false;
+                }
+                if(phone==''||phone.length!=11){
+                    show_error_tip('请填写正确的手机号码');
+                    $("[name=phone]").focus();
+                    return false;
+                }
+                if(!sheng){
+                    show_error_tip('请选择省');
+
+                    return false;
+                }
+                if(!shi){
+                    show_error_tip('请选择市');
+
+                    return false;
+                }
+                if(!qu){
+                    show_error_tip('请选择区');
+
+                    return false;
+                }
+                var code=$("input[name=code]").val();
+                if(!code){
+                    show_error_tip('请输入验证码');
+                    $("[name=code]").focus();
+                    return false;
+                }
+                $(this).attr('flag',1);
+                $(this).text("提交中");
+                var url="{weikucms::U('user_my_info',array('token'=>$token,'openid'=>$openid))}";
+
+                $.post(url,{sheng:sheng,shi:shi,qu:qu,code:code,cart:cart,name:name,phone:phone,bank_name:bank_name,bank_num:bank_num},function(data){
+                    if(data.status==1){
+                        show_success_tip('修改成功');
+                        setTimeout(function(){
+                            location.href="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                        },1000)
+                    }else if(data.status==2){
+                        show_error_tip('手机验证失败');
+                        $(".code").attr('flag','1');
+                        $('.abb').attr('flag',0);
+                        $('.abb').text('修改');
+                    }else{
+                        show_error_tip('修改失败');
+                        $('.abb').attr('flag',0);
+                        $('.abb').text('修改');
+                    }
+                },'json')
+                //	$("#form").submit();
+            })
+        })
+        //验证手机号码
+
+        $(".code").click(function(){
+            var phone=$("input[name=phone]").val();
+            var flag=$(this).attr('flag');
+            if(phone==''||phone.length!=11){
+                show_error_tip('请填写正确的手机号码');
+                $("[name=phone]").focus();
+                return false;
+            }
+            if(flag==0){
+                return false;
+            }
+            $(this).text("发送中...");
+            $(this).attr('flag','0');
+            var url="{weikucms::U('is_phone',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{phone:phone},function(data){
+                if(data.status==1){
+                    $(".code").text('发送成功');
+
+                }else if(data.status==2){
+                    show_error_tip('请稍后再发送');
+                    return false;
+                }else{
+                    show_error_tip('验证码发送失败');
+                    $(this).attr('flag','1');
+                    return false;
+                }
+            },'json');
+        })
+    </script>
+    <script type="text/javascript">
+    new PCAS('location_p', 'location_c', 'location_a', '{weikucms:$info.sheng}', '{weikucms:$info.shi}', '{weikucms:$info.qu}');
+  </script>
+</html>

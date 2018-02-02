@@ -1,0 +1,45 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            查看回复
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Commercedy/postShow',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+                <if condition="$info">
+				    <volist name="info" id="vo">
+				    	<tr>
+		                    <th valign="top">
+		                    	<label for="key">
+		                    	{weikucms:$vo.nickname}：{weikucms:$vo.comment}
+		                    	</label>
+		                    </th>
+	                	</tr>
+				    </volist>
+			    <else/>
+			    	暂无回复
+			    </if>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>

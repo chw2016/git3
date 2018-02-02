@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/pujing/css/pujing.css">
+		<script src="{weikucms::RES}/pujing/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/pujing/js/pujing.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/pujing/js/pujing.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/msg.js"></script>
+	</head>
+    <body>
+        <section class="header-blue">
+        	商城在线
+        </section>
+        <section class="showimg">
+        	<img src="{weikucms:$product.logourl" />
+        	<div class="title">
+        		<div class="titles">{weikucms:$product.name}</div>
+        		<div class="prices">{weikucms:$product.price}</div>
+        	</div>
+        </section>
+        <div class="instro">
+        	{weikucms:$product.des}
+        </div>
+        <!-- 图片展示 -->
+        <div class="picture">
+        	<div class="left">
+        		<img src="{weikucms:$imageList[0]['image']}" />
+        	</div>
+        	<div class="middle">
+        	</div>
+        	<div class="right">
+        	    <if condition="$imageList[1]['image'] neq null">
+        		    <img src="{weikucms:$imageList[1]['image']}" />
+        		</if>
+        	</div>
+        </div>
+        <!-- 图片展示 -->
+        <div class="picture">
+        	<div class="left">
+        		<if condition="$imageList[2]['image'] neq null">
+        		    <img src="{weikucms:$imageList[2]['image']}" />
+        		</if>
+        	</div>
+        	<div class="middle">
+        	</div>
+        	<div class="right">
+        		<if condition="$imageList[3]['image'] neq null">
+        		    <img src="{weikucms:$imageList[3]['image']}" />
+        		</if>
+        	</div>
+        </div>
+        <div style="height:40px;"></div>
+        <footer>
+        	<div class="left">
+        		<span class="jian">-</span>
+        		<span class="number">1</span>
+        		<span class="jia">+</span>
+        	</div>
+        	<a class="right" href="javascript:void(0);">
+        		立即购买
+        	</a>
+        </footer>
+        <script type="text/javascript">
+	        $(function(){
+	        	$("a").click(function(){
+	        		if(Number($.trim($('.number').text())) == 0){
+		        		msg.alert("数量不能为0");
+		        		return false;
+	        		}
+	        		var count = $.trim($('.number').text());
+	        		var url="{weikucms::U('Store_new/Buy',array('token' => $token,'wecha_id' => $_GET['wecha_id'],'did'=>$id,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}"+ '&count='+count+"&type=par";
+	        		$.ajax({
+			            url:url,
+			            dataType:"json",
+			            success: function(data) {
+			                if(data.status==0){
+			                    location.href = "{weikucms::U('Store_new/address',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&wecha_id='+data.data.wecha_id + '&pid=' + data.data.pid;
+			                } else {
+			                    location.href = "{weikucms::U('Store_new/show',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&pid=' + data.data.pid+'&wecha_id='+data.data.wecha_id;
+			                }
+			            }
+        			});
+	        	})
+	        })
+        </script>
+    </body>
+</html>

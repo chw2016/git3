@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <title>{weikucms:$tpl.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <style type="text/css">
+        .btn-pay {
+            padding: 10px 6px 40px 6px;
+        }
+        .btn-green {
+            color: #FFFFFF;
+            background-color: #04BE02;
+        }
+        .btn-pay .btn {
+            display: block;
+            width: 100%;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            font-size: 18px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral integral_record">
+    <div class="body">
+        <section class="p_10">
+               <table class="table_record">
+                <thead>
+                <tr>
+                    <td style="width:33%;">累计积分 </td>
+                    <td style="width:33%;">消费积分 </td>
+                    <td style="width:33%;">积分余额 </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                
+                  <tr>
+                      <td>{weikucms:$sCount}</td>
+                      <td>{weikucms:$xiaofeijifen}</td>
+                      <td>{weikucms:$user.score}</td>
+                  </tr>
+                </tbody>
+            </table>
+            
+
+            <table class="table_record">
+                <thead>
+                <tr>
+                    <td style="width:30%;">日期 </td>
+                    <td style="width:30%;">积分数 </td>
+                    <td style="width:40%;">方式 </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                <if condition="$moneyrecordlist neq null">
+                    <volist name="moneyrecordlist" id="vo">
+                        <tr>
+                            <td>{weikucms:$vo.addtime}</td>
+                            <td>{weikucms:$vo.score}</td>
+                            <td>
+                                <if condition="$vo['type'] eq 1" >
+                                    发贴
+                                    <elseif condition="$vo['type'] eq 2" />
+                                    评论
+                                    <elseif condition="$vo['type'] eq 3" />
+                                    回复
+                                    <elseif condition="$vo['type'] eq 4" />
+                                    商家奖励
+                                    <elseif condition="$vo['type'] eq 5" />
+                                    分享转发
+                                    <elseif condition="$vo['type'] eq 6" />
+                                    首次关注
+                                    <elseif condition="$vo['type'] eq 7" />
+                                    积分兑换
+                                    <elseif condition="$vo['type'] eq 8" />
+                                    微信支付返回积分
+                                    <elseif condition="$vo['type'] eq 9" />
+                                    余额支付返回积分
+                                    <else />
+                                    其他
+                                </if>
+                            </td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td>您还没有任何积分记录 </td>
+
+                    </tr>
+                </if>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</div>
+<script type="text/javascript">
+      $(function(){
+          $(".btn-green").click(function(){
+              var money = $("#money").val();
+              var btn = $(this);
+              var btntext = btn.text();
+
+              var re = /^[0-9]*[1-9][0-9]*$/ ;
+              if(!re.test(money)){
+                alert("请输入合法金额,必须为数字");
+                  return false;
+              }
+              btn.text('正在生成订单...');
+              $.ajax({
+                  type: "post",
+                  url: "{weikucms::U('Usercenter/genMoney',array('token'=>$token,'openid'=>$openid))}",
+                  dataType: "json",
+                  data:{money:money},
+                  success: function(html){
+                      if (html.code == 0) {
+                          btn.text(html.msg);
+                          $("#order_id").val(html.order_id);
+                          setTimeout(function(){
+                              $("#myweipayform").submit();
+                          },'1000');
+
+
+                      } else if(html.code == -1) {
+                          alert(html.msg);
+
+                      }else{
+                          alert(html.msg);
+                      }
+                      btn.text(btntext);
+                  }
+          });
+        });
+      });
+</script>
+</body>
+
+</html>

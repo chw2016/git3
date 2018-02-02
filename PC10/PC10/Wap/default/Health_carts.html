@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+
+<body>
+<div class="top">
+	<div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+<div class="Box">
+	<div class="BoxHead">购物车</div>
+	<div class="CartBox">
+			<volist name="carts" id="cart">
+            <div class="ItemBox myul carts" num="{weikucms:$cart.num}" gid="{weikucms:$cart.id}" price="{weikucms:$cart.price}">
+                 <div class="itemCircle" style="background: url('{weikucms:$cart.logourl}')">
+                 <div class="selectcircle"></div>
+                 </div>
+                 
+                 <div class="itemInfo">
+                     <span>{weikucms:$cart.name}</span>
+                     <span><?php echo mb_substr($cart['des'],0,10,"utf8");?>...</span>
+                     <span id="RMB">{weikucms:$cart.price}x{weikucms:$cart.num}</span>
+                 </div>
+            </div>
+            </volist>
+	</div>
+</div>
+<div class="footer myul">
+    <div class="selectAllbox myul"  type="yes" id="all" onclick="changeNum()">
+        <div class="selectAll blue-color"></div>
+        <div class="blue-color">全选</div>
+    </div>
+    <div class="goPay" onclick="count()">去结算</div>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	var L1 = $(".ItemBox").length;
+	for(var i = 0;i<=L1;i++){
+		$(".ItemBox").eq((3*i))
+		.find(".itemCircle").addClass("orange-border");
+		$(".ItemBox").eq((3*i))
+		.find(".selectcircle").addClass("orange-bg");
+		$(".ItemBox").eq((3*i+1))
+		.find(".itemCircle").addClass("green-border");
+		$(".ItemBox").eq((3*i+1))
+		.find(".selectcircle").addClass("green-bg");
+		$(".ItemBox").eq((3*i+2))
+		.find(".itemCircle").addClass("red-border");
+		$(".ItemBox").eq((3*i+2))
+		.find(".selectcircle").addClass("red-bg");
+		}
+	})
+	mySelector($(".selectcircle"),'icon-check',$('.selectAll'));myFadeIn()
+</script>
+
+<script>
+    function count(){
+        var carts=$(".carts");
+        var orders="";
+        $.each(carts,function(){
+            if($(this).find(".selectcircle").hasClass("icon-check")){
+                orders+=$(this).attr("gid")+"-"+$(this).attr("num")+"-"+$(this).attr("price")+"-par/";
+            }
+        });
+        if(!orders){
+            alert("请选择一项");
+            return false;
+        }
+        var url="{weikucms::U('Health/Buycart',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{info:orders},function(data){
+            if(data.status==1){
+                alert(data.info);
+                location.href="{weikucms::U('Health/uinfo',array('token'=>$token,'openid'=>$openid))}"+"&id="+data.data;
+            }else{
+                location.reload();
+            }
+        },"json")
+    }
+</script>
+</html>

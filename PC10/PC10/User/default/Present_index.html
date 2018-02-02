@@ -1,0 +1,49 @@
+<include file="Public:head"/>
+
+<div class="cLineB">
+    <h4 class="left">奖品列表</span></h4>
+    <div class="clr"></div>
+</div>
+<div class="cLine">
+    <div class="pageNavigator left">
+        <a href='{weikucms::U("Present/add",array("token"=>$token,"id"=>$id))}' title='新增奖品' class='btn btn-primary'>新增奖品</a>
+        <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/index",array("token"=>$token))}'>活动列表</a>
+    </div>
+    <div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR>
+                    <TH>序号</TH>
+                    <TH>奖品名称</TH>
+                    <TH>奖品总量</TH>
+                    <TH class="norightborder">操作</TH>
+                </TR>
+            </THEAD>
+            <TBODY>
+                <TR></TR>
+            <volist id="data" name="data">
+                <TR>
+                    <TD>{weikucms:$data.id}</TD>
+                    <TD>{weikucms:$data.gname}</TD>
+                    <TD>{weikucms:$data.tnum}</TD>
+                    <TD class="norightborder">
+                        <a class="btn btn-success btn-sm" href="index.php?g=User&m=Present&a=edit&id={weikucms:$data.id}">修改</a>
+                        <a class="btn btn-danger btn-sm" href="index.php?g=User&m=Present&a=del&id={weikucms:$data.id}">删除</a></TD>
+                </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form>
+
+</div>
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+<include file="Public:footer"/>

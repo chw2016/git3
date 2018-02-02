@@ -1,0 +1,74 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">left:-14px</if>">
+<div class="cLineB">
+      <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+        
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenBranch/check_res',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$w['kgid']}&course_id={weikucms:$w['course_id']}" <if condition="$hover4 eq 1">class="hover"</if>>预订信息</a>
+            </li>
+
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('KindergartenBranch/specialcourse',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$w['kgid']}">返回上一页</a>
+            </li>
+        </ul>        
+    </div>
+ 
+</div>
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>提示信息!</strong>
+  <ol>
+    <li>在这里可以查看预定信息。</li>
+  </ol>
+</div>
+<div class="box-content">
+ 
+  <div class="cLineB">
+    <h4>所有预定</h4>
+  </div>
+  <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align:center">课程名称</th>
+            <th style="text-align:center">课程图片</th>
+            <th style="text-align:center">预订人名称</th>
+            <th style="text-align:center">预订人手机号码</th>
+            <th style="text-align:center">预订时间</th>
+            <th style="text-align:center">备注</th>
+            <th style="text-align:center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="data" id="vo">
+            <tr>
+              <td style="text-align:center">{weikucms:$vo.course_name}</td>
+              <td style="text-align:center"><img src="{weikucms:$vo.course_pic}" style="width: 100px;height: 100px;border-radius: 5px;"/></td>
+              <td style="text-align:center">{weikucms:$vo.name}</td>
+              <td style="text-align:center">{weikucms:$vo.tel}</td>
+              <td style="text-align:center">{weikucms:$vo.addclasstime}</td>
+              <td style="text-align:center;width:100px">{weikucms:$vo.remark}</td>
+              <td class="norightborder" style="text-align:center">
+                  <a class="btn btn-danger btn-sm" onClick="source_delete('/index.php?g=User&amp;m=KindergartenBranch&amp;a=del_res&amp;token={weikucms:$token}&amp;userid={weikucms:$w['userid']}&amp;id={weikucms:$vo.kgid}&amp;course_id={weikucms:$vo.course_id}')" href="javascript:;">删除</a>
+              </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+
+  </div>
+  <div>
+    <ul class="pager">
+      {weikucms:$page}
+    </ul>
+  </div>
+</div>
+<include file="Public:footer"/>

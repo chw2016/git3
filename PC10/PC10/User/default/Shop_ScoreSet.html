@@ -1,0 +1,263 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top first" data-id="today">
+                <a href="{weikucms::U('Shop/account',array('token'=>$token,'type'=>0))}">账户</a>
+            </li>
+
+
+            <li data-index="0" class="tab_nav sub js_top " data-id="total">
+                <a href="{weikucms::U('Shop/index',array('token'=>$token))}">店铺管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ShopOrder/All',array('token'=>$token,'resour'=>'index'))}">所有订单</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ShopOrder/All',array('token'=>$token,'type'=>1,'resour'=>'index'))}">今日订单</a>
+            </li>
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/type',array('token'=>$token))}">店铺类型</a>
+            </li>
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/member',array('token'=>$token))}">区域运营商</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/Union',array('token'=>$token))}">社区管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/flash',array('token'=>$token))}">轮播图管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/navigation',array('token'=>$token))}">导航栏</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/BaseSet',array('token'=>$token))}">基础配置</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/WareList',array('token'=>$token))}">商品列表</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/GradeList',array('token'=>$token))}">会员等级</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/ScoreSet',array('token'=>$token))}">积分管理</a>
+            </li>
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Shop/classify',array('token'=>$token))}">分类管理</a>
+            </li>
+
+
+
+        </ul>
+    </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>
+            <a class="btn btn-success btn-sm" href="{weikucms::U('Shop/ScoreSet',array('token'=>$token))}">积分规则</a>
+            <a class="btn btn-primary btn-sm" href="{weikucms::U('Shop/ScoreList',array('token'=>$token))}">积分列表</a>
+        </h4>
+    </div>
+
+    <div class="msgWrap">
+        <div class="tab-pane fade active in">
+            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="id" id="id" value="{weikucms:$signdata.id}">
+
+                <div class="control-group">
+                    <label class="control-label">关注送积分：</label>
+                    <div class="controls">
+                        <input type="text" name="sub_score" id="sub_score" value="{weikucms:$signdata.sub_score}" class="input-small" placeholder="首次关注送积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">推荐关注积分：</label>
+                    <div class="controls">
+                        <input type="text" name="tuijian_score" id="tuijian_score" value="{weikucms:$signdata.tuijian_score}" class="input-small" placeholder="推荐关注所得积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"><if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">得意币<else />积分</if>抵扣（1元）：</label>
+                    <div class="controls">
+                        <input type="text" name="moneyscore" id="moneyscore" value="{weikucms:$signdata.moneyscore}" class="input-small" placeholder="一元等于多少积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">下单的积分：</label>
+                    <div class="controls">
+                        <input type="text" name="orderscore" id="orderscore" value="{weikucms:$signdata.orderscore}" class="input-small" placeholder="一元等于多少积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">订单未满几元：</label>
+                    <div class="controls">
+                        <input type="text" name="notget_money" id="notget_money" value="{weikucms:$signdata.notget_money}" class="input-small" placeholder="一元等于多少积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">加收几元：</label>
+                    <div class="controls">
+                        <input type="text" name="add_money" id="add_money" value="{weikucms:$signdata.add_money}" class="input-small" placeholder="一元等于多少积分">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">每日签到领取积分：</label>
+                    <div class="controls">
+                        <input type="text" name="day_score" id="day_score" value="{weikucms:$signdata.day_score}" class="input-small" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">连续签到：</label>
+                    <div class="controls">
+                        <input type="text" name="days" id="days" value="{weikucms:$signdata.days}" class="input-small" data-rule-required="true">
+                        天奖励
+                        <input type="text" name="scores" id="scores" value="{weikucms:$signdata.scores}" class="input-small" data-rule-required="true">
+                        积分
+                    </div>
+
+                </div>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">是否开启签到：</label>
+                    <div class="controls">
+                        <select name="status" id="status">
+                            <option value="2"  <if condition="$signdata['status'] eq 2">selected</if>>关闭</option>
+                            <option value="1"  <if condition="$signdata['status'] eq 1">selected</if>>开启</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="control-group">
+                    <label for="title" class="control-label">充值升级配置：</label>
+                    <div class="controls">
+                      充值金额 ： <input type="text" id="one_money" value="<php>echo key($signdata['moneylevel'][0]);</php>" placeholder="请输入金额如：100"> 升级到  <input type="text" id="one_level" value="<php>echo $signdata['moneylevel'][0][key($signdata['moneylevel'][0])];</php>" placeholder="请输入等级数字如:1"><br>
+                      充值金额 ： <input type="text" id="two_money" value="<php>echo key($signdata['moneylevel'][1]);</php>" placeholder="请输入金额如：100"> 升级到  <input type="text" id="two_level" value="<php>echo $signdata['moneylevel'][1][key($signdata['moneylevel'][1])];</php>" placeholder="请输入等级数字如:1"><br>
+                      充值金额 ： <input type="text" id="three_money" value="<php>echo key($signdata['moneylevel'][2]);</php>" placeholder="请输入金额如：100"> 升级到  <input type="text" id="three_level" value="<php>echo $signdata['moneylevel'][2][key($signdata['moneylevel'][2])];</php>" placeholder="请输入等级数字如:1"><br>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">充值界面文字描述：</label>
+                    <div class="controls">
+                        <textarea id="chongzhi_text">{weikucms:$signdata.chongzhi_text}</textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+	<!--<div>-->
+		<!--<ul class="pager">-->
+			<!--{weikucms:$page}-->
+		<!--</ul>-->
+	<!--</div>-->
+</div>
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var day_score = $("#day_score").val();
+                var id = $("#id").val();
+                var days = $("#days").val();
+                var scores = $("#scores").val();
+                var orderscore = $("#orderscore").val();
+                var moneyscore = $("#moneyscore").val();
+                var notget_money = $("#notget_money").val();
+                var add_money = $("#add_money").val();
+                var sub_score = $("#sub_score").val();
+                var tuijian_score = $("#tuijian_score").val();
+                var status = $("#status").val();
+
+                var one_money = $("#one_money").val();
+                var two_money = $("#two_money").val();
+                var three_money = $("#three_money").val();
+
+                var one_level = $("#one_level").val();
+                var two_level = $("#two_level").val();
+                var three_level = $("#three_level").val();
+
+                var chongzhi_text = $("#chongzhi_text").val();
+
+                var __hash__ =  $("input[name='__hash__']").val();
+                var re = /^[1-9]+[0-9]*]*$/;
+                if(!re.test(day_score)){
+                    notif({
+                        msg: "请输入正确的每日签到积分数",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(!re.test(days) || !re.test(scores)){
+                    notif({
+                        msg: "请正确输入连续签到积分奖励",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!id){
+                    id = 0;
+                }
+
+                $.post("{weikucms::U('Shop/ScoreSet',array('token'=>$token))}",
+                        {id:id,day_score:day_score,days:days,scores:scores,status:status,moneyscore:moneyscore,orderscore:orderscore,notget_money:notget_money,add_money:add_money,sub_score:sub_score,tuijian_score:tuijian_score,one_money:one_money,two_money:two_money,three_money:three_money,one_level:one_level,two_level:two_level,three_level:three_level,chongzhi_text:chongzhi_text,__hash__:__hash__},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+    </script>
+<include file="Public:footer"/>

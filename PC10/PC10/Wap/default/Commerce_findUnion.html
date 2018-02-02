@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="{weikucms::RES}/commerce/css/style.css" />
+		<script src="{weikucms::RES}/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/js/area.js"></script>
+		<script src="{weikucms::RES}/commerce/js/location.js"></script>
+		<script src="{weikucms::RES}/commerce/js/getLocation.js"></script>
+        <script>
+            var url="{weikucms::U('Commerce/getUnion',array('token'=>$token,'openid'=>$openid))}";
+        </script>
+		<style>
+            .collectunion{
+                display: block;
+                position: relative;
+                top: 20px;
+                font-size: 16px;
+                color: #ff4500;
+				left: -40px;
+            }
+        </style>
+    </head>
+    <body class="dark-green-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg">
+                <div class="top myul light-green-bg">
+                    <div class="homeBox left">
+                        <div class="icon person home  white" onclick="window.location.href='{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                    </div>
+                    <div class="titleBox middle">
+                        <div class="title white"></div>
+                    </div>
+                    <div class="PersonBox right myul">
+                        <div class="icon person userCenter  white" onclick="window.location.href='{weikucms::U('MemberCenter/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+                    </div>
+                </div>
+		    </div>
+
+			
+
+			<div style="width:90%;padding:10px 22px;">
+                <form action="" method="post">
+                    <input type="text" name="cname" style="width:67%;height:35px;line-height:35px;border:none;border-radius: 5px;">&nbsp;&nbsp;
+                    <button type="submit" style="width:25%;height:34px;line-height:34px;border:1px solid white;border-radius:5px;color:white;">搜索小区</button>
+                </form>
+			</div>
+            <if condition="$union">
+                <div class="union" style="margin-top: 5px;">
+                    <volist name="union" id="union">
+                        <div class="shop myul" >
+                            <div class="circleBox" long="{weikucms:$union['long']}" lat="{weikucms:$union['lat']}" cname="{weikucms:$union['cname']}" onclick="return goBack(this)">
+                                <div class="incircle" style=" background-image:url({weikucms:$union[pic]})"></div>
+                            </div>
+                            <div class="contentBox" long="{weikucms:$union['long']}" lat="{weikucms:$union['lat']}" cname="{weikucms:$union['cname']}" onclick="return goBack(this)">
+                                <div class="dark-black shopName">{weikucms:$union.cname}</div>
+                                <div class="dark-black shopName">{weikucms:$union.seng}{weikucms:$union.si}{weikucms:$union.xian}{weikucms:$union.address}</div>
+                                <div class="light-green derection">距离我<span id="derection">{weikucms:$union.distance}</span></div>
+                            </div>
+							<div class="contentBox collectunion" onclick="return CollectUnion(this);" uid="{weikucms:$union.id}" style="position:relative;left:-38px;top:13px;">
+                              <div class="light-green" >收藏</div>
+                            </div>
+                        </div>
+                    </volist>
+
+                </div>
+            <else/>
+                <div class="union" style="margin-top: 5px;line-height: 25px;text-align: center;color: white;font-size: 12px;">
+                   暂无搜索结果,请输入小区名字搜索
+                </div>
+            </if>
+			<!---->
+
+
+			
+    </body>
+    <script type="text/javascript">
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+
+//   $(function(){
+//	  GetLocation($(".getlocation"),$(".cityName"));
+//	})
+    </script>
+    <script type="text/javascript">
+	$(document).ready(function() {
+		showLocation();
+	});
+</script>
+    <script>
+        function goBack(obj){
+            var lat=$(obj).attr("lat");
+            var lng=$(obj).attr("long");
+            var cname=$(obj).attr("cname");
+            location.href="{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}"+'&lat'+lat+'&lng='+lng+'&long='+lng+'&cname='+cname;
+        }
+    </script>
+
+    <script>
+        function CollectUnion(obj){
+            var uid=$(obj).attr("uid");
+            var url="{weikucms::U('Commerce/CollectUnion',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{uid:uid},function(data){
+                if(data.status==1){
+                    location.reload();
+                }else{
+                    alert(data.info)
+                }
+            },"json")
+        }
+
+    </script>
+</html>

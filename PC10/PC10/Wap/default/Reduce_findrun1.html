@@ -1,0 +1,183 @@
+<html>
+	<head>
+		<title>{weikucms:$name}</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/14.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">{weikucms:$name}</span>
+		</div> -->
+		<!-- 搜索框 -->
+		<div class="search">
+			<if condition="$hides eq 2">
+				<form name="searchs" method="post" action="{weikucms::U('Wap/Reduce/findrun1',array('token'=>$token,'openid'=>$openid,'id'=>$tid))}">
+					<input type="text" name="runname" id="runname" placeholder="输入运动名称进行搜索" value="{weikucms:$runname}"/>
+					<!-- 隐藏域 -->
+					<input type="hidden" name="hide" id="hide" value="2" />
+					<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit" class="imgSearch" />
+				</form>
+			<else />
+				<form name="searchs" method="post" action="{weikucms::U('Wap/Reduce/findrun1',array('token'=>$token,'openid'=>$openid,'id'=>$tid))}">
+					<input type="text" name="runname" id="runname" placeholder="输入运动名称进行搜索" />
+					<!-- 隐藏域 -->
+					<input type="hidden" name="hide" id="hide" value="2" />
+					<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit" class="imgSearch"/>
+				</form>
+			</if>
+		</div>
+
+        <!-- 常见以及热量 -->
+        <div class="Description">
+            <div class="common">常见</div>
+            <div class="hot" >热量<span style="font-size:12px;margin-left:5px;">↑</span></div>
+            <div class="clear"></div>
+        </div>
+        <div id="contentShow">
+		<ol class="searchResult">
+			<if condition="$hides eq 2">
+				<volist name="results" id="so">
+					<li>
+					<!-- 食物内容名称 -->
+					<a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+						<div class="foodname">
+							<div class="foodimg">
+								<img src="{weikucms:$so.img_path}" width="75px" height="50px"/>
+							</div>
+							<p>
+								<span>{weikucms:$so.sport_name}</span><br /><span>{weikucms:$so.calorie}千卡/60分钟</span>
+								<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+							</p>
+							<!-- 清除浮动 -->
+							<div class="clear"></div>
+						</div>
+					</a>
+					</li>
+				</volist>
+			<else />
+			<volist name="result" id="so">
+				<li>
+				<!-- 食物内容名称 -->
+					<a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+					<div class="foodname">
+						<div class="foodimg">
+							<img src="{weikucms:$so.img_path}" width="75px" height="50px"/>
+						</div>
+						<p>
+							<span>{weikucms:$so.sport_name}</span><br /><span>{weikucms:$so.calorie}千卡/60分钟</span>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+						</p>
+						<!-- 清除浮动 -->
+						<div class="clear"></div>
+					</div>
+					</a>
+				</li>
+			</volist>
+			</if>
+			
+		</ol>
+
+        <!-- 常见 -->
+        <ol class="searchResult" style="display:none;">
+            <volist name="Commons" id="so">
+                <li>
+                    <a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                        <div class="foodname">
+                            <div class="foodimg">
+                                <img src="{weikucms:$so.img_path}" width="75px" height="50px"/>
+                            </div>
+                            <p>
+                                <span>{weikucms:$so.sport_name}</span><br /><span>{weikucms:$so.calorie}千卡/60分钟</span>
+                                <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+                            </p>
+                            <!-- 清除浮动 -->
+                            <div class="clear"></div>
+                        </div>
+                    </a>
+                </li>
+            </volist>
+        </ol>
+
+        <!-- 热量 -->
+        <ol class="searchResult" style="display:none;" id="up_hot">
+            <volist name="heats" id="so">
+                <li>
+                    <a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                        <div class="foodname">
+                            <div class="foodimg">
+                                <img src="{weikucms:$so.img_path}" width="75px" height="50px"/>
+                            </div>
+                            <p>
+                                <span>{weikucms:$so.sport_name}</span><br /><span>{weikucms:$so.calorie}千卡/60分钟</span>
+                                <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+                            </p>
+                            <!-- 清除浮动 -->
+                            <div class="clear"></div>
+                        </div>
+                    </a>
+                </li>
+            </volist>
+        </ol>
+
+        <ol class="searchResult" id="down_hot" style="display:none;">
+            <volist name="hotdown" id="so">
+                <li>
+                    <a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                        <div class="foodname">
+                            <div class="foodimg">
+                                <img src="{weikucms:$so.img_path}" width="75px" height="50px"/>
+                            </div>
+                            <p>
+                                <span>{weikucms:$so.sport_name}</span><br /><span>{weikucms:$so.calorie}千卡/60分钟</span>
+                                <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+                            </p>
+                            <!-- 清除浮动 -->
+                            <div class="clear"></div>
+                        </div>
+                    </a>
+                </li>
+            </volist>
+        </ol>
+        </div>
+		<script type="text/javascript">
+			$(function(){
+				$('.searchResult').css('max-height',($(window).height())+'px');
+				$('.imgSearch').css({'width':'16px','height':'16px'});$('.imgSearch').css({'width':'16px','height':'16px'});
+
+                // 热量
+                $('.common').click(function(){
+                    $('#contentShow').children('ol').eq($(this).index()).fadeIn().siblings().hide();
+                })
+
+                $('.hot').click(function(){
+                    if($(this).attr('data') == 'up'){
+                        $('#contentShow').children('ol').siblings().hide();
+                        $('#up_hot').fadeIn()
+                        $(this).attr('data','down');
+                        $(".hot span").text('↓');
+                    }else{
+                        $('#contentShow').children('ol').siblings().hide();
+                        $('#down_hot').fadeIn()
+                        $(this).attr('data','up');
+                        $(".hot span").text('↑');
+                    }
+
+                })
+			})
+		</script>
+	</body>
+</html>

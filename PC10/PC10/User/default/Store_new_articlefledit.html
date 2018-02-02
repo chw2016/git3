@@ -1,0 +1,68 @@
+<include file="Public:head"/>
+
+
+
+
+          <div class="cLineB">
+              <span class="glyphicon glyphicon-picture"></span>
+              <h4>修改商城文章分类</h4>
+          </div>
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post"   action=""  enctype="multipart/form-data" id="form" >
+     <input type="hidden" name="id" value="{weikucms:$info.id}">
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+               <TR>
+                  <TH><label for="title">分类名称：</label></TH>
+                  <TD><input type="input" class="px" id="title"   name="name" style="width:300px;" placeholder="此处填写分类名称" value="{weikucms:$info.name}"> </TD>
+                </TR>
+
+                <TR>
+                  <TH></TH>
+                  <TD><button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button></TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+  	</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+
+            var name = $("#title").val();
+
+            if(! name){
+                notif({
+                    msg: "请填写分类名称",
+                    type: "warning"
+                });
+                return false;
+            }
+            $("#form").submit();
+
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

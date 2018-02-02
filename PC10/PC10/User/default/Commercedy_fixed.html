@@ -1,0 +1,53 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            查看帖子
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Commercedy/noticelist',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">公告标题</label></th>
+                    <td>
+                    	{weikucms:$info.title}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="title">公告内容</label></th>
+                    <td>
+                    	{weikucms:$info.content}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">公告发布时间</label></th>
+                    <td>
+                        {weikucms:$info.time|date='Y-m-d H:i:s',###}
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>

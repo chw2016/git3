@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<title>注册</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/login.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+</head>
+<style>
+	::-webkit-input-placeholder{
+    color:#fff;
+}
+</style>
+<body>
+	<div class="top">
+        <span class="imgs"><img src="{weikucms::RES}/Jd/images/li1.png"></span>
+	</div>
+	<div class="bodys">
+	<form action="" method="post" id="form">
+		<div class="mr">
+		<!-- 	<input type="text" class="input_name" name="u_name" id="u_name" placeholder="*输入用户名">
+	
+<!-- 			<input type="text" class="input_name" name="u_email" id="u_email" placeholder="*填写邮箱">
+			<input type="text" class="input_name" name="u_phone" id="u_phone" placeholder="填写电话">
+			<input type="text" class="input_name" name="u_qq" id="u_qq" placeholder="填写QQ"> -->
+            <input type="tel" class="input_name" name="code" id="code" placeholder="*请输入您邮箱里的验证码" onfocus="if (placeholder =='*请输入您邮箱里的验证码'){placeholder =''}"onblur="if (placeholder ==''){placeholder='*请输入您邮箱里的验证码'}">
+            <input type="password" class="input_name" name="u_password" id="u_password" placeholder="*输入密码" onfocus="if (placeholder =='*输入密码'){placeholder =''}"onblur="if (placeholder ==''){placeholder='*输入密码'}">
+			<input type="password" class="input_name" name="re_u_password" id="re_u_password" placeholder="*再次输入密码" onfocus="if (placeholder =='*再次输入密码'){placeholder =''}"onblur="if (placeholder ==''){placeholder='*再次输入密码'}">
+			<span id="put" class="btn_login aaa">提交</span>
+	<!-- 		<div class="ts">
+				<span style="float:left"><a style="color:#fff;" href="">忘记密码</a></span>
+                <span style="float:right"><a style="color:#fff;" href="{weikucms::U('login',array('token'=>session('token')))}">返回登录</a></span>
+			</div> -->
+		</div>
+	</form>	
+	
+	</div>
+    <script>
+       $(".aaa").click(function(){
+    	   $("#form").submit();
+       })
+    </script>
+
+</body>
+</html>

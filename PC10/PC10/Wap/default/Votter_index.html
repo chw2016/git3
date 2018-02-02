@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Votter/js/jquery-1.9.1.min.js"></script>
+        <style type="text/css">
+			*{padding: 0;margin: 0;list-style: none;text-decoration: none;}
+			body{font-family: "楷体";font-size: 30px;}
+			#header{width: 100%;}
+			#header img{width: 100%;}
+			#content{background: url("{weikucms::STATICS}/wapweiui/Votter/img/school.jpg") no-repeat center;position: relative;;top: -10px;height: 800px;z-index: 10;}
+			/*内部遮罩*/
+			.zhezhao{z-index: 100;background: #fff;position: absolute;width: 100%;height: 100%;opacity: 0.3;}
+			.say{position: relative;z-index: 110;text-align: center;width: 100%;background: url("{weikucms::STATICS}/wapweiui/Votter/img/blueBack1.png");letter-spacing: 10px;padding: 30px 0;display: flex;display: -webkit-box;}
+			.say .one{width: 15%}
+			.say .two{width: 70%;position: relative;top: 12px;}
+			.say .three{width: 15%;}
+			/*老师*/
+			.teat{display: flex;display: -webkit-box;text-align: center;}
+			.teat .yellow{background: #daa61b;width: 24px;height: 24px;-webkit-border-radius:5px;-ms-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+			.teat .ytext{font-size: 20px;width:50%}
+			.teat .red{background: #e94841;}
+			/*学生*/
+			.stud{display: flex;display: -webkit-box;text-align: center;}
+			.stud .rtext{font-size: 20px;width:50%;margin-top: 10px}
+			.stud .red{background: #e94841;width: 24px;height: 24px;-webkit-border-radius:5px;-ms-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;-o-border-radius:5px;margin-top: 10px;}
+			/*投票*/
+			#vote{display: flex;display: -webkit-box; position: relative; z-index:200;margin-left: 2%;font-size: 14px;margin-top: 28%;}
+			#vote .left{width: 2%;}
+			#vote .right{width: 2%;}
+			#vote .one{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .two{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .three{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .four{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .five{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .six{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .seven{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .eight{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .nine{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .ten{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			#vote .elelve{width: 9%;display: flex;display: -webkit-box;text-align: center;position: relative;}
+			/*颜色*/
+			#vote .one #yellow1,#vote .two #yellow2,#vote .three #yellow3,#vote .four #yellow4,#vote .five #yellow5,#vote .six #yellow6,#vote .seven #yellow7,#vote .eight #yellow8,#vote .nine #yellow9,#vote .ten #yellow10,#vote .elelve #yellow11{width: 35%;-webkit-box-shadow: 2px 2px 3px #333;-ms-box-shadow: 2px 2px 3px #333;-moz-box-shadow: 2px 2px 3px #333;-o-box-shadow: 2px 2px 3px #333;background: #daa61b;
+			height: 0px;position: absolute;bottom: 0;left: 36%;max-height:400px;
+			-webkit-border-radius:5px;
+			-ms-border-radius:5px;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+			-o-border-radius:5px;color: #000;}
+			#vote .one #red1,#vote .two #red2,#vote .three #red3,#vote .four #red4,#vote .five #red5,#vote .six #red6,#vote .seven #red7,#vote .eight #red8,#vote .nine #red9,#vote .ten #red10,#vote .elelve #red11{width: 35%;-webkit-box-shadow: 2px 2px 3px #333;-ms-box-shadow: 2px 2px 3px #333;-moz-box-shadow: 2px 2px 3px #333;box-shadow: 2px 2px 3px #333;background: #e94841;height: 0px;position: absolute;bottom: 0;max-height: 400px;-webkit-border-radius:5px;-ms-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;-o-border-radius:5px;color: #fff;}
+			/*头像*/
+			#icon{display: flex;display: -webkit-box;}
+			#icon img{border-radius: 10px;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;}
+			#icon img{width: 72%;}
+			#icon{display: flex;display: -webkit-box; position: relative; z-index:200;margin-left: 2%;font-size: 14px;margin-top: 10px;}
+			#icon .left{width: 2%;}
+			#icon .right{width: 2%;}
+			#icon .one{width: 9%;position: relative;}
+			#icon .two{width: 9%;position: relative;}
+			#icon .three{width: 9%;position: relative;}
+			#icon .four{width: 9%;position: relative;}
+			#icon .five{width: 9%;position: relative;}
+			#icon .six{width: 9%;position: relative;}
+			#icon .seven{width: 9%;position: relative;}
+			#icon .eight{width: 9%;position: relative;}
+			#icon .nine{width: 9%;position: relative;}
+			#icon .ten{width: 9%;position: relative;}
+			#icon .elelve{width: 9%;position: relative;}
+        </style>
+    </head>
+    <body>
+    	<div id="header">
+    		<img src="{weikucms::STATICS}/wapweiui/Votter/img/banner.jpg" />
+    	</div>
+    	<div id="content">
+    		<div class="zhezhao"></div>
+    		<div class="say">
+ 				<div class="one"></div>
+ 				<div class="two">首届“金院好课堂”总决赛现场投票</div>
+ 				<div class="three">
+ 					<div class="teat">
+ 						<div class="yellow"></div>
+ 						<div class="ytext">：老师</div>
+ 					</div>
+ 					<div class="stud">
+ 						<div class="red"></div>
+ 						<div class="rtext">：学生</div>
+ 					</div>
+ 				</div>
+    		</div>
+    		<div id="vote">
+    			<div class="left"></div>
+    			<div class="one">
+    				<div id="yellow1"></div>
+    				<div id="red1"></div>
+    			</div>
+    			<div class="two">
+    				<div id="yellow2"></div>
+    				<div id="red2"></div>
+    			</div>
+    			<div class="three">
+    				<div id="yellow3"></div>
+    				<div id="red3"></div>
+    			</div>
+    			<div class="four">
+    				<div id="yellow4"></div>
+    				<div id="red4"></div>
+    			</div>
+    			<div class="five">
+    				<div id="yellow5"></div>
+    				<div id="red5"></div>
+    			</div>
+    			<div class="six">
+    				<div id="yellow6"></div>
+    				<div id="red6"></div>
+    			</div>
+    			<div class="seven">
+    				<div id="yellow7"></div>
+    				<div id="red7"></div>
+    			</div>
+    			<div class="eight">
+    				<div id="yellow8"></div>
+    				<div id="red8"></div>
+    			</div>
+    			<div class="nine">
+    				<div id="yellow9"></div>
+    				<div id="red9"></div>
+    			</div>
+    			<div class="ten">
+    				<div id="yellow10"></div>
+    				<div id="red10"></div>
+    			</div>
+    			<div class="elelve">
+    				<div id="yellow11"></div>
+    				<div id="red11"></div>
+    			</div>
+    			<div class="right"></div>
+    		</div>
+    		<!-- 头像 -->
+    		<div id="icon">
+    			<div class="left"></div>
+    			<div class="one">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/金晓燕.jpg" />
+    			</div>
+    			<div class="two">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/雷舰.jpg" />
+    			</div>
+    			<div class="three">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/李宏伟.jpg" />
+    			</div>
+    			<div class="four">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/李佐.jpg" />
+    			</div>
+    			<div class="five">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/梁怀超.jpg" />
+    			</div>
+    			<div class="six">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/林辉.jpg" />
+    			</div>
+    			<div class="seven">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/牛涛.jpg" />
+    			</div>
+    			<div class="eight">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/屠莉佳.jpg" />
+    			</div>
+    			<div class="nine">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/谢朝德.jpg" />
+    			</div>
+    			<div class="ten">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/张海燕.jpg" />
+    			</div>
+    			<div class="elelve">
+    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/张慧欣.jpg" />
+    			</div>
+    			<div class="right"></div>
+    		</div>
+    	</div>
+    	<script type="text/javascript">
+    		$(function(){
+    			$('#header>img').css('width', $(window).width()+'px');
+    			
+    			$('#content').css({'height':($(window).height() - $('#header').height())+'px','width':$(window).width()+'px'});
+    			
+    			setInterval(function(){
+    				var url = "{weikucms::U('Wap/Votter/accept',array('token'=>$token))}";
+    				$.post(url,{},function(data){
+    					for (var x in data){
+    						// 老师投票数
+    						$('#yellow'+x).text(data[x].split(",")[0]);
+    						$('#yellow'+x).animate({'height':data[x].split(",")[0]+'px'},1000);
+    						// 学生投票数
+    						/// 老师投票数
+    						$('#red'+x).text(data[x].split(",")[1]);
+    						$('#red'+x).animate({'height':data[x].split(",")[1]+'px'},1000);
+    					}
+    					
+
+    				},'json');
+    			},5000);
+    			
+    		})
+    	</script>
+    </body>
+</html>

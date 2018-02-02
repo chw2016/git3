@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-我要应聘</title>
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+    </head>
+    <body class="zhiwei" style="overflow-x:hidden"  >
+    <div class="content">
+        <div>
+            <img src="{weikucms::RES}/mru/img/zhiwei-ad.png" width="100%" />
+        </div>
+        <div>
+        
+        <volist name="list" id="v"  >
+            <a href="{weikucms::U('show',array('token'=>$_GET['token'],'id'=>$v['id'],'openid'=>$_GET['openid']))}">
+            <div class="line">
+                <div class='b'>
+                <?php 
+    				          echo mb_substr($v['zw'],0,18,'utf-8');
+    				       ?>
+                </div>
+                <div class='of f12 line-d'>
+                    <div class='fl'>
+                   
+                    <?php 
+    				          echo "学历".mb_substr($v['xl'],0,20,'utf-8');
+    				       ?>
+                    </div>
+                    
+                    <div class='fr'>
+                 
+                     <?php 
+    				          echo  mb_substr($v['gz'],0,12,'utf-8');
+    				       ?>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </volist>
+          
+        </div>
+        <div class='zwf'></div>
+    </div>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script>
+    <script type="text/javascript" src="{weikucms::RES}/mru/js/jiameng.js"></script>
+<include file="./tpl/Wap/default/mrufx.html" />      
+    </body>
+</html>

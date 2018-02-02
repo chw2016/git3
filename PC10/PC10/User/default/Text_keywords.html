@@ -1,0 +1,79 @@
+<include file="Public:head" />
+
+
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>系统关键词统一查看与删除</li>
+
+    </ol>
+</div>
+
+<div class="msgWrap">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>关键词</th>
+                <th style="width: 500px;">类型</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="info" id="vo">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.keyword}</td>
+                <td>
+                    <if condition="$vo.module eq 'Text'">
+                        文本
+                    </if>
+                    <if condition="$vo.module eq 'Img'">
+                        图文
+                    </if>
+                    <if condition="$vo.module eq 'Product'">
+                        产品
+                    </if>
+                    <if condition="$vo.module eq 'Lottery'">
+                        刮刮卡
+                    </if>
+                    <if condition="$vo.module eq 'Yuyue'">
+                        预约
+                    </if>
+                    <if condition="$vo.module eq 'Wxq'">
+                        微信墙
+                    </if>
+                    <if condition="$vo.module eq 'Vote'">
+                        投票
+                    </if>
+                    <if condition="$vo.module eq 'Usercenter'">
+                        用户中心
+                    </if>
+                    <if condition="$vo.module eq 'Spread'">
+                        微推广
+                    </if>
+                    <if condition="$vo.module eq 'Xt'">
+                        微喜帖
+                    </if>
+                </td>
+                <td class="norightborder">
+                    <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Text/keywordsdel',array('id'=>$vo['id']))}')"  href="#">删除</a>
+                </td>
+
+            </tr>
+            </volist>
+
+        </tbody>
+    </table>
+
+</div>
+<div>
+    <ul class="pager">{weikucms:$page}
+    </ul>
+</div>
+
+
+</div>
+<include file="Public:footer" />

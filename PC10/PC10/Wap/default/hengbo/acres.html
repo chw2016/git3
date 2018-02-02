@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="恒博物业">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>应聘职位</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+    <style type="text/css">
+        ul li { list-style: none;  background-color: #FFF;  border-top: 1px solid #CCC;  }
+        ul li:last-child { border-bottom: 1px solid #CCC;}
+        ul li a { padding: 15px 25px; display: block; }
+    </style>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/zhiwei.css">
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+<!--头部-->
+<div class="h-title">
+    <span>地区选择</span>
+    <span class="rIcon">
+        <a href="{weikucms::U('Hengbo/mymessage',array('token'=>$token,'openid'=>$openid))}">
+            <img src="{weikucms::STATICS}/wapweiui/hengbo/img/people.png" />
+        </a>
+    </span>
+</div>
+<div class="areaList">
+    <ul>
+        <volist name="aAres" id="vo">
+            <li><a href="{weikucms::U('Hengbo/office',array('token'=>$token,'openid'=>$openid,'aid'=>$vo['id']))}">{weikucms:$vo.username}</a></li>
+        </volist>
+    </ul>
+</div>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/hengbo/js/zhiwei.js"></script>
+</body>
+</html>

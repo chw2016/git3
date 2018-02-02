@@ -1,0 +1,140 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('JdAdviser/index',array('token'=>$token))}" >顾问管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('JdWz/index',array('token'=>$token))}" >方案管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('JdUser/index',array('token'=>$token))}" >用户管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('JdUser/tender',array('token'=>$token))}">招标方案与活动管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('JdUser/text',array('token'=>$token))}">前端会员入会须知编辑管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today" style="border-bottom: 3px solid #8C7CFF;">
+                <a href="{weikucms::U('JdUser/evalute',array('token'=>$token))}">评价管理</a>
+            </li>
+
+           <!-- <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNews/index',array('token'=>$token))}">车架号管理</a>
+            </li>-->
+
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>您可以在这里管理评论的数据</li>
+    </ol>
+</div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th >ID</th>
+                    <th >类型</th>
+                    <th >编码</th>
+                    <th >主题</th>
+                    <th >评价人</th>
+                    <th style="width: 30%; text-align: center;">评价内容</th>
+                    <th style="width: 30%;text-align: center;">评价回复</th>
+                    <th >回复人</th>
+                    <th >审核</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <volist name="list" id="vo">
+                    <tr>
+                        <td>{weikucms:$vo.id}</td>
+                        <td>
+                            <if condition="$vo['style'] eq 'plan'">
+                                {weikucms:$vo.type}
+                                <elseif condition="$vo['style'] eq 'active'"/>
+                                <if condition="$vo['type'] eq 0">
+                                    方案招标
+                                    <elseif condition="$vo['type'] eq 1"/>
+                                    活动及培训
+                                </if>
+
+                            </if>
+
+                        <td>{weikucms:$vo.code}</td>
+                        <td>{weikucms:$vo.title}</td>
+                        <td>{weikucms:$vo.upuname}</td>
+                        <td>{weikucms:$vo.upcontent}</td>
+                        <td>{weikucms:$vo.content}</td>
+                        <td>{weikucms:$vo.uname}</td>
+                        <td>
+                            <if condition="$vo['state'] eq 1">
+                                <img class="state" src="{weikucms::STATICS}/images/v.png" style="cursor:pointer;width:23px;height:23px;" data-id="{weikucms:$vo.id}" type="0">
+                                <elseif condition="$vo['state'] eq 0"/>
+                                <img class="state" src="{weikucms::STATICS}/images/x.png" style="cursor:pointer;width:23px;height:23px; " data-id="{weikucms:$vo.id}" type="1">
+                            </if>
+
+                            <!---->
+                        </td>
+
+                        <td >
+                            <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=JdUser&amp;a=delevalute&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="#">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+        <script>
+            $(function(){
+                $('.state').click(function(){
+                    if(confirm('确定此操作！')){
+                        var data = {
+                                id : $(this).attr('data-id'),
+                                type : $(this).attr('type')
+                        };
+                       /* var id = $(this).attr('data-id');
+                        var type = $(this).attr('type');*/
+                        var url = "{weikucms::U('JdUser/ajaxe',array('token'=>$token))}";
+                        $.post(url,data,function(rel){
+                            if(rel.status == 1){
+                                alert(rel.info);
+                                location.href = "{weikucms::U('JdUser/evalute',array('token'=>$token))}"
+                            }else{
+                                alert(rel.info);
+                            }
+                        },'json')
+                    }
+                })
+            })
+        </script>
+</div>
+<include file="Public:footer"/>

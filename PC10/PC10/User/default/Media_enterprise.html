@@ -1,0 +1,126 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+        float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+    }.borderColor{
+         border-bottom:3px solid #1576AD;
+     }
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top" data-id="total">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" >任务中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Media/marketing',array('token'=>$token))}" >营销中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/addInfo',array('token'=>$token))}" >消息中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" >用户中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/setCenter',array('token'=>$token))}" >配置中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >统计报表</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/tixianinfo',array('token'=>$token))}" >提现管理</a>
+            </li>
+            <if condition="$token eq $teToken">
+                <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                    <a href="{weikucms::U('Media/guanggao',array('token'=>$token))}" >广告位设置</a>
+                </li>
+            </if>
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="financial">
+                <a href="{weikucms::U('Media/enterprise',array('token'=>$token))}" >企业账号管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--添加按钮-->
+<div>
+    <ul>
+        <li>
+            <a href="{weikucms::U('Media/setenter',array('token'=>$token))}" style="text-decoration: none;">
+                <div class="addstyle" style="margin-left: 0px;background: #1576ad;" >
+                添加企业
+                </div>
+            </a>
+        </li>
+    <div style="clear:both;"></div>
+</div>
+<div>
+        <div class="alert alert-info" style="margin-top: 20px;">
+            <strong>提示信息!</strong>
+            <ol>
+                <li>
+                    <span>企业登陆入口：<php>echo C('site_url');</php>index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Media_enterprise<a class="btn btn-success btn-sm" target="_blank"  href="<php>echo C('site_url');</php>index.php?g=User&m=Branch&a=index&token={weikucms:$token}&modulename=Media_enterprise">企业登陆</a></span>
+                </li>
+
+            </ol>
+        </div>
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >ID</th>
+                <th >企业名称</th>
+                <th >企业执照号码</th>
+                <th >品牌管家</th>
+                <th >联系电话</th>
+                <th >联系QQ</th>
+                <th >微信号</th>
+                <th >积分余额</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="list" key="i">
+                <tr>
+                    <td>{weikucms:$vo.id}</td>
+                    <td>{weikucms:$vo.username}</td>
+                    <td>{weikucms:$vo.license}</td>
+                    <td>{weikucms:$vo.brand}</td>
+                    <td>{weikucms:$vo.phone}</td>
+                    <td>{weikucms:$vo.qq}</td>
+                    <td>{weikucms:$vo.weixin}</td>
+                    <td>{weikucms:$vo.score}</td>
+                    <td>
+                        <a href="{weikucms::U('Media/activescore',array('token'=>$token,'id'=>$vo['id']))}" title="充值" class="btn btn-success btn-sm">积分充值</a>
+                        <a href="{weikucms::U('Media/scoreinfo',array('token'=>$token,'id'=>$vo['id']))}" title="积分流水记录" class="btn btn-success btn-sm">积分流水记录</a>
+                        <a href="{weikucms::U('Media/setenter',array('token'=>$token,'id'=>$vo['id']))}" title="编辑文本" class="btn btn-success btn-sm">编辑</a>
+                        <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Media&amp;a=delenter&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="#">删除</a>
+                    </td>
+                </tr>
+            </volist>
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

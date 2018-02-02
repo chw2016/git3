@@ -1,0 +1,207 @@
+<include file="Public:head"/>
+<style>
+    .abc1{
+        display: block;
+        /* right: 0px; */
+        /* top: -10px; */
+        height: 39px;
+        /* padding: 0 40px; */
+        line-height: 2;
+        background: #C4E238;
+        width: 50px;
+        height: 25px;
+        text-align: center;
+    }
+</style>
+
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+			会员信息详情&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计消费 <?php echo $xiao['c'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;佣金余额 <?php echo $zong-$xiao['c'];?>
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">编号</label></th>
+                    <td>
+                        {weikucms:$info.id}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">姓名</label></th>
+                    <td>
+                        {weikucms:$info.name}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">电话</label></th>
+                    <td>
+                        {weikucms:$info.phone}
+                    </td>
+                </tr>
+                <if condition="$info['from_phone']">
+                <tr>
+                    <th valign="top"><label for="key">推荐人号码</label></th>
+                    <td>
+                        {weikucms:$info.from_phone}
+                    </td>
+                </tr>
+                    </if>
+				<tr>
+                    <th valign="top"><label for="key">佣金</label></th>
+                    <td>
+                        {weikucms:$info.yonjing}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">所在城市</label></th>
+                    <td>
+                        {weikucms:$info.fid1}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">单位</label></th>
+                    <td>
+                        {weikucms:$info.fid2}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">微信名称</label></th>
+                    <td>
+                        {weikucms:$info.nickname}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">银行卡号</label></th>
+                    <td>
+                        
+						<if condition="$info.brand eq ''">
+						还没有绑定
+						<else />
+						{weikucms:$info.brand}
+						</if>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">身份证正面</label></th>
+                    <td>
+                        
+                        <img src="{weikucms:$info.img}" width="150" height="120">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">身份证反面</label></th>
+                    <td>
+                        
+                        <img src="{weikucms:$info.img1}" width="150" height="120">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">银行卡照片</label></th>
+                    <td>
+                        
+                        <img src="{weikucms:$info.img2}" width="150" height="120">
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">支付宝</label></th>
+                    <td>
+                        
+						<if condition="$info.alipay eq ''">
+						还没有绑定
+						<else />
+						{weikucms:$info.alipay}
+						</if>
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">状态</label></th>
+                    <td>
+                        <if condition="$info.status eq 1">
+						申请成功
+						<else />
+						新申请
+						</if>
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">申请时间</label></th>
+                    <td>
+                        {weikucms:$info.add_time|date='Y-m-d:H:i:s',###}
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+        <script>
+            //去处理
+            function chuli(str){
+             //   var id="{weikucms:$_GET['id']}";
+
+                var url="{weikucms::U('chuli',array('token'=>$token,'id'=>$_GET['id']))}";
+                if(str==2){//失败还是成功
+                    if($("input[name=kk]:checked").val()==null){
+                        notif({
+                            msg: '请选择成功或者失败',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    var kk=$("input[name=kk]:checked").val();
+                    url=url+"&kk="+kk;
+                }
+                if(str==3){//设置成功交易金额
+                    var money=$("input[name=kk2]").val();
+                  //  $("input[name=kk2]").val().replace(/\D|^0/g,'');
+                    if(money==''){
+                        notif({
+                            msg: '请先填写金额',
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    url=url+"&kk="+money;
+                }
+               // alert(kk);return false;
+
+                $.post(url,{str:str},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: '操作成功',
+                            type: "success"
+                        });
+                        location.reload();
+                    }else{
+                        notif({
+                            msg: '操作失败',
+                            type: "error"
+                        });
+                    }
+                },'json');
+            }
+        </script>
+
+
+

@@ -1,0 +1,177 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+    th,td{
+        text-align:center !important;
+    }
+</style>
+<div class="" style="<if condition="">
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Distribution/index',array('token'=>$token))}">返回上一页</a></li>
+        </ul>
+    </div>
+</div>
+<!--tab start-->
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以查看微商数据统计。</li>
+    </ol>
+</div>
+<!--tab end-->
+<div class="box-content">
+    <div id="echartsloop" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/pie' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('echartsloop'));
+                    var option = option = {
+                        title : {
+                            text: '宏耐微商数地区统计',
+                            subtext: '总微商数：{weikucms:$num}',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:{weikucms:$province}
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : false,
+                        series : [
+                            {
+                                name:'微商来源',
+                                type:'pie',
+                                radius : [100, 140],
+
+                                // for funnel
+                                x: '60%',
+                                width: '35%',
+                                funnelAlign: 'left',
+                                max: 1048,
+
+                                data:{weikucms:$distribution}
+                            }
+                        ]
+                    };
+                    var ecConfig = require('echarts/config');
+                    myChart.on(ecConfig.EVENT.PIE_SELECTED, function (param){
+                        var selected = param.selected;
+                        var serie;
+                        var str = '当前选择： ';
+                        for (var idx in selected) {
+                            serie = option.series[idx];
+                            for (var i = 0, l = serie.data.length; i < l; i++) {
+                                if (selected[idx][i]) {
+                                    str += '【系列' + idx + '】' + serie.name + ' : ' +
+                                    '【数据' + i + '】' + serie.data[i].name + ' ';
+                                }
+                            }
+                        }
+                        document.getElementById('wrong-message').innerHTML = str;
+                    });
+                    myChart.setOption(option);
+                }
+        );
+    </script>
+
+    <div id="echartspie" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/pie' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('echartspie'));
+                    var option = {
+                        title : {
+                            text: '宏耐微商数时间段统计',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            data:{weikucms:$province},
+                            x:'left'
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : ['{weikucms::date(Y)}-01','{weikucms::date(Y)}-02','{weikucms::date(Y)}-03','{weikucms::date(Y)}-04','{weikucms::date(Y)}-05','{weikucms::date(Y)}-06','{weikucms::date(Y)}-07','{weikucms::date(Y)}-08','{weikucms::date(Y)}-09','{weikucms::date(Y)}-10','{weikucms::date(Y)}-11','{weikucms::date(Y)}-12']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : {weikucms:$Max}
+                    };
+
+                    myChart.setOption(option);
+                }
+        );
+    </script>
+
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+</div>
+<include file="Public:footer" />

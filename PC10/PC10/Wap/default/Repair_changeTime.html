@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+    href="{weikucms::STATICS}/wapweiui/service/css/default1.css"
+    type="text/css">
+<script type="text/javascript" async=""
+    src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script
+    src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::STATICS}/wapweiui/service/css/resource.css">
+<script type="text/javascript"
+    src="{weikucms::STATICS}/wapweiui/service/js/jQuery.js"></script>
+<script type="text/javascript"
+    src="{weikucms::STATICS}/wapweiui/service/js/map.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/css/api"
+    type="text/javascript"></script>
+<script type="text/javascript"
+    src="{weikucms::STATICS}/wapweiui/service/css/getscript"></script>
+<link rel="stylesheet" type="text/css"
+    href="{weikucms::STATICS}/wapweiui/service/css/bmap.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/select.js"></script>
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+</head>
+
+
+
+<body>
+    <div class="pageTitle">
+        <i style="background: #f00;"></i>
+        <span class="arrow-r" style="border-left: 10px solid #f00;"></span>
+        更改预约时间
+    </div>
+
+    <div class="publicList wml100">
+
+        <ul>
+            <li class="noAfter">
+                <div class="li-l">预约日期</div>
+                <div class="li-r" style="position:static;">
+                <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.png" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;"/>
+                </span>
+                    <!-- <input type="text" readonly  id="AppointmentD" onclick="J.calendar.get();"/> -->
+                    <select id="AppointmentD" name="AppointmentD" class="select">
+
+                    </select>
+                </div>
+            </li>
+
+            <li class="noAfter">
+
+                <div class="li-l">预约时间段</div>
+                <div class="li-r" style="position:static;">
+                <span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.png" width="51px" height="51px" style="position:absolute;right:-1px;top:-8px;"/>
+                </span>
+                    <!-- <input type="text" readonly  id="AppointmentT" onclick="J.calendar.get();"/> -->
+                    <select id="AppointmentT" class="select">
+                        <option selected="selected" value="8：00-10：00">8：00-10：00</option>
+                        <option value="10：00-12：00">10：00-12：00</option>
+                        <option value="12：00-14：00">12：00-14：00</option>
+                        <option value="14：00-16：00">14：00-16：00</option>
+                        <option value="16：00-18：00">16：00-18：00</option>
+                        <option value="18：00-20：00">18：00-20：00</option>
+                        <option value="20：00-22：00">20：00-22：00</option>
+                    </select>
+                </div>
+            </li>
+
+
+
+        </ul>
+    </div>
+    <input type="hidden" id="id" value="{weikucms:$orderInfo.id}" />
+    <div class="button clearfix">
+        <div style="width: 100%;">
+            <a href="javascript:void(0);"
+                style="background: #f00; text-align: center; color: #fff; font-weight: 400; border-radius: 6px; line-height: 2em; font-size: 16px; padding: 0;"
+                id="submit" class="gray flag">确定</a>
+        </div>
+    </div>
+    <!-- <div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div> -->
+
+</body>
+<style type="text/css">
+.gray {
+    border-top: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #888;
+    border-bottom: 2px solid #888;
+}
+
+.red {
+    border-top: 2px solid #888;
+    border-left: 2px solid #888;
+    border-right: 2px solid #ddd;
+    border-bottom: 2px solid #ddd;
+}
+</style>
+
+<script type="text/javascript">
+  $(function(){
+    $('.flag').mousedown(function(){
+      $(this).removeClass('gray').addClass('red');
+      
+    })
+    $('.flag').mouseup(function(){
+      $(this).addClass('gray').removeClass('red');
+      
+    })
+  })
+</script>
+<script type="text/javascript">
+
+$(function(){
+	$("#submit").click(function(){
+		var cdaytime = $("#AppointmentD").val();
+		var ctime = $("#AppointmentT").val();
+		var id = $("#id").val();
+		var url = 'index.php?g=Wap&m=Repair&a=changeTime&token={weikucms:$token}&openid={weikucms:$openid}';
+		$.post(url,{cdaytime:cdaytime,ctime:ctime,id:id},
+	        function(data){
+	            if(data.status == 100){ 
+	            	show_success_tip(data.info);
+	                setTimeout(function(){                        	
+	                    window.location.href = data.url;
+	                },'1000');
+	            }else{
+	            	show_error_tip(data.info);
+	            }
+	        },'json');
+	});
+});
+
+
+</script>
+
+</html>

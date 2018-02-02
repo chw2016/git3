@@ -1,0 +1,154 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script>
+    var editor1;
+    KindEditor.ready(function(K) {
+        editor1 = K.create('#cat_intro', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true,
+            afterBlur: function(){this.sync();}
+        })
+    });
+</script>
+<div class="" style="<if condition="$zm_id">margin-left:-214px;</if>">
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Distribution/index',array('token'=>$token))}&zm_id={weikucms:$get['zm_id']}">返回上一页</a></li>
+        </ul>
+    </div>
+</div>
+<!--tab start-->
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以修改区域管理员的密码。</li>
+    </ol>
+</div>
+<!--tab end-->
+<div class="box-content" style="<if condition="$zm_id">margin-left:150px;</if>">
+    <div class="msgWrap">
+        <form class="form" method="post" id="form" action="">
+            <div class="msgWrap bgfc">
+                <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <th>账号：</th>
+                        <td>
+                            <input type="text" id="username" name="username" value="{weikucms:$zmInfo['username']}" class="px require" style="width:300px;" readonly />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>请输入旧密码：</th>
+                        <td>
+                            <input type="password" id="opassword" name="opassword" value="" class="px require" style="width:300px;" />
+                            <span style="color:red;margin-top: 5px;">*必填</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>请输入新密码：</th>
+                        <td>
+                            <input type="password" id="npassword" name="npassword" value="" class="px require" style="width:300px;" />
+                            <span style="color:red;margin-top: 5px;">*必填</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>请再次输入新密码：</th>
+                        <td>
+                            <input type="password" id="cnpassword" name="cnpassword" value="" class="px require" style="width:300px;" />
+                            <span style="color:red;margin-top: 5px;">*必填</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" id="bsubmit" name="button" class="btn btn-primary">确定修改</button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = "{weikucms:$get['zm_id']}";
+            var opassword = $("#opassword").val().trim();
+            var npassword = $("#npassword").val().trim();
+            var cnpassword = $("#cnpassword").val().trim();
+            var o = "{weikucms:$zmInfo['pwd']}";
+            if(!opassword){
+                notif({
+                    msg:"请输入旧密码",
+                    type:"warning"
+                });
+                return false;
+            }
+            if(opassword !== o){
+                notif({
+                    msg:"旧密码输入不正确",
+                    type:"warning"
+                });
+                return false;
+            }
+            if(!npassword){
+                notif({
+                    msg:"请输入新密码",
+                    type:"warning"
+                });
+                return false;
+            }
+            if(!cnpassword){
+                notif({
+                    msg:"请再次确认新密码",
+                    type:"warning"
+                });
+                return false;
+            }
+            if(cnpassword !== npassword){
+                notif({
+                    msg:"两次输入密码不一致",
+                    type:"warning"
+                });
+                return false;
+            }
+
+            var url = "{weikucms::U('Distribution/modifyPwd',array('token'=>$token))}&zm_id="+{weikucms:$get['zm_id']};
+            $.post(url,{id:id,o:o,opassword:opassword,npassword:npassword,cnpassword:cnpassword},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg:data.info,
+                        type:"success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'2000')
+                }else if(data.status == 0){
+                    notif({
+                        msg:data.info,
+                        type:"warning"
+                    });
+                }else{
+                    notif({
+                        msg:data.info,
+                        type:"error"
+                    });
+                }
+            },'json');
+        });
+    });
+</script>
+<include file="Public:footer" />

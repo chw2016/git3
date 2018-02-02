@@ -1,0 +1,21 @@
+<volist id="vo" name="list" >
+        <li class="listset"  onclick="window.location.href='{weikucms::U('show',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'lmid'=>$_GET['lmid']))}'">
+            <div class="listsetleft">
+                <h3>
+                <?php 
+    				          echo mb_substr($vo['name'],0,30,'utf-8');
+    			?>
+                </h3>
+                <p>
+                     
+                 <?php
+                   echo mb_substr($vo['ms'],0,30,'utf-8');
+                 ?>
+                </p>
+            </div>
+            <div class="listsetright">
+                <img src="{weikucms:$vo.namepic}" title="图片">
+            </div>
+            <div style="clear:both;"></div>
+        </li>
+</volist>

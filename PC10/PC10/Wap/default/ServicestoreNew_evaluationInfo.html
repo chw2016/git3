@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+    <meta charset="UTF-8">
+
+    <title>{weikucms:$tpl.name}</title>
+
+    <meta name="Keywords" content="万普微盟">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var UID = {weikucms:$cid};
+        UID = parseInt(UID);
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+    </script>
+</head>
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>我的评价记录</div>
+<div style="padding:10px;"><div>
+<div  class="yxyyList">
+    <ul  class="rtable1">
+        <volist name="info" id="vo" key="i">
+            <if condition="$i eq 1">
+                <li id="yy_{weikucms:$i}" style="margin: 0px 10px;padding: 10px;">
+                    <div class="tit">
+                        <strong>
+                            {weikucms:$vo.etime| date = 'Y-m-d H:i:s',### }
+                        </strong>
+                    </div>
+                    <p>您对工号为{weikucms:$vo.staffID}的职员进行了评价。</p>
+                    <p>为<if condition="$vo['evaluation'] eq 0">满意
+                        <elseif condition="$vo['evaluation'] eq 1"/>合格
+                        <else/>不满意
+                       </if>，{weikucms:$vo.evaluation_info}</p>
+                </li>
+                <li id="yy_{weikucms:$i}" style="margin: 0px 10px;padding: 10px;display: none;">
+                    <div class="tit">
+                        <strong>
+                            {weikucms:$vo.etime| date = 'Y-m-d H:i:s',### }
+                        </strong>
+                    </div>
+                </li>
+            <else/>
+                <li id="yy_{weikucms:$i}" style="margin: 0px 10px;padding: 10px;display: none;">
+                    <div class="tit">
+                        <strong>
+                            {weikucms:$vo.etime| date = 'Y-m-d H:i:s',### }
+                        </strong>
+                    </div>
+                    <p>您对工号为{weikucms:$vo.staffID}的职员进行了评价。</p>
+                    <p>评价为<if condition="$vo['evaluation'] eq 0">满意
+                        <elseif condition="$vo['evaluation'] eq 1"/>合格
+                        <else/>不满意
+                       </if>，{weikucms:$vo.evaluation_info}</p>
+                </li>
+                <li id="yy_{weikucms:$i}" style="margin: 0px 10px;padding: 10px;">
+                    <div class="tit">
+                        <strong>
+                            {weikucms:$vo.etime| date = 'Y-m-d H:i:s',### }
+                        </strong>
+                    </div>
+                </li>
+            </if>
+
+        </volist>
+		
+    </ul>
+    <script type="text/javascript">
+        $(function(){
+            $('.rtable1>li:odd').each(function(){
+                $(this).bind('click',function(){
+                    $('.rtable1>li:even').slideUp();
+                    $('.rtable1>li:odd').slideDown();
+                    $(this).prev().slideDown();
+                    $(this).hide();
+                })
+            })
+        })
+    </script>
+</div>
+
+</body>
+</html>

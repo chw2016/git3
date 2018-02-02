@@ -1,0 +1,69 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/index',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试题库</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/manClass',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试分类</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="cLine">
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以添加测试的类型。</li>
+	</ol>
+</div>
+<div class="pageNavigator left">
+    <a href="{weikucms::U('Test/manClass',array('token'=>$token, 'type'=>0))}" title="添加" class="btn btn-primary" >添加测试分类</a></div>
+	<div class="clr"></div>
+</div>
+<div class="msgWrap">
+ 	<form method="post" action="index.php?ac=vote-manage&amp;id=9878" id="info">
+ 		<input name="delall" type="hidden" value="del">
+  		<input name="wxid" type="hidden" value="gh_423dwjkewad">
+   		<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	     	<thead>
+	       		<tr>
+					<th style="text-align:center;">编号</th>
+					<th style="text-align:center;">测试活动类名</th>
+                    <th style="text-align:center;">分类类型</th>
+					<th class="norightborder" style="text-align:center;">操作</th>
+	           </tr>
+	       </thead>
+	       <tbody>
+			<tr></tr>
+	        <volist id="list" name="list">
+	          <tr>
+	            <td style="text-align:center;">{weikucms:$list.id}</td>
+	            <td style="text-align:center;">{weikucms:$list.class_name}</td>
+                  <td style="text-align:center;">
+                      <if condition="$list['class_status'] eq 0">
+                          每道题目对应一个分数
+                          <else />
+                          每个选项对应一个分数
+                      </if>
+                  </td>
+	            <td class="norightborder" style="text-align:center;">       
+                 <a class="btn btn-success btn-sm" href="{weikucms::U('Test/manClass',array('type'=>1,'id'=>$list['id']))}" title="编辑">编辑</a>
+                 <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Test/delClass',array('style'=>0,'id'=>$list['id']))}');">删除</a>
+               </td>   
+	          </tr>
+	       </volist>
+	     </tbody>
+       </table>
+   </form> 
+</div> 
+<div class="cLine">
+  <div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>绑定银行卡</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/binding.css">
+    <style>
+        .span_on{
+            float: left;
+            display: block;
+            height: 37px;
+            line-height: 37px;
+            font-size: 10px;
+            width: 75px;
+            color: #D5C8C8;
+        }
+        .on_1_left{
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+<a href="#">
+	<div class="binding">
+		<i class="fa fa-plus-circle"></i>
+        <a href="{weikucms::U('bank_card2',array('token'=>$token,'openid'=>$openid))}"><span>
+            <if condition="$info['bank_card']">修改<else />绑定</if>银行卡</span></a>
+	</div>
+</a>
+
+<if condition="$info['bank_card']">
+    <div class="men_top">
+        <div class="men_top_one on">
+            <div class="on_1">
+                <span class="span_on">持卡人</span>
+                <input class="on_1_left"  readonly="readonly" value="{weikucms:$info.true_name}">
+                <span class="on_1_right"><i class="fa fa-user" style="color:#ff9120;font-size:19px;"></i></span>
+            </div>
+        </div>
+        <div class="men_top_one on">
+            <div class="on_1">
+                <span class="span_on">发卡行</span>
+                <input class="on_1_left" readonly="readonly" value="{weikucms:$info.bank_name}">
+                <span class="on_1_right"><i class="fa fa-credit-card" style="color:#2DC368;font-size:17px;"></i></span>
+            </div>
+        </div>
+        <div class="men_top_one on">
+            <div class="on_1">
+                <span class="span_on">开户行城市</span>
+                <input class="on_1_left" readonly="readonly" value="{weikucms:$info.bank_city}">
+                <span class="on_1_right"><i class="fa fa-street-view" style="color:#CB4720;font-size:21px;"></i></span>
+            </div>
+        </div>
+        <div class="men_top_one on">
+            <div class="on_1">
+                <span class="span_on">卡号</span>
+                <input class="on_1_left" readonly="readonly" value="{weikucms:$info.bank_card}">
+                <span class="on_1_right"><i class="fa fa-camera" style="color:#3e97d4;font-size:17px;"></i></span>
+            </div>
+        </div>
+
+    </div>
+    <else />
+</if>
+
+
+
+
+<div style="height:77px;"></div>
+<!--尾部-->
+	<section>
+
+        <include file="Loan:foot"/>
+</section>
+</body>
+</html>

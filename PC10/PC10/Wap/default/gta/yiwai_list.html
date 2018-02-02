@@ -1,0 +1,39 @@
+<volist name="list" id="vo">
+    <li>
+        <a href="{weikucms::U('yiwai_data',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'name'=>$vo['name']))}" data-ajax="false" style="display:block; text-decoration:none; color:#252525">
+            <div style=" position: relative;">
+                <div class="listName">
+                    <img src="{weikucms:$vo.logo}" class="productLogo">
+                    <div class="productName" >
+                        <!--<span style='color:Red' >【最受欢迎】</span>-->
+                        {weikucms:$vo.name}</div>
+                    <div class="listDes">
+                        {weikucms:$vo.content}
+                    </div>
+                    <!-- <div class="productAge">
+                         保障期限：1年
+                     </div>-->
+                </div>
+                <div class="listRights">
+                    <ul class="listRightNav">
+                        <volist name="vo['kuozhang']" id="vo1">
+                            <li>
+                                <span style="float:left;">{weikucms:$key}</span>
+                                <span style="float:right">{weikucms:$vo1}</span>
+                            </li>
+                        </volist>
+
+
+                    </ul>
+                </div>
+                <div class="listPrice">
+                    <span class="price">￥{weikucms:$vo.price}</span>
+                    <!--<span class="coupon" >返36%中民券</span>-->
+
+                    <span class="fr b1" onclick="location.href='{weikucms::U('yiwai_data',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'name'=>$vo['name']))}'">投他</span>
+                </div>
+                <div class="divider"></div>
+            </div>
+        </a>
+    </li>
+</volist>

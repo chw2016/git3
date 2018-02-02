@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+    {weikucms:$tpl.name}
+</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/wap.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <style type="text/css">
+        .bxqk
+        {
+            width:32%; float:left; height:70px; text-align:center; line-height:70px;margin-right:-2px; font-family:微软雅黑;font-size:14px;-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius:8px;margin-top:5px;
+        }
+        .bxqk1
+        {
+            width:32%; margin-left:2%; float:left; height:70px; text-align:center; line-height:70px;margin-right:-2px;font-family:微软雅黑;font-size:14px;-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius:8px;margin-top:5px;
+        }
+        .bxqk2
+        {
+            width:32%;  margin-left:2%; float:left; height:70px; text-align:center; line-height:35px;margin-right:-2px;font-family:微软雅黑;font-size:14px;-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius:8px;margin-top:5px;
+        }
+    </style>
+</head>
+<body>
+<form name="form1" method="post" action="bxaccident.aspx" id="form1">
+    <div>
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="KN2FwEztL/T4s9rzLrfXirX5uOqH7wCjKJrQlNHhJ08qRzkbSksYVpfk/Z6Z5j9NhjCOaG6juh/z/QAKujZmVAxKy1GGxFh8i0l6Iwm6cknFsXk8s6LyrXNBtorAsw6TFHse+qKkJMWxpK1cEmCs/53UPDQ=" />
+    </div>
+
+    <section id="page_ClassList" data-role="page" data-theme="d" style="padding: 0; margin: 0;">
+        <div data-role="content" style="padding:0; margin:0;">
+            <div class="header">
+                <h1 class="headerTitle">责任险</h1>
+            </div>
+        </div>
+        <div style="overflow: hidden;margin-bottom:15px; margin-top:10px; padding-left:5px; padding-right:5px;">
+            <volist name="list" id="vo">
+            <a href="{weikucms::U('zeren_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'name'=>$vo['name']))}" data-ajax="false" style="color:white;">
+                <div class="bxqk"
+                     <if condition="$i eq 1">
+                     style="margin-right: 1%; background-color:#ff5a56;"
+                         <elseif condition="$i eq 2" />
+                         style=" margin-right: 1%;background-color:#32bd62;"
+                         <elseif condition="$i eq 3" />
+                         style=" margin-right: 1%;background-color:#49aeff;"
+                         <elseif condition="$i eq 4" />
+                         style=" margin-right: 1%;background-color:#ffb200;"
+                         <elseif condition="$i eq 5" />
+                         style=" margin-right: 1%;background-color:#fe567d;"
+                         <elseif condition="$i eq 6" />
+                         style=" margin-right: 1%;background-color:#ff7a2d;"
+                         <elseif condition="$i eq 7" />
+                         style=" margin-right: 1%;background-color:#9c5bfd;"
+                         <elseif condition="$i eq 8" />
+                         style=" margin-right: 1%;background-color:#0ac6e2;"
+                         <elseif condition="$i eq 9" />
+                         style=" margin-right: 1%;background-color:#88c53a;"
+                         <elseif condition="$i eq 10" />
+                         style=" margin-right: 1%;background-color:#da58f1;"
+                         <elseif condition="$i eq 11" />
+                         style=" margin-right: 1%;background-color:#12cbb3;"
+                         <elseif condition="$i eq 12" />
+                         style=" margin-right: 1%;background-color:#f05f68;"
+                         <elseif condition="$i eq 13" />
+                         style=" margin-right: 1%;background-color:#7394f1;"
+                         <elseif condition="$i eq 14" />
+                         style=" margin-right: 1%;background-color:#12a7cb;"
+                         <elseif condition="$i eq 15" />
+                         style=" margin-right: 1%;background-color:#48bd37;"
+                         <else />
+
+                         </if>
+                        >
+                {weikucms:$vo.name}
+            </div>
+            </a>
+                </volist>
+
+            <!--<a href="/WAP/ProductList.aspx?bId=4&sort=0&sId=0&period=0&amount=0&cId=0&safe=0" data-ajax="false" style="color:white;"><div class="bxqk2" style=" background-color:#48bd37;">
+                <img src="http://images.zhongmin.cn/wap/images/rebate/i_ckcp.png" style=" margin-top:3px;" /><br /> 查看全部产品
+            </div></a>-->
+        </div>
+
+
+    </section>
+</form>
+
+</body>
+</html>

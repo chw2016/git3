@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/main.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog.css" media="all">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/usercenter/integral/wtj.js"><script src="./会员卡1_files/memc" type="text/javascript"></script><script src="./会员卡1_files/memc(1)" type="text/javascript"></script></script><script type="text/javascript" src="./会员卡1_files/jquery_min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/main.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog_min.js"></script>
+    <title>我的礼品</title>
+
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <!-- Mobile Devices Support @begin -->
+
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Mobile Devices Support @end -->
+    <link rel="shortcut icon" href="http://stc.weimob.com/img/favicon.ico">
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<script>
+    $().ready(function(){
+        $("#nav_1 a").on("touchstart touchend mouseover mouseout", function(e){
+            switch(e.type){
+                case "touchstart":
+                case "mouseover":
+                    this.classList.add("hover");
+                    break;
+                case "touchend":
+                case "mouseout":
+                    this.classList.remove("hover");
+                    break;
+            }
+        });
+    });
+
+    function readMsg(thi, evt,id){
+        var li = thi.parentNode;
+        li.classList.toggle("on");
+        li.removeAttribute("data-read");
+
+
+        if ($(li).hasClass("Js-read"))
+            return false;
+        $(li).addClass("Js-read");
+        $("#Js-msg-num").attr("data-count",parseInt($("#Js-msg-num").attr("data-count")) - 1);
+        var reg = {
+            id:id
+        }
+
+
+
+    }
+
+
+</script>
+
+<div class="container coupon message ">
+    <header>
+        <nav class="p_10">
+            <h3 style="height: 40px;
+        line-height: 40px;
+        background-color: #f3f3f3;
+        border: 1px solid #cbcbcb;
+        margin-bottom: 10px;
+        font-size: 16px;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        text-align: center;">我已兑换的礼品</h3>
+        </nav>
+    </header>
+    <div class="body">
+        <ul class="list_message">
+            <if condition="$list">
+                <volist name="list" id="vo">
+                    <li class="Js-read" style="padding: 10px;">
+                        <a href="javascript:;" onclick="readMsg(this, event,3);">
+                            <dl class="tbox">
+
+                                <dd>
+                                    <h3>{weikucms:$vo.title}，兑换成功</h3>
+                                    <p>{weikucms:$vo.time|date="Y-m-d H:i:s",###}</p>
+                                </dd>
+                            </dl>
+                        </a>
+                        <ol>
+                            <p>
+                                您于{weikucms:$vo.time|date="Y年m月d日 H时i分s秒",###}消费{weikucms:$vo.integral}积分兑换的 {weikucms:$vo.title}！
+                            </p>
+                        </ol>
+                    </li>
+                </volist>
+
+                <else/>
+                <li class="Js-read" style="padding: 10px;text-align: center;">
+                    您还没有兑换礼品吧 ！
+                </li>
+            </if>
+
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+
+
+    </script>
+</div>
+
+</body>
+</html>

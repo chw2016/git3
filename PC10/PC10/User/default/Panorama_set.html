@@ -1,0 +1,306 @@
+ <include file="Public:head" /> 
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <script>
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#fupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#fpic').val(),
+                     clickFn : function(url, title) {
+                         K('#fpic').val(url);
+                         $("#frontpic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#rupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#rpic').val(),
+                     clickFn : function(url, title) {
+                         K('#rpic').val(url);
+                         $("#rightpic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#bupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#bpic').val(),
+                     clickFn : function(url, title) {
+                         K('#bpic').val(url);
+                         $("#backpic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#lupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#lpic').val(),
+                     clickFn : function(url, title) {
+                         K('#lpic').val(url);
+                         $("#leftpic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#tupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#tpic').val(),
+                     clickFn : function(url, title) {
+                         K('#tpic').val(url);
+                         $("#toppic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#dupload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#dpic').val(),
+                     clickFn : function(url, title) {
+                         K('#dpic').val(url);
+                         $("#bottompic_src").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+
+ </script>
+<input type="hidden" id="catUrl" value="{weikucms::U('Product/ajaxCatOptions',array('token'=>$token))}" />
+
+  <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+
+ </div> 
+ 
+ <!--复制结束--> 
+   <div class="cLineB"> 
+    <h4>微全景设置</h4>
+
+   </div>
+
+      <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+              <li>全景照片是6个方位每一个方位添加一张图片</li>
+              <li>建议拍照的时候选用相机广角大一点的效果会更好！</li>
+          </ol>
+      </div>
+   
+   <form class="form" method="post" action="" enctype="multipart/form-data"> 
+   <input type="hidden" name="token" id="token" value="{weikucms:$token}" />
+<if condition="$isUpdate eq 1">
+<input type="hidden" name="id" id="id" value="{weikucms:$set.id}" />
+</if>
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.discount}" />
+    <div class="msgWrap bgfc"> 
+    <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <tbody>
+              	 <tr>
+                    <td align="right"><label for="title">名称：</label></td>
+              		 
+              		 
+              		<td><input type="input" class="px" id="name" name="name" value="{weikucms:$set.name}" style="width:300px;" onfocus="leave();" ></td>
+              		</tr>
+              		 <tr>
+                    <td align="right"><label for="title">关键词：</label></td>
+              		<td><input type="input" class="px" id="keyword" value="{weikucms:$set.keyword}" name="keyword" style="width:300px;" onfocus="leave();" ></td>
+              		</tr>
+              		<tr>
+                    <td align="right"><label for="title">顺序数字：</label></td>
+              		<td><input type="input" class="px" id="taxis" value="{weikucms:$set.taxis}" name="taxis" style="width:300px;" onfocus="leave();" >  由小到大排列</td>
+              		</tr>
+                     <tr>
+                    <td align="right"><label for="title">背景音乐：</label></td>
+              		<td><input type="input" class="px" id="music" value="{weikucms:$set.music}" name="music" style="width:300px;" onfocus="leave();" ></td>
+              		</tr>
+                     <tr>
+                       <td align="right">&nbsp;</td>
+                       <td>
+                       <table border="0" cellspacing="0" cellpadding="0" class="quanjing">
+                         <tbody><tr>
+                           <td align="center">前</td>
+                           <td align="center">右</td>
+                           <td align="center">后</td>
+                           <td align="center">左</td>
+                           <td align="center">顶部</td>
+                           <td align="center">底部</td>
+                         </tr>
+                         <tr>
+                           <td align="center"><img src="{weikucms:$set.frontpic}" id="frontpic_src" style="width:145px;"></td>
+                           <td align="center"><img src="{weikucms:$set.rightpic}" id="rightpic_src" style="width:145px;"></td>
+                           <td align="center"><img src="{weikucms:$set.backpic}" id="backpic_src" style="width:145px;"></td>
+                           <td align="center"><img src="{weikucms:$set.leftpic}" id="leftpic_src" style="width:145px;"></td>
+                           <td align="center"><img src="{weikucms:$set.toppic}" id="toppic_src" style="width:145px;"></td>
+                           <td align="center"><img src="{weikucms:$set.bottompic}" id="bottompic_src" style="width:145px;"></td>
+                         </tr>
+                         <tr>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="frontpic" id="fpic" value="{weikucms:$set.frontpic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="fupload" style="margin-left: 5px;">上传前方照片</span>
+                           </td>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="rightpic" id="rpic" value="{weikucms:$set.rightpic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="rupload" style="margin-left: 5px;">上传右方照片</span>
+                           </td>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="backpic" id="bpic" value="{weikucms:$set.backpic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="bupload" style="margin-left: 5px;">上传后方照片</span>
+                           </td>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="leftpic" id="lpic" value="{weikucms:$set.leftpic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="lupload" style="margin-left: 5px;">上传左方照片</span>
+                           </td>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="toppic" id="tpic" value="{weikucms:$set.toppic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="tupload" style="margin-left: 5px;">上传上方照片</span>
+                           </td>
+                           <td>
+
+                               <input type="hidden" class="text textMiddle inputQ"  name="bottompic" id="dpic" value="{weikucms:$set.bottompic}" style="width:300px;"   />
+                               <span class="ke-button-common" id="dupload" style="margin-left: 5px;">上传下方照片</span>
+                           </td>
+                         </tr>
+
+                       </tbody></table></td>
+                     </tr>
+                     
+                   <tr>
+                    <td align="right" valign="top"><label for="catepic">描述信息：</label></td>
+              		 
+              		 
+              		<td><textarea name="intro" id="intro" class="px" style="width:420px; height:150px">{weikucms:$set.intro}</textarea> </td>
+              		</tr>
+
+
+              	<tr>
+              		<td></td>
+              		<td colspan="3"><button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button>　<a href="{weikucms::U('Panorama/index',array('token'=>$token))}" class="btn btn-primary">取消</a></td>
+              		</tr>
+              	</tbody>
+            </table>
+     </div>
+    
+   </form> 
+  </div>
+ <script type="text/javascript">
+     $(function(){
+         $("#bsubmit").click(function(){
+             var token = $("#token").val();
+             var id = $("#id").val();
+             var discount = $("#discount").val();
+             var name = $("#name").val();
+             var keyword = $("#keyword").val();
+             var taxis = $("#taxis").val();
+             var music = $("#music").val();
+             var fpic = $("#fpic").val();
+             var rpic = $("#rpic").val();
+             var bpic = $("#bpic").val();
+             var lpic = $("#lpic").val();
+             var tpic = $("#tpic").val();
+             var dpic = $("#dpic").val();
+             var intro = $("#intro").val();
+             var __hash__ =  $("input[name='__hash__']").val();
+             if(! name){
+                 notif({
+                     msg: "名称不能为空哦",
+                     type: "warning"
+                 });
+                 return false;
+             }
+
+             if(! keyword){
+                 notif({
+                     msg: "关键词不能为空",
+                     type: "warning"
+                 });
+                 return false;
+             }
+
+             if(id){
+                 url = "{weikucms::U('Panorama/set')}";
+             }else{
+                 url = "{weikucms::U('Panorama/add')}";
+             }
+             $.post(url,
+                     {token:token,id:id,discount:discount,name:name,keyword:keyword,taxis:taxis,
+                         music:music,frontpic:fpic,rightpic:rpic,backpic:bpic,leftpic:lpic,toppic:tpic,bottompic:dpic,intro:intro,__hash__:__hash__},
+                     function(data){
+                         if(data.status == 1){
+                             notif({
+                                 msg: data.info,
+                                 type: "success"
+                             });
+                             setTimeout(function(){
+                                 window.location.href = data.url;
+                             },'1000');
+                         }else{
+                             notif({
+                                 msg: data.info,
+                                 type: "error"
+                             });
+                         }
+                     },'json');
+
+         });
+     });
+
+ </script>
+  <include file="Public:footer" />

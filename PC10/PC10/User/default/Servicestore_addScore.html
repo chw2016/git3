@@ -1,0 +1,175 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+<div class="content right">
+	<div class="cLineB">
+		<h4 class="left">进行订单结账</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Servicestore/index',array('token'=>$token, 'storeId'=>$storeId))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		  <tr>
+			<th valign="top">输入会员帐号：</th>
+			<td>
+				<input type="input" class="px" id="title" value="" name="title" style="width:208px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr> 
+	        <th valign="top">会员的订单号：</th>				        
+	        <td>
+	        	<select name="name" id="name">
+	        		 <option value="0">请选择</option>
+	        	</select>
+	        </td>
+	     </tr>
+	     <tr> 
+	        <th valign="top">服务类型：</th>				        
+	        <td>
+	        	<select name="service_type" id="service_type">
+	        		 <option value="0">请选择</option>
+		        	 <option value="1">买车付款</option>
+		        	 <option value="2">售后付款</option>
+	        	</select>
+	        </td>
+	     </tr>
+	     <tr>
+			<th valign="top">会员可用积分数：</th>
+			<td>
+				<span id="available_score">0</span>
+				<input type="hidden" id="avail_score" value=""/>
+			</td>
+  		 </tr> 		
+  		 <tr>
+			<th valign="top">积分兑换详情：</th>
+			<td>
+				<span id="score_to_info">0</span>
+				<input type="hidden" id="score_to_money" value=""/>
+			</td>
+  		 </tr>
+  		 
+  		  <tr>
+			<th valign="top">兑换积分数：</th>
+			<td>
+				<input type="input" class="px" id="exchange" value="" name="exchange" style="width:208px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">积分抵换金钱：</th>
+			<td>
+				<span id="score_exchange_t">0元</span>
+				<input type="hidden" id="score_exchange" value=""/>
+			</td>
+  		 </tr>
+  		 
+  		 
+  		 
+  		 <tr id="service_tr" style="">
+  		 	<th valign="top">输入售后的信息：</th>
+  		 	<td valign="top">
+  		 		<textarea class="px" id="service" name="service" style="width: 400px; height: 125px;"></textarea>
+  			</td>
+  		 </tr>
+  		 <tr id="buy_tr" style="display:none;">
+  		 	<th valign="top">输入买车的信息：</th>
+  		 	<td valign="top">
+  		 		<textarea class="px" id="buy" name="buy" style="width: 400px; height: 125px;"></textarea>
+  			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">付款金额：</th>
+			<td>
+				<input type="input" class="px" id="money" value="" name="money" style="width:100px" maxlength="30"/>&nbsp;元
+			</td>
+  		 </tr>	
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="button" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div>
+ <input type="hidden" id="storeId" value="{weikucms:$storeId}"/> 
+</form>
+<script>
+$(function(){
+	$("#title").focusout(function(){
+		var title = $("#title").val();
+		var url = 'index.php?g=User&m=Servicestore&a=vipOrder&token='+$("#token").val()+'&storeId='+$("#storeId").val();
+        $.post(url,{title:title},function(data){       	   
+           if(data.status == 100){       	  
+        	   var getdatas = data.result;
+        	   document.getElementById("name").length=0;
+        	   $.each(getdatas, function(index, item) {      		   
+        		   var id = getdatas[index].id;
+        		   var oid = getdatas[index].order_id;
+        		  
+        		   $("#name").html("<option value="+ 0 +">请选择</option>");
+        		   $("#name").html($("#name").html() + "<option value="+ oid+">" + oid +"</option>");
+        	   });
+           }else{
+           	notif({
+                   msg: data.info,
+                   type: "error"
+               });
+           } 
+       },'json');
+	});
+	
+	$("#name").change(function(){
+		var name = $("#name").val();
+		if(name == 0) {
+			 notif({
+                 msg: "请选择订单号",
+                 type: "error"
+             });
+		} else {
+		}
+	});
+	
+	$("#service_type").change(function(){
+		var type = $("#service_type").val();
+		if(type == 0) {
+			 notif({
+                 msg: "请选择付款类型",
+                 type: "error"
+             });
+		} else {
+			var name = $("#title").val();
+			var url = 'index.php?g=User&m=Servicestore&a=vipDatas&token='+$("#token").val();
+			$.post(url,{name:name, type:type},function(data){
+				if(data.status == 100){ 
+					$("#available_score").text(data.score);
+					$("#score_to_info").text(data.score_to_info);
+					$("#avail_score").val(data.score);
+					$("#score_to_money").val(data.score_to_money);					
+	            }else{
+	                notif({
+	                    msg: data.info,
+	                    type: "error"
+	                });
+	            }
+	        },'json');
+		}
+	});
+	
+	$("#exchange").focusout(function(){
+		var score = $("#exchange").val();
+		alert(score);
+		var level = $("#score_to_money").val();
+		var money = (score * level)/100;
+		alert(level);
+		alert(money);
+		$("#score_exchange_t").text(money);
+		$("#score_exchange").val(money);
+	});
+	
+});
+</script>
+<include file="Public:footer"/> 

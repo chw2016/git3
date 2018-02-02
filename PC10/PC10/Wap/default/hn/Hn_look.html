@@ -1,0 +1,203 @@
+<html><head>
+    <title>首页</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+    <style type="text/css">
+    .home-plist {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #e9e9e9;
+}
+.hp-header {
+  height: 16px;
+  padding: 15px;
+  margin-top:2px;
+
+}
+.hp-header>h5 {
+  font-size: 16px;
+  border-left: 3px solid #df3100;
+  line-height: 15px;
+  text-indent: 6px;
+  color:#333333;
+}
+.f17{font-size:16px;margin-bottom:10px;}
+.fr{
+  display: inline-block;
+  margin-top: 1px;
+  width: 33.33%;
+  text-align: center;
+}
+#topimg {
+  width: 95%;
+  max-height: 300px;
+  min-height: 100px;
+  margin-left: 8px;
+  /* margin-right: 3px; */
+  border-radius: 5px;
+}
+.color191919 {
+  /* padding-bottom: 10px; */
+  color: #191919;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+.hp-item li>figure {
+  width: 100%;
+  position: relative;
+   margin-bottom: initial;
+}
+.hp-item li>figure>img {
+  width: 95%;
+  max-height: 300px;
+  min-height: 100px;
+  margin-left: initial;
+  margin-right: initial;
+  border-radius: 5px;
+}
+.hp-item li>figure {
+  width: 100%;
+  position: relative;
+  margin-bottom: initial;
+  text-align: center;
+}
+    </style>
+</head>
+<body>
+
+<div class="space-10"></div>
+<div class="main-img" onclick="location.href='{weikucms::U('info1',array('token'=>$token,'openid'=>$openid))}'">
+    <img src="{weikucms:$lookinfo}" id="topimg"/>
+</div>
+<!-- <div class="home-item">
+    <ul>
+            <li data-href="rules.html">
+            <i class="icon-item4"></i>
+            <h5 class="title-size">活动规则</h5>
+            <i class="icon-arrow-gray"></i>
+            <i class="icon-new"></i>
+        </li>
+    </ul>
+</div> -->
+
+<section class="home-plist mb10" id="selling">
+    <header class="hp-header">
+        <h5>精品推荐</h5>
+    </header>
+<volist name="index" id="v">
+    <ul class="hp-item hp-item1">
+                <li class="pd0">
+				<h5 class="hpi-h5 f16 color191919f">{weikucms:$v.title}</h5>
+                <figure>
+                    <img src="{weikucms:$v.logopic}" alt="" data-href="{weikucms::U('book',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}">
+                </figure>
+     <!--            <ul class="hpi-jjr">
+                    <li>
+                        <h5>169</h5><p>已关注经纪人</p>
+                    </li>
+                    <li>
+                        <h5>434</h5><p>意向客户</p>
+                    </li>
+                    <li data-href="recommend.html">
+                        <h5></h5><p>推荐</p>
+                    </li>
+                </ul> -->
+                <div class="fn-home">
+				<h5 class="hpi-h5 f16 color191919" style="font-weight: normal;">{weikucms:$v.jianjie}</h5>
+                </div>
+                <div class="fn-clear"></div>
+
+                
+                            </li>
+			</ul>
+            
+			</volist>
+				
+</section>
+<!--
+<div class="home-item">
+    <ul>
+            <li data-href="{weikucms::U('rules',array('token'=>$token,'openid'=>$openid))}">
+            <span class="icon-coin1"></span>
+            <h5 class="title-size color999999">活动规则</h5>
+            <i class="icon-arrow-gray"></i>
+           <i class="icon-new"></i>
+        </li>
+    </ul>
+</div>-->
+<div class="space-10"></div>
+<div class="space-100"></div>
+<!--
+    <menu class="ucenter-menu">
+    <ul>
+        <li class="active" data-href="#">
+        <i class="icon-home"></i><br>首页
+        </li>
+
+        <li data-href="{weikucms::U('customer',array('token'=>$token,'openid'=>$openid))}">
+        <i class="icon-custom"></i><br>我的客户
+        </li>
+        <li data-href="{weikucms::U('center',array('token'=>$token,'openid'=>$openid))}">
+        <i class="icon-profile"></i><br>个人中心
+        </li>
+
+    </ul>
+</menu>-->
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<!--data-href="http://apps.weizhi.in/Weiloushu/Front/Index/project/wid/30/wpid/19"-->
+
+</body>
+<script>
+
+   /* var n=0;
+    var a=0;
+
+    var timeOut = null;
+
+    // alert(url);
+    $(document).scroll(function(){
+        if(a==1){
+            return false;
+        }
+        //滚动条顶部的偏移==总个文档的高度-窗口的高度
+        var diff = Number($(window).height()) + Number(20);
+
+        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+
+            if(timeOut != null) {
+                return false;
+            }  //判断容器timeOut 是否在运行！
+            n++;
+            //   $("#now_add").find(".a").waiting(function(){},16);
+            timeOut = setTimeout(function(){//1秒加载一次
+                //alert(5);
+                $.post('',{"n": n},function(html){
+                    //alert(html);
+                    if($.trim(html).length>0){
+                        $(html).appendTo('#selling');//第五步：拿到class="limitShoppingBox"看效果
+                        // $("#now_add").find('.a').waitingDone();
+                        timeOut=null;
+                    }else{
+                        a=1;
+
+                    }
+                },'html');
+            },1000);
+        }
+
+    })*/
+
+</script>
+</html>

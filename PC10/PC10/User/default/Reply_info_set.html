@@ -1,0 +1,346 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<style type="text/css">
+	.pic_img{width:145px;height:145px;}
+	.px{width:135px;}
+</style>
+
+
+
+<script>
+	KindEditor.ready(function(K){
+		var editor = K.editor({
+			allowFileManager:true
+		});
+		K('#upload_small_pic').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#small_pic').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#small_pic').val(url);
+							$("#frontpic_src").attr('src',url);
+						}else{
+							K('#small_pic').val("{weikucms::C('site_url')}"+url);
+							$("#frontpic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+		K('#upload_site_map_1').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#site_map_1').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#site_map_1').val(url);
+              $("#rightpic_src").attr('src',url);
+						}else{
+							K('#site_map_1').val("{weikucms::C('site_url')}"+url);
+							$("#rightpic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+		K('#upload_site_map_2').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#site_map_2').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#site_map_2').val(url);
+              $("#backpic_src").attr('src',url);
+						}else{
+							K('#site_map_2').val("{weikucms::C('site_url')}"+url);
+							$("#backpic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}  
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+		K('#upload_site_map_3').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#site_map_3').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#site_map_3').val(url);
+              $("#leftpic_src").attr('src',url);
+						}else{
+							K('#site_map_3').val("{weikucms::C('site_url')}"+url);
+							$("#leftpic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}  
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+		K('#upload_site_map_4').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#site_map_4').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#site_map_4').val(url);
+              $("#toppic_src").attr('src',url);
+						}else{
+							K('#site_map_4').val("{weikucms::C('site_url')}"+url);
+							$("#toppic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}  
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+		K('#upload_site_map_5').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					fileUrl : K('#site_map_5').val(),
+					clickFn : function(url, title) {
+						if(url.indexOf("http") > -1){
+							K('#site_map_5').val(url);
+              $("#bottompic_src").attr('src',url);
+						}else{
+							K('#site_map_5').val("{weikucms::C('site_url')}"+url);
+							$("#bottompic_src").attr('src',"{weikucms::C('site_url')}"+url);
+						}
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+	});
+	
+</script>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#intro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+uploadJson : '/index.php?g=User&m=Upyun&a=kindedtiropic',
+items : [
+'source','undo','clearhtml','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+<script>
+function selectall(name) {
+	var checkItems=$('.cbitem');
+	if ($("#check_box").attr('checked')==false) {
+		$.each(checkItems, function(i,val){
+			val.checked=false;
+		});
+		
+	} else {
+		$.each(checkItems, function(i,val){
+			val.checked=true;
+		});
+	}
+}
+function setlatlng(longitude,latitude){
+	art.dialog.data('longitude', longitude);
+	art.dialog.data('latitude', latitude);
+	// 此时 iframeA.html 页面可以使用 art.dialog.data('test') 获取到数据，如：
+	// document.getElementById('aInput').value = art.dialog.data('test');
+	art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:600,height:400,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<div class="cLineB">
+  <h4>{weikucms:$infoType.name}回复配置 </h4>
+
+</div>
+<!--复制开始-->
+      <div class="cLineB" id="uppict" style="display:none">
+
+
+</div>
+ 
+ <!--复制结束--> 
+
+
+    <div class="msgWrap bgfc" style="margin-top:10px;">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+            <tr>
+                <th valign="top">{weikucms:$infoType.name}链接地址：</th>
+                <td>
+                    <span class="badge badge-success"><php>echo C('site_url');</php>{weikucms:$infoType.url} </span>
+                    <a class="btn btn-success btn-xs" id="copy_btn" onclick="copyToClipboard('<php>echo C('site_url');</php>{weikucms:$infoType.url}','copy_btn');">点击复制</a>
+                    <br>
+                    {weikucms:$infoType.name}默认关键词 ：<span class="badge badge-success">{weikucms:$infoType.keyword}</span>
+                </td>
+            </tr>
+
+					<input type="hidden" value="{weikucms:$infoType.keyword}" readonly="readonly" style="width: 300px;"/>
+
+				<tr>
+					<th width="120">{weikucms:$infoType.name}图文消息回复标题：</th>
+					<td><input type="text" id="title" name="title" value="{weikucms:$set.title}" class="px" style="width:300px;">
+                    <span class="info_tip">图文消息标题不能为空</span>
+                    </td>
+				</tr>
+				<tr>
+					<th width="120">内容介绍：</th>
+					<td><textarea style="width:301px;height:75px" name="info" id="info" class="px" onfocus="leave();">{weikucms:$set.info}</textarea><br/>最多填写120个字</td>
+				</tr>
+                <TR>
+                    <TH valign="top"><label for="picurl">封面图片展示：</label></TH>
+
+                    <TD>
+                        <if condition="$set.picurl neq null">
+                        <img style="display: block;" id="image_show" class="indexs_img" src="{weikucms:$set.picurl}">
+                        <else/>
+                            <img style="display: block;" id="image_show" class="indexs_img" src="./upload/index_img.jpg">
+                        </if>
+                    </TD>
+                </TR>
+				<tr>
+					<th>上传封面图片：</th>
+					<td>
+                        <input type="hidden" class="px"  name="picurl" id="pic" value="{weikucms:$set.picurl}" style="width:300px;"   />
+                        <span class="ke-button-common" id="upload">上传图片</span>
+                 </td>
+				</tr>
+				<tr>
+					<th>自定义链接地址：</th>
+					<td><input name="apiurl" id="apiurl" value="<if condition='$set.picurl neq null'>{weikucms:$set.apiurl}<else/>./upload/index_img.jpg</if>" class="px" style="width:300px;" type="text" placeholder="此处填写你希望跳转的自定义外链地址">
+                    </td>
+				</tr>
+				<if condition="$set and ($infoType.type eq 'Dining')">
+				<tr>
+					<th>订购方式开关：</th>
+					<td>
+                        <label><input type="checkbox" id="diningyuding" name="diningyuding" value="" <if condition="$set.diningyuding eq 1">checked</if> /> 开启预定</label>
+                        <label><input type="checkbox" id="diningwaimai" name="diningwaimai" value="" <if condition="$set.diningwaimai eq 1">checked</if> /> 开启外卖</label></td>
+				</tr>
+				<tr>
+        <th>订购时限：</th>
+        <td><input type="text" id="yudingdays" name="yudingdays" value="{weikucms:$config.yudingdays}" class="px" style="width:100px;"  onfocus="leave();"/> 天（可以订购多少天）</td> 
+       </tr>
+				</if>
+				<th>&nbsp;</th>
+					<td>
+					<input type="hidden" name="keyword" id="keyword" value="{weikucms:$infoType.keyword}" />
+					<input type="hidden" name="infotype" id="infotype" value="{weikucms:$infoType.type}" />
+					<input type="hidden" name="token" id="token" value="{weikucms:$token}" />
+						<button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button>
+					</td>
+				</tr>
+                <TR style="height: 150px;">
+
+                </TR>
+			</tbody>
+		</table>
+	</form>
+  </div> 
+ 
+  
+        </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var picurl = $("#pic").val();
+            var apiurl = $("#apiurl").val();
+            var info = $("#info").val();
+            var yudingdays = $("#yudingdays").val();
+            var keyword = $("#keyword").val();
+            var infotype = $("#infotype").val();
+            var token = $("#token").val();
+            var diningyuding,diningwaimai;
+
+            if($('#diningyuding').is(':checked')) {
+                diningyuding = 1;
+            }else{
+                diningyuding = 0;
+            }
+
+            if($('#diningwaimai').is(':checked')) {
+                diningwaimai = 1;
+            }else{
+                diningwaimai = 0;
+            }
+
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! title){
+                notif({
+                    msg: "标题不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! picurl){
+                notif({
+                    msg: "您还没上传封面图片哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('Reply_info/set')}",
+                    {diningyuding:diningyuding,diningwaimai:diningwaimai,token:token,title:title,picurl:picurl,apiurl:apiurl,info:info,yudingdays:yudingdays,keyword:keyword,infotype:infotype,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url+infotype+'&token='+token;
+                            },'1000');
+                        }else{
+                                    notif({
+                                        msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

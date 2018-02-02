@@ -1,0 +1,162 @@
+<html>
+	<head>
+		<title>运动方案</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/20.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<div id="Mask"></div>
+		<!-- <form action="{weikucms::U('Wap/Reduce/foodSearch',array('token'=>$token,'openid'=>$openid))}" method="post" name="form1"> -->
+		<!-- 创建遮罩 -->
+		
+		<!-- 创建搜索框 -->
+		<!-- 今天的搜索框 -->
+		<div id="searchbox">
+			<div class="closeBtn"></div>
+			<div class="clear"></div>
+			<div class="search">
+				<input type="text" name="findRun" id="findRun" placeholder="输入运动名称进行搜索" />
+				
+				<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit" 
+				style="width:25px;height:25px;" id="searchResult"/>
+			</div>
+			<ol id="lists">
+						
+			</ol>
+			<!-- 清除历史记录 -->
+			<div class="clearHis">
+				<a href="javascript:void(0)">清空历史记录</a>
+			</div>
+		</div>
+		<!-- </form> -->
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">运动方案</span>
+		</div> -->
+		<!-- drinkrecord -->
+		<div class="drinkfont">
+			<span class="fontEat">运动名称</span>
+			<br />
+			<span>
+				<if condition="$flag eq 1">
+					<span class="fontRed">{weikucms:$result.sportsname}</span>
+					<span class="fontBlue">/</span>
+					<span class="fontBlue">{weikucms:$result.sportslong}</span>
+					分钟
+				<else />
+					<span class="fontRed">暂无运动</span>
+					<span class="fontBlue">/</span>
+					<span class="fontBlue">0分钟</span>	
+				</if>
+				
+			</span>
+		</div>
+		<!-- all drink -->
+		<div class="allDrink">
+			<table>
+				<if condition="$flag eq 1">
+							<tr class="borderColor">
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/runs.png" width="30px" height="21px"/>
+								</td>
+								<td>运动名称</td>
+								<td>
+									{weikucms:$result.sportsname}/{weikucms:$result.sportslong}分钟
+								</td>
+								<td>
+									<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="runs" know="zao">
+								</td>
+							</tr>
+				<else />
+					<tr class="borderColor">
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/runs.png" width="30px" height="21px"/>
+						</td>
+						<td>运动名称</td>
+						<td>
+							&nbsp;&nbsp;&nbsp;
+						</td>
+						<td>
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/clickadd.png" width="25px" height="25px" id="runs" know="zao">
+						</td>
+					</tr>
+				</if>
+			</table>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				
+				// 调整位置
+				$('#searchbox').css({'left':($(window).width()-280)/2+'px','top':'20px'});
+				$('ol').css({'height':($(window).height()-160)+"px",'overflow':'scroll','overflow-x':'hidden'});
+				//点开，早餐
+				$('#runs').click(function(){
+					$('#Mask').css({'width':$(window).width(),'height':$(window).height()}).show();
+					$('#searchbox').show();
+					$(this).attr('know');
+					$('#searchbox').data('know',$(this).attr('know'));
+				})
+				
+				//关闭
+				$('.closeBtn').click(function(){
+					$('#Mask').hide();
+					$('#searchbox').hide();
+					$('#lists').children('a').remove();
+					$('#findRun').val("");
+				})
+
+				//清除历史记录
+				$('.clearHis').click(function(){
+					$('#lists').children('a').remove();
+				})
+			//发送数据到后台获取结果集合
+				var findFood;
+				$('#searchResult').click(function(){
+					findRun = $('#findRun').val();
+					var url = "{weikucms::U('Wap/Reduce/runSearch',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{findRun:findRun},function(data){
+						$('#lists').children('a').remove();
+						var idArr = new Array();
+						var newli,newspan,newimg,newa,datas,i = 0,cutdata;
+						for(var x in data){
+							idArr[i] = x+","+data[x];
+							i++;
+						};
+
+						for (var i = 0; i < idArr.length; i++) {
+							cutdata = idArr[i].split(",");
+							datas = "{weikucms::U('Wap/Reduce/addruns',array('token'=>$token,'openid'=>$openid))}&id="+cutdata[0]+"&data="+$("#searchbox").data('know');
+							newa = document.createElement('a');
+							newa.setAttribute("href",datas);
+							newa.setAttribute("style","color:#666");
+							newli = document.createElement('li');
+							newspan = document.createElement('span');
+							newspan.innerHTML = cutdata[1];
+							newimg = document.createElement('imgs');
+							newimg.setAttribute('width','8px');
+							newimg.setAttribute('height','15px');
+							newimg.setAttribute("src","{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png");
+							newli.appendChild(newspan);
+							newli.appendChild(newimg);
+							newa.appendChild(newli);
+							document.getElementById('lists').appendChild(newa);
+						};
+					},'json'); 
+				})
+				
+			})
+		</script>
+	</body>
+</html>	

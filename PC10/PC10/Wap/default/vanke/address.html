@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <title>收货地址管理</title>
+</head>
+<body class="addAddress addressManagement">
+    <div class="fixTop header headerBg">
+        <!--<div class="logo"></div>
+        <div class="title">/ 度假服务</div>-->
+        <div class="circle goBack">
+
+        </div>
+        <div class="titleRight">
+            收货地址管理
+        </div>
+    </div>
+    <div class="content">
+
+        <if condition="address">
+        <volist name="address" id="item">
+        <if condition="item.is_default eq 1">
+        <div class="item on defaultAddress">
+            <div class="wrap addressChoose addressWrap">
+                <div class="typeWrap">
+                    <span class="ifAddressDefault"></span>
+                    <span class="addressTypeTag addressTypeTagFamily"></span>
+                </div>
+                <div class="text">
+                    <span class="name">冯XX</span>/
+                    <span class="telPhone">15078384575</span>
+                </div>
+                <div class="text">
+                    <span class="address">广东省深圳市宝安区宝安大道航空新城万科恒大金色领域西区24栋4楼402</span>
+                </div>
+            </div>
+            <div class="doActionWrap">
+                <div class="actionItem actionDefault">
+                    设为默认
+                </div>
+                <div class="actionItem actionEdit">
+                    修改
+                </div>
+                <div class="actionItem actionDelete">
+                    删除
+                </div>
+            </div>
+        </div>
+        <else />
+        <div class="item">
+            <div class="wrap addressChoose addressWrap">
+                <div class="typeWrap">
+                    <span class="ifAddressDefault"></span>
+                    <span class="addressTypeTag addressTypeTagCompany"></span>
+                </div>
+                <div class="text">
+                    <span class="name">冯XX</span>/
+                    <span class="telPhone">15078384575</span>
+                </div>
+                <div class="text">
+                    <span class="address">广东省深圳市宝安区宝安大道航空新城万科恒大金色领域西区24栋4楼402</span>
+                </div>
+            </div>
+            <div class="doActionWrap">
+                <div class="actionItem actionDefault">
+                    设为默认
+                </div>
+                <div class="actionItem actionEdit">
+                    修改
+                </div>
+                <div class="actionItem actionDelete">
+                    删除
+                </div>
+            </div>
+        </div>
+        </if>
+        </volist>
+        <else />
+        还没有收货地址哦~
+        </if>
+
+       <!-- <div class="setDefaultAddress f14">
+            <span class="circle checkCircle"></span>
+            设为默认收货地址
+        </div>-->
+        <a href="{weikucms::U('add_address')}">
+        <div class="submitBtn border-4 f18">
+            添加新地址
+        </div>
+        </a>
+    </div>
+
+    <script>
+        $(function(){
+            seajs.use("helper",function(h){
+                /*
+                * 选中
+                * */
+                $(".addressManagement").on("click",".item",function(e){
+                    if($(this).hasClass("on")) return false;
+                    $(this).siblings().removeClass("on");
+                    $(this).addClass("on");
+                });
+                /*
+                * 设为默认
+                * */
+                $(".actionDefault").touch(function(){
+                    var This = $(this);
+                    if(This.parents(".item").hasClass("defaultAddress")){
+                        return false;
+                    }
+                    h.confirm(
+                            "设置本地址为默认地址？",
+                            function(){
+                                This.parents(".item").siblings().removeClass("defaultAddress");
+                                This.parents(".item").addClass("defaultAddress");
+                            }
+                    )
+                });
+
+
+                /*
+                 * 修改
+                 * */
+                $(".actionEdit").touch(function(e){
+
+                });
+
+                /*
+                * 删除
+                * */
+                $(".actionDelete").touch(function(e){
+                    var This = $(this);
+                    h.confirm(
+                        "你确定要删除本条信息？",
+                        function(){
+                            This.parents(".item").fadeOut(100,function(){
+                                This.parents(".item").remove();
+                            });
+                        }
+                    )
+                })
+            })
+        })
+    </script>
+</body>
+</html>

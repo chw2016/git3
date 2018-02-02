@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css?v=123">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+		    wx.config({
+		        appId: '{weikucms:$signPackage.appId}',
+		        timestamp: {weikucms:$signPackage.timestamp},
+		        nonceStr: '{weikucms:$signPackage.nonceStr}',
+		        signature: '{weikucms:$signPackage.signature}',
+		        jsApiList: [
+		            'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+		        ]
+		    });
+		    wx.ready(function () {
+		        // 在这里调用 API
+		        wx.hideOptionMenu();
+		    });
+
+		</script>
+    </head>
+    <body style="background:#F0F0F0;">
+    	<div class="bbsBox white-bg">
+            <div class="bbsUserInfo myul">
+                <div class="circle bbsuserLogo fixBg" style="background-image:url({weikucms:$article['headimg']})">
+                    
+                </div>
+                <div class="bbsUserMoreInfo">
+                    <div class="bbsUserName">
+                        {weikucms:$article['nickname']}
+                    </div>
+                    <div class="bbsGrade myul">
+                        <div class="icon icon-grade">
+                            
+                        </div>
+                        <div class="bbsGradeDetail crown-yellow-bg white">{weikucms:$article.lvl}</div>
+                    </div>
+                </div>
+                
+            </div>
+            
+                <div class="bbsContent">
+                        {weikucms:$article.content}
+                </div>
+                <if condition="$article['img_url'] eq ''">
+                <else/>
+                    <div class="bbsPic fixBg" style="background-image:url({weikucms:$article.img_url})" data-url="{weikucms:$article.img_url}"></div>
+                </if>
+            
+            <div class="postAddress">{weikucms:$article.address}</div>
+                <div class=" bbsAction myul">
+					<div class="timeshows">
+					<php>
+					 if(intval(time()-strtotime($article['add_time'])>3600))
+                    {
+                        echo date("Y-m-d H:i",strtotime($article['add_time']));
+                    }elseif(intval(time()-strtotime($article['add_time'])<60)){
+                        echo intval(time()-strtotime($article['add_time']))."秒前";
+                    }else{
+                        echo intval(intval((time()-strtotime($article['add_time']))/60))."分钟前";
+                    }
+					</php>
+					</div>
+                    <div class=" border-20 bbsBtn bbsLike <if condition='$article["ifzan"] eq 1'>on<else/></if>">
+                    <!-- 显示是否是以及帖子的ID号码 -->
+                        <input type="hidden" value="{weikucms:$article['ifzan']}-{weikucms:$article['id']}" />
+                        <div class="icon icon-like "></div>
+                        <div class="likeCount">{weikucms:$article.dianzan}</div>
+                    </div>
+                    <div class=" border-20 bbsBtn bbsReply">
+                        <div class="icon icon-reply "></div>
+                        <div id="replyCount">{weikucms:$article.pinglun}</div>
+                    </div>
+                </div>
+                <div class="replyInputBox">
+                    <volist name="article.comments" id="so">
+                        <if condition="$so['comment'] neq ''">
+                             <div class="RPBItem myul">
+                                <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$so['headimg']})"></div>
+                                <div class="reContent" data-openid="{weikucms:$so.openid}" data-id="{weikucms:$so['id']}">
+                                    {weikucms:$so['nickname']}：{weikucms:$so.comment}
+                                    <input type="hidden" name="replayId" class="replayId" />
+                                </div>
+                               
+                             </div>
+                         <else/>
+                         </if>
+                    </volist>
+                    
+                    <div class="reInputReply myul hide">
+                        <div class="inputReplyBox">
+                            <input type="text" placeholder="请输入回复内容" />
+                        </div>
+                        <span class="replayBtn" data-replay="{weikucms:$article.openid}" data-id="{weikucms:$article.id}">
+                            回复
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+    		$(function(){
+		        var shareTitle="{weikucms:$res.title}";
+		        var imgUrl="<php>echo C('site_url');</php>{weikucms:$res.pic}";
+		        var descContent="{weikucms:$res.title}";
+		        var shareUrl="";
+
+		        $(function() {
+		            shareUrl = $("#shareUrl").text();
+		        });
+
+
+		        wx.config({
+		            appId: '{weikucms:$signPackage.appId}',
+		            timestamp: {weikucms:$signPackage.timestamp},
+		            nonceStr: '{weikucms:$signPackage.nonceStr}',
+		            signature: '{weikucms:$signPackage.signature}',
+		            jsApiList: [
+		                'onMenuShareTimeline',
+		                'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+						'previewImage'
+		            ]
+		        });
+				//图片预览
+				wx.ready(function(){
+					$(".bbsPic").click(function(){
+						var picUrl = $(this).data("url");
+							picUrl = 'http://v.wapwei.com/'+picUrl;
+						 var imgList = [picUrl];
+				            wx.previewImage({
+				                current: imgList[0],
+				                urls:  imgList
+				            });
+					})
+				})
+				// 分享
+				
+		    })
+	</script>
+    </body>
+</html>

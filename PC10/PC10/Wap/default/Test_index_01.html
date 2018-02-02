@@ -1,0 +1,307 @@
+<!DOCTYpE html>
+<html>
+<HEAD>
+<meta content="IE=10.000"  http-equiv="X-UA-Compatible">    
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+<meta name="apple-mobile-web-app-capable" content="yes">     
+<meta name="apple-touch-fullscreen" content="yes">     
+<meta name="format-detection" content="telephone=no">     
+<meta name="apple-mobile-web-app-status-bar-style" content="black">     
+<title>{weikucms:$data['test_name']}</title>       
+<meta name="revisit-after" content="1 days">     
+<meta name="keywords" content="">     
+<meta name="description" content="">     
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link href="{weikucms::STATICS}/wapweiui/test/css/common.css" rel="stylesheet" type="text/css">     
+<link href="{weikucms::STATICS}/wapweiui/test/css/animation.css" rel="stylesheet" type="text/css">     
+<link href="{weikucms::STATICS}/wapweiui/test/css/jifu.css" rel="stylesheet" type="text/css">     
+<script src="{weikucms::STATICS}/wapweiui/test/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<body style="background-color:#FDF5E6;">
+<div class="jifu">
+	<div id="ji-fu" style="line-height:40px;font-size:25px;font-weight:bold;">{weikucms:$data['test_name']}</div>
+	<div class="jifu-cen">
+		<volist name="title" id="value" key="i">
+			<if condition="$value.answer_num neq 1">
+				<ul id="skin{weikucms:$i}" sid="{weikucms:$value.id}">
+					<li>
+						<span style="font-size:16px;font-weight:bold;">{weikucms:$i}、{weikucms:$value.subject_title}</span>
+					</li>
+					<if condition="$value.answer_a_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="checkbox" sec='A'>                 
+		  					<label>A：{weikucms:$value.answer_a_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_b_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="checkbox" sec='B'>                 
+		  					<label>B：{weikucms:$value.answer_b_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_c_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="checkbox" sec='C'>                 
+		  					<label>C：{weikucms:$value.answer_c_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_d_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="checkbox" sec='D'>                 
+		  					<label>D：{weikucms:$value.answer_d_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_e_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="checkbox" sec='E'>                 
+		  					<label>E：{weikucms:$value.answer_e_con}</label>             
+		  				</li>
+		  			</if>  				
+  				</ul>
+			<else/>
+				<ul id="skin{weikucms:$i}" sid="{weikucms:$value.id}">
+					<li>
+						<span style="font-size:16px;font-weight:bold;">{weikucms:$i}、{weikucms:$value.subject_title}</span>
+					</li>
+					<if condition="$value.answer_a_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="radio" sec='A'>                 
+		  					<label>A：{weikucms:$value.answer_a_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_b_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="radio" sec='B'>                 
+		  					<label>B：{weikucms:$value.answer_b_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_c_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="radio" sec='C'>                 
+		  					<label>C：{weikucms:$value.answer_c_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_d_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="radio" sec='D'>                 
+		  					<label>D：{weikucms:$value.answer_d_con}</label>             
+		  				</li>
+		  			</if>
+		  			<if condition="$value.answer_e_con neq null">
+		  				<li>
+		  					<input name="skin{weikucms:$i}" type="radio" sec='E'>                 
+		  					<label>E：{weikucms:$value.answer_e_con}</label>             
+		  				</li>
+		  			</if>  				
+  				</ul>
+  			</if>
+  		</volist> 		
+    </div>
+    <input type="hidden" value="{weikucms:$count}" id="count"/>
+    <input type="hidden" value="{weikucms:$id}" id="id"/>
+    <input type="hidden" value="{weikucms:$token}" id="token"/>
+    <input type="hidden" value="{weikucms:$openid}" id="openid"/>
+    <div class="ti-eight" id="skin{weikucms:$i+1}" style="display: none;">
+        
+        <input type="text" name="name" value="" id="name" placeholder="请输入姓名" style="text-indent:3px;height: 40px;line-height: 40px;border-radius: 5px;width:100%;border: none;"/>
+        <br>
+        <br>
+        <input type="text" name="phone" value=""  id="phone" placeholder="请输入手机号码" style="text-indent:3px;height: 40px;line-height: 40px;border-radius: 5px;width:100%;border: none;"/>
+		        <br>
+        <br>
+        <input type="text" name="unio" value=""  id="unio" placeholder="请输入单位名称" style="text-indent:3px;height: 40px;line-height: 40px;border-radius: 5px;width:100%;border: none;"/>
+		<textarea style="font-size: 16px;border: none;display: none;" id="idea_info" ></textarea>
+	</div>
+	<div class="ti-eight"  id="result1" style="display: none;">
+		<p style="margin-top: 10px; font-size:16px;font-weight:bold;">你的分数：
+			<span id="result_score" style="font-size:16px;font-weight:normal;"></span>
+		</p> 
+		<p style="margin-top: 10px; font-size:16px;font-weight:bold;">你的结果分值段：<span id="result"></span></p>
+		<br/>
+		<p style="margin-top: 10px; font-size:16px;font-weight:bold;">结果信息：
+			<span id="result_info" style="font-size:16px;font-weight:normal;"></span>
+		</p> 
+	</div>	  					
+	<div class="jifu-btn" style="border-radius:8px;background-color:#FDF5E6;">
+		<a class="b-ce" id="skin-ce" style="display: none; color:black;font-size:16px;font-weight:bold;background-color:#6495ED;" href="javascript:void(0);">&lt;&lt;上一题</a> 
+        <a class="b-next" id="skin-next" href="javascript:void(0);" style="color:black;font-size:16px;font-weight:bold;background-color:#6495ED;" num="1">下一题&gt;&gt;</a>  
+    </div>
+	<div class="tijiao-btn" id="a-tijiao-btn" style="padding-right: 0px; display: none;background-color:#FDF5E6;">
+		<div class="titi-btn">
+			<a class="ti-btn" id="ti_submit" href="javascript:void(0);" style="background-color:#6495ED;">提交</a> 
+        </div>
+   </div>
+   <div style="padding-top:20px;">
+   		<footer><p style="color:black;">万普微信提供技术支持</p></footer>
+   </div>
+ </div>
+<script type="text/javascript">	
+    
+    //显示题目
+    function show_t(id){
+		var id = parseInt(id);
+		var max = $("#count").val();
+		if(id <= max){
+			if(id == max){
+				$("#a-tijiao-btn").show();
+				$("#skin"+id).hide();
+				$("#skin-ce").hide();
+			    $("#skin-next").hide();
+			    $("#skin"+(id+1)).show();
+			}
+			if(id < max){
+				if(id >= 1){
+			    	$("#skin-ce").show();	    	
+			    }
+			    $("#skin"+id).hide();
+			    $("#skin-next").attr("num", (id+1));
+			    $("#skin"+(id+1)).show();
+			}
+			
+		}
+		
+		if(id > max){
+			$("#ti_submit").show();
+		}
+	    
+	}   
+    
+	$(document).ready(function(){
+		var score = 0;
+		var score_data = new Array();	
+		var title = [];//选项
+		
+		$("input").click(function(){return false;});
+		
+		$("#skin-next").click(function(){
+			var id = parseInt($("#skin-next").attr("num"));
+			/*获取选择*/
+			var sid = $("#skin"+id).attr('sid');
+			
+			if($("#skin"+id).find("li").find("input").attr('type') == "checkbox" && $("#skin"+id).find("li").find("input").is(":checked")) {
+				var sec = '';
+				$("#skin"+id +" li").each(function(){
+					if($(this).find("input").attr('type') == "checkbox" && $(this).find("input").prop("checked")){
+						sec = sec + $(this).find("input").attr("sec");
+					}
+				});
+				title[sid] = sec;
+			}
+
+			if($("#skin"+id).find("li").find("input").attr('type') == "checkbox" && !($("#skin"+id).find("li").find("input").is(":checked"))) {
+				alert("请选择选项");
+				return false;
+			}
+			
+			if($("#skin"+id).find("li").find("input").attr('type') == "radio" && $("#skin"+id).find("li").find("input").is(":checked")) {
+				//var sec = $("#skin"+id).find("li").find("input");				
+				//alert(sec.prop('checked'));
+				$("#skin"+id + ' li').each(function(){			
+					if($(this).find("input").attr('type') == "radio" && $(this).find("input").prop("checked")){
+						var sec = $(this).find("input").attr("sec");
+						title[sid] = sec;
+					}
+				});				
+			}
+			
+			if($("#skin"+id).find("li").find("input").attr('type') == "radio" && !($("#skin"+id).find("li").find("input").is(":checked"))) {
+				alert("请选择选项");
+				return false;
+			}			
+			show_t(id);
+		});	
+		
+		$("#skin-ce").click(function(){
+			var id = parseInt($("#skin-next").attr("num"));
+			if(id == 2){
+				$("#skin-ce").hide();
+				$("#skin"+id).hide();
+				$("#skin-next").attr("num", (id-1));
+				//alert($("#skin-next").attr("num"));
+				$("#skin"+(id-1)).show();
+			} else {
+				$("#skin-ce").show();
+				$("#skin"+id).hide();
+				$("#skin-next").attr("num", (id-1));
+				$("#skin"+(id-1)).show();
+			}
+			
+		});
+		
+		$("li").click(function(){
+			if($(this).find("input").attr('type') == "checkbox" && $(this).find("input").is(":checked")){	
+	            $(this).find("input").attr("checked", false);
+	        }else{
+	            $(this).find("input").attr("checked", true);
+	        }
+			
+		});
+		
+		$("#a-tijiao-btn").click(function(){
+			
+			var id = $("#id").val();
+			var advice = $("#idea_info").val();
+			var name = $("#name").val();
+			var unio = $("#unio").val();
+			var phone = $("#phone").val();
+			var max = parseInt($("#count").val());
+
+			if(!name){
+				alert('请输入您的名字');
+				return false;
+			}
+			
+			if(!phone){
+				alert('请输入您的手机号码');
+				return false;
+			}
+			
+			if(!unio){
+				alert('请输入您的单位名字');
+				return false;
+			}
+			
+			var jsonstr = "[{";
+			for(var key in title) {
+				jsonstr += "\"" + key + "\""+ ":" + "\"" + title[key] + "\","; 				
+			}
+			
+			jsonstr += "\"id\""+ ":" + "\"" + id + "\",";
+			jsonstr += "\"advice\""+ ":" + "\"" + advice + "\",";
+			jsonstr += "\"name\""+ ":" + "\"" + name + "\",";
+			jsonstr += "\"unio\""+ ":" + "\"" + unio + "\",";
+			jsonstr += "\"phone\""+ ":" + "\"" + phone + "\"";
+			jsonstr += "}]";
+			var url = 'index.php?g=Wap&m=Test&a=addTest&token='+$("#token").val()+"&openid="+$("#openid").val();
+			$.post(url,{jsonstr:jsonstr},
+		            function(data){ 
+		                if(data.status == 100){
+		                	max = max+1;
+		                	var info1 = "";
+		                	info1 = info1 + data.min +"~" +data.max;
+		                	$("#result_score").text(data.score);
+		                	$("#result").text(info1);
+		                	$("#result_info").text(data.info);		                	
+		                	$("#skin"+max).hide();
+		                	$("#idea").hide();
+		                	$("#idea_info").hide();
+		                	$("#a-tijiao-btn").hide();
+		                	$("#result_info").show();
+		                	$("#result1").show();
+		                		
+		                }else if(data.status == 1 ){
+		                	alert(data.info);
+		                	/*setTimeout(function(){                       	
+		                        window.location.href = data.url;
+		                    },'1000');*/
+		                }
+		            },'json');
+		});
+		
+		
+	});
+</script>
+<script>
+
+</script>
+ </body>
+ </html>

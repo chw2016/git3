@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/style1-3.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/style_one.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <title>确认订单</title>
+    <style type="text/css" media="screen">
+        .shareBtn  { font-size: 14px; display: inline-block; background-color: #1AC11A; padding: 3px 7px; color: #FFF; margin-left: 10px; }
+    </style>
+</head>
+<body class="orders">
+    <div class="fixTop header headerBg">
+        <!--<div class="logo"></div>
+        <div class="title">/ 度假服务</div>-->
+        <div class="circle goBack">
+        </div>
+        <div class="titleRight">
+            确认订单
+        </div>
+    </div>
+    <div class="content">
+        <div class="ordersWrap boxShadow">
+            <div class="item ">
+                <div class="img">
+                    <img src="{weikucms:$product.url}" alt="" data-original="{weikucms:$product.url}"/>
+                </div>
+                <div class="goodsDetail">
+                    <div class="goodsTitle">
+                        {weikucms:$product.name}
+                    </div>
+                    <div class="priceBox">
+                        <div class="price RMB">{weikucms:$product.price}</div>
+                        <div class="count" style="visibility: hidden;">
+                            <span class="countBtn minus" price="{weikucms:$product.price}"></span>
+                            <span class="num" id="goodNum">1</span>
+                            <span class="countBtn plus" price="{weikucms:$product.price}" max="10"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="totalWrap">
+                <span class="expressFee">
+                    快递:<span class="num">免运费</span>
+                </span>
+                <span class="totalGoodsFee">
+                    合计:<span class="num RMB">{weikucms:$product.price}</span>
+                </span>
+            </div>
+        </div>
+		<div class="chooseBox cinemaChooseWrap boxShadow">
+            <div class="title">
+                我的社区
+            </div>
+            <span class="wrap yeChoose movieChoose">
+            <input type="text" readonly id="yuyue_sq" value="{weikucms:$rooms.project_item_name}">
+            </span>
+			</div>
+
+ <div class="chooseBox boxShadow">
+            <div class="title choose">
+                使用优惠券
+            </div>
+            <div class="wrap couponChoose">
+                <if condition="$yhj">
+                    <volist name="yhj" id="item">
+                    <div class="couponBox">
+                        <span class="text couponWrap">
+                       <span class="circle checkCircle" data-id="{weikucms:$item.id}"></span>
+                       <span class="textCoupon f14">
+                           可抵用{weikucms:$item.number}元
+                       </span>
+                    </span>
+                    </volist>
+                <else />
+                <div class="text noCoupon">
+                    暂时还没有优惠券哦~
+                </div>
+                </if>
+                </div>
+            </div>
+        </div>
+
+        <div class="chooseBox boxShadow">
+            <div class="title">
+                选择支付方式
+            </div>
+            <!--
+            <span class="wrap yeChoose yeChooseBody">
+                <span class="text yue">
+                    <span class="circle checkCircle"></span>
+                    <img src="{weikucms::STATICS}/common/img/ye.png" alt="" width="22"/>
+                    余额支付
+                    <span class="myMoney f12">可用:(<span class="num"><php>echo max(0,$userinfo['money'])</php></span>元)</span>
+                </span>
+                <span class="tipsText f12">
+                    勾选余额支付后，当余额不足时自动使用下列付款方式补足。
+                </span>
+            </span>
+            -->
+            <span class="wrap payTypeChoose">
+                <span class="text weChatPay payType" check="true">
+                    <span class="circle checkCircle on"></span>
+                    <img src="{weikucms::STATICS}/common/img/weChat.png" alt="" width="22"/>
+                    微信支付
+                </span>
+                <!--
+                <span class="text aLiPay payType">
+                    <span class="circle checkCircle"></span>
+                    <img src="{weikucms::STATICS}/common/img/alipay.png" alt="" width="22"/>
+                    支付宝支付
+                </span>
+                -->
+            </span>
+        </div>
+        <div class="shareBtn border-4 f18">
+            分享送优惠券
+        </div>
+        <div class="submitBtn border-4 f18">
+            立即支付
+        </div>
+    </div>
+    <form id="yypayform" method="post" action="http://szm.vanke.com/shop/pay/commpay.php" >
+        <input type="hidden" name="orderid" value="" id="orderid">
+        <input type="hidden" name="token" value="{weikucms:$token}" id="token">
+        <input type="hidden" name="openid" value="{weikucms:$openid}" id="openid">
+        <input type="hidden" name="title" value="4S预约服务" id="title">
+        <input type="hidden" name="money" value="0" id="totalPrice1">
+        <!--gid数据是没有用的-->
+        <input type="hidden" name="gid" value="{weikucms:$product.id}" id="gid">
+        <input type="hidden" name="product_id" value="{weikucms:$product.id}" id="product_id">
+        <input type="hidden" name="returnurl" value="{weikucms::U('Myuyue/wx_pay', array('token' => $token, 'openid' => $openid),true,false, true)}">
+    </form>
+    <script>
+        /*function cart(opt){
+            this.total = 0;
+            this.totalPrice = 0;
+            this.totalCeil = opt.totalCeil ? opt.totalCeil : null;
+        }*/
+
+        seajs.use("helper",function(h){
+            $(".submitBtn").submitBtn({
+                tipText : "正在支付···",
+                testData : {
+                    ".payTypeChoose" : {
+                        extend : function(){
+                            var length = $(".payTypeChoose").find(".payType").find(".checkCircle.on").length;
+                            if(length<1){
+                                this.errorCount++;
+                                return this.Error("请选择支付方式")
+                            }
+                            var goodNum = parseInt($('#goodNum').text());
+                            if(confirm('您确认要购买吗')){
+                                $.post("{weikucms::U('Myuyue/order')}", {
+                                    'product_id': "{weikucms:$product.id}",
+                                    'shequ'     : $('#yuyue_sq').val(),
+                                    'source'    : 1,
+                                    'yhj_id'    : $('.couponChoose .couponWrap .checkCircle.on').attr('data-id'),
+                                    'month'     :   "{weikucms:$month}",
+                                    'day'       : "{weikucms:$day}",
+                                    'number'    : goodNum
+                                }, function(data){
+                                    //处理
+                                    if(data.status == 0){
+                                        if(typeof(data.data.finished) != 'undefined' && data.data.finished){
+                                            //已经完成付款（使用优惠券，则直接跳转）
+                                            location.href = "{weikucms::U('Mtour/orderlist')}";
+                                        }else{
+                                            $("[name='money']").val(data.data.money);
+                                            $("[name='orderid']").val(data.data.orderid);
+                                            $('#yypayform').submit();
+                                        }
+                                    }else{
+                                        $('.submitBtn')
+                                            .removeClass('_submitting_')
+                                            .text('确定支付')
+                                            .css('opacity', 1);
+                                        return msg.alert(data.msg);
+                                    }
+                                }, 'json');
+                                return false;
+                            }else{
+                                this.errorCount++;
+                                return false;
+                            }
+
+
+
+                        }
+                    }
+                },
+                success : function(){
+
+                },
+                error : function(text){
+                    h.tips(text);
+                }
+            })
+            $(function(){
+                var $minus = $(".minus"),
+                        $plus  = $(".plus"),
+                        $totalPrice = $(".totalGoodsFee").find(".num");
+                $minus.touch(function(){
+                    var $i = $(this).parent().find(".num"),
+                            i = Number($(this).parent().find(".num").text()),
+                            price = $(this).attr("price").fixNum(),
+                            totalPrice = Number($totalPrice.text()) - price ;
+                    i--;
+                    if(i>=1){
+                        $i.text(i);
+                        $totalPrice.text(totalPrice);
+                    }else{
+                        h.tips("至少选择一个")
+                    }
+                });
+                $plus.touch(function(){
+                    var $i = $(this).parent().find(".num"),
+                            i = Number($(this).parent().find(".num").text()),
+                            max = Number($(this).attr("max")),
+                            price = $(this).attr("price").fixNum(),
+                            totalPrice = Number($totalPrice.text()) + price ;
+                    i++;
+                    if(i<=max){
+                        $i.text(i);
+                        $totalPrice.text(totalPrice);
+                    }else{
+                        h.tips("最多只能选"+max+"个")
+                    }
+                })
+
+            });
+        })
+    </script>
+    <script type="text/javascript" charset="utf-8">
+        var title   = '{weikucms:$product.name}';
+        var link    = "{weikucms::U('Myuyue/index', array('token' => 'a2a2cd98f8da2729ab743d64d0b08f0b'), true, false, true)}";
+        var imgUrl  = '{weikucms:$site_url}/{weikucms:$product.url}';
+        var dataUrl = '';
+        var desc    = '万科预约服务';
+        function success(type){
+            $('#mcover').trigger('touchstart');
+            $.post(
+                "{weikucms::U('sendYhj')}",
+                {"price":{weikucms:$product.price}},
+                function (data){
+                if(data.status == 0){
+                    msg.alert('分享成功，送优惠券一份哦~', 1000);
+                    //location.reload();
+                    $('#yyForm').submit();
+                }else{
+                    msg.alert(data.msg, 1000);
+                }
+            }, 'json');
+        }
+    </script>
+    <include file="./tpl/Wap/default/vanke/share.html" />
+    <script type="text/javascript" src="{weikucms::STATICS}/common/invite.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            $('.shareBtn').invite();
+        });
+    </script>
+    <form action="{weikucms::U('Myuyue/yy_order')}" id="yyForm" method="POST">
+        <input type="hidden" name="id" value="{weikucms:$id}">
+        <input type="hidden" name="month" value="{weikucms:$month}">
+        <input type="hidden" name="day" value="{weikucms:$day}">
+    </form>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Ynd/user',array('token'=>$token))}" >用户管理</a>
+            </li>
+
+
+            <!--<li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Ynd/user',array('token'=>$token))}" >返回</a>
+            </li>-->
+        </ul>
+    </div>
+</div>
+<style type="text/css">
+    .user_content{
+        width: 99%;
+        border: 1px solid #f1f3f3;
+        border-radius: 5px;
+        padding: 10px 0;
+        margin: 3px 0;
+        font-size: 14px;
+    }
+    .user_taitle{
+        font-size: 15px;
+        font-weight: 600;
+        padding: 5px 0;
+    }
+    .shenhebut{
+        padding: 3px 8px;
+        border-radius: 5px;
+        background-color: #2252B3;
+        color: #FFF;
+    }
+</style>
+<div style="background-color: #F0F5F5;padding: 10px 0;font-size: 13px;">用户管理 ->个人资料</div>
+<div>
+    <div class="user_content">
+        <div class="user_taitle">基本资料</div>
+        <div class="certer">
+            <div>
+                <span>微信昵称：</span>
+                <span>{weikucms:$wxuser['nickname']}</span>
+            </div>
+            <div>
+                <span>会员号：</span>
+                <span>{weikucms:$user['uname']}</span>
+            </div>
+            <div>
+                <span>性别：</span>
+                <span>
+                    <php>
+                        if($user['sex'] ==0){
+                            echo "男";
+                        }elseif($user['sex'] ==1){
+                            echo "女";
+                        }
+                    </php>
+                </span>
+            </div>
+            <div>
+                <span>人民币余额：</span>
+                <span>{weikucms:$user['money']}元</span>
+            </div>
+            <div>
+                <span>LQ币余额：</span>
+                <span>{weikucms:$user['LQ']}</span>
+            </div>
+            <div>
+                <span>CQ币余额：</span>
+                <span>{weikucms:$user['CQ']}</span>
+            </div>
+            <div>
+                <span>联系方式：</span>
+                <span>{weikucms:$user['phone']}</span>
+            </div>
+            <div>
+                <span>邮箱：</span>
+                <span>{weikucms:$user['email']}</span>
+            </div>
+            <div>
+                <span>地址：</span>
+                <span>{weikucms:$user['location_p']}{weikucms:$user['location_c']}</span>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="user_content">
+        <div class="user_taitle">银行卡基本资料</div>
+        <div class="certer">
+            <div>
+                <span>持卡人：</span>
+                <span>{weikucms:$bank['name']}</span>
+            </div>
+            <div>
+                <span>银行卡号：</span>
+                <span>{weikucms:$bank['bank_code']}</span>
+            </div>
+            <div>
+                <span>开户行：</span>
+                <span>{weikucms:$bank['bank_room']}</span>
+            </div>
+            <div>
+                <span>联系方式：</span>
+                <span>{weikucms:$bank['phone']}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="user_content">
+        <div class="user_taitle">收货地址</div>
+        <div class="certer">
+            <volist name="address" id="so" key="i">
+                <div>
+                    <span>地址{weikucms:$i}：</span>
+                    <span>{weikucms:$so.address}</span>
+
+                    <if condition="$so['type'] eq 2">
+                        <span style="margin-left: 65px">家庭</span>
+                        <else/>
+                        <span style="margin-left: 65px">公司</span>
+                    </if>
+
+                    <if condition="$so['sign'] eq 1">
+                        <span style="color: #ff2360;padding-left:5px; ">(默认)</span>
+                    </if>
+
+
+
+                </div>
+            </volist>
+        </div>
+    </div>
+
+
+    <div class="user_content">
+        <div class="user_taitle">权限审核</div>
+        <div class="certer">
+
+            <div>
+                <span>审核状态：</span>
+                <span>
+                    <if condition="$user['status'] eq -1">
+                        <span class="shenhebut" id="shenhebut">审核</span>
+                        <else/>
+                        <if condition="$user['status'] eq 1">
+                            审核通过，但未激活
+                            <elseif condition="$user['status'] eq 2"/>
+                            正式会员
+                        </if>
+                    </if>
+                </span>
+            </div>
+
+            <div style="padding: 20px 0;">
+                <span>用户类型：</span>
+                <span>
+                    <if condition="$user['type'] eq 0">
+                        普通用户
+                        <span class="shenhebut" id="shenhebuts" style="margin-left: 25px;">提升放单型</span>
+                        <else/>
+                        <if condition="$user['status'] eq 1">
+                            放单类型
+                        </if>
+                    </if>
+                </span>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#shenhebut').click(function(){
+                var url = "{weikucms::U('Ynd/shenheuser',array('token'=>$token,'id'=>$_GET['id']))}";
+                if(confirm("确定审核通过吗？")){
+                    $.post(url,{},function(rel){
+                        if(rel.status == 1){
+                            alert(rel.info);
+                            location.href="{weikucms::U('Ynd/seeuse',array('token'=>$token,'id'=>$_GET['id']))}";
+                        }else{
+                            alert(rel.info);
+                        }
+                    },'json')
+                }
+            })
+
+            $('#shenhebuts').click(function(){
+                var url = "{weikucms::U('Ynd/fangdanuser',array('token'=>$token,'id'=>$_GET['id']))}";
+                if(confirm("确定升级为放单用户吗？")){
+                    $.post(url,{},function(rel){
+                        if(rel.status == 1){
+                            alert(rel.info);
+                            location.href="{weikucms::U('Ynd/seeuse',array('token'=>$token,'id'=>$_GET['id']))}";
+                        }else{
+                            alert(rel.info);
+                            location.href="{weikucms::U('Ynd/seeuse',array('token'=>$token,'id'=>$_GET['id']))}";
+                        }
+                    },'json')
+                }
+            })
+        })
+
+    </script>

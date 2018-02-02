@@ -1,0 +1,78 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<div class="cLineB">
+    <h4 style="position:relative;">
+        查看预约人信息
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Microscene/index',array('token'=>$token,'pid'=>$pid))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+
+
+<style type="text/css">
+    .upimg{
+        margin-bottom: 15px;
+    }
+    .upimg img{
+        width: 80px;
+        height: 70px;
+    }
+</style>
+<div class="row" style="margin-left: 20px;margin-bottom: 20px;">
+    <a href="{weikucms::U('Microscene/exportexcel',array('token'=>$token,'pid'=>$pid))}" class="btn btn-primary export_excel">导出Excel</a>
+</div>
+
+<div class="msgWrap">
+
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th style="width: 200px;">性别</th>
+                <th>电话号码</th>
+                <th>营员</th>
+                <th>人数</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+                <tr>
+                    <td>{weikucms:$vo.id}</td>
+                    <td>{weikucms:$vo.name}</td>
+                    <td><if condition="$vo['sex'] eq 1">男<else/>女</if></td>
+                    <td>{weikucms:$vo.telphone}</td>
+                    <td><!--{weikucms:$vo.campers}--><if condition="$vo['campers'] eq 1">是<else/>否</if></td>
+                    <td>{weikucms:$vo.num}</td>
+
+                </tr>
+            </volist>
+
+            </tbody>
+        </table>
+
+        </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+<include file="Public:footer" />

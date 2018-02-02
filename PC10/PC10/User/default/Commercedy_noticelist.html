@@ -1,0 +1,91 @@
+<include file="Public:head"/>  
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="total">
+                <a href="{weikucms::U('Commercedy/postShow',array('token'=>$token))}" >帖子列表</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="financial">
+                <a href="{weikucms::U('Commercedy/popular',array('token'=>$token))}" >人气排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/stars',array('token'=>$token))}" >星级排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/noticelist',array('token'=>$token))}" >公告添加</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/setScore',array('token'=>$token))}" >积分设置</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/huati_index',array('token'=>$token))}" >话题管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+         <!--  <div class="cLineB">
+             <h4 class="left">微信优惠券活动设置 </h4>
+                
+             <div class="clr"></div>
+         </div> -->
+          <div class="cLine">
+            <div class="pageNavigator e_left">
+  <a href='{weikucms::U('Commercedy/notice',array('token'=>$token))}' title='新增公告' class='btn btn-primary'>新增公告</a>
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+          <div class="msgWrap">
+          <form method="post"  action="" id="info" >
+          <input name="delall"  type="hidden" value="" />
+           <input name="wxid"  type="hidden" value="" />
+            <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+					<TH>公告标题</TH>
+					<TH style="width:300px;">公告内容</TH>
+					<TH>发布时间</TH>
+					<TH class="norightborder">操作</TH>
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+                  <volist id="list" name="info">
+	                <TR>
+	                  <TD>{weikucms:$list.title}</TD>
+	                  <TD>{weikucms:$list.content|msubstr=###,0,250,'utf-8','...'}</TD> 
+					  <TD>{weikucms:$list.time|date='Y-m-d H:i:s',###}</TD>
+	                  <TD class="norightborder">
+						   <a class="btn btn-success btn-sm" href="index.php?g=User&m=Commercedy&a=fixed&id={weikucms:$list.id}&token={weikucms:$token}">查看公告</a>
+						   <a class="btn btn-success btn-sm" href="index.php?g=User&m=Commercedy&a=notice&id={weikucms:$list.id}&token={weikucms:$token}&type=1">编辑</a>
+						  <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Commercedy/delNotice',array('id'=>$list['id'],'token'=>$token))}')" href="#">删除</a>
+					  </TD>
+	                </TR>
+				</volist>
+              </TBODY>
+            </TABLE>
+           </form> 
+
+          </div>
+            
+ 
+          <div class="cLine">
+
+            <div class="clr"></div>
+          </div>
+        </div>
+		
+        <div>
+	        <ul class="pager">
+	            {weikucms:$page}
+	        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>团购</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+    </head>
+    <body>
+		<!--<header class="header textMiddle white h3">
+	    	<div class="setLeft icon-back"></div>
+	    	<span>团购</span>
+	    </header>-->
+		<section class="publicBox">
+            <include file="Store_lm:flash" />
+            <include file="Store_lm:nav" />
+		</section>
+		<!-- 团购列表 -->
+		<section class="grouponList">
+			<if condition="$list">
+            <volist name="list" id="vo">
+                <if condition="$i eq 1">
+                <div class='groupon new '>
+                    <else />
+                    <div class='groupon '>
+                    </if>
+                    <a href="{weikucms::U('Store_lm/product_tg',array('id'=>$vo['pid'],'openid'=>$openid,'token'=>$token,'tid'=>$vo['id']))}">
+                        <div class="img">
+                            <img src="{weikucms:$vo.logourl}" alt="" width="100%">
+                            <div class="imgDescribe myul">
+                                <div class="gTitle">
+                                    {weikucms:$vo.title|substr=0,33}
+                                </div>
+                                <div class="RMB gPrice">
+                                    {weikucms:$vo.price}
+                                </div>
+                                <div class="setRight oldGPrice">
+                                    <div>零售原价</div>
+                                    <div class="RMB">{weikucms:$vo.oprice}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gMoreInfo">
+						<span class="moreDescribe">
+							【包邮】 {weikucms:$vo.name}
+						</span>
+						<span class="setRight">
+							<span class="gSold">
+								已售{weikucms:$vo.mnum}
+							</span>
+							<span class="gAssessment">
+								评价{weikucms:$vo.cnum}条
+							</span>
+						</span>
+                        </div>
+                    </a>
+                </div>
+            </volist>
+            <else />
+                暂时没有团购商品
+                </if>
+            <volist name="olist" id="vo">
+			<div class="groupon off">
+				<a >
+					<div class="img">
+						<img src="{weikucms:$vo.logourl}" alt="" width="100%">
+						<div class="imgDescribe myul">
+							<div class="gTitle">
+                                {weikucms:$vo.title|substr=0,33}
+							</div>
+							<div class="RMB gPrice">
+                                {weikucms:$vo.price}
+							</div>
+							<div class="setRight oldGPrice">
+								<div>零售原价</div>
+								<div class="RMB">{weikucms:$vo.oprice}</div>
+							</div>
+						</div>
+					</div>
+					<div class="gMoreInfo">
+						<span class="moreDescribe">
+							【包邮】 {weikucms:$vo.name}
+						</span>
+						<span class="setRight">
+							<span class="gSold">
+								已售{weikucms:$vo.mnum}
+							</span>
+							<span class="gAssessment">
+								评价{weikucms:$vo.cnum}条
+							</span>						
+						</span>
+					</div>
+				</a>
+			</div>
+                </volist>
+		</section>	
+		<!-- 占位符 -->
+		<div style="height:52px;"></div>
+        <include file="Store_lm:foot" />
+    </body>
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+    <!-- 假如已经结束了的抢购不需要点击跳转了，就可以使用以下代码，如果还需要，就把下面的代码删了或注释掉。 -->
+    <script type="text/javascript">
+    	$(function(){    		
+    		$(".groupon.off a").click(function(e){
+    			e.preventDefault();
+    		})
+    	})
+    </script>
+</html>

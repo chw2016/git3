@@ -1,0 +1,88 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<div class="" >
+    <div class="cLineB">
+        <div class="cLine">
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <span class="red">{weikucms:$catData.name}</span>的分类属性设置
+
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                        <a href="{weikucms::U('Store_new/attributes',array('token' => $token, 'catid' => $catid))}" class="nohover">返回</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <form class="form" method="post" action="" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="{weikucms:$set.id}" />
+
+        <div class="msgWrap bgfc">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th>名称：</th>
+                    <td><input type="text" id="name" name="name" value="{weikucms:$set.name}" class="px" style="width:400px;" /></td>
+                </tr>
+                <tr>
+                    <th>属性值：</th>
+                    <td><input type="text" id="value" name="value" value="{weikucms:$set.value}" class="px" style="width:400px;" /></td>
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <input type="hidden" value="{weikucms::$catid}" name="catid" />
+                        <input type="hidden" value="{weikucms::$token}" name="token" />
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>
+<include file="Public:footer" />
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var value = $("#value").val();
+            var id = $("#id").val();
+
+
+
+
+
+            var posturl = "{weikucms::U('Store_new/attributeAdd',array('token'=>$token,'type'=>$type,'catid'=>$catid))}";
+            $.post(posturl,
+                    {name:name,value:value,id:id,catid:"{weikucms:$catid}",token:"{weikucms:$token}"},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>

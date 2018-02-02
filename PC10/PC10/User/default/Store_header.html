@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <!-- Apple devices fullscreen -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <!-- Apple devices fullscreen -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/index.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/bootstrap_min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/bootstrap_responsive_min.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/style.css" media="all">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/themes.css">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/style.css">
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/resource.css">
+        <script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+        <script type="text/javascript" src="{weikucms::RES}/js/wapwei/jQuery.js"></script>
+        <script type="text/javascript" src="{weikucms::RES}/js/wapwei/application.js"></script>
+        <script type="text/javascript" src="{weikucms::RES}/js/wapwei/bootstrap_min.js"></script>
+        <script type="text/javascript" src="{weikucms::RES}/js/wapwei/notifIt.js"></script>
+        <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+        <script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/notifIt.css" media="all">
+        <script src="{weikucms::STATICS}/jquery.form.js" type="text/javascript"></script>
+        <style type="text/css">
+            .dropdown-submenu:hover>.dropdown-menu{display:none}
+        </style>
+        <title>
+            {weikucms::C('site_title')} {weikucms::C('site_name')}
+        </title>
+        <!--[if IE 7]>
+            <link href="http://stc.weimob.com/css/font_awesome_ie7.css" rel="stylesheet"
+            />
+        <![endif]-->
+        <!--[if lte IE 8]>
+            <script language="javascript" type="text/javascript" src="http://stc.weimob.com/src/excanvas_min.js">
+            </script>
+        <![endif]-->
+        <script>
+            var SITEURL = '';
+        </script>
+        <script type="text/javascript">
+            function source_delete(url){
+                if(confirm('您确定删除此条记录')){
+                    $.post(url,{},function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+                }else{
+                    return;
+                }
+            }
+
+            function go_url(url){
+                $.post(url,{},function(data){
+                    if(data == null){
+                        window.location.href = url;
+                    }else{
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                            if(data.url != null){
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                setTimeout(function(){
+                                    window.location.href = url;
+                                },'1000');
+                            }
+                            return false;
+                        }
+                    }
+
+
+                },'json');
+           }
+
+            function lbsfunc(){
+                notif({
+                    width:'100%',
+                    msg: '亲,地理位置是智能回复的,只要设置商家地理信息就能自动回复的哦',
+                    type: "success"
+                });
+                return;
+            }
+        </script>
+    </head>
+    
+    <body>
+        <div id="navigation">
+            <div class="container-fluid">
+                <div>
+                    <a href="" target="_self" id="brand">
+                        <img src="{weikucms::RES}/images/logo_wapwei.png" style="width: 100px;">
+                    </a>
+
+                </div>
+
+                <div class="user">
+                    <ul class="icon-nav">
+                        <li class="dropdown sett" style="display:none;">
+                            <a href="http://www.v.wapwei.com/wechat/index/aid/116261#" class="dropdown-toggle" data-toggle="dropdown" title="系统设置">
+                                <i class="icon-cog">
+                                </i>
+                            </a>
+                        </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="dropdown">
+                        <a href="http://www.v.wapwei.com/wechat/index/aid/116261#" class="dropdown-toggle"
+                        data-toggle="dropdown" style="min-width:127px;">
+                            <nobr style="font-size: 13px">
+                                {weikucms:$Think.session.name}
+                                <img src="./upload/weixin_headimg/{weikucms:$Think.session.fakeid}.png"
+                                style="width: 50px; height: 50px" alt="{weikucms:$Think.session.name}">
+                                <span class="caret">
+                                </span>
+                            </nobr>
+                        </a>
+                        <ul class="dropdown-menu pull-right" style="min-width: 147px;">
+                            <li>
+                                <a href="{weikucms::U('Admin/Admin/logout')}" target="_self">
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="content">
+            <div id="left" style="overflow: hidden; outline: none;" tabindex="5000">
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/index',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>订单管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/sAll',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>所有订单</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/sToday',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>今日订单</span>
+                        </a>
+                    </div>
+                </div>               
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/manager',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>商品管理</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/goods',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>添加商品</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/classify',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>分类管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="{weikucms::U('Store/eClassify',array('token'=>$token,'id'=>session('wxid')))}" class="toggle-subnav">
+                            <span>添加分类</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="javascript:void(0);" class="toggle-subnav">
+                            <span>会员信息</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="javascript:void(0);" class="toggle-subnav">
+                            <span>查询会员</span>
+                        </a>
+                    </div>    
+                </div>
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="javascript:void(0);" class="toggle-subnav">
+                            <span> 数据魔方</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="javascript:void(0);" class="toggle-subnav">
+                            <span> 微信客服</span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+                <div class="subnav">
+                    <div class="subnav-title">
+                        <a href="javascript:void(0);" class="toggle-subnav">
+                            <i class="icon-angle-right">
+                            </i>
+                            <span>
+                                微信支付中心
+                            </span>
+                        </a>
+                    </div>
+                </div>
+			</div>

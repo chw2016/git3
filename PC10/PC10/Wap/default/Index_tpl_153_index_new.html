@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <include file="Public:weiweb"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_153/zepto.css"/>
+	<style type="text/css">
+	.list_ul {
+    margin: 10px;
+    overflow: hidden;
+    padding: 5px;
+    width: 260px;
+    margin: auto;
+    position: fixed;
+    bottom: 50px;
+    left: calc(50% - 129px);
+    padding-top: 150px;
+}
+	</style>
+
+<div class="body" style="background-image: url('{weikucms:$flash[0]["img"]}');">
+				<!--
+		用户分类管理
+        -->
+		<section>
+
+			<ul class="list_ul">
+				<volist name="info" id="vo">
+					<li>
+						
+						<a href="{weikucms::U('Wap/Index/lists',array('token'=>$token,'classid'=>$vo['id']))}">{weikucms:$vo.name}</a>
+													
+					</li>
+				</volist>
+						
+			</ul>
+		</section>
+	</div>       			
+			<footer style="overflow:visible;">
+				<div style="padding-bottom:50px;text-align:center;">
+											<span class="weimob-support" >©万普提供</span>
+				</div>
+			</footer>
+	<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	<script type="text/javascript">
+		$(function(){
+			var im_w = $('.body').width()+'px';
+			var im_h = $('.body').width()*8/5+'px';
+			$('body').css({'background-size':im_w+" "+im_h,'color':'#ccc'});
+		})
+	</script>
+	</body>
+</html>
+

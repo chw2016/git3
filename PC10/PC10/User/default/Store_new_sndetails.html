@@ -1,0 +1,61 @@
+<include file="Public:head"/>
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            {weikucms:$list[0]['snname']}详情
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/sn',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th >编号</th>
+
+                    <th >优惠券SN码</th>
+                    <th >兑换金额</th>
+                    <th >使用状态</th>
+
+                </tr>
+                </thead>
+               <volist name="list" id="vo" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$vo.sn}</td>
+                        <td>{weikucms:$vo.amount}</td>
+                        <td><if condition="$time lt $vo['starttime']">未使用</span>
+                            <elseif condition="($time egt $vo['starttime']) and (($time elt $vo['endtime']))"/>
+                            <if condition="$vo.status eq 0">使用中
+                                <elseif condition="$vo.status eq 1" /><span style="color:red">已使用
+                            </if>
+                            <else/><span style="color:red">已过期</span></if></td>
+
+                    </tr>
+                </volist>
+
+
+
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+    </head>
+    <body>
+
+      <div class='successInfo'>
+        <span class='bg'><img src="{weikucms::STATICS}/wapweiui/loan/image/right_white.png" /></span>
+        <span>恭喜，信息保存成功</span>
+          <p>(请前往个人中心设置安全密码跟银行卡号)</p>
+      </div>
+    	
+  <section>
+  <div class='zwf'></div>
+      <include file="Loan:foot"/>
+</section>
+</body>
+    <script>
+        $(document).ready(function(){
+            setTimeout(test,'3000');
+            function test(){
+               var url="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+               location.href=url;
+
+            }
+        });
+    </script>
+</html>

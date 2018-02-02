@@ -1,0 +1,93 @@
+<html><head>
+    <title>意见反馈</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<style>
+#assign{height:50%;width:92%;  margin-top: 10px;}
+.um-list li {
+  position: relative;
+  height: 150px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+  padding-left: 10px;
+  line-height: 44px;
+}
+::-webkit-input-placeholder {margin-top:25px;width:100px;height:50px;}
+
+</style>
+<body>
+
+<div class="space-20"></div>
+<header class="ucenter-t">
+    意见反馈</header>
+<section class="ucenter-main animated fadeInDown">
+    <div class="space-10"></div>
+    <ul class="um-list um-list-form">
+        <li><textarea id="assign" rows="6" cols="10" placeholder="请留下您的宝贵意见，我们定卧薪尝胆，不会辜负您的期望！"></textarea></li>
+    </ul>
+</section>
+<div class="space-20"></div>
+<aside class="account-submit">
+    <input type="hidden" id="waid" value="293">
+    <input type="hidden" id="uid" value="1141259">
+    <input type="hidden" id="role" value="MANAGER">
+    <input type="hidden" id="submitUrl" value="/Home/Center/change">
+    <button class="ui-btn-lg ui-btn-danger" type="button" id="sub">保存</button>
+</aside>
+<div class="space-20"></div>
+
+
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+$('#sub').click(function(){
+var assign = $('#assign').val();
+	if(assign==''){
+ 			$.dialog({
+	            content:'意见不能为空',
+	            button:['我知道了']
+	        });
+	        return false;
+ 	}
+	var el=$.loading({
+	        content:'正在提交'
+	    });
+	    var DATA={
+	    	assign:assign
+	    };
+	    $.post("{weikucms::U('a_check',array('token'=>$token,'openid'=>$openid))}",DATA,function(data){
+	    	if(data.status==1){
+	    		var DG=$.dialog({
+		            content:'恭喜您，提交成功！',
+		            button:['我知道了']
+		        });
+		        DG.on('dialog:action',function(e){
+			        document.location.href="{weikucms::U('center',array('token'=>$token,'openid'=>$openid))}";
+			    });
+	    	}else{
+	    		$.dialog({
+		            content:'网络错误，请重试',
+		            button:['我知道了']
+		        });
+	    	}
+	    	el.hide();
+	    },'json');
+	
+});
+
+
+
+</script>
+</body></html>

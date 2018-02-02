@@ -1,0 +1,279 @@
+<include file="Public:head" />
+
+<div class="cLineB">
+    <h4>
+        查看详情
+    </h4>
+</div>
+
+
+
+<!--复制开始-->
+
+<!--复制结束-->
+<div class="msgWrap">
+    <form class="form" method="post" action="{weikucms::U('Classify/insert')}"
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        车辆种类：
+                    </label>
+                </TH>
+                <TD>
+                    <php>
+                        switch($res['species']){
+                            case 1 : echo "轿车";break;
+                            case 2 : echo "SUV越野车";break;
+                            case 3 : echo "跑车";break;
+                            case 4 : echo "商务车";break;
+                            case 5 : echo "面包车";break;
+                            case 6 : echo "客车";break;
+                            case 7 : echo "货车";break;
+                            case 8 : echo "皮车";break;
+                            case 9 : echo "摩托车";break;
+                            default : echo "工程车";
+                    }
+                    </php>
+                </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        品牌车型：
+                    </label>
+                </TH>
+                <TD>
+                    {weikucms:$res.brand}
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        预售价格：
+                    </label>
+                </TH>
+                <TD>
+                   {weikucms:$res.presell}
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        初次上牌时间：
+                    </label>
+                </TH>
+                <TD>
+                    {weikucms:$res.first}
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+          
+            <TR>
+               <TH valign="top">
+                    <label for="keyword">
+                        行驶里程(万公里)：
+                    </label>
+                </TH>
+                <TD>
+                    {weikucms:$res.mileage}
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        车辆上牌时间：
+                    </label>
+                </TH>
+                <TD>
+                    {weikucms:$res.sptime}
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                 <TH valign="top">
+                    <label for="keyword">
+                       车身颜色：
+                    </label>
+                </TH>
+                <TD>
+                    <php>
+                        switch($res['carColor']){
+                            case 1 : echo "黑色";break;
+                            case 2 : echo "红色";break;
+                            case 3 : echo "蓝色";break;
+                            case 4 : echo "白色";break;
+                            case 5 : echo "绿色";break;
+                            case 6 : echo "黄色";break;
+                            case 7 : echo "银灰色";break;
+                            case 8 : echo "灰色";break;
+                            case 9 : echo "橙色";break;
+                            default : echo "其他";
+                    }
+                    </php>
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        原车用途：
+                    </label>
+                </TH>
+                <TD>
+                    <if condition="$res.caruser eq 0">非运营<else />运营</if>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        变速器：
+                    </label>
+                </TH>
+                <TD>
+                   <if condition="$res.speedM eq 1"> 手动
+                    <elseif condition="$res.speedM eq 2"/>自动
+                    <else /> 手自一体
+                    </if>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+           <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        燃油类型：
+                    </label>
+                </TH>
+                <TD>
+                    <php>
+                        switch($res['gasType']){
+                            case 1 : echo "汽油";break;
+                            case 2 : echo "柴油";break;
+                            case 3 : echo "电力";break;
+                            case 4 : echo "混合动力";break;
+                            default : echo "燃气";
+                    }
+                    </php>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        排放标准：
+                    </label>
+                </TH>
+                <TD>
+                    <php>
+                        switch($res['emission']){
+                            case 1 : echo "国一";break;
+                            case 2 : echo "国二";break;
+                            case 3 : echo "国三";break;
+                            case 4 : echo "国三+OBD";break;
+                            case 5 : echo "国四";break;
+                            case 6 : echo "国五+OBD";break;
+                            default : echo "未知";
+                    }
+                    </php>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        能否过户：
+                    </label>
+                </TH>
+                <TD>
+                    <if condition="$res.transfer eq 0">能<else />不能</if>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        能否按揭：
+                    </label>
+                </TH>
+                <TD>
+                    <if condition="$res.mortgage eq 0">能<else />不能</if>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        车况描述：
+                    </label>
+                </TH>
+                <TD>
+                    {weikucms:$res.carcondition}
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        图片：
+                    </label>
+                </TH>
+                <TD>
+                    <if condition="$res.imgurl eq ''">暂无图片<else /><img src="{weikucms:$res.imgurl}" style="max-width:300px;"/></if>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer" />

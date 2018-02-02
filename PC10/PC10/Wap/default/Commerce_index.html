@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style.css" />
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/samphay.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/works/GetLocation.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/api"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/getscript"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/convertor.js"></script>
+        <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/slider.css" />
+        <script src="tpl/Wap/default/common/commerce/js/yxMobileSlider.js"></script>
+
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+             var lng=0;
+             var lat=0;
+             var getLocation_Loading = 0;
+             var geolocation = new BMap.Geolocation();
+             geolocation.getCurrentPosition(function(r){
+	             if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+		             lng = r.point.lng;
+		             lat = r.point.lat;
+					 <if condition="$location neq 1">
+					 window.location.href="{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}"+"&lat="+lat+"&lng="+lng;
+	                 </if>
+				 }else{
+				 	 alert('地理位置获取失败了');
+				 }
+             });
+             /*
+			 wx.config({
+	            appId: '{weikucms:$signPackage.appId}',
+	            timestamp: {weikucms:$signPackage.timestamp},
+	            nonceStr: '{weikucms:$signPackage.nonceStr}',
+	            signature: '{weikucms:$signPackage.signature}',
+	            jsApiList: [
+					'getLocation'
+	            ]
+	        });
+
+			wx.ready(function () {
+	            wx.getLocation({
+	                success: function (res) {
+	                    lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+	                    lng = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+	                    var speed = res.speed; // 速度，以米/每秒计
+	                    var accuracy = res.accuracy; // 位置精度
+						
+	                }
+	            });
+			});
+			*/
+
+
+        </script>
+
+
+
+    </head>
+    <body class="light-gray-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg">
+		    	<div class="homeBox left">
+                    <div class="icon person locate  white" onclick="window.location.href='{weikucms::U('Commerce/location',array('token'=>$token,'openid'=>$openid))}'"></div>
+		    	</div>
+		    	<div class="titleBox middle">
+		    		<div class="white">{weikucms:$tpl['name']}</div>
+		    	</div>
+		    	<div class="PersonBox right myul">
+		    		<div class="icon person userCenter  white" onclick="window.location.href='{weikucms::U('MemberCenter/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+		    	</div>
+		    </div>
+
+
+			<!---->
+
+			<!-- Banner DIV -->
+			<div class="bannerBox">
+				<!--<div class="bannerBoxSwrap myul">-->
+                    <!--<volist name="flashes" id="flash">-->
+                        <!--<div class="banner light-yellow-bg" style="background-image: url('{weikucms:$flash.pic}')" onclick="window.location.href='{weikucms:$flash.url}'"></div>-->
+                    <!--</volist>-->
+				<!--</div>-->
+                <div class="slider">
+                    <ul>
+                        <volist name="flashes" id="flash">
+                           <li><a href="{weikucms:$flash.url}" target="_blank"><img src="{weikucms:$flash.pic}" ></a></li>
+                        </volist>
+                    </ul>
+                </div>
+                <script>
+                    $(".slider").yxMobileSlider({width:'100%',height:180,during:3000})
+                </script>
+
+            </div>
+			<!---->
+            <script>
+                function near(){
+                    var url="{weikucms::U('Commerce/nearUnion',array('token'=>$token,'openid'=>$openid))}"+"&lng={weikucms:$lng}&lat={weikucms:$lat}";
+                    location.href=url;
+                }
+                function tiaozhuan(obj){
+                    var typeid=$(obj).attr("typeid");
+                    var url="{weikucms::U('Commerce/ShopList',array('token'=>$token,'openid'=>$openid,'access'=>'classfy'))}"+"&typeid="+typeid+"&lng={weikucms:$lng}&lat={weikucms:$lat}";
+                    location.href=url;
+                }
+            </script>
+			<!-- menu4 DIV -->
+            <if condition="$top eq 1">
+			<div class="menuBox menu4">
+			<div class="menuTitle dark-gray">
+                <?php if($cname):?>
+                    当前位置:<span style="color:red;font-size:13px;padding-left:5px;">{weikucms:$cname}</span>
+                <?php endif;?>
+
+                <?php if(!$cname):?>
+               社区服务
+                <?php endif;?>
+            </div>
+				<div class="menuBoxSwrap">
+					<div class="myul">
+						<div class="menu msm " onclick="return near()">
+							<div class="item ism light-green-bg ban_circle fitbg" style="background-image: url('{weikucms::RES}/commerce/img/shequ.jpg')"></div>
+							<span>附近社区</span>
+						</div>
+						<div class="menu msm " onclick="return CUnion()">
+							<div class="item ism light-green-bg ban_circle fitbg" style="background-image: url('{weikucms::RES}/commerce/img/shouchang.jpg')"></div>
+							<span >收藏社区</span>
+						</div>
+                        <div class="menu msm " onclick="return FUnion();">
+                            <div class="item ism light-green-bg ban_circle fitbg" style="background-image: url('{weikucms::RES}/commerce/img/xinwenliulan.png')"></div>
+                            <span >新闻资讯</span>
+                        </div>
+                        <div class="menu msm " onclick="window.location.href='http://v.wapwei.com/index.php?g=Wap&m=Integralshop&a=index&token={weikucms:$token}&openid={weikucms:$openid}'">
+                            <div class="item ism light-green-bg ban_circle fitbg" style="background-image: url('{weikucms::RES}/commerce/img/jifenshop.jpg')"></div>
+                            <span >积分商城</span>
+                        </div>
+					</div>
+
+				</div>
+			</div>
+            </if>
+			<!---->
+            <if condition="$token eq 'b47234062c938be7ad20f0f82f0241a2'">
+                <!-- menu4 DIV -->
+                <div class="menuBox menu4">
+                <div class="menuTitle dark-gray">生活广场</div>
+                    <div class="menuBoxSwrap">
+                        <volist name="type" id="type">
+                            <div class="menu msm floatLeft" onclick="return tiaozhuan(this)" typeid="{weikucms:$type.id}">
+                                <div class="item ism light-green-bg circle fitbg" style="background-image: url('{weikucms:$type.pic}')"></div>
+                                <span>{weikucms:$type.name}</span>
+                            </div>
+                        </volist>
+                        <div class="clearFloat"></div>
+                    </div>
+                </div>
+
+                <div class="menuBox menu4">
+                <div class="menuTitle dark-gray">步行街</div>
+                    <div class="menuBoxSwrap">
+                        <volist name="type2" id="type">
+                            <div class="menu msm floatLeft" onclick="return tiaozhuan(this)" typeid="{weikucms:$type.id}">
+                                <div class="item ism light-green-bg circle fitbg" style="background-image: url('{weikucms:$type.pic}')"></div>
+                                <span>{weikucms:$type.name}</span>
+                            </div>
+                        </volist>
+                        <div class="clearFloat"></div>
+                    </div>
+                </div>
+            <else/>
+                <div class="menuBox menu4">
+                    <div class="menuTitle dark-gray">店铺类型</div>
+                    <div class="menuBoxSwrap">
+                        <volist name="type" id="type">
+                            <div class="menu msm floatLeft" onclick="return tiaozhuan(this)" typeid="{weikucms:$type.id}">
+                                <div class="item ism light-green-bg circle fitbg" style="background-image: url('{weikucms:$type.pic}')"></div>
+                                <span>{weikucms:$type.name}</span>
+                            </div>
+                        </volist>
+                        <div class="clearFloat"></div>
+                    </div>
+                </div>
+            </if>
+			<!---->
+
+			<!-- menu4 DIV -->
+            <if condition="$bot eq 1">
+			<div class="menuBox menu4">
+			<div class="menuTitle dark-gray">关于我们</div>
+				<div class="menuBoxSwrap">
+					<div class="myul">
+
+                        <volist name="nav" id="down" offset="0">
+                            <div class="menu msm " onclick="window.location.href='{weikucms:$down.linkurl}'">
+                                <div class="item ism light-green-bg circle fitbg" style="background-image: url('{weikucms:$down.pic}')"></div>
+                                <span>{weikucms:$down.name}</span>
+                            </div>
+                        </volist>
+
+					</div>
+					
+				</div>
+			</div>
+            </if>
+			<!---->
+
+
+
+    </body>
+    <script type="text/javascript">
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+    // window.onload = function(){
+    // 	square($(".menu"));
+   	// 	square($(".item"));
+    // }
+    square($(".mlarge"));
+   	square($(".ilarge"));
+   	square($(".msm"));
+	square($(".ism"));
+	$(function(){
+		//var h = $(document).height();
+		var h1 = $(".mlarge").height();
+		var h2 = parseInt($(".mlarge").css('margin-bottom'));
+		var h = h1+h2+5;
+		var l = $(".mlarge").length;
+		var ll = Math.ceil(l/3)
+		//alert(h);
+		$(".menuBox").eq(1).css('height', h*ll);
+	})
+
+	
+    </script>
+
+    <script>
+        function CUnion(){
+            var url="{weikucms::U('Commerce/CollectUnionList',array('token'=>$token,'openid'=>$openid))}"+"&lat="+lat+"&lng="+lng;
+            location.href=url;
+        }
+		
+		function FUnion(){
+            //var url="{weikucms::U('Commerce/findUnion',array('token'=>$token,'openid'=>$openid))}"+"&lat="+lat+"&lng="+lng;
+            var url = 'http://m.toutiao.com#';
+			location.href=url;
+        }
+		
+		
+    </script>
+</html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣店</title>
+<link href="{weikucms::RES}/laundry/css/footer.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/wap.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jscommon.js"></script>
+</head>
+<body>
+  <!-- 我的订单 -->
+    <div class="channel-nav three-nav">
+    <ul>
+      <!-- <li class=""><a href="mobile.php?act=module&status=0&from_user=oMWhZt_kOO8jsIU7RL3dw4QvfBYM&name=washing&do=wapmember&weid=5">待确认</a></li> -->
+      <li class=""><a href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}">服务中</a></li>
+      <li class="active"><a href="{weikucms::U('Laundry/doneorders',array('token'=>$token,'openid'=>$openid))}">已完成</a></li>
+    </ul>
+  </div>
+  <if condition="$key eq 1">
+  <div class="myOrder">
+        <div class="empty empty_order"><p class="txt">您还没有订单</p></div>
+  </div>
+  <else />
+  <div class="myOrder_list p10">
+      <ul>
+        <!-- 每个订单 -->
+        <volist name="orderList" id="vo">
+          <li class="order_item">
+            <!-- 订单信息 -->
+            <div class="item_list_number navlist">
+              <div class="item_list_box borderD list-titel">
+                <div class="list-titel_ico">订单信息：{weikucms:$vo.order_goods} × {weikucms:$vo.order_goods_num}</div>
+              </div>
+              <div class="list-item-main list-item ">
+                <div class="item_list_box borderD">订单编号：{weikucms:$vo.order_sn}</div>
+              </div>
+            </div>
+            <!-- 订单状态 -->
+            <div class="item_list_state">
+              <div class="item_list_box borderD">订单状态：<em>已完成</em></div>
+            </div>
+            <!-- 订单服务时段 -->
+            <div class="item_list_time">
+              <div class="item_list_box borderD">服务时段：{weikucms:$vo.washing_date}&nbsp;{weikucms:$vo.washing_time}</div>
+            </div>
+            <!-- 订单服务付款金额 -->
+            <div class="item_list_money navlist">
+              <div class="item_list_box list-titel">
+                <div class="list-titel_ico">应付金额：<em>{weikucms:$vo.order_price}元</em><em style="float:right;margin-right:25px;color:#65c3ed"><if condition="$vo['order_payment_status'] eq 0">现金支付<elseif condition="$vo['order_payment_status'] eq 1" />支付宝支付<elseif condition="$vo['order_payment_status'] eq 2" />微信支付<elseif condition="$vo['order_payment_status'] eq 3" />账户支付</if></em></div>
+              </div>
+              <div class="list-item-main list-item " style="display: none;">
+                <div class="item_list_box">
+                  <div class="selectBox  selectcont">
+                    <select class="select01" id="paytype_72858">
+                      <option value="2">微信支付</option>
+                      <!--<option value="4">POS刷卡</option>-->
+                      <option value="1" selected="selected">支付宝支付</option>
+                      <option value="3">现金支付</option>
+                    </select>
+                    <div class="Selected  selectBx"><if condition="$vo['order_payment_status'] eq 0">现金支付<elseif condition="$vo['order_payment_status'] eq 1" />支付宝支付<elseif condition="$vo['order_payment_status'] eq 2" />微信支付<elseif condition="$vo['order_payment_status'] eq 3" />账户支付</if></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </volist>
+        <!-- ／end每个订单 -->
+      </ul>
+    </div>
+  </if>
+      <!-- ／我的订单 -->
+    <footer>
+      <div class="fix-bottom"></div>
+      <div class="bottomBox">
+        <div class="indexMsg">
+          <div class="indexMenu">
+            <a href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}"><span class="home-index">首页</span></a>
+            <a href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}"><span class="Order-index-active">订单</span></a>
+            <a href="{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}"><span class="card-index">会员卡</span></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+  </html>

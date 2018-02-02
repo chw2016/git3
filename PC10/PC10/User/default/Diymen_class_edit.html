@@ -1,0 +1,277 @@
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/jQuery.js"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/bootstrap_min.css"
+      media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/themes.css">
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/notifIt.js"></script>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/notifIt.css" media="all">
+<script type="text/javascript">
+    $(function(){
+        $("#csubmit").click(function(){
+            var button = $(this);
+            var m_class = $("#class").val();
+            var id = $("#id").val();
+            var pid = $("#pid").val();
+            var title = $("#menu_title").val();
+            var keyword = $("#keyword").val();
+            var url = $("#url").val();
+            var auth_url = $("#auth_url").val();
+            var sort = $("#sort").val();
+            var is_show = $("input[name='is_show']:checked").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            if(url == ''){
+                if(keyword == ''){
+                    notif({
+                        msg: '关联关键词不能为空',
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }
+
+            $.post("{weikucms::U('Diymen/class_edit')}",
+                    {pid:pid,id:id,class:m_class,auth_url:auth_url,title:title,keyword:keyword,url:url,sort:sort,is_show:is_show,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                parent.window.location.reload()
+                            },'1000')
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<style>
+.action {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 1px 1px 3px #666666;
+    width: 359px;
+}
+#formid input{
+    height: 28px;
+    line-height: 28px;
+}
+td{text-align: -webkit-left;}
+</style>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>关联关键词和外链url可选填,当您填写完外链url后关联关键词将不能生效</li>
+        <li>排序为数字，数字越大顺序越靠前，如果不填写将按照添加时间顺序排序</li>
+    </ol>
+</div>
+	<form id="formid" action="" method="post" id="realinfo_form">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <input type="hidden" id="id" value="{weikucms:$show.id}" />
+		<tbody>
+		<tr bgcolor="#F1F1F1">
+			<td align="right" height="42" width="">父级菜单：</td>
+			<td>
+				<div class="mr15 l">
+				<select name="pid" id="pid">
+					<option  value="0">请选择菜单</option>
+					<volist id="class" name="class">
+						<option  value="{weikucms:$class.id}" <if condition="$show['pid'] eq $class['id']">selected</if>>{weikucms:$class.title}</option>
+					</volist>
+				</select>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right" height="42" width="">主菜单名称:</td>
+			<td>
+				<div class="mr15 l">
+				<input id="menu_title" class="txt" name="title" title="主菜单名称" value="{weikucms:$show.title}" type="text"></div>
+				<div class="system l"></div>
+			</td>
+		</tr>					
+		<tr bgcolor="#F1F1F1">
+			<td align="right" height="42" width="">关联关键词</td>
+			<td>
+				<div class="mr15 l">
+                    <!--<input id="keyword" class="txt" name="keyword" title="关联关键词" value="{weikucms:$show.keyword}" type="text">-->
+                    <select id="keyword" name="keyword" >
+                        <option value="请选择" >请选择</option>
+                        <optgroup label="========平台默认关键字======="></optgroup>
+                        <option value="首页" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微官网首页</option>
+                        <option value="地图"  <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>地图导航</option>
+                        <option value="微信墙" <if condition="$show['keyword'] eq $vo['keyword']">selected</if> >微信墙</option>
+                        <option value="摇一摇" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微信摇一摇</option>
+                        <option value="会员卡" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>会员中心</option>
+                        <option value="相册" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微相册</option>
+                        <option value="商城" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微商城</option>
+                        <option value="全景" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>全景展示</option>
+                        <option value="留言" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微留言</option>
+						<option value="微门店" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微门店</option>
+                        <option value="微订餐" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微订餐</option>
+                        <option value="团购" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微团购</option>
+                        <option value="WAPWEIKEFU" <if condition="$show['keyword'] eq $vo['keyword']">selected</if>>微信多客服</option>
+                        <optgroup label="========用户设定关键字======="></optgroup>
+                        <volist name="keywords" id="vo">
+                            <option value="{weikucms:$vo.keyword}" <if condition="$show['keyword'] eq $vo['keyword']">selected</if> >{weikucms:$vo.keyword}---------
+                            <if condition="$vo.module eq 'Img'">
+                                (类型)图文回复
+                            </if>
+                            <if condition="$vo.module eq 'Text'">
+                                (类型)文本回复
+                            </if>
+                            <if condition="$vo.module eq 'Voiceresponse'">
+                                (类型)语音回复
+                            </if>
+                            <if condition="$vo.module eq 'Product'">
+                                (类型)商品
+                            </if>
+                            <if condition="$vo.module eq 'Lottery'">
+                                (类型)幸运大转盘
+                            </if>
+                            <if condition="$vo.module eq 'Yuyue'">
+                                (类型)微预约
+                            </if>
+                            <if condition="$vo.module eq 'Wxq'">
+                                (类型)微信墙
+                            </if>
+                            <if condition="$vo.module eq 'Diaoyan'">
+                                (类型)微调研
+                            </if>
+                            <if condition="$vo.module eq 'Fang'">
+                                (类型)微房产
+                            </if>
+                            <if condition="$vo.module eq 'Medical'">
+                                (类型)微医疗
+                            </if>
+                            <if condition="$vo.module eq 'Reservation'">
+                                (类型)微美容
+                            </if>
+                            <if condition="$vo.module eq 'Xt'">
+                                (类型)微喜帖
+                            </if>
+                            <if condition="$vo.module eq 'Shipin'">
+                                (类型)微食品
+                            </if>
+                            <if condition="$vo.module eq 'Vote'">
+                                (类型)微投票
+                            </if>
+                            <if condition="$vo.module eq 'Vote'">
+                                (类型)微投票
+                            </if>
+							<if condition="$vo.module eq 'Usercenter'">
+                                (类型)用户中心
+                            </if>
+							<if condition="$vo.module eq 'Spread'">
+                                (类型)微推广
+                            </if>
+                            </option>
+                        </volist>
+                    </select>
+                </div>
+				<div class="system l"></div>
+			</td>
+		</tr>
+		<tr bgcolor="#F1F1F1">
+			<td align="right" height="42" width="">链接地址</td>
+			<td>
+				<div class="mr15 l"><input id="url" class="txt" name="url" title="链接地址" placeholder="链接地址或者电话、qq客服链接" value="{weikucms:$show.url}" type="text"></div>
+				<div class="system l"></div>
+			</td>
+		</tr>
+        <tr bgcolor="#F1F1F1">
+            <td align="right" height="42" width="">网页授权链接</td>
+            <td>
+
+                <div class="mr15 l">
+                    <div>
+
+                            <input id="auth_url" class="txt" name="auth_url"  value="{weikucms:$show.auth_url}" placeholder="网页授权url默认为空" type="text" readonly >
+
+
+
+                    </div>
+                <div><input type="radio" name="show" value="1" id="show" <if condition="$show['url'] neq null">checked="checked"</if> />开启授权&nbsp;<input type="radio" name="show" value="0" id="close" <if condition="$show['url'] eq null">checked="checked"</if> >关闭授权&nbsp;</div>
+                </div>
+                <script type="text/javascript">
+                    $(function(){
+                        var is_auth="{weikucms:$wxuserdata.is_auth}";
+                        var service_type_info = "{weikucms:$wxuserdata.service_type_info}";
+                        var verify_type_info = "{weikucms:$wxuserdata.verify_type_info}";
+                        var appid = "{weikucms:$wxuserdata.authorizer_appid}";
+                        if(service_type_info == 1 || verify_type_info < 0 ){
+                            $("#close").attr('checked','checked');
+                            $("#auth_url").val("");
+                        }
+                        $('#show').click(function(){
+                            if(is_auth == 1) {
+                                if((service_type_info == 2 ||  service_type_info == 1 || service_type_info == 0) && verify_type_info >=0 ){
+                                    var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/allindex/token/{weikucms:$token}/id/{weikucms:$show.id}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect"
+                                    $("#auth_url").val(url);
+                                }else{
+                                    notif({
+                                        msg: '您的帐号类型不支持授权接口',
+                                        type: "error"
+                                    });
+                                    $("#close").attr('checked','checked');
+                                    $("#auth_url").val("");
+                                    return false;
+                                }
+                            }else{
+                                var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$arr.appid}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/allindex/token/{weikucms:$token}/id/{weikucms:$show.id}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+                                $("#auth_url").val(url);
+                            }
+
+                        })
+
+                        $('#close').click(function(){
+                            $("#auth_url").val("");
+                        })
+
+                    })
+                </script>
+                <div class="system l"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" height="42" width=""></td>
+            <td>
+                <span style="font-size:12px;color:green;">1、一键拨号 格式如 tel:0755888888</span><br/>
+                <span style="font-size:12px;color:green;">2、在线QQ 进入shang.qq.com复制在线QQ客服链接即可</span><br/>
+            </td>
+        </tr>
+		<tr>
+			<td align="right" height="42">显示：　</td>
+			<td>
+				<div class="mr15 l">
+				<input type="radio" name="is_show" <if condition="$show['is_show'] eq 1">checked="checked"</if> value="1">是&nbsp;
+				<input type="radio" name="is_show" <if condition="$show['is_show'] eq 0">checked="checked"</if> value="0">否&nbsp;
+				</div>
+				<div class="system l"></div>
+			</td>
+		</tr>
+		<tr bgcolor="#F1F1F1">
+			<td align="right" height="42">排序:</td>
+			<td>
+				<div class="mr15 l">
+				<input id="sort" class="txt" name="sort" title="排序" value="{weikucms:$show.sort}" type="text"></div>
+				<div class="system l"></div>
+			</td>
+		</tr>
+		<tr>
+			<td height="42">&nbsp;</td>
+			<td>
+				<button class="btn btn-primary" type="button" name="submit" id="csubmit">提交</button>
+			</td>
+		</tr>
+			
+	</tbody></table>
+</form>

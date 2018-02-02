@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var UID = {weikucms:$cid};
+        UID = parseInt(UID);
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+
+    </script>
+    <style type="text/css">
+        .noAfter li:after {
+            content: "";
+            border: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>我要评价</div>
+<div>
+    <input type="hidden" value="{weikucms:$token}" id="token" />
+    <input type="hidden" value="{weikucms:$openid}" id="openid"/>
+</div>
+
+
+
+<div class="publicList wml65">
+    <ul  class="noAfter _boxcp">
+        <li id="staffDiv">
+            <div class="li-l">工号</div>
+            <div class="li-r">
+                <input id="staffID" value="{weikucms:$staff['staff_id']}" placeholder="" class="input" type="text" readonly="readonly"/>
+            </div>
+        </li>        
+    </ul>
+</div>
+<!--<div style="padding:0px 10px; "><span >提示：亲爱的客服您可以对任何人与自然车业连锁的员工做评价！</span></div>-->
+
+<div class="publicList wml65">
+    <ul  class="noAfter _boxcp">
+        <li id="nameDiv">
+            <div class="li-l">姓　　名</div>
+            <div class="li-r" style="background: rgb(236, 244, 236);">
+
+                <input id="name" value="{weikucms:$profile['car_username']}" placeholder="" class="input" type="text" />
+
+            </div>
+        </li> 
+		<li id="phoneDiv">
+            <div class="li-l">联系方式</div>
+            <div class="li-r">
+                <input id="phone" value="{weikucms:$profile['user_phone']}" placeholder="" class="input" type="tel">
+            </div>
+        </li> 
+		<li id="frameDiv">
+            <div class="li-l">车　架号</div>
+            <div class="li-r" style="background: rgb(236, 244, 236);">
+
+                <input id="car_frame" value="{weikucms:$profile['car_frame']}" placeholder="" class="input" type="text" />
+
+            </div>
+        </li>
+        <li id="evaluaDiv">
+            <div class="li-l">评　　价</div>
+            <div class="li-r" >
+                <input type="radio" name="evaluation" value="0" style="-webkit-appearance: radio;"/>满意
+                <input type="radio" name="evaluation" value="1" style="-webkit-appearance: radio;" />合格
+                <input type="radio" name="evaluation" value="2" style="-webkit-appearance: radio;"/>不满意
+            </div>
+        </li>
+
+    </ul>
+</div>
+<div class="textarea clearfix">
+<span style="font-size: 16px;">评价内容：</span>
+    <textarea name="reason" cols="" rows="" placeholder="写下您满意的地方是在哪里或者不满意的是在哪里，我们会认真查阅吸取！"></textarea>
+</div>
+<div style="width: 75%;margin: 0 auto;display: -webkit-box;display: flex;">
+	<div class="button clearfix" id="sure" style="width: 100px;"><a href="javascript:void(0);" onclick="submit();">确认</a></div>
+	<div class="button clearfix" style="width: 100px;"><a href="{weikucms::U('Wap/ServicestoreNew/evaluation',array('token'=>$token,'openid'=>$openid))}">取消</a></div>
+	<div style="clear:both"></div>
+    <input type="hidden" name="token" value="{weikucms:$token}">
+    <input type="hidden" name="openid" value="{weikucms:$openid}">
+</div>
+
+
+
+<script type="text/javascript">
+    function submit(){
+
+        staffID = $("#staffID").val();
+        if(staffID == ''){
+            alert("请输入您要评价的职工工号");
+            $("#staffID").focus();
+            return false;
+        }
+
+        ephone = $("#phone").val();
+        if( ephone == '' ){
+            alert("请填写正确的联系电话");
+            $("#phone").focus();
+            return false;
+        }
+        ename = $("#name").val();
+        token = $("input[name='token']").val();
+        openid = $("input[name='openid']").val();
+        eframe  = $("#car_frame").val();		
+		evaluation = $("input[name='evaluation']:checked").val();
+        evaluations = $("input[name='evaluation']:checked");
+        if(!evaluations.is(":checked")){
+            alert("请选择您的评价");
+            $("input[name='evaluation']:checked").focus();
+            return false;
+        }
+
+
+        reason = $("textarea[name='reason']").val();
+       /* if( reason == '' ){
+            alert("请填写反馈内容");
+            $("textarea[name='reason']").focus();
+            return false;
+        }*/
+        var param = {staffID:staffID, ephone:ephone, reason:reason, ename:ename, token:token, openid:openid, eframe:eframe,evaluation:evaluation};
+        
+        var url = 'index.php?g=Wap&m=ServicestoreNew&a=evaluation&token='+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,param,
+                function(data){
+                    if(data.status == 100){
+                        alert(data.info);
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 1 ){
+                        alert(data.info);
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 0){
+                        alert(data.info);
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }
+                },'json');
+    }
+</script>
+</body>
+</html>

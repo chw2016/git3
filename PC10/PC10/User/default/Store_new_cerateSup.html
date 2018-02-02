@@ -1,0 +1,118 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(document).ready(function(){
+        $(".pxf").attr("value","0");
+        $(".pxf").click(function(){
+            $(this).val($(this).attr("checked")?"1":"0");
+        })
+    })
+
+</script>
+
+<div class="cLineB">
+    <h4>添加小区</h4>
+</div>
+<div class="cLineB" id="uppict" style="display:none">
+</div>
+<div class="msgWrap">
+    <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+        <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <tbody>
+            <tr>
+                <th valign="top"><label for="username">供货商账号</label></th>
+                <td><input type="text" calss="pc" name="username" id="username" value="{weikucms:$supplier.username}"/></td>
+            </tr>
+            <tr>
+                <th valign="top"><label for="password">密码</label></th>
+                <td><input type="password" calss="pc" name="password" id="password" value="{weikucms:$supplier.password}"/></td>
+            </tr>
+            <tr>
+                <th valign="top"><label for="tel">联系方式</label></th>
+                <td><input type="tel" calss="pc" name="tel" id="tel" value="{weikucms:$supplier.tel}"/></td>
+            </tr>
+            <tr>
+                <th>
+                    <input type="hidden" name="id" id="id" value="{weikucms:$supplier.id}">
+                    <input type="hidden" name="token" id="token" value="{weikucms:$token}">
+                </th>
+                <td>
+                    <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                    <include file="./tpl/User/default/helper/list_btn.html"/>
+                    <div class="clr"></div></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("#id").val();
+        var token = $("#token").val();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var tel = $("#tel").val();
+        if(username == ''){
+            notif({
+                msg: '请填写供货商账号',
+                type: 'warning'
+            });
+            return false;
+        }
+        if(password == ''){
+            notif({
+                msg: '请填写密码',
+                type: 'warning'
+            });
+            return false;
+        }
+        if(tel == ''){
+            notif({
+                msg: '请填写联系电话',
+                type: 'warning'
+            });
+            return false;
+        }
+        var url = "{weikucms::U('Store_new/cerateSup',array('token'=>$token))}";
+
+        $.post(url,{
+                    id:id,
+                    token:token,
+                    username : username,
+                    password : password,
+                    tel : tel,
+                    __hash__: $("input[name='__hash__']").val()
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+
+    }
+</script>

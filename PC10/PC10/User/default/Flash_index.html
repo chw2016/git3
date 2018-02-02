@@ -1,0 +1,189 @@
+<include file="Public:head" />
+
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+            <li data-index="0" class="tab_nav first js_top "
+                data-id="total">
+                <a
+                    href="{weikucms::U('Home/set',array('token'=>$token))}"
+                    <if condition="$hover1 eq 1">class="hover"</if>
+                    >首页回复配置
+                </a>
+            </li>
+
+
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('Classify/index',array('token'=>$token))}"
+                    <if condition="$hover2 eq 1">class="hover"</if>
+                    >分类管理
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('Tmpls/index',array('token'=>$token))}"
+                    <if condition="$hover3 eq 1">class="hover"</if>
+                    >微官网风格
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('Flash/index',array('token'=>$token))}"
+                    <if condition="$hover4 eq 1">class="hover"</if>
+                    >轮播图
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub"
+                data-id="today">
+                <a
+                    href="{weikucms::U('speeddial/index',array('token'=>$token))}"
+                    <if condition="$hover5 eq 1">class="hover"</if>
+                    >导航与版权
+                </a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub yulan"
+                data-id="today">
+                <a href="#"
+                    onclick="window.open('{weikucms::U('Yulan/index',array('token'=>$token))}', 'bindweixin', 'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,title=0,height=1100,width=720');"
+                    class="nohover">微官网预览</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="cLineC" style="line-height: 32px;">
+    <a target="_self" href="{weikucms::U('Flash/add')}"
+        class="btn btn-primary">添加轮播图</a>
+</div>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>添加微官网轮播图展示精美微官网</li>
+
+    </ol>
+</div>
+<div class="msgWrap form">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>轮播图图片</th>
+                <th style="width: 100px;">排列次序</th>
+                <th style="width: 500px;">轮播图链接地址</th>
+                <th>轮播图位置</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <volist name="info" id="vo">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>
+                    <img src="{weikucms:$vo.img}"
+                        style="width: 150px; height: 75px; border-radius: 5px;" />
+                </td>
+                <td>{weikucms:$vo.sorts}</td>
+                <td>{weikucms:$vo.url}</td>
+                <td>
+                    <if condition="$vo.ifscroll eq 1">微官网首页<else />频道页</if>
+                </td>
+                <td>
+
+                    <a class="btn btn-success btn-sm" target="_self"
+                        href="{weikucms::U('Flash/edit',array('id'=>$vo['id']))}">编辑</a>
+                    <a class="btn btn-danger btn-sm" href="#"
+                        onclick="source_delete('{weikucms::U('Flash/del',array('id'=>$vo['id']))}')">删除</a>
+                </td>
+            </tr>
+            </volist>
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pager">{weikucms:$page}
+        </ul>
+    </div>
+    <table class="userinfoArea" style="margin: 20px 0 0 0;" border="0"
+        cellSpacing="0" cellPadding="0" width="100%">
+        <TR>
+            <TH valign="top">
+                <label for="keyword">轮播图位置选择</label>
+            </TH>
+            <TD>
+                <select name="scrollchoice" id="scrollchoice">
+                    <option value="1" selected>微官网首页</option>
+                    <option value="2">频道页</option>
+                </select>
+            </TD>
+            <TD>&nbsp;</TD>
+        </TR>
+        <TR>
+            <TH valign="top">
+                <label for="keyword">轮播图选择</label>
+            </TH>
+            <TD>
+                <select name="scrollid" id="scrollid">
+                    <volist name="info" id="so">
+                    <option value="{weikucms:$so.id}">{weikucms:$so.id}</option>
+                    </volist>
+                </select>
+            </TD>
+            <TD>&nbsp;</TD>
+        </TR>
+        <TR>
+            <TH></TH>
+            <TD>
+                <button type="button" id="bsubmit" name="button"
+                    class="btn btn-primary">保存</button>
+                <div class="clr"></div>
+            </TD>
+        </TR>
+    </table>
+</div>
+
+
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#bsubmit').bind('click',function(){
+            var scrollchoice = $('#scrollchoice').val();
+            var scrollid = $('#scrollid').val();
+              $.post("{weikucms::U('Flash/scrollChoice',array(token=>$token))}",
+                    {scrollchoice:scrollchoice,scrollid:scrollid},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        })
+    })
+</script>
+
+<include file="Public:footer" />

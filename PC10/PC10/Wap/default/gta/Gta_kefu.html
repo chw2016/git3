@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/a.css">
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/b.css">
+<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+
+<style>
+    .bb1{
+        color: rgb(26, 71, 19);
+    }
+</style>
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+    <div class="container itemdetail mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" onclick="javascript:history.go(-1);"></a></div>
+                    <div class="wx_bar_tit">我的分销</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt20">
+        <!--    <div class="col-md-12 p0">
+                <div class="my_nav">
+                    <ul>
+                        <li class="tiao"><a href="{weikucms::U('Usercenterzj/commission',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">分销详情</a></li>
+                        <li class="tiao"><a href="{weikucms::U('Usercenterzj/fengxia',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">分销产品</a></li>
+                                       </ul>
+                </div>
+            </div>-->
+            <div class="col-md-12 p0" style="display:none;">
+                <p class="alert bg-info p10 ml10 mr10" style="color:#333;">您目前推荐了： <strong style="color:red;">28</strong> 位朋友&nbsp;&nbsp;&nbsp;&nbsp;累积赚取推荐奖励：￥<strong style="color:red;">168.80</strong>元</p><!--说明：可以根据需要调用不同class，bg-primary蓝色背景、bg-success浅绿色背景、bg-info淡蓝色背景、bg-warning浅黄色背景、bg-danger浅红色背景-->
+                <div class="my_menu" style="display:none;">
+                    <ul>
+                        <li class="tiao"><a href="/personal.html"><span class="m7">会员中心</span></a></li>
+                        <li class="tiao update"><a href="/personal/order.html"><span class="m3">我的订单</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 tal p10">
+                <div class="panel panel-default" style="border:none;">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="{weikucms::U('kefu',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">我的客户</a></li>
+
+                        <li><a href="{weikucms::U('commission',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">推荐奖励</a></li>
+                    </ul>
+                    <div class="panel-body smallfont p5" style="border:1px #ddd solid; border-top:none;">
+                        <if condition="$showDetail">
+                        <table class="table table-hover table-condensed" style="margin-bottom:5px;">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>姓名</th>
+
+                                <th>加入时间</th>
+                            </tr>
+                            <volist name="list" id="vo">
+                            <tr style="border: 1px solid #eee; color: #ccc; font-size: 14px;font-weight: 100;">
+                                <th>{weikucms:$i}</th>
+                                <th>{weikucms:$vo.nickname}</th>
+
+                                <th>{weikucms:$vo.add_time}</th>
+                            </tr>
+                                </volist>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <else />
+                        <style type="text/css" media="screen">
+                            tr.rowList td div span { display: inline-block; min-width: 90px;}
+                            .none { display: none;}
+                        </style>
+                        <script type="text/javascript" charset="utf-8">
+                            $(document).on('touchstart', '.showList', function(){
+                                $(this).next('.rowList').toggle();
+                            });
+                        </script>
+                        <table class="table table-hover table-condensed" style="margin-bottom:5px;">
+                            <tbody>
+                            <tr class="showList">
+                                <td style="border: 0;">一级分销</td>
+                                <td style='text-align: right;border: 0;'><?php echo count($list[0]);?>人</td>
+                            </tr>
+                            <if condition="$list[0]">
+                            <tr class='rowList none'>
+                                <td colspan="2">
+                                    <div class="bb1">
+                                        <span>昵称</span>
+                                        <span>图像</span>
+                                        <span>绑定时间</span>
+                                    </div>
+
+                                <volist name="list[0]" id="vo">
+                                <div style="margin-bottom: 3px;">
+                                    <span>{weikucms:$vo.nickname}</span>
+                                    <span><img src="{weikucms:$vo.headimgurl}" width="30px;" /> </span>
+                                    <span>{weikucms:$vo.t_add_time|date='Y-m-d',###}</span>
+                                </div>
+                                    </volist>
+
+
+                                </td>
+                            </tr>
+
+                            </if>
+                            <tr class="showList">
+                                <td>二级分销</td>
+                                <td style='text-align: right;'><?php echo count($list[1]);?>人</td>
+                            </tr>
+                            <if condition="$list[1]">
+                                <tr class='rowList none'>
+                                    <td colspan="2">
+                                        <div class="bb1">
+                                            <span>昵称</span>
+                                            <span>图像</span>
+                                            <span>绑定时间</span>
+                                        </div>
+
+                                        <volist name="list[1]" id="vo">
+                                            <div style="margin-bottom: 3px;">
+                                                <span>{weikucms:$vo.nickname}</span>
+                                                <span><img src="{weikucms:$vo.headimgurl}" width="30px;" /> </span>
+                                                <span>{weikucms:$vo.t_add_time|date='Y-m-d',###}</span>
+                                            </div>
+                                        </volist>
+
+
+                                    </td>
+                                </tr>
+
+                            </if>
+                            <!--<tr class="showList">
+                                <td>三级分销</td>
+                                <td style='text-align: right;'><?php echo count($list[2]);?>人</td>
+                            </tr>
+                            <if condition="$list[2]">
+                                <tr class='rowList none'>
+                                    <td colspan="2">
+                                        <div class="bb1">
+                                            <span>昵称</span>
+                                            <span>图像</span>
+                                            <span>绑定时间</span>
+                                        </div>
+
+                                        <volist name="list[2]" id="vo">
+                                            <div style="margin-bottom: 3px;">
+                                                <span>{weikucms:$vo.nickname}</span>
+                                                <span><img src="{weikucms:$vo.headimgurl}" width="30px;" /> </span>
+                                                <span>{weikucms:$vo.t_add_time|date='Y-m-d',###}</span>
+                                            </div>
+                                        </volist>
+
+
+                                    </td>
+                                </tr>
+
+                            </if>-->
+                            </tbody>
+
+                        </table>
+                        </if>
+                        <div class="wap_page" style="text-align:center;">
+                        </div>
+                        <p class="bg-success p10" style="color:#333;">*说明：以上数据是您分亨给您的小伙伴,您的小伙伴点击分亨链接,如果他是没有上级的情况,他就会成功你的下级</p><!--说明：可以根据需要调用不同class，bg-primary蓝色背景、bg-success浅绿色背景、bg-info淡蓝色背景、bg-warning浅黄色背景、bg-danger浅红色背景-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footnav mini-innner">
+        <p style="  margin-top: 6px;">
+            <if condition="$d_nickname">
+            您的上级分销商微信昵称是：{weikucms:$d_nickname}
+                <else />
+                您暂时没有上级分销商
+                </if>
+        </p>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

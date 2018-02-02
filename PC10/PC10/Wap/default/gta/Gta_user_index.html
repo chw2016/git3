@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="utf-8" />
+        <title>{weikucms:$tpl.name}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <style>
+            .user_top_size2{
+                color: #fff;
+                position: absolute;
+                bottom: 10px;
+                left: 15px;
+                font-size: 12px;
+            }
+            .user_top_size2 p{
+                line-height: 30px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function(){
+               var userinfo = "{weikucms:$userinfo['phone']}";
+                if(!userinfo){
+                    alert('您现在还不是会员，请注册！');
+                    location.href = "{weikucms::U('user_my_info',array('token'=>$token,'openid'=>$openid))}";
+                }
+            })
+        </script>
+        </head>
+        <header>
+            <a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo">
+            </a>
+            <h1 id="h1_title" style="color: #FFFFFF;">
+                个人中心
+            </h1>
+            <div>
+                &nbsp;
+            </div>
+        </header>
+        <!--内容模块-->
+        <section class="contant  " >
+            <div class="user_top">
+                <div class="user_top_Integral">
+                    <div class="user_top_size2">
+                        <p>
+                            理财：{weikucms:$t_money}
+                        </p>
+                        <p>
+                            收益：{weikucms:$s_money}
+                        </p>
+
+                    </div>
+                    <div class="user_top_size">
+                        <p>
+                            会员等级：{weikucms:$info.dengji}
+                        </p>
+                        <p>
+                            推荐奖励：{weikucms:$info.jifeng}
+                        </p>
+                        <p>
+                            余额：{weikucms:$info.money}
+                        </p>
+                    </div>
+                </div>
+                <div class="yuan">
+                    <img src="{weikucms:$info.headimgurl}" />
+                </div>
+                <div class="user_name">
+                    {weikucms:$info.nickname}
+                </div>
+            </div>
+            <div class="user_nav">
+                <ul>
+                    <li onclick="location.href='{weikucms::U('user_orderlist',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+                        <p>
+                            我的订单
+                        </p>
+                        <p>
+                            {weikucms:$num}
+                        </p>
+                    </li>
+                    <li onclick="location.href='{weikucms::U('kefu',array('token'=>$token,'openid'=>$openid))}'">
+                        <p>
+                            我的客户
+                        </p>
+                        <p>
+                            {weikucms:$kefu_num}
+                        </p>
+                    </li>
+                    <li style="border:0" onclick="location.href='{weikucms::U('commission',array('token'=>$token,'openid'=>$openid))}'">
+                        <p>
+                            推荐奖励
+                        </p>
+                        <p>
+                            {weikucms:$info.jifeng}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="user_footer clearfix">
+                <span class="shadow_arrow" style="color: #5f93b5;" onclick="location.href='{weikucms::U('user_my_info',array('token'=>$token,'openid'=>$openid))}'">
+                    <if condition="$phone">个人资料<else />会员注册</if>
+                </span>
+                <span class="shadow_arrow" style="color: #97abc8;" onclick="location.href='{weikucms::U('code',array('token'=>$token,'openid'=>$openid))}'">
+                    专属二维码
+                </span>
+            </div>
+            <div class="user_footer clearfix" style="margin-top: 10px;">
+                <span class="shadow_arrow" style="color: #82b258;" onclick="location.href='{weikucms::U('user_chongzhi',array('token'=>$token,'openid'=>$openid))}'">
+                    会员充值
+                </span>
+                <span class="shadow_arrow" style="color: #d9685b;" onclick="location.href='{weikucms::U('user_orderlist',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+                    我的订单
+                </span>
+            </div>
+            <div class="user_footer clearfix" style="margin-top: 10px;">
+                <span class="shadow_arrow" style="color: #7fb2bf;" onclick="location.href='{weikucms::U('user_tixian',array('token'=>$token,'openid'=>$openid))}'">
+                    提现
+                </span>
+            </div>
+        </section>
+        </body>
+
+</html>

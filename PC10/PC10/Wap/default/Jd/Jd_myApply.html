@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>我的顾问申请</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+</head>
+<body>
+<empty name="apply">
+<div style="width:100%; height:20px; line-height:20px; text-align:center; margin-top:20px;">暂无申请记录。</div>
+</empty>
+
+<style>
+.day2 {
+color: green;
+font-size: 12px;
+display: initial;
+line-height: 25px;
+position:relative;
+left:130px;
+}
+
+
+</style>
+<ul class="lica_ul">
+    <foreach name="apply" item="v">
+        <a href="javascript: void(0)" class="goDetail" data-href="{weikucms::U('Jd/abs',array('token'=>$token,'yid'=>$v['id'],'openid'=>$openid))}">
+            <li style="margin-bottom: 10px;">
+                <div class="img">
+                    <img style="height:88%;" src="{weikucms:$v.head}">
+                </div>
+                <div style="width:70%;height:28px;margin-left:10px;float:left;position: relative;">
+                    <span class="name" style="position: absolute; top: -4px;">{weikucms:$v.name|mb_substr=###,0,4,'utf-8'}</span>
+                    <if condition="$v.status eq 0">
+                    <span class="day1">待处理</span>
+                    <else/>
+                    <span class="fr"><span class="day2">已处理</span><span href="#" class="day3" aid="{weikucms:$v.aid}" oid="{weikucms:$v.oid}">评价</span></span>
+                    </if>
+                </div>
+                <div class="day4">{weikucms:$v.time|date='Y-m-d',###}</div>
+                <div class="bz" style="padding-left: 10px;"><font style="font-size: 14px;">{weikucms:$v.xm|mb_substr=###,0,6,'utf-8'}</font>/ 行业：{weikucms:$v.hy|mb_substr=###,0,4,'utf-8'}</div>
+            </li>
+          <!--   <input type="hidden" id="yid" value="<?php echo $v['id']; ?>" /> -->
+        </a>
+    </foreach>
+
+</ul>
+
+<div style="height:170px;float:left;"></div>
+<div class="foot">
+
+    <span onclick='location.href="{weikucms::U('lists',get1(state,1,token,openid))}"'  >我要申请</span>
+</div>
+	<!--显示区域-->
+	<div class="Mask">
+		<div class="body_class" style="margin-top: 5%;" >
+			<div class="body_classone"><textarea oid="" aid="" type="text" name="textarea1" value="" placeholder="请发表评论,建议字数200以内"/></textarea></div>
+		   <div class="Mask_btn">提交</div>
+		</div>
+	</div>
+
+<script>
+	$(function(){
+        $('.goDetail').click(function(){
+            location.href = $(this).attr('data-href');
+        });
+       $(".day3").click(function(event) {
+            event.stopPropagation();
+            $(".body_class").css('display', 'block');
+            $('.Mask').addClass('is-visible');
+            $("[name=textarea1]").attr('aid',$(this).attr('aid'));
+            $("[name=textarea1]").attr('oid',$(this).attr('oid'));
+        });
+        $(".Mask_btn").click(function(event) {
+            $(".body_class").css('display', 'none');
+            if( $(event.target).is('.Mask') ||$(event.target).is('.Mask_btn')) {
+				event.preventDefault();
+				$(".Mask").removeClass('is-visible');	
+			}
+            var content=$("[name=textarea1]").val();
+            var oid=$("[name=textarea1]").attr('oid');
+           
+            var aid=$("[name=textarea1]").attr('aid');
+           
+            var url="{weikucms::U('talk',array('token'=>session('token'),'openid'=>$openid))}";
+            var type=1;
+            //异步请求
+            $.post(url,{oid:oid,aid:aid,content:content,type:type},function(data){
+                if(data.status){
+                    notif({msg:data.msg,type:'success',position:'center'});                
+                    msg.alert(data.msg);
+                }else{
+                    msg.alert(data.msg);
+                    if(data.url){
+                        setTimeout(function(){window.location=data.url},1200);//未登录操作时候的错误处理机制 
+                    }
+                }
+            },'json'); 
+        });
+	});
+</script>
+</body>
+</html>

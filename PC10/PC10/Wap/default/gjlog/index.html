@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/calendar.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/default.css">
+
+	<script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+	<script src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/TouchSlide.1.1.source.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/lanrenzhijia.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/gjlog/js/garden.js"></script>
+        <script type="text/javascript">
+            var deot = [
+                    <volist name="pdl" id="pdl">
+                        "{weikucms:$pdl}",
+                    </volist>
+            ];
+
+        </script>
+	<title>柑橘管理日历</title>
+        <style>
+            .hasWrited {
+                background-color: rgb(170, 253, 80);
+                color: #FD2222;
+            }
+            .isToday { color: rgb(255, 255, 255); background: rgb(251, 164, 76); }
+            .isToday font { color: rgb(255, 255, 255); }
+            .everyRow {   width: 30px; }
+        </style>
+    </head>
+    <body class="bj" onload="initial();">
+   	<!--  头部 -->
+   	<div class="header">
+ 		<!-- <img src="{weikucms::STATICS}/wapweiui/gjlog/images/guoyuan.png" alt=""> -->
+ 		<div id="slideBox" class="slideBox line-bottom">
+	                <div class="bd">
+	                    <div class="tempWrap carousel">
+	                    <ul  class="carousel-ul">
+                            <volist name="im" id="im">
+	                            <li class="carousel-ul-li">
+	                                <a class="pic" href="#"><img src="{weikucms:$im[pic]}" style="height:180px; width:100%"></a>
+	                            </li>
+
+                                </volist>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="hd">
+	                    <ul><li class="">1</li><li class="">2</li><li class="">3</li></ul>
+	                </div>
+	            </div>
+   	</div>
+	<!-- tab -->
+   	<div class="tab-calendar">
+   		<ul class="tab-calendar-ul">
+   			<li class="tab-calendar-ul-li" onclick="window.location.href = '{weikucms::U('Gjlog/tianqi',array('token'=>$token,'openid'=>$openid,'id'=>$list['id']))}'">
+   				<p class="temperature">27°C/29°C</p>
+   				<p class="weather">雷阵雨</p>
+   				<div  id="weather">
+   					
+   				</div>
+   			</li>
+   			<li class="tab-calendar-ul-li" onclick="window.location.href = '{weikucms::U('Gjlog/jieqi',array('token'=>$token,'openid'=>$openid,'id'=>$list['id']))}'">
+   				<p>离（{weikucms:$jq.jq}）</p>
+                <p><span>还有{weikucms:$jt}</span>天<span class="terms"> &nbsp;</span></p>
+   				<div class="icon-calendar2">
+   					
+   				</div>
+   			</li>		
+   		</ul>
+   	</div>
+   	<!-- 日历区域 -->
+   	<form name="CLD" class="content">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="datetable">
+		    <thead>
+		    <tr>
+		      <td colSpan=7><span>公历</span>
+		        <select name="SY" onchange="changeCld();" style="font-SIZE: 9pt">
+		        <script>
+		            for(i=1900;i<2050;i++) document.write('<option>'+i);
+		        </script>
+		         </select><span>年</span>
+		         <select name="SM" onchange="changeCld();" style="font-SIZE: 9pt">
+		        <script>
+		            for(i=1;i<13;i++) document.write('<option>'+i);
+		        </script>
+		        </select><span>月</span>
+		        </font><span id="GZ"></span>
+		      </td>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <tr style="background:#eee;">
+		      <td width="54">日</td>
+		      <td width="54">一</td>
+		      <td width="54">二</td>
+		      <td width="54">三</td>
+		      <td width="54">四</td>
+		      <td width="54">五</td>
+		      <td width="54">六</td>
+		    </tr>            
+		    <script type="text/javascript">
+                function transdate(endTime){
+                    var date=new Date();
+                    date.setFullYear(endTime.substring(0,4));
+                    date.setMonth(endTime.substring(5,7)-1);
+                    date.setDate(endTime.substring(8,10));
+                    date.setHours(endTime.substring(11,13));
+                    date.setMinutes(endTime.substring(14,16));
+                    date.setSeconds(endTime.substring(17,19));
+                    return Date.parse(date)/1000;
+                }
+		    var gNum;
+		    for(i=0;i<6;i++) {
+		       document.write('<tr align="center">');
+		       for(j=0;j<7;j++) {
+		          gNum = i*7+j;
+		          document.write('<td class="everyRow" id="GD' + gNum +'"><font id="SD' + gNum +'" size=2 face="Arial Black"');
+		          if(j == 0) document.write('color="red"');
+		          if(j == 6) document.write('color="#000080"');
+		          document.write('></font><br/><font id="LD' + gNum + '" size=2 style="font-size:9pt"></font></td>');
+		       }
+		       document.write('</tr>');
+		    }
+
+               $('.everyRow').touch(function(){
+                    var sy = $("[name=SY]").val();
+                    var sm = $("[name=SM]").val();
+                    var gd = $(this).find('font:first').text();      /*这是拿到当前节点下面的*/
+                              var huoqu =  sy+"-"+ sm +"-"+ gd;         /*获取点击传过来的时间*/
+
+                              var d = new Date();                        //获取当前日期
+                              var str = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                         // /*把日期转换为时间戳*/
+                                     var  dangq = new Date(huoqu).getTime();
+                                     var  houqu = new Date(str).getTime();
+                           if(dangq > houqu){
+                               msg.alert('还没有到'+ gd +'号！');
+                            }else{
+                                 location.href="{weikucms::U('Gjlog/loglist',array('token'=>$token,'openid'=>$openid,))}"+"&datetime="+ huoqu + "&dang="+ str;
+                            }
+
+
+               })
+
+                 </script>
+		     </tbody>
+		</table>
+    </form>
+
+
+
+
+
+
+
+	<div class="bottom">
+		<div class="bootm-main">
+			<div class="bootm-main-title">宜</div>
+			<div class="bootm-main-nav">
+				<ul class="bootm-main-nav-ul">
+                    <foreach name="yi" item="voo">
+					<li class="bootm-main-nav-ul-li">{weikucms:$voo}</li>
+                    </foreach>
+				</ul>
+			</div>
+		</div>
+		<div class="bottom-content">
+			<p class="bootm-content-text">柑橘提醒：</p>
+			<p class="bootm-content-size"><volist name="user" id="ts">{weikucms:$ts[tip_info]}</volist></p>
+		</div>
+		<div class="bootm-main">
+			<div class="bootm-main-title coloreb3a3a">忌</div>
+			<div class="bootm-main-nav">
+				<ul class="bootm-main-nav-ul">
+                    <foreach name="ji" item="vo">
+					<li class="bootm-main-nav-ul-li">{weikucms:$vo}</li>
+                        </foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		    TouchSlide({
+		        slideCell:"#slideBox",
+		        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		        mainCell:".bd ul",
+		        effect:"leftLoop",
+		        autoPage:true,//自动分页
+		        autoPlay:true //自动播放
+		    });
+		</script>
+
+    <script type="text/javascript">
+        function wxready(){
+            wx.hideMenuItems({
+                menuList: ["menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook"]
+            });
+        }
+    </script>
+    </body>
+</html>

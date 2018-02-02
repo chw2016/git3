@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>产品全库</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<link type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/style.css" rel="stylesheet"/>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.event.drag-1.5.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.touchSlider.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+
+			/*$(".main_visual").hover(function(){
+				$("#btn_prev,#btn_next").fadeIn()
+			},function(){
+				$("#btn_prev,#btn_next").fadeOut()
+			});*/
+			
+			$dragBln = false;
+			
+			$(".main_image").touchSlider({
+				flexible : true,
+				speed : 200,
+				btn_prev : $("#btn_prev"),
+				btn_next : $("#btn_next"),
+				paging : $(".flicking_con a"),
+				counter : function (e){
+					$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+				}
+			});
+			
+			$(".main_image").bind("mousedown", function() {
+				$dragBln = false;
+			});
+			
+			$(".main_image").bind("dragstart", function() {
+				$dragBln = true;
+			});
+			
+			$(".main_image a").click(function(){
+				if($dragBln) {
+					return false;
+				}
+			});
+			
+			timer = setInterval(function(){
+				$("#btn_next").click();
+			}, 5000);
+			
+			$(".main_visual").hover(function(){
+				clearInterval(timer);
+			},function(){
+				timer = setInterval(function(){
+					$("#btn_next").click();
+				},5000);
+			});
+			
+			$(".main_image").bind("touchstart",function(){
+				clearInterval(timer);
+			}).bind("touchend", function(){
+				timer = setInterval(function(){
+					$("#btn_next").click();
+				}, 5000);
+			});
+			
+		});
+	</script>
+    </head>
+    <body>
+		<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<header id="yanxiang-interaction">
+    		<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/all_product.jpg" />
+    	</header>
+    	<!-- 轮播图 -->
+    	<div class="main_visual">
+			<!--<div class="flicking_con">
+				<volist name="info" id="vo">
+					<a href="#">{weikucms:$i}</a>
+				</volist>
+			</div>-->
+			<div class="main_image">
+				<ul>
+					<volist name="info" id="vo">
+						<a href="{weikucms:$vo.link_url}">
+							<li>
+								<img src="{weikucms:$vo.img_path}" />
+							</li>
+						</a>
+					</volist>
+				</ul>
+				<a href="javascript:;" id="btn_prev"></a>
+				<a href="javascript:;" id="btn_next"></a>
+			</div>
+		</div>
+		<!-- 下面纯色 -->
+		<div class="productSearch">
+			<div class="search">
+				<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/fangdajing.png" width="30px" height="29px" />
+				<div>产品检索</div>
+			</div>
+    		<div class="active">
+	    		<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/talk.png" width="34px" height="29px" />
+	    		<div>产品列表</div>
+    		</div>
+    		<div class="chilun">
+    			<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/chilun.png" width="30px" height="30px" />
+				<div>行业解决方案</div>
+    		</div>
+		</div>
+    	<script type="text/javascript">
+    	window.onload = function(){
+    		$('#yanxiang-interaction>img').css('width', $(window).width()+'px');
+    		// 轮播图部分
+			$('.main_visual').css('height',($(window).height()-$('#yanxiang-interaction').height()-$('.productSearch').height())+'px');
+    		$('.main_image>ul>a>li>img').css('width',$(window).width()+'px');
+				$('.main_visual').css({'height': $('.main_image>ul>li>img').height(),'border':'1px solid #fff'});
+				$('.flicking_con').css('top', $('.main_image>ul>a>li>img').height()-25 +'px');
+			var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+    	}
+    	$(function(){
+    		// 产品检索
+    		$('.search').bind('click',function(){
+    			window.location.href = "{weikucms::U('Wap/Yanxiang/cSearch',array('token'=>$token))}";
+    		})
+    		// 专题活动
+    		$('.active').bind('click',function(){
+    			window.location.href = "{weikucms::U('Wap/Yanxiang/active',array('token'=>$token))}";
+                //修改成产品列表
+              //  window.location.href = "{weikucms::U('Wap/Yanxiang/cSearch',array('token'=>$token))}";
+    		}) 
+    		// 解决方案
+    		$('.chilun').bind('click',function(){
+    			window.location.href = "{weikucms::U('Wap/Yanxiang/industy',array('token'=>$token))}";
+    		}) 
+    	})
+    	</script>
+    </body>
+</html>

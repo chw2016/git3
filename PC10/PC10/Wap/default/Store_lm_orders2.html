@@ -1,0 +1,56 @@
+<div id="abc" class="myul">
+<div class="myli payState" cc="0"  >待付款</div><div class="myli payState " cc="3">已发货</div>
+</div>
+        <script>
+
+                $("#abc div").click(function(){
+                    var act=$(this).attr('cc');
+                    $("#act").attr('act',act);
+                    $(".myul .kong_1").trigger('click');
+                });
+
+        </script>
+            <volist name="data" id="data">
+        <li class="block block-order animated"><div class="header">
+    <span class="font-size-12">订单号：{weikucms:$data[orderid]}</span>
+</div>
+<hr class="margin-0 left-10">
+<div class="block block-list block-border-top-none block-border-bottom-none">
+    <div class="block-item name-card name-card-3col clearfix">
+        <a  class="thumb">
+            <img src="{weikucms:$data[logourl]}" >
+        </a>
+        <div class="detail">
+            <a ><h3>{weikucms:$data[name]}</h3></a>
+            
+                <p class="sku-detail js-toggle-more">
+                    <span class="c-gray ellipsis">
+                        {weikucms:$data[attr]}
+                    </span>
+                </p>
+        </div>
+        <div class="price-num">
+            <div class="price">¥&nbsp;<span>{weikucms:$data[price]}</span></div>
+            <div class="num">
+                ×<span class="num-txt">{weikucms:$data[total]}</span>
+            </div>
+        </div>
+    </div>
+    
+
+</div>     
+<hr class="margin-0 left-10">
+<div class="bottom">
+    商品总价：<span class="c-orange">￥<?php echo $data[total]*$data[price];?></span>
+    <div class="opt-btn">
+        <?php if($data[paid]==0):?>
+        <a class="btn btn-yellow btn-in-order-list" href="javascript:;" gid="{weikucms:$data[id]}" onclick="return cancel(this)">取消</a>
+        <a class="btn btn-red btn-in-order-list" href="{weikucms::U('Store_new/show',array('pid'=>$data[id],'token'=>$token,'wecha_id'=>$wecha_id))}">付款</a>
+        <?php else:?>
+        <span>已支付</span>
+        <?php endif;?>
+    </div>
+</div>
+
+        </li>
+        </volist>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+       	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+        <style>
+            .nr_2_title{
+                float: left;
+                width: 100%;
+            }
+            .nr_3_title{
+                width: 58px;
+            }
+            .nr_2_br{
+                width: 100%;;
+            }
+            .nr_3_dra{
+                width: 100px;
+                height: 50px;
+               float: none;
+            }
+            .nr_3_name{
+              width: 60px;height: 35px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="body_cen">
+
+        	<div class="nr1 of">
+        		<div class="nr1 nr_1_title">
+                    <div class="nr_1_left">个人信息</div> 
+                    <div class="nr_1_right">
+                      <span class='edit'><a href="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid,'type'=>3))}">修改信息</a></span>
+                    </div>   
+                </div>
+                <div class="nr_1_hr"></div>
+                <div class="nr_2_br">
+                    <div class="row"><div class="name">姓名：</div><div class="cen">{weikucms:$info.true_name}</div></div>
+                    <div class="row"><div class="name">性别：</div><div class="cen"><if condition="$info['sex'] eq 1">男<else />女</if></div></div>
+                    <div class="row"><div class="name">身份证号码：</div><div class="cen">{weikucms:$info.card_num}</div></div>
+                    <div class="row"><div class="name">手机号码：</div><div class="cen">{weikucms:$info.phone}</div></div>
+                    <div class="row"><div class="name">职业身份：</div><div class="cen">{weikucms:$info.zhiye}</div></div>
+                    <div class="row">
+                      <div class="name">宿舍地址：</div>
+                      <div class="cen">{weikucms:$info.room},{weikucms:$info.detail_room}</div>
+                    </div>
+                    <div class="row">
+                      <div class="name">家庭地址：</div>
+                      <div class="cen">{weikucms:$info.home},{weikucms:$info.detail_home}</div>
+                    </div>
+                    <div class="row">
+                      <div class='ccac5c5'>身份证明:</div>
+                      <div class='clearLeft imgShow'>
+                          <volist name="info['pid']" id="vo">
+                         <img src="{weikucms:$vo}" class="img_c" width="60px" height="40px" />
+                       </volist>
+                      </div>
+                    </div>
+                </div>
+        	</div>
+        	<div class="nr2" style="width: 100%">
+	        	<div class="nr_2_title">
+                    <div class="nr_2_left">教育信息</div> 
+                    <div class="nr_2_right">
+                      <span class='edit'><a href="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid,'type'=>3))}">修改信息</a></span>
+                    </div>   
+                </div>
+                <div class="nr_1_hr"></div>
+
+                <div class="nr_2_br">
+                    <div class="row"><div class="name">大学：</div><div class="cen">{weikucms:$info.school}</div></div>
+                   <!-- <div class="row"><div class="name">身份证号码：</div><div class="cen">{weikucms:$info.xian_home}</div></div>-->
+                    <div class="row"><div class="name">学历：</div><div class="cen">{weikucms:$info.xuewei}</div></div>
+                    <div class="row"><div class="name">在校期间</div><div class="cen">{weikucms:$info.school_time}</div></div>
+                </div>
+        	</div>
+        	<!--<div class="nr2">
+	        	<div class="nr_2_title">
+                    <div class="nr_2_left">紧急联系人</div> 
+                    <div class="nr_2_right">
+                      <span class='edit'><a href="{weikucms::U('sq_loan',array('token'=>$token,'openid'=>$openid,'type'=>3))}">修改信息</a></span>
+                    </div>   
+                </div>
+                <div class="nr_1_hr"></div>
+
+                <volist name="info['lid']" id="vo">
+                    <div class="nr_2_br">
+                        <div class="nr_3_title">{weikucms:$vo.friendly}</div>
+                        <div>
+                            <div style="overflow: hidden;">
+                                <span class="nr_3_name">{weikucms:$vo.name}</span>
+                                <span class="nr_3_tel">{weikucms:$vo.phone}</span>
+                            </div>
+
+                            <div class="">
+                                <?php echo mb_substr($vo['address'],0,13,'utf-8');?>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </volist>
+
+        	</div>-->
+        	<div class="nr4">
+        		
+        	</div>
+        	<div class="nr5">
+
+        	</div>
+
+        </div>
+
+
+        <section>
+
+  <div class='zwf'></div>
+<include file="Loan:foot"/>
+</section>
+</body>
+<script>
+        $(".tijiao").click(function(){
+            if(!document.getElementById("checkbox_che").checked){
+                alert("请阅读并同意《借款协议》");
+                return false;
+            }
+            var url="{weikucms::U('tijiao_loan',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+            var fenqi={weikucms:$loan_num};
+            var monthly_repayments=$(".my").text();
+            var loan_total_money={weikucms:$loan_price};
+            $.post(url,{fenqi:fenqi,monthly_repayments:monthly_repayments,loan_total_money:loan_total_money},function(data){
+                if(data.status==1){
+                    var url2="{weikucms::U('tijiao_loan_success',array('token'=>$token,'openid'=>$openid))}";
+                  location.href=url2;
+                }else{
+                    alert('申请失败');
+                }
+            },'json');
+        });
+</script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+
+
+        var shareTitle="{weikucms:$product.name}-{weikucms:$tpl['name']}商城";
+        var imgUrl="http://v.wapwei.com/{weikucms:$product.logourl}";
+        //var descContent="http://v.wapwei.com/{weikucms:$product.logourl}";
+        var descContent=$('#itemName').text();
+        var shareUrl='';
+
+        $(function() {
+            shareUrl = $("#textarea_c").text();
+        });
+
+
+        wx.config({
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'previewImage'
+            ]
+        });
+        wx.ready(function () {
+            //图片展示
+
+            $(document).on('click', '.imgShow img', function (){
+
+                var urls = [];
+				var $this = $(this);
+
+                <volist name="info.pid" id="url">
+                urls[{weikucms:$key}] = "{weikucms:$url}";
+                </volist>
+                var img_cur=$(this).attr('src');
+                wx.previewImage({
+                    current: $this.attr('src'),
+                    urls:  urls
+
+                });
+            })
+    });
+
+
+    </script>
+</html>

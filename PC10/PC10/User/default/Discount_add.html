@@ -1,0 +1,120 @@
+<include file="Public:head"/>
+<script>
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#info', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true,
+            items : [
+                'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+        });
+
+    });
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+          <div class="cLineB"><h4>添加二维码折扣</h4></div>
+
+      <div class="cLineB" id="uppict" style="display:none">    
+
+ </div> 
+
+<div class="msgWrap">
+  <form class="form" method="post"   action="{weikucms::U('Discount/insert')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+ <TBODY>
+<TR><input type="hidden" class="px" id="id" value="{weikucms:$_SESSION['id']}" name="id" style="width:300px" ><input type="hidden" class="px" id="token" value="{weikucms:$_SESSION['token']}" name="token" style="width:300px" >  <TR>
+  <TH valign="top"><label for="keyword">商品名</label></TH>
+  <TD><input type="input" class="px" id="name" value="" name="name" style="width:300px" onfocus="leave();"  ><br />
+                  </TD>
+  <TD></TD>
+</TR>  <TR>
+  <TH valign="top"><label for="keyword">原价</label></TH>
+  <TD><input type="input" class="px" id="price" value="" name="price" style="width:60px" onfocus="leave();"  >&nbsp;&nbsp;元<br />
+                  </TD>
+  <TD></TD>
+</TR>  <TR>
+  <TH valign="top"><label for="keyword">折扣价</label></TH>
+  <TD><input type="input" class="px" id="zprice" value="" name="zprice" style="width:60px" onfocus="leave();"  >&nbsp;&nbsp;元<br />
+                  </TD>
+  <TD></TD>
+</TR>  <TR>
+  <TH valign="top"><label for="keyword">开始日期</label></TH>
+  <TD><input type="input" class="px" id="startdate" value="" name="startdate" style="width:80px" onClick="WdatePicker();"  onfocus="leave();"  ><br />
+                  </TD>
+  <TD></TD>
+</TR>  <TR>
+  <TH valign="top"><label for="keyword">结束日期</label></TH>
+  <TD><input type="input" class="px" id="enddate" value="" name="enddate" style="width:80px" onClick="WdatePicker();"  onfocus="leave();"  ><br />
+                  </TD>
+  <TD></TD>
+</TR>
+<TR>
+    <TH valign="top"><label for="picurl">商品图片展示：</label></TH>
+
+    <TD><img style="display: none;" id="image_show" class="indexs_img" src=""></TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">上传商品图</label></TH>
+  <TD>
+
+      <input type="hidden" class="text textMiddle inputQ"  name="picurl" id="pic" value="" style="width:300px;"   />
+      <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+ </TD>
+  <TD></TD>
+</TR>  <TR>
+  <TH valign="top"><label for="keyword">商品描述</label></TH>
+  <TD>
+      <textarea  class="px" id="info" value="" name="content" style="width:500px;height: 300px;" onfocus="leave();"  ></textarea>
+
+  </TD>
+  <TD></TD>
+</TR><TR>
+  <TH></TH>
+  <TD><button type="submit"  name="button"  class="btn btn-primary" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+<TR style="height: 150px;">
+
+</TR>
+  </TBODY>
+</TABLE>
+  </form>
+  </div> 
+
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>

@@ -1,0 +1,54 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="{weikcums:$aData.title}";
+    var imgUrl="{weikcums:$aData.imgUrl}";
+    var descContent="{weikcums:$aData.descContent}";
+    var shareUrl="{weikcums:$aData.shareUrl}";
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+
+
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                if(typeof wxJSSDKsuccess == 'function'){
+                  wxJSSDKsuccess();  
+                }
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                if(typeof wxJSSDKsuccess == 'function'){
+                  wxJSSDKsuccess();  
+                }
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+</script>

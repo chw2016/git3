@@ -1,0 +1,271 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/binding.css">
+<style type="text/css">
+    .cl{
+        color: #138A13;
+        padding: 32px;;
+    }
+</style>
+
+<div class="cLineB">
+  <h4 class="left">
+      <if condition="$classifyname">
+          
+          我的微信粉丝<span class="FAQ">粉丝轻松管理</span>
+      </if>
+  </h4>
+ </div>
+
+<div class="msgWrap">
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>  您可以轻松查看粉丝信息！
+
+    </div>
+	 <div class="cLine">
+              <div class="pageNavigator left">
+     <a href="#" id="fanssync" class='btn btn-primary'>粉丝同步</a>　
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+    <div class="box-content">
+        <div class="tab-pane fade active in" id="home">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+
+                    <th>粉丝头像</th>
+                    <th>微信ID</th>
+                    <th>昵称</th>
+                    <th>最后联系时间</th>
+                    <th>分组</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="list" id="vo">
+                <tr>
+                    <td>
+					<div width="40px" height="40px">
+                        <img style="width:40px;height:40px" src="{weikucms:$vo.headimgurl}}">
+
+						</div>
+                    </td>
+                    <td>{weikucms:$vo.openid}</td>
+                    <td>{weikucms:$vo.nickname}</td>
+                    <td><php>echo date("Y-m-d H:i:s",$vo['update_time']);</php></td>
+                    <td>
+
+                        <select style="width: 130px;" onchange="moveclassify(this,{weikucms:$vo.id})">
+                            <option value="0">未分组</option>
+                            <volist name="classlist" id="classify">
+                                <option value="{weikucms:$classify.id}"<if condition="$vo['type'] eq $classify['id']">selected</if>>{weikucms:$classify.classifyname}</option>
+                            </volist>
+                        </select>
+
+                    </td>
+                    <td>
+                        <a href="{weikucms::U('Weixinfans/userview',array('id'=>$vo['id']))}" class="btn btn-primary">查看用户</a>
+                        <a href="#" class="btn btn-success disabled" onclick="tanbeizhu('{weikucms:$vo.remarks}',{weikucms:$vo.id})">备注</a>
+                    </td>
+                </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+<!--点击备注 弹框 开始-->
+<div class="fensiclassify">
+    <form method="post" action="">
+        <div class="fensicontent">
+            <div class="fensifont">添加备注</div>
+            <div><input type="text" name="remarks" value=""></div>
+            <div class="butall">
+                <button type="submit" class="fl butsub">确定</button>
+                <div class="fl butcan">取消</div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+  	</div>
+
+<script type="text/javascript">
+   function moveclassify(obj,id){
+       var classifyid = $(obj).val();
+       var id = id;
+       var type = "{weikucms:$_GET['type']}";
+       if(type){
+           var url = "{weikucms::U('User/Weixinfans/moveclass',array('token'=>$token,'type'=>$_GET['type']))}";
+       }else{
+           var url = "{weikucms::U('User/Weixinfans/moveclass',array('token'=>$token))}";
+       }
+       if(confirm('您确定移组吗？')){
+           $.post(url,{classifyid:classifyid,id:id},function(datas){
+               if(datas.status == 1){
+                   notif({
+                       msg: datas.info,
+                       type: "success"
+
+                   });
+                   setTimeout(function(){
+                       window.location.reload();
+                   },'2000');
+               }else{
+                   notif({
+                       msg: datas.info,
+                       type: "error"
+                   });
+               }
+           },'json');
+       }else{
+           return;
+       }
+   }
+   function tanbeizhu(str,id){
+       var id = id;
+       $('.fensiclassify').show();
+       $('input[name="remarks"]').val(str);
+       $('.butcan').click(function(){
+           $('.fensiclassify').hide();
+       })
+       $('.butsub').click(function(){
+           var remarks = $('input[name="remarks"]').val();
+           var type = "{weikucms:$_GET['type']}";
+           if(type){
+               var urlo = "{weikucms::U('User/Weixinfans/fansiclassify',array('token'=>$token,'type'=>$_GET['type']))}";
+           }else{
+               var urlo = "{weikucms::U('User/Weixinfans/fansiclassify',array('token'=>$token))}";
+           }
+           $.post(urlo,{id:id,remarks:remarks},
+                   function(dataes){
+                       if(dataes.status == 1){
+                           notif({
+                               msg: dataes.info,
+                               type: "success"
+
+                           });
+                           setTimeout(function(){
+                               window.location.reload();
+                           },'2000');
+                       }else{
+                           notif({
+                               msg: dataes.info,
+                               type: "error"
+                           });
+                       }
+                   },'json');
+
+       })
+
+
+   }
+    $(function(){
+	    $("#fanssync").click(function(){
+		    var This = $(this);
+			This.text('正在处理...');
+			var flag = true;
+			if(flag == true){
+			    flag = false;
+				$.post("{weikucms::U('User/Weixinfans/fanssync',array('token'=>$token))}",{},
+	                    function(ret){
+	                        if(ret.code == 0){
+	                            notif({
+	                                msg: ret.msg,
+	                                type: "success"
+
+	                            });
+								This.text(ret.msg);
+                            
+	                        }else{
+	                            notif({
+	                                msg: ret.msg,
+	                                type: "error"
+	                            });
+								This.text('粉丝同步');
+								
+	                        }
+							flag = true;
+	                    },'json');
+			}else{
+			  alert('正在处理请勿重复操作！');
+			  return;	
+			}		
+		});
+        $(".delclassify").click(function(){
+            var cid = "{weikucms:$_GET['type']}";
+            var urltwo = "{weikucms::U('User/Weixinfans/delclassify',array('token'=>$token))}";
+            $.post(urltwo,{id:cid},
+                    function(dataes){
+                        if(dataes.status == 1){
+                            notif({
+                                msg: dataes.info,
+                                type: "success"
+
+                            });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'2000');
+                        }else{
+                            notif({
+                                msg: dataes.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        })
+
+        $(".editclassify").click(function(){
+
+            var cid = "{weikucms:$_GET['type']}";
+            alert(cid);
+            var urltwo = "{weikucms::U('User/Weixinfans/editclassify',array('token'=>$token))}";
+            $.post(urltwo,{id:cid},
+                    function(dataes){
+                        if(dataes.status == 1){
+                            notif({
+                                msg: dataes.info,
+                                type: "success"
+
+                            });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'2000');
+                        }else{
+                            notif({
+                                msg: dataes.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        })
+    })
+
+
+
+</script>
+
+
+<include file="Public:footer"/> 

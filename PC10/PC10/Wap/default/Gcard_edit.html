@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>贺卡编辑</title>
+<meta name="viewport" say="width=device-width,user-scalable=no, initial-scale=1">
+<script src='./tpl/Wap/default/common/css/invites/jquery-1.8.3.min.js'></script>
+<style>
+body{border: 0 none;margin: 0;padding: 0;background: none repeat scroll 0 0 #EAEBEE; width:100%;font: 12px Verdana,Arial,sans-serif,"Times New Roman",'΢ź'; overflow:hidden}
+dl dt{ width:98%; margin:0px auto}
+.top{background:#333333;color: #FFFFFF;font-size: 20px;font-weight: bold;line-height: 40px;text-align: center;}
+input{width:98%;height:35px;margin:0px;background:#FFF; border:none; text-indent:12px;font-size:14px;overflow:hidden}
+textarea{width:98%;height:80px;margin:0px;text-indent:12px;padding-top:8px; line-height:20px;background:#FFF; border:none;font-size:14px;overflow:hidden}
+.inputTxt{width:98%;background:#333333; color:#FFFFFF; height:40px;font-size:16px; padding:0;overflow:hidden}
+</style>
+</head>
+<script>
+function check(){
+if ($("#to").val() == '')  { alert("请输入收卡人") ;  $("#to").focus();return false;}
+if ($("#from").val() == '')  { alert("请输入您的姓名") ;  $("#from").focus();return false;}
+if ($("#say").val() == '')  { alert("请输祝福信息") ;  $("#say").focus();return false;}
+if ($("#say").val().length > '140')  { alert("最多可输入140个字符") ;  $("#say").focus();return false;}
+}		
+</script>
+<body>
+<form action="/index.php?g=Wap&m=Gcard&a=edit&token={weikucms:$token}&id={weikucms:$id}&wecha_id={weikucms:$wecha_id}" method="post" id="form1" onSubmit="return check();">
+<input type="hidden" name="gid" id="gid" value="{weikucms:$id}">
+<input type="hidden" name="token" id="token" value="{weikucms:$token}">
+<input type="hidden" name="wecha_id" id="wecha_id" value="{weikucms:$wecha_id}">
+<div class="top"><font  color="#FFFFFF">编辑卡片信息</font></div>
+<dl>
+<dt style=" margin-bottom:10px"><input type="text" id="to" name="to" value="{weikucms:$info.to}" placeholder="输入收卡人"/></dt>
+<dt style=" margin-bottom:10px"><textarea id="say" name="say" placeholder="输入祝福信息 最多可输入140个字符">{weikucms:$info.say}</textarea></dt>
+<dt style=" margin-bottom:10px"><input type="text" id="from" name="from" value="{weikucms:$info.from}" value="" placeholder="输入您的姓名"/></dt>
+</dl>
+<div class="top"><input type="submit" class="inputTxt" value="保存并查看"></div>
+</form>
+</body>
+</html>

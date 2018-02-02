@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/lm1.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+        <style>
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .bf80{
+                width: 100%;
+				height: 150px;
+				line-height: 150px;
+				font-size: 14px;
+            }
+        </style>
+
+    </head>
+	<script>
+        $(function(){
+            //是否身体健康
+            $(".fx_btn").click(function(){
+                $(this).toggleClass("fx_btn1");
+            })
+            //关闭弹出框
+            $(".gta_bj_btn").click(function(event) {
+                $(".body_class").css('display', 'none');
+                if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+                    event.preventDefault();
+                    $(".Mask").removeClass('is-visible');
+                }
+            });
+        })
+	</script>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">上传证件</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+            <div class="shadow20">
+                <p>
+                    <span class="fx_btn fx_btn1"></span>
+                    <font class="f14 ml5" style="position: relative;top: -2px;">身体是否健康</font>
+                </p>
+                <div class="Supplement">
+                    <textarea placeholder="补充说明...." name="health_info"/></textarea>
+                </div>
+                <p class="mt10" style="color: #333333;">注&nbsp;:&nbsp;勾选代表健康，未勾选请做说明。</p>
+            </div>
+	    <div class="shadow20 mt10">
+	    	<div class="bf90 clearfix ">
+	    	   <div class="bf80 shadow80 " style="position: relative;">
+	    	     <div class="cart_imgs">观看照片</div>
+                   <!--<img src="{weikucms::STATICS}/wapweiui/gta/images/4.jpg" >-->
+	    	    <div style="position: absolute;top: 0; right: 0;">
+	    	   	<div class="gta_hs" ></div>
+	    	   </div>
+	    	   </div>
+	    	</div>
+	    </div>
+	    <div class="shadow20 mt10">
+	    	<div class="bf90 bf90_can">
+	    		<div class="z14">上传证件</div>
+	    		<ul style="width: 100%;" class="clearfix mt10">
+                    <volist name="ims" id="vo">
+	    			<li class="shadow45 fl<?php if($i%2==1){echo ' fl';}else{echo ' fr';}?>">
+
+	    				<span class="dashed">
+	    					+
+	    				</span>
+                        <input type="text" name="imgfile" value="" class="file1"/>
+                        <div style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;" class="file2">
+                <!--<img src="http://pic1.nipic.com/2008-09-08/200898163242920_2.jpg" />-->
+                        </div>
+	    				<p>{weikucms:$vo}</p>
+
+
+
+	    			</li>
+                        </volist>
+
+
+	    		</ul>
+	    </div>
+		</div>	
+		 <div class="add_btn"><span class="btn add_btn1" flag="0">下一步</span></div>
+		</section>
+        <!--显示区域-->
+        <div class="Mask">
+            <div class="mg0a">
+                <div class="gta_bj"><div class="gta_bj_text"></div>
+                    <div class="gr">
+                        <span class="gta_bj_btn">X</span>
+                    </div>
+                </div>
+                <div class="body_classone">
+                    <p>提交成功</p>
+                </div>
+            </div>
+        </div>
+	</body>
+    <script>
+
+        $(function(){
+            function test(){
+                $(".gta_bj_btn").trigger('click');
+
+            }
+            //查看大图
+             $(document).on('touchstart','img',function(e){
+                 //alert(7);
+                 e.stopPropagation();
+                 var src=$(this).attr('src');
+                 //alert(src);
+                 $(".cart_imgs").html("<img src="+src+" >");
+             })
+            //删除
+            $(document).on('touchstart','.gta_hs',function(){
+                var src=$(".shadow80 img").attr('src');
+                if(typeof(src)=='undefined'){
+                    return false;
+                }
+                msg.confirm('确定要删除吗','是',function(){
+
+                    $(".cart_imgs").html('观看照片');
+                    //  alert(src);
+                    $("img").each(function(e,t){
+                        if($(t).attr('src')==src){
+                            $(t).remove();
+                        }
+                    });
+                    $("input").each(function(e,t){
+                        if($(t).val()==src){
+                            $(t).val('');
+                        }
+                    });
+                })
+
+
+            })
+            //提交
+            $(".add_btn1").click(function(){
+                var flag=$(this).attr('flag');
+                if(flag==1){
+
+                    return false;
+                }
+                if($(".fx_btn").hasClass('fx_btn1')){
+                    var is_health=1;
+                    var health_info='';
+                }else{
+                    var is_health=0;
+                    var health_info=$("textarea[name=health_info]").val();
+                    if(health_info==''){
+                        show_error_tip('请填写您的病情');
+                        $("textarea[name=health_info]").focus();
+                        return false;
+                    }
+                }
+                var imgs=[];
+                var num=$("input").length;
+                for(var i=0;i<num;i++){
+                    if($("input").eq(i).val()==''){
+                        show_error_tip('图片资料上传不完整');
+                        return false;
+                    }
+                    imgs[i]=$("input").eq(i).val();
+                }
+               // var img=$("input").eq(0).val();
+               // var img1=$("input").eq(1).val();
+               // var img2=$("input").eq(2).val();
+               // imagesc=[img,img1,img2];
+             //    alert(imgs);
+                imgs=imgs.join(',');
+                $(this).attr('flag','1');
+                $(this).text('提交中');
+                var url="{weikucms::U('input_life_imgs',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url,{imgs:imgs,health_info:health_info,is_health:is_health},function(data){
+                    if(data.status==0){
+                        show_error_tip('提交失败,请重试');
+                        $(this).attr('flag',0);
+
+                        return false;
+                    }else{
+                      //  alert('成功');
+                        $(".add_btn1").text('提交成功');
+                        $(".body_class").css('display', 'block');
+                        $('.Mask').addClass('is-visible');
+                        i=$(".btn").textnode;
+                        //消失掉
+                        setTimeout(test,2000);
+                        //下面是成功之后跳转的地址
+                        var url2="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                        location.href=url2;
+
+                    }
+                });
+            })
+        })
+    </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'chooseImage',
+                'uploadImage',
+                'downloadImage',
+                    'previewImage'
+            ]
+        });
+        wx.ready(function () {
+            var images = {
+                localId: [],    //
+                serverId: []
+            };
+            //chooseImage
+
+            $(".file2").click(function() {    //拍照、本地选图
+                if($(this).find("img").length != 0){
+                    return false;
+                }
+                var a1=$(this);
+                wx.chooseImage({
+                    success: function (res) {
+                        images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                        var i = 0, length = images.localId.length;
+                        images.serverId = [];
+                        function upload() {
+                            wx.uploadImage({
+                                localId: images.localId[i],
+                                success: function (res) {
+                                    i++;
+                                    images.serverId.push(res.serverId);
+                                    if (i < length) {
+                                        upload();
+                                    }else{
+                                        var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                        $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                            var leng=data.imgs.length;
+                                            $.each(data.imgs, function(e,t){
+                                                a1.prev().val(t);
+                                                a1.append("<img src='"+t+"' width='90px' />");
+                                            })
+                                        },'json');
+                                    }
+                                },
+                                fail: function (res) {
+                                    alert(JSON.stringify(res));
+                                }
+                            });
+                        }
+                        upload();//上传
+
+                    }
+                });
+            })
+            //图片展示
+
+            $(document).on('click', '.cart_imgs img', function (){
+
+                var urls = [];
+                var $this = $(this);
+                $(".bf90_can").find("img").each(function(e,t){
+                    urls[e]=$(t).attr('src');
+                });
+                wx.previewImage({
+                    current: $this.attr('src'),
+                    urls:  urls
+                });
+            })
+        })
+
+        $(".body_img_left,.body_img_right").on('click',function(){
+            $(".span_btn").trigger('click');
+            $("#chooseImage").trigger('click');
+        })
+    </script>
+</html>

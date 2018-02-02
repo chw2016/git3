@@ -1,0 +1,318 @@
+<include file="Public:head"/>
+
+        
+        <div id="tips">
+<div id="tips-close"></div>
+<div id="tips-text">
+<strong>提示信息</strong></br><ol>
+<span id="tips-content"><ol>
+           <li>万普微信官方授权登录正式上线欢迎使用！</li>
+           
+       </ol></span></br>
+<span id="tips-date"></span>
+</div>
+</div>
+
+
+        <div id="main-box-head">
+            <ul id="today">
+                <li id="today-fans" onclick="window.location.href='{weikucms::U('Weixinfans/index',array('token'=>$token))}'">
+
+                    <a >
+                        <span class="t-count">
+                            <i class="t-icon fans"></i>
+                            <em class="t-num">{weikucms::$todayfans}</em>
+                            <strong class="t-title">新粉丝</strong>
+                        </span>
+                    </a>
+
+                </li >
+
+                <li id="today-massage" onclick="window.location.href='{weikucms::U('Weixinfans/msglist',array('token'=>$token))}'">
+                    <a >
+                        <span class="t-count">
+                            <i class="t-icon massage"></i>
+                            <em class="t-num">{weikucms::$msgs}</em>
+                            <strong class="t-title">新消息</strong>
+                        </span>
+                    </a>
+                </li>
+                <li id="today-visitor" onclick="window.location.href='{weikucms::U('Requery/index',array('token'=>$token))}'">
+                    <a >
+                        <span class="t-count">
+                            <i class="t-icon visitor"></i>
+                            <em class="t-num">{weikucms::$viewcounts}</em>
+                            <strong class="t-title">新访问</strong>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <ul id="all">
+                <li id="all-fans" onclick="window.location.href='{weikucms::U('Weixinfans/index',array('token'=>$token))}'">
+                    <a >
+                        <span class="t-count">
+                            <i class="t-icon allfans"></i>
+                            <em class="t-num">{weikucms::$fans}</em>
+                            <strong class="t-title">粉丝总数</strong>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+          
+          <div class="function-box" id="main-box-app">
+           <div class="title-box"><span>我的应用</span></div>
+             <div class="content-box">
+			 <volist name="app_list" id="vo">
+               <if condition="$vo['app_id'] eq 4">
+
+                   <div title="{weikucms:$vo.app_name}" onclick="window.location.href='{weikucms::U($vo['enter_api'],array('token'=>$token,'dining'=>1))}'" class="content-box-item" id="content-box-app" >
+                       <img src="<php>echo C('site_url');</php>{weikucms:$vo.pic}" width="65" height="65">
+                       <div class="app-name">{weikucms:$vo.app_name}<br>
+                           <span style="font-weight: bold;color: red;">
+                               <php>
+                                   if($vo['is_pay'] == 1){
+                                   if($vo['try_type'] != 0){
+                                   if($vo['end_date']>date("Y-m-d H:i:s",time())){
+                                   echo "<span style='font-weight: bold;color: red;'>".round((strtotime($vo['end_date'])-time())/(3600*24))."天后到期</span>";
+                                   }
+                                   }
+                                   }else if($vo['is_pay'] == 0){
+                                   if($vo['try_type'] != 0){
+                                   if($vo['end_date']>date("Y-m-d H:i:s",time())){
+                                   echo "<span style='font-weight: bold;color: red;'>试用".round((strtotime($vo['end_date'])-time())/(3600*24))."天后到期</span>";
+                                   }
+                                   }
+                                   }
+
+                               </php>
+                           </span>
+                       </div>
+                   </div>
+
+
+
+               <else/>
+
+                   <div title="{weikucms:$vo.app_name}" onclick="window.location.href='{weikucms::U($vo['enter_api'],array('token'=>$token))}'" class="content-box-item" id="content-box-app" >
+                       <img src="<php>echo C('site_url');</php>{weikucms:$vo.pic}" width="65" height="65">
+                       <div class="app-name">{weikucms:$vo.app_name}<br>
+                           <span style="font-weight: bold;color: red;">
+                               <php>
+                                   if($vo['is_pay'] == 1){
+                                   if($vo['try_type'] != 0){
+                                   if($vo['end_date']>date("Y-m-d H:i:s",time())){
+                                   echo "<span style='font-weight: bold;color: red;'>".round((strtotime($vo['end_date'])-time())/(3600*24))."天后到期</span>";
+                                   }
+                                   }
+                                   }else if($vo['is_pay'] == 0){
+                                   if($vo['try_type'] != 0){
+                                   if($vo['end_date']>date("Y-m-d H:i:s",time())){
+                                   echo "<span style='font-weight: bold;color: red;'>试用".round((strtotime($vo['end_date'])-time())/(3600*24))."天后到期</span>";
+                                   }
+                                   }
+                                   }
+
+                               </php>
+                           </span>
+                       </div>
+                   </div>
+
+
+
+			   </if>
+			   </volist>
+               <div title="点击添加新APP！" class="content-box-item plus" id="content-box-app" onclick="window.location.href='{weikucms::U('App/index',array('token'=>$token))}'"><img src="{weikucms::STATICS}/newwapweiui/img/plus.png" width="65" height="65"></div>
+
+            </div>
+             </div>
+          
+			   <div class="function-box" id="main-box-info">
+					<div class="title-box">
+						<span>
+							我的微信公众号
+						</span>
+					</div>
+					<div class="content-box">
+						<if condition="$user['status'] eq 1">
+						<!--<div class="content-box-item" id="info-code">-->
+							<!--<img src="<php>echo C('site_url');</php>/upload/weixin_qrcode/<php> echo $user['fakeid']; </php>.png" width="150" height="150">-->
+						<!--</div>-->
+						<div class="content-box-item" id="info-detail">
+							<table width="790" border="0" align="center" cellpadding="0" cellspacing="0"
+							style="font-size:12px">
+								<tr>
+									<td width="75" height="25" nowrap>
+										账号名称
+									</td>
+									<td>
+										<php>echo $user['name'];</php>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										公众账号
+									</td>
+									<td>
+										<php> echo $user['wxname']; </php>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										通讯token
+									</td>
+									<td>
+										<php>echo $user['token']; </php>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										通讯url
+									</td>
+									<td nowrap>
+										<php>echo C('site_url');</php>index.php?g=Home&m=Weixin&a=index&token=<php>echo $user['token']; </php>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										绑定时间
+									</td>
+									<td>
+										<php> echo date("Y-m-d H:i:s",$user['bind_time']); </php>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										当前版本
+									</td>
+									<td>
+									<if condition="$gid eq 1">
+										<span id="banben">万普体验版</div>
+									</if>
+									<if condition="$gid eq 2">
+										<span id="banben">万普展示版</div>
+									</if>
+									<if condition="$gid eq 3">
+										<span id="banben">万普功能版</div>
+									</if>
+									<if condition="$gid eq 4">
+										<span id="banben">万普全能版</div>
+									</if>
+									</td>
+								</tr>
+								<tr>
+									<td width="75" height="25" nowrap>
+										到期时间
+									</td>
+									<td>
+										<php> echo date("Y-m-d H:i:s",$adminuser['viptime']); </php>还剩于
+										<span id="leftday">
+											<php> echo round(($adminuser['viptime']-time())/(3600*24));</php>
+										</span>
+										天到期
+									</td>
+								</tr>
+                                <if condition="$wecha['is_auth'] neq 1">
+                                    <tr>
+
+                                    <td width="75" height="25" nowrap>
+                                        绑定状态
+                                    </td>
+                                    <td>
+                                        <span id="disbind" onclick="if(confirm('您确定解除绑定吗?')){ go_url('{weikucms::U('Bind/closeBind')}');}">
+                                            解除绑定
+                                        </span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td width="75" height="25" nowrap>
+                                            官方授权
+                                        </td>
+                                        <td>
+                                            <a href="<php>echo C('site_url');</php>Home/Open/openlogin/token/{weikucms:$wecha.token}">
+                                                <img src="{weikucms::STATICS}/icon_button2.png" style="width: 120px;height: 24px;">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <else/>
+                                    <tr>
+
+                                        <td width="75" height="25" nowrap>
+                                            微信官方授权
+                                        </td>
+                                        <td>
+                                        <span style="width: 100px;height: 30px;text-align:center;color:white;line-height: 30px;background: #3eb94e;border-radius: 5px;display: block;">
+                                            已授权
+                                        </span>
+                                        </td>
+                                    </tr>
+
+                                </if>
+							</table>
+						</div>
+						<else/>
+						<div class="content-box-item" id="info-detail">
+							  <table width="790" border="0" align="center" cellpadding="0" cellspacing="0"
+								style="font-size:12px">
+									<tr>
+                                            您还没绑定万普平台哦,请点击微信公众平台官方授权登陆入口进行绑定
+											<!--<a href="{weikucms::U('Bind/index')}" style="margin-left: 10px;">-->
+											<a href="<php>echo C('site_url');</php>Home/Open/openlogin/token/{weikucms:$wecha.token}" style="margin-left: 10px;">
+                                                <img src="{weikucms::STATICS}/icon_button2.png">
+											</a>
+
+									</tr>
+							  </table>
+						</div>
+						</if>
+					</div>
+				</div>
+          
+            
+          <div class="function-box" id="main-box-note">
+            <div class="title-box"><span>系统公告</span></div>
+
+              <div class="content-box-note">
+                  <volist name="articledata" id="vo">
+                  <div class="note-news first" offset="0" length="1" id="new1">
+                      <div class="news-title">
+                          <a style="text-decoration: none;color: #333;" target="_blank" href="http://www.wapwei.com/chanpingengxin/<php> echo date('Y',$vo['pubdate']);</php>/<php> echo date('md',$vo['pubdate']);</php>/{weikucms:$vo.id}.html">{weikucms:$vo.title}</a>
+
+                          <php>
+                              if($vo['pubdate'] < (time()-3600*7)){
+                          </php>
+                          <i class="new ">
+                          </i>
+                          <php>
+                              }
+                          </php>
+                      </div>
+                      <div class="news-date">
+                          <php> echo date("Y年m月d日",$vo['pubdate']);</php>
+                      </div>
+                  </div>
+                  </volist>
+
+              </div>
+          </div>
+          <!--    张湘南 -->
+	          <if condition="$hts" >
+		          <div>
+		               <a  href="{weikucms::U('Ht/index')}" >操作</a>
+		          </div>
+		          <volist name="hts" id="v" >
+		          <div>
+		               <a  href="{weikucms:$v['url']}" >{weikucms:$v['name']}</a>
+		          </div>
+		          </volist>
+	          </if>
+          </div>
+        </div>
+      </div> 
+    </div>
+<include file="Public:footer"/>

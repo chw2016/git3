@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<meta content="samphay@163.com" name="Author">
+<title>资讯</title>
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=11.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/news.css?v=11.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+<script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/star/js/index.js"></script>
+<script src="{weikucms::STATICS}/star/js/news.js"></script>
+<script src="{weikucms::STATICS}/star/js/foot.js"></script>
+</head>
+<body>
+<div class="index">
+
+<div class="newslisthavbox">
+    <div class="newslisthav myul">
+        <div data-li="news" class="newslistitem li itemon">新闻</div>
+        <div data-li="photo" class="newslistitem li">写真</div>
+        <div data-li="voice" class="newslistitem li">语音</div>
+    </div>
+</div>
+
+/*新闻*/
+<div class="news listbox">
+    <volist name="topics" id="vo">
+    <div class="news list myul" onClick="window.location.href='{weikucms::U('Forum/comment',array('token'=>$token,'openid'=>$openid,'tid'=>$vo['id']))}'">
+        <div class="newspic" style=" background-image:url({weikucms::STATICS}/star/img/1.jpg);"></div>
+        <div class="newscontent">
+            <div class="newsabstract">{weikucms:$vo.title}</div>
+            <div class="newslistbottom myul">
+               <div class="newslisttime">{weikucms::date('Y-m-d H:i:s',$vo['createtime'])}</div>
+               <div class="newslistlike"><span class="icon-chat">{weikucms:$vo.cnum}</span></div>
+            </div>
+        </div>
+    </div>
+    </volist>
+
+  <div class="pagesbox">
+    <div style="text-align: center;">
+      {weikucms:$page}
+    </div>
+  </div>
+
+</div>
+
+/*写真*/
+<div class="photo listbox">
+
+        <div class="photo list myul" onClick="window.location.href='{weikucms::U('Forum/photo',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="photopic" style=" background-image:url({weikucms::STATICS}/star/img/0.jpg);"></div>
+            <div class="photocontent">
+                <div class="photoabstract">写真写真写真写真写真写真写真写真写真...</div>
+                <div class="photolistbottom myul">
+                   <div class="photolisttime right"><div class="yy">2014</div><span class="mm">11</span><span class="dd">11</span></div>
+                   <!--<div class="newslistreply">22</div>
+                   <div class="newslistlike">11</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="photo list myul" onClick="window.location.href='{weikucms::U('Forum/photo',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="photopic" style=" background-image:url({weikucms::STATICS}/star/img/1.jpg);"></div>
+            <div class="photocontent">
+                <div class="photoabstract">写真写真写真写真写真写真写真写真写真...</div>
+                <div class="photolistbottom myul">
+                   <div class="photolisttime right"><div class="yy">2014</div><span class="mm">11</span><span class="dd">11</span></div>
+                   <!--<div class="newslistreply">22</div>
+                   <div class="newslistlike">11</div>-->
+                </div>
+            </div>
+        </div>
+        
+        
+  <div class="pagesbox">  
+    <div class="pages myul">
+      <div class="page myli prev">上一页</div>
+      <div class="page myli">1</div>
+      <div class="page myli">2</div>
+      <div class="page myli">3</div>
+      <div class="page myli">4</div>
+      <div class="page myli">5</div>
+      <div class="page myli next">下一页</div>
+    </div>
+  </div>  
+    
+</div>
+
+/*语音*/
+<div class="voice listbox">
+       <div class="voicepic" style=" background-image:url({weikucms::STATICS}/star/img/0.jpg);"></div>
+     <div class="voice list myul" onClick="window.location.href='voice.html'">
+            <div class="voicecontent">
+                <div class="voicetitle">浮夸</div>
+                
+            </div>
+            
+        </div>
+      <div class="voice list myul" onClick="window.location.href='voice.html'">
+            <div class="voicecontent">
+                <div class="voicetitle">浮夸</div>
+                
+            </div>
+            
+        </div>
+
+   
+    
+    <div class="pagesbox">  
+    <div class="pages myul">
+      <div class="page myli prev">上一页</div>
+      <div class="page myli">1</div>
+      <div class="page myli">2</div>
+      <div class="page myli">3</div>
+      <div class="page myli">4</div>
+      <div class="page myli">5</div>
+      <div class="page myli next">下一页</div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+
+
+
+<footer class="myul">
+    <div data-foot="home" class="tapfoot myli home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="tapfoot myli more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="tapfoot myli user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-user"></span></div></div>
+</footer>
+
+
+
+<div class="fmore">
+    <div class="onlyu moreli"><div><span class="icon-eye"></span>只看Hi<span class="icon-uniE638 arrowright"></span></div></div>
+    <div class="iwrite moreli" onClick="window.location.href='{weikucms::U('Forum/add',array('token'=>$token,'openid'=>$openid))}'" ><div><span class="icon-pencil"></span>发帖<span class="icon-uniE638 arrowright"></span></div></div>
+    <div class="gotop moreli"><div><span class="icon-arrow-up"></span>回到顶部<span class="icon-uniE638 arrowright"></span></div></div>
+    <div class="helpcenter moreli"><div><span class="icon-question"></span>帮助中心<span class="icon-uniE638 arrowright"></span></div></div>
+</div>
+<div id="shade"></div>
+
+
+
+
+
+</div>
+
+
+
+
+</body>
+</html>

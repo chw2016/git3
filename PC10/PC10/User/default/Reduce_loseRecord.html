@@ -1,0 +1,90 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+  
+  <div class="cLineB">
+    <h4 style="position:relative;">
+        减肥记录使用者查询
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Reduce/index',array('token'=>$token,'pid'=>$pid))}">
+            返回
+        </a>
+    </h4>
+</div>  
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以根据减肥记录使用者查询相应信息</li>
+	</ol>
+</div>
+
+
+<div class="box-content">
+
+    <div class="cLineB">
+        <h4>
+            <if condition="$flag eq 1">
+                {weikucms:$datetime}&nbsp;&nbsp;&nbsp;减重记录使用人数
+                <else/>
+                <?php echo "昨天&nbsp;&nbsp;&nbsp;".date("Y-m-d",strtotime("-1 day"))."&nbsp;&nbsp;&nbsp;减重记录使用人数"; ?>
+            </if>
+            <span style="padding: 0px 10px;font-size: 18px;color: #ff4500;font-weight: bold;">{weikucms:$count}</span>人
+        </h4>
+    </div>
+		
+    <div class="msgWrap">
+
+        <table class="table table-bordered">
+            <form action="" method="post">
+                <tr>
+                    <th>时段查询：</th>
+                    <td>
+                        <input type="text" name="dateMin" id="dateMin" value="{weikucms:$dateMin}" onclick="WdatePicker()"/>&nbsp; &nbsp;到&nbsp; &nbsp;
+                        <input type="text" name="dateMax" id="dateMax" value="{weikucms:$dateMax}"  onclick="WdatePicker()"/>
+                        <span style="color:#f00;">注意：前面输入框日期应该小于后面输入框日期</span>
+                    </td>
+                    <td>
+                        <button type="submit" id="lookup" name="lookup" class="btn btn-primary">查询</button>
+                    </td>
+                </tr>
+            </form>
+        </table>
+
+        <table class="table table-bordered">
+                 <tbody>
+                  <tr>
+                  	<th>日期</th>
+                  	<th>人数</th>
+                  </tr>
+
+                  	<volist name="coutsarr" id="vo">
+                  		<tr>
+	                  		<td>
+	                  			{weikucms:$vo.date}
+	                  		</td>
+	                  		<td>
+	                  			{weikucms:$vo.count}人
+	                  		</td>
+                  		</tr>
+                  	</volist>
+                  <tr>
+                      <td>
+                          总人数
+                      </td>
+                      <td>
+                          {weikucms:$dur_counts}人
+                      </td>
+                  </tr>
+                  	
+                  </tbody>
+              </table>			
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,110 @@
+<include file="Public:head"/>
+        <style type="text/css">
+            .seachsub{
+                width: 80px;
+                height: 35px;
+                line-height: 35px;
+                background-color: #115D8A;
+                color: #fff;
+                margin-top: -10px;
+                border-radius: 5px;
+            }
+        </style>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里您可以添加图文关键词回复信息,比如您添加"万普微盟"这个关键词以后，用户在微信输入"万普微盟"系统就会回复您所设置的图文回复内容，以图文信息的的形式回复给用户</li>
+
+        </ol>
+    </div>
+          <div class="cLine">
+              <div class="pageNavigator left">
+     <a href="{weikucms::U('Img/add',array('token'=>$token))}" title='新增图文自定义回复' class='btn btn-primary'>新增图文自定义回复</a>　
+
+                  <div style="display: block;float: right;margin-left: 500px;">
+                      <form action="" method="post" >
+                          <input type="text" name="classname" id="classname" value="{weikucms:$seach}" placeholder="请输入您要搜索的所属分类名"/>
+                          <button type="button" class="seachsub">搜索</button>
+                      </form>
+                  </div>
+
+
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>关键词</th>
+                      <th style="width: 400px;">图文标题</th>
+                      <th>所属分类</th>
+                      <th>浏览次数</th>
+                      <th>添加时间</th>
+                      <th>排序号</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td>{weikucms:$vo.id}</td>
+                          <td>{weikucms:$vo.keyword}</td>
+                          <td>{weikucms:$vo.title}</td>
+                          <td>{weikucms:$vo.classname}</td>
+                          <td><span class="badge badge-success">{weikucms:$vo.click}</span></td>
+                          <td><php>echo date('Y-m-d',$vo['uptatetime']);</php></td>
+                          <td>{weikucms:$vo.store}</td>
+                          <td>
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Img/edit',array('id'=>$vo['id'],'seach'=>$_GET['seach']))}" title="编辑图文自定义回复">编辑</a>
+                              <if condition="$vo['is_zf'] eq 1">
+                                  <a class="btn btn-success btn-sm" href="{weikucms::U('Img/zhuanfa',array('id'=>$vo['id'],'seach'=>$_GET['seach']))}" title="编辑图文自定义回复">查看转发</a>
+                              </if>
+                              <a class="btn btn-success btn-sm" href="#" onclick="window.open('{weikucms::U('Wap/Index/content',array('id'=>$vo['id'],'token'=>session('token')))}', 'bindweixin', 'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,title=0,height=960,width=640');" >预览</a>
+                              <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Img/del',array('id'=>$vo['id']))}')" href="#">删除</a></td>
+
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+        <script type="text/javascript">
+            $(function(){
+                $('#classname').keypress(function(e) {
+                    if (e.keyCode == 13) {
+                        e.preventDefault();
+                    }
+                })
+                $('.seachsub').click(function(){
+                    var seach = $('#classname').val();
+                    var url = "{weikucms::U('Img/index',array('token'=>$token))}&seach="+seach;
+                    $.post(url,{},function(rel){
+                        if(rel.status == 1){
+                            location.href = rel.url;
+                        }else{
+                            alert('系统报错');
+                        }
+                    },'json');
+                })
+            })
+        </script>
+<include file="Public:footer"/>

@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <title>签到记录-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral integral_record">
+    <div class="body">
+        <section class="p_10">
+            <table class="table_record">
+                <thead>
+                <tr>
+                    <td style="width:70%;">签到日期 </td>
+                    <td style="width:30%;">积分</td>
+                </tr>
+                </thead>
+                <tbody>
+                <if condition="$signlist neq null">
+                    <volist name="signlist" id="vo">
+                    <tr>
+                    <td>{weikucms:$vo.sign_date} </td>
+                    <td>+{weikucms:$vo.score}</td>
+
+                    </tr>
+                    </volist>
+                <else/>
+                    <tr>
+                        <td>您还没有签到记录 </td>
+
+                    </tr>
+                </if>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</div></body>
+
+</html>

@@ -1,0 +1,153 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+   <div class="cLineB">
+       <div class="title_tab" id="topTab">
+           <ul class="tab_navs title_tab" data-index="0" >
+
+               <li data-index="0" class="tab_nav  js_top first" data-id="today">
+                   <a href="{weikucms::U('ShopMember/account',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">我的账户</a>
+               </li>
+
+               <li data-index="1" class="tab_nav sub js_top " data-id="total">
+                   <a href="{weikucms::U('ShopMember/index',array('token'=>$token,'member_id'=>$member_id))}">门店主页</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/MemberAll',array('token'=>$token,'member_id'=>$member_id))}">所有订单</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/MemberAll',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">今日订单</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/WareList',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">商品管理</a>
+               </li>
+
+               <!--<li data-index="1" class="tab_nav  js_top sub" data-id="today">-->
+               <!--<a href="{weikucms::U('ShopMember/GradeList',array('token'=>$token,'member_id'=>$member_id))}">会员管理</a>-->
+               <!--</li>-->
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/Union',array('token'=>$token,'member_id'=>$member_id))}">社区管理</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/Flash',array('token'=>$token,'member_id'=>$member_id))}">轮播图管理</a>
+               </li>
+
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopMember/changepwd',array('token'=>$token,'member_id'=>$member_id))}">修改密码</a>
+               </li>
+
+
+
+               <!--<li data-index="1" class="tab_nav  js_top sub" data-id="today">-->
+               <!--<a href="">未处理订单</a>-->
+               <!--</li>-->
+           </ul>
+       </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+   <div style="width:100%;line-height: 35px;font-size: 18px;color:red;padding: 0px 10px;">
+        您好,{weikucms:$shopmemberdata.username}
+    </div>
+    
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以了解万普微门店(所有分店)的订单总数、今日的订单量、会员总数和未处理订单，未处理订单将会展示各分店订单的处理情况，有利于了解和管理分店。</li>
+		<li>在这里还可以添加分店、编辑分店、删除分店。</li>
+	</ol>
+</div>
+
+
+<div class="box-content">
+    <h4>
+        <a class="btn btn-success btn-sm" href="{weikucms::U('ShopMember/account',array('token'=>$token,'member_id'=>$member_id,'type'=>1))}">我的账户</a>
+        <a class="btn btn-success btn-sm" href="{weikucms::U('ShopMember/account',array('token'=>$token,'member_id'=>$member_id,'type'=>2))}">店铺管理详情</a>
+    </h4>
+    <div class="msgWrap">
+        <if condition="$type eq 1">
+        <form method="post"  action="###" id="info" >
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>区域平台销售总额</th>
+                    <th>线上收入</th>
+                    <th>货到付款</th>
+                    <th>区域平台收入</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{weikucms:$totalget}</td>
+                        <td>{weikucms:$getrate}</td>
+                        <td>{weikucms:$mycount}</td>
+                        <td>{weikucms:$shopcount}</td>
+                        <td>
+                            <a class="btn btn-success btn-sm" href="{weikucms::U('ShopMember/ApplyCount',array('token'=>$token,'member_id'=>$member_id))}">申请提现</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <else />
+            <form method="post"  action="###" id="info" >
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>店铺名称</th>
+                        <th>店铺佣金比列</th>
+                        <th>店铺销售总额</th>
+                        <th>店铺支付佣金</th>
+                        <th>已经结算</th>
+                        <th>未结算</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="memberList" id="list" key="k">
+                    <tr>
+                        <td>{weikucms:$k}</td>
+                        <td>{weikucms:$list.username}</td>
+                        <td>{weikucms:$list.rate}</td>
+                        <td>{weikucms:$list.totalget}</td>
+                        <td><?php echo $list['totalget']*$list['rate'];?></td>
+                        <td>{weikucms:$list.getrate}</td>
+                        <td><?php echo $list['totalget']-$list['totalget']*$list['rate']-$list['getrate'];?></td>
+                        <td>
+                            <a class="btn btn-success btn-sm" href="{weikucms::U('ShopMember/CountList',array('token'=>$token,'member_id'=>$member_id,'id'=>$list[id],'status'=>0))}">提现记录</a>
+                        </td>
+                    </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </form>
+            <div>
+                <ul class="pager">
+                    {weikucms:$page}
+                </ul>
+            </div>
+            </if>
+
+    </div>
+<include file="Public:footer"/>

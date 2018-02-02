@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<title>
+        <if condition="$isHD">
+            活动及培训
+            <else />
+            招标方案主题
+        </if>
+	</title>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{weikucms::RES}/Jd/css/index1.css">
+	<link rel="stylesheet" href="{weikucms::RES}/Jd/css/lication.css">
+	<link rel="stylesheet" href="{weikucms::RES}/Jd/css/icon/style.css">
+	<script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/common/invite.js"></script>
+	<script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".data-btn").click(function(){
+		    var This = $(this);
+			var data=$(this).html();
+            var figure= 0;
+            var id = parseInt({weikucms:$_GET['id']});
+            var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'active'))}";
+			if($(this).hasClass('on')){
+                figure--;
+                $.post(url,{figure:figure,id:id},function(rel){
+                    if(rel.status==1){
+						data--;
+				        This.removeClass('on');
+						This.html(data);
+                        //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                    }else{
+                        msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                    }
+                },'json')
+			}else{
+                figure++;
+				
+                $.post(url,{figure:figure,id:id},function(rel){
+                    if(rel.status==1){
+                        data++;
+				        This.addClass('on');
+						This.html(data);
+                        //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                    }else{
+                        msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                    }
+                },'json')
+			}
+			
+		})
+	})
+	</script>
+</head>
+<body>
+    <img style="display:none;" src="{weikucms::RES}/Jd/images/login.png" alt="">
+<!--   头部 -->
+	<!--<div class="search" style="font-size:20px;">
+        <if condition="$isHD">
+        活动及培训主题：
+        <else />
+        招标主题：
+        </if>{weikucms:$info['title']}
+    </div>-->
+	<!-- 内容 -->
+	<div class="img">
+		<img src="{weikucms:$info['pic']}" alt="">
+		<div class="icon-abso">
+			<span class="praise icon-thumbs-up arrow-btn data-btn <if condition="$data['type'] eq 1">on</if>">{weikucms:$info['number']}</span>
+			<span class="praise icon-chat arrow-btn " onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'active'))}'"><if condition="$evacount">{weikucms:$evacount}<else/>0</if></span>
+		</div>
+	</div>
+	<div class="main">
+        <div class="mb10">
+        <if condition="$isHD">
+            活动及培训主题：
+            <else />
+            招标主题：
+        </if>{weikucms:$info['title']}
+      </div>
+        <if condition="!$isHD">
+            <div class="mb10" style="  background-color: #F5772D;padding: 5px;width: 45%;color: #FFF;text-align: center;border-radius: 5px;">目标奖金：{weikucms:$info['money']}&nbsp;元</div>
+        </if>
+		<div class="mb10">
+            <if condition="$isHD">
+                活动及培训描述：
+                <else />
+                标书描述：
+            </if>
+            {weikucms:$info['abstract']}
+        </div>
+		<div class="mb10">
+            <if condition="$isHD">
+                开始时间：{weikucms:$info['startday']}
+                <else />
+                开始日期：<php>echo date('Y-m-d', strtotime($info['startday']));</php>
+            </if>
+        </div>
+		<div class="mb10">
+            <if condition="$isHD">
+                截止时间： {weikucms:$info['endday']}
+                <else />
+                截止日期： <php>echo date('Y-m-d', strtotime($info['endday']));</php>
+            </if>
+        </div>
+		<!--<div class="mb10">描述</div>
+		<div class="mb10">关键字：向日葵，太阳花</div>
+		<div class="mb10"><i class="color3388df">附件:方案标题.doc</i></div>-->
+		<div class="mb10"><a href="{weikucms:$info['activeurl']}"> <i class="color3388df">方案链接：{weikucms:$info['activeurl']}</i></a></div>
+		<!--<div class="mb10 btn">在线阅读</div>-->
+	</div>
+	<div class="main-content">
+		<div class="main-content-title">
+			<span class="main-content-title-left">评论 <if condition="$evacount">({weikucms:$evacount})<else/>(0)</if></span>
+            <if condition="$evacount gt 4">
+			<span class="main-content-title-right" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'active'))}'">更多...</span>
+		    </if>
+        </div>
+
+
+        <volist name="evaluate" id="so" offset="0" length="4">
+		<div class="p10">
+			<div class="main-center" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'active'))}'">
+				<div class="main-center-left">
+                    <if condition="$so['headpic']" >
+                        <img src="{weikucms:$so.headpic}" alt="">
+                        <else/>
+                        <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                    </if>
+				</div>
+				<div class="main-center-right">
+                    <if condition="$so['upuname']">
+                        <div class="color737373">{weikucms:$so.upuname}回复{weikucms:$so.uname}</div>
+                        <else/>
+                        <div class="color737373">{weikucms:$so.uname}</div>
+                    </if>
+
+					<div class="colora4a4a4">
+                        <php>
+                            $times = strtotime($so['add_time']);
+                            echo date('Y/m/d H:i',$times);
+                        </php>
+                    </div>
+					<div class="color3d3d3d" style="word-break: break-all;" >{weikucms:$so.content}</div>
+				</div>
+			</div>
+		</div>
+        </volist>
+
+	</div>
+<if condition="!$isHD">
+    <div class="main-content">
+        <div class="main-content-title">
+            <span class="main-content-title-left">报名 <if condition="$rescount">({weikucms:$rescount})<else/>(0)</if></span>
+            <if condition="$rescount gt 3">
+                <span class="main-content-title-right" onclick="window.location.href='{weikucms::U('Jd/somelist',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id'],'type'=>'enlist'))}'">更多...</span>
+            </if>
+        </div>
+        <volist name="regist" id="so" offset="0" length="3">
+            <div class="p10">
+                <div class="main-center">
+                    <div class="main-center-left">
+                        <if condition="$so['headpic']">
+                            <img src="{weikucms:$so.headpic}" alt="">
+                            <else/>
+                            <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                        </if>
+                    </div>
+                    <div class="main-center-right">
+                        <div class="color737373">参与人：{weikucms:$so.name}</div>
+                        <div class="color737373">报名时间：
+                            <php>
+                                $times = strtotime($so['add_time']);
+                                echo date('Y/m/d H:i',$times);
+                            </php>
+                        </div>
+                        <div class="color737373">组织名称：{weikucms:$so.organization}</div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+
+
+        <!--<div class="p10">
+            <div class="main-center">
+                <div class="main-center-left">
+                    <img src="{weikucms::RES}/Jd/images/1.jpg" alt="">
+                </div>
+                <div class="main-center-right">
+                    <div class="color737373">用户名</div>
+                    <div class="colora4a4a4">2015-06-04</div>
+                    <div class="color3d3d3d">《标题标题标书标题》</div>
+                    <div class="colora4a4a4 mt10">标书标题标书标题标书标题标书标题标书标题标书标题标书标题标书标题...</div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="main-content">
+        <div class="main-content-title">
+            <span class="main-content-title-left">投标 <if condition="$scacount">({weikucms:$scacount})<else/>(0)</if></span>
+            <if condition="$scacount gt 3">
+            <span class="main-content-title-right" onclick="window.location.href='{weikucms::U('Jd/somelist',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id'],'type'=>'scale'))}'">更多...</span>
+            </if>
+        </div>
+        <volist name="scale" id="so" offset="0" length="3">
+            <div class="p10">
+                <div class="main-center">
+                    <div class="main-center-left">
+                        <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                    </div>
+                    <div class="main-center-right">
+                        <div class="color737373">作者：{weikucms:$so.author}</div>
+                        <div class="colora4a4a4">
+                            <php>
+                                $times = strtotime($so['add_time']);
+                                echo date('Y/m/d H:i',$times);
+                            </php>
+                        </div>
+                        <div class="color3d3d3d">标书名称:《{weikucms:$so.tender}》</div>
+                        <div class="color737373">标书链接地址：{weikucms:$so.activeurl}</div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+
+
+
+
+        <!--<div class="p10">
+            <div class="main-center">
+                <div class="main-center-left">
+                    <img src="{weikucms::RES}/Jd/images/1.jpg" alt="">
+                </div>
+                <div class="main-center-right">
+                    <div class="color737373">用户名</div>
+                    <div class="colora4a4a4">2015-06-04</div>
+                    <div class="color3d3d3d">《标题标题标书标题》</div>
+                    <div class="colora4a4a4 mt10">标书标题标书标题标书标题标书标题标书标题标书标题标书标题标书标题...</div>
+                </div>
+            </div>rescount
+        </div>-->
+    </div>
+
+
+</if>
+
+<!-- 底部 -->
+	<div style="height:80px;float:left;"></div>
+	<div class="foot">
+		<a href="/index.php?g=Wap&amp;m=Jd&amp;a=setactive&amp;token=3eaf0f4f4805de0439d6940654198378&amp;oepnid=oGFJcuO0F3fhR4_VH77Ups5QvRiA&amp;id=4"><span style="margin-left:10px;width:120px;float:left;font-weight: initial;">我要报名</span></a>
+		    <a href="#">
+	        <div style="float: right;margin-left: 10px;">
+	            <p class="ons" style="margin-top: 13px;"></p>
+	            <p style="font-size: 12px;color:#000000;font-weight: initial;">发送给朋友</p>
+	        </div>
+	    </a>
+	    <a href="#">
+	        <div style="float: right;margin-left: 10px;">
+	            <p class="ons1" style=" margin-top: 13px;"></p>
+	            <p style="font-size: 12px;color:#000000;font-weight: initial;">分享到QQ</p>
+	        </div>
+	    </a>
+	    <!--<a href="#">
+	        <div style="float: right;">
+	              <p class="ons2"></p>
+	              <p style="font-size: 12px;color:#000000">朋友圈</p>
+	        </div>
+	    </a>-->
+
+	    <a href="#">
+	        <div style="float: right;">
+	            <p class="ons2" style="width: 22px; margin-left: 15px; position: relative; top: 4px;"></p>
+	            <p style="font-size: 12px;color:#000000;font-weight: initial;">复制链接</p>
+	        </div>
+	    </a>
+</div>
+<div class="foot">
+    <if condition="$validTime">
+        <a href="{weikucms::U('Jd/setactive',array('token'=>$token,'oepnid'=>$openid,'id'=>$_GET['id']))}"><span style="margin-left:10px;width:120px;float:left;font-weight: initial;">我要报名</span></a>
+        <else />
+        <a href="javascript: void(0)"><span style="margin-left:10px;width:120px;float:left;  color: #CACACA;">我要报名</span></a>
+    </if>
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons" style="margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">发送给朋友</p>
+        </div>
+    </a>
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons1" style=" margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">分享到QQ</p>
+        </div>
+    </a>
+    <!--<a href="#">
+        <div style="float: right;">
+              <p class="ons2"></p>
+              <p style="font-size: 12px;color:#000000">朋友圈</p>
+        </div>
+    </a>-->
+
+    <a href="#">
+        <div style="float: right;">
+            <p class="ons2" style="width: 22px; margin-left: 15px; position: relative; top: 4px;"></p>
+            <p style="font-size: 12px;color:#000000;font-weight: initial;">复制链接</p>
+        </div>
+    </a>
+</div>
+<script>
+    $(function(){
+        $('.ons').invite({"bg":'tpl/static/wapweiui/images/py.png'});//{"bg":'./tpl/Wap/default/common/Jd/images/doc.png'}
+        $('.ons1').invite({"bg":'tpl/static/wapweiui/images/qq.png'});
+        $('.ons2').invite({"bg":'tpl/static/wapweiui/images/lj.png'});
+    })
+
+</script>
+<script>
+    function shareConfig(){
+        return {
+            'imgUrl': "<?php echo C('site_url');?>./tpl/Wap/default/common/Jd/images/login.png"
+        };
+
+    }
+    function shareSuccess(type){//分亨成功回调
+        $.post('',{},function(data){
+
+        },'json')
+
+    }
+</script>
+</body>
+</html>

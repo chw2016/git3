@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;
+	charset=UTF-8">
+    <meta charset="utf-8">
+    <title>
+        {weikucms:$wxuser.name}会员中心
+    </title>
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <script>
+        var _loadStart = new Date().getTime();
+    </script>
+    <link href="{weikucms::STATICS}/wapweiui/usercenter/resource/base-492b4460c6b0ebbaf972f4468345f714.css"
+          type="text/css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/usercenter/resource/cards-c1597327f68b856c52da753f87b3b43f.css"
+          type="text/css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/usercenter/resource/mods.all-87f301c82376503af2c7de2a6edd44bc.css"
+          type="text/css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/usercenter/resource/mods.all-ca7fd0d64bb3c4a8d48be89f2e84d9ef.js">
+    </script>
+    <script src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery2-4364d597e57a92365de0c33b1e3cc44a.js">
+    </script>
+    <script src="{weikucms::STATICS}/wapweiui/usercenter/resource/cards-bec22ae26165d6b349c1c9a1ffc42b54.js">
+    </script>
+    <script src="{weikucms::STATICS}/wapweiui/usercenter/resource/acts-70ccbcc765e060b71d9a85952fbe16e7.js">
+    </script>
+    <script src="{weikucms::STATICS}/wapweiui/usercenter/resource/mods.all-3448f4e1d6473dd5165500245ea4611a.js">
+    </script>
+</head>
+
+<body>
+<div id="box" class="container">
+<div class="dataCont">
+    <div class="card11 card-combine" data-node="group" id="boxId_1408508963875_14">
+        <div data-node="cardList" class="card-list">
+            <div class="card card30 line-around" data-node="card" data-jump="/u/1640513980"
+                 data-act-type="hover" id="boxId_1408508963875_15">
+                <div class="layout-box media-graphic">
+                    <div class="mod-media size-m">
+                        <div class="media-main">
+                            <if condition="$userdata.headimgurl neq null">
+                                <img src="{weikucms:$userdata.headimgurl}" height="64" width="64">
+                                <elseif condition="$userdata.fakeid neq null" />
+                                <img src="./upload/weixin_headimg/{weikucms:$userdata.fakeid}.png" height="64" width="64">
+                                <else/>
+                                <img width="64px" height="64px" src="./upload/w_client.jpg">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="box-col item-list">
+                        <div class="item-main txt-m mct-a txt-cut" data-node="cNameUsr">
+                            <if condition="$usercenterdata neq null">
+                                {weikucms:$usercenterdata.name}
+                                <else/>
+                                {weikucms:$userdata.nickname}
+                            </if>
+
+                            <if condition="$usercenterdata eq null">
+                            <a href="{weikucms::U('Usercenter/joinusercenter',array('token'=>$token,'openid'=>$openid))}" data-act-type="hover" class="btn">
+                                    点击成为会员
+                            </a>
+                            <else/>
+                                <a href="{weikucms::U('Usercenter/joinusercenter',array('token'=>$token,'openid'=>$openid))}" data-act-type="hover" class="btn">
+                                    {weikucms:$userlevelname}
+                                </a>
+                            </if>
+                        </div>
+                        <!--<div class="item-minor txt-s mct-d" data-node="cTxtUsr">-->
+                            <!--简介：万普微盟是微信推广的领导者，专注于微信公众号广，微信公众号定制开发www.wapwei.com-->
+                        <!--</div>-->
+                    </div>
+
+                </div>
+            </div>
+            <div class="card card2 line-around" id="boxId_1408508963875_16">
+                <div class="layout-box">
+                    <a class="box-col line-separate" href="{weikucms::U('Usercenter/scorerecord',array('token'=>$token,'openid'=>$openid))}"
+                       data-act-type="hover">
+                        <div class="mct-a txt-s">
+                            <if condition="$usercenterdata neq null">
+                                {weikucms:$usercenterdata.score}
+                                <else/>
+                                0
+                            </if>
+                        </div>
+                        <div class="mct-a txt-s txt-bottom">
+                            积分
+                        </div>
+                    </a>
+					<if condition="$_GET['token'] neq 'bd70f29e952a7a8e31193d1ae6e77e36'">
+                    <a class="box-col line-separate" href="{weikucms::U('Usercenter/moneyrecord',array('token'=>$token,'openid'=>$openid))}"
+                       data-act-type="hover">
+                        <div class="mct-a txt-s">
+                            <if condition="$usercenterdata neq null">
+                                {weikucms:$usercenterdata.money}
+                                <else/>
+                                0
+                            </if>
+                        </div>
+                        <div class="mct-a txt-s txt-bottom">
+                            余额
+                        </div>
+                    </a>
+					</if>
+                    <if condition="$token eq '233eb0b413256696f977e4c963645877'">
+                    <a class="box-col line-separate" href="{weikucms::U('Usercenterzj/tixian',array('token'=>$token,'openid'=>$openid))}"
+                       data-act-type="hover">
+                        <div class="mct-a txt-s">
+                            {weikucms:$yongjin}
+                        </div>
+                        <div class="mct-a txt-s txt-bottom">
+                            提现
+                        </div>
+                    </a>
+                        </if>
+
+                    <a class="box-col line-separate" href="{weikucms::U('Usercenter/salecard',array('token'=>$token,'openid'=>$openid))}"
+                       data-act-type="hover">
+                        <div class="mct-a txt-s">
+                            {weikucms:$salecardcount}
+                        </div>
+                        <div class="mct-a txt-s txt-bottom">
+                            优惠券
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card11 card-combine" data-node="group">
+        <if condition="$usercenterdata neq null">
+            <div data-node="cardList" class="card-list">
+                <div class="card card32 line-around" style="height: 43px;line-height: 40px;padding-left: 15px;padding-bottom: 5px;" >
+                    <span style="font-size: 15px;font-weight:bold;color: rgb(241, 89, 89);">会员卡号:
+                          
+						  <php>if($token == 'bd70f29e952a7a8e31193d1ae6e77e36' ||  $token == 'b1e591201cd2db6dc1893da4bacc8f4f'){</php>   
+                                {weikucms:$usercenterdata.phone}
+								<php>}else{</php>
+							    <if condition="$usercenterdata['is_bind'] eq 1">
+                                {weikucms:$usercenterdata.phone}
+                                <else/>
+                                <php>if($shitidata['member_sn'] != null){</php>
+                                  {weikucms:$shitidata.member_sn}
+                                <php>}else{</php>
+                                {weikucms:$usercenterdata.member_sn}
+                                <php>}</php>
+
+
+                            </if>
+						  <php>}</php>
+                    </span>
+                </div>
+            </div>
+        </if>
+
+        <!--
+        <div data-node="cardList" class="card-list">
+            <div class="card card32 line-around" data-node="card" data-act-type="hover"
+                 data-jump="{weikucms::U('Usercenter/salecard',array('token'=>$token,'openid'=>$openid))}" >
+                <a href="{weikucms::U('Usercenter/salecard',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+                   data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918015921342_easyicon_net_64.png" data-node="cMesImg">
+                    </i>
+                    <div class="box-col txt-cut">
+                        <span class="mct-a " data-node="cMesTxt">
+                            我的优惠券
+                        </span>
+                        <span style="float: right;color: red;">
+                            {weikucms:$salecardcount}
+                        </span>
+                    </div>
+
+                </a>
+            </div>
+
+        </div>
+        -->
+        <div class="card card4 line-around">
+            <a href="{weikucms::U('Usercenter/activitys',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+               data-act-type="hover">
+                <i class="iconimg iconimg-s">
+                    <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918015921342_easyicon_net_64.png" alt="">
+                </i>
+                <div class="box-col txt-cut">
+                                                    <span class="mct-a ">
+                                                        抽奖活动
+                                                    </span>
+                                                    <span style="float: right;color: red;padding-right: 14px;">
+                                                        {weikucms:$lotterycounts}
+                                                    </span>
+                </div>
+
+            </a>
+        </div>
+
+        <div data-node="cardList" class="card-list">
+            <div class="card card32 line-around" data-node="card" data-act-type="hover"
+                 data-jump="{weikucms::U('Usercenter/notice',array('token'=>$token,'openid'=>$openid))}" >
+                <a href="{weikucms::U('Usercenter/notice',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+                   data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20141205061618722_easyicon_net_128.png" data-node="cMesImg">
+                    </i>
+                    <div class="box-col txt-cut">
+                        <span class="mct-a " data-node="cMesTxt">
+                            会员通知
+                        </span>
+                        <span style="float: right;color: red;padding-right: 3px;">
+                            {weikucms:$notices}
+                        </span>
+                    </div>
+
+                </a>
+            </div>
+
+        </div>
+
+
+
+        <div class="card card4 line-around" id="boxId_1408508963875_22">
+            <a href="{weikucms::U('Usercenter/usersign',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+               data-act-type="hover">
+                <i class="iconimg iconimg-s">
+                    <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918020023544_easyicon_net_63.9536567705.png" alt="">
+                </i>
+                <div class="box-col txt-cut">
+                                <span class="mct-a ">
+                                    我要签到
+                                </span>
+                                <span style="float: right;color: red;padding-right: 14px;">
+                                    <if condition="$userissign neq null">
+                                        今日已签
+
+                                    </if>
+
+                                </span>
+                </div>
+
+            </a>
+        </div>
+
+        <div data-node="cardList" class="card-list">
+            <div class="card card32 line-around" data-node="card" data-act-type="hover"
+                 data-jump="{weikucms::U('Usercenter/scoreguize',array('token'=>$token,'openid'=>$openid))}" >
+                <a href="{weikucms::U('Usercenter/scoreguize',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+                   data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20141205061536191_easyicon_net_127.907313541.png" data-node="cMesImg">
+                    </i>
+                    <div class="box-col txt-cut">
+                        <span class="mct-a " data-node="cMesTxt">
+                            会员使用规则
+                        </span>
+                    </div>
+
+                </a>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+    <div class="card11 card-combine" data-node="group" id="boxId_1408508963875_21">
+        <div data-node="cardList" class="card-list">
+
+           <if condition="$token eq 'bd70f29e952a7a8e31193d1ae6e77e36' or $token eq 'b1e591201cd2db6dc1893da4bacc8f4f'">
+            <else/>
+            <div class="card card4 line-around">
+                <a href="{weikucms::U('Wap/Integralshop/index',array('token'=>$token,'openid'=>$openid))}" class="layout-box"
+                   data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20141108015727653_easyicon_net_127.907313541.png" alt="">
+                    </i>
+                    <div class="box-col txt-cut">
+                        <span class="mct-a ">
+                            积分商城
+                        </span>
+
+                    </div>
+
+                </a>
+            </div>
+           </if>
+
+
+        </div>
+    </div>
+    <div class="card11 card-combine" data-node="group" id="boxId_1408508963875_25">
+        <div data-node="cardList" class="card-list">
+			<if condition="$_GET['token'] neq 'bd70f29e952a7a8e31193d1ae6e77e36'">
+            <div class="card card4 line-around" id="boxId_1408508963875_26">
+                <a href="{weikucms::U('Usercenter/joinusercenter',array('token'=>$token,'openid'=>$openid))}" class="layout-box" data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918020216497_easyicon_net_64.png" alt="">
+                    </i>
+                    <div class="box-col txt-cut">
+                                                    <span class="mct-a ">
+                                                        完善资料
+                                                    </span>
+                    </div>
+
+                </a>
+            </div>
+
+            <div class="card card4 line-around" data-jump="{weikucms::U('Usercenter/shangjia',array('token'=>$token,'openid'=>$openid))}">
+                <a href="{weikucms::U('Usercenter/shangjia',array('token'=>$token,'openid'=>$openid))}" class="layout-box" data-act-type="hover">
+                    <i class="iconimg iconimg-s">
+                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918021303647_easyicon_net_64.png" alt="">
+                    </i>
+                    <div class="box-col txt-cut">
+                        <span class="mct-a ">
+                            商家信息
+                        </span>
+                    </div>
+
+                </a>
+            </div>
+			</if>
+			<if condition="$_GET['token'] neq 'bd70f29e952a7a8e31193d1ae6e77e36'">
+           <if condition="$usercenterdata neq null">
+	            <div class="card card4 line-around">
+	                <a href="{weikucms::U('Usercenter/bindcard',array('token'=>$token,'openid'=>$openid))}" class="layout-box" data-act-type="hover">
+	                    <i class="iconimg iconimg-s">
+	                        <img width="23" height="23" src="{weikucms::STATICS}/wapweiui/usercenter/resource/20140918021214737_easyicon_net_63.9536567705.png" alt="">
+	                    </i>
+	                    <div class="box-col txt-cut">
+	                                                    <span class="mct-a ">
+	                                                        绑定实体会员卡
+	                                                    </span>
+	                    </div>
+
+	                </a>
+	            </div>
+			</if>
+			</if>
+        </div>
+    </div>
+</div>
+</div>
+<div style="text-align: center;padding: 10px 0px 20px 0px;font-size: 12px;color:#8A8A8A;">
+    ©{weikucms:$wxuser.name}<if condition="$_GET['token'] != '5e06d4d7477b35508c07d8ec81250286'">-万普微信</if>
+</div>
+
+</body>
+
+</html>

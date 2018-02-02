@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>理财产品介绍</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    金融产品
+    <!-- <div class="headerRight city-ed noWrap overFloatHidden">
+        请选择
+    </div> -->
+</div>
+<div class="produceImg setMiddle boxShadow fixBg" style="background-image:url({weikucms::STATICS}/wapweiui/jishi/img/img.png)"></div>
+<div class="produceNameBox lisheng-red-bg setMiddle lisheng-text-color h3 myul">
+    <div class="produceName white-bg myli">
+        产品名称
+    </div>
+    <div class="RMB white myli">
+        100
+    </div>
+</div>
+<div class="lisheng-text-color h4 setMiddle textMiddle oldPrice">
+    实体价：<span class="RMB">199</span>
+</div>
+<div class="produceInfoBox setMiddle boxShadow white-bg lisheng-text-color">
+    <div class="PIBTitle h4">
+        理财产品名称
+    </div>
+    <div class="produceInfo h5">
+        理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议理财专家建议
+    </div>
+</div>
+<div class="produceLicaishiBox white-bg lisheng-text-color myul boxShadow">
+    <div class="produceLicaishiLogowrap">
+        <div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms::STATICS}/wapweiui/jishi/img/userlogo.png)"></div>
+    </div>
+    <div class="produceLicaishiInfoBox">
+        <div class="pLicaishiName">周星驰</div>
+        <div class="licaishiDengJiBox">
+            <div class="licaishiDengJiWrap  myul" data-zhuanshi="3">
+                <!-- data-zhuanshi的值是星星个数，后台只需循环遍历出这个值即可 -->
+            </div>
+        </div>
+        <div class="myul">
+            <div class="myli">
+                专业：4.9
+            </div>
+            <div class="myli">
+                沟通：4.9
+            </div>
+            <div class="myli">
+                服务：4.9
+            </div>
+        </div>
+        <div class="pLicaishiContent">
+            理财师说很多话理财师说很多话理财师说很多话理财师说很多话理财师说很多话理财师说很多话理财师说很多话理财师说很多话
+        </div>
+    </div>
+</div>
+<div class="footer yuyue lishengGoldBg textMiddle lisheng-text-color h4">
+    预约
+    <!-- <div class="headerRight city-ed noWrap overFloatHidden">
+        请选择
+    </div> -->
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".licaishiDengJiWrap").each(function(i,o){
+            var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi'))  ,
+                    di = 0,
+                    zhuanshi = '<div class="zhuanshi fixBg"></div>';
+            for(di; di < d ; di++){
+                $(this).append(zhuanshi);
+            }
+        })
+    })
+</script>
+</html>

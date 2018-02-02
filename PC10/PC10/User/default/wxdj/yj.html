@@ -1,0 +1,164 @@
+<include file="Public:head"/>
+<style>
+    .abc1{
+        display: block;
+        /* right: 0px; */
+        /* top: -10px; */
+        height: 39px;
+        /* padding: 0 40px; */
+        line-height: 2;
+        background: #C4E238;
+        width: 50px;
+        height: 25px;
+        text-align: center;
+    }
+    .rightf{
+        float:left;
+        margin-bottom:20px;
+        margin-top:10px;
+    }
+</style>
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+			核审用户信息
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="rightf">
+    审查事项：<br/>1.姓名是否规范；<br/>2.手机号是否有效（验证归属地）；<br/>3.地址是否填写了省、市（县、区）及具体街道（门牌号、村）；<br/>4.前面板照片产品型号清晰，并符合SN对应的机型（MES中查询）；<br/>5.后面板照片产品序列号是否清晰，并与SN一致。
+符合以上条件，审查通过，否则，审查不通过，并说明原因。
+    </div>
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">编号</label></th>
+                    <td>
+                        {weikucms:$info.id}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">姓名</label></th>
+                    <td>
+                        {weikucms:$info.name}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">电话号码</label></th>
+                    <td>
+                        {weikucms:$info.phone}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">地址</label></th>
+                    <td>
+                        {weikucms:$id.s_address}
+                    </td>
+                </tr>
+
+				
+				<tr>
+                    <th valign="top"><label for="key">前版面照</label></th>
+                    <td>
+                        <img src="{weikucms:$info.img1}" width="150" height="150">
+                    </td>
+                </tr>
+                
+				<tr>
+                    <th valign="top"><label for="key">后版面照</label></th>
+                    <td>
+                        <img src="{weikucms:$info.img2}" width="150" height="150">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">SN</label></th>
+                    <td>
+                       {weikucms:$sid.sn}
+                    </td>
+                </tr>
+			     <tr>
+                    <th valign="top"><label for="key">时间</label></th>
+                    <td>
+                        {weikucms:$info.add_time|date='Y-m-d H:i:s',###}
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">审查</label></th>
+					<if condition="$info['is_if'] neq 1">
+					
+                    <td>
+                        <input type="radio" value="1" name="is_if"/>通过
+                        
+                    </td>
+					<else/>
+					<td>已经处理过了</td>
+					</if>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key">备注</label></th>
+                    <td>
+                        <input value="{weikucms:$info.other}" name="other" id="other">
+                    </td>
+                </tr>
+				<tr>
+                    <th valign="top"><label for="key"></label></th>
+					
+                    <td>
+					
+                        <button type="button" id="savebtn" name="button"  class="btn btn-primary as" onclick="save()">确定</button>
+					
+						<a target="_self" class="btn btn-success btn-sm" href="javascript:history.go(-1);" >返回</a>
+                    </td>
+					
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+        <script>
+            //去处理
+			
+            function save(){
+			var kk=$('input[name="is_if"]:checked').val();
+			var other = $('#other').val();
+                var url="{weikucms::U('chuli1',array('token'=>$token,'id'=>$_GET['id']))}";
+                $('.as').html('确认中...');
+                   $.post(url,{kk:kk,other:other},function(data){
+						if(data.status==1){
+							notif({
+								msg: '修改成功',
+								type: "success"
+							});
+						window.location.href="{weikucms::U('luckjoy',array('token'=>$token))}";
+						}else{
+							notif({
+								msg: '修改失败',
+								type: "error"
+							});
+						}
+				   },'json')
+                //}
+                
+            }
+        </script>
+
+
+

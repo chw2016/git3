@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+</head>
+<body onload="initEvent()">
+<if condition="$isnull eq 1">
+<div class="iconText">
+	    <ul>
+	    	<li class="noAfter">	           
+		        <div class="notContentTips">
+		          <img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png">
+		          <if condition="$legal eq 1">
+		          	<p>对不起，非法数据闯入，不能进行评价！！！</p>
+		          <else/>
+		          	<p>对不起，你已经对这个订单评价过了，不能再评价！！！</p>
+		          </if>
+		        </div> 
+	     	</li> 	           
+	    </ul>
+	</div>
+<else/>
+<div style="padding-top:40px;">
+    <div class="titleFixed" style="height:40px;">
+        <div class="pageTitle"><i></i><span class="arrow-r"></span>服务点评</div>        
+    </div>
+    <div class="bookingTips" style="line-height:25px;">
+		<strong>评价提示</strong>
+   		<div style="line-height:20px;">我们很重视您对我们员工的服务评价，评价可获得一定积分哦！</div>
+	</div>
+	<div id="baoyangYuyue1">
+		<div class="iconText">
+			<ul>
+				<li class="noAfter">
+					<div class="li-l">
+						<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_04.png">
+					</div>
+					<div class="li-r">
+						<strong>订单号：{weikucms:$orderId}</strong>
+					</div>
+				</li>
+				<li class="noAfter">
+					<div class="li-l">
+						<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_17.png">
+					</div>
+					<div class="li-r">
+						<strong>售后员工号：{weikucms:$staffId}</strong>
+					</div>
+			   </li>
+			<!--    <li class="noAfter">
+			   	<div style="padding-left:50px;padding-top:16px;padding-bottom:16px;line-height:30px;">
+					<div style="float:left;"><strong>评价分数：</strong></div>
+					<div id="star" style="width: 280px;">
+						<img src="{weikucms::STATICS}/wapweiui/service/images/star-off-big.png" alt="1" title="bad" class="img">&nbsp;
+						<img src="{weikucms::STATICS}/wapweiui/service/images/star-off-big.png" alt="2" title="poor" class="img">&nbsp;
+						<img src="{weikucms::STATICS}/wapweiui/service/images/star-off-big.png" alt="3" title="regular" class="img">&nbsp;
+						<img src="{weikucms::STATICS}/wapweiui/service/images/star-off-big.png" alt="4" title="good" class="img">&nbsp;
+						<img src="{weikucms::STATICS}/wapweiui/service/images/star-off-big.png" alt="5" title="gorgeous" class="img">
+						<input type="hidden" name="score" id="score" value="">
+					</div>					
+				</div>
+			   </li>
+		 	-->
+		   </ul>
+	</div>
+	<div class="textarea clearfix">
+		<textarea name="reason" cols="" rows="" id="curkm" placeholder="写下需要售后服务相关信息，我们很重视您提供的信息！"></textarea>
+	</div>
+	<!--
+	<div class="iconText">	
+		<ul>
+			 <li class="noAfter">
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png">
+				</div>
+				<div class="li-r">
+					<input class="input" value="{weikucms:$carData['car_username']}" placeholder="输入联系人" id="name" maxlength="20">
+				</div>
+			</li>
+			
+		
+			<li class="noAfter">
+				<div class="li-l">
+					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_05.png">
+				</div>
+				<div class="li-r">
+					<input class="input" value="" placeholder="输入手机号码" id="phone" type="tel" maxlength="11">
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+	-->
+</div>
+
+<div id="all">
+	<div class="button clearfix" id="bad" style="float:left;clear:none;"><a href="#">不满意</a></div>
+	<div class="button clearfix" id="regular" style="float:left;clear:none;"><a href="#">合格</a></div>
+	<div class="button clearfix" id="gorgeous" style="float:left;clear:none;"><a href="#">满意</a></div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		//var width = device-width;
+		var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		$('#bad').css({'width':(width-40)/3.3,'height':'50px'});
+		$('#regular').css('width',(width-40)/3.3);
+		$('#gorgeous').css('width',(width-40)/3.3);
+		$('#all').css({'width':width,'margin':'0 auto','float':'left'});
+	})
+</script>
+<div class="button clearfix">
+	<p style="padding-bottom:10px; font-size:16px; text-align:center;">评价成功后可获得一定的积分哦！</p>	
+</div>
+<!-- 
+<div class="button clearfix"><a href="javascript:void(0);" id="save">确定</a></div>
+	<p style="padding-bottom:10px; font-size:16px; text-align:center;">评价成功后可获得一定的积分哦！</p>	
+</div>
+ -->
+ </if>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+<input type="hidden" id="cid" value="{weikucms:$cid}"/>
+<input type="hidden" id="staffId" value="{weikucms:$staffId}"/>
+<input type="hidden" id="orderId" value="{weikucms:$orderId}"/>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+<script src="{weikucms::STATICS}/wapweiui/service/js/zepto.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/rate.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery.mobile-1.2.0.min.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/mobiscroll.custom-2.4.6.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$("#bad").click(function(){
+	var staffId = $("#staffId").val();
+	var orderId = $("#orderId").val();
+	var appriseInfo = $("#curkm").val();
+	var score = 1;
+	//var username = $("#name").val();
+	//var phone= $("#phone").val();
+	if(!appriseInfo){
+		show_error_tip('我们非常重视您的评价，请输入评价信息');
+		return false;
+	}
+	
+	var url = 'index.php?g=Wap&m=Service&a=appraise&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(url,{staffId:staffId,orderId:orderId,appriseInfo:appriseInfo,score:score},
+            function(data){ 
+                if(data.status == 100){                 	
+                	show_success_tip(data.info);
+                    setTimeout(function(){                        	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 2 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 3 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 4 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }
+            },'json');
+});
+$("#regular").click(function(){
+	var staffId = $("#staffId").val();
+	var orderId = $("#orderId").val();
+	var appriseInfo = $("#curkm").val();
+	var score = 2;
+	//var username = $("#name").val();
+	//var phone= $("#phone").val();
+	if(!appriseInfo){
+		show_error_tip('我们非常重视您的评价，请输入评价信息');
+		return false;
+	}
+	
+	var url = 'index.php?g=Wap&m=Service&a=appraise&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(url,{staffId:staffId,orderId:orderId,appriseInfo:appriseInfo,score:score},
+            function(data){ 
+                if(data.status == 100){                 	
+                	show_success_tip(data.info);
+                    setTimeout(function(){                        	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 2 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 3 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 4 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }
+            },'json');
+});
+$("#gorgeous").click(function(){
+	var staffId = $("#staffId").val();
+	var orderId = $("#orderId").val();
+	var appriseInfo = $("#curkm").val();
+	var score = 3;
+	//var username = $("#name").val();
+	//var phone= $("#phone").val();
+	if(!appriseInfo){
+		show_error_tip('我们非常重视您的评价，请输入评价信息');
+		return false;
+	}
+	
+	var url = 'index.php?g=Wap&m=Service&a=appraise&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(url,{staffId:staffId,orderId:orderId,appriseInfo:appriseInfo,score:score},
+            function(data){ 
+                if(data.status == 100){                 	
+                	show_success_tip(data.info);
+                    setTimeout(function(){                        	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 2 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 3 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 4 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }
+            },'json');
+});
+</script>
+</body>
+</html>

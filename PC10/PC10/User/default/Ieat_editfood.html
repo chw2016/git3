@@ -1,0 +1,771 @@
+﻿<include file="Public:head" />
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+.ke-dialog-default.ke-dialog { top: 20%; }
+</style>
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<script>
+/*
+var editor1;
+
+KindEditor.ready(function(K) {
+
+    editor1 = K.create('#food_brief', {
+
+        resizeType : 1,
+
+        allowPreviewEmoticons : false,
+
+        allowImageUpload : true,
+
+        allowFileManager:true,
+
+        afterBlur: function(){this.sync();}
+
+    })
+
+});
+*/
+var editor2;
+
+KindEditor.ready(function(K) {
+
+    editor2 = K.create('#taocan', {
+
+        resizeType : 1,
+
+        allowPreviewEmoticons : false,
+
+        allowImageUpload : true,
+
+        allowFileManager:true,
+
+        afterBlur: function(){this.sync();}
+
+    })
+
+});
+</script>
+
+<script>
+    KindEditor.ready(function(K) {
+
+        var editor = K.editor({
+
+            allowFileManager: true
+
+        });
+
+        K('#upload1').click(function() {
+
+            editor.loadPlugin('image',
+
+            function() {
+
+                editor.plugin.imageDialog({
+
+                    fileUrl: K('#food_pic1').val(),
+
+                    clickFn: function(url, title) {
+
+                        K('#food_pic1').val(url);
+
+                        $("#food_pic_show1").attr('src', url).show();
+
+                        editor.hideDialog();
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+
+
+
+    KindEditor.ready(function(K) {
+
+        var editor = K.editor({
+
+            allowFileManager: true
+
+        });
+
+        K('#upload2').click(function() {
+
+            editor.loadPlugin('image',
+
+                    function() {
+
+                        editor.plugin.imageDialog({
+
+                            fileUrl: K('#food_pic2').val(),
+
+                            clickFn: function(url, title) {
+
+                                K('#food_pic2').val(url);
+
+                                $("#food_pic_show2").attr('src', url).show();
+
+                                editor.hideDialog();
+
+                            }
+
+                        });
+
+                    });
+
+        });
+
+    });
+
+
+
+    KindEditor.ready(function(K) {
+
+        var editor = K.editor({
+
+            allowFileManager: true
+
+        });
+
+        K('#upload3').click(function() {
+
+            editor.loadPlugin('image',
+
+                    function() {
+
+                        editor.plugin.imageDialog({
+
+                            fileUrl: K('#food_pic3').val(),
+
+                            clickFn: function(url, title) {
+
+                                K('#food_pic3').val(url);
+
+                                $("#food_pic_show3").attr('src', url).show();
+
+                                editor.hideDialog();
+
+                            }
+
+                        });
+
+                    });
+
+        });
+
+    });
+</script>
+
+<div class="" style="">
+
+  <div class="cLineB">
+
+    <div class="title_tab" id="topTab">
+
+      <ul class="tab_navs title_tab" data-index="0">
+
+        <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/food',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!--tab start-->
+
+  <div class="alert alert-info">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>
+
+    <strong>提示信息!</strong>
+
+    <ol>
+
+      <li>在这里可以添加限购食物。</li>
+
+    </ol>
+
+  </div>
+
+  <!--tab end-->
+
+  <div class="box-content">
+
+     <div class="msgWrap">
+
+         <form class="form" method="post" id="form" action="">
+
+             <if condition="$op eq 1">
+
+                <input type="hidden" name="food_id" id="food_id" value="{weikucms:$food['food_id']}" />
+
+             </if>
+
+      <div class="msgWrap bgfc">
+
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+
+          <tbody>
+
+          <tr>
+
+              <th>限购食物名称：</th>
+
+              <td>
+
+                  <if condition="$op neq 1">
+
+                  <input type="text" id="food_name" name="food_name" value="" class="px require" style="width:300px;" />
+
+                  <else/>
+
+                  <input type="text" id="food_name" name="food_name" value="{weikucms:$food['food_name']}" class="px require" style="width:300px;" />
+
+                </if>
+
+              </td>
+
+            </tr>
+
+	<tr>
+
+              <th>限购食物运费：</th>
+
+              <td>
+
+                  <if condition="$op neq 1">
+
+                  <input type="text" id="food_yunfei" name="food_yunfei" value="0" class="px require" style="width:300px;" />
+
+                  <else/>
+
+                  <input type="text" id="food_yunfei" name="food_yunfei" value="{weikucms:$food['food_yunfei']}" class="px require" style="width:300px;" />
+
+                </if>
+
+              </td>
+
+            </tr>
+
+
+
+
+          <tr>
+
+              <th>限购食物描述：</th>
+
+              <td>
+
+                  <if condition="$op neq 1">
+
+                      <input type="text" id="food_des" name="food_des" value="" class="px require" style="width:300px;" />
+
+                      <else/>
+
+                      <input type="text" id="food_des" name="food_des" value="{weikucms:$food['food_des']}" class="px require" style="width:300px;" />
+
+                  </if>
+
+              </td>
+
+          </tr>
+
+
+            <tr>
+
+                <th valign="top">限购食物图片：</th>
+
+                <td>
+
+                    <if condition="$data.picurl">
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show1" class="fenlei_img" src="{weikucms:$food['food_pic1']}">
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show2" class="fenlei_img" src="{weikucms:$food['food_pic2']}">
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show3" class="fenlei_img" src="{weikucms:$food['food_pic3']}">
+
+                        <else />
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show1" class="fenlei_img" src="{weikucms:$food['food_pic1']}">
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show2" class="fenlei_img" src="{weikucms:$food['food_pic2']}">
+
+                        <img style="display: inline;width: 200px;height: 200px;" id="food_pic_show3" class="fenlei_img" src="{weikucms:$food['food_pic3']}">
+
+                    </if>
+
+                </td>
+
+
+
+            </tr>
+
+            <tr>
+
+                <th>上传图片：</th>
+
+                <td>
+
+                    <if condition="$op neq 1">
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic1" id="food_pic1" value="" style="width: 300px;" />
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic2" id="food_pic2" value="" style="width: 300px;" />
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic3" id="food_pic3" value="" style="width: 300px;" />
+
+                        <else />
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic1" id="food_pic1" value="{weikucms:$food['food_pic1']}" style="width: 300px;" />
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic2" id="food_pic2" value="{weikucms:$food['food_pic2']}" style="width: 300px;" />
+
+                        <input type="hidden" class="pic text textMiddle inputQ" name="food_pic3" id="food_pic3" value="{weikucms:$food['food_pic3']}" style="width: 300px;" />
+
+                    </if>
+
+                    <span class="ke-button-common" id="upload1" style="margin-left: 72px;">上传图片</span>
+
+                    <span class="ke-button-common" id="upload2" style="margin-left: 133px;">上传图片</span>
+
+                    <span class="ke-button-common" id="upload3" style="margin-left: 133px;">上传图片</span>
+
+                </td>
+
+            </tr>
+
+
+
+
+            <tr>
+
+              <th>限购食物价格：</th>
+
+              <td>
+
+                  <if condition="$op neq 1">
+
+                  <input type="text" id="food_price" name="food_price" value="" class="px require" style="width:300px;" />
+
+                  <else/>
+
+                  <input type="text" id="food_price" name="food_price" value="{weikucms:$food['food_price']}" class="px require" style="width:300px;" />
+
+                </if>
+
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>限购食物数量：</th>
+
+              <td>
+
+                <if condition="$op neq 1">
+
+                  <input type="text" id="food_num" name="food_num" value="" class="px require" style="width:300px;" />
+
+                  <else/>
+
+                  <input type="text" id="food_num" name="food_num" value="{weikucms:$food['food_num']}" class="px require" style="width:300px;" />
+
+                </if>
+
+              </td>
+
+            </tr>
+
+
+
+          <tr>
+
+            <th>限购有效期设置：</th>
+
+            <td>
+
+                <if condition="$op neq 1">
+
+                开始日期：<input type="input" class="px" id="start_date" value="" onClick="WdatePicker()" name="statdate">
+
+                结束日期：<input type="input" class="px" id="end_date" value="" name="enddate" onClick="WdatePicker()"></td>
+
+                <else />
+
+                开始日期：<input type="input" class="px" id="start_date" value="{weikucms:$food['start_date']}" onClick="WdatePicker()" name="statdate">
+
+                结束日期：<input type="input" class="px" id="end_date" value="{weikucms:$food['end_date']}" name="enddate" onClick="WdatePicker()"></td>
+
+              </if>
+
+          </tr>
+
+
+
+          <tr>
+
+              <th>其他设置：</th>
+
+              <td valign="top">
+
+                  <div style="width: 200px;display: inherit">
+
+                      <input type="checkbox" name="sstk" id="sstk" value="1" style="margin-top:0px;" <if condition="$food['other_set']['sstk'] eq 1">checked</if>>
+
+                      <span style="text-align: center;">&nbsp;&nbsp;支持随时退款</span>
+
+                  </div>
+
+                  <div style="width: 200px;display: inherit">
+
+                      <input type="checkbox" name="gqtk" id="gqtk" value="1" style="margin-top:0px"; <if condition="$food['other_set']['gqtk'] eq 1">checked</if>>
+
+                      <span style="text-align: center;">&nbsp;&nbsp;支持过期退款</span>
+
+                  </div>
+
+              </td>
+
+
+
+          </tr>
+
+
+
+          <tr>
+
+              <th valign="top">商品描述:</th>
+
+              <td valign="top">
+
+                  <if condition="$op eq 1">
+
+                      <textarea class="px" id="taocan" name="taocan" style="width: 560px; height: 300px; display: ;">
+
+                          {weikucms:$food['taocan']}
+
+                      </textarea>
+
+                      <else />
+
+                      <textarea class="px" id="taocan" name="taocan" style="width: 560px; height: 300px; display: ;"></textarea>
+
+                  </if>
+
+              </td>
+
+          </tr>
+
+
+<!--
+
+
+          <tr>
+
+            <th valign="top">购买须知:</th>
+
+            <td valign="top">
+
+                <if condition="$op eq 1">
+
+                    <textarea class="px" id="food_brief" name="food_brief" style="width: 560px; height: 300px; display: ;">
+
+{weikucms:$food['food_brief']}
+
+                    </textarea>
+
+                <else />
+
+                    <textarea class="px" id="food_brief" name="food_brief" style="width: 560px; height: 300px; display: ;"></textarea>
+
+                </if>
+
+            </td>
+
+         </tr>
+
+-->
+
+          <tr>
+
+            <th>&nbsp;</th>
+
+            <td>
+
+                <if condition="$op neq 1">
+
+                    <input type="hidden" name="op" id="op" value="0" />
+
+                <else/>
+
+                    <input type="hidden" name="op" id="op" value="1" />
+
+                </if>
+
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+
+              <if condition="$op neq 1">
+                    确认添加
+                <else/>确定编辑
+
+              </if>
+
+              </button>
+
+           </td>
+
+          </tr>
+
+          </tbody>
+
+
+
+        </table>
+
+      </div>
+
+    </form>
+
+    </div>
+
+    <div>
+
+      <ul class="pager">
+
+        {weikucms:$page}
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+
+        $("#bsubmit").click(function(){
+
+            var food_id = $("#food_id").val();
+
+            var cat_id = "{weikucms:$get['cat_id']}";
+
+            var food_name = $("#food_name").val();
+
+	    var food_yunfei = $("#food_yunfei").val();
+
+            var food_des = $("#food_des").val();
+
+            var food_pic1 = $("#food_pic1").val();
+
+            var food_pic2 = $("#food_pic2").val();
+
+            var food_pic3 = $("#food_pic3").val();
+
+            var food_price = $("#food_price").val();
+
+            var food_num = $("#food_num").val();
+
+            var start_date = $("#start_date").val();
+
+            var end_date = $("#end_date").val();
+
+            var sstk = $("input[name='sstk']:checked").val();
+
+            if(sstk == undefined){
+
+                sstk = 0;
+
+            }
+
+            var gqtk = $("input[name='gqtk']:checked").val();
+
+            if(gqtk == undefined){
+
+                gqtk = 0;
+
+            }
+
+            var taocan = editor2.html();
+
+            var food_brief = '';//editor1.html();
+
+            var op = "{weikucms:$op}";
+
+            if(!food_id){
+
+                food_id = null;
+
+            }
+
+            if(! food_name){
+
+                notif({
+
+                    msg: "食物名称不能为空",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(! food_des){
+
+                notif({
+
+                    msg: "描述不能为空",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(! food_price){
+
+                notif({
+
+                    msg: "食物价格不能为空",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(isNaN(parseFloat(food_price))){
+
+                notif({
+
+                    msg: "非法的价格！",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(! food_num){
+
+                notif({
+
+                    msg: "限购数量不能为空",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(!start_date){
+
+                notif({
+
+                    msg: "团购开始时间不能为空！",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+
+            if(!end_date){
+
+                notif({
+
+                    msg: "团购结束时间不能为空！",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+/*
+            if(!food_brief){
+
+                notif({
+
+                    msg: "限购食物简介不能为空！",
+
+                    type: "warning"
+
+                });
+
+                return false;
+
+            }
+*/
+            var url = "{weikucms::U('Ieat/editfood',array('token'=>$token))}";
+
+            $.post(url,{taocan:taocan,gqtk:gqtk,sstk:sstk,food_des:food_des,food_id:food_id,cat_id:cat_id,food_name:food_name, food_yunfei: food_yunfei,food_price:food_price,food_num:food_num,food_pic1:food_pic1,food_pic2:food_pic2,food_pic3:food_pic3,start_date:start_date,end_date:end_date,food_brief:food_brief,op:op},function(data){
+
+                if(data.status == 1) {
+
+                    notif({
+
+                        msg: data.info,
+
+                        type: "success"
+
+                    });
+
+                    setTimeout(function () {
+
+                        window.location.href = data.url;
+
+                    }, '1000');
+
+                }else{
+
+                    notif({
+
+                        msg: data.info,
+
+                        type: "error"
+
+                    });
+		}
+
+            },'json');
+
+        });
+
+    });
+
+
+
+</script>
+
+<include file="Public:footer" />

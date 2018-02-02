@@ -1,0 +1,61 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+  <div class="cLineB">
+    <h4>修改小区</h4>
+  </div>
+  <div class="cLineB" id="uppict" style="display:none">
+  </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>修改小区</li>
+        </ol>
+    </div>
+  <div class="msgWrap">
+    <form class="form" method="post" action="{weikucms:$FormUrl}"  target="_top" enctype="multipart/form-data" >
+      <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+          <tr>
+            <input type="hidden" class="px" id="id" value="{weikucms:$id}" name="id">
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION["token"]}" name="token">
+          <tr>
+            <th valign="top"><label for="keyword">小区</label></th>
+            <td>
+                <input type="input" class="px" id="pinzhong" value="{weikucms:$xiaoqu.xiaoqu}" name="xiaoqu" style="width:300px">
+            </td>
+            <td></td>
+          </tr>
+        <input type="hidden" class="px" id="hid" value="{weikucms:$info.hid}" name="hid" style="width:300px" >
+        <tr>
+          <th></th>
+          <td><button type="submit" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+              <include file="./tpl/User/default/helper/list_btn.html"/>
+            <div class="clr"></div></td>
+        </tr>
+        </TBODY>
+      </table>
+    </form>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        //地区
+        if($('#title').val() == ''){
+            notif({
+                msg: '请填写地区名称',
+                type: 'warning'
+            });
+            return false;
+        }
+        return true;
+    }
+</script>

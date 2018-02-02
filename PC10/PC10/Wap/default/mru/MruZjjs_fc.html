@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+ <title>鱼美人-企业风采</title>  
+    <style type="text/css">
+    	*{
+    		margin: 0;
+    		padding: 0;
+    		background-color: #fff;
+    	}
+    	.body_top_cen_pad{
+    		border-bottom: 1px solid #ccc;
+    	}
+		.body_top_cen{
+			 padding: 10px;
+		}
+		.body_top{
+			 height:100%; 
+			 width:100%; 
+			 margin:0 auto; 
+			 overflow:hidden;
+			 
+		}
+		.body_top img{
+			width: 100%;
+			display: block;
+		}
+		.body_cen{
+			width: 94%;
+			height: 80px;
+			padding: 10px;
+		    border-bottom:1px solid #ccc;
+		}
+		._left{
+			float: left;
+			width: 70%;
+			
+			
+			clear: both;
+		}
+		._right{
+			float: left;
+			width: 30%;
+			height: 100%;
+			background-color: #ddd;
+
+		}
+		._text{
+			
+			font-size: 15px;
+			font-weight: bold;
+		}
+		._bz{
+			height: 70%;
+			padding-top: 2px;
+			font-size: 13px;
+		
+		}
+		._img{
+
+		}
+		._img img{
+			width: 100%;
+			display: block;
+		}
+		.body_top_cen_1{
+		
+		}
+    </style>
+</head>
+<body>
+<div class="body_body">
+	<div class="body_top_cen_pad">
+		<div class="body_top_cen">
+			<div class="body_top">
+				<img src="{weikucms::RES}/mru/img/xc.png">
+			</div>
+		</div>
+	</div>
+	<div class="body_top_cen_1">
+	 <volist name="list" id="v"  >
+	  <a href="{weikucms::U('fcshow',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+		<div class="body_cen">
+			<div class="_left">
+				<div class="_text" style="font-weight:800;font-size:15px; color:black;" >
+				
+				        <?php 
+				            echo mb_substr($v['name'],0,25,'utf-8');
+                          
+				        ?>
+				</div>
+				<div class="_bz" style="font-size:12px; color:#666;letter-spacing:2px;line-height:20px;" >
+			            
+				  <php>
+               
+                        if(strlen($v['content']) > 25){
+                           echo (mb_substr(strip_tags($v['content']), 0, 25, 'utf-8'))."......";
+                        }else{
+                           echo (mb_substr(strip_tags($v['content']), 0, 25, 'utf-8'));
+                        }
+                        
+                </php>
+				</div>
+			</div>
+			<div class="_right" style="background-color: white;" >
+				<div class="_img">
+					<img src="{weikucms:$v.pic}"> 
+				</div>
+			</div>
+		</div>
+	  </a>   	
+	 </volist>	
+	</div>
+	
+	    <div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+	
+	
+
+   
+                 
+               
+            
+
+
+        
+<include file="./tpl/Wap/default/mru_normal_fx.html" />       
+  
+
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>产品保修期查询</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body class="beijing">
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<div class="c-baoxiu-title">
+    		查询结果
+    	</div>
+    	<div class="baoxiuqisay">
+    		{weikucms:$term}
+    	</div>
+    	<!-- 内容参数 -->
+    	<div class="tiaoxingma">
+    		<!--<p class="xinghao">未知</p>
+    		<p class="detail-say">未知</p>-->
+    		<p class="detail-say">开始日期：{weikucms:$beginTime}</p>
+    		<p class="detail-say" id="buydate">结束日期：{weikucms:$endTime}</p>
+    		<p class="detail-say">保修期：{weikucms:$timeData}</p>
+    		<!--<div class="xiangcan">
+    			<span class="font">详细参数</span>
+    			<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/arrow.png" />
+    		</div>-->
+    	</div>
+       
+    	<p class="weixin">
+    		温馨提示
+    	</p>
+    	<p class="wenxin-next">如果对结果有异议</p>
+    	<p class="wenxin-next">请致电400-880-9666客服热线咨询</p>
+    	<div style="height:30px;"></div>
+    	<script type="text/javascript">
+    		window.onload = function(){
+    			$('.beijing').css('background-size',$(window).width()+'px '+$(document).height()+'px');
+    			
+    			$('.xiangcan img').css('height',($('.font').height()-6)+'px');
+                var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+    			
+    		}
+    	</script>
+    </body>
+</html>

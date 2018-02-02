@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="hengbo">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/baoxiu.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+        <script type="text/javascript">
+            var urls = "{weikucms::U('Hengbo/usersbo',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}";
+        </script>
+    </head>
+    <body>
+		<div class="h-title">会员信息</div>
+		<div class="h-header">
+			<img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-member.png" />
+		</div>
+		<form id="form">
+		<div class="form bx-body">
+			<div class="inputBox">
+				<div class="icon icon-bx-name"></div>
+				<div class="input uname">
+					<input type="text" name="uname" placeholder="请输入姓名" value="{weikucms:$aUser.name}">
+				</div>
+			</div>
+			<div class="inputBox ">
+				<div class="icon icon-bx-phone"></div>
+				<div class="input phone">
+					<input type="tel" name="phone" placeholder="联系电话" value="{weikucms:$aUser.tel}">
+				</div>
+			</div>
+            <input type="hidden" name="aid" value="{weikucms:$_GET['aid']}"/>
+		</div>
+		</form>
+		<div class="inputBox submit fixBottom" submit='1'>
+			保存
+		</div>
+    </body>
+</html>

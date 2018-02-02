@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style type="text/css">
+				*{padding: 0;margin: 0;list-style: none;text-decoration: none;}
+				body{font-family: "楷体";font-size: 30px;}
+				#header{width: 100%;}
+				#header img{width: 100%;}
+				#content{background: url("{weikucms::STATICS}/wapweiui/Votter/img/school.jpg") no-repeat center;position: relative;;top: -10px;height: 800px;z-index: 10;}
+				/*内部遮罩*/
+				.zhezhao{z-index: 100;background: #fff;position: absolute;width: 100%;height: 100%;opacity: 0.3;}
+				.say{position: relative;z-index: 110;text-align: center;width: 100%;background: url("{weikucms::STATICS}/wapweiui/Votter/img/blueBack1.png");letter-spacing: 10px;padding: 30px 0;}
+				#Champion{/* display: flex;display: -webkit-box; */margin:0 auto;margin-top: 80px;width: 20%;position: relative;text-align: center;min-height: 135px;}
+				#Champion img{-webkit-border-radius:15px;-ms-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;display: none;}
+				p{color:#b11e24;font-weight: bold;font-size: 40px;}
+				#total{display: flex;display: -webkit-box;margin-top: 80px;}
+				#total .left,#total .right{width: 40%;display: flex;display: -webkit-box;min-height: 136px}
+				#total .middle{width: 20%;}
+				#total .left .Runner1,#total .left .Runner2,#total .left .Runner3{
+					width: 33.3%;text-align: center;
+				}
+				#total .right .three1,#total .right .three2,#total .right .three3{
+					width: 33.3%;text-align: center;
+				}#total .left .Runner1 img,#total .left .Runner2 img,#total .left .Runner3 img{
+					-webkit-border-radius:15px;-ms-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;display: none;
+				}
+				#total .right .three1 img,#total .right .three2 img{
+					-webkit-border-radius:15px;-ms-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;display: none;
+				}#number{display: flex;display: -webkit-box;/* margin-top: 10px; */}
+				#number .num1,#number .num2{width:40%;text-align: center;}
+				#number .num3{width: 20%;}
+				#number .num2{display: flex;display: -webkit-box;}
+				#number .num2 .one,#number .num2 .two{width: 33.3%;}
+				#number .num2 .one{width: 33.3%;}
+				#number .num2 .two{width: 66.6%;}
+				.btn1{display: flex;display: -webkit-box;width: 20%;margin: 0 auto;}
+				#one,#two,#three,#four,#five,#six{margin: 0 auto;width: 50%;display: block;height: 30px;position: relative;z-index: 1000;}
+        </style>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+    	<div id="header">
+    		<img src="{weikucms::STATICS}/wapweiui/Votter/img/banner.jpg" />
+    	</div>
+    	<div id="content">
+    		<div class="zhezhao"></div>
+    		<div class="say">
+ 				首届“金院好课堂”总决赛现场投票
+    		</div>
+    		<!-- 第一名 -->
+    		<div id="Champion">
+    			<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$first}.jpg" id="first"/>
+    			
+    		</div>
+    		<p style="text-align:center;">1</p>
+    		<!-- 按钮 -->
+    		<div class="btn1">
+    			<button id="one" type="button">猜猜他是谁？</button>
+    		</div>
+    		<!-- 季军 -->
+    		<!-- 第三名 -->
+    		<div id="total">
+	    		<div class="left">
+	    			<div class="Runner1">
+	    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$four}.jpg" id="second"/>
+	    			</div>
+    				<div class="Runner2">
+    					<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$five}.jpg" id="third"/>
+    				</div>
+    				<div class="Runner3">
+    					<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$six}.jpg" id="fourth"/>
+    				</div>
+    				<p></p>
+	    		</div>
+	    		<div class="middle"></div>
+	    		<!-- 第二名 -->
+	    		<div class="right">
+	    			<div class="three3"></div>
+	    			<div class="three1">
+	    				<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$second}.jpg" id="fifth"/>
+	    			</div>
+	    			
+    				<div class="three2">
+    					<img src="{weikucms::STATICS}/wapweiui/Votter/img/icon/{weikucms:$third}.jpg" id="sixth"/>
+    				</div>
+	    		</div>
+    		</div>
+    		<!-- 亚军 -->
+    		<div id="number">
+    			<div class="num1"><p>3</p></div>
+    			<div class="num3"></div>
+    			<div class="num2">
+    				<p class="one"></p>
+    				<p class="two">2</p>
+    			</div>
+    		</div>
+    		<!-- 下面的按钮 -->
+    		<div id="total" style="margin-top:0px;">
+	    		<div class="left">
+	    			<div class="Runner1">
+	    				<button id="two" type="button">猜猜他是谁？</button>
+	    			</div>
+    				<div class="Runner2">
+    					<button id="three" type="button">猜猜他是谁？</button>
+    				</div>
+    				<div class="Runner3">
+    					<button id="four" type="button">猜猜他是谁？</button>
+    				</div>
+    				<p></p>
+	    		</div>
+	    		<div class="middle"></div>
+	    		<!-- 第二名 -->
+	    		<div class="right">
+	    			<div class="three3"></div>
+	    			<div class="three1">
+	    				<button id="five" type="button">猜猜他是谁？</button>
+	    			</div>
+	    			
+    				<div class="three2">
+    					<button id="six" type="button">猜猜他是谁？</button>
+    				</div>
+	    		</div>
+    		</div>
+    	</div>
+    	<!-- 根据姓名的不同来判断 -->
+    	
+    	<script type="text/javascript">
+    		$(function(){
+    			$('#header>img').css('width', $(window).width()+'px');
+    			
+    			$('#content').css({'height':($(window).height() - $('#header').height())+'px','width':$(window).width()+'px'});
+    			// 按钮
+    			// 第一名
+    			$('#one').click(function(){
+    				$('#first').slideDown(4000);
+    				console.log(1);
+    			})
+    			// 第三名
+    			$('#two').click(function(){
+    				$('#second').fadeIn(4000);
+    			})
+    			// 第三名
+    			$('#three').click(function(){
+    				$('#third').fadeIn(4000);
+    			})
+    			// 第三名
+    			$('#four').click(function(){
+    				$('#fourth').fadeIn(4000);
+    			})
+    			// 第二名
+    			$('#five').click(function(){
+    				$('#fifth').fadeIn(4000);
+    			})
+    			// 第二名
+    			$('#six').click(function(){
+    				$('#sixth').fadeIn(4000);
+    			})
+    		})
+    	</script>
+    </body>
+</html>

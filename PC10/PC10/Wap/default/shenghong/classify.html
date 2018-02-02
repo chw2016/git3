@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/common.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/index.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style1.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/main.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/font-awesome.min.css" />
+</head>
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+</style>
+<body>
+<div style="border-bottom: 1px solid #d5d5d5;">
+    <if condition="$phone2">
+        <img src="{weikucms:$phone2[pic]}" />
+        <else/>
+        <img src="{weikucms::STATICS}/wapweiui/shenghong/img/logo.png"  />
+    </if>
+
+</div>
+<div class="mt10 main_center">
+    <volist name="aOffice" id="vo" key="i">
+    <div class="main_user" onclick="window.location.href='{weikucms::U('Shenghong/message',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['cid'],'oid'=>$vo['id']))}'"><span class="main_yuan ml5">{weikucms:$i}</span>{weikucms:$vo.oname}</div>
+    </volist>
+       <!-- <div class="main_user"><span class="main_yuan ml5">2</span>人事专员</div>
+    <div class="main_user"><span class="main_yuan ml5">3</span>培训专员</div>
+    <div class="main_user"><span class="main_yuan ml5">4</span>专员</div>-->
+</div>
+</body>
+</html>

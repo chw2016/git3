@@ -1,0 +1,137 @@
+
+<div style="width:1250px; width: 90%; margin: 0 auto;  " >
+  
+  <!--搜索开始-->
+    <if condition="$search">
+        <form action="{weikucms::U('',array('id'=>$_GET['id']))}" method="post" id="seach">
+           
+            <table   ><!-- style="margin:0 auto;"  -->
+                <tbody>
+                <tr>
+             
+                    <volist name="search" id="vo">
+                        <if condition="$vo['type'] eq 'between'">
+                            <td>{weikucms:$vo.title}：</td>
+                            <td>
+                                <input placeholder="{weikucms:$vo.placeholder}" type="input" class="px" id="statdate2" value="<?php echo $_POST[$vo['name']]['0']?>" onclick="WdatePicker()" name="{weikucms:$vo.name}[]" readonly>
+                            </td>
+                            <td>---</td>
+                            <td>
+                            <input placeholder="{weikucms:$vo.placeholder}" type="input" class="px" id="statdate3" value="<?php echo $_POST[$vo['name']]['1']?>" onclick="WdatePicker()" name="{weikucms:$vo.name}[]" readonly>
+                            </td>
+                            <elseif condition="$vo['type'] eq 'select'" />
+                            <td>{weikucms:$vo.title}：</td>
+                            <td>
+                                <select name="{weikucms:$vo.name}">
+                                    <option value="">全部</option>
+                                    <volist name="vo['many']" id="vo1">
+                                    <option value="{weikucms:$vo1.value}"  <?php if($_POST[$vo['name']]==$vo1['value']){echo selected;} ?> >{weikucms:$vo1.name}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                            <else />
+                            
+                            <td >{weikucms:$vo.title}：</td>
+                            <td  ><input placeholder="{weikucms:$vo.placeholder}" type="text" style="width: 150px;" id="{weikucms:$vo.name}" value="<?php echo $_POST[$vo['name']]?>" name="{weikucms:$vo.name}"></td>
+                        </if>
+                        
+
+
+                    </volist>
+                                         <td>
+                        &nbsp;&nbsp; <a class="btn btn-success btn-sm" href="javascript:;" id="search" style="position: relative;top:-5px;">查询</a>
+                       
+                    </td>
+                   
+
+
+
+                </tr>
+                </tbody>
+           </table>
+            <input type="hidden" name="__hash__" value="8fe64cbddd0f99adf1710b3eed3b8771_59ce64e1d0a671065ece69ea3d010c13">
+        </form>
+<script>
+    $("#search").click(function(){
+        $("#seach").submit();
+    });
+</script>
+    </if>
+ 
+</div>
+  <div class="bdrcontent">
+ 
+    <div id="div_ptype" style="width:90%;margin: 0 auto;" >
+      <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <thead>
+          <tr>
+            <volist name="Table_Header" id="H">
+                <th  style="text-align:center" >{weikucms:$H}</th>
+            </volist>
+          </tr>
+        </thead>
+        <!--tab start-->
+        <div class="alert alert-info">
+          <button type="button" class="tips close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+        
+            <volist name="tips" id="t">
+            <li>{weikucms:$t}</li>
+            </volist>
+          </ol>
+          <script type="text/javascript">
+            $('.tips.close').click(function(){
+               $(this).parents('.alert.alert-info').hide();
+            });
+          </script>
+        </div>
+        <!--tab end-->
+        <volist name="aList" id="List">
+          <tr>
+         
+            <foreach name="List" key="K" item="Row">
+            <td  style="text-align:center" >
+                <if condition="in_array($K, $aListImg['container'])">
+                <img src="{weikucms:$Row}" width="{weikucms:$aListImg['width']}" height="{weikucms:$aListImg['width']}">
+                <else />
+                <!-- 排序 -->
+                <if condition="$K eq 'sort'" >
+                       <input style="width:40px;text-align:center;" class="sort" value="{weikucms:$Row} " />
+				<elseif condition="$K eq 'id'" />    
+                      <a class="id" >{weikucms:$Row} </a>
+                <else/>
+                 {weikucms:$Row} 
+                </if>             
+                
+                </if>
+            </td>
+            </foreach>
+            <td class="norightborder" style="text-align:center" >
+                <volist name="List_Opt" id="Opt">
+                <!-- 如果主键不是id，则需要C设置id过来指定 -->
+                <a target="_self" class="btn btn-success btn-sm" href="{weikucms:$Opt.url}&<if condition='empty($kid)'>id<else/>{weikucms:$kid}</if>=<if condition='empty($id)'>{weikucms:$List.id}<else />{weikucms:$List.$id}</if>">{weikucms:$Opt.name}</a>
+                </volist>
+            </td>
+          </tr>
+        </volist>
+      </table>
+    </div>
+  </div>
+  <div class="footactions" style="padding-left:10px">
+    <div class="pager">{weikucms:$page}</div>
+  </div>
+</div>
+
+<script>
+         //排序
+         var url="<?php  echo trim(C('site_url'),'/'); ?><?php echo $_SERVER['REQUEST_URI']; ?>";
+          $(".sort").change(function(){
+         	 var sort=$(this).val();
+         	 var id=$(this).parents("tr").find('td').eq(0).find('.id').html();
+         	 $.post("{weikucms::U('sortajax')}",{"sort":sort,"id":id},function(data){
+         		   location.href=url;
+        	 },'json');
+          })
+</script>
+

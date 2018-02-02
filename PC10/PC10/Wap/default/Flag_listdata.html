@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/flag/default.css" type="text/css">
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <title> {weikucms:$wxuser.name}</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+<style type="text/css">
+    .wx_footer {
+        margin: 45px 0 60px 0;
+    }
+    .wx_footer .wapwei_logo {
+        height: 15px;
+        width: 86px;
+        margin: 15px auto 0 auto;
+        background: url("http://mall.wapwei.com/resource/logo_min.png");
+        background-size: cover;
+        -webkit-background-size: cover;
+    }
+    .iconText ul li .li-l{
+        width: 100px;
+        font-size: 14px;
+        margin-top:-8px;
+    }
+    .iconText ul li .li-r{
+        margin-left: 110px;
+    }
+</style>
+
+<body>
+<div class="bookingTips" style="line-height:25px;">
+    <strong>查询结果</strong>
+    <div style="line-height:20px;">以下为所查询的详细结果！</div>
+</div>
+<div id="baoyangYuyue1" style="padding-top: 30px;">
+    <volist name="flaglistres" id="vo">
+        <div class="iconText"  style="margin-bottom: 30px;" onclick="window.location.href='{weikucms::U('Wap/Flag/result',array('token'=>$token,'id'=>$vo['id']))}}'">
+            <ul>
+
+                <li class="noAfter">
+                    <div class="li-l">注册号</div>
+                    <div class="li-r">
+                        {weikucms:$vo.reg_num}
+                    </div>
+                </li>
+                <li class="noAfter">
+                    <div class="li-l">商标名称</div>
+                    <div class="li-r">
+                        {weikucms:$vo.flag_name}
+                    </div>
+                </li>
+
+                <li class="noAfter">
+                    <div class="li-l">商标名称</div>
+                    <div class="li-r">
+                        {weikucms:$vo.apply_person}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </volist>
+
+</div>
+<div class="wx_footer">
+    <div class="wapwei_logo"></div>
+</div>
+
+</body></html>

@@ -1,0 +1,144 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/index',array('token'=>$token))}" <if condition="$hover eq 1" >class="hover"</if>>用户中心设置</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/memberman',array('token'=>$token))}" <if condition="$hover eq 2" >class="hover"</if>>微信会员管理</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/salecard',array('token'=>$token))}" <if condition="$hover eq 3" >class="hover"</if>>会员优惠</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/scoreman',array('token'=>$token))}" <if condition="$hover eq 4" >class="hover"</if>>积分规则</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/userlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/notice',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>会员通知</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Usercenter/shitimember',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>实体会员</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Integralshop/index',array('token'=>$token))}" <if condition="$hover eq 5" >class="hover"</if>>积分商城</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>添加会员通知吧</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="/MemMarket/EditMemberCoupon" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <input type="hidden" name="aid" value="313205">
+                <input type="hidden" name="id" value="">
+                <div class="control-group">
+                    <label for="title" class="control-label">标题：</label>
+                    <div class="controls">
+                        <input type="text" name="title" id="title" value="" class="input-large" data-rule-required="true">
+                    </div>
+                </div>
+
+
+                <div class="control-group daijqan ">
+                    <label class="control-label" for="info">通知内容</label>
+                    <div class="controls">
+                        <textarea class="input-large" name="content" id="desc" style="display: block;width: 400px;"></textarea>
+                        <br/>
+                        <span class="help-inline" style="padding-left: 0px;"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+<script>
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#desc', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var content = editor.html();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            if(!title){
+                notif({
+                    msg: "标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!content){
+                notif({
+                    msg: "通知内容不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Usercenter/addnotice',array('token'=>$token))}",
+                    {title:title,content:content,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+
+</div>

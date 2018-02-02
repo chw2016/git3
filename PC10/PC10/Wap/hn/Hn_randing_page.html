@@ -1,0 +1,42 @@
+<volist name="rand" id="vo">
+<ul>
+    <li>{weikucms:$vo.id}</li>
+    <li><?php echo str_substr($vo['name'],1,'*');?></li>
+    <li>
+        <if condition="$vo['yonjing'] lt 200">
+            菜鸟顾问
+            <elseif condition="($vo['yonjing'] egt 200)AND($vo['yonjing'] lt 400)" />
+            高级顾问
+            <elseif condition="($vo['yonjing'] egt 400)AND($vo['yonjing'] lt 800)" />
+            销售经理
+            <elseif condition="($vo['yonjing'] egt 800)AND($vo['yonjing'] lt 1600)" />
+            销售总监
+            <elseif condition="($vo['yonjing'] egt 1600)AND($vo['yonjing'] lt 3200)" />
+            区域总监
+            <elseif condition="($vo['yonjing'] egt 3200)AND($vo['yonjing'] lt 6400)" />
+            区域副总
+            <elseif condition="($vo['yonjing'] egt 6400)AND($vo['yonjing'] lt 12800)" />
+            区域老总
+            <elseif condition="($vo['yonjing'] egt 12800)AND($vo['yonjing'] lt 25600)" />
+            大区副总
+            <elseif condition="($vo['yonjing'] egt 25600)AND($vo['yonjing'] lt 51200)" />
+            大区老总
+            <elseif condition="($vo['yonjing'] egt 51200)AND($vo['yonjing'] lt 102400)" />
+            集团副总
+            <elseif condition="($vo['yonjing'] egt 102400)AND($vo['yonjing'] lt 204800)" />
+            集团总裁
+            <elseif condition="($vo['yonjing'] egt 204800)AND($vo['yonjing'] lt 409600)" />
+            执行董事
+            <elseif condition="($vo['yonjing'] egt 409600)AND($vo['yonjing'] lt 819200)" />
+            董事长
+            <elseif condition="($vo['yonjing'] egt 819200)AND($vo['yonjing'] lt 1638400)" />
+            马上离职
+            <elseif condition="$vo['yonjing'] egt 1638400" />
+            加入我们
+            <else />
+        </if>
+
+    </li>
+    <li>{weikucms:$vo.yongjin}</li>
+</ul>
+</volist>

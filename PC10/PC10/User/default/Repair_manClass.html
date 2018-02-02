@@ -1,0 +1,58 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+	<div class="cLineB">
+		
+		<h4 class="left"><if condition="$type eq 1">添加服务分类<elseif condition="$type eq 2"/>编辑服务分类</if></h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Repair/service',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一层</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		 <tr>
+			<th valign="top">服务分类名称：</th>
+			<td>
+				<input type="input" class="px" id="name"  name="name" style="width:208px" maxlength="16" value="{weikucms:$dataArray['name']}"/>
+			</td>
+  		 </tr>
+		 <tr> 
+	        <th valign="top">所属分类名：</th>				        
+	        <td>
+	        	<select name="pid" id="pid">
+					<option selected="selected" value="0">请选择分类</option>					
+
+					<volist name="data" id="vo">
+			            <option value="{weikucms:$vo.id}" style="text-indent:{weikucms:$vo['Count']*20}px;">
+			            <?php 
+			            	for($i = 0; $i < ($vo['Count']*3); $i++) {
+								echo "&nbsp;";
+							}
+			             ?>
+			            <neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.name}</option>			                
+			        </volist>
+				</select>
+	        </td>
+	     </tr>
+ 		
+ 		<tr>
+			<th valign="top">排序：</th>
+			<td>
+				<input type="input" class="px" id="sort"  name="sort" style="width:208px" maxlength="16" value="{weikucms:$dataArray['sort']}"/>
+			</td>
+  	   </tr>
+ 		
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="sure" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<include file="Public:footer"/> 

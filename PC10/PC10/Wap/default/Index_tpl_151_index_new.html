@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:weiweb"/>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_151/home-56.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/new_151/zepto.js"></script>
+    <title>{weikucms:$tpl['name']}</title>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <include file="Public:audio"/> 
+<div class="body">
+    <section>
+        <div>
+            <div class="header2">
+                <!--
+幻灯片管理         
+-->
+                <div class="mylogo">
+                    <img src="<php>echo C('site_url');</php>/upload/weixin_headimg/{weikucms:$tpl['fakeid']}.png">
+                </div>
+                <div style="-webkit-transform:translate3d(0,0,0);">
+                    <div id="banner_box" class="box_swipe">
+                        <ul>
+                            <volist name="flash" id="so">
+                                <li>
+                                    <a onclick="return false;">
+                                        <img src="{weikucms:$so.img}" style="width:100%;" />
+                                    </a>
+                                </li>
+                            </volist>
+                        </ul>
+
+                    </div>
+                </div>
+                <script>
+                    $(function(){
+                        new Swipe(document.getElementById('banner_box'), {
+                            speed:500,
+                            auto:3000,
+                            callback: function(){
+                                var lis = $(this.element).next("ol").children();
+                                lis.removeClass("on").eq(this.index).addClass("on");
+                            }
+                        });
+                    });
+                </script>
+                <!--<a href="tel:666555666" class="tel">地址:666555666<span class="icon-phone">&nbsp;</span></a>-->
+            </div>
+            <ul class="list_ul" style="clear:both;">
+                <volist name="info" id="vo" offset="0" length='1'>
+                <li class="one">
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>"
+                       class="box">
+                        <div>
+                            <p style="background: url('{weikucms:$vo.img}') no-repeat center center;background-size:cover;">{weikucms:$vo.name}</p>
+                        </div>
+
+                    </a>
+                </li>
+                </volist>
+                <volist name="info" id="vo" offset="1" length='1'>
+                <li class="two">
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>"
+                       class="box">
+                    <div>
+                        <p style="background: url('{weikucms:$vo.img}') no-repeat center center;background-size:cover;">{weikucms:$vo.name}</p>
+                    </div>
+
+                    </a>
+                </li>
+                </volist>
+                <div class="three">
+                    <volist name="info" id="vo" offset="2" length='1'>
+                    <li>
+                        <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>"
+                           class="boxa">
+                        <div>
+                            <p style="background: url('{weikucms:$vo.img}') no-repeat center center;background-size:cover;">{weikucms:$vo.name}</p>
+                        </div>
+
+                        </a>
+                    </li>
+                    </volist>
+                    <volist name="info" id="vo" offset="3" length='1'>
+                    <li>
+                        <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>"
+                           class="boxa">
+                        <div>
+                            <p style="background: url('{weikucms:$vo.img}') no-repeat center center;background-size:cover;">{weikucms:$vo.name}</p>
+                        </div>
+
+                        </a>
+                    </li>
+                    </volist>
+                </div>
+                <volist name="info" id="vo" offset="4" length='1'>
+                <li class="four">
+                    <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>"
+                       class="box">
+                    <div>
+                        <p style="background: url('{weikucms:$vo.img}') no-repeat center center;background-size:cover;">{weikucms:$vo.name}</p>
+                    </div>
+
+                    </a>
+                </li>
+                </volist>
+
+                <li class="five">
+                    <img id="qrcodeimg" src="<php>echo C('site_url');</php>/upload/weixin_qrcode/<php> echo $tpl['fakeid']; </php>.png">
+                </li>
+
+
+            </ul>
+        </div>
+    </section>
+</div>
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+
+<!--<footer style="overflow:visible;">-->
+    <!--<div class="weimob-copyright" style="padding-bottom:50px;">-->
+        <!--<span class="weimob-support" >©<php>echo $tpl['name'];echo '-';echo C('site_my');</php></span>-->
+    <!--</div>-->
+<!--</footer>-->
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>
+

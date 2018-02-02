@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>{weikucms:$tpl.name}资讯</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/index.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/font-awesome.min.css">
+    <script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script src="{weikucms::STATICS}/common/f.js"></script>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+    <style>
+        .top-li.on {
+            color: #FFF;
+            background-color: #0C7C67;
+        }
+        .top-li{
+            border-left:1px solid #FFF;
+            height: 50px;
+            width: 9.6%;
+        }
+        .myul{
+            display: flex;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -moz-box;
+        }
+        .myli{
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            -ms-flex: 1;
+            flex:1;
+        }
+        .span1 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            line-height: 55px;
+        }
+        .nr {
+            width: 90%;
+            border-bottom: 1px solid #1BB59B;
+            padding: 5px 0;
+        }
+        .nr-text {
+            height: 55px;
+        }
+        .nr-fx{
+            width: 28%;
+            height: 55px;
+        }
+        .fa.fa-angle-right {
+            line-height: 55px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="top-index">
+    <ul class="myul">
+        <volist name="classify" id="vo">
+            <li style="font-size: 15px;" class="top-li myli classfiy <if condition="$iTid eq $vo['id']">on</if>" data="{weikucms:$vo.id}" type="{weikucms:$vo.type}">{weikucms:$vo.cname}</li>
+        </volist>
+    </ul>
+</div>
+<div class="claert">
+    <if condition="$type eq 1">
+        <volist name="information" id="so" offset="0">
+            <div class="nr">
+                <div class="spadding">
+                    {weikucms:$so.content}
+                </div>
+            </div>
+        </volist>
+        <else/>
+<volist name="information" id="so">
+    <div class="nr">
+        <div class="spadding">
+            <a href="{weikucms::U('Roadnext/trafficinfo',array('token'=>$token,'openid'=>$openid,'cid'=>$_GET['cid'],'id'=>$so['id']))}" style="width: 70%;" >
+                <!--<div class="nr-img"><img src="{weikucms:$so.pic}"> </div>-->
+                <div class="nr-text" style="width: 100%;">
+                    <div class="span1">
+                        <php>
+                            if(mb_strlen($so['title'],'utf8') < 15){
+                            echo $so['title'];
+                            }else{
+                            echo mb_substr($so['title'],0,15, 'utf8').'...';
+                            }
+                        </php>
+
+                    </div>
+                    <!--<div style="color: rgb(159,153,165)">{weikucms:$so.add_time}</div>-->
+
+                </div>
+            </a>
+                <div class="nr-fx"><img src="{weikucms:$so.pic}" style="height: 58px;width: 100%;"></div>
+
+        </div>
+    </div>
+</volist>
+    </if>
+
+</div>
+<div style="clear: both;"></div>
+<div style="height: 50px;"></div>
+<footer>
+    <div style="width: 20%" class="fl">
+        <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+    </div>
+    <div class="fl" style="width:80%">
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="tel:0769-83222111" style="color: #999;">一键联系</a></div>
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="#" style="color: #999;">使用帮助</a></div>
+        <div class="home_xian  ml15 fl"></div>
+        <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Roadnext/jianyi',array('token'=>$token,'openid'=>$openid))}" style="color: #999;">投诉建议</a></div>
+    </div>
+</footer>
+
+
+<script type="text/javascript">
+    $(function(){
+        $(document).on('touchstart','.classfiy',function(){
+            $('.classfiy.on').removeClass('on');
+            $(this).addClass('on');
+            var cid = $.trim($(this).attr("data"));
+            var type = $.trim($(this).attr('type'));
+            setCookie('data',cid,1);
+            var url = "{weikucms::U('Roadnext/traffic',array('token'=>$token,'openid'=>$openid))}";
+            $('.claert').empty();//清空
+            $.post(url,{cid:cid,type:type},function(data){
+                if(data.status ==1){
+                    $('.claert').append(data.fetch);
+                    $('.nr:visible:last').css('border-bottom', 0);
+                    timeOut = null;
+                    iPage = 0;
+                }else{
+                    alert('系统繁忙，请稍后！');
+                }
+            },'json')
+        })
+
+        var d = getCookie('data');
+       // console.log(d)
+        $(".classfiy[data='"+d+"']").trigger('touchstart');
+
+        $('.nr:visible:last').css('border-bottom', 0);
+    })
+
+    //点击加载更多
+    var iPage = 0;   //定义加载的页数
+    var timeOut = null;  //时间加载器默认为空闲状态
+    var cid = $.trim($('.classfiy.on').attr("data"));
+    var type = $.trim($('.classfiy.on').attr('type'));
+    $(document).on('scroll',window,function(){
+        var cid = $.trim($('.classfiy.on').attr("data"));
+        var type = $.trim($('.classfiy.on').attr('type'));
+        var diff = Number($(window).height()) + Number(20); //设置促发的高度，其中，Number($(window).height())为计算页面的整个的高度，Number(20)为设置滚动时距离顶部的高度。
+        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+            if(timeOut != null) {return false;}  //判断容器timeOut 是否在运行！
+            //if(type ==1){return false;}
+            iPage++;
+            // 异步加载
+            timeOut = setTimeout(function(){
+                var url = "{weikucms::U('Roadnext/traffic',array('token'=>$token,'openid'=>$openid))}"+cid;
+                $.post(url,{"cid":cid,"page": iPage,"pLength":0},function(data){
+                    console.log(data);
+                    if(data.status == 1){
+                        $('.nr:visible:last').css('border-bottom', '1px solid #1BB59B');
+                        $('.claert').append(data.fetch);
+                        $('.nr:visible:last').css('border-bottom', 0);
+                    }else{
+                        iPage--;
+                    }
+                },'json');
+            },500);
+        }
+    })
+</script>
+
+</body>
+</html>

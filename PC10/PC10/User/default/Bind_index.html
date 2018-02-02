@@ -1,0 +1,120 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/binding.css">
+
+<div class="cLineB">
+  <h4 class="left">绑定微信公众账号<span class="FAQ">智能一键绑定来得更轻松</span></h4>
+ </div>
+<div class="msgWrap">
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>输入您的为您公众账号和密码将智能对接</li>
+            <li>如果出现智能对接失败请联系客服哦</li>
+        </ol>
+    </div>
+    <div class="box-content">
+        <div class="bboxl step1">
+            <div class="pd">
+                <div class="f14 mb30">
+                    请输入微信公众平台帐号信息。您还没有申请点击<a href="https://mp.weixin.qq.com" target="_blank">申请</a>
+                </div>
+                <if condition="$is_open eq 1">
+                    您的微信公众账号已经与万普微盟平台对接好了的哦,您可以点击解除绑定&nbsp;&nbsp;<button onclick="if(confirm('您确定解除绑定吗?')){ go_url('{weikucms::U('Bind/closeBind')}');}" class="btn btn-danger">解除绑定</button>
+                    <else/>
+                    <form action="/wechat/autobind" method="post" class="form-horizontal form-validate2" novalidate="novalidate">
+                        <div class="control-group">
+                            <label class="control-label" for="username">微信公众平台帐号:</label>
+                            <div class="controls">
+                                <input type="text" name="username" id="username" class="input-large" data-rule-required="true" data-rule-maxlength="60">
+                                <span for="username" class="help-block error valid"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="password">密码:</label>
+                            <div class="controls">
+                                <input type="password" name="password" id="password" class="input-large" data-rule-required="true" data-rule-maxlength="60">
+                                <span for="password" class="help-block error valid"></span>
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" id="sig" name="sig">
+                        <div class="form-actions">
+                            <button id="bsubmit" type="button"  class="btn btn-primary">智能对接</button>
+                            <button id="ssubmit" onclick="window.open('http://kefu.qycn.com/vclient/chat/?websiteid=85794&clerkid=851661&clienturl=http%3A%2F%2Fwww.wapwei.com&originPageTitle='+encodeURIComponent(window.document.title)+'&originPageUrl='+encodeURIComponent(document.referrer)+'&originPageLocationUrl='+encodeURIComponent(document.location.href), '_blank', 'toolbar=no,scrollbars=yes,menubar=no,status=no,resizable=yes,location=no,width=650,height=530,top=100,left=200');return false;" type="button" class="btn btn-primary">联系客服</button>
+                        </div>
+                    </form>
+                </if>
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var btn = $(this);
+            if(! $("#username").val()){
+                notif({
+                    msg: "请输入微信公众平台用户名",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! $("#password").val()){
+                notif({
+                    msg: "请输入微信公众平台密码",
+                    type: "warning"
+                });
+                return false;
+            }
+            btn.addClass('disabled');
+            btn.attr('disabled','disabled');
+            btn.text('绑定中.....');
+            $.post('index.php?g=User&m=Bind&a=auto',{username:$("#username").val(),password:$("#password").val()},function(data){
+                if(data.code == 0){
+                    notif({
+                        msg: data.msg,
+                        type: "success"
+                    });
+                    $("#bsubmit").text('智能绑定');
+                    $("#bsubmit").removeClass('disabled');
+                    $("#bsubmit").attr('disabled',false);
+                    window.location.href = 'http://v.wapwei.com';
+                }else{
+                    notif({
+                        msg: data.msg,
+                        type: "error"
+                    });
+                    $("#bsubmit").text('智能绑定');
+                    $("#bsubmit").removeClass('disabled');
+                    $("#bsubmit").attr('disabled',false);
+                }
+            },'json');
+
+        });
+    });
+
+</script>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+
+
+<include file="Public:footer"/> 

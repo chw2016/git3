@@ -1,0 +1,96 @@
+<html>
+<head>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        *:focus{
+            outline: 0px;
+        }
+        body{
+            background: url(../imgs/bg.jpg) center no-repeat;
+            max-width:640px;
+            margin: 0 auto;
+            font-family: "Microsoft YaHei";
+            font-size: 12px;
+            text-align: center;
+        }.content{border-top: 1px solid #f6ad69;margin-top: 20px;font-size: 15px;}
+        .contents{/* background: #f6ad69; font-size: 16px;*/color: #f6ecb1;width:60%;margin: 0 auto;padding: 2px 0;position: relative;top: -12px;}
+        .contents img{width: 100px;height: 23px;}
+        .con{padding: 0px 16px 10px;text-align: left;}
+        table{text-align: center;width: 100%;background: #faebb2;position: fixed;bottom: 0px;border-collapse: collapse;}
+        table .border{border-right:1px solid #f6ad69;padding: 15px 0;}
+        table td {color: #b48c4f;display: block;font-size: 14px;}
+        .selected{
+            background-color: #ea6262;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<img src="{weikucms::STATICS}/works/cansai.png" id="header"/>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/active.jpg" /></div>
+    <div class="con">{weikucms:$set.explain|htmlspecialchars_decode|strip_tags}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/ruler.jpg" /></div>
+    <div class="con">{weikucms:$set.entry|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/vote.jpg" /></div>
+    <div class="con">{weikucms:$set.vote|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/pinglun.jpg" /></div>
+    <div class="con">{weikucms:$set.awaedrul|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/match.jpg" /></div>
+    <div class="con">{weikucms:$set.awards|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/youhui.jpg" style="width:139px;height:23px;"/></div>
+    <div class="con">{weikucms:$set.gain|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/youhuiuse.jpg" style="width:139px;height:23px;"/></div>
+    <div class="con">{weikucms:$set.coupon|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/prize.jpg" /></div>
+    <div class="con">{weikucms:$set.accept|htmlspecialchars_decode}</div>
+</div>
+<div class="content">
+    <div class="contents"><img src="{weikucms::STATICS}/works/lay.jpg" /></div>
+    <div class="con">{weikucms:$set.law|htmlspecialchars_decode}</div>
+</div>
+<div style="height:60px;"></div>
+<table>
+    <tr>
+        <td class="border <if condition="$selected eq 1">selected</if>" onclick="window.location.href='{weikucms::U('Works/index',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'" >参赛作品</td>
+        <td class="border <if condition="$selected eq 2">selected</if>" onclick="window.location.href='{weikucms::U('Works/rules',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'openid'=>$_GET['openid']))}'">参与方法</td>
+        <td class="border <if condition="$selected eq 3">selected</if>"  onclick="window.location.href='{weikucms::U('Works/event',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">活动规则</td>
+        <td class="border <if condition="$selected eq 4">selected</if>" onclick="window.location.href='{weikucms::U('Works/set',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">我要投稿</td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(function(){
+        $('#header').css('max-width',$('body').width());
+    })
+</script>
+</body>
+</html>

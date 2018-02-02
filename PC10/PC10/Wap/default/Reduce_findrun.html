@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title>运动查询</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/14.css" />
+		
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<!-- 与前面的一个公用css样式 -->
+	</head>
+	<body>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">运动查询</span>
+		</div> -->
+		<!-- 搜索框 -->
+		<div class="search">
+			<if condition="$hides eq 1">
+				<form name="searchs" method="post" action="{weikucms::U('Wap/Reduce/findrun',array('token'=>$token,'openid'=>$openid))}">
+					<input type="text" name="findRun" id="findRun" placeholder="输入运动名称进行搜索" value="{weikucms:$findRun}"/>
+					<!-- 隐藏域 -->
+					<input type="hidden" name="hide" id="hide" value="1" />
+					<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit"/>
+				</form>
+			<else />
+				<form name="searchs" method="post" action="{weikucms::U('Wap/Reduce/findrun',array('token'=>$token,'openid'=>$openid))}">
+					<input type="text" name="findRun" id="findRun" placeholder="输入运动名称进行搜索" />
+					<!-- 隐藏域 -->
+					<input type="hidden" name="hide" id="hide" value="1" />
+					<input type="image" src="{weikucms::STATICS}/wapweiui/Reduce/imgs/Magnifier.png" alt="Submit"/>
+				</form>
+			</if>
+			
+		</div>
+		
+		<ol class="searchResult">
+			<if condition="$hides eq 1">
+				<volist name="result" id="vo">
+					<li>
+					<!-- 运动内容名称 -->
+					<a href="{weikucms::U('Wap/Reduce/findrun2',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+						<div class="foodname">
+							<div class="foodimg">
+								<img src="{weikucms:$vo.img_path}" width="75px" height="50px"/>
+							</div>
+							<p>
+								<span>{weikucms:$vo.sport_name}</span><br /><span>{weikucms:$vo.calorie}千卡/60分钟</span>
+								<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" />
+							</p>
+							<!-- 清除浮动 -->
+							<div class="clear"></div>
+						</div>
+					</a>
+					</li>
+				</volist>
+			<else />
+				<volist name="result" id="so">
+					<li>
+					<!-- 运动内容名称 -->
+					<a href="{weikucms::U('Wap/Reduce/findrun1',array('token'=>$token,'openid'=>$openid,'id'=>$so['id'],'name'=>$so['foodname']))}">
+						<div class="foodname">
+							<!--<img src="{weikucms:$so.img_path}" width="75px" height="50px" class="foodimg"/>-->
+							<p>
+								<span class="eatfood">{weikucms:$so.class_name}</span>
+								<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/rightArrow.png" class="rightArrow" style="bottom:-10px;"/>
+							</p>
+							<!-- 清除浮动 -->
+							<div class="clear"></div>
+						</div>
+					</a>
+					</li>
+				</volist>
+			</if>
+			
+		</ol>
+		<script type="text/javascript">
+			$(function(){
+				$('.searchResult').css('max-height',($(window).height())+'px');
+			})
+		</script>
+	</body>
+</html>

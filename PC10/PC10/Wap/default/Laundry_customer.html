@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣服务</title>
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/page.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/touchslider.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/klass.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jsAddress.js"></script>
+<script style="text/javascript" src="{weikucms::STATICS}/wapweiui/distribution/area.js"></script>
+<script style="text/javascript" src="{weikucms::STATICS}/wapweiui/distribution/location.js"></script>
+<script>
+    $(document).ready(function() {
+        showLocation();
+    });
+</script>
+</head>
+<body>
+	<!--添加新地址-->
+	<form method="post" action="javascript::void(0)">
+		<!-- 个人基本信息-->
+		<section class="section_4">
+			<div class="m_input m_input_5">
+				<label for="name">姓名</label>
+				<div class="input">
+					<input placeholder="请填写姓名" value="{weikucms:$c['c_name']}" id="c_name" name="c_name">
+				</div>
+			</div>
+			<div class="m_input m_input_5">
+				<label for="mobile">手机号码</label>
+				<div class="input">
+					<input placeholder="请填写手机号码" id="c_tel" name="c_tel" value="{weikucms:$c['c_tel']}">
+				</div>
+			</div>
+			<!-- 
+            <div class="m_input m_input_5">
+                <label for="mobile">微信号</label>      
+                <div class="input"><input placeholder="用于发送衣物明细" value="" id="weixin_no" name="weixin_no"></div>
+            </div>  
+             -->
+		</section>
+		<!-- 地址-->
+		<!-- 地址-->
+		<section class="address_div">
+			<div class="m_input select y_hover">
+				<label for="">选择省份 </label>
+				<div class="select y_hover">
+                    <select id="loc_province" class="select"></select>
+					<!--<select id="cmbCity" class="J_city select_J_ytag" name="city">
+						<option value="深圳">深圳</option>
+					</select>-->
+				</div>
+			</div>
+            <div class="m_input select y_hover">
+                <label for="">选择地级市</label>
+                <div class="select y_hover">
+                    <select id="loc_city" class="select"></select>
+                    <!--<select id="cmbCity" class="J_city select_J_ytag" name="city">
+                        <option value="深圳">深圳</option>
+                    </select>-->
+                </div>
+            </div>
+            <div class="m_input select y_hover">
+                <label for="">选择市县区</label>
+                <div class="select y_hover">
+                    <select id="loc_town" class="select"></select>
+                    <!--<select id="cmbCity" class="J_city select_J_ytag" name="city">
+                        <option value="深圳">深圳</option>
+                    </select>-->
+                </div>
+            </div>
+			<!--<div class="m_input select y_hover">
+				<label for="">选择区域</label>
+				<div class="select y_hover">
+					<select id="cmbArea" class="J_area select_J_ytag" name="area">
+						<option value="">请选择区域</option>
+						<option value="南山区" <if condition="$c['c_zone'] eq '南山区' ">selected</if>>南山区</option>
+						<option value="宝安区" <if condition="$c['c_zone'] eq '宝安区' ">selected</if>>宝安区</option>
+						<option value="罗湖区" <if condition="$c['c_zone'] eq '罗湖区' ">selected</if>>罗湖区</option>
+						<option value="盐田区" <if condition="$c['c_zone'] eq '盐田区' ">selected</if>>盐田区</option>
+					</select>
+				</div>
+			</div>-->
+			<div class="m_input m_input_4">
+				<label for="id_pay">详细地址 </label>
+				<div class="input">
+					<textarea placeholder="请填写详细地址，如：xx街道/xx小区/xx村 xx栋xx号" id="c_address" name="c_address">{weikucms:$c['c_address']}</textarea>
+				</div>
+			</div>
+		</section>
+		<!-- 确定-->
+		<input type="hidden" name="goodsid" value="18">
+		<input type="hidden" name="aid" value="">
+		<input type="hidden" name="from_user" value="oMWhZt_kOO8jsIU7RL3dw4QvfBYM">
+		<input type="hidden" name="action" value="updateaddress">
+		<input type="hidden" name="washing_date" value="2014年10月08日">
+		<input type="hidden" name="washing_time" value="10:00-12:00">
+		<input type="hidden" name="key" id="key" value="{weikucms:$key}">
+		<input type="hidden" name="openid" id="openid" value="{weikucms:$w['openid']}">
+		<input type="hidden" name="goods_id" id="goods_id" value="{weikucms:$w['goods_id']}">
+		<section class="section_5">
+			<div class="m_input">
+				<button type="submit" class="btn_order y_hover J_ytag" value="保存">保存</button>
+			</div>
+		</section>
+	</form>
+	<!--／添加新地址-->
+	<div id="error_tip" style="display: none" class="cod">
+		<div class="wx_mask"></div>
+		<div class="wx_confirm">
+			<div class="wx_confirm_inner">
+				<div class="wx_confirm_hd">
+					<div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+				</div>
+				<div class="wx_confirm_bd">
+					<div class="wx_confirm_btn">
+						<button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay">我知道了</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+    $(function() {
+        $(".btn_order").click(function() {
+            var c_name = $("#c_name").val();
+            var c_tel = $("#c_tel").val();
+            var c_province = $("#loc_province").find('option:selected').text();
+            var c_province_id = $("#loc_province").find('option:selected').val();
+
+            var c_city = $("#loc_city").find('option:selected').text();
+            var c_city_id = $("#loc_city").find('option:selected').val();
+
+            var c_town = $("#loc_town").find('option:selected').text();
+            var c_town_id = $("#loc_town").find('option:selected').val();
+
+            var c_address = $("#c_address").val();
+            var key = $("#key").val();
+            var c_openid = $("#openid").val();
+            var goods_id = $("#goods_id").val();
+            if (c_name == "") {
+                $("#error_tip").show();
+                $("#tip_div").html("请填写姓名");
+                return false;
+            }
+            if (c_tel == "") {
+                $("#tip_div").html("请填写手机号码");
+                $("#error_tip").show();
+                return false;
+            }
+			var partten = /^1[3,4,5,8]\d{9}$/;
+            if(!partten.test(c_tel)){
+                alert("请输入正确的号码");
+                return;
+            }
+            if (!c_province_id) {
+                $("#tip_div").html("请填写省份");
+                $("#error_tip").show();
+                return false;
+            }
+            if (!c_city_id) {
+                $("#tip_div").html("请填写地级市");
+                $("#error_tip").show();
+                return false;
+            }
+            if (!c_town_id) {
+                $("#tip_div").html("请填写市县区");
+                $("#error_tip").show();
+                return false;
+            }
+            if (c_address == "") {
+                $("#tip_div").html("请填写详细地址");
+                $("#error_tip").show();
+                return false;
+            }
+            var url = "{weikucms::U('Laundry/customer',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url, {
+                goods_id: goods_id,
+                key: key,
+                c_name: c_name,
+                c_openid: c_openid,
+                c_tel: c_tel,
+
+                c_province:c_province,
+                c_province_id:c_province_id,
+
+                c_city:c_city,
+                c_city_id:c_city_id,
+
+                c_town:c_town,
+                c_town_id:c_town_id,
+                c_address: c_address
+            },
+            function(data) {
+                if (data.status == 1) {
+                    $("#error_tip").show();
+                    $("#tip_div").html(data.info);
+                    setTimeout(function() {
+                        window.location.href = data.url;
+                    },
+                    '1000');
+                } else {
+                    $("#error_tip").show();
+                    $("#tip_div").html(data.info);
+                }
+            },
+            'json');
+        });
+    });
+
+    function onclose1() {
+        $("#error_tip").hide();
+        return false;
+    }
+</script>
+<script>
+    $(function(){
+
+        var c_province = "{weikucms:$c['c_province']}";
+        var c_province_id = "{weikucms:$c['c_province_id']}";
+
+        var c_city = "{weikucms:$c['c_city']}";
+        var c_city_id = "{weikucms:$c['c_city_id']}";
+
+        var c_town = "{weikucms:$c['c_town']}";
+        var c_town_id = "{weikucms:$c['c_town_id']}";
+
+        document.getElementById("loc_province").value = c_province_id;
+        $('#loc_province').change();
+        document.getElementById("loc_city").value = c_city_id;
+        $('#loc_city').change();
+        document.getElementById("loc_town").value = c_town_id;
+        $('#loc_town').change();
+    });
+</script>
+</body>
+</html>

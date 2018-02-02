@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+    <script type="text/javascript">
+        // 预约时间Json
+        var bookDates = {
+            "20150312" : ["06:30","08:20","09:45","13:30","14:20"],
+            "20150313" : ["14:30","15:20","16:45","17:30","18:20"]
+        }
+        //console.log(bookDates)
+    </script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    订单确认
+</div>
+
+<div class="myul stepHav setMiddle">
+    <div class="myli step on">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">选择时间</span>
+    </div>
+    <div class="myli step">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">选择地址</span>
+    </div>
+    <div class="myli step">
+        <div class="setMiddle circle stepPoint">
+
+        </div>
+        <span class="textMiddle">提交订单</span>
+    </div>
+</div>
+
+<div class="stepIndex">
+    <div class="dateSelectionBox textMiddle border-12 setMiddle myul white blur-gray-bg">
+        <div class="myli dateSelect on" id="day0" date="{weikucms:$date0}">
+            <div class="dateName  h4">今天</div>
+            <div class="date">{weikucms:$day0}</div>
+        </div>
+        <div class="myli dateSelect" id="day1" date="{weikucms:$date1}">
+            <div class="dateName  h4">明天</div>
+            <div class="date">{weikucms:$day1}</div>
+        </div>
+        <div class="myli dateSelect" id="day2" date="{weikucms:$date2}">
+            <div class="dateName  h4">后天</div>
+            <div class="date">{weikucms:$day2}</div>
+        </div>
+        <div class="myli dateSelect" id="day3" date="{weikucms:$date3}">
+            <div class="dateName  h4">大后天</div>
+            <div class="date">{weikucms:$day3}</div>
+        </div>
+    </div>
+    <div class="white-bg timeSelectBox setMiddle">
+        <!-- <span id="TimeBox" class="h7">- <span id="time" IFTime="1">没有可预约时间</span> -</span> -->
+        <select name="TimeBox" id="TimeBox" >
+            <!-- <option value="0">没有可预约时间</option> -->
+            <option value="09.30">09.30</option>
+            <option value="10.00">10.00</option>
+            <option value="10.30">10.30</option>
+            <option value="11.00">11.00</option>
+            <option value="14.30">14.30</option>
+            <option value="15.00">15.00</option>
+            <option value="15.30">15.30</option>
+            <option value="16.00">16.00</option>
+            <option value="16.30">16.30</option>
+        </select>
+    </div>
+
+</div>
+<div class="stepIndex hide">
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-tel lisheng-text-color"></div><span>电话</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderTel" type="tel" placeholder='请输入您的手机号码' value="{weikucms:$user['tel']}">
+        </div>
+    </div>
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-address lisheng-text-color"></div><span>地址</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderAddress" type="text" placeholder='请输入您的详细地址' value="{weikucms:$user['address']}">
+        </div>
+    </div>
+</div>
+<div class="stepIndex hide">
+    <div class="orderInfoBox border-6 boxShadow setMiddle lisheng-text-color white-bg">
+        <div class="orderInfoBoxHead myul">
+            <div class="myli">
+                <div class="setMiddle boxShadow fixBg ORImg" style="background-image:url({weikucms:$Product.image})"></div>
+            </div>
+            <div class="myli">
+                <div class="h2  bold">
+                {weikucms:$Product.title}
+                <input type="hidden" id='product_id' value='{weikucms:$Product.id}'>
+            </div>
+                <div class="h3 ">
+                    {weikucms:$Product.title}：<span class="RMB">{weikucms:$Product.price}万</span>
+                </div>
+                <div class="h3 ">
+                    {weikucms:$Product.titles}：<span class="RMB">{weikucms:$Product.entity_price}万</span>
+                </div>
+            </div>
+        </div>
+        <!--<div class="myul couponBox">
+            <div>使用优惠券</div>
+            <div class="border-6">
+                <select name="coupon" id="coupon">
+                    <option value="0">不使用优惠券</option>
+                </select>
+            </div>
+        </div>
+        <div class="textMiddle lisheng-red h2 pay bold">
+            应付金额：<span class="RMB" id="pay">{weikucms:$Product.price}</span>
+        </div>-->
+    </div>
+</div>
+
+<form action="" method="post" id="orderForm">
+    <input type="hidden" id="BookingMan" value="">
+    <input type="hidden" id="BookingDate" value="">
+    <input type="hidden" id="BookingTel" value="">
+    <input type="hidden" id="BookingAddr" value="">
+</form>
+<div class="myul stepHavList">
+    <div class="stepPrev lishengGoldBg  myli textMiddle h4 lisheng-text-color hide" >
+        上一步
+    </div>
+    <div class="stepNext nextBg  myli textMiddle h4 lisheng-text-color " >
+        下一步
+    </div>
+    <div class="nextBg subMit myli textMiddle h4 lisheng-text-color hide ">
+        <button type="submit" id="submit" form="orderForm" value="Submit">提交订单</button>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".stepNext").click(function(){
+            if($("#TimeBox").find("option:selected").val() == "0") return;
+            if($("#time").attr("IFTime") == "0") return;
+            var step = null ;
+            $(".step").each(function(i,o){
+                if($(this).hasClass('on')){
+                    step = i;
+                }
+            });
+            if(step == 0){
+                var date = $.trim($(".dateSelect.on").attr("date"));
+                var time = $("#TimeBox").find("option:selected").val();
+                $("#BookingDate").val(date +" "+ time);
+                $(".stepPrev").removeClass('hide')
+            } else if(step == 1){
+                if($("#orderTel").val() == "" || $("#orderAddress").val() == "") return;
+                var urphone = $("#orderTel").val();
+                var phonematch=/^1[3,4,5,8]\d{9}$/;
+                if(phonematch.test(urphone)){
+                    $(this).addClass('hide');
+                    $(".subMit").removeClass('hide');
+                }else{
+                    alert("请输入正确的手机号码！");
+                    $("#orderTel").val("").focus();
+                    return false;
+                }
+                $("#BookingTel").val($("#orderTel").val());
+                $("#BookingAddr").val($("#orderAddress").val())
+                $(this).addClass('hide');
+                $(".subMit").removeClass('hide');
+            }
+            $(".stepIndex").addClass('hide');
+            $(".step").eq(step+1).addClass('on');
+            $(".stepIndex").eq(step+1).removeClass('hide');
+
+        })
+
+        $(".dateSelect").click(function(){
+            $(".dateSelect").removeClass("on");
+            $(this).addClass("on");
+            if($(this).attr("id")=="day0"){
+
+            }else if($(this).attr("id")=="day1"){
+
+            }else if($(this).attr("id")=="day2"){
+
+            }else if($(this).attr("id")=="day3"){
+
+            }
+        })
+        $(".stepPrev").click(function(){
+            var step = null ;
+            $(".step").each(function(i,o){
+                if($(this).hasClass('on')){
+                    step = i;
+                }
+            });
+            if(step == 1){
+                $(this).addClass('hide')
+            } else if(step == 2){
+                $(".stepNext").removeClass('hide');
+                $(".subMit").addClass('hide')
+            }
+            $(".stepIndex").addClass('hide');
+            $(".step").eq(step).removeClass('on');
+            $(".stepIndex").eq(step-1).removeClass('hide');
+
+        })
+        $("#submit").click(function(event) {
+            /* Act on the event */
+            var sDate    = $("#BookingDate").val();
+            var sTel     = $("#BookingTel").val();
+            var sAddress = $("#BookingAddr").val();
+            var product_id = $('#product_id').val();
+          
+            $.ajax({
+                url: "{weikucms::U('Jishi/order',array('token'=>$token,'openid'=>$openid))}",
+                type:"POST",
+                data:{"id":product_id, "time" : sDate, "tel" : sTel, "address" : sAddress},
+                dataType:"json",
+                success: function(res){
+                    if(res.status == 0){
+                        alert('预约成功');
+                        window.location.href = "{weikucms::U('Jishi/user_center',array('token'=>$token,'openid'=>$openid))}";
+                    }else{
+                        alert(res.info);
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+</html>

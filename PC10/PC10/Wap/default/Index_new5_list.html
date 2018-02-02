@@ -1,0 +1,71 @@
+<html>
+<head>
+	<include file="Public:weiweb"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{weikucms:$tpl['name']}</title>
+	<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/list_new5/style.css">
+</head>
+<body>
+	<include file="Public:audio"/> 
+	<ol>
+		<volist name="res" id="so">
+			<li>
+				<!-- <if condition="$so['url']">
+				
+				<a href="{weikucms:$so.url}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+				</if>
+				
+				<div class="img"><eq name="so.showpic" value="1"><img src="{weikucms:$so.pic}"></eq></div>
+				
+				<h2>{weikucms:$so.title}</h2>
+				
+				<p class="onlyheight">{weikucms:$so.text}</p>
+				
+				<div class="commentNum"></div>
+				
+				</a> -->
+				<if condition="$so['url']">
+				
+				<a href="{weikucms:$so.url}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+				</if>
+					<eq name="so.showpic" value="1"><img src="{weikucms:$so.pic}"></eq>
+				</a>
+				<if condition="$so['url']">
+				
+				<a href="{weikucms:$so.url}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+				</if>
+					<p class="title">{weikucms:$so.title}</p>
+				</a>
+				<if condition="$so['url']">
+				
+				<a href="{weikucms:$so.url}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+				</if>
+					<p class="content">{weikucms:$so.text}</p>
+				</a>
+				<div style="clear:both;"></div>
+			</li>
+		</volist>
+	</ol>
+	<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+</html>

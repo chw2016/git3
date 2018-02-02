@@ -1,0 +1,55 @@
+<include file="Public:head"/> 
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>兑换奖品</h4>
+
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%"><TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>兑换密码：</th>
+                    <TD>
+                        <input type="input" class="px"  style="width:200px;" name="password" id="password"><br />
+                        <input type="hidden" class="px"  style="width:200px;" name="lid" value="{weikucms:$lid}"><br />
+                        <input type="hidden" class="px"  style="width:200px;" name="gid" value="{weikucms:$gid}">
+                    </TD>
+                </TR>
+                <TR>
+                    <td><button type="submit" class="btn btn-primary" id="submit" >提交</button>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div> 
+
+    <!--活动结束-->
+
+
+
+
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    $(function() {
+        $("#submit").click(function() {
+            var password = $("#password").val();
+            if (!password) {
+                notif({
+                    msg: "奖品名不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+        })
+    })
+</script>
+<include file="Public:footer"/> 

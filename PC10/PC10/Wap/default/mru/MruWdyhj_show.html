@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title><?php echo (mb_substr(strip_tags($list['name']), 0, 9, 'utf-8')) ?>-鱼美人</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt" style="overflow-x:hidden;background-color:white;">
+        <div class="youhuiquanmain">
+            <div class="diyongquan" style=" position:relative;background-size: 100% 100%; background-image: url({weikucms::RES}/mru/img2/diyongquanliaocheng.png);"  > <!-- style="  background-image: url({weikucms::$list['pic']});" -->
+                 <div style="position:absolute; top:45px;left:52px; color:white;letter-spacing:3px;font-size:20px;" >现金优惠券</div>
+                <div class="jine"><span class="money">{weikucms::$list['price']}</span>元</div>
+                <div class="card">{weikucms::$list['yzm']}</div>
+            </div>
+            <div class="boxcontent">
+               <div class="line_box">
+         
+               
+               
+                 验证码 : 
+                 <div class="code"><span class="copy"><!-- 复制 --></span>{weikucms::$list['yzm']}</div>
+               </div>
+            </div>
+
+            <div class="boxcontent">
+               <div class="line_box">
+                {weikucms::$list['name']}
+                 <div class="dateline">有效期 : <?php echo substr($list['j_time'],0,10); ?>&nbsp截止</div>
+               </div>
+            </div>
+
+            <div class="boxcontent">
+               <div class="line_box noline">
+                 使用细则 :
+<style>
+#aaa2 img{
+	width:100%;
+}
+</style>                 
+                 <div class="desc" id="aaa2" >
+           
+                    
+                   
+					    					 <?php
+					    echo $list['content'];
+					 ?>
+					
+                 </div>
+               </div>
+            </div>
+        </div>
+<script type="text/javascript">
+  function copy(){ 
+    window.clipboardData.setData("Text",$("#spreadurl").html());
+    alert("已经复制到剪贴板");
+  }
+</script>
+<include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+</html>

@@ -1,0 +1,303 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js">
+</script>
+<div class="">
+	<div class="cLineB">
+		<h4 class="left">
+			<if condition="$op neq 1">发布商品 <else /> 编辑商品</if>
+		</h4>
+		<div class="searchbar">
+			<form method="post" action="">
+				<script>
+                    KindEditor.ready(function(K) {
+                        var editor = K.editor({
+                            allowFileManager : true
+                        });
+                        K('#upload').click(
+                                function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#goods_pic').val(),
+                                            clickFn : function(url, title) {
+                                                K('#goods_pic').val(url);
+                                                $("#goods_pic_show").attr(
+                                                        'src', url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+                    });
+                </script>
+				<script>
+                    KindEditor.ready(function(K) {
+                        var editor1 = K.editor({
+                            allowFileManager : true
+                        });
+                        K('#upload1').click(
+                                function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#goods_index_pic')
+                                                    .val(),
+                                            clickFn : function(url, title) {
+                                                K('#goods_index_pic').val(url);
+                                                $("#goods_index_pic_show")
+                                                        .attr('src', url)
+                                                        .show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+                    });
+                </script>
+				<script>
+                    var editor;
+                    KindEditor.ready(function(K) {
+editor = K.create('#goods_brief', {
+                            resizeType : 1,
+                            allowPreviewEmoticons : false,
+                            allowImageUpload : true,
+                            allowFileManager : true,
+                            items : [ 'source', 'undo', 'redo', 'copy',
+                                    'plainpaste', 'wordpaste', 'clearhtml',
+                                    'quickformat', 'selectall', 'fullscreen',
+                                    'fontname', 'fontsize', 'subscript',
+                                    'superscript', 'indent', 'outdent', '|',
+                                    'forecolor', 'hilitecolor', 'bold',
+                                    'italic', 'underline', 'hr',
+                                    'removeformat', '|', 'justifyleft',
+                                    'justifycenter', 'justifyright',
+                                    'insertorderedlist', 'insertunorderedlist',
+                                    '|', 'emoticons', 'image', 'link',
+                                    'unlink', 'baidumap', 'lineheight',
+                                    'table', 'anchor', 'preview', 'print',
+                                    'template', 'code', 'cut' ]
+                        });
+
+                    });
+                </script>
+			</form>
+		</div>
+		<div class="clr"></div>
+	</div>
+	<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以添加商品、编辑商品。</li>
+		</ol>
+	</div>
+	<!--tab end-->
+	<div class="msgWrap">
+		<form class="form" method="post" id="form" action="">
+			<if condition="$op neq 1"> <input id="goods_id" name="goods_id" value="" type="hidden" /> <else /> <input id="goods_id" name="goods_id" value="{weikucms:$w['id']}" type="hidden" /> </if>
+			<div class="msgWrap bgfc">
+				<table class="userinfoArea" style="margin: 0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tbody>
+						<tr>
+							<th>商品名称：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="goods_name" name="goods_name" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="goods_name" name="goods_name" value="{weikucms:$goods['goods_name']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+						<tr>
+							<th>商品分类：</th>
+							<td>
+								<select id="columns_id" name="columns_id">
+									<option value="">请选择商品分类</option>
+									<volist name="columns" id="vo">
+									<option value="{weikucms:$vo.id}"<if condition="$goods['columns_id'] eq $vo['id']">selected</if>>{weikucms:$vo.columns_name}</option>
+									</volist>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>商品位置选择：</th>
+							<td>
+								<select name="position" id="position">
+									<option value="">请选择商品位置</option>
+									<option value="1" <if condition="$goods['position'] eq 1">selected</if>>1</option>
+									<option value="2" <if condition="$goods['position'] eq 2">selected</if>>2</option>
+									<option value="3" <if condition="$goods['position'] eq 3">selected</if>>3</option>
+									<option value="4" <if condition="$goods['position'] eq 4">selected</if>>4</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+                            <th>选择按袋还是按件：</th>
+                            <td>
+                                <select name="is" id="is" style="width:314px;border-radius:0px;height:35px">
+                                    <option value="请点击这里选择">请点击这里选择</option>
+                                    <option value="1" <if condition="$goods['is'] eq 1">selected</if>>按袋</option>
+                                    <option value="0" <if condition="$goods['is'] eq 0">selected</if>>按件</option>
+                                </select>
+                            </td>
+                        </tr>
+						<tr>
+							<TH valign="top">商品照片：</TH>
+							<TD>
+								<if condition="$data.picurl"> <img style="display: block;" id="goods_pic_show" class="fenlei_img" src="{weikucms:$goods['goods_pic']}"> <else /> <img style="display: none;" id="goods_pic_show" class="fenlei_img" src="{weikucms:$goods['goods_pic']}"> </if>
+							</TD>
+						</tr>
+						<tr>
+							<th>上传图片：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" class="pic text textMiddle inputQ" name="goods_pic" id="goods_pic" value="" style="width: 300px;" /> <else /> <input type="hidden" class="pic text textMiddle inputQ" name="goods_pic" id="goods_pic" value="{weikucms:$goods['goods_pic']}" style="width: 300px;" /> </if>
+								<span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+							</td>
+						</tr>
+						<tr>
+							<TH valign="top">首页轮播图图片：</TH>
+							<TD>
+								<if condition="$data.picurl"> <img style="display: block;" id="goods_index_pic_show" class="fenlei_img" src="{weikucms:$goods['goods_index_pic']}"> <else /> <img style="display: none;" id="goods_index_pic_show" class="fenlei_img" src="{weikucms:$goods['goods_index_pic']}"> </if>
+							</TD>
+						</tr>
+						<tr>
+							<th>上传图片：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" class="pic text textMiddle inputQ" name="goods_index_pic" id="goods_index_pic" value="" style="width: 300px;" /> <else /> <input type="hidden" class="pic text textMiddle inputQ" name="goods_index_pic" id="goods_index_pic" value="{weikucms:$goods['goods_index_pic']}" style="width: 300px;" /> </if>
+								<span class="ke-button-common" id="upload1" style="margin-left: 5px;">上传图片</span>
+							</td>
+						</tr>
+						<tr>
+							<th>本店价格：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="goods_price" name="goods_price" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="goods_price" name="goods_price" value="{weikucms:$goods['goods_price']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+						<tr>
+							<th>市场价格：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="market_price" name="market_price" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="market_price" name="market_price" value="{weikucms:$goods['market_price']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+						<tr>
+							<th valign="top">商品简介:</th>
+							<td valign="top">
+								<textarea class="px" id="goods_brief" name="goods_brief" style="width: 560px; height: 320px; display:;">
+{weikucms:$goods['goods_brief']}
+                        </textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<th>&nbsp;</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" name="op" id="op" value="0" /> <else /> <input type="hidden" name="op" id="op" value="1" /> </if>
+								<input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+								<button type="button" id="bsubmit" name="button" class="btn btn-primary">
+									<if condition="$op neq 1">添加商品 <else /> 确定编辑 </if>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+	<div class="cLine">
+		<div class="clr"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#bsubmit")
+                .click(
+                        function() {
+                            var columns_id = $("#columns_id").val();
+                            var columns_name = $("#columns_id").find("option:selected").text();
+                            var goods_id = $("#goods_id").val();
+                            var goods_name = $("#goods_name").val().trim();
+                            var goods_pic = $("#goods_pic").val();
+                            var goods_index_pic = $("#goods_index_pic").val();
+                            var goods_brief = editor.html();
+                            var goods_price = $("#goods_price").val();
+                            var market_price = $("#market_price").val();
+                            var position = $("#position").val();
+                            var is = $("#is").find('option:selected').val();
+                            var op = $("#op").val();
+                            if (!goods_name) {
+                                notif({
+                                    msg : "商品名称不能为空",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+                            if (!columns_id) {
+                                notif({
+                                    msg : "商品分类不能为空",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+
+                            var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+
+                            if(!exp.test(goods_price)){
+                                notif({
+                                    msg : "价格请输入合法金额",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+
+                            if(!exp.test(market_price)){
+                                notif({
+                                    msg : "市场价请输入合法金额",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+
+                            if(!goods_brief){
+                                notif({
+                                    msg : "简介不可为空",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+                            var url = "{weikucms::U('Laundry/goodsmanage',array('token'=>$token))}";
+                            $.post(url, {
+                                goods_id : goods_id,
+                                goods_name : goods_name,
+                                position : position,
+                                goods_pic : goods_pic,
+                                goods_index_pic : goods_index_pic,
+                                goods_brief : goods_brief,
+                                goods_price : goods_price,
+                                market_price : market_price,
+                                columns_id : columns_id,
+                                columns_name : columns_name,
+                                op : op,
+                                is : is
+                            }, function(data) {
+                                if (data.status == 1) {
+                                    notif({
+                                        msg : data.info,
+                                        type : "success"
+                                    });
+                                    setTimeout(function() {
+                                        window.location.href = data.url;
+                                    }, '1000');
+                                } else {
+                                    notif({
+                                        msg : data.info,
+                                        type : "error"
+                                    });
+                                }
+                            }, 'json');
+                        });
+    });
+</script>
+<include file="Public:footer" />

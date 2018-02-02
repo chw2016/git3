@@ -1,0 +1,126 @@
+<include file="Public:head"/>  
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Member_card/index',array('token'=>$token))}" >会员卡设计</a>
+                </li>
+
+
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/news',array('token'=>$token))}">最新通知</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/privilege',array('token'=>$token))}">会员卡特权</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/info',array('token'=>$token))}">会员卡详情</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/create',array('token'=>$token))}">创建会员卡</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/exchange',array('token'=>$token))}">积分设置</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member/index',array('token'=>$token))}">会员资料管理</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+          <div class="cLine">
+			<div class="pageNavigator left">
+				<a href="{weikucms::U('Member_card/create_add',array('token'=>$token))}" title="创建会员卡号" class="btn btn-primary">
+					创建会员卡号
+				</a> <strong style="padding-left: 20px;">已经领取 <span style="color:red">{weikucms:$usecount}</span> 张，剩余<span style="color:red">{weikucms:$ucount}</span>张未领取，一共 <span style="color:red">{weikucms:$count}</span>张</strong>
+			</div>
+
+			<div class="clr"></div>
+          </div>
+          <div class="msgWrap">
+          <form method="post" action="" id="info">
+          <input name="delall" type="hidden" value="del">
+           <input name="wxid" type="hidden" value="gh_423dwjkewad">
+            <table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+                <tr>
+					
+					<th class="category">卡号</th>
+					<th class="category">会员卡号</th>					
+					<th class="category">状态</th>
+                    <th class="category">会员资料</th>
+                    <th class="category">删除</th>
+                </tr>
+              </thead>
+              <tbody>
+                <volist name="data_vip" id="data_vip">           
+                <tr>
+					
+					  <td><div class="answer_text">{weikucms:$i}</div></td>
+					  <td><div class="answer_text">{weikucms:$data_vip.number}</div></td>
+					 
+					  <td class="category">
+						<!--a href="">使用统计</a--> 
+						<if condition="$data_vip['wecha_id'] eq false">空闲卡<else/><strong>使用中</strong></if>
+					  </td>
+                      <td> 
+                      <if condition="$data_vip['wecha_id'] neq false">
+                            
+                    <a href="index.php?g=User&m=Member_card&a=getuserinfo&id={weikucms:$data_vip.wecha_id}">查看会员详情</a>
+                       
+                      </if>
+
+                    </td>
+                    
+                       <td> 
+                     
+                       <if condition="$data_vip['wecha_id'] neq false">     
+                    <a href="#" onclick="source_delete('index.php?g=User&m=Member_card&a=privilege_del&id={weikucms:$data_vip.wecha_id}')">删除</a>
+                       
+                      </if>
+
+                    </td>
+                </tr>
+				</volist>
+                <TR style="height: 150px;">
+
+                </TR>
+              </tbody>
+            </table>
+           </form> 
+			<script>
+			   function checkvotethis() {
+					var aa=document.getElementsByName('del_id[]');
+					var mnum = aa.length;
+					j=0;
+					for(i=0;i<mnum;i++){
+					if(aa[i].checked){
+					j++;
+					}
+					}
+					if(j>0) {
+					document.getElementById('info').submit();
+					} else {
+					alert('未选中内容！')
+					}
+				}
+			</script>
+          </div>
+          <div class="cLine">
+              <div>
+                  <ul class="pager">
+                      {weikucms:$page}
+                  </ul>
+              </div>
+            <div class="clr"></div>
+          </div>
+        </div>
+<include file="Public:footer"/>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+	<meta http-equiv="Cache-Control" content="max-age=0">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+	<script type="text/javascript" src="tpl/Wap/default/hn/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".commission-tab-ul-li ").click(function(){
+			$(this).addClass('active').siblings().removeClass('active');
+			var index = $(this).index();
+			$(".commission-main>li").eq(index).show().siblings().hide();
+		})
+	})
+	</script>
+    </head>
+    	<style type="text/css">
+	body{
+		background-color:#f5f5f5;
+	}
+	.top{  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  text-align: center;}
+  	.topt{  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  text-align: center;}
+    	</style>
+    <body>
+    <div class="commission-tab">
+    	<ul class="commission-tab-ul">
+    		<li class="commission-tab-ul-li active">我的佣金（税前）<br/> 合计￥<if condition="$yonz['c'] eq null">0<else/>{weikucms:$yonz['c']}</if></li>
+    		<li class="commission-tab-ul-li ">消费记录<br/> 合计￥
+          <if condition="intval($t['c']) eq null and intval($xiao['c']) neq null">{weikucms:$xiao.c}
+          <elseif condition="intval($xiao['c']) eq null and intval($t['c']) neq null">{weikucms:$t.c}
+          <!-- <elseif condition="intval($xiao['c']) eq '' and intval($t['c']) eq ''">0 -->
+          <else/>
+          {weikucms:$tx}
+          </if>
+        </li>
+    	</ul>
+    </div>
+   <div>
+   	<ul class="commission-main">
+   		<li>
+   			<ul class="tab-sublevel-ul">
+   				<li class="tab-sublevel-ul-li f14">事由</li>
+   				<li class="tab-sublevel-ul-li f14">姓名</li>
+   				<li class="tab-sublevel-ul-li f14">金额</li>
+   				<li class="tab-sublevel-ul-li f14">日期</li>
+   			</ul>
+			<volist name="yon" id="v">
+   			<ul class="tab-sublevel-ul">
+   				<li class="tab-sublevel-ul-li">{weikucms:$v.content}</li>
+				<li class="tab-sublevel-ul-li">{weikucms:$v.name}</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$v.yonjing}</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$v.add_time|date='Y-m-d',###}</li>
+   			</ul>
+			</volist>
+   			<div class="tab-sublevel-bottom rand">
+   				看看别人拿了多少佣金&nbsp;>>
+   			</div>
+   		</li>
+   		<li class="hide">
+   			<ul class="tab-sublevel-ul">
+   				<li class="tab-sublevel-ul-li f14">事由</li>
+   				<li class="tab-sublevel-ul-li f14">金额</li>
+   				<li class="tab-sublevel-ul-li f14">日期</li>
+				<li class="tab-sublevel-ul-li f14">备注</li>
+   			</ul>
+			<volist name="conusme" id="vt">
+   			<ul class="tab-sublevel-ul">
+				<li class="tab-sublevel-ul-li">消费</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$vt.yonjing}</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$vt.addtime|date='Y-m-d',###}</li>
+				<li class="tab-sublevel-ul-li">{weikucms:$vt.name}</li>
+   			</ul>
+			</volist>
+
+			<volist name="with" id="tv">
+				<ul class="tab-sublevel-ul">
+				<li class="tab-sublevel-ul-li">提现</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$tv.money}</li>
+   				<li class="tab-sublevel-ul-li">{weikucms:$tv.addtime|date='Y-m-d',###}</li>
+				<li class="tab-sublevel-ul-li">审核中</li>
+   			</ul>
+			</volist>
+      <volist name="all" id="tv">
+        <ul class="tab-sublevel-ul">
+        <li class="tab-sublevel-ul-li">提现</li>
+          <li class="tab-sublevel-ul-li">{weikucms:$tv.money}</li>
+          <li class="tab-sublevel-ul-li">{weikucms:$tv.addtime|date='Y-m-d',###}</li>
+        <li class="tab-sublevel-ul-li">已打款</li>
+        </ul>
+      </volist>
+   		</li>
+   	</ul>
+   </div>
+    </body>
+<script>
+	$('.rand').click(function(){
+		window.location.href="{weikucms::U('randing',array('token'=>$token,'openid'=>$openid))}";
+	})
+</script>
+</html>

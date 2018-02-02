@@ -1,0 +1,36 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">left:-14px<elseif condition="$_GET['userid'] eq 'Supermanage'" /><else/></if>">
+<div class="cLineB">
+  <div class="title_tab" id="topTab">
+    <ul class="tab_navs title_tab" data-index="0">
+      <li data-index="0" class="tab_nav first js_top " data-id="total"> <a href="{weikucms::U('KindergartenBranch/show',array('token'=>$token))}&userid={weikucms:$b['userid']}">幼儿园主页</a> </li>
+    </ul>
+  </div>
+</div>
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>提示信息!</strong>
+  <ol>
+    <li>在这里可以了解<span style="color:red;">普通会员</span>和<span style="color:red;">高级会员</span>的区别，以及<span style="color:red;">普通会员</span>如何升级为<span style="color:red;">高级会员</span>。</li>
+  </ol>
+</div>
+<div class="box-content">
+<div class="alert alert-info">
+  <strong>普通会员说明:</strong>  <br><br>
+
+  {weikucms:$vipdes['seniormember']}
+
+</div>
+
+
+<div class="alert alert-info">
+  <strong>高级会员说明:</strong> <br> <br>
+
+    {weikucms:$vipdes['ordinarymember']}
+
+</div>
+  
+</div>
+<include file="Public:footer"/>

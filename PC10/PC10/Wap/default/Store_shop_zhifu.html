@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+
+
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.5.1.min.js"></script>
+
+
+
+<!--[if lt IE 9]>
+<![endif]-->
+</head>
+<body class="">
+
+
+<style>.address_defalut ul{color:#000}</style>
+<div class="maincontainer">
+    <div class="container wx_wrap mini-innner">
+        <!--div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" href="javascript:history.back();"></a></div>
+                    <div class="wx_bar_tit">确认订单</div>
+                </div>
+            </div>
+        </div-->
+
+
+        <div class="row" id="paycontainer">
+            <div class="col-md-12 p0">
+                <div id="sendTo" class="send_to">
+                    <div class="address_defalut temp_address_click">
+
+                    </div>
+                </div>
+                <div class="order_info mt5" id="orderList">
+                    <li class="message" style="display:block;display:none;"><textarea tag="message" id="postscript"  placeholder="祝福语"></textarea></li>
+
+
+                </div>
+
+
+                <form id="myweipayform" method="post" action="{weikucms::U('Weipay/index',array('token'=>$token))}" >
+                    <input type="hidden" name="order_money" value="{weikucms:$_GET['price']}" id="totalPrice1">
+                    <input type="hidden" name="order_text" value="六月初八（大吉大利）">
+                    <input type="hidden" name="orderid" value="{weikucms:$_GET['orderid']}">
+
+                    <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">
+                    <input type="hidden" name="returnurl" value="{weikucms::U('Store_shop/cats',array('token'=>$token,'openid'=>$_GET['openid']))}">
+                    <input type="hidden" name="type" value="Store_new_goods_order">
+
+                <div class="pay_area" id="pay_area" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+                    <p class="price" id="price">支付现金:￥<strong id="totalPrice" style="font-size:22px;" price="200" market_price="250">{weikucms:$_GET['price']}</strong></p>
+                    <p class="use_pay"><button type="submit" id="buyBtn1" class="btn btn-success btn-block mt10 J_payBtn"  >微信支付</button></p>
+
+
+
+
+                    <p class="has_pay" style="display:none;"><button type="button" rel="2" class="btn btn-success  btn-block mt10 J_payBtn">确认支付</button></p>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--配送方式选择-->
+
+    <div class="modal fade" id="mydelivery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:120px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header tac">
+                    <button type="button" class="close" id="closemydelivery" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title" id="myModalLabel">货到付款加收5%手续费,最低5元</h5>
+                </div>
+                <div class="modal-body tac" id="choosedelivery">
+                    <div class="btn-group">
+
+                        <div class="price">商品总价： ￥<strong id="want_pay" style="font-size:20px;color: #FC004D;"></strong></div>
+                        <div class="price">订单总价： ￥<strong id="want_pay_order" style="font-size:20px;color: #FC004D;"></strong></div>
+                        <br/>
+                        <div class="col-xs-6 pl0" style="width:120px;"><button type="button" rel="4" class="btn btn-success btn-block J_payBtn">确认下单</button></div>
+                        <div class="col-xs-6 pr0" style="width:120px;"><button type="button" class="btn btn-info btn-block">返回重选</button></div>
+                        <br/><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footnav mini-innner">
+        <div class="shopnav js-navmenu nav-on-bottom style-2">
+
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<volist name="info" id="vo">
+    <if condition="$type eq 2 || $type eq 3">
+        <li class="">
+            <div>{weikucms:$vo.content}</div>
+            <div class="pad5">桩号区间：<span>{weikucms:$vo.psection}</span></div>
+            <div class="pad5">站点区间：<span>{weikucms:$vo.ksection}</span></div>
+            <div style="float: right; color: #93A5A4;">{weikucms:$vo.add_time}</div>
+            <div style="clear: both;"></div>
+        </li>
+    </if>
+    <if condition="$type eq 1">
+        <li class="tishi">
+            <div class="quan" style="display: none;">{weikucms:$vo.content}</div>
+            <div class="jie">
+                <php>
+                    if(mb_strlen(strip_tags($vo['content']),'utf8') < 50){
+                    echo $vo['content'];
+                    }else{
+                    echo mb_substr(strip_tags($vo['content']),0,50, 'utf8').'...';
+                    }
+                </php>
+            </div>
+            <div style="float: right; color: #93A5A4;padding: 3px;">{weikucms:$vo.add_time}</div>
+            <div style="clear: both;"></div>
+        </li>
+    </if>
+    <if condition="$type eq 4">
+        <li class="tishi">
+            <div class="quan" style="display: none;">{weikucms:$vo.content}</div>
+            <div class="jie">
+                <php>
+                    if(mb_strlen(strip_tags($vo['content']),'utf8') < 50){
+                    echo $vo['content'];
+                    }else{
+                    echo mb_substr(strip_tags($vo['content']),0,50, 'utf8').'...';
+                    }
+                </php>
+            </div>
+            <div style="float: right; color: #93A5A4;padding: 3px;">{weikucms:$vo.add_time}</div>
+            <div style="clear: both;"></div>
+        </li>
+    </if>
+</volist>

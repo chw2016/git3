@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/home_bg.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/wapweiui/service/css/usercenter.css" rel="stylesheet" type="text/css">
+
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="Keywords" content="我的积分">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+td a {
+    color: #f00;
+    display: block;
+}
+</style>
+<style type="text/css">
+#bottom td a {
+    color: #fff;
+    display: block;
+    font-size: 20px;
+}
+</style>
+<script type="text/javascript">
+    $(function(){
+    	if(document.body.scrollHeight > $(window).height()){
+    		$('#bottom').css({'width':$(window).width(),'left':0,'bottom':-(document.body.scrollHeight-$(window).height())});
+    	}else{
+    		$('#bottom').css({'width':$(window).width(),'left':0});
+    	}
+        
+    })
+</script>
+</head>
+<body>
+    <div class="pageTitle" style="font-size: 15px;">
+        <i style="background: #f15151;"></i>
+        <span class="arrow-r" style="border-left: 10px solid #f15151;"></span>
+        <a
+            href="{weikucms::U('Wap/Repair/wxCenter',array('token'=>$token,'openid'=>$openid))}"
+            style="color: #fff;">首页</a>
+        &nbsp;>>&nbsp;我的积分
+    </div>
+    <if condition="$isNull eq 1">
+    <div class="yxyyList">
+        <ul id="rtable">
+            <div class="notContentTips">
+                <img
+                    src="{weikucms::STATICS}/wapweiui/service/images/notContent.png">
+                <p>目前还没有任何积分！</p>
+            </div>
+        </ul>
+    </div>
+    <else /> <volist id="value" name="scoreInfo">
+    <div class="publicList wml100">
+        <ul>
+            <li class="noAfter">
+                <div class="li-l">积分额</div>
+                <div class="li-r">
+                    <div id="Integral">{weikucms:$value.get_score}</div>
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">获取日期</div>
+                <div class="li-r">
+                    <div id="Acquisitedate">{weikucms:$value.gettime|date='Y-m-d
+                        H:i:s',###}</div>
+                </div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l">结束日期</div>
+                <div class="li-r">
+                    <div id="enddate">{weikucms:$value.endtime|date='Y-m-d
+                        H:i:s',###}</div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    </volist> </if>
+
+    <div class="publicList wml100">
+        <ul>
+            <li class="noAfter">
+                <div class="li-l">积分合计</div>
+                <div class="li-r">
+                    <div id="total">{weikucms:$score['score']}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="button clearfix">
+        <div style="width: 99%; float: left;" id="integrals">
+            <a href="javascript:void(0);" style="background: red; text-align: center; color: #fff; font-weight: 400; border-radius: 6px; line-height: 2em; font-size: 16px; padding: 0;" class="red flag">兑换账户余额</a>
+        </div>
+        <div style="clear: both;padding-top: 10px;" ></div>
+
+        <div style="padding: 5px 12px;border:1px solid #cfcbcb;border-radius:6px;margin:0 auto;width: 89%">
+            <div style="margin-bottom:10px;font-weight:800;font-size:16px;">说明</div>
+            <ul margin-top>
+
+                <li style="margin-bottom:10px;line-height:20px;">
+                    1.通过【首页】-【我的二维码】推荐用户关注1号服务，可获得5积分。
+                </li>
+                <li style="margin-bottom:10px;line-height:20px;">
+                    2.100积分=1元。
+                </li>
+                <li style="margin-bottom:10px;line-height:20px;">
+                    3.积分目前仅可用于兑换账户余额。
+                </li>
+            </ul>
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+    <!-- <div style="height:60px;">
+</div> -->
+    <div style="height: 100px;"></div>
+    <footer>
+        <div class="fix-bottom"></div>
+        <div class="bottomBox">
+            <div class="indexMsg">
+                <div class="indexMenu">
+                    <a
+                        href="index.php?g=Wap&amp;m=Repair&amp;a=home&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a
+                        href="index.php?g=Wap&amp;m=Repair&amp;a=myOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="Order-index">订单</span>
+                    </a>
+                    <a
+                        href="index.php?g=Wap&amp;m=Repair&amp;a=recharge&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="My-index">充值</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <style type="text/css">
+.gray {
+    border-top: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #888;
+    border-bottom: 2px solid #888;
+}
+
+.red {
+    border-top: 2px solid #888;
+    border-left: 2px solid #888;
+    border-right: 2px solid #ddd;
+    border-bottom: 2px solid #ddd;
+}
+
+.indexMenu a span {
+    color: #fff;
+}
+</style>
+    <script type="text/javascript">
+    $(function(){
+        $('.flag').mousedown(function(){
+            $(this).removeClass('gray').addClass('red');
+            $(this).children('a').css({'bottom':'2px','right':'2px'});
+        })
+        $('.flag').mouseup(function(){
+            $(this).addClass('gray').removeClass('red');
+            $(this).children('a').css({'top':'0px','left':'0px'});
+        })
+    })
+</script>
+    <!-- <div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div> -->
+
+    <script type="text/javascript">
+	$(function(){
+		$('#dhyhj').click(function(){
+			window.location.href="";
+		})
+		$('#smewmhqjf').click(function(){
+			window.location.href="";
+		})
+	})
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#integrals").click(function(){
+            var integral = $("#total").text();
+
+            if(integral < 100){
+                show_error_tip('当前积分不够！');
+                return false;
+            }
+            var url="{weikucms::U('Repair/agentScore',array('token'=>$token,'openid'=>$openid))}";
+           
+            $.post(url,{integral:integral},
+                    function(data){
+                        if(data.status == 1){
+                            alert(data.info);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            alert(data.info);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }
+                    },'json');
+        });
+    });
+</script>
+</body>
+</html>

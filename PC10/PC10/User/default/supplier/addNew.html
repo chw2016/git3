@@ -1,0 +1,499 @@
+<include file="Public:public"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#intro', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            items : [
+                'source','undo','clearhtml','hr',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut', 'music', 'video'],
+            afterBlur: function(){this.sync();}
+        });
+    });
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload0').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#fenlei_img0").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image1').val(),
+                    clickFn : function(url, title) {
+                        K('#image1').val(url);
+                        $("#fenlei_img1").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image2').val(),
+                    clickFn : function(url, title) {
+                        K('#image2').val(url);
+                        $("#fenlei_img2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload3').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image3').val(),
+                    clickFn : function(url, title) {
+                        K('#image3').val(url);
+                        $("#fenlei_img3").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload4').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image4').val(),
+                    clickFn : function(url, title) {
+                        K('#image4').val(url);
+                        $("#fenlei_img4").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload5').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image5').val(),
+                    clickFn : function(url, title) {
+                        K('#image5').val(url);
+                        $("#fenlei_img5").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload6').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image6').val(),
+                    clickFn : function(url, title) {
+                        K('#image6').val(url);
+                        $("#fenlei_img6").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript" src="http://cdn.bootcss.com/select2/3.3.2/select2.js"> </script>
+<link rel="stylesheet" href="http://cdn.bootcss.com/select2/3.3.2/select2.css" />
+
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="cLineB">
+            <h4>商品管理</h4>
+        </div>
+        <div class="cLineB" id="uppict" style="display:none">
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+                <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <tbody>
+                    <tr>
+
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="catid">商品分类</label></th>
+                        <td>
+                            <select name="catid" id="catid" style="width: 315px;">
+                                <option value="0">请选商品分类</option>
+                                <volist name="aCat" id="union">
+                                    <option value="{weikucms:$union.id}">{weikucms:$union.name}</option>
+                                </volist>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>名称：</th>
+                        <td>
+                            <input type="hidden" name="id" id="id" value="{weikucms:$aShop.id}"/>
+                            <input type="text" name="name" id="name" value="{weikucms:$aShop.name}" class="px" style="width:400px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>库存：</th>
+                        <td><input type="text" id="num" name="num" value="{weikucms:$aShop.num}" class="px" style="width:100px;" /></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                商品图片：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img0" class="fenlei_img" src="{weikucms:$aShop.logourl}">
+                            <input type="hidden" class="px" id="pic" value="{weikucms:$aShop.logourl}"  name="pic" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload0">上传图片</span>
+
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片一：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img1" class="fenlei_img" src="{weikucms:$imageList[0].image}">
+                            <input type="hidden" class="px" id="image1" value="{weikucms:$imageList[0].image}"  imageid="{weikucms:$imageList[0].id}" name="image1" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload1">上传图片</span>
+
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片二：
+                            </label>
+                        </th>
+                        <td>
+                            <img  id="fenlei_img2" class="fenlei_img" src="{weikucms:$imageList[1].image}">
+                            <input type="hidden" class="px" id="image2" value="{weikucms:$imageList[1].image}"  imageid="{weikucms:$imageList[1].id}" name="image2" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload2">上传图片</span>
+                            <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片三：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img3" class="fenlei_img" src="{weikucms:$imageList[2].image}">
+                            <input type="hidden" class="px" id="image3" value="{weikucms:$imageList[2].image}"  imageid="{weikucms:$imageList[2].id}" name="image3" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload3">上传图片</span>
+                            <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片四：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img4" class="fenlei_img" src="{weikucms:$imageList[3].image}">
+                            <input type="hidden" class="px" id="image4" value="{weikucms:$imageList[3].image}"  imageid="{weikucms:$imageList[3].id}" name="image4" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload4">上传图片</span>
+                            <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片五：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img5" class="fenlei_img" src="{weikucms:$imageList[4].image}">
+                            <input type="hidden" class="px" id="image5" value="{weikucms:$imageList[4].image}"  imageid="{weikucms:$imageList[4].id}" name="image5" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload5">上传图片</span>
+                            <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                展示图片六：
+                            </label>
+                        </th>
+                        <td>
+                            <img id="fenlei_img6" class="fenlei_img" src="{weikucms:$imageList[5].image}">
+                            <input type="hidden" class="px" id="image6" value="{weikucms:$imageList[5].image}"  imageid="{weikucms:$imageList[5].id}" name="image6" style="width:300px" readonly="readonly">
+                            <span class="ke-button-common" id="upload6">上传图片</span>
+                            <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                            <span class="info_tip">建议图片大小320×250</span>
+
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><span class="red">*</span>商品简介：</th>
+                        <td><textarea name="des" id="des" cols="30" rows="10">{weikucms:$aShop.des}</textarea></td>
+                    </tr>
+
+                    <TR>
+                        <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+                        <TD><textarea name="intro" id="intro"  rows="5" style="width:590px;height:360px">{weikucms:$aShop.intro}</textarea></TD>
+                    </TR>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" name="button" class="btn btn-primary" id="save">保存</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var oldselect = [];
+        $(".editselect").each(function(){
+            var t = $(this).val().split(",");
+            //alert(t[0]+'---'+ parseInt(t[1])+'---'+  t[2]+'---'+  t[3]+'---'+  t[4]+'---'+  t[5]+'---'+  t[6]);
+            oldselect[t[1] + '_' + t[3]] = new Array(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]);
+        });
+        $('#catid').select2();
+
+        $("#save").click(function(){
+
+            var name = $("#name").val();
+            if (name.length < 1) {
+                art.dialog({title:'消息提示', ok:true, width:300, height:200, content:'名称不能为空'});
+                return false;
+            }
+            var num = $("#num").val();
+            if (isNaN(num)) {
+                art.dialog({title:'消息提示', ok:true, width:300, height:200, content:'库存应该是为正整数'});
+                return false;
+            }
+            var id = $("#id").val();
+            var pic = $("#pic").val();
+            var catid = $("#catid").val();
+            var intro = $("#intro").val();
+            var attribute = [];
+            var i = 0;
+            var str = '';
+            $(".attribute").each(function(){
+                attribute[i]= {'name':$(this).attr('atr'), 'value':$(this).val(), 'aid':$(this).attr('aid'), 'id':$(this).attr('id')};//new Array($(this).attr('atr'), $(this).val());
+                i ++;
+            });
+            var norms = [];
+            var i = 0;
+            var tnum = 0;
+            $(".tnorms").each(function(){
+                tnum += parseInt($(this).children('td').eq(3).children('input').val());
+                norms[i]= {'color':$(this).children('td').eq(0).children('input').val(), 'format':$(this).children('td').eq(1).children('input').val(), 'price':$(this).children('td').eq(2).children('input').val(), 'vprice':$(this).children('td').eq(3).children('input').val(), 'num':$(this).children('td').eq(4).children('input').val(), 'id':$(this).children('td').eq(5).children('input').val()};
+                i ++;
+            });
+
+            //num = num > tnum ? num : tnum;
+            var image1 = $("#image1").val();
+            var image2 = $("#image2").val();
+            var image3 = $("#image3").val();
+            var image4 = $("#image4").val();
+            var image5 = $("#image5").val();
+            var image6 = $("#image6").val();
+            var des = $("#des").val();
+            var imageid1 = parseInt($("#image1").attr('imageid'));
+            var imageid2 = parseInt($("#image2").attr('imageid'));
+            var imageid3 = parseInt($("#image3").attr('imageid'));
+            var imageid4 = parseInt($("#image4").attr('imageid'));
+            var imageid5 = parseInt($("#image5").attr('imageid'));
+            var imageid6 = parseInt($("#image6").attr('imageid'));
+            if(!pic){
+                alert("商品图片没有添加");return false;
+            }
+            if(!image1 && !image2 && !image3 && !image4 && !image5 && !image6){
+                alert("展示图片必需要添加一项");return false;
+            }
+            if(!des){
+                alert("商品简介不能为空");return false;
+            }
+
+            var images = [];
+            images[0] = {'id':imageid1, 'image':image1};
+            images[1] = {'id':imageid2, 'image':image2};
+            images[2] = {'id':imageid3, 'image':image3};
+            images[3] = {'id':imageid4, 'image':image4};
+            images[4] = {'id':imageid5, 'image':image5};
+            images[5] = {'id':imageid6, 'image':image6};
+            var bili=$("#bili").val();
+            var data = {
+                id:id,
+                name:name,
+                des:des,
+                num:num,
+                logourl:pic,
+                intro:intro,
+                images:JSON.stringify(images),
+                token:'{weikucms:$token}',
+                catid:catid
+            };
+            var url = "{weikucms::U('Supplier/createShop',array('token'=>$token,'sid'=>$_GET['sid']))}";
+            $.post(url, data, function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            }, 'json');
+        });
+    });
+    </script>
+    <script>
+        $(function(){
+            $(".del").click(function(){
+                $(this).parent().find("img").attr('src','');
+                $(this).parent().find("input").val('');
+            })
+        })
+    </script>
+
+    <include file="Public:footer" />

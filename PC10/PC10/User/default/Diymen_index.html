@@ -1,0 +1,211 @@
+<include file="Public:head" />
+<link rel="stylesheet" href="{weikucms::RES}/css/diymen/tipswindown.css"
+    type="text/css" media="all" />
+<script type="text/javascript"
+    src="{weikucms::RES}/css/diymen/tipswindown.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#iframe1").click(function(){
+		tipsWindown("添加菜单","iframe:{weikucms::C('site_url')}{weikucms::U('Diymen/class_add',array('token'=>$_SESSION['token']))}","460","600","true","","true","leotheme");
+	});
+});
+</script>
+
+<button class="ajax btn btn-primary" id="iframe1" title="添加主菜单">添加菜单</button>
+<div class="cLineD">
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>您的公众平台帐号类型必须为服务号或者认证之后的订阅号</li>
+            <li>最多创建3个一级菜单，每个一级菜单下最多可以创建5个二级菜单，菜单最多支持两层。</li>
+            <li>公众平台规定，菜单发布24小时后生效。您也可先取消关注，再重新关注即可马上看到菜单</li>
+        </ol>
+    </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>使用前提是已经拥有了自定义菜单的用户才能够使用</li>
+            <li>第一步:必须先填写【AppId】【 AppSecret】！</li>
+            <li>第二步:添加菜单</li>
+            <li>第三步:点击生成!</li>
+        </ol>
+    </div>
+
+    <form enctype="multipart/form-data" action="" method="post">
+        微信公众号AppId:&nbsp;
+        <input style="margin-bottom: 0px;" type="text" size="20"
+            tabindex="1" class="px" value="{weikucms:$diymen.appid}"
+            id="appid" name="appid">
+        微信公众号AppSecret:&nbsp;
+        <input style="margin-bottom: 0px;" type="text" size="20"
+            tabindex="1" class="px" value="{weikucms:$diymen.appsecret}"
+            id="appsecret" name="appsecret">
+        <button class="btn btn-primary" value="true" name="appidsubmit"
+            type="button" id="bsubmit">保存</button>
+
+    </form>
+
+</div>
+
+<div class="msgWrap form">
+    <form enctype="multipart/form-data" action="" method="post">
+        <input type="hidden" value="" name="anchor">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 4%;">菜单顺序</th>
+                    <th style="width: 12%;">主菜单名称</th>
+                    <th style="width: 12.5%;">关联关键词(点击类型)</th>
+                    <th style="width: 41.5%;">链接地址(链接类型)</th>
+                    <th class="norightborder" style=" width:223px;"">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <volist id="class" name="class">
+                <tr>
+                    <td>{weikucms:$class.sort}</td>
+                    <td>{weikucms:$class.title}</td>
+                    <td>{weikucms:$class.keyword}</td>
+                    <td>
+                        <span>
+                            <if condition="$class['url'] eq false">无链接地址<else />{weikucms:$class.url}</if>
+                        </span>
+                    </td>
+                    <td>
+                        <a class="ajax btn btn-primary cboxElement"
+                            href='javascript:tipsWindown("修改菜单","iframe:{weikucms::C('
+                            site_url')}{weikucms::U('Diymen/class_edit',array('id'=>$class['id']))}","460","600","true","","true","leotheme");'
+                            title="修改主菜单">修改</a>
+                        <a class="btn btn-danger"
+                            href="javascript:source_delete('{weikucms::C('site_url')}{weikucms::U('Diymen/class_del',array('id'=>$class['id']))}');">删除</a>
+                    </td>
+                </tr>
+                <volist id="class1" name="class['class']">
+                <tr>
+                    <td colspan="1">
+                        <span>{weikucms:$class1.sort}</span>
+                    </td>
+                    <td colspan="1">
+                        <div class="board">
+                            <span>{weikucms:$class1.title}</span>
+                        </div>
+                    </td>
+
+                    <td colspan="1">
+                        <span>{weikucms:$class1.keyword}</span>
+                    </td>
+                    <td>
+                        <span>
+                            <if condition="$class1['url'] eq false">无链接地址<else />{weikucms:$class1.url}</if>
+                        </span>
+                    </td>
+                    <td colspan="1">
+                        <a class="ajax btn btn-primary cboxElement"
+                            href='javascript:tipsWindown("修改菜单","iframe:{weikucms::C('site_url')}{weikucms::U('Diymen/class_edit',array('id'=>$class1['id']))}","460","600","true","","true","leotheme");'title="修改主菜单">修改</a>
+                        <a class="btn btn-danger"
+                            href="javascript:source_delete('{weikucms::C('site_url')}/{weikucms::U('Diymen/class_del',array('id'=>$class1['id']))}');">删除</a>
+                    </td>
+                </tr>
+                </volist> </volist>
+
+
+                <br>
+                <br>
+                <tr class="hover">
+                    <td class="td25" colspan="5">
+                        <if condition="$class neq false"> <a
+                            class="btn btn-primary" id="create_menubtns"
+                            onclick="menu_create('{weikucms::U('Diymen/class_send')}');"
+                            title="">生成自定义菜单</a> <a
+                            class="btn btn-danger" id="delete_menubtns"
+                            onclick="source_delete('{weikucms::U('Diymen/delete_menu')}');"
+                            title="">刷新自定义菜单</a> </if>
+
+
+
+                    </td>
+                </tr>
+                <br>
+                <br>
+            </tbody>
+        </table>
+    </form>
+
+</div>
+</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<div class="clr"></div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var appid = $("#appid").val();
+            var appsecret = $("#appsecret").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! appid){
+                notif({
+                    msg: "微信公众号appid不可为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! appsecret){
+                notif({
+                    msg: "微信公众号appsecret不可为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Diymen/index')}",
+                    {appid:appid,appsecret:appsecret,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+    function menu_create(url){
+        var create_menubtns = $("#create_menubtns");
+        create_menubtns.text('微信自定义菜单创建中...');
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                create_menubtns.text('生成自定义菜单');
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+                create_menubtns.text('生成自定义菜单');
+            }
+        },'json');
+    }
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript">
+        var _URL = "{weikucms::U('Media/myhome',array('token'=>$token,'openid'=>$openid))}";
+        
+    </script>
+</head>
+<body style="padding-bottom:70px" >
+<div class="userBox red-bg">
+    <div class="userLogoWrap setMiddle circle">
+        <div class="userLogo circle fixBg" >
+            <img style="display:block;width:100%;height:100%;border-radius:50%;" src="{weikucms:$wxusers['headimgurl']}" alt="头像">
+        </div>
+    </div>
+    <div class="textMiddle h3 white userName">
+        <if condition="$users['nickname'] neq ''">{weikucms:$users['nickname']}
+        <else/>
+        {weikucms:$wxusers['nickname']}
+        </if>
+    </div>
+    <div class="textMiddle h5 white jifen">当前积分：<if condition="$users['money'] neq ''">{weikucms:$aScores['score']}<else/>0</if>
+    </div>
+
+</div>
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg icon icon-nickName"></div>
+    <div class="settingItemName" id="nickname">
+        <if condition="$users['nickname'] neq ''">{weikucms:$users['nickname']}
+            <else/>
+            {weikucms:$wxusers['nickname']}
+        </if>
+    </div>
+    <div class="light-gray editSetting setRight h5"  edit="nickname" id="fixname">修改</div>
+</div>
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg icon icon-pw"></div>
+    <div class="settingItemName" id="password">密码设置</div>
+    <div class="light-gray editSetting setRight h5"  edit="password">修改</div>
+</div>
+<div class="settingTitle h4 gray">支付绑定</div>
+
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">银行卡</div>
+        <div class="light-gray bindSetting setRight h5" bind="bankpay">绑定</div>
+    </div>
+    <div class="settingContent light-gray" id="bankpay">
+        {weikucms:$users['bank_card']}
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户银行</div>
+        <div class="light-gray bindSetting setRight h5" bind="wechatpay">绑定</div>
+    </div>
+    <div class="settingContent light-gray" id="wechatpay">
+        {weikucms:$users['bank_name']}
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户人姓名</div>
+        <div class="light-gray bindSetting setRight h5" bind="alipay">绑定</div>
+    </div>
+    <div class="settingContent light-gray" id="alipay">
+        {weikucms:$users['alipay_account']}
+    </div>
+</div>
+
+<div class="settingTitle h4 gray">联系方式</div>
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-phone"></div>
+    <div class="settingItemName">手机</div>
+    <div class="settingContent light-gray" id="phone">
+        {weikucms:$users['phone']}
+    </div>
+    <div class="light-gray editSetting setRight h5" edit="phone">修改</div>
+</div>
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg icon icon-QQ"></div>
+    <div class="settingItemName">微信/QQ</div>
+    <div class="settingContent light-gray" id="wechat">
+        {weikucms:$users['qq']}
+    </div>
+    <div class="light-gray editSetting setRight h5" edit="wechat">修改</div>
+</div>
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg icon icon-email"></div>
+    <div class="settingItemName ">邮箱</div>
+    <div class="settingContent light-gray" id="email">
+        {weikucms:$users['email']}
+    </div>
+    <div class="light-gray editSetting setRight h5" edit="email">修改</div>
+</div>
+
+<!--<div class="gray white-bg settingItem h4 ">-->
+    <!--<div class="myul">-->
+        <!--<div class="settingItemIco fixBg icon icon-binding">-->
+        <!--</div>-->
+        <!--<div>绑定社交帐号</div>-->
+    <!--</div>-->
+    <!--<div class="accountList white-bg">-->
+        <!--<div class="accountListWrap setMiddle">-->
+
+            <!--<div class="accountWrap floatLeft ">-->
+                <!--<div class="circle account setMiddle fixBg weixin on"></div>-->
+            <!--</div>-->
+            <!--<div class="accountWrap floatLeft ">-->
+                <!--<div class="circle account setMiddle fixBg pengyouquan on"></div>-->
+            <!--</div>-->
+            <!--<div class="accountWrap floatLeft ">-->
+                <!--<div class="circle account setMiddle fixBg qq on"></div>-->
+            <!--</div>-->
+            <!--<div class="accountWrap floatLeft ">-->
+                <!--<div class="circle account setMiddle fixBg qqkj on"></div>-->
+            <!--</div>-->
+            <!--<div class="accountWrap floatLeft ">-->
+                <!--<div class="circle account setMiddle fixBg tieba"></div>-->
+            <!--</div>-->
+
+            <!--<div class="clearBoth"></div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</div>-->
+
+
+<footer class="menuTab myul fixBottom">
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/taskcenter',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-renwu">
+
+        </div>
+        <div class="menuTitle gray">
+            任务大厅
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+        <div class="menu menu-xiaoxi">
+
+        </div>
+        <div class="menuTitle gray">
+            我的消息
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/myincomes',array('token'=>$token,'openid'=>$openid,'iType'=>2))}'">
+            <div class="menu menu-shouru">
+
+        </div>
+        <div class="menuTitle gray">
+            我的收入
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/mybrother',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-yaoqing">
+
+        </div>
+        <div class="menuTitle gray">
+            我的邀请
+        </div>
+    </div>
+</footer>
+</body>
+</html>

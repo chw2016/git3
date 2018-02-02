@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>我要推荐</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/Jd/js/main.js"></script>
+</head>
+<body>
+<ul class="lica_ul">
+    <foreach name="list" item="v">
+    <li class="he" href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}">
+    <div style="width:90%;height:35px;margin-left:10px;float:left;">
+        <span class="name" style="width:25%;">{weikucms:$v.title|mb_substr=###,0,13,'utf-8'}</span>
+        <span class="tel" style="width:45%;">作者；{weikucms:$v.name}</span>
+        <span class="lx">行业：{weikucms:$v.hy}</span>
+    </div>
+    <div class="bz color" style="width:100%;">{weikucms:$v.content|mb_substr=###,0,37,'utf-8'}</div>
+    <div class="tb">
+        <foreach name="v.tag" item="vo">
+        <span class="color{weikucms:$vo.color}" style="color:{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+        </foreach>
+    </div>
+    </li>
+    </foreach>
+</ul>
+<div style="height:230px;float:left;"></div>
+<div class="foot">
+    <span>我要推荐</span>
+</div>
+</body>
+</html>

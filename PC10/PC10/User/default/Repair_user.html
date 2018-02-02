@@ -1,0 +1,273 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+<div>
+	<select id="addarea" class="select" style="width:150px;">
+     <option selected="selected" value="0">选择省</option>
+     <volist name="province" id="vo">
+        <option value="{weikucms:$vo.code}" id="pp_{weikucms:$vo.code}">{weikucms:$vo.name}</option>			                
+    </volist>
+	</select>
+	<select id="city" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="county" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="town" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<a class="btn btn-danger btn-sm" id="finda" style="margin-bottom:5px;" href="/index.php?g=User&amp;m=Repair&amp;a=agent&amp;status=1&amp;type={weikucms:$type}&amp;token={weikucms:$token}" href="javascript:void(0);">搜索</a>
+	<a class="btn btn-danger btn-sm" style="margin-bottom:5px;" href="{weikucms::U('Repair/export',array('token'=>$token, 'type'=>$type, 'status'=>$status, 'area'=>$area, 'op'=>2))}">导出数据表</a>
+	<a class="btn btn-danger btn-sm" style="float:right;" href="{weikucms::U('Repair/index',array('token'=>$token))}">返回上一层</a>
+	
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered" >
+                  <thead>
+                  <tr>
+                      <th style="text-align:center;">序列号</th>
+                    <!--  <th style="text-align:center;">编码</th> --> 
+                      <th style="text-align:center;">用户名称</th>
+                      <th style="text-align:center;">联系方式</th>
+                      <th style="text-align:center;width:150px;word-wrap:break-word;">用户地址</th>
+                      <th style="text-align:center;">操作</th>                       
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" key="i" id="vo">
+                  		<tr>
+        					<td style="text-align:center;">{weikucms:$i}</td>
+                  			<td style="text-align:center;"><div class="answer_text">{weikucms:$vo.username}</div></td>
+                  			<td style="text-align:center;">{weikucms:$vo.user_tel}</td> 
+                    		<td><div style="width:150px;word-wrap:break-word;">{weikucms:$vo.address}</div></td>
+                   			<td class="norightborder" style="text-align:center;">
+                              <a class="btn btn-danger btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=userInfo&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}">查看</a>
+                          	</td>	                                      	
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+<script type="text/javascript">
+function operate(url){
+    if(confirm('您确定进行此操作')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+</script>
+
+
+<script>
+	$(function(){
+		
+		$("#addarea").change(function(){
+			
+			if($("#addarea").val() == 0){
+				alert('请选择省');
+			} else {
+				var id = $("#addarea").val();
+				
+				var div = document.getElementById("city");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var urla = "/index.php?g=User&m=Repair&a=user&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				urla = urla + "&area=" + pptxt;
+				$("#finda").attr("href", urla);	
+				
+                
+				var city = '<option selected="selected" value="0">选择市</option>';
+                var url="index.php?g=User&m=Repair&a=findCity&token={weikucms:$token}";
+               
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		city += '<option value="'+data.data[index].code+'" id="cc_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                  	$("#city").append(city);
+                  }
+              },'json');
+                
+			}
+			
+		});
+		
+		$("#city").change(function(){
+			
+			if($("#city").val() == 0){
+				alert('请选择市');
+			} else {
+				
+				var id = $("#city").val();
+				
+				var div = document.getElementById("county");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+                
+				var txt1=  pptxt + cctxt;
+				
+				var urla = "/index.php?g=User&m=Repair&a=user&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				urla = urla + "&area=" + txt1;
+				$("#finda").attr("href", urla);
+                
+                
+				var county = '<option selected="selected" value="0">选择区/县</option>';
+                var url="index.php?g=User&m=Repair&a=findCounty&token={weikucms:$token}";
+               
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="xx_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                  	$("#county").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		$("#county").change(function(){
+			
+			if($("#county").val() == 0){
+				alert('请选择区/县');
+			} else {
+				
+				var id = $("#county").val();
+				
+				var div = document.getElementById("town");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var obj = document.getElementById("county");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +txt;
+				var url = "/index.php?g=User&m=Repair&a=user&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				url = url + "&area=" + txt;
+				$("#finda").attr("href", url);	
+                
+				var county = '<option selected="selected" value="0">选择镇</option>';
+                var url="index.php?g=Wap&m=Repair&a=findTown&token={weikucms:$token}&openid={weikucms:$openid}";
+			   
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="tt_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#town").show();
+                  	$("#town").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		
+		
+		
+		var smallarea = new Array();
+		$("#town").change(function(){
+			
+			if($("#town").val() == 0){
+				alert('请选择镇');
+			} else {
+				
+				var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var ttobj = document.getElementById("county");
+				var tttxt = ttobj.options[ttobj.selectedIndex].text;
+				
+				var obj = document.getElementById("town");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +tttxt + txt;
+				var url = "/index.php?g=User&m=Repair&a=user&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				url = url + "&area=" + txt;
+				$("#finda").attr("href", url);				
+			}
+			
+		});
+		
+		
+	});
+
+</script>
+<include file="Public:footer"/>

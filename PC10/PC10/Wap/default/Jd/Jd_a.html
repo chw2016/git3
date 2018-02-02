@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>我要申请顾问</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+<style type="text/css">
+*{margin: 0;padding :0;}
+.ceng{width: 100%;height: 90px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+.col-sm-2.control-label{margin:10px 0 ;color:#2f2f2f;}
+.form-control{background-color: #f6f6f6;height: 40px;font-size: 13px;}
+.ceng1{width: 100%;height: 150px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+</style>
+</head>
+<body style="background-color:#ededed;">
+<form action="{weikucms::U('a',array('token'=>session('token'),'openid'=>$openid))}" method="post" id="form" />
+	<div class="ceng">
+
+        <label for="firstname" class="col-sm-2 control-label">项目名称</label>
+        <div class="col-sm-10">
+            <input type="text" name="xm" class="form-control" id="firstname" placeholder="请填写项目名称">
+        </div>
+	</div>
+		<div class="ceng">
+            <label for="firstname" class="col-sm-2 control-label">申请人</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" id="firstname" placeholder="请填写申请人">
+            </div>
+	</div>
+		<div class="ceng">
+            <label for="firstname" class="col-sm-2 control-label">联系手机</label>
+            <div class="col-sm-10">
+                <input type="text" name="tel" class="form-control" id="firstname" placeholder="请填写联系电话">
+            </div>
+	</div>
+<!-- 		<div class="ceng">
+
+            <label for="firstname" class="col-sm-2 control-label">所属行业</label>
+            <div class="col-sm-10">
+                <input type="text" name="hy" class="form-control" id="firstname" placeholder="请填写所属行业">
+            </div>
+	    </div> -->
+	    <style>
+	    
+	    .ceng_eag {
+display: block;
+width: 100%;
+padding: 6px 12px;
+font-size: 14px;
+line-height: 1.42857143;
+color: #888;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #f6f6f6;
+height: 40px;
+font-size: 13px
+
+	    </style>
+	    	<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">项目所属行业</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="hy" class="form-control" id="firstname" readonly value="{weikucms:$info['hy']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="hy" id="hy" class="ceng_eag">
+                    <option>请选择行业</option>
+                    <volist name="types" id="v" >
+                       <option value="{weikucms::$v['industry']}" >{weikucms::$v['industry']}</option>
+                    </volist>
+                </select>
+            </if>
+
+ 
+      	</div>
+	</div>
+	
+		<div class="ceng">
+
+            <label for="firstname" class="col-sm-2 control-label">竞争对手</label>
+            <div class="col-sm-10">
+                <input type="text" name="ds" class="form-control" id="firstname" placeholder="请填写竞争对手">
+            </div>
+
+
+	</div>
+		<div class="ceng">
+            <label for="firstname" class="col-sm-2 control-label">申请机构</label>
+            <div class="col-sm-10">
+                <input type="text" name="jg" class="form-control" id="firstname" placeholder="请填写申请机构">
+            </div>
+	</div>
+
+
+	<div class="ceng1">
+		<label for="firstname" class="col-sm-2 control-label">申请内容</label>
+      	<div class="col-sm-10">
+            <textarea name="content" id="content" class="form-control" id="firstname" placeholder="请填写申请内容" style="height: 105px;"></textarea>
+         	<!-- <input type="text" name="exper" class="form-control" id="firstname" placeholder="请填写您要推荐人的项目经历"> -->
+      	</div>
+	</div>
+    <input type="hidden" name="adviser_id" value="{weikucms:$data.adviser_id}">
+    <input type="hidden" name="time" value="{weikucms:$data.time}">
+	<div style="height:80px;float:left;"></div>
+    </form>
+
+    <div class="foot">
+        <span id="put">确认申请</span>
+    </div>
+
+
+    <script type="text/javascript">
+$(function(){
+    
+        $('#put').click(function(){
+		     /*    $('#form').find('input[type=text]').each(function(){
+		            if($(this).val()==''){
+		                msg.alert($(this).attr('placeholder'));
+		                sub=0;
+		                return false;
+		            }else{
+		                sub=1;
+		            }
+		        }); */
+		        
+        	if(!$("input[name='xm']").val()){
+    	    	alert('项目名称输入为空');
+    	    	return false;
+    	    }
+		        
+        	if(!$("input[name='name']").val()){
+    	    	alert('申请人输入为空');
+    	    	return false;
+    	    }
+        	
+        	if(!$("input[name='tel']").val()){
+    	    	alert('联系手机输入为空');
+    	    	return false;
+    	    }
+        	
+
+		        
+		        
+            if($("#hy").val()=='请选择行业'){
+    	    	alert('行业选择为空');
+    	    	return false;
+	        }
+    	    
+        	if(!$("input[name='jg']").val()){
+    	    	alert('申请机构输入为空');
+    	    	return false;
+    	    }
+    	     
+        	if(!$("#content").val()){
+    	    	alert('申请内容输入为空');
+    	    	return false;
+        	}
+    	    
+    	    $('form').trigger('submit'); 
+		        
+		     //   if(sub==1) $('#form').submit();
+        }); 
+        
+        
+        
+});
+
+    </script>
+</body>
+</html>

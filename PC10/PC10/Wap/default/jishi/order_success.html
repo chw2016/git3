@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>订单</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+		<style type="text/css">
+			.cancelOrder {
+			    height: 42px;
+			    line-height: 42px;
+			    top: 4px;
+			}
+		</style>
+    </head>
+    <body class="bodyHasMargin">
+	    <div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+	    	订单确认
+	    	<div class="headerRight cancelOrder border-6 bold cencel-bg noWrap overFloatHidden">
+	    		取消订单
+	    	</div>
+	    </div>
+
+		<div class="myul ordersuccessInfo h6 lisheng-text-color">
+			<div class="myli orderNumber">
+                <input type="hidden" id="order_id" value="{weikucms:$order.id}">
+				预约号：{weikucms:$order.order_num}
+			</div>
+			<div class="myli orderTime">
+				下单时间：{weikucms:$order.add_time}
+			</div>
+		</div>
+
+
+		<div class="stepIndex ">
+			<div class="orderInfoBox border-6 boxShadow setMiddle lisheng-text-color white-bg">
+				<div class="orderSuccessBox lisheng-red">
+					<h3 class="textMiddle" id="IFsuccess">订单提交成功</h3>
+					<div class="orderSuccessInfo">
+						<h4>理财师：{weikucms:$order.finances_planner_name}</h4>
+						<h4>预约时间：{weikucms:$order.time}</h4>
+					</div>
+				</div>
+				<div class="orderInfoBoxHead myul">
+					<div class="myli">
+						<div class="setMiddle boxShadow fixBg ORImg" style="background-image:url({weikucms:$order.finances_planner_image})"></div>
+					</div>
+					<div class="success-produceInfo">
+						<div class="h4  bold">
+                        {weikucms:$order.finances_product_title}<span class="RMB setRight">{weikucms:$order.price}</span>
+						</div>
+						<div class="orderInfoContent h6">
+                        <php>echo htmlspecialchars_decode($order['finances_product_desc'])</php>
+					</div>
+					</div>
+
+				</div>
+
+				<div class="textMiddle lisheng-red h2 pay bold">
+					应付金额：<span class="RMB" id="pay">{weikucms:$order.price}</span>
+				</div>
+				<a href="tel:{weikucms:$order.tel}" class="callGirl hide"><!-- 客服的电话号码在这 -->
+					<div class="border-12 setMiddle lisheng-red-bg orderOff callBtn white myul">
+						<div class="icon icon-call"></div>
+						客服{weikucms:$kf.tel} <!-- 客服的电话号码在这 -->
+					</div>
+				</a>
+			</div>
+		</div>
+
+
+		<div class="myul stepHavList">
+			<div class="stepPrev lishengGoldBg  myli textMiddle h4 lisheng-text-color hide" >
+				上一步
+			</div>
+			<div class="stepNext nextBg  myli textMiddle h4 lisheng-text-color " >
+				完成
+			</div>
+			<div class="nextBg subMit myli textMiddle h4 lisheng-text-color hide ">
+				<button type="submit" form="orderForm" value="Submit">提交订单</button>
+			</div>
+		</div>
+
+    </body>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".cancelOrder").click(function(){
+                $.ajax({
+                    url: "{weikucms::U('Jishi/del_order',array('token'=>$token,'openid'=>$openid))}",
+                    type:"POST",
+                    data:{"id":$('#order_id').val()},
+                    dataType:"json",
+                    success: function(res){
+                        if(res.status == 0){
+                            // Ajax成功后执行下面代码
+                            $(this).addClass('hide');
+                            $("#IFsuccess").text("您已经取消预约");
+                            $(".callGirl").removeClass('hide');
+                            $(".pay").addClass('off')
+                        }else{
+                            alert(res.info);
+                        }
+                    }
+                });
+    		})
+    	})
+    </script>
+</html>

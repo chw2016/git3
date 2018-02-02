@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<include file="Public:weiweb" />
+<title>{weikucms:$tpl.name}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="http://stc.weimob.com/new/template/home-207/css/main.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_156/index.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_156/theme_blue.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+<script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        window.swipe = new Swipe(document.getElementById('imgSwipe'), {
+            speed: 500,
+            auto: 5000,
+            callback: function(){
+                var lis = $(this.element).next("ol").children();
+                lis.removeClass("on").eq(this.index).addClass("on");
+            }
+        });
+    });
+</script>
+<!-- Mobile Devices Support @end -->
+<body onselectstart="return true;" ondragstart="return false;">
+<include file="Public:audio"/>
+
+
+<div class="dg_top">
+    <div style="  width: 97%;margin: 5px auto;">
+        <div id="banner_box" class="box_swipe">
+            <ul>
+                <volist name="flash" id="so">
+                    <li>
+                        <a onclick="return false;" href="{weikucms:$so.url|htmlspecialchars_decode}">
+                            <img src="{weikucms:$so.img}" alt="dsf" style="width:100%;" />
+                        </a>
+                    </li>
+                </volist>
+            </ul>
+            <ol>
+                <li class="on"></li>
+                <volist name="flash" id="vo" offset="1">
+                    <li style="margin-right:4px;"></li>
+                </volist>
+            </ol>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            new Swipe(document.getElementById('banner_box'), {
+                speed:500,
+                auto:3000,
+                callback: function(){
+                    var lis = $(this.element).next("ol").children();
+                    lis.removeClass("on").eq(this.index).addClass("on");
+                }
+            });
+        });
+    </script>
+</div>
+<div style="margin: 0 auto;width: 100%">
+    <div class="dg_tel">
+
+            <div class="dg_tel_nav">
+                <a href="tel:{weikucms:$speeddial['phone']} " style="color: rgb(46,149,130);">
+                <span class="tel"></span>
+                <span class="ml10">{weikucms:$speeddial['phone']}</span>
+                </a>
+            </div>
+
+
+    </div>
+
+    <div class="mt10 clearfix ml10 ">
+        <volist name="info" id="vo" offset="0" length="1">
+            <div class="orange1 fl pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+                <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="1" length="1">
+            <div class="win1 fl ml10 pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+                <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="2" length="1">
+            <div class="Pink fl ml10 pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="3" length="1">
+            <div class="yellow fl pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="4" length="1">
+            <div class="greenshen ml10 fl pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="5" length="1">
+            <div class="Pinkshen fl ml10 pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="6" length="1">
+            <div class="yellow fl  pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+        <volist name="info" id="vo" offset="7" length="1">
+            <div class="Pinkshen fl ml10 pt5 pb5 mb-5" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+            <p class="home" style="margin-top: 10px;"><img src="{weikucms:$vo.img}" style="width:100%;height: 100%;" /></p>
+            <p>{weikucms:$vo.name}</p>
+            </div>
+        </volist>
+
+    </div>
+    <div style="height: 100px;"></div>
+    <footer>
+        <div style="width: 20%" class="fl">
+            <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+        </div>
+        <div class="fl" style="width:80%">
+            <div class="home_xian  fl"></div>
+            <div class="ds_ib fl w33"><a href="tel:{weikucms:$speeddial['phone']}">一键联系</a></div>
+            <div class="home_xian  fl"></div>
+            <div class="ds_ib fl w33"><a href="#">使用帮助</a></div>
+            <div class="home_xian  ml15 fl"></div>
+            <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Roadnext/jianyi',array('token'=>$token,'openid'=>$openid))}">投诉建议</a></div>
+        </div>
+    </footer>
+
+</div>
+</body>
+</body>
+</html>

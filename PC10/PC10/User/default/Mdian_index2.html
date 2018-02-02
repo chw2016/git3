@@ -1,0 +1,213 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;">
+    <div style="width: 90%;margin: 0 auto;">
+
+   <style>
+.title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+</style>
+<div class="cLineB"  style="position:relative" > 
+    <div class="title_tab" id="topTab"><a  class="btn btn-primary"  style="position:relative; left:900px; top:25px;" href="{weikucms::U($aaa/$bbb,array('token'=>$token,'expor'=>1))}"  >导出</a> 
+   
+    
+
+        <ul class="tab_navs title_tab" data-index="0"  >
+
+           
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>">预约人数</a>
+            </li>
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Qianggou/index',array('aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">限时抢购</a>
+            </li> -->
+<!--             
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>">最新活动</a>
+            </li> -->
+            
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Dianphd/index',array('token'=>$_GET['token'],'aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">店铺活动管理</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms:$Head.url}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">活动管理</a>
+            </li> -->
+            
+          
+        </ul>
+    
+    </div>
+</div>
+
+<div class="cLineC" style="line-height: 32px;">
+   
+   <a 
+    href="{weikucms::U('Dianphd/index',array('aid'=>$_GET['aid'],'modulename'=>$_GET['modulename'],'token'=>$_GET['token']))}" class="btn btn-primary {weikucms:$Opt.css}" >返回</a>
+   
+</div>
+
+   <div class="msgWrap form">
+  <div class="bdrcontent">
+    <div id="div_ptype">
+      <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <thead>
+          <tr>
+          	<th  style="text-align:center" >日期</th>
+            <th  style="text-align:center" >9:00</th>
+            <th  style="text-align:center" >10:00</th>
+            <th  style="text-align:center" >11:00</th>
+            <th  style="text-align:center" >12:00</th>
+            <th  style="text-align:center" >13:00</th>
+            <th  style="text-align:center" >14:00</th>
+            <th  style="text-align:center" >15:00</th>
+            <th  style="text-align:center" >16:00</th>
+            <th  style="text-align:center" >17:00</th>
+            <th  style="text-align:center" >18:00</th>
+            <th  style="text-align:center" >19:00</th>
+            <th  style="text-align:center" >20:00</th>
+            
+          </tr>
+        </thead>
+        <!--tab start-->
+        <div class="alert alert-info">
+          <button type="button" class="tips close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+        
+           
+            <li>你可以在这里管理你的预订人数信息</li>
+            
+            
+         
+          </ol>
+          <script type="text/javascript">
+            $('.tips.close').click(function(){
+               $(this).parents('.alert.alert-info').hide();
+            });
+          </script>
+        </div>
+                 <?php 
+		/*	foreach($dates as $date){
+
+				echo $date;//输出日期
+				for($i=9;$i<count($atime)+9;$i++){//循环
+					if(isset($list[$date.','.$i])){//如果$list['2015-04-28,9']存在就输出  ，这样输出的就是特殊的
+						echo (int)$list[$date.','.$i];
+					}else{
+						echo (int)$default['hour'.$i];//否则就输出，$default['hour9']
+					}
+					echo str_repeat('&nbsp;', 5);//
+				}
+				echo "<br />";
+		} 
+         */
+         ?>
+          <?php  
+             foreach($dates as $date){  
+          ?>
+            <tr>
+	             <td  style="text-align:center;" >
+	                 <a target="_self" style=" width:100px; height:60px;  width:100px; height:60px;  " class="btn btn-success btn-sm" >
+	                               <?php 
+                                          echo $date; 
+                                          $add=strtotime($date);
+                                          $add=date('w',$add);
+                                       switch ($add){
+			                            	case 1:$aa='星期一';break;
+			                             	case 2:$aa='星期二';break;
+			                             	case 3:$aa='星期三';break;
+			                             	case 4:$aa='星期四';break;
+			                             	case 5:$aa='星期五';break;
+			                             	case 6:$aa='星期六';break;
+			                             	case 0:$aa='星期日';break;
+			                             }
+                                     echo "<br/>";
+                                       print_r($aa);
+	                               ?>
+	                 </a>
+	             </td>
+	             <?php for($i=9;$i<count($atime)+9;$i++){ ?>
+                 <td class="norightborder" style="text-align:center" >
+                  
+	               <div  class="aaa" style=" background-color:#19b593; height:60px;line-height:60px; width:83px; color:white; " ><?php
+	                           	if(isset($time_xs[$date.','.$i])){
+										echo (int)$time_xs[$date.','.$i];
+								}else{
+										echo 0;
+					           }
+	                       ?>/<a id="aaaa" ><?php
+	                           	if(isset($list[$date.','.$i])){
+										echo (int)$list[$date.','.$i];
+								}else{
+										echo (int)$default['hour'.$i];
+					           }
+	                       ?></a></div>
+	               <input name="zhi"   class="abc"  type="text" style="display:none; height:50px;line-height:50px;width:70px;text-align:center;margin-top:8px;" value="<?php
+	                           	if(isset($list[$date.','.$i])){
+										echo (int)$list[$date.','.$i];
+								}else{
+										echo (int)$default['hour'.$i];
+					           }
+	                       ?>""/>
+	                    <input type="hidden"  class="time" name="time" value="<?php print_r($date.",".$i); ?>"  />
+	                    <input type="hidden"  class="token" name="token" value="<?php print_r($token); ?>"  />
+	                    <input type="hidden"  class="pid" name="pid" value="<?php print_r($pid); ?>"  />
+	             
+
+	             </td>
+	             <?php } ?>
+           </tr>
+       <?php
+           }
+       ?>
+       
+    
+      </table>
+    </div>
+  </div>
+  <div class="footactions" style="padding-left:10px">
+    <div class="pager">{weikucms:$page}</div>
+  </div>
+</div>
+
+
+
+    <div class="clr"></div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script>
+$(".abc").mouseout(function(){
+	var zhi=$(this).val();
+	    time=$(this).siblings(".time").val();
+	    token=$(this).siblings(".token").val();
+	    pid=$('.pid').val();
+	 
+	    $.post("{weikucms::U('index')}",{"zhi":zhi,"time":time,"token":token,"pid":pid},function(data){
+        	if(data.str){
+        		alert(data.str)
+        	}
+		},'json');
+	    $(this).hide();
+	    $(this).siblings(".aaa").show();
+	    $(this).siblings(".aaa").children("#aaaa").html(zhi);
+})
+
+$(".aaa").click(function(){
+	$(this).hide();
+	$(this).siblings(".abc").show();
+})
+   
+</script>
+<include file="Public:footer"/>

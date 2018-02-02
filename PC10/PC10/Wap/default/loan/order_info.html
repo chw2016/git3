@@ -1,0 +1,189 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>订单详情</title>
+
+
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/a.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/bill.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+    <style>
+        .bill_num{
+            width: 12%;
+        }
+        .bill_text{
+            width: 68%;
+        }
+        .my-container{
+            padding: 0;
+
+        }
+    </style>
+</head>
+<body>
+<!--<div class="my-top-bar">
+    <div class="my-bar">
+        <a id="btn-back" href="javascript:history.go(-1);" class="my-bar-btn pull-left"><span class="icon-chevron-left"></span></a>    <a href="/u/home" class="my-bar-btn pull-right"><span class="icon-user my-bg-icon"></span></a>
+        <h1>订单详情</h1>
+    </div>
+</div>-->
+<div class="my-container" style=" padding-bottom:10px;">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div style="font-size:14px;">
+<span class="pull-right">
+<span style="color:#cccccc">
+<if condition="($info['paystatus'] eq 0) AND ($info['type'] eq 1)">
+    未付款
+    <elseif condition="$info['paystatus'] eq -1" />
+    已取消
+    <elseif condition="($info['paystatus'] eq 1) AND ($info['type'] eq 1) AND($user_info['pid'] eq '')" />
+    已付款待上传图片
+    <elseif condition="($info['paystatus'] eq 1) AND ($info['type'] eq 1) AND($user_info['pid'] neq '')" />
+    已付款审核中
+    <elseif condition="($info['paystatus'] eq 5) AND ($info['type'] eq 1)" />
+    审核通过
+    <elseif condition="($info['paystatus'] eq 7) AND ($info['type'] eq 1)" />
+    申请退款中
+    <elseif condition="($info['paystatus'] eq 8) AND ($info['type'] eq 1)" />
+    退款成功
+    <elseif condition="($info['paystatus'] eq 9) AND ($info['type'] eq 1)" />
+    退款失败
+    <elseif condition="($info['paystatus'] eq 0) AND ($info['type'] eq 2)" />
+    审核中
+    <elseif condition="($info['paystatus'] eq 1) AND ($info['type'] eq 2)" />
+    审核通过
+    <elseif condition="$info['paystatus'] eq 12" />
+    已全额还款完成
+    <elseif condition="$info['paystatus'] eq 2" />
+    审核未通过
+    <else />
+</if>
+</span></span>
+                订单号：{weikucms:$info.orderid}</div>
+            <hr style="margin-top:5px; margin-bottom:5px;">
+            <span style="color:#999">姓名：</span>{weikucms:$user_info.true_name}<br>
+            <span style="color:#999">手机：</span>{weikucms:$user_info.phone}<br>
+            <span style="color:#999">备注：</span>--无--<br>
+            <hr style="margin-top:5px; margin-bottom:5px;">
+            <if condition="$info['type'] eq 1">
+            <span style="color:#999">首付：</span>￥{weikucms:$info.shoufu}元<br>
+                <elseif condition="$info['type'] eq 2" />
+                <span style="color:#999">贷款总额：</span>￥{weikucms:$info.loan_total_money}元<br>
+                <else />
+                </if>
+
+            <span style="color:#999;float: left;">月付：</span>￥{weikucms:$info.monthly_repayments} x {weikucms:$info.fenqi}期
+            <span style=" width:40px; text-align:center;float: right;background-color:#009fa4; color: #FFF;font-size: 14px"
+                    onclick="javascript:history.back(-1);">返回</span>
+            <hr style="margin-top:5px; margin-bottom:5px;">
+            <div class="row">
+                <if condition="($info['type'] eq 1)AND($xiajia eq 1)">
+
+                <a href="{weikucms::U('no_credit',array('token'=>$token,'openid'=>$openid,'id'=>$info['cid']))}" style="display:block;">
+                    <elseif condition="($info['type'] eq 1)AND($xiajia eq 0)" />
+                    <a  onclick="xiajia()" style="display:block;">
+                    <else />
+                    </if>
+                    <div class="col-xs-4"><img src="{weikucms:$info.pic}" width="100%"></div>
+                    <div class="col-xs-8" style="padding-left:0px;">
+                        <span style="font-weight:bold; color:#000;">{weikucms:$info.title}</span> <span style="font-size:12px; color:#999;">
+                    <if condition="($info['people_num'] eq 3) AND($info['type'] eq 1)">
+                        x2
+                        <elseif condition="$info['type'] eq 1" />
+                        x1
+                    </if>
+                    </span>
+                        <br />
+                        <if condition="$info['type'] eq 1">
+                            <if condition="$info['date_time'] neq ''">
+                        <span style="font-size:12px; color:#999;">出游日期：{weikucms:$info.date_time}</span><br />
+                                </if>
+                            <span style="font-size:12px; color:#999;">购买数量：{weikucms:$info.many}</span>
+                        </if>
+
+                    </div>
+                </a>
+            </div>
+
+            <if condition="$info['type'] eq 1">
+               <hr style="margin-top:5px; margin-bottom:5px;">
+            <div class="text-right" style="font-size:14px;">
+                金额：<span style="font-size:18px; color:#FF0000">￥{weikucms:$info.shoufu}</span>
+            </div>
+            </if>
+
+            <hr style="margin-top:5px; margin-bottom:5px;">
+            <div class="text-right">
+            </div>
+
+
+        </div>
+        <!---还款列表-->
+
+            <if condition="(($info['type'] eq 1)AND($info['paystatus'] eq 5))OR(($info['type'] eq 2)AND($info['paystatus'] eq 1))">
+        <div class="bill">
+            <volist name="arr" id="vo">
+            <div class="bill_body">
+                <div class="bill_num">{weikucms:$i}</div>
+                <div class="bill_text">
+                    <div><span class="bile left">还款金额：</span><span class="bile right text">{weikucms:$info.monthly_repayments}</span></div>
+                    <div><span class="bile left">还款期限：</span><span class="bile right">{weikucms:$vo.start_time}至{weikucms:$vo.end_time}</span></div>
+                    <if condition="$vo['hk_jl']">
+                        <div><span class="bile left">还款日期：</span><span class="bile right">{weikucms:$vo.hk_jl.add_time|date='Y-m-d h:i:s',###}</span></div>
+                    </if>
+
+                </div>
+                <div class="bill_zt">
+                    <if condition="$vo['hk_jl']">
+                    <span class="bile_span on">已付款</span>
+                        <else />
+                         <if condition="$vo['c'] eq 1">
+                        <span class="bile_span"><a href="{weikucms::U('zhifu',array('qingsu'=>$i,'token'=>$token,'openid'=>$openid,'id'=>$info['id']))}">立即还款</a></span>
+                        </if>
+                    </if>
+                </div>
+            </div>
+            </volist>
+
+        </div>
+                <else />
+            </if>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<div style="height:40px;background-color: #F5F5F5;"></div>
+
+<!--尾部-->
+<section>
+    <include file="Loan:foot"/>
+</section>
+
+
+<script>
+    function xiajia(){
+        show_error_tip("此商品已下架");
+        return false;
+    }
+</script>
+
+<script src="/public/asset/bootstrap/js/bootstrap.min.js"></script>
+<script src="/public/asset/shoufuyou/js/myui.js"></script>
+<div style="overflow:hidden; height:1px;"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254141628'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1254141628' type='text/javascript'%3E%3C/script%3E"));</script></div></body>
+</html>

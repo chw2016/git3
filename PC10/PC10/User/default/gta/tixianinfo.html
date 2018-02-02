@@ -1,0 +1,121 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+        float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+    }.borderColor{
+         border-bottom:3px solid #1576AD;
+     }
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('user_index',array('token'=>$token))}" >用户管理</a>
+            </li>
+
+           <!-- <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('index',array('token'=>$token))}" >分销商</a>
+            </li>-->
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('adduserlevel',array('token'=>$token))}" >会员等级</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('tixianinfo',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>提现管理</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="cLineC" style="line-height: 32px;">
+    <a href="{weikucms::U('excel',array('token'=>$token))}" class="btn btn-primary">导出excel表</a>　
+</div>
+
+        <div>状态：
+            <select id="status">
+                <if condition="session('gta_cw') eq '会计权限'">
+                    <option value=""> 请选择状态</option>
+                    <option value="1" <if condition="$_GET['status'] eq 1">selected</if>>未审核</option>
+                    <option value="3" <if condition="$_GET['status'] eq 3">selected</if>>已打款</option>
+                    <elseif condition="session('gta_cw') eq '出纳权限'"/>
+                    <option value="2" <if condition="$_GET['status'] eq 2">selected</if>>已审核打款中</option>
+                    <else/>
+                    <option value="1" <if condition="$_GET['status'] eq 1">selected</if>>未审核</option>
+                    <option value="2" <if condition="$_GET['status'] eq 2">selected</if>>已审核打款中</option>
+                    <option value="3" <if condition="$_GET['status'] eq 3">selected</if>>已打款</option>
+                    <option value="4" <if condition="$_GET['status'] eq 4">selected</if>>审核未通过</option>
+                </if>
+            </select>
+            <a class="btn btn-primary" id="souch" style="margin-top: -10px;">搜索</a>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                $('#souch').click(function(){
+                    var status = $('#status').val();
+                    /*var url = "{weikucms::U('tixianinfo',array('token'=>$token))}";*/
+                    if(status){
+                        location.href = "{weikucms::U('tixianinfo',array('token'=>$token))}&status="+status;
+                    }else{
+                        location.href = "{weikucms::U('tixianinfo',array('token'=>$token))}";
+                    }
+                })
+            })
+        </script>
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >序号</th>
+                <th >姓名</th>
+                <th >手机号码</th>
+                <th >提现金额(元)</th>
+                <th >种类</th>
+                <th >申请时间</th>
+                <th >审核时间</th>
+                <th >状态</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="alist" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td >{weikucms:$vo.true_name}</td>
+                    <td >{weikucms:$vo.phone}</td>
+                    <td >{weikucms:$vo.number}</td>
+                    <td ><if condition="$vo['type'] eq 1">余额<elseif condition="$vo['type'] eq 2" />佣金<else /></if></td>
+                    <td>{weikucms:$vo.add_time}</td>
+                    <td>{weikucms:$vo.check_time}</td>
+                    <td><if condition="$vo.status eq 1">未审核<elseif condition="$vo['status'] eq 2"/>已审核打款中<elseif condition="$vo['status'] eq 4"/>审核未通过<else/>已打款</if></td>
+                    <td >
+                        <a href="{weikucms::U('ticheck',array('token'=>$token,'id'=>$vo['id']))}" title="详情" class="btn btn-success btn-sm">查看详情</a>
+                    </td>
+                </tr>
+            </volist>
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

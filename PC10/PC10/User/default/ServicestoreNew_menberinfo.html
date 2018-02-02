@@ -1,0 +1,124 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(document).ready(function(){
+        $(".pxf").attr("value","0");
+        $(".pxf").click(function(){
+            $(this).val($(this).attr("checked")?"1":"0");
+        })
+    })
+</script>
+<style type="text/css">
+    .msgWrap input{
+        width: 250px;
+    }
+</style>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="cLineB">
+            <h4>会员管理</h4>
+        </div>
+        <div class="cLineB" id="uppict" style="display:none">
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+                <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <input type="hidden" class="px" id="id" value="{weikucms:$aInfo.id}" name="id">
+                        <input type="hidden" class="px" id="token" value="{weikucms:$aInfo.token}" name="token">
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="vip_name">会员号</label></th>
+                        <td><input calss="pc" type="text" name="vip_name" id="vip_name" value="{weikucms:$aInfo.vip_name}" readonly/></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="car_username">会员名称</label></th>
+                        <td><input calss="pc" type="text" name="car_username" id="car_username" value="{weikucms:$aInfo.car_username}"/></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="car_frame">车架号</label></th>
+                        <td><input calss="pc" type="text" name="car_frame" id="car_frame" value="{weikucms:$aInfo.car_frame}" /></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="user_phone">电话号码</label></th>
+                        <td><input calss="pc" type="tel" name="user_phone" id="user_phone" value="{weikucms:$aInfo.user_phone}" /></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="integral">积分</label></th>
+                        <td><input calss="pc" type="number" name="integral" id="integral" value="{weikucms:$aInfo.integral}" /></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="integral">类型</label></th>
+                        <td>
+                            <select id="type">
+                                <option value="">请选择类型</option>
+                                <option value="1" <if condition="$aInfo['type'] eq 1">selected</if>>会员</option>
+                                <option value="2"  <if condition="$aInfo['type'] eq 2">selected</if>>公司员工</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                            <include file="./tpl/User/default/helper/list_btn.html"/>
+                            <div class="clr"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div class="clr"></div>
+    </div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("#id").val();
+        var token = $("#token").val();
+        var car_username = $("#car_username").val();
+        var car_frame = $("#car_frame").val();
+        var user_phone = $("#user_phone").val();
+        var integral = $("#integral").val();
+        var type = $("#type").val();
+        var url = "{weikucms::U('ServicestoreNew/menberinfo',array('token'=>$token))}";
+        $.post(url,{
+                    id:id,
+                    token:token,
+                    car_username:car_username,
+                    car_frame:car_frame,
+                    user_phone:user_phone,
+                    integral:integral,
+                    type:type,
+                    __hash__: $("input[name='__hash__']").val()
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+    }
+</script>
+

@@ -1,0 +1,53 @@
+<include file="Public:head"/>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里您可以查看到所有转发人数</li>
+
+        </ol>
+    </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>用户昵称</th>
+                      <th style="width: 400px;">微信ID</th>
+                      <th>转发时间</th>
+                      <th>浏览次数</th>
+					  <th>转发次数</th>
+                      <th>所得积分</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td>{weikucms:$vo.id}</td>
+                          <td>{weikucms:$vo.nick_name}</td>
+                          <td>{weikucms:$vo.openid}</td>
+                          <td><php>echo date('Y-m-d H:i:s',$vo['add_time']);</php></td>
+                          <td><span class="badge badge-success">{weikucms:$vo.times}</span></td>
+						  <td><span class="badge badge-success">{weikucms:$vo.share_times}</span></td>
+                          <td>{weikucms:$vo.score}</td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+<include file="Public:footer"/>

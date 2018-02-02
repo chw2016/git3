@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>研祥</title>
+<script src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.11.2.min.js"></script>
+<link type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/style2.css" rel="stylesheet"/>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.touchSlider.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yx.css">
+
+
+
+
+</head>
+<body >
+
+
+
+	<div class="yx_body">
+		<ul>
+            <volist name="list" id="vo">
+			<a <if condition="$vo['url']">href="{weikucms:$vo.url}"<else />href="{weikucms::U('content2',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}"</if>>
+				<li class="yx_body_li">
+					<div class="yx_body_li_img"><img src="{weikucms:$vo.pic}" alt=""></div>
+					<div class="yx_body_li_text">
+						<div class="yx_body_li_text_title">
+                            <?php echo str_substr($vo['title'],13) ?>
+						</div>
+						<div class="yx_body_li_text_body">
+                            {weikucms:$vo.ms}
+						</div>
+					</div>
+				</li>
+			</a>
+                </volist>
+
+		</ul>
+	</div>
+
+    <div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+
+</body>
+</html>

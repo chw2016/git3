@@ -1,0 +1,141 @@
+<include file="Public:head"/>
+<style type="text/css">
+    .importclass{
+        position: relative;
+        left:-123px;
+    }
+   .a_button{display:inline-block; position:relative; overflow:hidden;}
+   #codefile{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);}
+</style>
+
+<script type="text/javascript">
+    $(function(){
+        var btn = $("#import_btn");
+        $("#import_btn").click(function(){
+            var v= $("#codefile").val();
+            if(!v){
+                alert('请选择防伪码文件');
+            }else{
+                $("#myform").ajaxSubmit({
+                    dataType:  'json',
+                    beforeSend: function() {
+                        btn.html("处理中..");
+                    },
+                    /*
+                    uploadProgress: function(event, position, total, percentComplete) {
+                        var percentVal = percentComplete + '%';
+                        btn.html("处理中..("+percentVal+")");
+                    },
+                    complete: function(xhr) {
+                     $(".files").html(xhr.responseText);
+                     },*/
+                    success: function(data) {
+                        btn.html(data.msg);
+                    },
+                    error:function(xhr){
+                        btn.html("处理失败");
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+      <div class="cLineB">
+        <h4>资料管理</h4>
+      </div>
+
+
+      <div class="cLine">
+
+          <div class="pageNavigator left">
+          <form id="myform" action="{weikucms::U('Flag/importcode')}" method="post" enctype="multipart/form-data">
+              <a href="{weikucms::U('Flag/add',array('token'=>$token))}" title='自主添加' class='btn btn-primary'>自主添加</a>　
+              <a href="#" class="a_button btn btn-primary">EXCEL导入
+                  <input type="file" name="file" id="codefile" value="导入资料">
+              </a>
+          </form>
+          <button class='btn btn-success' id="import_btn">确定导入</button>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>
+            <ol>
+                <li>已指定格式的excel文本导入到系统</li>
+            </ol>
+        </div>
+
+    <div class="msgWrap">
+
+        <div class="search_bar_class span12">
+
+            <div class="row span10 left_bar">
+                <form action="" method="post">
+
+
+                    <div class="input-group input-group-text">
+                        <input type="text" name="reg_num" value="{weikucms:$reg_num}" placeholder="输入注册号查询"/>
+                        <input type="submit" class="btn btn-primary chaxun_btn" value="查询" >
+                    </div>
+                </form>
+            </div>
+
+            <!--<div class="row span2">-->
+            <!--<a href="{weikucms::U('Baozhiyuan/exportexcel',array('token'=>$token,'status'=>$status,'p'=>$p))}" class="btn btn-primary export_excel">导出Excel</a>-->
+            <!--</div>-->
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>注册号</th>
+                <th>商标名称</th>
+                <th>申请日期</th>
+                <th>申请人</th>
+                <th>初审期号</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.reg_num}</td>
+                <td>{weikucms:$vo.flag_name}</td>
+                <td>
+                    {weikucms:$vo.apply_date}
+                </td>
+                <td>{weikucms:$vo.apply_person}</td>
+                <td>
+                    {weikucms:$vo.first_num}
+
+                </td>
+                <td>
+                    <php>echo date("Y-m-d H:i:s",$vo['add_time']);</php>
+                </td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Flag/edit',array('id'=>$vo['id'],'token'=>$token))}" title="编辑图文自定义回复">编辑</a>
+                    <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Flag/del',array('id'=>$vo['id'],'token'=>$token))}')" href="#">删除</a></td>
+
+                </td>
+            </tr>
+            </volist>
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+
+</div>
+<include file="Public:footer"/>

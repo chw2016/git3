@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>客服</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body class="beijing" style="display: none;">
+		<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+		<!-- 放置小头像的地方 -->
+		<div class="kefu-touxiang">
+			<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/kefu.png" />
+		</div>
+		<!-- 我要找售前服务 -->
+		<div class="shouqian">
+			我要找售前服务
+		</div>
+		<!-- 售后服务 -->
+		<div class="shouhou">
+			我要找售后服务
+		</div>
+    </body>
+		<script type="text/javascript">
+	    $(function(){
+
+            // 售前服务
+	      //  $(".shouqian,.shouhou").click(function(){
+	            var url = "{weikucms::U('Wap/Duokf/sendkfmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+	            $.post(url,{},function(data){
+	                if(data.code == 0){
+	                    $(".motify-inner").text(data.msg);
+	                    $(".motify").show();
+	                    setTimeout(function(){
+	                        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+	                        });
+	                    },'2000');
+
+	                }else{
+	                    $(".motify-inner").text(data.msg);
+	                    $(".motify").show();
+	                    setTimeout(function(){
+	                        $(".motify").hide();
+	                    },'2000');
+	                    return false;
+	                }
+	            },'json');
+	      //  });
+
+	    });
+	</script>
+    <script type="text/javascript">
+    	window.onload = function(){
+    		$('.beijing').css('background-size',$(window).width()+'px '+$(window).height()+'px');
+    		// 客服头像框的高度
+    		$('.kefu-touxiang').css({'height':$('.kefu-touxiang').width()+'px','margin':$(window).height()*0.15+'px auto'});
+    		// 里面的头像
+    		/*alert($('.kefu-touxiang img').height());
+    		alert($('.kefu-touxiang').height());*/
+    		$('.kefu-touxiang img').css('width',$('.kefu-touxiang').width()*0.5+'px');
+    		$('.kefu-touxiang img').css('margin-top',($('.kefu-touxiang').height()-$('.kefu-touxiang img').height()-2)/2+'px');
+    		$('.shouqian').css('margin', $(window).height()*0.1+'px auto 0');
+				var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+    	}
+    
+    </script>
+</html>

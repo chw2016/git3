@@ -1,0 +1,121 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <!-- <div class="cLineB"style=" background-color:#FFFFFF;border-style:hidden;">
+    <div class="title_tab" id="topTab" style="float:left;background-color:#f4f5f9;border-radius:8px;width:50%;"> -->
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;">
+<div style="width: 90%;margin: 0 auto;">
+   <div class="cLineB">
+       <div class="title_tab" id="topTab">
+           <ul class="tab_navs title_tab" data-index="0" >
+
+               <li data-index="0" class="tab_nav first js_top " data-id="total">
+                   <a href="{weikucms::U('ShopBranch/account',array('token'=>$token,'branch_id'=>$branch_id))}">我的账户</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'branch_id'=>$branch_id))}">所有订单</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'branch_id'=>$branch_id,'type'=>1))}">今日订单</a>
+               </li>
+
+               <!--<li data-index="1" class="tab_nav  js_top sub" data-id="today">-->
+               <!--<a href="">未处理订单</a>-->
+               <!--</li>-->
+
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/classify',array('token'=>$token,'branch_id'=>$branch_id))}">类目设置</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/ware',array('token'=>$token,'branch_id'=>$branch_id))}">商品管理</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/Flash',array('token'=>$token,'branch_id'=>$branch_id))}">轮播图管理</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/writing',array('token'=>$token,'branch_id'=>$branch_id))}">店铺设置</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/activitise',array('token'=>$token,'branch_id'=>$branch_id))}">活动</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/changepwd',array('token'=>$token,'branch_id'=>$branch_id))}"> 修改密码</a>
+               </li>
+
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/reveal',array('token'=>$token,'branch_id'=>$branch_id))}"> 积分商城</a>
+               </li>
+
+           </ul>
+       </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div> Integralshop_reveal  -->
+</div>
+    <div style="width:100%;line-height: 35px;font-size: 18px;color:red;padding: 0px 10px;">
+        您好,{weikucms:$shopdata.username}
+    </div>
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以了解万普微门店(所有分店)的订单总数、今日的订单量、会员总数和未处理订单，未处理订单将会展示各分店订单的处理情况，有利于了解和管理分店。</li>
+		<li>在这里还可以添加分店、编辑分店、删除分店。</li>
+	</ol>
+</div>
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>商品分类列表</h4>
+    </div>
+    <a class="btn btn-success btn-sm" href="{weikucms::U('ShopBranch/AddClassify',array('branch_id'=>$branch_id,'token'=>$token))}">添加分类</a>
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>分类名称</th>
+                     <!-- <th>分类关键词</th>
+                      <th>分类描述</th>
+                      <th>分类图片</th>-->
+                      <th>排序</th>
+                      <th style="width: 165px;text-align: center;">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo" key="i">
+                  		<tr>
+        					<td>{weikucms:$i}</td>
+                  			<td style="text-indent:{weikucms:$vo['Count']*6}px;"><neq name="vo.Count" value="1">|__</neq>{weikucms:$vo.tname}</td>
+                           <!-- <td>{weikucms:$vo.keywords}</td>
+                            <td>{weikucms:$vo.des}</td>
+                            <td><img src="{weikucms:$vo.pic}" alt="图片不存在" style="width: 100px;height: 100px;"/></td>-->
+                            <td>{weikucms:$vo.sort}</td>
+                          	<td class="norightborder">
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('ShopBranch/EditClassify',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id))}">编辑</a>
+                              <a class="btn btn-danger btn-sm"  href="{weikucms::U('ShopBranch/DelClassify',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id))}">删除</a>
+                             <!--  <a class="btn btn-success btn-sm" style="background-color:#7CFC00;border-radius:8px;" href="/index.php?g=User&amp;m=Shopdoor&amp;a=manager&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="登录分店">分店登录</a> -->
+                          	</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+	</form>
+  </div>
+    </div>

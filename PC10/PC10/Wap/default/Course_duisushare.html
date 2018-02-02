@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+        <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+        <style type="text/css">
+            .renwuPic img{
+                display: block;width: 100%;height:100%;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function(){
+                $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+                $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                // 遮罩分享
+                $('.Invitation').click(function(){
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+                // 遮罩消失
+                $('#mcover').click(function(){
+                    $(this).hide();
+                    //$(this).children('img').hide();
+                })
+            })
+        </script>
+
+    </head>
+    <body>
+    <!--分享罩罩-->
+    <div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 99099999;background-color: rgba(0, 0, 0, 0.8);left: 0;">
+        <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+    </div>
+    <!--分享罩罩-->
+    	<div class="shareimg">
+         <img src="{weikucms::STATICS}/course/img/565651.png" title="兑换">
+         <p class="shareimgp">恭喜您，礼品兑换成功！</p>
+         <!--<if condition="$_GET['type'] neq 1">
+            <p class="shareimgpt">您此次分享获得金财币 <span>{weikucms:$info['score']}</span> 个！</p>
+             <else/>
+         </if>-->
+        </div>
+        <a href="#">
+            <div class='Invitation' style="line-height: 40px;color: white;text-align: center;width: 100%;background-color:#2D8A59;position: fixed;bottom: 0;letter-spacing: 12px;">
+                马上分享
+            </div>
+        </a>
+
+        <if condition="$tpl['is_auth'] eq 1">
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getcfoshare/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+            <else />
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getcfoshare/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+        </if>
+
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            var shareTitle="";
+            var imgUrl="";
+            var descContent="";
+            var shareUrl="";
+
+            $(function() {
+                shareTitle = "恭喜您，兑换成功！";
+                imgUrl = "<php>echo C('site_url');</php>{weikucms:$info['pic']}";
+                descContent = "我在CFO俱乐部微信平台兑换了{weikucms:$info['title']}礼物，小伙们快来围观吧！";
+                shareUrl = $("#shareUrl").text();
+            });
+
+            wx.config({
+                appId: '{weikucms:$signPackage.appId}',
+                timestamp: {weikucms:$signPackage.timestamp},
+                nonceStr: '{weikucms:$signPackage.nonceStr}',
+                signature: '{weikucms:$signPackage.signature}',
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+                ]
+            });
+            wx.ready(function () {
+                // 在这里调用 API
+                wx.onMenuShareTimeline({
+                    title: shareTitle, // 分享标题
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle, // 分享标题
+                    desc: descContent, // 分享描述
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+
+        </script>
+
+
+    </body>
+</html>

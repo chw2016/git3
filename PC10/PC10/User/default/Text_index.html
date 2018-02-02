@@ -1,0 +1,71 @@
+<include file="Public:head"/>
+
+         
+          <div class="cLine">
+            <div class="pageNavigator left">
+           <a href='{weikucms::U("Text/add")}' title='新增文本自定义回复' class='btn btn-primary'>新增文本自定义回复</a>　
+
+  <!--<a class="btn btn-primary" onclick="location.href='index.php?ac=csv&id=9379';" ><img src="{weikucms::RES}/images/import.png" class="vm" />批量导入文本</a>　<a class="btn btn-primary" onclick="location.href='index.php?ac=outtxt&page=1&type=0&classid=0&wxid=gh_858dwjkeww5';" ><img src="{weikucms::RES}/images/export.png" class="vm" />批量导出本页文本结果</a>-->
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>
+            <ol>
+                <li>在这里您可以添加关键词回复信息,比如您添加"万普微盟"这个关键词以后，用户在微信输入"万普微盟"系统就会回复您所设置的回复内容，以文字的形式回复给用户</li>
+
+            </ol>
+        </div>
+
+          <div class="msgWrap">
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>编号</th>
+                      <th>关键词</th>
+                      <th style="width:500px;">回复内容</th>
+                      <th>匹配类型</th>
+                      <th>浏览次数</th>
+                      <th>时间</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td>{weikucms:$i}</td>
+                          <td>{weikucms:$vo.keyword}</td>
+                          <td>{weikucms:$vo.text}</td>
+                          <td>
+                              <eq name="vo.type" value="1">完全匹配<else/>模糊匹配</eq>
+                          </td>
+                          <td><span class="badge badge-success">{weikucms:$vo.click}</span></td>
+                          <td>
+                              <php>echo date('Y-m-d',$vo['updatetime']);</php>
+
+                          </td>
+                          <td class="norightborder">
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Text/edit',array('id'=>$vo['id']))}" title="编辑文本">编辑</a>
+                              <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Text/del',array('id'=>$vo['id']))}')" href="#">删除</a>
+                          </td>
+
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta content="Author" name="samphay@163.com">
+    <title>{weikucms:$wxusers['nickname']}</title>
+    <link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=1.0" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/forum.css?v=1.0" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/dialog.css" />
+    <script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/star/js/index.js"></script>
+    <script src="{weikucms::STATICS}/star/js/foot.js"></script>
+    <script src="{weikucms::STATICS}/star/js/fatie.js"></script>
+    <script src="{weikucms::STATICS}/star/js/main.js"></script>
+    <script src="{weikucms::STATICS}/star/js/dialog_min.js" ></script>
+    <!--webuploader-->
+    <link type="text/css" rel="stylesheet"  href="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.css">
+    <script type="text/javascript" charset="utf-8" src="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.js"> </script>
+    <!--/webuploader-->
+    <!--emotion-->
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.js"></script>
+    <!--!emotion-->
+</head>
+<body>
+<div id="blur" ></div>
+<div id="AlertBox"></div>
+
+<style>
+    div#blur {
+        display:none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 998;
+        background-color: RGBA(0,0,0,0.6);
+    }
+    div#AlertBox {
+        display:none;
+        width: 50%;
+        /* height: 50%; */
+        /* border: 1px solid; */
+        position: absolute;
+        margin-top: 50%;
+        margin-left: 25%;
+        color: #fff;
+        z-index: 999;
+        text-align: center;
+    }
+</style>
+<div class="" style="height: 100%;">
+    <div class="writeboxtop myul">
+        <div class="cancel" onclick="javascript:history.go(-1)">取消</div>
+        <div class="postit" onclick="javascript:submit()">发帖</div>
+    </div>
+    <div class="wtitleinputbox">
+        <input type="text" placeholder="标题"  id="title"/>
+        <input type="hidden" id="token"  value="{weikucms:$token}"/>
+        <input type="hidden" id="openid"  value="{weikucms:$openid}"/>
+    </div>
+    <div class="wtaginputbox">
+        <input type="text" placeholder="标签，多个标签请使用逗号隔开。" readonly="readonly"/>
+    </div>
+    <div class="wcontentinputbox">
+        <!--<div id="out" style="height:auto;width:414px;border:1px dashed #000000;padding:10px;"></div>-->
+        <textarea placeholder="禁止发布广告，色情，谩骂等违反相关法律的内容。" id="content" class="emotion" onclick="out()"></textarea>
+        <div class="contentbottom myul">
+
+            <div id="filePicker"></div>
+
+            <div class="inputface" id="face">
+                <span class="icon-happy"></span>
+            </div>
+        </div>
+
+        <div id="fileList" class="uploader-list"></div>
+    </div>
+
+</div>
+<footer class="myul">
+    <div data-foot="home" class="myli tapfoot home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="myli tapfoot more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="myli tapfoot user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="circle">
+            <if condition="($messageNum neq '0') or ($messageNum neq 0)">
+                <span data-tip="{weikucms:$messageNum}" class="icons_my"></span>
+            </if>
+            <span class="icon-user"></span>
+        </div>
+    </div>
+</footer>
+
+<style>
+#emotions{
+    top:333px;
+}
+</style>
+<script type="text/javascript">
+    // 绑定表情
+    $('#face').SinaEmotion($('.emotion'));
+</script>
+<script>
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: false,
+        // swf文件路径
+        swf: "{weikucms::STATICS}/star/webuploader-0.1.5/Uploader.swf",
+        // 文件接收服务端。
+        //server: submit(),
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: {
+            id:'#filePicker',
+            label:'<span class="icon-camera" style="font-size: 14px;"></span>'
+        },
+        fileNumLimit:8,
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        var $li = $(
+                        '<div id="' + file.id + '" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="info">' + file.name + '</div>' +
+                        '</div>'
+                ),
+                $img = $li.find('img');
+
+        var $list = $("#fileList");
+        // $list为容器jQuery实例
+        $list.append( $li );
+
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        var thumbnailWidth = 68;
+        var thumbnailHeight = 70;
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+
+
+    uploader.on('error', function(file) {
+        if(file == "Q_EXCEED_NUM_LIMIT"){
+            $("#AlertBox").fadeIn(500).text('最多只能上传8张图片').delay(1000).fadeOut(500);
+            $("#blur").fadeIn(500).delay(1000).fadeOut(500);
+            return false;
+        }
+
+        if(file=="F_DUPLICATE"){
+            $("#AlertBox").fadeIn(500).text('文件重复').delay(1000).fadeOut(500);
+            $("#blur").fadeIn(500).delay(1000).fadeOut(500);
+            return false;
+        }
+    });
+</script>
+
+</body>
+</html>

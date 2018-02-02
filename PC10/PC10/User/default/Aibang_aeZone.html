@@ -1,0 +1,161 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+  
+           <div class="cLineB">
+            <if condition="$hover eq 1">
+              <h4 class="left">修改区域</h4>    
+            <else/>
+              <h4 class="left">新增区域</h4> 
+            </if>
+              <div class="searchbar"> 
+              </div>
+              <div class="cLine">
+
+              <div class="clr"></div>
+              </div>
+          </div>
+         
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post" action="" enctype="multipart/form-data" >
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+                   <TR>
+                  <TH valign="top"><label for="pic">区域名称：</label></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <input type="input" class="px" id="zonename" value="{weikucms:$info.zone}" name="zonename" placeholder="请填写区域名称">
+                     <else/>
+                        <input type="input" class="px" id="zonename" value="" name="zonename" placeholder="请填写区域名称">
+                     </if>
+                 </TD>
+                 </TR>
+                 
+                  <TH></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">修改</button>
+                     <else/>
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button>
+                     </if>
+                  </TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+         
+            // 城市名称
+            var zonename = $("#zonename").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            if(!zonename){
+                notif({
+                    msg: "请填写区域名称",
+                    type: "warning"
+                });
+                return false;
+            }
+           
+            if("{weikucms:$hover}" == 1){
+                  $.post("{weikucms::U('Aibang/aeZone',array('token'=>$token,'id'=>$info['id']))}",
+                      {zonename:zonename,__hash__:__hash__,uid:"{weikucms:$uid}"},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+              return;
+            }
+                 // 添加页面
+                 $.post("{weikucms::U('Aibang/aeZone',array('token'=>$token))}",
+                      {zonename:zonename,__hash__:__hash__,types:1,uid:"{weikucms:$uid}"},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

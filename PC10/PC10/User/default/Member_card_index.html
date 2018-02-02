@@ -1,0 +1,574 @@
+<include file="Public:head"/>
+<script src="{weikucms::RES}/js/cart/jscolor.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+<style type="text/css">
+.vipcard{
+margin: 0 auto;
+position: relative;
+height: 159px;
+text-align: left;
+width: 267px;
+}
+#cardbg{
+height: 159px;
+width: 267px;
+position:absolute;
+border-radius: 8px;
+-webkit-border-radius:8px;
+-moz-border-radius:8px;
+box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+-moz-box-shadow:0 0 4px rgba(0, 0, 0, 0.6);
+-webkit-box-shadow:0 0 8px rgba(0, 0, 0, 0.6);
+top:0;
+left:0;
+z-index:1;
+}
+.vipcard .logo {
+max-height:70px;
+position:absolute;
+top:8px;
+left:5px;
+z-index:2;
+}
+.vipcard .verify {
+display:inline-block;
+height:40px;
+top:105px;
+right:12px;
+text-align:right;
+line-height:24px;
+color:#000;
+font-size:20px;
+text-shadow:0 1px rgba(255, 255, 255, 0.2);
+z-index:2;
+}
+
+.vipcard h1 {
+position:absolute;
+right:10px;
+top:7px;
+text-shadow:0 1px rgba(255, 255, 255, 0.2);
+color:#000;
+font-size:11px;
+line-height:25px;
+text-align:right;
+font-weight: normal;
+z-index:2;
+}
+.vipcard .verify span {
+display:inline-block;
+text-align:left;
+}
+.vipcard .verify em {
+display:block;
+line-height:13px;
+font-size:10px;
+font-weight:normal;
+font-style:normal;
+}
+.pdo {
+position:absolute;
+top:0;
+left:0;
+display:inline-block;
+}
+.userinfoArea td {
+    padding: 0px 0px 0px 10px;
+}
+#tishi{
+text-align: center;display: block;
+}
+.banner{
+display:block; width:213px;height: 278px;overflow: hidden;
+}
+.banner img{
+display:block; width:213px; border:0;
+}
+.bannerbtn{ position:relative; display:block}
+.bannerbtn .qiaodaobtn{ position: absolute; display:block; bottom:0}
+
+</style>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#cardlogo").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#zupload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#zpic').val(),
+                    clickFn : function(url, title) {
+                        K('#zpic').val(url);
+                        $("#cardbg").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#news2').val(),
+                    clickFn : function(url, title) {
+                        K('#news2').val(url);
+                        $("#news").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#vippower2').val(),
+                    clickFn : function(url, title) {
+                        K('#vippower2').val(url);
+                        $("#vippower").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload3').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#qiandao2').val(),
+                    clickFn : function(url, title) {
+                        K('#qiandao2').val(url);
+                        $("#qiandao").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload4').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#shopping2').val(),
+                    clickFn : function(url, title) {
+                        K('#shopping2').val(url);
+                        $("#shopping").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload5').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#user2').val(),
+                    clickFn : function(url, title) {
+                        K('#user2').val(url);
+                        $("#user").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload6').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#info2').val(),
+                    clickFn : function(url, title) {
+                        K('#info2').val(url);
+                        $("#info").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload7').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#addr2').val(),
+                    clickFn : function(url, title) {
+                        K('#addr2').val(url);
+                        $("#addr").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+
+
+        <div class="cLineB">
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Member_card/index',array('token'=>$token))}" >会员卡设计</a>
+                    </li>
+
+
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member_card/news',array('token'=>$token))}">最新通知</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member_card/privilege',array('token'=>$token))}">会员卡特权</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member_card/info',array('token'=>$token))}">会员卡详情</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member_card/create',array('token'=>$token))}">创建会员卡</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member_card/exchange',array('token'=>$token))}">积分设置</a>
+                    </li>
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Member/index',array('token'=>$token))}">会员资料管理</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+          <div class="cLineB">
+         <h4>会员卡设置</h4></div>
+<div class="msgWrap bgfc" style="padding:10px;">
+
+<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"><tbody>
+<tr>
+<th width="303" rowspan="5" valign="top">
+	<div class="vipcard">
+		<img id="cardbg" src="{weikucms:$card.diybg}">
+		<img id="cardlogo" class="logo" src="{weikucms:$card.logo}">
+		<h1 id="vipname" style="color:{weikucms:$card.vipnamecolor}">{weikucms:$card.cardname}会员卡</h1>
+		<strong class="pdo verify" id="number" style="color:{weikucms:$card.numbercolor}"><span><em>会员卡号</em>2188 5539</span></strong>
+	</div>
+</th>
+<td colspan="2">会员卡的名称：
+<input type="text" name="cardname" value="{weikucms:$card.cardname}" id="cardname" class="px" style="width:200px;" onkeyup="DivFollowingText()">
+<script type="text/javascript">
+function DivFollowingText()
+{
+document.getElementById("vipname").innerHTML=document.getElementById("cardname").value;
+}
+</script>
+颜色：
+<input type="text" name="vipnamecolor" id="vipnamecolor" value="{weikucms:$card.vipnamecolor}" class="px color" style="width: 55px; background-image: none; background-color:{weikucms:$card.vipnamecolor}; color: rgb(255, 255, 255);" onblur="document.getElementById('vipname').style.color=document.getElementById('vipnamecolor').value;">
+</td>
+</tr>
+
+<tr>
+<td colspan="2">会员卡的图标：
+    <input type="hidden" class="text textMiddle inputQ"  name="logo" id="pic" value="{weikucms:$card.logo}" style="width:300px;"   />
+    <span class="ke-button-common" id="upload" style="margin-left: 0px;margin-bottom: 10px;">上传logo</span>
+</tr>
+<tr>
+<td colspan="2">会员卡的背景：
+	<select name="bg" onchange="document.getElementById('cardbg').src=this.options[this.selectedIndex].value;" class="pt" style="width:210px;" onblur="document.getElementById('cardbg').src=this.options[this.selectedIndex].value;">
+	<option selected="">请选择会员卡背景图</option>
+		<?php
+			for($i=1;$i<=23;$i++){
+				$i=$i<10?'0'.$i:$i;
+				$str='./tpl/User/default/common/images/card/card_bg'.$i.'.png';
+				if($card['bg']==$str){
+					echo $str='<option value="'.$str.'" selected="selected" >'.$i.'</option>';
+				}else{
+					echo $str='<option value="'.$str.'">'.$i.'</option>';
+
+				}
+			}
+		?>
+
+	</select>
+</td>
+</tr>
+<tr>
+<td colspan="2">自定义背景：
+    <input type="hidden" class="text textMiddle inputQ"  name="diybg" id="zpic" value="{weikucms:$card.diybg}" style="width:300px;"   />
+    <span class="ke-button-common" id="zupload" style="margin-left: 12px;margin-bottom: 10px;">上传自定义背景</span>
+
+</td>
+</tr>
+<tr>
+<td colspan="2">卡号文字颜色：
+<input type="text" name="numbercolor" id="numbercolor" value="{weikucms:$card.numbercolor}" class="px color" style="width: 55px; background-image: none; background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);" onblur="document.getElementById('number').style.color=document.getElementById('numbercolor').value;"> </td>
+</tr>
+<tr>
+<td><span id="tishi"></span></td>
+<td colspan="2">首页提示文字：
+<input type="text" name="msg" value="{weikucms:$card.msg}" id="tishi2" class="px" style="width:287px;" onkeyup="DivFollowingText2()"> 请不要超过20个字。
+<script type="text/javascript">
+function DivFollowingText2()
+{
+document.getElementById("tishi").innerHTML=document.getElementById("tishi2").value;
+}
+</script></td>
+</tr>
+<tr>
+<td colspan="2"><span class="red"></span></td>
+</tr>
+<tr>
+<td width="70">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+  </div>
+
+<div class="cLineB">
+          	<h4>会员中心样式设计</h4></div>
+<div class="msgWrap bgfc" style="padding:15px 5px 10px 0px;">
+
+  	<table class="userinfoArea" style=" margin: 0;padding:0px;" border="0" cellspacing="0" cellpadding="0" width="100%"><tbody>
+	 <tr>
+		<td align="center" valign="top">
+			<div class="banner">
+				<img src="{weikucms::RES}/images/cart_info/news-2.jpg">
+				<img id="news" src="{weikucms:$card.Lastmsg}">
+				<img src="{weikucms::RES}/images/cart_info/news-3.jpg">
+			</div>
+		</td>
+		<td align="center" valign="top">
+			<div class="banner">
+				<img src="{weikucms::RES}/images/cart_info/vippower-2.jpg">
+				<img id="vippower" src="{weikucms:$card.vip}">
+				<img src="{weikucms::RES}/images/cart_info/vippower-3.jpg"></div>
+		</td>
+		<td align="center" valign="top">
+			<div class="banner">
+				<img src="{weikucms::RES}/images/cart_info/qiandao-2.jpg">
+				<img id="qiandao" src="{weikucms:$card.qiandao}">
+				<div class="bannerbtn">
+					<img src="{weikucms::RES}/images/cart_info/qiandao-3.jpg">
+					<img class="qiaodaobtn" src="{weikucms::RES}/images/cart_info/qiandao-4.png">
+				</div>
+			</div>
+		</td>
+		<td align="center" valign="top">
+			<div class="banner">
+				<img src="{weikucms::RES}/images/cart_info/shopping-2.jpg">
+				<img id="shopping" src="{weikucms:$card.shopping}">
+				<img src="{weikucms::RES}/images/cart_info/shopping-3.jpg">
+			</div>
+		</td>
+	</tr>
+     <tr>
+         <td></td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+     </tr>
+     <tr>
+<tr>
+	<td align="center">
+        <input type="hidden" name="Lastmsg" id="news2" value="{weikucms:$card.Lastmsg}"/>
+        <span class="ke-button-common" id="upload1" style="margin-left: 5px;">上传banner图片</span>
+
+	</td>
+	<td align="center">
+        <input type="hidden" name="vip" id="vippower2" value="{weikucms:$card.vip}"/>
+        <span class="ke-button-common" id="upload2" style="margin-left: 5px;">上传banner图片</span>
+
+	</td>
+	<td align="center">
+
+        <input type="hidden" name="qiandao" id="qiandao2" value="{weikucms:$card.qiandao}"/>
+        <span class="ke-button-common" id="upload3" style="margin-left: 5px;">上传banner图片</span>
+    </td>
+	<td align="center">
+
+        <input type="hidden" name="shopping" id="shopping2" value="{weikucms:$card.shopping}"/>
+        <span class="ke-button-common" id="upload4" style="margin-left: 5px;">上传banner图片</span>
+    </td>
+ </tr>
+<tr>
+<td></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td align="center" valign="top">
+	<div class="banner">
+		<img src="{weikucms::RES}/images/cart_info/user-2.jpg">
+		<img id="user" src="{weikucms:$card.memberinfo}">
+		<img src="{weikucms::RES}/images/cart_info/user-3.jpg">
+	</div>
+</td>
+<td align="center" valign="top">
+	<div class="banner">
+		<img src="{weikucms::RES}/images/cart_info/info-2.jpg">
+		<img id="info" src="{weikucms:$card.membermsg}">
+		<img src="{weikucms::RES}/images/cart_info/info-3.jpg">
+	</div>
+</td>
+<td align="center" valign="top">
+	<div class="banner">
+		<img src="{weikucms::RES}/images/cart_info/addr-2.jpg">
+		<img id="addr" src="{weikucms:$card.contact}">
+		<img src="{weikucms::RES}/images/cart_info/addr-3.jpg">
+	</div>
+</td>
+</tr>
+     <tr style="height: 20px;"></tr>
+<tr>
+<td align="center">
+
+    <input type="hidden" name="memberinfo" id="user2" value="{weikucms:$card.memberinfo}"/>
+    <span class="ke-button-common" id="upload5" style="margin-left: 5px;">上传banner图片</span>
+</td>
+<td align="center">
+
+    <input type="hidden" name="membermsg" id="info2" value="{weikucms:$card.membermsg}"/>
+    <span class="ke-button-common" id="upload6" style="margin-left: 5px;">上传banner图片</span>
+</td>
+<td align="center">
+    <input type="hidden" name="contact" id="addr2" value="{weikucms:$card.contact}"/>
+    <span class="ke-button-common" id="upload7" style="margin-left: 5px;">上传banner图片</span>
+</td>
+<td></td>
+</tr>
+     <tr>
+         <td></td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+     </tr>
+<TR>
+
+    <td><button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button></td>
+</TR>
+<tr  style="height: 150px;">
+
+</tr>
+</tbody>
+</table>
+  </div>
+        </div>
+</form>
+ <script type="text/javascript">
+$(document).ready(function(){
+	document.getElementById("cardbg").src=<if condition="$card.diybg eq ''">'{weikucms:$card.bg}'<else/>'{weikucms:$card.diybg}'</if>;
+});
+</script>
+
+        <div class="clr"></div>
+		<include file="Public:footer"/>
+      </div>
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var cardname = $("#cardname").val();
+            var vipnamecolor = $("#vipnamecolor").val();
+            var logo = $("#pic").val();
+            var bg = $(".pt").val();
+            var diybg = $("#zpic").val();
+            var numbercolor = $("#numbercolor").val();
+            var msg = $("#tishi2").val();
+            var Lastmsg = $("#news2").val();
+            var vip = $("#vippower2").val();
+            var qiandao = $("#qiandao2").val();
+            var shopping = $("#shopping2").val();
+            var memberinfo = $("#user2").val();
+            var membermsg = $("#info2").val();
+            var contact = $("#addr2").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! cardname){
+                notif({
+                    msg: "会员卡名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Member_card/index')}",
+                    {cardname:cardname,vipnamecolor:vipnamecolor,logo:logo,bg:bg,diybg:diybg,
+                        numbercolor:numbercolor,msg:msg,Lastmsg:Lastmsg,vip:vip,qiandao:qiandao,
+                        shopping:shopping,memberinfo:memberinfo,membermsg:membermsg,contact:contact,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+  </div> 

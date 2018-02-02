@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/samphay.css">
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/style.css">
+
+<link rel="stylesheet" href="/tpl/static/lm/css/style.css">
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/main1.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/core.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/msg.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/slider.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/iscroll.js"></script>
+
+<script src="/tpl/static/lm/js/jquery-1.7.1.min.js"></script>
+<script src="/tpl/static/lm/js/jquery.event.drag-1.5.min.js"></script>
+<script src="/tpl/static/lm/js/jquery.touchSlider.js"></script>
+
+<style>
+    .gray { color: #B5AEAE; margin-left: 3px; }
+
+    .main_image ul { width: 100%; }
+
+    .cat_goods h3:before {
+        /*
+        content: "";
+        display: block;
+        width: 14px;
+        border-top: 1px solid;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        */
+    }
+
+</style>
+
+
+
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+<div class="container mini-innner">
+
+    <div class="row">
+                     <!---->
+        <div>
+            <include file="./tpl/Wap/default/Public_flash.html"/>
+        </div>
+
+
+
+
+        <!--快速分类导航了-->
+        <if condition="$fast_carts">
+        <div class='fast_div'>
+            <volist name="fast_carts" id="vo">
+            <span class='fast_carts'>
+                <div style="width: 14%; margin: 0 auto;"><img src="{weikucms:$vo.label_pic}" style="width: 100%;" /></div>
+                <div>
+                    <a href="{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$vo['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">{weikucms:$vo.label}</a>
+                </div>
+                </span>
+            </volist>
+        </div>
+        </if>
+        <div class="col-md-12 p10">
+
+            <volist name="cats" id="hostlist">
+            <div class="cat_goods">
+                <h3><a href="<if condition="$hostlist['parentid'] eq
+                        0">{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'dining'=>$isDining,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}<else/>{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$hostlist['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}</if>"
+                        ><b>{weikucms:$hostlist.name}</b><span style="position:
+                            absolute;right: 10px; color:#00BBFF;font-size: 14px;">更多产品<span class='gray'>&gt;</span></span></a></h3>
+                <ul>
+
+                                        <li>
+                        <a href="{weikucms::U('Store_shop/product',array('token' => $_GET['token'], 'id' => $hostlist['shop'][0]['id'], 'wecha_id' => $_GET['openid'],'openid'=>$_GET['openid']))}">
+                            <div class="goods_img"><img src="{weikucms:$hostlist.shop.0.logourl}" style="max-height: 235px;" data-src="http://www.sisterzhong.com/upload/product/fa/ef/d5/faefd5a101330e048c14e6e2e14d1ea4.jpg" width="100%" pagespeed_url_hash="1541764222" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+                            <div class="googds_item">
+                                <div class="name">{weikucms:$hostlist.shop.0.name}</div>
+                                <div class="price" style="color: red;">¥{weikucms:$hostlist.shop.0.price}</div>
+                            </div>
+                        </a>
+                    </li>
+                    <if condition="$hostlist['shop'][1]">
+
+                        <li class="fr">
+                        <a href="{weikucms::U('Store_shop/product',array('token' => $_GET['token'], 'id' => $hostlist['shop'][1]['id'], 'wecha_id' => $_GET['openid'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">
+                            <div class="goods_img"><img src="{weikucms:$hostlist.shop.1.logourl}" style="max-height: 235px;" data-src="http://www.sisterzhong.com/upload/product/3e/8a/24/3e8a245f4fb9d697eb736786514cbc82.jpg" width="100%" pagespeed_url_hash="2302366129" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+                            <div class="googds_item">
+                                <div class="name">{weikucms:$hostlist.shop.1.name}</div>
+                                <div class="price" style="color: red;">¥{weikucms:$hostlist.shop.1.price}</div>
+                            </div>
+                        </a>
+                    </li>
+                    <else />
+                    </if>
+                                    </ul>
+            </div>
+
+            </volist>
+
+        </div>
+        <div class="col-md-12 p10 tac" style=" margin-top:20px; background:#CAAC63; display:block; clear:both;">
+            <if condition="$token eq 'b873d389377626a99006d613c85fb3a6'">
+                <p style="color:#fff;font-size:14px; padding-top:3px; margin-bottom:0px;">订购电话  020-31137759</p>
+            </if>
+            <p style="color:#fff;font-size:14px; padding-top:6px; margin-bottom:0px;">
+                <if condition="$token eq 'b873d389377626a99006d613c85fb3a6'">
+                    广州益笙行贸易有限公司
+                    <else />
+            {weikucms:$tpl.name}
+                    </if>
+            <if condition="$contact"><br />服务热线：{weikucms:$contact}</if>
+            <if condition="$token neq '233eb0b413256696f977e4c963645877'">
+                -万普技术支持</if></p>
+
+        </div>
+    </div>
+</div>
+
+        <div class="footnav mini-innner">
+
+<include file="Store:shop_foot"/>
+            <include file='./tpl/Wap/default/mrufx.html' />
+
+
+    </div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css">
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+    <style>
+        .GoodsDescribBox img{
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="top">
+    <div class="circleBorder">
+        <div class="homeBtn">
+            <span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span>
+        </div>
+    </div>
+</div>
+<div class="Box ShopMall">
+   <div class="PicBox">
+    <img src="{weikucms:$good.logourl}" width="100%" height="100%" >
+    </div>
+    <div class="DescribBox">
+        <div class="DescribTitle">{weikucms:$good.name}</div>
+        <div class="NowPrice red-color">
+            原价：<span id="price" style="color: #A11B1B">{weikucms:$good.price}元</span>
+            &nbsp;&nbsp;&nbsp;
+            折扣价：<span id="price" style="color: #A11B1B">{weikucms:$good.vprice}元</span>
+        </div>
+    </div>
+    <div class="shoppingActionBox myul">
+        <div class="orange-bg white-color Action myli" style="border-right:1px solid #fff;" onclick="addcart()">加入购物车</div>
+        <div class="green-bg white-color Action myli" style="border-left:1px solid #fff;" onclick="Buy()">马上去支付</div>
+    </div>
+
+    <div class="GoodsDescribBox" style="margin: 5%">
+        {weikucms:$good.intro}
+    </div>
+
+</div>
+
+
+<!--隐藏支付表单-->
+<!--<form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">-->
+    <!--<input type="hidden" name="order_money" value="<?php echo $data['total']*$data['price']+$data[mailpay];?>">-->
+    <!--<input type="hidden" name="order_text" value="{weikucms:$data['name']}">-->
+    <!--<input type="hidden" name="orderid" value="{weikucms:$data['orderid']}">-->
+    <!--<input type="hidden" name="openid" value="{weikucms:$openid}">-->
+    <!--<input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store_new&a=my&openid={weikucms:$openid}">-->
+    <!--<input type="hidden" name="type" value="Store_new_goods_order">-->
+<!--</form>-->
+<!--隐藏支付表单结束-->
+</body>
+<script type="text/javascript">
+document.body.addEventListener('touchmove', function(e) {
+    e.stopPropagation();
+    //e.preventDefault();
+});
+</script>
+<script type="text/javascript">
+success();
+	slider($(".cardBox"),$('.cardSwrap'),$('.cardslide'));myFadeIn()
+</script>
+
+<script>
+    function Buy(){
+        var url="{weikucms::U('Health/Buy',array('token'=>$token,'openid'=>$openid,'id'=>$good[id]))}";
+        $.post(url,function(data){
+            if(data.status==1){
+                alert(data.info);
+                location.href="{weikucms::U('Health/uinfo',array('token'=>$token,'openid'=>$openid))}"+"&id="+data.data;
+            }else{
+                location.reload();
+            }
+        },"json")
+    }
+
+
+    function addcart(){
+        var url="{weikucms::U('Health/addcart',array('token'=>$token,'openid'=>$openid,'id'=>$good[id]))}";
+        $.post(url,function(data){
+            if(data.status==1){
+                alert(data.info);
+            }else{
+                location.reload();
+            }
+        },"json")
+    }
+</script>
+</html>

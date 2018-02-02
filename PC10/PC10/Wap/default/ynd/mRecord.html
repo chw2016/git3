@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/buy.css">
+	<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var type = "{weikucms:$_GET['type']}";
+        if(!type){
+            location.href = "{weikucms::U('Ynd/mRecord',array('token'=>$token,'openid'=>$openid))}&type=money";
+        }
+	})
+	</script>
+    </head>
+    <body>
+                <div class="top-details">
+                        <div class="arrow-left-details" onclick="location.href ='{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}'"></div>
+                        <div class="details-center">
+                                    钱包记录
+                        </div>
+                </div>
+                <div class="wallet-money">
+                	  <ul class="wallet-money-ul">
+                	  	<li class="wallet-money-ul-li <if condition="$_GET['type'] eq 'money'">on</if>" onclick="location.href ='{weikucms::U('Ynd/mRecord',array('token'=>$token,'openid'=>$openid,'type'=>'money'))}'">人民币</li>
+                	  	<li class="wallet-money-ul-li <if condition="$_GET['type'] eq 'LQ'">on</if>" onclick="location.href='{weikucms::U('Ynd/mRecord',array('token'=>$token,'openid'=>$openid,'type'=>'LQ'))}'">LQ</li>
+                	  	<li class="wallet-money-ul-li <if condition="$_GET['type'] eq 'CQ'">on</if>" onclick="location.href='{weikucms::U('Ynd/mRecord',array('token'=>$token,'openid'=>$openid,'type'=>'CQ'))}'">CQ</li>
+                	  </ul>
+                </div>
+              <div class="wallet-content">
+              	<ul class="wallet-content-ul">
+                    <if condition="$_GET['type'] eq 'money'">
+                        <li class="wallet-content-ul-li">
+                            <div class="wallet-main">
+                                <if condition="$list eq ''">
+                                    <div style="text-align: center;font-size:14px;padding: 15px; ">
+                                        暂无数据
+                                    </div>
+                                </if>
+                                <volist name="list" id="vo">
+                                <div class="wallet-text">
+                                    <p class="wallet-title">{weikucms:$vo.info}</p>
+                                    <p class="wallet-day">{weikucms:$vo.add_time}</p>
+                                    <div class="walletadd"><if condition="$vo['rank'] eq 0">+<else/>-</if>{weikucms:$vo.content}</div>
+                                </div>
+                                </volist>
+                            </div>
+                        </li>
+                        <elseif condition="$_GET['type'] eq 'LQ'"/>
+                        <li class="wallet-content-ul-li">
+                            <if condition="$list eq ''">
+                                <div style="text-align: center;font-size:14px;padding: 15px; ">
+                                    暂无数据
+                                </div>
+                            </if>
+                            <volist name="list" id="vo">
+                                <div class="wallet-text">
+                                    <p class="wallet-title">{weikucms:$vo.info}</p>
+                                    <p class="wallet-day">{weikucms:$vo.add_time}</p>
+                                    <div class="walletadd"><if condition="$vo['rank'] eq 0">+<else/>-</if>{weikucms:$vo.content}</div>
+                                </div>
+                            </volist>
+                        </li>
+                        <elseif condition="$_GET['type'] eq 'CQ'"/>
+                        <li class="wallet-content-ul-li">
+                            <if condition="$list eq ''">
+                                <div style="text-align: center;font-size:14px;padding: 15px; ">
+                                    暂无数据
+                                </div>
+                            </if>
+                            <volist name="list" id="vo">
+                                <div class="wallet-text">
+                                    <p class="wallet-title">{weikucms:$vo.info}</p>
+                                    <p class="wallet-day">{weikucms:$vo.add_time}</p>
+                                    <div class="walletadd"><if condition="$vo['rank'] eq 0">+<else/>-</if>{weikucms:$vo.content}</div>
+                                </div>
+                            </volist>
+                           <!-- <div class="wallet-text">
+                                <p class="wallet-title">收单获得</p>
+                                <p class="wallet-day">2015-08-16&nbsp;08:56</p>
+                                <div class="walletadd">+500.00</div>
+                            </div>-->
+                        </li>
+                    </if>
+
+
+
+              	</ul>
+              </div>
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

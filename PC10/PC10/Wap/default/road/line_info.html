@@ -1,0 +1,31 @@
+<div class="close-btn">
+    <span id="close-span"></span><!--关闭按钮-->
+</div>
+<div class="close-nr">
+    <div  class="_show1">
+        <ul class="_show1_ul1">
+            <li class="event <if condition="$type eq 1">on</if>" type="2" lid="{weikucms:$lid}">高速事件</li>
+            <div style="float:left;line-height:40px;">|</div>
+            <li class="event <if condition="$type eq 2">on</if>" type="1" lid="{weikucms:$lid}">施工信息</li>
+            <div style="float:left;line-height:40px;">|</div>
+            <a href="{weikucms::U('Road/platfrom',array('token'=>$token,'lid'=>$lid))}">
+                <li>高速预览</li>
+            </a>
+        </ul>
+        <ul class="_show1_ul2">
+
+            <if condition="$info">
+                <volist name="info" id="in">
+                    <li>
+                        {weikucms:$in.content}
+                    </li>
+                </volist>
+                <else/>
+                <if condition="$in['type'] eq 1"></if>
+                <div style="padding: 10px;text-align: center">暂无情况！</div>
+
+            </if>
+        </ul>
+    </div>
+
+</div>

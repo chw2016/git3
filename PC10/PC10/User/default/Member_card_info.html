@@ -1,0 +1,290 @@
+<include file="Public:head"/>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Member_card/index',array('token'=>$token))}" >会员卡设计</a>
+                </li>
+
+
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/news',array('token'=>$token))}">最新通知</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/privilege',array('token'=>$token))}">会员卡特权</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/info',array('token'=>$token))}">会员卡详情</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/create',array('token'=>$token))}">创建会员卡</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member_card/exchange',array('token'=>$token))}">积分设置</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('Member/index',array('token'=>$token))}">会员资料管理</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+	<div class="msgWrap bgfc">	 
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<form action="" method="post">
+			<tbody>
+				<tr>
+					<td width="500px" rowspan="4" valign="top">商家简介：<br>
+						<textarea class="px" id="info" name="info" style="width: 450px; height: 230px; ">{weikucms:$info.info}</textarea>
+					</td>
+
+
+
+					<td valign="top">上传商家logo
+
+                        <input type="hidden" class="text textMiddle inputQ"  name="logo" id="pic" value="" style="width:300px;"   />
+                        <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+                    </td>
+					<td rowspan="4" valign="top">&nbsp;</td>
+					<td rowspan="4" valign="top"><img id="image_show" class="logo" src="{weikucms:$info.logo}" width="100px" height="100px"></td>
+				</tr>
+				<tr>
+				<td valign="top">选择分类：<br>
+					<label for="select"></label>
+					<select name="class" id="select">
+					<option value="1">美食餐饮</option>
+					<option value="2">休闲娱乐</option>
+					<option value="3">生活服务</option>
+					<option value="4">其他</option>
+					</select>
+				</td>
+				</tr>
+				<tr>
+					<td valign="top">会员卡优惠简短描述：（12个字以内）<br>
+					<input name="description" type="input"  class="px" id="description" style="width:250px;" onblur="document.getElementById('cardlogo').src=document.getElementById('logo').value;" value="{weikucms:$info.description}"></td>
+				</tr>
+				<tr>
+					<td valign="top">消费确认密码：<br>
+					<input type="input" class="px" id="password" value="{weikucms:$info.password}" name="password" style="width:150px;">
+					<br>
+					商家用来确认用户代金券，优惠券和礼品券使用的密码</td>
+				</tr>
+					 <tbody>
+			 <tr>
+				<td colspan="5" class="norightborder">
+					<button type="button" name="batchsubmit" id="bsubmit" value="true" class="btn btn-primary"><strong>保存</strong></button>
+				</td>
+			 </tr>
+		</tbody>
+			</tbody>
+			</form>
+		</table>
+	</div> 
+	<div class="cLineB">
+		<h4>添加商家联系方式 <span class="FAQ">设置商家地址及联系电话。<a name="linkinfo"></a></span></h4>
+	</div>
+      		 
+ <div class="msgWrap form">
+<div class="bdrcontent">
+	
+	<div id="div_ptype">
+	
+	<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	 <form action="{weikucms::U('Member_card/Contact')}" method="post">  
+		<thead>
+			<tr>
+				<th>区域名称</th>
+				<th>详细地址</th>
+				<th>联系电话</th>
+				<th style=" width:70px;">显示顺序</th>
+				<th style=" width:100px;" class="norightborder">操作</th>
+			</tr>
+		</thead>			
+		<tbody>
+			<tr>
+				<td><input type="text" name="cname" id="cname" value="" class="px" style="width:100px;"></td>
+				<td><input type="text" name="info" id="cinfo" value="" class="px" style="width:350px;"></td>
+				<td><input type="text" name="tel" id="tel" value="" class="px" style="width:150px;"></td>
+				<td><input type="text" name="sort" id="sort" value="" class="px" style="width:50px;"></td>
+				<td class="norightborder"><button type="button" id="csubmit" class="btn btn-primary"><strong>添加</strong></button></td>
+			</tr>
+		 </tbody>
+
+		<thead>
+			<tr>
+				<th>区域名称</th>
+				<th>详细地址</th>
+				<th>联系电话</th>
+				<th style=" width:70px;">显示顺序</th>
+				<th style=" width:100px;" class="norightborder">操作</th>
+			</tr>
+		</thead>		
+		 </form>
+		<volist id="contact" name="contact">
+			<tbody>
+				 <form action="{weikucms::U('Member_card/contact_edit')}" method="post">  
+				<tr>
+					<td><input type="text" name="cname" value="{weikucms:$contact.cname}" class="px" style="width:100px;"></td>
+					<td><input type="text" name="info" value="{weikucms:$contact.info}" class="px" style="width:350px;"></td>
+					<td><input type="text" name="tel" value="{weikucms:$contact.tel}" class="px" style="width:150px;"></td>
+					<td>
+						<input type="text" name="sort" value="{weikucms:$contact.sort}" class="px" style="width:50px;">
+						<input type="hidden" name="id" value="{weikucms:$contact.id}" class="px" style="width:50px;">
+					</td>					
+					<td class="norightborder"><button type="submit" class="btn btn-primary"><strong>修改</strong></button></td>
+				</tr>
+				</form>
+			</tbody>
+		</volist>
+        <TR style="height: 150px;">
+
+        </TR>
+	</table>
+	</div>
+	
+</div>
+<div class="footactions" style="padding-left:10px">
+  <div class="pages"></div>
+</div>
+
+<script>
+function addrow(tbody) {
+	var add = false;
+	var newnode;
+	if($(tbody).rows.length == 1 && $(tbody).rows[0].style.display == 'none') {
+		$(tbody).rows[0].style.display = '';
+		newnode = $(tbody).rows[0];
+	} else {
+		newnode = $(tbody).rows[0].cloneNode(true);
+		add = true;
+	}
+	if(add) {
+		$(tbody).appendChild(newnode);
+	}
+}
+function delrow(obj, tbody) {
+	if($(tbody).rows.length == 1) {
+		var trobj = obj.parentNode.parentNode;
+		trobj.style.display='none';
+	} else {
+		$(tbody).removeChild(obj.parentNode.parentNode);
+	}
+}
+
+
+</script>
+
+
+
+ 
+   
+        </div>
+  
+  
+        </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var select = $("#select").val();
+            var description = $("#description").val();
+            var password = $("#password").val();
+            var logo = $("#pic").val();
+            var info = $("#info").val();;
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! info){
+                notif({
+                    msg: "商家简介信息不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Member_card/info')}",
+                    {select:select,description:description,password:password,logo:logo,info:info,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+
+        $("#csubmit").click(function(){
+            var cname = $("#cname").val();
+            var tel = $("#tel").val();
+            var sort = $("#sort").val();
+            var info = $("#cinfo").val();;
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! cname){
+                notif({
+                    msg: "区域名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Member_card/Contact')}",
+                    {cname:cname,tel:tel,sort:sort,info:info,info:info,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+		<include file="Public:footer"/>

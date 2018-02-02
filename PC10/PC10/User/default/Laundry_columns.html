@@ -1,0 +1,74 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/laundry/css/laundry.css">
+<div class="customers"></div>
+<div class="" style="<if condition="$brand_id">left:0px<else /></if>">
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+			<ul class="tab_navs title_tab" data-index="0">
+				<li data-index="0" class="tab_nav first js_top " data-id="total">
+					<a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">
+						&brand_id={weikucms:$brand_id}
+						<else />
+						</if>
+						">洗衣店管理主页
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以对商城商品分类进行查看/删除/编辑等操作。</li>
+		</ol>
+	</div>
+	<div class="pageNavigator">
+		<a href="{weikucms::U('Laundry/columnsmanage',array('token'=>$token))}" title="新增分类" class="btn btn-primary">新增分类</a>
+	</div>
+	<div class="box-content">
+		<div class="msgWrap">
+			<form method="post" action="###" id="info">
+				<input name="delall" type="hidden" value="" />
+				<input name="wxid" type="hidden" value="" />
+				<if condition="$brand_id"> <input id="key" type="hidden" value="1" /> <else /> <input id="key" type="hidden" value="0" /> </if>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="text-align: center">分类名称</th>
+							<th style="text-align: center">分类图片</th>
+							<th style="text-align: center">添加时间</th>
+							<th style="text-align: center">分类简介</th>
+							<th style="text-align: center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="columns" id="vo">
+						<tr>
+							<td style="text-align: center">{weikucms:$vo.columns_name}</td>
+							<td style="text-align: center">
+								<img src="{weikucms:$vo.columns_pic}" style="width: 100px; height: 80px">
+							</td>
+							<td style="text-align: center">{weikucms:$vo.columns_addtime}</td>
+							<td style="text-align: center">{weikucms:$vo.columns_intro}</td>
+							<td class="norightborder" style="text-align: center">
+								<a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Laundry&amp;a=columnsmanage&amp;op=1&amp;token={weikucms:$token}&amp;columns_id={weikucms:$vo.id}" title="充值">编辑</a>
+								<a class="btn btn-danger btn-sm" onClick="source_delete('/index.php?g=User&amp;m=Laundry&amp;a=del_columns&amp;token={weikucms:$token}&amp;columns_id={weikucms:$vo.id}')" href="javascript:;">删除</a>
+							</td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+			</form>
+			<script type="text/javascript">
+                
+            </script>
+		</div>
+		<div>
+			<ul class="pager">{weikucms:$page}
+			</ul>
+		</div>
+	</div>
+	<include file="Public:footer" />

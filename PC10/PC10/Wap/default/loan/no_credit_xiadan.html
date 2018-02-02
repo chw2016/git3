@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.shoufuyou.com/order/create?pid=112 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="format-detection" content="telephone=no">
+<title>{weikucms:$tpl.name}</title>
+<link href="{weikucms::STATICS}/wapweiui/loan/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css" rel="stylesheet">
+<link href="{weikucms::STATICS}/wapweiui/loan/css/style_one.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style1-3.css">
+
+<script src="{weikucms::STATICS}/wapweiui/loan/files/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/loan/js/style.js"></script>
+<script>
+$(document).ready(function() {
+$('tr').addClass('ducalendar-days_oddrowcolor');
+$('tr:even').addClass('ducalendar-days_evenrowcolor'); //奇偶变色，添加样式
+});
+</script>
+
+
+<style>
+    .checkbox1, .radio {
+        position: relative;
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+.selectClass {
+	color:#FFF!important;
+	background-color:#fcb1af!important;
+}
+.modal-dialog { z-index: 10000; }
+ .yuedu{
+     text-align: center;
+ }
+    .line{
+        height: 10px;
+    }.
+</style>
+</head>
+<body>
+<form id="form1" name="form1" method="post" action="" onsubmit="return isSubmit()">
+<!--<div class="my-top-bar">
+  <div class="my-bar" style="background-color: #fff;">
+    <a href="javascript:history.go(-1);" class="my-bar-btn pull-left"><span style="color: #000;" class="icon-chevron-left"></span></a>    <a href="http://www.shoufuyou.com/u/home" class="my-bar-btn pull-right"><span class="icon-user my-bg-icon" style="font-size: 16px;background-color:#ff5a60;color: #fff;"></span></a>
+    <h1 style="color:#333">订单创建</h1>
+  </div>
+</div>-->
+<div class="my-container" style="padding-left:0;padding-right:0;background-color:#fff">
+  <!-- <h1 class="my-title" style="background-color:#f5f5f5;margin-top:0;margin-bottom:0;line-height:3em">首付249，上海—普吉岛4晚6日自由行</h1> -->
+  <div class="body_img">
+    <img src="{weikucms::STATICS}/wapweiui/loan/image/xc_logo.png" id="xc_logo">
+  </div>
+    <!---日期-->
+  <div class="base-info date1" <?php if(!in_array(1,$info['is_show'])){echo "style='display: none;'";} ?> >
+  <div class="rs_1"></div>
+  <div class="rs_float">
+    <div class="info-title"><img class="info-img" src="{weikucms::STATICS}/wapweiui/loan/files/canlender.png">
+      <span>选择日期</span>
+    </div>
+  </div>
+    <div class="check-month">
+      <a class='btn btn-product <if condition="$_GET['type'] eq 1">active</if>' href="{weikucms:$now}"  ><?php echo date('Y年m月',time());?></a>
+      <a class='btn btn-product <if condition="$_GET['type'] eq 2">active</if>'  href="{weikucms:$last}"  ><?php echo date("Y年m月", strtotime("+1 month"));?></a>
+      <a class='btn btn-product <if condition="$_GET['type'] eq 3">active</if>' href="{weikucms:$last_2}" ><?php echo date("Y年m月", strtotime("+2 month"));?></a>
+    </div>
+    <div id="calendar">
+        {weikucms:$time_info}
+    </div>
+    </div>
+    <!---日期-->
+    <!---选择人数-->
+  <div class="base-info date2" <?php if(!in_array(2,$info['is_show'])){echo "style='display: none;'";} ?>   >
+    <div class="rs_2"></div>
+    <div class="rs_float">
+      <div class="info-title"><img class="info-img" src="{weikucms::STATICS}/wapweiui/loan/files/person.png">
+        <span>选择人数</span>
+      </div>
+    </div>
+    <div class="order_body">
+      <div class="order_cen" id="order_cen_1" people="1" >
+
+        <div class="order_roid"><div class="border_ra" id="che_1"></div></div>
+        <div class="order_men" id="men_1">1个人</div>
+        <div class="order_bz" id="bz_1">需补单房差</div>
+      </div>
+       <div class="order_cen" id="order_cen_2" people="3">
+
+         <div class="order_roid"><div class="border_ra" id="che_2"></div></div>
+        <div class="order_men" id="men_2">2个人</div>
+        <div class="order_bz" id="bz_2">我一人付全部</div>
+      </div>
+       <div class="order_cen" id="order_cen_3" people="2">
+
+         <div class="order_roid"><div class="border_ra" id="che_3"></div></div>
+        <div class="order_men" id="men_3">2个人</div>
+        <div class="order_bz" id="bz_3">AA制，各付各的</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="base_body ">
+     <div class="info-title">
+      <div class="bk_3"></div>
+
+
+      <div class="bk_3_left">
+      <img class="info-img" src="{weikucms::STATICS}/wapweiui/loan/files/contact.png">
+      <span>联系人信息</span>
+      </div>
+
+
+    </div>
+    <div class="lxr">
+      <div class="lxr_nr" id="lxr_nr_1">
+
+        <span class="lxr_name" id="name">姓名</span>
+        <input type="text" class="lxr_text" id="contact_name" name="name1" placeholder="请填写您的姓名" onclick="addCss(1);" value="{weikucms:$user_info.true_name}">
+      </div>
+    </div>
+    <div class="lxr" >
+      <div class="lxr_nr" id="lxr_nr_2">
+        <span class="lxr_name" id="tel">手机</span>
+        <input type="tel"  class="lxr_text" id="contact_tel" name="phone1" placeholder="用于我们与您联系" onclick="addCss(2);" value="{weikucms:$user_info.phone}">
+      </div>
+    </div>
+      <div class="lxr" <if condition="$info['max']">style='display:block;'<else />style='display:none;'</if>>
+
+          <div class="lxr_nr" id="lxr_nr_31">
+              <span class="lxr_name" id="qt1">数量</span>
+              <div >
+              <select class="lxr_text many" name="many" style="position: relative; text-align: right; direction: rtl;">
+                  <for start="1" end="$info['max']">
+                  <option value="{weikucms:$i}">{weikucms:$i}</option>
+                      </for>
+                  <option value="{weikucms:$info['max']}">{weikucms:$info['max']}</option>
+
+              </select>
+                  </div>
+              <!--<input type="text" class="lxr_text" value="1" id="many" name="many" placeholder="购买数量" onclick="addCss(3);">-->
+          </div>
+      </div>
+    <div class="lxr" >
+      <div class="lxr_nr" id="lxr_nr_3">
+        <span class="lxr_name" id="qt">其他</span>
+        <input type="text" class="lxr_text" id="lxr_text3" name="other1" placeholder="特殊要求，请留言" onclick="addCss(3);">
+      </div>
+    </div>
+  </div>
+<!---其他人信息--->
+    <div class="base_body date3"   <?php if(!in_array(3,$info['is_show'])){echo "style='display: none;'";} ?>  >
+        <div class="info-title">
+            <div class="bk_3"></div>
+
+
+            <div class="bk_3_left">
+                <img class="info-img" src="{weikucms::STATICS}/wapweiui/loan/files/contact.png">
+                <span>其他人信息</span>
+            </div>
+
+
+        </div>
+        <div class="lxr">
+            <div class="lxr_nr" id="lxr_nr_1_1">
+
+                <span class="lxr_name" id="name_1">姓名</span>
+                <input type="text" class="lxr_text" id="contact_name_1" name="name2" placeholder="如果您是两位请填写" onclick="addCss(1);">
+            </div>
+        </div>
+        <div class="lxr" >
+            <div class="lxr_nr" id="lxr_nr_2_1">
+                <span class="lxr_name" id="tel_1">手机</span>
+                <input type="tel" class="lxr_text" id="contact_tel_1" name="phone2" placeholder="如果您是两位请填写" onclick="addCss(2);">
+            </div>
+        </div>
+
+    </div>
+
+    <!---其他人信息--->
+<!--   <div class="base-info" style="padding-left:10px;padding-right:10px;">
+    <div class="info-title">
+    <div class="bk_4"></div>
+    <img class="info-img" src="{weikucms::STATICS}/wapweiui/loan/files/contact.png">
+      <span>优惠码</span>
+    </div>
+     <div class="lxr_yh" id="lxr_yh">
+        <span class="lxr_yhcode" id="lxr_yhcode">优惠码：3GS56s</span>
+        <input type="text" class="lxr_yhtext" id="lxr_yhtext" placeholder="优惠码" readonly="readonly">
+      </div>
+
+  </div>-->
+
+
+
+   <div class="order-foot">
+   <div class="order_lx">
+     <div class="lx_one">
+        <span class="lx_one_left">首付金额</span>
+        <span class="lx_one_right"><span class="a2">{weikucms:$info.shoufu}</span>元</span>
+     </div>
+      <div class="lx_one">
+        <span class="lx_one_left">分期月数</span>
+        <span class="lx_one_right">{weikucms:$info.fenqi}个月</span>
+     </div>
+     <div class="lx_one">
+       <div class="lx_left">月供：</div>
+       <div class="lx_body">
+         <span class="lx_span_one">￥<span class="a3">{weikucms:$info.monthly_repayments}</span>元</span>
+         <span class="lx_span_two">*{weikucms:$info.fenqi}期</span>
+         <span class="lx_span_three">(本金：<span class="a2">{weikucms:$info.shoufu}</span>元+服务费：￥0)</span>
+        </div>
+     </div>
+   </div>
+
+  <div class="yuedu">
+    <label>
+        <div class="line"></div>
+      <input type="checkbox" checked id="checkboxs"> 我已阅读并且同意<a href="{weikucms::U('agreement',array('token'=>$token,'openid'=>$openid))}">《如多分期网站注册协议》</a>
+    </label>
+  </div>
+  </div>
+
+   <div style="padding:10px; padding-top:30px;"><input type="submit" flag="1" name="button" id="button" value="立即分期" class="btn btn-lg btn-warning btn-block"></div>
+  <br>
+
+</form>
+
+<script src="{weikucms::STATICS}/wapweiui/loan/files/bootstrap.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/loan/files/myui.js"></script>
+<div style="overflow:hidden; height:1px;"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254141628'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1254141628' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_1254141628"><a href="http://www.cnzz.com/stat/website.php?web_id=1254141628" target="_blank" title="站长统计">站长统计</a></span><script src="{weikucms::STATICS}/wapweiui/loan/files/z_stat.php" type="text/javascript"></script><script src="{weikucms::STATICS}/wapweiui/loan/files/core.php" charset="utf-8" type="text/javascript"></script></div>
+<script>
+
+
+function isSubmit(){
+	/*if($("#date_id").val()==''){
+		myUi.msgbox('请选择出行日期！',function(){
+		});
+		return false;
+	}*/
+  if(!document.getElementById('checkboxs').checked){
+      myUi.msgbox('请认真阅读预订协议',function(){});
+      return false;
+
+  }
+    if($(".date1").is(":visible")) {
+        if(!$("tbody tr td").hasClass("selectClass")){
+            myUi.msgbox('请选择出行日期！',function(){
+            });
+            return false;
+        }else{
+            var y_m=$("tbody tr td.selectClass").find(".a").attr('y_m');
+            var d=$("tbody tr td.selectClass").find(".a").attr('d');
+            var yu=$("tbody tr td.selectClass").find(".a").next().text();
+            yu=yu.substr(1);
+
+        }
+    }else{
+        var y_m='';
+        var d='';
+    }
+   //alert(yu);
+   // return false;
+
+    if($(".date2").is(":visible")) {
+        if($(".order_cen.on").length<1){
+            myUi.msgbox('请选择出行人数！',function(){
+
+            });
+            return false;
+        }else{
+            var people_num=$(".order_cen.on").attr('people');
+        }
+    }else{
+        var people_num='';
+    }
+
+
+  //  alert(Math.min(2,people_num)); return false;
+    if(Math.min(2,people_num)>yu){
+        myUi.msgbox('余票不足',function(){
+
+        });
+        return false;
+    }
+
+
+	if($('#contact_name').val()==''){
+		myUi.msgbox('请输入您的姓名。',function(){
+			$('#contact_name').focus();
+		});
+		return false;
+	}
+  if($('#contact_tel').val()==''){
+    myUi.msgbox('请输入您的电话号码。',function(){
+      $('#contact_name').focus();
+    });
+    return false;
+  }
+
+  if($('#contact_tel').val()!=''){
+    var tel = $('#contact_tel').val()
+    var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+       if (reg.test(tel)) {
+          //  alert("号码正确~");
+       }else{
+            alert("号码有误~");
+            $('#contact_tel').focus();
+            return false;
+       };
+
+  }
+
+  if($("#button").attr('flag')==1){//这里只要求别人提交一次
+        $("#button").attr('flag',2);
+        var name1=$("input[name=name1]").val();
+        var phone1=$("input[name=phone1]").val();
+        var other1=$("input[name=other1]").val();
+        var name2=$("input[name=name2]").val();
+        var phone2=$("input[name=phone2]").val();
+        var id={weikucms:$_GET['id']};//产品id
+      var many=$("select[name=many]").val();//购买数量
+      //alert(many);return false;
+        var url="{weikucms::U('no_credit_xiadan',array('token'=>$token,'openid'=>$openid))}";
+
+
+
+        $.post(url,{many:many,y_m:y_m,d:d,people_num:people_num,name1:name1,phone1:phone1,other1:other1,name2:name2,phone2:phone2,id:id},function(data){
+           if(data.status==1){
+                var url2="{weikucms::U('zhifu',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url2+"&orderid="+data.orderid;
+
+                return false;
+            }else if(data.status==3){
+
+                myUi.msgbox('位置不足,抱歉',function(){
+
+                });
+               $("#button").attr('flag',1);
+              return false;
+            }else if(data.status==4){
+               myUi.msgbox('您已经下过单',function(){
+
+               });
+               $("#button").attr('flag',1);
+               return false;
+            }else{
+               alert('失败');
+               $("#button").attr('flag',1);
+               return false;
+           }
+        },'json');
+
+
+    }
+
+	return false;//不提交form
+}
+
+//选择日期
+$("tbody tr td").click(function(){
+    var yu=$(this).find('.day-info').eq(1).text();
+    yu=yu.substr(1);
+    if(yu>0){
+        if($(this).hasClass("red")){
+            $("tbody tr td").each(function(e,t){
+                $(t).removeClass('selectClass');
+            })
+            $(this).addClass("selectClass");
+        }
+    }
+
+
+});
+    //选择人不同价格不同
+    $(".order_cen").click(function(){
+        var num=$(this).attr('people');
+        var price={weikucms:$info.shoufu};
+        var monthly_repayments="{weikucms:$info.monthly_repayments}";
+        if(num==3){
+
+            $(".a2").text(price*2);
+            $(".a3").text(monthly_repayments*2);
+
+        }else{
+            $(".a2").text(price);
+            $(".a3").text(monthly_repayments);
+        }
+    });
+//选择购买数量改变价格
+$(".many").change(function(){
+   // alert(1);
+    var many=$(this).val();
+    var price={weikucms:$info.shoufu};
+    var monthly_repayments="{weikucms:$info.monthly_repayments}";
+
+
+    $(".a2").text(price*many);
+    $(".a3").text(monthly_repayments*many);
+
+
+
+
+});
+
+
+
+</script>
+
+</body></html>

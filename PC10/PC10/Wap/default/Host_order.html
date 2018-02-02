@@ -1,0 +1,49 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>已下订单 </title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link href="{weikucms::RES}/css/style/css/hotels.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::RES}/css/style/js/jquery.min.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/css/style/js/iscroll.js" type="text/javascript"></script>
+
+</head>
+
+<body id="hotelsorder" >
+
+<div class="cardexplain">
+
+
+<!--商家房价及类型-->
+<ul class="round">
+<li class="biaotou bradius pad"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>类型</td>
+<td class="yuanjia">订购时间</td>
+<td class="youhuijia">价格</td>
+</tr>
+</table></li>
+<li><span class="noneorder">
+<table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <volist name="userinfo" id="types">
+<tr>
+<td>{weikucms:$types['room_type']}</td>
+<td class="yuanjia">{weikucms:$types['book_time'|date="y-m-d",###]}</td>
+<td class="youhuijia">￥{weikucms:$types['price']}</td>
+</tr>
+</volist>
+</table>
+</span>
+</li>
+
+</ul>
+
+
+</div>
+
+
+</body>
+</html>

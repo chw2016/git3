@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style.css" />
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+        <link href="{weikucms::STATICS}/wapweiui/service/css/default2.css" rel="stylesheet" type="text/css">
+        <script src="{weikucms::STATICS}/wapweiui/service/js/cst_index.js" type="text/javascript"></script>
+    </head>
+    <body class="darkless-green-bg" style="width:100%;height:100%">
+    	<!-- 输入 -->
+    	<div class="inputBox">
+
+            <if condition="$address">
+                <php>if($token != 'b47234062c938be7ad20f0f82f0241a2'){ </php>
+                    <div class="inputSwrap xuanze myul">
+                        <div class="xuanze white" style="left:5px;">
+                            <div class="infoItem lightness-green" style="font-size: 14px;">订单总额：{weikucms:$orderinfo.totalmoney}元</div>
+                            <php>if($shopScoresetdata['notget_money'] != null && $orderinfo['totalmoney'] < $shopScoresetdata['notget_money']){</php>
+                                <div class="infoItem lightness-green" style="font-size: 14px;">未满{weikucms:$shopScoresetdata.notget_money}元加收{weikucms:$shopScoresetdata.add_money}元跑腿费</div>
+                            <php>}</php>
+                            <div class="infoItem lightness-green" style="font-size: 14px;">可用积分：
+                                <input type="hidden" id="oldscoreid" value="{weikucms:$userscore.score}" />
+                                <input type="number" id="scoreid" value="{weikucms:$userscore.score}" style="line-height: 20px;font-size: 10px;width: 35px;text-align: center;border: none;"/>
+                                <select name="usedscore" id="usedscore" style="line-height: 20px;
+    font-size: 10px;
+    width: 38px;
+    text-align: center;
+    text-indent: 3px;
+    border: none;
+    background-color: rgb(32, 203, 190);
+    border-radius: 5px;
+    color: white;">
+                                    <option value="1">不使用</option>
+                                    <option value="2">使用</option>
+                                </select>
+                                <span style="font-size: 10px;color: rgb(215, 211, 211);padding-left: 3px;">({weikucms:$shopScoresetdata.moneyscore}积分相当于1元)</span></div>
+                        </div>
+                    </div>
+                <php>}</php>
+                <volist name="address" id="address" key="k">
+                    <div class="inputSwrap xuanze myul">
+                        <div class="myulleft">
+                            <div class="circle white circleSelectorSwrap">
+                                <div class="circle circleSelector <if condition='$k eq 1'>circleSelected</if>" wid="{weikucms:$address.id}"></div>
+                            </div>
+                            <div class="circle circleDeleteSwrap" aid="{weikucms:$address.id}" onclick="return delAddress(this)">
+                                <div class="circleDelete"></div>
+                            </div>
+                        </div>
+                        <div class="input xuanze white">
+                            <div class="infoItem lightness-green">姓名：{weikucms:$address.uname}</div>
+                            <div class="infoItem lightness-green">电话：{weikucms:$address.tel}</div>
+                            <div class="infoItem lightness-green">地址：{weikucms:$address.address}</div>
+                        </div>
+                    </div>
+
+                        <!--微信支付隐藏表单-->
+
+
+                </volist>
+
+                <div class="inputSwrap myul">
+                    <div class="circle white circle-icon icon icNote"></div>
+                    <div class="input ">
+                        <input type="text" class="nobg lightness-green" placeholder="备注信息" id="instruct">
+                    </div>
+                </div>
+
+                <div class="border5 white btnGoBuy" onClick="window.location.href='{weikucms::U('Commerce/address',array('openid'=>$openid,'token'=>$token,'oid'=>$oid))}'">
+                    添加新的收货信息
+                </div>
+
+
+                <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+                    <input type="hidden" name="order_money" value="{weikucms:$orderinfo.totalmoney}">
+                    <input type="hidden" name="order_text" value="">
+                    <input type="hidden" name="orderid" value="{weikucms:$orderinfo.ordernumber}">
+                    <input type="hidden" name="openid" value="{weikucms:$openid}">
+                    <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=MemberCenter&a=index&token={weikucms:$token}&openid={weikucms:$openid}">
+                    <input type="hidden" name="type" value="Commerce_Order">
+                </form>
+                <!--微信支付隐藏表单结束-->
+
+
+                <div class="border5 white btnGoBuy" id="delivery">
+                    货到付款
+                </div>
+                
+                <div class="border5 white btnGoBuy" id="wxpay">
+                    微信支付
+                </div>
+
+                <!--<div class="border5 white btnGoBuy" id="alipay">-->
+                <!--支付宝付款-->
+                <!--</div>-->
+                <else/>
+
+                <div class="border5 white btnGoBuy" onClick="window.location.href='{weikucms::U('Commerce/address',array('openid'=>$openid,'token'=>$token,'oid'=>$oid))}'">
+                    请先添加收货信息
+                </div>
+
+
+            </if>
+
+
+            
+
+    		
+    	</div>
+
+
+
+			
+    </body>
+    <script>
+
+        function delAddress(obj){
+            var aid=$(obj).attr("aid");
+            $.post("{weikucms::U('Commerce/DeleteAddress',array('token'=>$token,'openid'=>$openid))}",{aid:aid},function(data){
+                if(data.status==1){
+                    location.reload();
+                }else{
+                    alert(data.info);
+                }
+            },"json")
+        }
+        function check(){
+            var selector = $(".circleSelector");
+            var wid="";
+            selector.each(function(){
+                if($(this).hasClass("circleSelected")){
+                    wid=$(this).attr("wid");
+                }
+            })
+            return wid;
+        }
+
+        function pay(type){
+                var instruct=$("#instruct").val();
+                var usedscore = $("#usedscore").val();
+                var scoreid = $("#scoreid").val();
+                var oldscoreid = $("#oldscoreid").val();
+                var scoreset = {weikucms:$shopScoresetdata.moneyscore};
+				
+                if(usedscore == 2){
+				    if(scoreid > oldscoreid){
+                        alert("您目前没有这么多积分哦");
+                        return false;
+                    }
+					
+					if(scoreid > (scoreset*6/2)){
+                        alert("单笔订单最大使用积分"+(scoreset*6/2));
+                        return false;
+                    }
+					
+                    var reg1 =  /^\d+$/;
+                    if(!reg1.test(scoreid)){
+                        alert("请输入合法积分数字");
+                        return false;
+                    }
+                    if(!scoreset || scoreid % (scoreset/2) != 0){
+                        alert("请输入"+(scoreset/2)+"整数倍的积分数");
+                        return false;
+                    }
+                }
+
+                var url="{weikucms::U('Commerce/EditOrder',array('token'=>$token,'openid'=>$openid,'oid'=>$oid))}"+"&paytype="+type;
+                if(!check()){
+                    show_error_tip("请选择地址");
+                    return false;
+                }else{
+                    var wid=check();
+                }
+                $.post(url,{paytype:type,wid:wid,instruct:instruct,usedscore:usedscore,scoreid:scoreid},function(data){
+                    if(data.status==1){
+                        if(type=="wxpay"){
+                            $("#myweipayform").submit();
+                        }else if(type=="alipay"){
+                            alipayurl="{weikucms::U('AlipayC/pay',array('openid'=>$openid,'token'=>$token,'orderid'=>$oid,'price'=>$orderinfo[totalmoney],'orderName'=>$orderinfo[ordernumber],'single_orderid'=>$oid,'from'=>'O2O'))}";
+                            window.location.href=alipayurl;
+                        }else{
+                            alert(data.info);
+                            window.location.href = "{weikucms::U('Wap/MemberCenter/index',array('token'=>$token,'openid'=>$openid))}";
+                        }
+                    }else{
+                        alert(data.info);
+                    }
+                },"json")
+        }
+    </script>
+    <script>
+        $("#wxpay").click(function(){
+            pay("wxpay");
+        })
+        $("#alipay").click(function(){
+            pay("alipay");
+        })
+
+        $("#delivery").click(function(){
+            pay("delivery");
+        })
+
+    </script>
+
+    <script>
+    $(document).ready(function(e) {
+		var selector = $(".circleSelector");
+		var onl = selector.length;
+		function check(){
+			for(var i = 0;i<=onl;i++){
+			if(!selector.eq(i).hasClass("circleSelected")){
+				selector.eq(i).parents('.myulleft').find(".circleDeleteSwrap").show();
+				}else{
+                selector.eq(i).parents('.myulleft').find(".circleDeleteSwrap").hide();
+                }
+			}
+		}
+        check();
+        selector.click(function(){
+            check();
+        })
+		var delector = $(".circleDeleteSwrap");
+		delector.click(function(){
+			var THIS = $(this);
+            var aid=THIS.attr("aid");
+            $.post("{weikucms::U('Commerce/DeleteAddress',array('token'=>$token,'openid'=>$openid))}",{aid:aid},function(data){
+                if(data.status==1){
+                    THIS.parents(".inputSwrap").slideUp(200);
+                }else{
+                    alert(data.info);
+                }
+            },"json")
+			});
+
+	})
+    </script>
+
+    <script type="text/javascript">
+  	 mySelector($(".circleSelector"),"circleSelected",1)
+    </script>
+</html>

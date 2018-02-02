@@ -1,0 +1,279 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<div class="">
+	<div class="cLineB">
+		<h4 class="left"><if condition="$op neq 1">添加分店<else/>编辑分店</if></h4>		
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Shopdoor/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+		<div class="searchbar"> 
+<form method="post" action="">
+
+<script>
+function selectall(name) {
+	var checkItems=$('.cbitem');
+	if ($("#check_box").attr('checked')==false) {
+		$.each(checkItems, function(i,val){
+			val.checked=false;
+		});
+		
+	} else {
+		$.each(checkItems, function(i,val){
+			val.checked=true;
+		});
+	}
+}
+function setlatlng(longitude,latitude){
+	art.dialog.data('longitude', longitude);
+	art.dialog.data('latitude', latitude);
+	art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:874,height:700,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+</form>
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以了解微门店今日的订单数、订单总数、会员总数，还可以添加分店、编辑分店、删除分店，最后还可以根据分店名称进入后台管理。</li>
+		</ol>
+	</div>
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+ 		<if condition="$op eq 1">
+ 			<input type="hidden" name="id" id="id" value="{weikucms:$data['id']}" />
+ 		</if> 
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody> 
+			       <tr> 
+				        <th>分店名称：</th>
+				        
+				        <td>
+				        <if condition="$op neq 1">
+				        	<input type="text" id="name" name="name" value="" class="px require" style="width:300px;" />
+				        <else/>
+				        	<input type="text" id="name" name="name" value="{weikucms:$data['username']}" class="px require" style="width:300px;" />
+				        </if>
+				        </td>
+			       </tr>
+			       <tr> 
+				        <th>分店登录密码：</th> 
+				        <td>
+				        	<input type="password" id="password" name="password" value="{weikucms:$data['door_pwd']}" class="px require" style="width:300px;" />
+				        </td>
+			       </tr>
+			       <tr> 
+				        <th>分店电话：</th> 
+				        <td>
+				        <if condition="$op neq 1">
+				        	<input type="text" id="tel" name="tel" value="" class="px require" style="width:300px;" />
+				        <else/>
+				        	<input type="text" id="tel" name="tel" value="{weikucms:$data['door_phone']}" class="px require" style="width:300px;" />
+				        </if>
+				        </td>
+			       </tr>
+			       <tr>
+       					 <th>分店营业时间：</th> 
+       					 <td>
+       					 <if condition="$op neq 1">
+       					 	<input type="text" class="px" id="starttime" style="width:60px;" value="" name="starttime">到									
+							<input type="text" class="px" id="endtime" style="width:60px;" value="" name="endtime"> 
+						<else/>
+							<input type="text" class="px" id="starttime" style="width:60px;" value="{weikucms:$data['door_start_time']}" name="starttime">到									
+							<input type="text" class="px" id="endtime" style="width:60px;" value="{weikucms:$data['door_end_time']}" name="endtime">
+						</if>
+						</td>
+       			  </tr>  
+			       <tr> 
+				        <th>分店地址：</th> 
+				        <td>
+				        <if condition="$op neq 1">
+				        	<input type="text" id="address" name="address" value="" class="px require" style="width:300px;" />
+				        <else/>
+				        	<input type="text" id="address" name="address" value="{weikucms:$data['door_adress']}" class="px require" style="width:300px;" />
+				        </if>
+				        </td>
+			       </tr> 
+			       <tr>
+				       <TR>
+				           <TH valign="top">门店图片：</TH>
+				           <TD>
+				               <if condition="$data.picurl">
+				               	  <img style="display: block;" id="image_show" class="fenlei_img" src="{weikucms:$data['door_image_url']}">
+				               <else/>
+				                   <img style="display: none;" id="image_show" class="fenlei_img" src="{weikucms:$data['door_image_url']}">
+				               </if>
+				           </TD>
+				       </TR>
+				        <th>上传标志：</th>
+				        <td>
+				            <if condition="$op neq 1">
+                                <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="pic" value="" style="width:300px;"   />
+
+				            <else/>
+                                <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="pic" value="{weikucms:$data['door_image_url']}" style="width:300px;"   />
+				            </if>
+				            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+				        </td>
+			</tr>
+	        <tr> 
+		        <th>分店地址的经纬度：</th> 
+		        <td>
+		        <if condition="$op neq 1">
+		        	经度 <input type="text" id="longitude" style="width:80px;" name="longitude" size="14" class="px" value="" /> 
+		        	纬度 <input type="text" style="width:80px;" name="latitude" size="14" id="latitude" class="px" value="" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a>
+		        <else/>
+		        	经度 <input type="text" id="longitude" style="width:80px;" name="longitude" size="14" class="px" value="{weikucms:$data['door_longitude']}" /> 
+		        	纬度 <input type="text"  name="latitude" style="width:80px;" size="14" id="latitude" class="px" value="{weikucms:$data['door_latitude']}" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a>
+		        </if>
+		        </td> 
+	       </tr>
+	       
+	       <tr> 
+		        <th>门店描述信息：</th>			        
+		        <td>
+		        	<textarea name="intro" id="intro" rows="4" style="width:500px;height:120px"><if condition="$op neq 1"><else/>{weikucms:$data['door_prompt_info']}</if></textarea>
+				</td>
+		  </tr>
+		  
+		  <tr> 
+		        <th>门店友情提示信息：</th>			        
+		        <td>
+		        	<textarea name="actionIntro" id="actionIntro" rows="4" style="width:500px;height:120px"><if condition="$op neq 1"><else/>{weikucms:$data['door_prompt_info']}</if></textarea>
+				</td>
+		  </tr>
+	       
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+		       <if condition="$op neq 1">
+			      <input type="hidden" name="op" id="op" value="0" />
+			   <else/>
+				  <input type="hidden" name="op" id="op" value="1" />
+		      </if>
+      			<input type="hidden" name="token" id="token" value="{weikucms::$token}" />
+       			<button type="button" id="bsubmit" name="button" class="btn btn-primary"><if condition="$op neq 1">添加分店<else/>确定编辑</if></button></td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+         
+            var name = $("#name").val();
+            var password = $("#password").val();
+            var tel = $("#tel").val();
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            var address = $("#address").val();
+            
+            var logourl = $("#pic").val();
+            var longitude = $("#longitude").val();
+            var latitude = $("#latitude").val();
+            var intro = $("#intro").val();
+            var actionIntro = $("#actionIntro").val();
+            
+            var op = $("#op").val();
+            
+            var token = $("#token").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! name){
+                notif({
+                    msg: "门店名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! password){
+                notif({
+                    msg: "门店登录密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+            if(! address){
+                notif({
+                    msg: "门店地址不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if(! tel){
+                notif({
+                    msg: "门店电话不能为空",
+                    type: "warning"
+                });
+                return false;
+            }            
+
+            $.post("{weikucms::U('Shopdoor/manager')}",
+                    {id:id,token:token,actionIntro:actionIntro,intro:intro,password:password,starttime:starttime,endtime:endtime,op:op,name:name,tel:tel,address:address,logourl:logourl,longitude:longitude,latitude:latitude,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

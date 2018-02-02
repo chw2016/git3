@@ -1,0 +1,54 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+        	查看消息
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Media/addInfo',array('token'=>$token,'tid'=>$tid))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+
+                <tr>
+                    <th valign="top"><label for="key">消息标题</label></th>
+                    <td>{weikucms:$info.title}</td>
+                </tr>
+				
+                <tr>
+                    <th valign="top"><label for="title">消息类型</label></th>
+                    <td>
+                    	<if condition="$info['type'] eq 1">
+                    		系统消息
+                    	<else/>
+                    		任务消息
+                    	</if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="title">消息内容</label></th>
+                    <td>{weikucms:$info.content}</td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">消息添加时间</label></th>
+                    <td>
+                       <php>
+                       		echo date("Y-m-d",strtotime($info['info_time']))
+                       </php>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>

@@ -1,0 +1,127 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="cLineB">
+            <h4>信息处理</h4>
+        </div>
+        <div class="cLineB" id="uppict" style="display:none">
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+                <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <input type="hidden" class="px" id="id" value="{weikucms:$candidate.id}" name="id">
+                        <input type="hidden" class="px" id="token" value="{weikucms:$candidate.token}" name="token">
+                    </tr>
+                    <tr>
+                        <th valign="top">所在区域</th>
+                        <td><span>{weikucms:$candidate.name}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">应聘者</th>
+                        <td><span>{weikucms:$candidate.name}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">性别</th>
+                        <td><span><if condition="$candidate['sex'] eq 0">男<else/>女</if></span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">年龄</th>
+                        <td><span>{weikucms:$candidate.tel}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">电话</th>
+                        <td><span>{weikucms:$candidate.tel}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">籍贯</th>
+                        <td><span>{weikucms:$candidate.address}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">学历</th>
+                        <td><span>{weikucms:$candidate.educational}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">邮箱</th>
+                        <td><span>{weikucms:$candidate.email}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">工作经历</th>
+                        <td><span>{weikucms:$candidate.winfo}</span></td>
+                    </tr>
+                    <tr>
+                        <th valign="top">审核</th>
+                        <td>
+                            <select id="start">
+                                <option value="0" <if condition="$candidate['start'] eq 0">selected</if>>未审核</option>
+                                <option value="1" <if condition="$candidate['start'] eq 1">selected</if>>审核通过</option>
+                                <!--<option value="2" <if condition="$candidate['start'] eq 2">selected</if>>审核未通过</option>-->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th valign="top">审核回复</th>
+                        <td><textarea name="info" id="info">{weikucms:$candidate.info}</textarea></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                            <a href="javascript: history.back();" name="button"  class="btn btn-success btn-sm" >返回</a>
+                            <div class="clr"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div class="clr"></div>
+    </div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("#id").val();
+        var token = $("#token").val();
+        var start = $("#start").val();
+        var info = $("#info").val();
+
+        var url = "{weikucms::U('Recruitments/check',array('token'=>$token,'aid'=>$_GET['aid']))}";
+
+        $.post(url,{
+                    id:id,
+                    token:token,
+                    start:start,
+                    info:info,
+                    openid:'{weikucms:$candidate.openid}'
+                    // __hash__: $("input[name='__hash__']").val()
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+    }
+</script>

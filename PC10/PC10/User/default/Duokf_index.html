@@ -1,0 +1,59 @@
+<include file="Public:head"/>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在使用多客服功能之前请先确认在公众平台已经添加微信多客服功能</li>
+
+        </ol>
+    </div>
+          <div class="cLine">
+              <div class="pageNavigator left">
+              <a href="#" id="syKf" class='btn btn-primary'>同步客服信息</a>　
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>客服头像</th>
+                      <th>客服工号</th>
+                      <th>客服昵称</th>
+                      <th style="width: 100px;">客服账号</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="kefulist" id="vo">
+                      <tr>
+                          <td><img src="{weikucms:$vo.kf_headimg}" style="width: 40px;height: 40px;"></td>
+                          <td>{weikucms:$vo.kf_id}</td>
+                          <td>{weikucms:$vo.kf_nick}</td>
+                          <td>{weikucms:$vo.kf_account}</td>
+                          <td>
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Img/edit',array('id'=>$vo['id']))}" title="编辑图文自定义回复">设置</a>
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+
+  </div>
+
+
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#syKf"
+    })
+</script>
+<include file="Public:footer"/>

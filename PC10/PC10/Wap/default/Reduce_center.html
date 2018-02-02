@@ -1,0 +1,589 @@
+<html>
+	<head>
+		<title>个人资料</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/19.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/fatTest.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/fatAlert.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/area.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/location.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				showLocation();
+			});
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 创建遮罩 -->
+		<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="target">
+			<div class="choice">
+				请填写目标体重
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>体重</span>
+					<input type="text" class="weights select" placeholder="体重"/>
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="asure">确定</div>
+			<div class="acancel">取消</div>
+		</div>
+		<!-- 减重 -->
+		<div id="losefat">
+			<div class="choice">
+				已减重
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>减重</span>
+					<input type="text" class="loseweights select" placeholder="减重"/>
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="lsure">确定</div>
+			<div class="lcancel">取消</div>
+		</div>
+		<!-- 坚持天数 -->
+		<div id="insist">
+			<div class="choice">
+				已坚持天数
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>天数</span>
+					<input type="text" class="insists select" placeholder="天数"/>
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="isure">确定</div>
+			<div class="icancel">取消</div>
+		</div>
+		<!-- 性别 -->
+		<div id="ysex">
+			<div class="choice">
+				请选择性别
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>性别</span>
+					<select id="ysexs" class="select">
+						<option value="男" selected>男</option>
+						<option value="女">女</option>	
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="esure">确定</div>
+			<div class="ecancel">取消</div>
+		</div>
+		<!-- 生日 -->
+		<div id="birth">
+			<div class="choice">
+				请选择出生日期
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>年份</span>
+					<select id="year" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				
+				<div class="Eject">
+					<span>月份</span>
+					<select id="month" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="Eject">
+					<span>日期</span>
+					<select id="days" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="sure">确定</div>
+			<div class="cancel">取消</div>
+		</div>
+		<!-- 身高 -->
+		<div id="yheight">
+			<div class="choice">
+				请选择身高
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>身高</span>
+					<select id="height" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="hsure">确定</div>
+			<div class="hcancel">取消</div>
+		</div>
+		<!-- 运动 -->
+		<div id="sport">
+			<div class="choice">
+				请选择运动量
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>运动</span>
+					<select id="sports" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="ssure">确定</div>
+			<div class="scancel">取消</div>
+		</div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请选择体重
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>体重</span>
+					<select id="weight" class="select">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 所在城市 -->
+		<div id="citys">
+			<div class="choice">
+				请选择城市
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>省级</span>
+					<select id="loc_province" class="select"></select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="Eject">
+					<span>市级</span>
+					<select id="loc_city" class="select"></select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="csure">确定</div>
+			<div class="ccancel">取消</div>
+		</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">个人资料</span>
+		</div> -->
+		<!-- 头像 -->
+		<div class="photo">
+			<div class="imgsBorder">
+				<if condition="$imgs eq ''">
+					<span style="line-height:64px;">暂无图片</span>
+				<else />
+					<img src="{weikucms:$imgs}" width="70px" height="70px" />
+				</if>
+				
+			</div>
+			<p class="nikename">
+				<span class="font1">
+					<if condition="$nikename eq ''">
+						暂无名称
+					<else />
+						{weikucms:$nikename}
+					</if>
+				</span>
+				<br />
+			</p>
+		</div>
+		<!-- 目标体重 -->
+		<div class="Target">
+			<table>
+				<tr class="inspadd borderColor" id="targets">
+					<td class="td1">目标体重</td>
+					<td class="td2" id="targetNum">{weikucms:$lose.aimweight}kg</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd borderColor" id="loseweights">
+					<td class="td1">已减重</td>
+					<td class="td2" id="loseWeight">{weikucms:$lose.haslose}kg</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd" id="persist">
+					<td class="td1">已坚持</td>
+					<td class="td2" id="ins">{weikucms:$lose.persist}day</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 资料 -->
+		<div class="Means">
+			<table>
+				<tr class="inspadd borderColor" id="sexs">
+					<td class="td1">性别</td>
+					<td class="td2" id="sex">
+						<if condition="$result['sex'] eq 1">
+							男
+						<else />
+							女
+						</if>
+					</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd borderColor" id="births">
+					<td class="td1">年龄</td>
+					<td class="td2" id="birthday">{weikucms:$result.age}</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd borderColor" id="length">
+					<td class="td1">身高</td>
+					<td class="td2" id="lengths">{weikucms:$result.height}</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd borderColor" id="avoird">
+					<td class="td1">体重</td>
+					<td class="td2" id="avoirds">{weikucms:$result.weight}</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd borderColor" id="active">
+					<td class="td1">活动量</td>
+					<td class="td2" id="actived">{weikucms:$result.run}</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+				<tr class="inspadd" id="incity">
+					<td class="td1">所在城市</td>
+					<td class="td2" id="incitys">{weikucms:$result.city}</td>
+					<td class="td3">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/leftArrow.png" width="10px" height="17px">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 行高 -->
+		<div style="height:10px"></div>
+		<script type="text/javascript">
+			$(function(){
+				// 点击产生遮罩以及生日，生日模块的位置
+				$('#targets').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#target').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 体重
+				// 点解确定按钮产生的情况
+				$('.asure').click(function(){
+					if (!$('.weights').val()) {
+						show_error_tip("请填写体重！");
+						return false;
+					};
+					if (isNaN($('.weights').val())) {
+						show_error_tip("体重应为数字！");
+						return false;
+					};
+					$('#targetNum').html($('.weights').val()+'kg');
+					var targetNum = $("#targetNum").text();
+					var url = "{weikucms::U('Wap/Reduce/aimsdata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{weight:targetNum,type:3}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					$('#Mask').hide();
+					$('#target').hide();
+				})
+				// 点击取消
+				$('.acancel').click(function(){
+					$('#Mask').hide();
+					$('#target').hide();
+				})
+				// 减重
+				// 点解确定按钮产生的情况
+
+				$('#loseweights').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#losefat').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 减重
+				$('.lsure').click(function(){
+					if (!$('.loseweights').val()) {
+						show_error_tip("请填写减重！");
+						return false;
+					};
+					if (isNaN($('.loseweights').val())) {
+						show_error_tip("减重应为数字！");
+						return false;
+					};
+					
+					$('#loseWeight').html($('.loseweights').val()+'kg');
+					var loseWeight = $("#loseWeight").text();
+					var url = "{weikucms::U('Wap/Reduce/aimsdata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{lose:loseWeight,type:1}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					$('#Mask').hide();
+					$('#losefat').hide();
+				})
+				// 点击取消
+				$('.lcancel').click(function(){
+					$('#Mask').hide();
+					$('#losefat').hide();
+				})
+				// 坚持天数
+				// 点解确定按钮产生的情况
+
+				$('#persist').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#insist').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 坚持天数
+				$('.isure').click(function(){
+					if (!$('.insists').val()) {
+						show_error_tip("请填写坚持天数！");
+						return false;
+					};
+					if (isNaN($('.insists').val())) {
+						show_error_tip("坚持天数应为数字！");
+						return false;
+					};
+					
+					$('#ins').html($('.insists').val()+'day');
+					var ins = $("#ins").text();
+					var url = "{weikucms::U('Wap/Reduce/aimsdata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{ins:ins,type:2}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#insist').hide();
+				})
+				// 点击取消
+				$('.icancel').click(function(){
+					$('#Mask').hide();
+					$('#insist').hide();
+				})
+
+				// 性别
+				// 点解确定按钮产生的情况
+
+				$('#sexs').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#ysex').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 性别
+				$('.esure').click(function(){
+					$('#sex').html($('#ysexs').val());
+					var sex = $("#sex").text();
+					// alert(sex);return;
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{sex:sex,type:1}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#ysex').hide();
+				})
+				// 点击取消
+				$('.ecancel').click(function(){
+					$('#Mask').hide();
+					$('#ysex').hide();
+				})
+				// 日期
+				// 点击产生遮罩以及生日，生日模块的位置
+				$('#births').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#birth').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				
+				// 点解确定按钮产生的情况
+				$('.sure').click(function(){
+					var date = new Date();
+					var ages = parseInt(date.getFullYear())-parseInt($('#year').val());
+					
+					$('#birthday').html(parseInt(date.getFullYear())-parseInt($('#year').val())+"周岁");
+					var birthday = $("#birthday").text();
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{birthday:birthday,type:2}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#birth').hide();
+				})
+				// 点击取消
+				$('.cancel').click(function(){
+					$('#Mask').hide();
+					$('#birth').hide();
+				})
+				// 身高
+				$('#length').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#yheight').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 点击身高那里的确定
+				$('.hsure').click(function(){
+					
+					$('#lengths').html($('#height').val() + "cm");
+					var lengths = $("#lengths").text();
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{lengths:lengths,type:3}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#yheight').hide();
+				})
+				// 点击身高那里的取消
+				$('.hcancel').click(function(){
+					$('#Mask').hide();
+					$('#yheight').hide();
+				})
+				// 体重
+				$('#avoird').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#yweight').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 点击体重那里的确定
+				$('.wsure').click(function(){
+					
+					$('#avoirds').html($('#weight').val() + "kg");
+					var avoirds = $("#avoirds").text();
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{avoirds:avoirds,type:4}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#yweight').hide();
+				})
+				// 点击体重那里的取消
+				$('.wcancel').click(function(){
+					$('#Mask').hide();
+					$('#yweight').hide();
+				})
+				// 运动量
+				$('#active').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#sport').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 点击运动量那里的确定
+				$('.ssure').click(function(){
+					
+					$('#actived').html($('#sports').val());
+					var actived = $("#actived").text();
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{actived:actived,type:5}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#sport').hide();
+				})
+				// 点击运动量那里的取消
+				$('.scancel').click(function(){
+					$('#Mask').hide();
+					$('#sport').hide();
+				})
+
+				// 城市选择
+				$('#avoird').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#yweight').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				
+
+				// 城市
+				$('#incity').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#citys').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#birth').height())/2+'px'}).show();
+				})
+				// 点击运动量那里的确定
+				$('.csure').click(function(){
+					$('#incitys').html($("#loc_city option:selected").text());
+					var incitys = $("#incitys").text();
+					var url = "{weikucms::U('Wap/Reduce/humandata',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{incitys:incitys,type:6}, function(data){
+	                            if(data.status == 1){
+	                                show_error_tip(data.info);
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					 $('#Mask').hide();
+					 $('#citys').hide();
+				})
+				// 点击运动量那里的取消
+				$('.ccancel').click(function(){
+					$('#Mask').hide();
+					$('#citys').hide();
+				})	
+				
+			})
+		</script>
+	</body>
+</html>

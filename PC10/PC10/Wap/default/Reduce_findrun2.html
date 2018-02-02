@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>运动详情</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/9.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">运动详情</span>
+		</div> -->
+		<!-- 跑步 -->
+		<div class="run">
+			<span style="font-size:20px;">
+				{weikucms:$result.sport_name}
+				(强度：<if condition="$qiang gt 6">高<elseif condition="$qiang egt 6 AND $qiang elt 3" />中<else />低</if>)
+			</span>
+		</div>
+		<!-- 计算 -->
+		<div class="count">
+			<span>
+				消耗{weikucms:$result.calorie}大卡/每小时（以60kg体重为参考）
+			</span>
+		</div>
+		<!-- 运动详情 -->
+		<div class="count">
+			<span>
+				运动强度：{weikucms:$qiang}MET，属于<if condition="$qiang gt 6">高<elseif condition="$qiang egt 6 AND $qiang elt 3" />中<else />低</if>强度运动<br />
+				千步活动量时间：{weikucms:$times}分钟，做该运动{weikucms:$times}分钟相当于中速步行1000步（即以4km/h的速度走10分钟）
+			</span>
+		</div>
+		<!-- 消耗热量 -->
+		<div class="count">
+			<span>
+				消耗这些热量相当于摄入以下食物：
+			</span>
+			<table id="hot">
+				<tr>
+					<td>食品名称</td>
+					<td>份量</td>
+				</tr>
+				<tr>
+					<td>米饭</td>
+					<td>{weikucms:$rice}g</td>
+				</tr>
+				<tr>
+					<td>苹果</td>
+					<td>{weikucms:$apple}g</td>
+				</tr>
+				<tr>
+					<td>鸡蛋</td>
+					<td>{weikucms:$egg}g</td>
+				</tr>
+				<tr>
+					<td>豆浆</td>
+					<td>{weikucms:$dou}g</td>
+				</tr>
+				<tr>
+					<td>牛奶</td>
+					<td>{weikucms:$milk}g</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- 邀请好友来 -->
+		<!--
+		<div id="Invitation">
+			分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+		</div>
+		-->
+		<div style="height:10px;"></div>
+		<script type="text/javascript">
+			$(function(){
+				// 遮罩分享
+				$('#Invitation').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+					// $(this).children('img').hide();
+				})
+			})
+		</script>
+	</body>
+</html>

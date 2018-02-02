@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>{weikucms:$tpl.name}-更多</title>
+    <!--<link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/index1-4.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+    </head>
+<style>
+
+    .more1 ul{
+        text-indent: 34px;
+    }
+    .more1 ul li{
+        width: 100%;
+       height: 70px;
+        line-height: 70px;
+        border-bottom: solid 1px #d8d8d8;
+        color: #616161;
+    }
+
+</style>
+<body style="background-color: #FFF;">
+<div class="more1">
+    <ul>
+        <volist name="list" id="vo">
+            <a href="{weikucms::U('article',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+
+
+                <li>
+                    <img src="{weikucms:$vo.pic}" style="width: 40px;margin-right: 20px; padding-top: 16px;"  />
+                    <span style="position: relative; top: -13px;">{weikucms:$vo.title}</span>
+                    <div style="float: right;">
+                        <img src="{weikucms::STATICS}/wapweiui/loan/images/b4.png" style="margin-right: 20px;
+  width: 13px;position: relative;
+  top: 9px;"  />
+                    </div>
+                </li>
+            </a>
+
+
+
+
+<!--
+                <li style="background:url({weikucms::STATICS}/wapweiui/loan/images/b1.jpg) no-repeat;background-position: left;"><span >{weikucms:$vo.title}</span></li></a>
+-->
+
+
+        </volist>
+
+    </ul>
+</div>
+<include file="Loan:foot"/>
+</body>
+</html>

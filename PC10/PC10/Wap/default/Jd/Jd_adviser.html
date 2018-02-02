@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>顾问详情</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+<link rel="stylesheet" href="{weikucms::RES}/Jd/css/icon/style.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/Jd/js/main.js"></script>
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<style type="text/css">
+.lica_ul li{height: 30px;margin-top: 9px;border-top: 1px solid #e7e7e7;border-bottom: 1px solid #e7e7e7;margin-bottom: 0;}
+.lica_ul li span{font-size: 14px;}
+.lica_ul li span.rig{float: right;}
+.weight{
+    color: #B6D8FF;
+    font-size: 12px;
+    font-weight: bold;
+}
+.praise {
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px !important;
+  text-align: center;
+  border-radius: 24px;
+  display: inline-block;
+  color: #fff;
+   background-color: rgba(0,0,0,0.3); 
+/*  border: 1px solid #fff;*/
+  display: inline-block;
+  font-size: 16px;
+}
+.arrow-btn{
+    padding: 0 10px;
+}
+.tel2{
+    margin-top: 5px;
+   /* margin-right: 10px;*/
+}
+.praise.icon-thumbs-up.arrow-btn.on{
+    color:red;
+}
+</style>
+<script>
+        $(function(){
+            $('.demoP').each(function(i,row){
+                var all=$(row).html();
+                if(all.length>20) {
+                    $(row).html(all.substr(0,25)+".......");
+                    $(row).attr('all', all);
+                }
+
+            })
+
+            $(".demoP").click(function(){
+                var isshow=$(this).attr("isshow");
+                all  = $(this).attr('all');
+                if(isshow=="0"){
+                    $(this).html(all);
+                    $(this).attr("isshow","1")
+                }
+                else{
+                    $(this).html(all.substr(0,25)+".......");
+                    $(this).attr("isshow","0")
+                }
+            })
+
+            $(".arrow-btn").click(function(){
+			    var This =$(this); 
+                var data=$(this).html();
+                var figure= 0;
+                var id = parseInt({weikucms:$_GET['id']});
+                var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'adviser'))}";
+                if($(this).hasClass('on')){
+                    figure--;
+                    
+                    $.post(url,{figure:figure,id:id},function(rel){
+                        if(rel.status==1){
+                            data--;
+                            This.removeClass('on');
+							This.html(data);
+                            //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                        }else{
+                            msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                        }
+                    },'json')
+                }else{
+                    figure++;
+                    
+                    $.post(url,{figure:figure,id:id},function(rel){
+                        if(rel.status==1){
+                             data++;
+                             This.addClass('on');
+							 This.html(data);
+                            //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                        }else{
+                            msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                        }
+                    },'json')
+                }
+                
+            })
+        });
+</script>
+</head>
+<body style="background-color:#f8f8f8;">
+<div class="top_4"   >
+<a href="#"  style="color: #a4bef0;">
+    <div class="top_4_left">
+        <span  onclick='location.href="{weikucms::U('adviserShow',get(id,openid))}"' ><img src="{weikucms:$adviser.head}"></span>
+    </div>
+    <div class="top_4_right" >
+        <div class="top_4_right_names" style="height: 21%;">
+            <span class="_top_name" style="height: 50%; color:#EFF3FC;"  onclick='location.href="{weikucms::U('adviserShow',get(id,openid))}"' >
+                  <php>
+                		echo str_substr($adviser['name'],10);
+                 </php>
+            </span>
+<!--             <a href="#"><span class="icon-thumbs-up"></span></a> -->
+            <a href="tel:{weikucms:$adviser.phone}"><span class="tel2"></span></a>
+            <span class="_bottom">{weikucms:$adviser.phone}</span>
+        </div>
+
+       <div class="top_4_right_nr" style="height: 30%;line-height: 20px; word-break:break-all;"  onclick='location.href="{weikucms::U('adviserShow',get(id,openid))}"' >
+             
+                <php>
+                		echo '<span class="weight">顾问邮箱：</span>'.str_substr($adviser['email'],40,'......');
+                </php>
+           
+        </div>
+        
+                 <div class="top_4_right_nr" style="height: 30%;line-height: 20px;"  onclick='location.href="{weikucms::U('adviserShow',get(id,openid))}"' >
+             
+                <php>
+                		//echo '擅长领域：'.str_substr($adviser['trade'],40,'......');
+                		echo '<span class="weight">擅长领域：</span>'.$adviser['trade'];
+                </php>
+           
+        </div>
+        
+        
+                <div class="top_4_right_nr" style="height: 30%;line-height: 20px;">
+        
+                <php>
+                		//echo '顾问履历：'.str_substr($adviser['remark'],70,'......');
+                		echo '<span class="weight">顾问履历：</span><div class="demoP" isshow="0">'.$adviser['remark'];'</div>'
+                </php>
+        </div>
+        
+         <div class="top_4_right_nr" style="height: 30%;line-height: 20px;"  >
+             
+                <php>
+                   // print_r($adviser['exper']);
+                		//echo '项目经验：'.str_substr($adviser['exper'],70,'......');
+                		echo '<span class="weight">项目经验：</span><div class="demoP" isshow="0">'.$adviser['exper'];'</div>'
+                </php>
+
+        </div>
+        
+
+
+       
+    </div>
+      <div style="float:right;padding-bottom:10px">
+                <a href="#"><span class="praise icon-thumbs-up arrow-btn <if condition="$data['type'] eq 1">on</if> ">{weikucms:$adviser['praise']}</span></a>
+                <!-- <a href="tel:{weikucms:$adviser.phone}"><span class="tel2"></span></a> -->
+        </div>
+    <!-- <div style="height:150px;float:left;"></div> -->
+
+    <!-- <div class="foot" style="background-color:#f8f8f8;"> -->
+        <!-- [> <span>查看更多</span> <] -->
+    <!-- </div> -->
+    <script type="text/javascript">
+        $(function(){
+var url2 = "<?php echo $_GET['state']?U('myApply',get(token)):$_SERVER['REQUEST_URI']; ?>";
+var url="{weikucms::U('setApplp',array('token'=>$token,'openid'=>$openid))}";
+$(".lica_ul li").each(function(){
+	if($(this).children('.aaa').html()!='已预约'){
+		 $(this).click(function(){
+		    	var obj=$(this);
+               var u= obj.find('span').last().attr('v');
+               if(u=='0') return false;
+/* 		        msg.confirm("你确定要预约吗",function(){ */
+		        	$.post(url,{adviserId:obj.next().attr('advId'),time:obj.next().attr('time')},function(data){
+		                if(data.status){
+		                   // obj.find('.aaa').html('已预约');
+		                    //obj.find('.aaa').css('color','red');
+		                    //window.location=url2;
+                            window.location=data.url;
+		                }else{
+		                     msg.alert(data.msg);
+		                    if(data.url){
+		                        msg.alert(data.msg);
+		                        setTimeout(function(){window.location=data.url},1500);
+		                       //window.location=data.url;
+		                    }
+		                }
+		            },'json');
+		    });
+	}
+   
+});
+})
+
+    </script>
+
+    </div>
+    </div>
+          <div class="top_5" style="clear: both;z-index: 1;overflow: hidden;background-color: #FFF;" >
+        <ul class="lica_ul">
+            <foreach name="config" item="v">
+            <li>
+            <span style="color:#5C5C5C;padding-left:15px;" >{weikucms:$v.date}&nbsp{weikucms:$v.week}</span>
+                <if condition="$v.status eq 0">
+                    <if condition="$v.apply eq 0">
+                            <span v="0" class="rig red" style="color:red;padding-right:15px" >不可申请预约</span>
+                        <else/>
+                            <span v="1" class="rig green aaa" style="padding-right:15px;">可申请预约</span>
+                      </if>
+                <else/>
+                <span v="0" class="rig green aaa" style="color:red;" >已预约</span>
+                </if>
+            </li>
+            <input type="hidden" advId="{weikucms:$v.adv_id}" time="{weikucms:$v.time}">
+            </foreach>
+        </ul>
+    </div>
+    </div>
+    </html>

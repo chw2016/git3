@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		 <title>鱼美人-会员中心</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt">
+    <div class="header">
+    	<div class="wrapHeader myul">
+    		<div class="circle icon_mian_huiyuan"></div>
+    		<div class="title">会员中心</div>
+    	</div>
+    </div>
+    <div class="limitShoppingBox">
+        
+       <div class="member_pic">
+           <img src="{weikucms::RES}/mru/img2/huiyuan_pic.png">
+           <div class="img_bar">
+               <div class="nickname">昵称:{weikucms:$name}</div>
+                <div style="margin-right: 10px;" class="score">积分：<if condition="$list['num']" >{weikucms:$list['num']}<else/>0</if></div>
+                <div style="margin-right: 10px;" class="score">红包：<if condition="$list['hongbao']" >{weikucms:$list['hongbao']}元<else/>0元</if></div>
+           </div>
+       </div>
+
+       <div class="icon_box">
+         <a href="{weikucms::U('Mhyzx/bd',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+             <div class="icon_min">
+                <div class="icon_logo xiaoxitixing"></div>
+                <div class="text_decoration">会员绑定</div> <!-- 消息提醒 -->
+            </div>
+         </a>   
+       <a href="{weikucms::U('Mrugr/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo gerenziliao"></div>
+                <div class="text_decoration">个人资料</div>
+            </div>
+             </a>   
+            <a href="{weikucms::U('Wyyy/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo yuyuefuwu"></div>
+                <div class="text_decoration">预约服务</div>
+            </div>
+             </a>   
+    <!--         <a href="{weikucms::U('Mhyzx/bd',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > -->
+            <a href="{weikucms::U('MruHy/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo yaoqinhaoyou"></div>
+                <div class="text_decoration">邀请好友</div><!--  邀请好友 -->
+            </div>
+            </a>
+       
+            <a href="{weikucms::U('Hyzx/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo jifenduihuan"></div>
+                <div class="text_decoration">积分兑换</div>
+            </div>
+             </a>   
+            <a href="{weikucms::U('Wdyhj/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo youhuiquan"></div>
+                <div class="text_decoration">我的优惠券</div>
+            </div>
+             </a>   
+            <a href="{weikucms::U('MruJf/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+
+            <div class="icon_min">
+                <div class="icon_logo woyaojifen"></div>
+                <div class="text_decoration">我要积分</div>
+            </div>
+             </a>   
+          <a href="{weikucms::U('Mruqd2/usersign',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+            <div class="icon_min">
+                <div class="icon_logo qiandao"></div>
+                <div class="text_decoration">签到</div><!-- 游戏中心  -->
+            </div>
+         </a>  
+            <a href="{weikucms::U('Qianggou/index',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}" >
+            <div class="icon_min">
+                <div class="icon_logo xianshiqianggou"></div>
+                <div class="text_decoration">限时抢购</div>
+            </div>
+             </a>   
+       </div>
+		<script>
+			$(function(){
+				$('.icon_min').each(function(i,obj){
+					$(obj).height($(this).width()).css('background-position', 'top center');
+				});
+			});
+		</script>
+        
+       
+    </div>
+<include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+</html>

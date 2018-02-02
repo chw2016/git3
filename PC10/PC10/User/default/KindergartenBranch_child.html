@@ -1,0 +1,83 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">left:-14px</if>">
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('KindergartenBranch/index',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$w['id']}" <if condition="$hover1 eq 1">class="hover"</if> >幼儿园管理主页</a>
+            </li>
+
+           
+            <if condition="$mm">
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('KindergartenBranch/childmanage',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$w['id']}" <if condition="$hover5 eq 1">class="hover"</if>>添加幼教产品</a>
+            </li>
+            </if>
+           
+            
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('KindergartenBranch/index',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$w['id']}">返回上一页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以查看以及编辑幼教产品。</li>
+    </ol>
+</div>
+
+
+<div class="box-content">
+    <div class="cLineB">
+        <h4>幼教产品列表</h4>
+    </div>               
+    <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />           
+            <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th style="text-align:center;">名称</th>
+                      <th style="text-align:center;">图片</th>
+                      <th style="text-align:center;">介绍</th>
+                      <th style="text-align:center;">添加时间</th>
+                      <if condition="$mm">
+                      <th style="text-align:center;">操作</th>
+                      </if>
+                  </thead>
+                  <tbody>
+                  <volist name="a" id="vo">
+                  <tr>
+                      <td style="text-align:center;">{weikucms:$vo.name}</td>
+                      <td style="text-align:center;">{weikucms:$vo.pic}</td>
+                      <td style="text-align:center;"><div class="answer_text">{weikucms:$vo.intro}</div></td>
+                      <td style="text-align:center;">{weikucms:$vo.addtime}</td>
+                      <if condition="$mm">
+                      <td class="norightborder" style="text-align:center">
+		                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=KindergartenBranch&amp;a=childmanage&amp;op=1&amp;token={weikucms:$token}&amp;userid={weikucms:$w['userid']}&amp;kgid={weikucms:$w['id']}&amp;id={weikucms:$vo.id}" title="编辑文本">编辑</a> 
+		                  <a class="btn btn-danger btn-sm" onClick="source_delete('/index.php?g=User&amp;m=KindergartenBranch&amp;a=del_child&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}&amp;userid={weikucms:$w['userid']}&amp;kgid={weikucms:$w['id']}')" href="javascript:;">删除</a>
+		              </td>
+		              </if>
+                  </tr>
+                  </volist>                     
+                  </tbody>
+              </table>          
+        </form>
+</div>
+    <div> 
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>      
+</div>
+<include file="Public:footer"/>

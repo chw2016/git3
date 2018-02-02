@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication2.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            $(".comment-reply").click(function(){
+                $(".comment-main").focus();
+                var pid = $(this).attr('data');
+                $('#pid').val(pid);
+                //$(".btn").trigger('touchend');
+            })
+            $(".btn").touch(function(){
+                var text=$(".comment-main").val();
+                var tid = {weikucms:$_GET['tid']};
+                var pid = $("#pid").val();
+                //alert(pid);
+                var url = "{weikucms::U('Jd/evaluateactive',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['tid'],'type'=>$_GET['type']))}";
+                $.post(url,{tid:tid,pid:pid,content:text},function(rel){
+                    if(rel.status ==1){
+                        msg.alert(rel.info);
+                        location.href = "{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['tid'],'type'=>$_GET['type']))}";
+                    }else{
+                        msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+                    }
+                },'json')
+            })
+
+        })
+
+    </script>
+</head>
+<style>
+    .comment{
+        width:98%;
+        margin:0 auto;
+    }
+    .theme .comment-title{
+        padding:10px;
+        font-size:16px;
+    }
+    .comment textarea{
+        border:0;
+    }
+    .comment .comment-main{
+        width:90%;
+        height:150px;
+        resize: none;
+        font-size: 16px;
+        border:1px solid #ccc;
+        padding:10px;
+    }
+    .btn{
+        padding:5px;
+        background-color:#fff;
+        border-radius:5px;
+        border:1px solid #ccc;
+        font-size:14px;
+        width:25%;
+        text-align:center;
+        float:right;
+        margin-right:5px;
+    }
+    .clearfix {
+        *zoom: 1;
+        clear: both;
+    }
+    .clearfix::after,.clearfix::before{
+        content: " ";
+        display: table;
+    }
+    .clearfix::after{
+        clear: both;
+    }
+    .comment-center{
+        background-color:#fff;
+        padding:10px;
+        font-size:14px;
+        margin-top:15px;
+        box-shadow: 0 -1px 3px rgba(0,0,0,0.3);
+    }
+    .comment-center .reply-btn{
+        padding: 3px 7px;
+        background-color: #FFF;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        width: 10%;
+        color: #0C0C0C;
+        text-align: center;
+        margin-left: 10px;
+    }
+    .ml10{
+        margin-left:10px;
+    }
+    .mt10{
+        margin-top:10px;
+    }
+    .padding10{
+        padding: 10px 0px 10px 10px;
+        border-bottom: 1px solid #bababa;
+    }
+    .padding15{
+        padding:10px 10px 10px 20px;
+        border-bottom: 1px solid #bababa;
+    }
+    .comment{
+        text-align:center;
+    }
+    .comment-right{
+        float:right;
+    }
+    .color1979dc{
+        color:#1979dc;
+    }
+    .comment-day{
+        text-align: right;
+        color: #b4b4b4;
+        font-size: 12px;
+    }
+    .comment-reply{
+        float:right;
+        margin-right:10px;
+        font-size:12px;
+    }
+</style>
+<body>
+<div class="search">
+    评论
+</div>
+<div class="theme">
+    <div class="comment-title">主题：<span style="font-size: 15px;">{weikucms:$title}</span></div>
+    <div class="comment">
+        <input type="hidden" value="" name="pid" id="pid"/>
+        <textarea name="textarea" placeholder="这里是输入评论" class="comment-main"></textarea>
+    </div>
+    <div class="clearfix">
+        <div class="btn">提交</div>
+    </div>
+</div>
+<!-- <div class="comment-center">
+    <div class="padding10">
+        <span>你好,我叫张三</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="ml10">
+    <div class="padding10">
+        <span>张三回复了李四：</span><span>你好</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="padding10">
+        <span>李四回复了张三：</span><span>你也好</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="padding10">
+        <span>张三回复了李四：</span><span>你好</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="padding10">
+        <span>李四回复了张三：</span><span>你也好</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="padding10">
+        <span>张三回复了李四：</span><span>你好</span><span class="reply-btn">回复</span>
+    </div>
+    <div class="padding10">
+        <span>李四回复了张三：</span><span>你也好</span><span class="reply-btn">回复</span>
+    </div>
+    </div>
+</div> -->
+<div class="comment-center clearfix">
+    <if condition="$list">
+        <volist name="list" id="vo">
+            <if condition="$vo['upuname'] eq ''">
+                <div class="padding10 clearfix" >
+                    <span class="color1979dc">{weikucms:$vo.uname}:</span><span style="word-break: break-all;">{weikucms:$vo.content}</span>
+                    <div class="mt10">
+                    <span class="comment-day">
+                        <php>
+                            $times = strtotime($vo['add_time']);
+                            echo date('Y/m/d H:i',$times);
+                        </php>
+                    </span>
+                        <span class="comment-reply"data="{weikucms:$vo.id}">回复</span>
+                    </div>
+                </div>
+                <else />
+                <div class="padding10 clearfix" >
+                    <span class="color1979dc" style="display: inline-block;">{weikucms:$vo.uname}回复{weikucms:$vo.upuname}:</span><span style="word-break: break-all;">{weikucms:$vo.content}</span>
+                    <div class="mt10">
+                    <span class="comment-day">
+                         <php>
+                             $times = strtotime($vo['add_time']);
+                             echo date('Y/m/d H:i',$times);
+                         </php>
+                    </span>
+                        <span class="comment-reply" data="{weikucms:$vo.id}">回复</span>
+                    </div>
+                </div>
+            </if>
+
+        </volist>
+        <else/>
+       <div style="text-align: center;">该主题暂时还没有评价哦！ </div>
+    </if>
+
+
+    <!--<div class="padding10 clearfix" >
+        <span class="color1979dc">TheSmile___回复The:</span><span>呵呵哒</span>
+        <div class="mt10">
+            <span class="comment-day">2014/09/10</span>
+            <span class="comment-reply" data="5">回复</span>
+        </div>
+    </div>-->
+</div>
+</body>
+</html>

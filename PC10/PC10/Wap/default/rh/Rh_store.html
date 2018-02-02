@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/common.css" />
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="tpl/Wap/default/rh/css/search_bed.css" />
+      <script src="tpl/Wap/default/rh/js/jquery_qcliandong.js" type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/Smaty.js"></script>
+        <script>
+
+ 		function getCity(){
+                var geolocation = new BMap.Geolocation();
+                var geoc = new BMap.Geocoder();
+                      geolocation.getCurrentPosition(function(r){
+                        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                          var mk = new BMap.Marker(r.point);
+                          geoc.getLocation(r.point, function(rs){
+                            var addComp = rs.addressComponents;
+
+                         // alert(r.point.lat);
+                              var lat="{weikucms:$lat}";
+                              $(".site_shi").waitingDone();
+                              if(lat==''){
+
+                                  new PCAS('location_p', 'location_c', 'location_a', addComp.province, addComp.city,addComp.district);
+
+                                  var url="{weikucms::U('store',array('token'=>$token,'store'=>$_GET['store'],'openid'=>$openid))}&lng="+r.point.lng+"&lat="+r.point.lat+"&location_c="+addComp.city+"&location_a="+addComp.district+"&location_p="+addComp.province;
+                                  location.href=url;
+                              }
+
+                            // alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                          });  
+                         //  alert('您的位置：'+r.point.lng+','+r.point.lat);
+
+                        }
+                        else {
+                          alert('failed'+this.getStatus());
+                        }        
+                      },{enableHighAccuracy: true})
+          }
+        // getCity()
+    </script>
+        <title>{weikucms:$tpl.name}</title>
+    </head>
+    <body>
+          <div class="site_header">
+          	           <img src="tpl/Wap/default/rh/image/rh_logo.png" />
+          </div>
+          <div class="site_top">
+          	    <ul>
+          	    	<li class="site_shi">
+          	    		<div style="margin-left: 20px;">定位城市：
+          	    		</div>
+                    <div>
+                    <select name="location_p" id="location_p" style="display:none;" >
+                    </select>
+          	    		 <select name="location_c" id="location_c" disabled="disabled" style="position: relative;top:8px;">
+                      </select>	 
+                      </div>       
+          	    	</li>
+          	    	<li style="position: relative;">
+          	    		
+			<select name="location_a" id="location_a" style="  width: 100%;height: 28px;padding-left: 35px;">
+              </select>
+		     <i class="fa fa-sort-down icon_arrow" style="position: absolute; top: 0;right: 36px;" ></i>
+          	    	</li>
+          	    </ul>
+          </div>
+          <if condition="$list">
+          <volist name="list" id="vo">
+          <div class="site_nav" onclick="location.href='{weikucms::U('store_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">
+          	      <p>{weikucms:$vo.name}</p>
+          	      <p>{weikucms:$vo.address}</p>
+              <if condition="$vo['jl']">
+          	      <p>距您<span style="color:#333333"><?php echo round(($vo['jl']/1000),2).'千米'?></span></p>
+                  </if>
+          	       <p>电话：<span style="color:#2e6bdb"><a style="color: #4d4d4d" href="tel:{weikucms:$vo.tel}">{weikucms:$vo.tel}</a></span></p>
+          	       <i class="fa fa-angle-right right_site"></i>
+          </div>
+              </volist>
+              <else />
+              <div style="width: 100%; height: 200px; text-align: center;line-height: 200px;">此地区暂时没有<if condition="$_GET['store'] eq 1">门店<else />楼盘</if></div>
+              </if>
+
+          <script src="tpl/Wap/default/rh/js/region_select.js"></script>
+      <script type="text/javascript">
+    // new PCAS('location_p', 'location_c', 'location_a', '广东省', '', '');
+  </script>
+    </body>
+<script>
+    $(function(){
+        var lat="{weikucms:$lat}";
+
+        if(lat==''){
+          //  $(".site_shi").waiting(function(){},16);
+        }else{
+            $(".site_shi").waitingDone();
+        }
+
+        var location_a="{weikucms:$location_a}";
+        var location_c="{weikucms:$location_c}";
+        var location_p="{weikucms:$location_p}";
+        //new PCAS('location_p', 'location_c', 'location_a', location_p, location_c,location_a);
+        new PCAS('location_p', 'location_c', 'location_a', '广东省', '深圳市',location_a);
+    })
+    $("#location_a").change(function(){
+     //  alert(5);
+        var location_c=$("#location_c").val();
+        var type=$(this).val();
+        var url="{weikucms::U('store',array('token'=>$token,'openid'=>$openid,'store'=>$_GET['store'],'lng'=>$_GET['lng'],'lat'=>$_GET['lat'],'location_p'=>$_GET['location_p']))}&type="+type+'&location_c='+location_c;
+
+        // var url="{weikucms::U('store',array('token'=>$token,'openid'=>$openid,'store'=>$_GET['store'],'lng'=>$_GET['lng'],'lat'=>$_GET['lat'],'location_c'=>$_GET['location_c'],'location_p'=>$_GET['location_p']))}&type="+type;
+        location.href=url;
+
+    });
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+<style>
+  .content img{
+  	width:100%;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="top">
+	<div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+<div class="Box">
+   <div class="HavUlBox myul">
+       <!--<div class="beforeCheck stepNow white-color">体检前</div>-->
+       <?php if($act=="before"):?>
+       <div class="beforeCheck white-color stepNow"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'before'))}'">体检前</div>
+       <?php else:?>
+       <div class="beforeCheck white-color"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'before'))}'">体检前</div>
+       <?php endif;?>
+       <div class="lighting"></div>
+
+       <?php if($act=="mid"):?>
+       <div class="beforeCheck white-color stepNow"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'mid'))}'">体检中</div>
+       <?php else:?>
+       <div class="beforeCheck white-color"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'mid'))}'">体检中</div>
+       <?php endif;?>
+       <div class="lighting"></div>
+
+       <?php if($act=="after"):?>
+       <div class="beforeCheck white-color stepNow"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'after'))}'">体检后</div>
+       <?php else:?>
+       <div class="beforeCheck white-color"  onclick="window.location.href='{weikucms::U('Health/notice',array('token'=>$token,'openid'=>$openid,'act'=>'after'))}'">体检后</div>
+       <?php endif;?>   </div>
+     
+  <div class="cardTipsBox">
+    <div class="BoxTitle white-color">体检须知</div>
+      <div class="content">
+          {weikucms:$data.info}
+      </div>
+  </div>
+   
+   
+  
+  
+    
+    
+</div>
+
+
+
+
+
+</body>
+<script type="text/javascript">
+    $(function(){
+		var H = parseInt($(".HavUlBox div").eq(0).width());
+	    $(".HavUlBox div").height(H);
+		$(".HavUlBox div").width(H);
+	})
+	myFadeIn()
+</script>
+</html>

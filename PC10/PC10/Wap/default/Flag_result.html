@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/flag/default.css" type="text/css">
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <title> {weikucms:$wxuser.name}</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+<style type="text/css">
+    .wx_footer {
+        margin: 45px 0 60px 0;
+    }
+    .wx_footer .wapwei_logo {
+        height: 15px;
+        width: 86px;
+        margin: 15px auto 0 auto;
+        background: url("http://mall.wapwei.com/resource/logo_min.png");
+        background-size: cover;
+        -webkit-background-size: cover;
+    }
+    .iconText ul li .li-l{
+        width: 100px;
+        font-size: 14px;
+        margin-top:-8px;
+    }
+    .iconText ul li .li-r{
+        margin-left: 110px;
+    }
+</style>
+
+<body>
+<div class="bookingTips" style="line-height:25px;">
+    <strong>查询结果</strong>
+    <div style="line-height:20px;">以下为所查询的详细结果！</div>
+</div>
+<div id="baoyangYuyue1" style="padding-top: 30px;">
+    <div class="iconText"  style="margin-bottom: 30px;">
+        <ul>
+
+            <li class="noAfter">
+                <div class="li-l">注册号</div>
+                <div class="li-r">
+                    {weikucms:$flagres.reg_num}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">商标名称</div>
+                <div class="li-r">
+                    {weikucms:$flagres.flag_name}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">商标LOGO</div>
+                <div class="li-r">
+                   <if condition="$flagres['img'] neq null">
+                    <img src="{weikucms:$flagres.img}" />
+                       <else/>
+                       <img src="/upload/flagimg/{weikucms:$flagres.reg_num}.gif" style="max-height: 100px;max-width: 120px;"/>
+                   </if>
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">申请日期</div>
+                <div class="li-r">
+                    {weikucms:$flagres.apply_date}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">初审日期</div>
+                <div class="li-r">
+                    {weikucms:$flagres.first_date}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">异议截止</div>
+                <div class="li-r">
+                    {weikucms:$flagres.first_under_date}
+                </div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l">注册日期</div>
+                <div class="li-r">
+                    {weikucms:$flagres.reg_date}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">截止日期</div>
+                <div class="li-r">
+                    {weikucms:$flagres.under_date}
+                </div>
+            </li>
+            <li class="noAfter">
+                <div class="li-l">申请人</div>
+                <div class="li-r">
+                    {weikucms:$flagres.apply_person}
+                </div>
+            </li>
+
+
+            <li class="noAfter">
+                <div class="li-l">代理组织</div>
+                <div class="li-r">
+                    {weikucms:$flagres.agent_station}
+                </div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l">初审期号</div>
+                <div class="li-r">
+                    {weikucms:$flagres.first_num}
+                </div>
+            </li>
+
+            <li class="noAfter">
+                <div class="li-l">初审页码</div>
+                <div class="li-r">
+                    {weikucms:$flagres.first_yema}
+                </div>
+            </li>
+
+
+            <li class="noAfter">
+                <div class="li-l">使用商品</div>
+                <div class="li-r">
+                    {weikucms:$flagres.used_goods}
+                </div>
+            </li>
+
+
+            <li class="noAfter">
+                <div class="li-l">备注</div>
+                <div class="li-r">
+                    {weikucms:$flagres.remark}
+                </div>
+            </li>
+
+
+            <li class="noAfter">
+                <div class="li-l">商品组别</div>
+                <div class="li-r">
+                    {weikucms:$flagres.goods_class}
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+
+
+</div>
+<div class="wx_footer">
+    <div class="wapwei_logo"></div>
+</div>
+
+</body></html>

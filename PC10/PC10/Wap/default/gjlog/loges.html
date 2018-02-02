@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+<title>日历记事本</title>
+<script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+<script src="{weikucms::STATICS}/common/msg.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&amp;ak=2WQAlmlNeRT29pY8vTqCN7kO&amp;services=&amp;t=20150605180935"></script>
+<script type="text/javascript">
+    var url = "{weikucms::U('Gjlog/ajaxlogs',array('token'=>$token,'openid'=>$openid,'id'=>$list['id'],'datetime'=>$datetime))}";
+</script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+             'uploadImage',
+            'downloadImage',
+        ]
+    });
+    wx.ready(function () {
+
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+        //chooseImage
+
+        $(".bingpic").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#bingpic').val(t);
+                                            if($('#imges').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".bingpic").append("<img src='"+t+"' id='imges' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+        $(".yaopic").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#yaopic').val(t);
+                                            if($('#imges1').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".yaopic").append("<img src='"+t+"' id='imges1' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+
+        $(".feipic").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#feipic').val(t);
+                                            if($('#imges2').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".feipic").append("<img src='"+t+"' id='imges2' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+
+
+        /*二级图片*/
+
+
+
+
+        $(".bingpic1").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#bingpic1').val(t);
+                                            if($('#imgeso').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".bingpic1").append("<img src='"+t+"' id='imgeso' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+        $(".yaopic1").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#yaopic1').val(t);
+                                            if($('#imges11').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".yaopic1").append("<img src='"+t+"' id='imges11' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+
+        $(".feipic1").click(function() {    //拍照、本地选图
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $('#feipic1').val(t);
+                                            if($('#imges22').attr('src')){
+                                                //$('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+                                            }else{
+                                                //$('.webuploader-pick').css('display','none');
+                                                $(".feipic1").append("<img src='"+t+"' id='imges22' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    // 'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block'
+                                                });
+                                            }
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+
+
+
+
+    })
+
+
+</script>
+
+<script src="{weikucms::STATICS}/wapweiui/gjlog/js/garden.js"></script>
+<style>
+    .upload-img-content-ul-li img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width:100%;
+        height:100%;
+    }
+</style>
+
+</head>
+<body class="bj">
+<!--  头部 -->
+<div class="header">
+    <img src="{weikucms::STATICS}/wapweiui/gjlog/images/guoyuan.png" alt="">
+</div>
+<!-- tab -->
+<div class="tab">
+    <ul class="tab-ul">
+        <li class="tab-ul-li">
+                <p id="month">{weikucms:$list.data_tima}{weikucms:$datetime}<span id="weekday">
+               星期       {weikucms:$list.weekday}
+
+                </span></p>
+            <p class="tab-ul-li-text">节气：{weikucms:$jq.jq}</p>
+        </li>
+
+        <li class="tab-ul-li">
+            <p class="tab-ul-li-du temperature">{weikucms:$list.temperature}</p>
+            <p class="tab-ul-li-text weathe" id="tab-ul-li-text">雷阵雨转阵雨</p>
+        </li>
+    </ul>
+</div>
+
+
+<if condition="$_GET['id']">
+    <input type="hidden" id="noDataAuto" value="1" />
+</if>
+<!-- 上传区域 -->
+<div class="uploading">
+    <div class="upload-issue">
+        <div class="upload-title">
+            管理日历：问题及用药、肥综
+        </div>
+        <div class="upload-textarea">
+            <textarea name="content" id="content" placeholder="写写你今天遇到的问题">{weikucms:$list.content}</textarea>
+        </div>
+    </div>
+    <div class="upload-img">
+        <div class="upload-title">上传果园照片</div>
+        <div class="upload-img-content">
+            <ul class="upload-img-content-ul">
+                <li class="upload-img-content-ul-li bingpic">
+                    <p class="icon-plus2"></p>
+                    <p>病虫图片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic1}" id="bingpic"  class="file"/>
+                    <img src="{weikucms:$list.pic1}" alt="" id="img"/>
+                </li>
+                <li class="upload-img-content-ul-li yaopic">
+                    <p class="icon-plus2"></p>
+                    <p>用药图片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic2}" id="yaopic"  class="file"/>
+                    <img src="{weikucms:$list.pic2}" alt="" id="img"/>
+                </li>
+                <li class="upload-img-content-ul-li feipic">
+                    <p class="icon-plus2"></p>
+                    <p>水肥照片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic3}" id="feipic"  class="file"/>
+                   <img src="{weikucms:$list.pic3}" alt="" id="img"/>
+            </ul>
+                    <p> &nbsp;</p>
+            <ul class="upload-img-content-ul">
+                <li class="upload-img-content-ul-li bingpic1">
+                    <p class="icon-plus2"></p>
+                    <p>病虫图片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic4}" id="bingpic1"  class="file"/>
+                    <img src="{weikucms:$list.pic4}" alt="" id="img"/>
+                </li>
+                <li class="upload-img-content-ul-li yaopic1">
+                    <p class="icon-plus2"></p>
+                    <p>用药图片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic5}" id="yaopic1"  class="file"/>
+                    <img src="{weikucms:$list.pic5}" alt="" id="img"/>
+                </li>
+                <li class="upload-img-content-ul-li feipic1">
+                    <p class="icon-plus2"></p>
+                    <p>水肥照片</p>
+                    <input  type="hidden" value="{weikucms:$list.pic6}" id="feipic1"  class="file"/>
+                    <img src="{weikucms:$list.pic6}" alt="" id="img"/>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="upload-bottom">
+    <div class="upload-bottom-title">
+        您的位置：<span class="map">{weikucms:$list.address}</span>   <span onclick="arrayre()">刷新</span>
+    </div>
+    <div class="upload-bottom-size">
+        <div class="upload-bottom-size-name">姓名：</div>
+        <div class="upload-bottom-size-input">
+            <input type="text" name="name" id="name" placeholder="输入您的姓名" value="{weikucms:$list.name}{weikucms:$mabi.name}">
+        </div>
+    </div>
+    <div class="upload-bottom-size">
+        <div class="upload-bottom-size-name">手机：</div>
+        <div class="upload-bottom-size-input">
+            <input type="tel" name="name" id="tel" placeholder="输入您的手机号码" value="{weikucms:$list.phone}{weikucms:$mabi.phone}">
+        </div>
+    </div>
+    <div class="upload-btn">
+        <ul class="upload-btn-ul">
+            <li class="upload-btn-li" id="baocue">保存</li>
+
+            <li class="upload-btn-li" id="yulan">预览</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+
+        $('#yulan').touch(function(){
+            var d = new Date();                        //获取当前日期
+            var str = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+            var datetime = ('.month').text();
+            var doe ={weikucms:$datetime};
+            alert(doe);
+            location.href="{weikucms::U('Gjlog/loglist',array('token'=>$token,'openid'=>$openid,))}"+"&datetime="+ str;
+        })
+    </script>
+    <script type="text/javascript">
+		function wxready(){
+			 wx.hideMenuItems({
+	            menuList: ["menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook"]
+	        });
+		}
+       
+    </script>
+</div>
+</body>
+</html>

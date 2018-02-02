@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+        {weikucms:$res.title}-{weikucms:$tpl.name}
+    </title>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/17.css" />
+    <style>
+        *{list-style: none;text-decoration: none;}
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; background: #fff;}
+         #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+        #contents{max-width: 90%;margin: 15px auto;line-height: 26px;}
+        #imgs{width: 90%;margin: 0 auto;max-height: 160px;}
+        .img{text-align: center;margin-top: 15px;}
+        .zan{width: 90%;margin: 0 auto;}
+        .ComZone{width: 90%;margin: 0 auto;}
+        #commits{margin:0 auto;margin-top: 15px;width: 90%;}
+        #commits span{color:#f00;}
+        #commits p{font-size: 13px;padding-bottom: 8px;margin-top: 10px;}
+    </style>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/17.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+    <script type="text/javascript">
+            var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+    </script>
+</head>
+
+<body id="activity-detail">
+    <include file="Public:audio"/> 
+<eq name="res.showpic" value="1">
+<img width="12px" style="position: absolute;top:-1000px;" src="{weikucms:$res.pic}">
+</eq>
+<!-- 分享 -->
+ <div id="mcover">
+    <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+</div>
+<div class="page-bizinfo">
+    <div class="header">
+        <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:40px;">{weikucms:$result.contentitle}
+        </h1>
+        <p class="activity-info">
+            <span id="post-date" class="activity-meta no-extra">
+                {weikucms:$result.contentime}
+            </span>
+            <span class="activity-meta">
+                {weikucms:$result.contentopen}
+            </span>
+        </p>
+    </div>
+</div>
+<!-- 图片区域 -->
+<div class="img">
+    <img src="{weikucms:$result.contentimg}" id="imgs" />
+</div>
+<!-- 内容区域 -->
+<div id="contents">
+    <php>
+        echo html_entity_decode(htmlspecialchars_decode($result['content']));
+    </php>
+</div>
+<!-- 给赞 -->
+<div class="zan" id="zan">
+<!-- 赞 -->
+    <span class="zans">
+        <span class="add1">+1</span>
+        <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/zan.png" width="20px" height="20px" id="zans" />
+                        <span id="praise">
+                            <if condition="$zan eq 0">
+                                赞(0)
+                            <else />
+                                赞({weikucms:$zan})
+                            </if>
+                        </span>           
+    </span>
+    <!-- 分享 -->
+    <span class="share">
+        <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/fenxiang.png" width="20px" height="16px" class="shares" />
+        <span>分享</span>
+    </span>
+    <!-- 评论 -->
+    <span class="Comment">
+    <img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/pinglun.png" width="16px" height="18px" id="coms" />
+    <span id="comms">评论({weikucms:$comit})</span>
+    </span>
+</div>
+<div class="ComZone">
+    <textarea placeholder="请填写评论内容" rows="3"></textarea>
+    <a href="javascript:void(0)" id="commit">提交</a>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<!-- 给赞 -->
+<!-- 评论显示 -->
+<div id="commits">
+    <volist name="zans" id="so">
+        <p>
+            <span>
+                <if condition="$so['nikename'] eq '' AND $so['comment'] neq ''">
+                    游客：
+                <else />
+                    {weikucms:$so.nikename}
+                </if>
+            </span>{weikucms:$so.comment}
+        </p>
+    </volist>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+<div id="img-content">
+<div class="media" id="media">
+    <img onerror="this.parentNode.removeChild(this)" src="{weikucms:$res.pic}" />
+</div>
+<div class="text">
+    {weikucms:$res.info|htmlspecialchars_decode}
+</div>
+
+<footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;">
+    <span>©<php>echo $tpl['name'];</php><php>if($token != '8890fe84b729e89c2240ec70d843c15a'){ echo '-'.C('site_my'); };</php></span>
+</footer>
+
+</div>
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+<script type="text/javascript">
+    $(function(){
+        // 显示隐藏说明框
+        $('#coms').click(function(){
+            $('.ComZone').toggle();
+        });
+        // 点击赞
+        // var num = 1;
+        $('#praise').click(function(){
+            var url = "{weikucms::U('Wap/Reduce/zan',array('token'=>$token,'openid'=>$openid,'id'=>$result['id']))}"
+            $.post(url,{},function(data){
+                if (data.status == 1) {
+                    var zan = data.info.split("-");
+                    show_error_tip(zan[0]);
+                    $('#praise').text("赞("+zan[1]+")");
+                    $('.add1').fadeIn().fadeOut();
+                }else{
+                    show_error_tip(data.info);
+                };
+            },'json');
+        })
+        // 点击评论
+        $('#commit').click(function(){
+            if (!$('textarea').val()) {
+                show_error_tip("请填写评论内容！");
+                return false;
+            };
+            var commit = $('.ComZone>textarea').val();
+            var url = "{weikucms::U('Wap/Reduce/comment',array('token'=>$token,'openid'=>$openid,'id'=>$result['id']))}"
+            $.post(url,{comment:commit},function(data){
+                if (data.status == 1) {
+                    show_error_tip(data.info);
+                    setTimeout(function(){
+                         window.location.href = data.url;
+                    },1200);
+                }else{
+                    show_error_tip(data.info);
+                    $('textarea').val("");
+                };
+            },'json');
+        })
+        // 遮罩分享
+        $('.shares').click(function(){
+            $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'position':'fixed'});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+        })
+        // 遮罩消失
+        $('#mcover').click(function(){
+            $(this).hide();
+            // $(this).children('img').hide();
+        })
+
+    })
+</script>
+</body>
+
+</html>

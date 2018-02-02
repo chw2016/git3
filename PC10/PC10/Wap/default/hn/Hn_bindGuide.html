@@ -1,0 +1,112 @@
+<html><head>
+    <title>银行卡绑定说明</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<body>
+
+<div class="space-20"></div>
+<article class="bindcard-guide">
+    <h2>提交真实完整的资料是您快速结佣的关键</h2>
+    <h3><img src="http://jjr2.weizhi.in/wap/img/bindcard-t.png" alt="" width="200"></h3>
+    <ul>
+        <li>经纪人对所上传的资料的真实性负责，因经纪人自身提交上传资料有误造成的延迟支付或无法支付后果由经纪人承担；</li>
+        <li>开户行 <span class="red">示例：招商银行 XX省 XX市 XX支行</span></li>
+        <li>为了避免您无法正常结佣，请严格按照以下示例填写资料和上传图片；</li>
+        <li>本活动最终解释权归活动举办方所有。</li>
+    </ul>
+    <h5>身份证正面图片示例</h5>
+    <p><img src="http://jjr2.weizhi.in/wap/img/img-id-1.jpg" alt=""></p>
+    <h5>身份证反面图片示例</h5>
+    <p><img src="http://jjr2.weizhi.in/wap/img/img-id-2.jpg" alt=""></p>
+    <h5>银行卡正面图片示例</h5>
+    <p><img src="http://jjr2.weizhi.in/wap/img/img-bankcard.jpg" alt=""></p>
+</article>
+<div class="space-20"></div>
+<footer class="foot">
+    Powered by 智讯科技&nbsp;·&nbsp;带客通</footer>
+<div class="space-50"></div>
+<a href="{weikucms::U('bind',array('token'=>$token,'openid'=>$openid))}" class="bindcard-link">+ 绑定身份证与银行卡信息</a>
+
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+(function(window){
+    //初始化默认的分享配置
+     window._Conf={
+         title: "开启财富之旅--全民经纪人",
+         desc:"调动你的社交关系，推荐客源，获丰厚佣金!",
+//         link: "http://jjr2.weizhi.in/Home/Share/index/waid/293/uid/1141259",
+         link: "http://jjr2.weizhi.in/Home/Index/guideRegister/waid/293/uid/1141259",
+         imgUrl: "http://jjr2.weizhi.in/wap/img/share.jpg",
+         trigger:function(res){},
+         success:function(res){},
+         cancel:function(res){},
+         fail:function(res){},
+         complete:function(res){}
+     };
+      //声明默认的加载接口
+    window._DfJsApiList=[
+                     'checkJsApi',
+                     'onMenuShareTimeline',
+                     'onMenuShareAppMessage',
+                     'onMenuShareQQ',
+                     'onMenuShareWeibo',
+                     'hideMenuItems',
+                     'showMenuItems'
+                     ];
+    //处理加载config签名
+    wx.loadConfig=function(apiConfig){
+         if(apiConfig.jsApiList==undefined){
+             apiConfig.jsApiList=_DfJsApiList;
+         }
+         if(apiConfig.debug==undefined){
+             apiConfig.debug=false;
+             wx.debugstate=false;
+         }else{
+            wx.debugstate=apiConfig.debug;
+         } 
+         wx.config(apiConfig);
+     };
+       
+     //组合分享方法
+     window._Share=function(){
+         wx.showOptionMenu();
+         wx.onMenuShareAppMessage(_Conf);
+         wx.onMenuShareTimeline(_Conf);
+         wx.onMenuShareQQ(_Conf);
+         wx.onMenuShareWeibo(_Conf);
+     };
+     //异常处理
+     wx.error(function(res){
+         if(wx.debugstate){
+             alert(res.errMsg);
+         }
+     });
+})(window);
+//签名配置
+var apiConfig={
+ debug:false,//默认微false
+ appId:'wxdb23c27d23c2b7b6',
+ timestamp:'1439359122',
+ nonceStr:'tOZXC16cJWS0HScp',
+ signature:'811c597a10ea5b58b6f05a7b2472fb00d3338e00'
+};
+wx.loadConfig(apiConfig);//加载配置
+wx.ready(function(){
+  _Share();//分享 依赖_Conf变量 参数设置
+});
+
+</script>
+</body></html>

@@ -1,0 +1,140 @@
+<include file="Public:public"/>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="">
+            <div class="cLineB">
+                <h4 style="position:relative;">
+                    滚动文字设置
+                </h4>
+                <div style="width: 74px;height: 30px;background-color: #19b593;color: #FFF;line-height: 30px;text-align: center;border-radius: 5px;letter-spacing: 6px;font-size: 16px;float: right;margin-top: -35px;position:relative;z-index:100;" onClick="javascript:window.history.back();">
+                    返回
+                </div>
+            </div>
+
+            <form class="form" method="post" id="form" action="">
+                <div class="msgWrap bgfc">
+                    <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                        <tbody>
+                        <tr>
+                            <th>滚动文字：</th>
+                            <td>
+                                <textarea name="des" id="des" rows="4" style="width:500px;height:120px">{weikucms:$list['des']}</textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>营业时段：</th>
+                            <td>
+                                <input type="text" name="start_time" id="start_time" placeholder="如:  09:00" value="{weikucms:$list['start_time']}"> 至   <input type="text" name="end_time" id="end_time" value="{weikucms:$list['end_time']}" placeholder="如:  24:00">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>最低多少元起送(元)：</th>
+                            <td>
+                                <input type="text" name="min_price" id="min_price" placeholder="" value="{weikucms:$list['min_price']}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>外卖费(元)：</th>
+                            <td>
+                                <input type="text" name="waimai_price" id="waimai_price" placeholder="" value="{weikucms:$list['waimai_price']}">
+                            </td>
+                        </tr>
+						
+						
+						<tr>
+                            <th>无线打印机配置：</th>
+                            <td>
+                                <input type="text" name="print_key" id="print_key" placeholder="" value="{weikucms:$list['print_key']}"><br>
+								请输入无线打印机的key，目前仅支持http://www.feado.com/的产品
+                            </td>
+                        </tr>
+						
+						<tr>
+                            <th>无线打印机配置：</th>
+                            <td>
+                                <input type="text" name="print_domain" id="print_domain" placeholder="" value="{weikucms:$list['print_domain']}"><br>
+								请输入无线打印机的域名
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th>店铺营业状态：</th>
+                            <td>
+                               <select id="yingye_status" name="yingye_status">
+                                   <option value="1" <if condition="$list['yingye_status'] eq 1">selected</if>>开启</option>
+                                   <option value="2" <if condition="$list['yingye_status'] eq 2">selected</if>>关闭</option>
+                               </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <th>&nbsp;</th>
+
+                            <td>
+
+                                <button type="button" id="bsubmit" name="button" class="btn btn-primary">确定
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <div class="cLine">
+            <div class="clr"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function(){
+        $("#bsubmit").click(function(){
+            var des = $("#des").val();
+            var start_time = $("#start_time").val();
+            var end_time = $("#end_time").val();
+            var yingye_status = $("#yingye_status").val();
+            var waimai_price=$("#waimai_price").val();//外卖费
+            var min_price=$("#min_price").val();//起送费
+			var print_key = $("#print_key").val();
+			var print_domain = $("#print_domain").val();
+            $.post("{weikucms::U('ShopBranch/writing',array('token'=>$token,'branch_id'=>$_GET['branch_id']))}",{min_price:min_price,waimai_price:waimai_price,des:des,start_time:start_time,end_time:end_time,yingye_status:yingye_status,print_key:print_key,print_domain:print_domain},function(data){
+                if(data.status==1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+
+                    location.href="{weikucms::U('ShopBranch/writing',array('token'=>$token,'branch_id'=>$_GET['branch_id']))}"
+
+                }else{
+
+                    notif({
+
+                        msg: data.info,
+
+                        type: "error"
+
+                    });
+                    location.href="{weikucms::U('ShopBranch/writing',array('token'=>$token,'branch_id'=>$_GET['branch_id']))}"
+
+                }
+            },"json")
+
+        });
+
+    });
+</script>

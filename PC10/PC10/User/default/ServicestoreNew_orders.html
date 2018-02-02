@@ -1,0 +1,108 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/index',array('token'=>$token))}" >网点管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/orders',array('token'=>$token))}" >援救订单管理</a>
+            </li>
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('ServicestoreNew/staff',array('token'=>$token))}" >公司职员管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/integralInstall',array('token'=>$token))}">积分设置</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/store',array('token'=>$token))}">积分商城</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('ServicestoreNew/menber',array('token'=>$token))}">会员管理</a>
+            </li>
+
+           <!-- <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Serviceactive/index',array('token'=>$token))}">活动推广管理</a>
+            </li> -->
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以查看万普售后的所有订单，点击“订单处理”按钮对相应的订单进行处理。</li>
+    </ol>
+</div>
+
+<div class="box-content">
+
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >序号</th>
+                <th >订单号</th>
+                <th >订单人</th>
+                <th >联系方式</th>
+                <th>下单时间</th>
+                <th>服务店铺</th>
+                <th>故障详情</th>
+                <th>服务技工</th>
+                <th>订单状态</th>
+                <th>站长电话</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <thody>
+                <volist name="list " id="vo" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$vo.orderID}</td>
+                        <td>{weikucms:$vo.oname}</td>
+                        <td>{weikucms:$vo.ophone}</td>
+                        <td>{weikucms:$vo.otime|date='Y-m-d H:i:s',###}</td>
+                        <td>{weikucms:$vo.storename}</td>
+                        <td>{weikucms:$vo.reason}</td>
+                        <td>{weikucms:$vo.staffname}</td>
+                        <td><if condition="$vo.status eq 0">未处理<elseif condition="$vo.status eq 1"/>已派工<elseif condition="$vo.status eq 2"/>已完成<elseif condition="$vo.status eq 3"/>已取消</if></td>
+                        <td>{weikucms:$vo.tel}</td>
+                        <td>
+                            <a href="{weikucms::U('ServicestoreNew/orderInfo',array('token'=>$token,'id'=>$vo['id']))}" title="处理" class="btn btn-success btn-sm">订单处理</a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('ServicestoreNew/deloreder',array('id'=>$vo['id'],'token'=>$token))}')">删除</a>
+<!--
+                            <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('ServicestoreNew/deloreder',array('token'=>$token,'id'=>$vo['id']))})" href="#">删除</a>
+-->
+
+                        </td>
+                    </tr>
+                </volist>
+            </thody>
+
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

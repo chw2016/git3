@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+           <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+           <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd//js/jquery-1.11.2.min.js"></script>
+           <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+           <script>
+           $(function(){
+           	$(".review-btn").touch(function(){
+           		var textarea=$(".textarea").val();
+           		if(textarea==''){
+                    msg.alert('亲，您还没有写评论哦~');
+                    return false;
+                }
+                var url = "{weikucms::U('Ynd/ajaxevaluate',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id']))}";
+                $.post(url,{content:textarea},function(rel){
+                    if(rel.status==1){
+                        msg.alert("感谢你的评论,您的意见我们会采纳。",function(){
+                            location.href = rel.url;
+                        })
+                    }else{
+                        msg.alert(rel.info);
+                    }
+                },'json');
+           	})
+           })
+           </script>
+    </head>
+    <body>
+                <div class="top-details">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                                    发表评论
+                        </div>
+                </div>
+                 <div class="commodity pt10 colorfff">
+                        <div class="order-tab-main-content-left">
+                                <img src="{weikucms:$product['pic']}" />
+                        </div>
+                        <div class="order-tab-main-content-right">
+                                <div class="order-tab-main-content-right-size">
+                                    {weikucms:$product['name']}
+                                </div>
+                                <div class="order-tab-main-content-right-money">
+                                    参考零售价：￥298.0
+                                </div>
+                        </div>
+                </div>
+                <div class="main-textarea">
+                        <div class="main-textarea-text">
+                                <textarea name="textarea" placeholder="亲，写点什么呗！您的评价对其他淘友有很大的帮助~" class="textarea"></textarea>
+                        </div>
+                </div>
+                <div class="review-btn">
+                            评论
+                </div>
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

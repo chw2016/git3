@@ -1,0 +1,82 @@
+ <include file="Public:head" /> 
+ <script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <script>
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#upload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#pic').val(),
+                     clickFn : function(url, title) {
+                         K('#pic').val(url);
+                         $("#image_show").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+
+ </script>
+
+
+ 
+ <!--复制结束-->
+   <div class="cLineB">
+    <h4><if condition="$isDining neq 1">商品分类<else/>菜品分类</if>设置</h4>
+   </div>
+   <form class="form" method="post" action="" enctype="multipart/form-data"> 
+    <input type="hidden" name="id" value="{weikucms:$set.id}" /> 
+     
+    <div class="msgWrap bgfc"> 
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      <tbody> 
+       <tr> 
+        <th>名称：</th>
+        <td><input type="text" name="name" value="{weikucms:$set.name}" class="px" style="width:300px;" placeholder="此处填写分配名称不可为空" /></td>
+       </tr> 
+       <tr>
+       <TR>
+           <TH valign="top"><label for="picurl">分类图片展示：</label></TH>
+
+           <TD>
+               <if condition="$set['logourl']">
+               <img id="image_show" class="fenlei_img" src="{weikucms:$set.logourl}">
+               <else/>
+               <img id="image_show" class="fenlei_img" src="./upload/index_img.jpg">
+               </if>
+           </TD>
+       </TR>
+        <th>商品分类图片：</th>
+        <td>
+            <if condition="$set['logourl']">
+                <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="pic" value="{weikucms:$set.logourl}" style="width:300px;"   />
+            <else/>
+            <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="pic" value="./upload/index_img.jpg" style="width:300px;"   />
+            </if>
+            <span class="ke-button-common" id="upload">上传图片</span>
+        </td>
+       </tr>
+       
+        <tr> 
+        <th>简介：</th>
+        <td><textarea name="des" class="px" style="width:300px;height:80px;" onfocus="leave();">{weikucms:$set.des}</textarea></td>
+       </tr>
+       <tr>         
+       <th>&nbsp;</th>
+       <td>
+       <if condition="$isDining neq 1"><input type="hidden" value="0" name="dining" /><else/><input type="hidden" value="1" name="dining" /></if>
+       <input type="hidden" value="{weikucms::$parentid}" name="parentid" />
+       <button type="submit" name="button" class="btn btn-primary">保存</button> </td>
+       </tr> 
+      </tbody> 
+     </table> 
+     </div>
+    
+   </form> 
+  </div> 
+  <include file="Public:footer" />

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="{weikucms::RES}/mru/js4/jquery-1.11.1.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+
+<select id="aaa" name="name" >
+    <option  value="<?php echo date('Y-m-d',time()) ?>" >当前时间</option>
+  <volist name="aDate" id="v" >
+     <option <if condition="$_GET['time'] eq $v" >selected=selected</if> value="{weikucms:$v}" >{weikucms:$v}</option>
+  </volist>
+</select> 
+
+<select id="aaa" name="name" >
+   <option value="内容1" >空闭会议室</option>
+   <option value="内容2"  >空闭会议室</option>
+</select> 
+<br/>
+
+
+<volist name="aDate" id="v" >
+<a href="{weikucms::U('index',array('time'=>$v))}" <if condition="$_GET['time'] eq $v" > style="color:red;"</if> >{weikucms:$v}</a>&nbsp
+</volist>
+
+<br/>
+<a>一楼<a><br/>
+<volist name="lc1"  id="v">
+ <a href="{weikucms::U('show',array('name'=>$v['name'],'lc'=>1,'time'=>$_GET['time']))}" >{weikucms:$v['name']}</a>&nbsp
+</volist>
+<br/>
+<a>一楼<a><br/>
+<br/>
+<a>一楼<a><br/>
+<script>
+   $("#aaa").change(function(){
+	
+	  var time = $("#aaa").val()
+	  location.href = "{weikucms::U('index',array('time'=>'"+time+"'))}"
+   })
+</script>
+</body>
+</html>

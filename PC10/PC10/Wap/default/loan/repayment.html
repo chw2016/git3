@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/balanc.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/css/prompt.css">
+
+    <link href="{weikucms::STATICS}/wapweiui/loan/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/loan/css/style_one.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style1-3.css">
+    <script src="{weikucms::STATICS}/wapweiui/loan/files/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+    <style>
+        body{font-size: 14px;}
+        ._on_right{
+            left:72%;
+        }
+        .selectClass {
+            width: 50px;;
+            color:#FFF!important;
+            background-color:#ff9120!important;
+        }
+        #calendar tr td div{
+            width: 35px;
+            height: 35px;
+            background-color: red;
+            border-radius: 55%;
+            line-height: 33px;
+            color: #FFF;
+            font-size: 19px;
+            margin-top: -7px;
+            margin-left: 3px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+	<div class="top_top">
+		<span class="top_top "><a href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}">订单列表</a></span>
+		<span class="top_top _on"><a href="{weikucms::U('repayment',array('token'=>$token,'openid'=>$openid))}">还款计划</a></span>
+	</div>
+	<span  class="_on_right"></span>
+    <div class="base-info" >
+        <div class="rs_float">
+        </div>
+        <div class="check-month" style="height: 50px;">
+            <a class='btn btn-product active'  style="height: 40px; line-height: 30px; color: #D50900;" ><?php echo date('Y年m月',time());?></a>
+        </div>
+        <div id="calendar">
+            {weikucms:$time_info}
+        </div>
+    </div>
+	
+
+    <div style="width: 100%;margin-bottom: 5px;">
+        <include file="Loan:foot"/>
+    </div>
+</body>
+<script>
+    $(function(){
+        <volist name="add_time_arr" id="vo">
+        var d="{weikucms:$vo}";
+        if(d){
+            $("#calendar tr td").each(function(e,t){
+              if($(t).text()==d){
+                  $(t).html("<div>"+d+"</div>");
+              }
+            })
+        }
+        </volist>
+    })
+    $("#calendar tr td").click(function(){
+        var d=$(this).find('div').text();
+       if(d){
+           var url="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}&d="+d;
+           location.href=url;
+       }
+    });
+</script>
+</html>

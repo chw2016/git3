@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+    	<include file="Public:audio"/> 
+        <style type="text/css">
+.body{
+	display:block;
+	background:#e9e9e9;
+	}
+	.box{
+		float: left;
+		width: 50%;
+		text-align: center;
+		display: block;
+	}
+</style>
+<div class="body">
+		<!--
+	幻灯片管理
+	-->
+	<div style="-webkit-transform:translate3d(0,0,0);">
+		<div id="banner_box" class="box_swipe">
+			<ul>
+				<volist name="flash" id="so">
+				     <li>
+									<a href="{weikucms:$so.url|htmlspecialchars_decode}">
+													<img src="{weikucms:$so.img}" alt="dsf" style="width:100%;" />
+					</a>
+					</li>
+					</volist>
+									
+		     </ul>
+			<ol>
+				<li class="on"></li>
+				<li ></li>
+		    </ol>
+		</div>
+	</div>
+		<script>
+		$(function(){
+			new Swipe(document.getElementById('banner_box'), {
+				speed:500,
+				auto:3000,
+				callback: function(){
+					var lis = $(this.element).next("ol").children();
+					lis.removeClass("on").eq($(this).index()).addClass("on");
+				}
+			});
+		});
+	</script>
+<br/>	<section>
+		<div>
+			<ul class="list_ul">
+				<volist name="info" id="vo" offset="0" length="2">
+								<li class="box">
+									
+										<dl>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<dd>
+								<div>
+									<img src="{weikucms:$vo.img}" width="90px" height="90px"/>
+								</div>
+							</dd>
+							<dt>{weikucms:$vo.name}</dt>
+						</a>
+					</dl>
+									
+				</li>
+				</volist>
+							
+											
+                				<volist name="info" id="vo" offset="2" length="2">
+								<li class="box">
+									
+										<dl>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<dd>
+								<div>
+									<img src="{weikucms:$vo.img}" width="90px" height="90px"/>
+								</div>
+							</dd>
+							<dt>{weikucms:$vo.name}</dt>
+						</a>
+					</dl>
+									
+				</li>
+				</volist>
+
+								</volist>
+							
+											
+                				<volist name="info" id="vo" offset="4" length="2">
+								<li class="box">
+									
+										<dl>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<dd>
+								<div>
+									<img src="{weikucms:$vo.img}" width="90px" height="90px"/>
+								</div>
+							</dd>
+							<dt>{weikucms:$vo.name}</dt>
+						</a>
+					</dl>
+									
+				</li>
+				</volist>
+
+								</volist>
+							
+											
+                				<volist name="info" id="vo" offset="6" length="2">
+								<li class="box">
+									
+										<dl>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<dd>
+								<div>
+									<img src="{weikucms:$vo.img}" width="90px" height="90px"/>
+								</div>
+							</dd>
+							<dt>{weikucms:$vo.name}</dt>
+						</a>
+					</dl>
+									
+				</li>
+				</volist>
+
+								</volist>
+							
+											
+                				<volist name="info" id="vo" offset="8" length="2">
+								<li class="box">
+									
+										<dl>
+													<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+													<dd>
+								<div>
+									<img src="{weikucms:$vo.img}" width="90px" height="90px"/>
+								</div>
+							</dd>
+							<dt>{weikucms:$vo.name}</dt>
+						</a>
+					</dl>
+									
+				</li>
+				</volist>
+			</ul>
+		</div>
+	</section>
+</div>
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+</html>
+

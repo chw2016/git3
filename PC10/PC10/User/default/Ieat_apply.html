@@ -1,0 +1,65 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+          <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/category',array('token'=>$token))}">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>下面的列表是申请加入Ieat联盟的记录。</li>
+    </ol>
+  </div>
+  <!--tab end-->
+  <div class="box-content">
+     <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th style="text-align:center;width: 100px;">名称</th>
+              <th style="text-align:center;width: 150px;">详细地址</th>
+              <th style="text-align:center;width: 80px;">开张年月</th>
+              <th style="text-align:center;width: 80px;">餐饮类别</th>
+              <th style="text-align:center;width: 88px;">联系方式</th>
+              <th style="text-align:center">最吸引人的地方</th>
+              <th style="text-align:center">开店景愿</th>
+              <!--<th style="text-align:center;width: 80px;">操作</th>-->
+          </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+            <tr>
+                <td style="text-align:center">{weikucms:$vo.name}</td>
+                <td style="text-align:center">{weikucms:$vo.position}</td>
+                <td style="text-align:center">{weikucms:$vo.date}</td>
+                <td style="text-align:center">{weikucms:$vo.type}</td>
+                <td style="text-align:center">{weikucms:$vo.tel}</td>
+                <td style="text-align:center">{weikucms:$vo.attract}</td>
+                <td style="text-align:center">{weikucms:$vo.vision}</td>
+                <!--<td class="norightborder" style="text-align:center">
+                    <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Ieat&amp;a=mallcontent&amp;token={weikucms:$token}&amp;cat_id={weikucms:$v.cat_id}" title="批准">批准</a>
+                </td>-->
+            </tr>
+        </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+  </div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+        {weikucms:$res.title}-{weikucms:$tpl.name}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.mgs.js"></script>
+    <style>
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; }
+        #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+    </style>
+	<script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').each(function(i,o){
+                $(this).click(function(){
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+            })
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                // $(this).children('img').hide();
+            })
+        })
+    </script>
+
+
+</head>
+
+<body id="activity-detail">
+    <include file="Public:audio"/>
+<eq name="res.showpic" value="1">
+<img width="12px" style="position: absolute;top:-1000px;" src="{weikucms:$res.pic}">
+</eq>
+   <!-- <if condition="$redinfo">
+    <div style="  text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      position: fixed;
+      top: 94%;
+      width: 100%;
+      background-color: rgba(255, 0, 0, 0.7);
+      color: #FFF;">
+        {weikucms:$redinfo}
+    </div>
+	</if>
+	-->
+<div class="page-bizinfo">
+    <div class="header">
+        <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:20px;">{weikucms:$res.title}
+        </h1>
+        <p class="activity-info">
+                    <span id="post-date" class="activity-meta no-extra">
+                        <php> echo date('Y-m-d',$res['createtime']);</php>
+                    </span>
+                    <span class="activity-meta">
+                        {weikucms:$tpl.name}
+                    </span>
+
+        </p>
+    </div>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+<div id="img-content">
+<div class="media" id="media">
+                <eq name="res.showpic" value="1">
+                <img onerror="this.parentNode.removeChild(this)" src="{weikucms:$res.pic}" />
+                </eq>
+</div>
+<div class="text">
+    {weikucms:$res.info|htmlspecialchars_decode}
+</div>
+<if condition="$redinfo eq '下载APP即可领取微信现金红包！'">
+	<script type="text/javascript">
+            setTimeout(function(){
+				var url = "{weikucms::U('Wap/Index/sendmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+	            $.post(url,function(data){
+	                
+	            },'json');
+				
+			},8000); 
+	            
+	
+	</script>
+</if>
+
+<if condition="$res['is_zf'] eq 1">
+    <if condition="$tpl['is_auth'] eq 1">
+        <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/zhuanarticle/token/{weikucms:$token}/id/{weikucms:$res.id}/dopenid/{weikucms:$openid}/&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+        <else />
+        <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/zhuanarticle/token/{weikucms:$token}/id/{weikucms:$res.id}/dopenid/{weikucms:$openid}/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+    </if>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var shareTitle="{weikucms:$res.title}";
+        var imgUrl="<php>echo C('site_url');</php>{weikucms:$res.pic}";
+        var descContent="{weikucms:$res.title}";
+        var shareUrl="";
+        var token = "{weikucms:$token}";
+
+        $(function() {
+            shareUrl = $("#shareUrl").text();
+        });
+
+
+        wx.config({
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+            ]
+        });
+        wx.ready(function () {
+            // 在这里调用 API
+            wx.onMenuShareTimeline({
+                title: shareTitle, // 分享标题
+                link: shareUrl, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    var url = "{weikucms::U('Wap/Index/zhuanfa',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid'],'redarticle_id'=>$_GET['redarticle_id']))}";
+                    var article_id = {weikucms:$res['id']};
+                    $.post(url,{article_id:article_id},function(data){
+                        if(data.code == 0){
+                            if(token =='ec60f633808334ace70cabce58e50b6f'){
+                                console.log('分享成功！');
+                                var urls = "{weikucms::U('Wap/Course/sharesuct',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid'],'lid'=>$res['id']))}&type=";
+                                window.location.href = urls+data.info;
+                            }else{
+                                console.log('分享成功！');
+                            }
+                       /* }else if(data.code == 3){
+                            if(token =='ec60f633808334ace70cabce58e50b6f'){
+                               // var urls = "{weikucms::U('Wap/Course/zhuanlist',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+                                alert('您已分享！');
+								window.location.href = data.urles;
+                            }else{
+                                console.log('分享成功！');
+                            }*/
+                        }else{
+                            console.log('分享失败');
+                        }
+                    },'json');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title: shareTitle, // 分享标题
+                desc: descContent, // 分享描述
+                link: shareUrl, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    var url = "{weikucms::U('Wap/Index/zhuanfa',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid'],'redarticle_id'=>$_GET['redarticle_id']))}";
+                    var article_id = {weikucms:$res['id']};
+                    $.post(url,{article_id:article_id},function(data){
+                        if(data.code == 0){
+                            if(token =='ec60f633808334ace70cabce58e50b6f'){
+                                console.log('分享成功！');
+                                var urls = "{weikucms::U('Wap/Course/sharesuct',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid'],'lid'=>$res['id']))}&type=";
+                                window.location.href = urls+data.info;
+                            }else{
+                                console.log('分享成功！');
+                            }
+                        }else if(data.code == 3){
+                            if(token =='ec60f633808334ace70cabce58e50b6f'){
+                               // var urls = "{weikucms::U('Wap/Course/zhuanlist',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+                                alert('您已分享！');
+								window.location.href = data.urles;
+
+                            }else{
+                                console.log('分享成功！');
+
+                            }
+                        }else{
+                            console.log('分享失败');
+                        }
+                    },'json');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        button.btn {
+            width: 100%;
+            border: 0;
+            outline: 0;
+            -webkit-appearance: none;
+        }
+        .btn {
+            margin-bottom: 15px;
+        }
+        .btn_primary {
+            background-color: #04be02;
+        }
+        .btn {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 14px;
+            padding-right: 14px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            overflow: visible;
+            height: 50px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            color: #ffffff;
+            line-height: 35px;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        }
+    </style>
+    <button class="btn btn_primary Invitation">我也要分享</button>
+
+    <div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+        <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+    </div>
+    <div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+
+        <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+
+    </div>
+
+
+
+
+</if>
+
+
+
+<footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;">
+    <span>©<php>echo $tpl['name'];</php><php>if($token !='574b41005f440ebfd2bfca4a5a1bb56b' and $token != '5e06d4d7477b35508c07d8ec81250286'){ echo '-'.C('site_my'); };</php></span>
+</footer>
+
+</div>
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>

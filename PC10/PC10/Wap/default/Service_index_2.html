@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
+<title>万普wapwei</title>
+<meta name="Keywords" content="万普wapwei" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = 0;
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+</head>
+<body>
+<div id="div1">
+	<div class="tabMenu two">		
+		<ul>
+			<li class="on" rel="cp">
+				<div>
+					<a href="javascript:void(0);">车牌号绑定</a>
+				</div>
+			</li>
+			<li rel="cj">
+				<div>
+					<a href="javascript:void(0);">员工登录使用</a>
+				</div>
+			</li>
+		</ul>
+		<input type="hidden" value="{weikucms:$token}" id="token" />
+		<input type="hidden" value="{weikucms:$openid}" id="openid"/>
+	</div>
+	
+	<div class="publicList wml65">
+		<ul  class="noAfter _boxcp">
+			<li id="selectCarInfoDiv">
+				<div class="li-l">输入车型</div>
+				<div class="li-r">
+					<input id="model_id" value="" placeholder="不对外公开" class="input">
+				</div>
+			</li>
+			
+			<li class="noAfter _boxcp">
+				<div class="li-l">车牌号码</div>
+				<div class="li-r">
+					<input class="input" id="cpNum" value="" placeholder="请输入车牌号码">
+				</div>
+			</li>
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">车主姓名</div>
+				<div class="li-r">
+					<input class="input" id="name" placeholder="行驶证上的车主名" maxlength="20">
+				</div>
+			</li>
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">联系方式</div>
+				<div class="li-r">
+					<input class="input" id="phone" placeholder="输入联系方式" maxlength="20">
+				</div>
+			</li>
+		</ul>
+		<ul style="display:none;" class="noAfter _boxcj">
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">登录帐号</div>
+				<div class="li-r">
+					<input class="input" id="username" placeholder="登录帐号" maxlength="20">
+				</div>
+			</li>
+			<li class="noAfter _box" id="czName">
+				<div class="li-l">登录密码</div>
+				<div class="li-r">
+					<input class="input" id="password" type="password" maxlength="20">
+				</div>
+			</li>		
+		</ul>
+		
+		
+		
+	</div>
+	
+	<div class="button clearfix">
+		<a href="javascript:void(0);" id="bindBtn">绑　定</a>
+	</div>
+	<div class="tips" style="font-size:14px;">
+		<div class="tit">温馨提示: 绑定后有啥好处？</div>
+		<p>1.车辆违章主动提醒</p>
+		<p>2.保养、保险、年检到期提醒</p>
+		<p>3.24小时预约，服务不打烊</p>
+		<p>4.一键救援，出行无忧</p>
+		<p>5.在线服务点评，关心您的诉求</p>
+		<p>6.1对1专属养车顾问24小时在线服务</p>
+	</div>
+	
+</div>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+
+var _maq = _maq || [];
+	_maq.push(['_uid', 0]);
+$(function() {
+	$('.tabMenu li').click(function(){
+		 $('.tabMenu li').removeClass('on');
+		 $(this).addClass('on');
+		 var rel = $(this).attr('rel');		 
+		 $('#div1 div[class="publicList wml65"] ul').hide();
+		 $('._box' + rel).show();
+		 $('#selectCarInfoDiv').show();
+		 $('#czName').show();
+	});
+	
+	$("#bindBtn").click(function(){
+		var type 	= $('.tabMenu ul li.on').attr('rel');
+		var token = $("#token").val();
+		var openid = $("#openid").val();
+		var params  = {'Identity' : type};		
+		params[ 'token' ] = token;
+		params[ 'openid' ] = openid;
+		if( type == 'cp' ) {
+			var carname	=$.trim( $('#model_id').val() );
+	    	var cpnum  	=$.trim( $('#cpNum').val() );
+			var name  = $.trim( $('#name').val() );
+			var phone = $.trim( $('#phone').val() );
+			if( !name ){
+				show_error_tip('请输入联系人');
+				return false;
+			}
+			else if ( !checkName( name ) ){
+				show_error_tip('姓名请输入<br />至少2位中文字符');
+				return false;
+			}
+			
+			if(!carname){
+	    		show_error_tip('请输入车型');
+	    		return false;
+	    	}
+	    	
+	    	if( !cpnum ){
+	    		show_error_tip('请输入车牌号码');
+	    		return false;
+	    	}
+	    	
+	    	if( !phone ){
+	    		show_error_tip('请输入联系方式');
+	    		return false;
+	    	}
+	    	
+			params[ 'name' ] = name;
+			params[ 'carname' ] = carname;
+			params[ 'cpnum' ] = cpnum;
+			params[ 'phone' ] = phone;
+		}		
+				
+		if( type == 'cj' )
+		{
+			var username = $.trim( $('#username').val() );
+			var password = $.trim( $('#password').val() );
+			if ( !username )
+			{
+				show_error_tip('请输入员工登录帐号');
+				return false;
+			}
+			if ( !password )
+			{
+				show_error_tip('请输入登录密码');
+				return false;
+			}
+			params[ 'username' ] = username;
+			params[ 'password' ] = password;
+		}		
+    	var url = 'index.php?g=Wap&m=Service&a=index&token='+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,params,
+                function(data){        	
+                    if(data.status == 1){  
+                    	show_success_tip(data.info);
+                        setTimeout(function(){                        	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 2 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 3 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 100 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 101 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }
+                },'json');
+
+    });
+    $("#cross").click(function(){
+    	var url = 'index.php?g=Wap&m=Service&a=index&style=1&token='+$("#token").val()+"&openid="+$("#openid").val();
+    	window.location.href = url;
+    });
+});	
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

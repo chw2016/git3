@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)http://cheshangtong.chexiu.cn/index.php?mod=mine&code=ucenter -->
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/sellcar/css/default.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/sellcar/css/mobiscroll.custom-2.4.5.min.css">
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/common.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/ga.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.mobile-1.2.0.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/mobiscroll.custom-2.4.5.min.js"></script>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<title></title>
+
+</head>
+
+
+
+<body>
+
+<div class="title" style="text-align:center;font-size:16px;color:gray;"><strong>查看车辆详情</strong></div>
+
+<div class="publicList wml100">
+    <ul style="background:#f3f3f3;">
+       <ul>
+        <li class="noAfter">
+        	<div class="li-l">车辆种类</div>
+			<div class="li-r">
+				<php>
+                        switch($res['species']){
+                            case 1 : echo "轿车";break;
+                            case 2 : echo "SUV越野车";break;
+                            case 3 : echo "跑车";break;
+                            case 4 : echo "商务车";break;
+                            case 5 : echo "面包车";break;
+                            case 6 : echo "客车";break;
+                            case 7 : echo "货车";break;
+                            case 8 : echo "皮车";break;
+                            case 9 : echo "摩托车";break;
+                            default : echo "工程车";
+                    }
+                    </php>
+			</div>
+			</a>
+		</li>
+        <li class="noAfter">
+            <div class="li-l">品牌车型</div>
+            <div class="li-r">		
+            	{weikucms:$res.brand}
+             </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">预售价格</div>
+            <div class="li-r">
+				{weikucms:$res.presell}
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">排量</div>
+            <div class="li-r">
+            	{weikucms:$res.first}
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l" style="font-size:12px;">行驶里程(万公里)</div>
+            <div class="li-r">
+            	{weikucms:$res.mileage}
+            </div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">车辆上牌时间</div>
+            <div class="li-r">
+            	{weikucms:$res.sptime}
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">车身颜色</div>
+            <div class="li-r">
+				 <php>
+                        switch($res['carColor']){
+                            case 1 : echo "黑色";break;
+                            case 2 : echo "红色";break;
+                            case 3 : echo "蓝色";break;
+                            case 4 : echo "白色";break;
+                            case 5 : echo "绿色";break;
+                            case 6 : echo "黄色";break;
+                            case 7 : echo "银灰色";break;
+                            case 8 : echo "灰色";break;
+                            case 9 : echo "橙色";break;
+                            default : echo "其他";
+                    }
+                    </php>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">原车用途</div>
+            <div class="li-r" id="caruser">
+            	  <if condition="$res.caruser eq 0">非运营<else />运营</if>
+			</div>
+        </li>
+        <li class="noAfter">
+        	<div class="li-l">变速器</div>
+        	<div class="li-r" id="speedM">
+             	<if condition="$res.speedM eq 1"> 手动
+                    <elseif condition="$res.speedM eq 2"/>自动
+                    <else /> 手自一体
+             	</if>
+         	</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">燃油类型</div>
+            <div class="li-r">
+				<php>
+                        switch($res['gasType']){
+                            case 1 : echo "汽油";break;
+                            case 2 : echo "柴油";break;
+                            case 3 : echo "电力";break;
+                            case 4 : echo "混合动力";break;
+                            default : echo "燃气";
+                    }
+                    </php>
+            </div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">排放标准</div>
+            <div class="li-r">
+				<php>
+                        switch($res['emission']){
+                            case 1 : echo "国一";break;
+                            case 2 : echo "国二";break;
+                            case 3 : echo "国三";break;
+                            case 4 : echo "国三+OBD";break;
+                            case 5 : echo "国四";break;
+                            case 6 : echo "国五+OBD";break;
+                            default : echo "未知";
+                    }
+                    </php>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">能否过户</div>
+            <div class="li-r" id="transfer">
+            	 <if condition="$res.transfer eq 0">能<else />不能</if>
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">能否按揭</div>
+            <div class="li-r" id="mortgage">
+             	<if condition="$res.mortgage eq 0">能<else />不能</if>
+			</div>
+        </li>
+       <li class="noAfter">
+           <div class="li-l">联系方式</div>
+           <div class="li-r">
+               {weikucms:$res.contact}
+           </div>
+       </li>
+        <li class="noAfter">
+            <div class="li-l">车况描述</div>
+            <div class="li-r">
+            	{weikucms:$res.carcondition}
+			</div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">图片</div>
+            <div class="li-r">
+                        <if condition="$res.imgurl eq ''">暂无图片<else />
+                        <a href="<php>echo C('site_url');</php>{weikucms:$res.imgurl}"><img src="{weikucms:$res.imgurl}" style="max-width:200px;"/></a> </if>
+			</div>
+        </li>
+    </ul>
+    </ul>
+</div>
+</body>
+</html>

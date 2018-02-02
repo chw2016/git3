@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        *:focus{
+            outline: 0px;
+        }
+        body{
+            max-width:640px;
+            margin: 0 auto;
+            font-family: "Microsoft YaHei";
+            font-size: 12px;
+        }.clear{clear: both;}
+        ol{margin-top: 10px;margin-bottom:30px;}
+        ol li{text-align: center;}
+        .bg1{background: #0095fd;}
+        /*.bg2{background: #}*/
+    </style>
+
+</head>
+<body>
+<div class="main_visual">
+    <!--<div class="flicking_con">-->
+    <!--<a href="#">1</a>-->
+    <!--<a href="#">2</a>-->
+    <!--<a href="#">3</a>-->
+    <!--<a href="#">4</a>-->
+    <!--<a href="#">5</a>-->
+    <!--</div>-->
+    <div class="main_image1">
+        <ul>
+            <volist name="flash" id="so" offset="1" length='1'>
+                <li>
+                    <img src="{weikucms:$so.img}" class="header" style="width: 100%;"/>
+                </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<!-- 列表页 -->
+
+<ol>
+    <volist name="res" id="vo">
+        <li style="border-top: 1px solid #b2b2b2;padding:5px 0px 5px 15px;text-align: left;" onclick="window.location.href='<if condition="$vo['url'] eq ''">
+        {weikucms::U('Wap/Index/content',array('id'=>$vo['id'],'token'=>$vo['token']))}
+        <else />
+        {weikucms:$vo.url}
+        </if>'">
+        <!--<div style="float: left;width: 60px;text-align: center;background: #{weikucms:$vo.color};margin-left:25px;padding:8px 0;">-->
+            <!--<img src="{weikucms:$vo.img}" width="30px" height="39px"/>-->
+        <!--</div>-->
+        <span style="font-size: 16px;line-height:50px;position:relative;text-align: left;">{weikucms:$vo.title}</span>
+        <div style="float: right;border-top: 2px solid #{weikucms:$vo.color};border-right: 2px solid #{weikucms:$vo.color};margin-right:25px;width:16px;height:16px;-webkit-transform:rotate(45deg);position:relative;top:20px;">
+
+        </div>
+        </li>
+    </volist>
+
+</ol>
+<script type="text/javascript">
+    $(function(){
+        $('.header').css('max-width',$('body').width());
+    })
+</script>
+</body>
+
+</html>

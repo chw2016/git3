@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>{weikucms:$tpl.name}-绑定银行卡</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/loan/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/lm/css/prompt.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/binding.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/loan/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var x = document.getElementById("pw");
+		$("#passwords").focus(function(event) {
+			x.className = "fa fa-times-circle";
+		});
+		$("#passwords").blur(function(event) {
+			x.className = "fa fa-link";
+		});
+		$("#pw").click(function(event) {
+			$("#passwords").val("");
+			$("#passwords").focus();
+		});
+		$("#btn").click(function(event) {
+			/*if($("input[name = 'ckr']").val() == ""){
+                show_error_tip("持卡人内容不能为空");
+				$($("input[name = 'ckr']")).focus();
+			}else */
+            if($("input[name = 'fkh']").val() == ""){
+                show_error_tip("发卡行内容不能为空");
+				$($("input[name = 'fkh']")).focus();
+                return false;
+			}else if($("input[name = 'kh']").val() == ""){
+                show_error_tip("卡号内容不能为空");
+				$($("input[name = 'kh']")).focus();
+                return false;
+			}else if($("input[name = 'pw']").val() == ""){
+                show_error_tip("密码内容不能为空");
+				$($("input[name = 'pw']")).focus();
+                return false;
+			}else if($("input[name = 'bank_city']").val() == ""){
+                show_error_tip("请填写开户行所在城市");
+                $($("input[name = 'bank_city']")).focus();
+                return false;
+            }
+            var bank_city=$("input[name = 'bank_city']").val();
+            var pwd=$("input[name = 'pw']").val();
+            var bank_name=$("input[name = 'fkh']").val();
+            var bank_card=$("input[name = 'kh']").val();
+            var url="{weikucms::U('bank_card',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{bank_city:bank_city,pwd:pwd,bank_name:bank_name,bank_card:bank_card},function(data){
+                if(data.status==1){
+                    show_success_tip('成功');
+                   // var url2="{weikucms::U('bank_card',array('token'=>$token,'openid'=>$openid))}";
+                    location.href=url;
+                }else{
+                    show_error_tip('修改失败');
+                }
+            },'json');
+		});
+
+		
+	})
+
+</script>
+</head>
+<body>
+	<div class="top_lin">
+		请绑定持卡人本人的银行卡
+	</div>
+	<div class="men_top">
+		<!--<div class="men_top_one on">
+			<div class="on_1">
+				<input class="on_1_left" placeholder="持卡人" name="ckr">
+				<span class="on_1_right"><i class="fa fa-user" style="color:#ff9120;font-size:19px;"></i></span>
+			</div>
+		</div>-->
+		<div class="men_top_one on">
+			<div class="on_1">
+				<input class="on_1_left" placeholder="开户行支行全称" name="fkh">
+				<span class="on_1_right"><i class="fa fa-credit-card" style="color:#2DC368;font-size:17px;"></i></span>
+			</div>
+		</div>
+		<div class="men_top_one on">
+			<div class="on_1">
+				<input class="on_1_left" placeholder="卡号" name="kh">
+				<span class="on_1_right"><i class="fa fa-camera" style="color:#3e97d4;font-size:17px;"></i></span>
+			</div> 
+		</div>
+        <div class="men_top_one on">
+            <div class="on_1">
+                <input class="on_1_left" placeholder="开户行所在城市" name="bank_city">
+                <span class="on_1_right"><i class="fa fa-street-view" style="color:#CB4720;font-size:21px;"></i></span>
+            </div>
+        </div>
+		<div class="men_top_one on">
+			<div class="on_1">
+				<input type="password" class="on_1_left" placeholder="安全密码(非银行卡密码咯!)" value="" id="passwords" name="pw">
+				<!-- <span class="on_1_right">
+					<i id="pw" class="fa fa-times-circle" style="color:#ccc;font-size:17px;"></i>
+				</span> -->
+				<span class="on_1_right"><i id="pw" class="fa fa-link" style="color:#3e97d4;font-size:17px;"></i></span> 
+				
+			</div> 
+		</div>
+	</div>
+
+	<div  id="btn" class="bin_btn">
+		确认修改信息
+	</div>
+
+	<div style="height:77px;"></div>
+<!--尾部-->
+	<section>
+
+        <include file="Loan:foot"/>
+</section>
+</body>
+</html>

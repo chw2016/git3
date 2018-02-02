@@ -1,0 +1,140 @@
+<include file="Public:head"/>
+
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+           
+            <li>可以查看二手车的相关信息</li>
+        </ol>
+    </div>
+
+ 
+
+
+ <div class="msgWrap form">
+    <div style="background:#f4f5f9;margin-bottom:10px;padding:10px;">
+        <span style="color:#3a87ad;">
+        微信端链接地址:&nbsp;&nbsp;<php>echo C('site_url');</php>index.php?g=Wap&m=Sellcar&a=index&token={weikucms:$token}</span>
+        <span style="color:#3a87ad;">  <br/>
+        微信端列表地址:&nbsp;&nbsp;<php>echo C('site_url');</php>index.php?g=Wap&m=Sellcar&a=info&token={weikucms:$token}</span>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>车辆种类</th>
+            <th>品牌车型</th>
+            <th>预售价格</th>
+            <th>初次上牌时间</th>
+            <th>行驶里程</th>
+            <th>车辆上牌时间</th>
+            <th>车身颜色</th>
+            <th>原车用途</th>
+            <th>变速器类型</th>
+            <th>燃油类型</th>
+            <th>排放标准</th>
+            <th width="150px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="res" id="vo">
+            <tr>
+               
+                <td>
+                  
+                    <php>
+                        switch($vo['species']){
+                            case 1 : echo "轿车";break;
+                            case 2 : echo "SUV越野车";break;
+                            case 3 : echo "跑车";break;
+                            case 4 : echo "商务车";break;
+                            case 5 : echo "面包车";break;
+                            case 6 : echo "客车";break;
+                            case 7 : echo "货车";break;
+                            case 8 : echo "皮车";break;
+                            case 9 : echo "摩托车";break;
+                            default : echo "工程车";
+                    }
+                    </php>
+                </td>
+                <td>{weikucms:$vo.brand}</td>
+                <td>{weikucms:$vo.presell}</td>
+                <td>{weikucms:$vo.first}</td>
+                <td>{weikucms:$vo.mileage}</td>
+                <td>{weikucms:$vo.sptime}</td>
+                <td>
+                    <!-- {weikucms:$vo.carColor} -->
+                    <php>
+                        switch($vo['carColor']){
+                            case 1 : echo "黑色";break;
+                            case 2 : echo "红色";break;
+                            case 3 : echo "蓝色";break;
+                            case 4 : echo "白色";break;
+                            case 5 : echo "绿色";break;
+                            case 6 : echo "黄色";break;
+                            case 7 : echo "银灰色";break;
+                            case 8 : echo "灰色";break;
+                            case 9 : echo "橙色";break;
+                            default : echo "其他";
+                    }
+                    </php>
+                </td>
+                <!-- 原车用途 -->
+                <td><if condition="$vo.caruser eq 0">非运营<else />运营</if></td>
+                <!-- 变速器 -->
+                <td>
+                    <!-- <if condition="$vo.speedM eq 1">手动<elseif condition="$vo.speedM eq 2">自动<else />手自一体</if> -->
+                    <if condition="$vo.speedM eq 1"> 手动
+                    <elseif condition="$vo.speedM eq 2"/>自动
+                    <else /> 手自一体
+                    </if>
+                </td>
+                <td>
+                    <!-- {weikucms:$vo.gasType} -->
+                    <php>
+                        switch($vo['gasType']){
+                            case 1 : echo "汽油";break;
+                            case 2 : echo "柴油";break;
+                            case 3 : echo "电力";break;
+                            case 4 : echo "混合动力";break;
+                            default : echo "燃气";
+                    }
+                    </php>
+                </td>
+                <td>
+                    <!-- {weikucms:$vo.emission} -->
+                    <php>
+                        switch($vo['emission']){
+                            case 1 : echo "国一";break;
+                            case 2 : echo "国二";break;
+                            case 3 : echo "国三";break;
+                            case 4 : echo "国三+OBD";break;
+                            case 5 : echo "国四";break;
+                            case 6 : echo "国五+OBD";break;
+                            default : echo "未知";
+                    }
+                    </php>
+                </td>
+                <td style="width:200px;">
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Sellcar/look',array('id'=>$vo['id'],'token'=>session('token')))}">查看详情</a>
+                    <a href="#" onclick="source_delete('{weikucms::U('Sellcar/del',array('id'=>$vo['id'],'token'=>$token))}')" title="删除" class="btn btn-danger btn-sm">删除</a>
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pager">
+            总共{weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+
+ </div>
+
+<include file="Public:footer"/>

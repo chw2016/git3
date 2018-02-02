@@ -1,0 +1,290 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script>
+var editor1;
+KindEditor.ready(function(K) {
+    editor1 = K.create('#ticket_intro', {
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : true,
+        allowFileManager:true,
+        afterBlur: function(){this.sync();}
+    })
+});
+
+var editor2;
+KindEditor.ready(function(K) {
+    editor2 = K.create('#taocan', {
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : true,
+        allowFileManager:true,
+        afterBlur: function(){this.sync();}
+    })
+});
+</script>
+<div class="" style="">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+        <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/ticket',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以添加栏目。</li>
+    </ol>
+  </div>
+  <!--tab end-->
+  <div class="box-content">
+     <div class="msgWrap">
+         <form class="form" method="post" id="form" action="">
+             <if condition="$op eq 1">
+                <input type="hidden" name="ticket_id" id="ticket_id" value="{weikucms:$ticket['ticket_id']}" />
+             </if>
+      <div class="msgWrap bgfc">
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+          <tbody>
+          <tr>
+              <th>团购券名称：</th>
+              <td>
+                  <if condition="$op neq 1">
+                  <input type="text" id="ticket_name" name="ticket_name" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="ticket_name" name="ticket_name" value="{weikucms:$ticket['ticket_name']}" class="px require" style="width:300px;" />
+                </if>
+                <span style="color: red;">*</span><span style="margin-left: 20px;color: red;">例如：32元团购券</span>
+              </td>
+            </tr>
+
+          <tr>
+              <th>团购券描述：</th>
+              <td>
+                  <if condition="$op neq 1">
+                      <input type="text" id="ticket_des" name="ticket_des" value="" class="px require" style="width:300px;" />
+                      <else/>
+                      <input type="text" id="ticket_des" name="ticket_des" value="{weikucms:$ticket['ticket_des']}" class="px require" style="width:300px;" />
+                  </if>
+                  <span style="color: red;">*</span><span style="margin-left: 20px;color: red;">例如：最高价值864元的10人套餐</span>
+              </td>
+          </tr>
+
+            <tr>
+              <th>团购券SN码：</th>
+              <td>
+                  <if condition="$op neq 1">
+                  <input type="text" id="ticket_sn" name="ticket_sn" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="ticket_sn" name="ticket_sn" value="{weikucms:$ticket['ticket_sn']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+            </tr>
+
+            <tr>
+              <th>团购券价格：</th>
+              <td>
+                  <if condition="$op neq 1">
+                  <input type="text" id="ticket_price" name="ticket_price" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="ticket_price" name="ticket_price" value="{weikucms:$ticket['ticket_price']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+            </tr>
+
+            <tr>
+              <th>团购券数量：</th>
+              <td>
+                  <input type="text" id="ticket_num" name="ticket_num" value="1" class="px require" style="width:300px;" readonly />
+                  <span style="color: red;">*</span><span style="margin-left: 20px;color: red;">团购券默认数量为1</span>
+              </td>
+            </tr>
+
+          <tr>
+            <th>团购券有效期设置：</th>
+            <td>
+                <if condition="$op neq 1">
+                开始日期：<input type="input" class="px" id="start_date" value="" onClick="WdatePicker()" name="statdate">
+                结束日期：<input type="input" class="px" id="end_date" value="" name="enddate" onClick="WdatePicker()">
+            </td>
+                <else />
+                开始日期：<input type="input" class="px" id="start_date" value="{weikucms:$ticket['start_date']}" onClick="WdatePicker()" name="statdate">
+                结束日期：<input type="input" class="px" id="end_date" value="{weikucms:$ticket['end_date']}" name="enddate" onClick="WdatePicker()">
+              </td>
+                </if>
+          </tr>
+
+
+          <tr>
+              <th>其他设置：</th>
+              <td valign="top">
+                  <div style="width: 200px;display: inherit">
+                      <input type="checkbox" name="sstk" id="sstk" value="1" style="margin-top:0px;" <if condition="$ticket['other_set']['sstk'] eq 1">checked</if>>
+                      <span style="text-align: center;">&nbsp;&nbsp;支持随时退款</span>
+                  </div>
+                  <div style="width: 200px;display: inherit">
+                      <input type="checkbox" name="gqtk" id="gqtk" value="1" style="margin-top:0px"; <if condition="$ticket['other_set']['gqtk'] eq 1">checked</if>>
+                      <span style="text-align: center;">&nbsp;&nbsp;支持过期退款</span>
+                  </div>
+              </td>
+
+          </tr>
+
+
+          <tr>
+              <th valign="top">套餐:</th>
+              <td valign="top">
+                  <if condition="$op eq 1">
+                      <textarea class="px" id="taocan" name="taocan" style="width: 560px; height: 300px; display: ;">
+                          {weikucms:$ticket['taocan']}
+                      </textarea>
+                      <else />
+                      <textarea class="px" id="taocan" name="taocan" style="width: 560px; height: 300px; display: ;"></textarea>
+                  </if>
+              </td>
+          </tr>
+
+
+          <tr>
+            <th valign="top">购买须知:</th>
+            <td valign="top">
+                <if condition="$op eq 1">
+                    <textarea class="px" id="ticket_intro" name="ticket_intro" style="width: 560px; height: 300px; display: ;">
+{weikucms:$ticket['ticket_intro']}
+                    </textarea>
+                <else />
+                    <textarea class="px" id="ticket_intro" name="ticket_intro" style="width: 560px; height: 300px; display: ;"></textarea>
+                </if>
+            </td>
+         </tr>
+
+          <tr>
+            <th>&nbsp;</th>
+            <td>
+                <if condition="$op neq 1">
+                    <input type="hidden" name="op" id="op" value="0" />
+                <else/>
+                    <input type="hidden" name="op" id="op" value="1" />
+                </if>
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+              <if condition="$op neq 1">添加团购券
+                <else/>确定编辑
+              </if>
+              </button>
+           </td>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </form>
+    </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var cat_id = "{weikucms:$get['cat_id']}";
+            var ticket_id = $("#ticket_id").val();
+            var ticket_name = $("#ticket_name").val();
+            var ticket_des = $("#ticket_des").val();
+            var ticket_sn = $("#ticket_sn").val();
+            var ticket_price = $("#ticket_price").val();
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            var sstk = $("input[name='sstk']:checked").val();
+            if(sstk == undefined){
+                sstk = 0;
+            }
+            var gqtk = $("input[name='gqtk']:checked").val();
+            if(gqtk == undefined){
+                gqtk = 0;
+            }
+            var taocan = editor2.html();
+            var ticket_intro = editor1.html();
+            var op = "{weikucms:$op}";
+            if(!ticket_id){
+                ticket_id = null;
+            }
+            if(! ticket_name){
+                notif({
+                    msg: "团购券名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! ticket_des){
+                notif({
+                    msg: "团购券描述不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! ticket_sn){
+                notif({
+                    msg: "团购券SN码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! ticket_price){
+                notif({
+                    msg: "团购券价格不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(isNaN(parseFloat(ticket_price))){
+                notif({
+                    msg: "非法的价格！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!start_date){
+                notif({
+                    msg: "团购开始时间不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!end_date){
+                notif({
+                    msg: "团购结束时间不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var url = "{weikucms::U('Ieat/editticket',array('token'=>$token))}";
+            $.post(url,{taocan:taocan,gqtk:gqtk,sstk:sstk,ticket_des:ticket_des,cat_id:cat_id,ticket_id:ticket_id,ticket_name:ticket_name,ticket_sn:ticket_sn,ticket_price:ticket_price,start_date:start_date,end_date:end_date,ticket_intro:ticket_intro,op:op},function(data){
+                if(data.status == 1) {
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function () {
+                        window.location.href = data.url;
+                    }, '1000');
+                }else{
+                    notif({
+                    msg: data.info,
+                    type: "error"
+                });
+
+                }
+            },'json');
+        });
+    });
+
+</script>
+<include file="Public:footer" />

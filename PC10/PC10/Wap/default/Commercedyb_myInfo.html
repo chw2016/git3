@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.form.js" type="text/javascript"></script>
+		<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/upfile.js" type="text/javascript"></script>
+		<style type="text/css">
+			body{
+				background-color: rgb(240,240,240);
+				padding-bottom: 6px;
+			}
+			
+		</style>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+		    wx.config({
+		        appId: '{weikucms:$signPackage.appId}',
+		        timestamp: {weikucms:$signPackage.timestamp},
+		        nonceStr: '{weikucms:$signPackage.nonceStr}',
+		        signature: '{weikucms:$signPackage.signature}',
+		        jsApiList: [
+		            'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+		        ]
+		    });
+		    wx.ready(function () {
+		        // 在这里调用 API
+		        wx.hideOptionMenu();
+		    });
+
+		</script>
+    </head>
+    <body>
+    	<div class="bbsBox white-bg" style="font-size:16px;">
+			我的消息（{weikucms:$countComm}）
+		</div>
+		<if condition="$countComm eq 0">
+			<div class="bbsBox white-bg" style="font-size:16px;text-align:center;">
+				暂无帖子
+			</div>
+		<else/>
+			<volist name="comment" id="vo">
+				<div class="bbsBox white-bg">
+		           <div class="replyInputBox">
+	            		 <div class="RPBItem myul">
+		                    <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$vo.headimg})"></div>
+		                    <div class="reContent" style="width:90%">
+		                    	<span class="nickname">{weikucms:$vo.nickname}</span><br> 回复我:{weikucms:$vo.comment}
+		                    	<span>{weikucms:$vo.comment_time}</span>
+								<a href="{weikucms::U('Wap/Commercedyb/lookUpDetails',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['uid']}&is_read=1&comment_id={weikucms:$vo.id}" style="float:right;color:rgb(21, 194, 187);">查看详情</a>
+		                    </div>
+	                	 </div>
+		            </div>
+		    	</div>
+			</volist>
+		</if>
+		
+    </body>
+   
+</html>

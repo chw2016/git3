@@ -1,0 +1,29 @@
+﻿<volist name="msgList" id="vo">
+    <div class="listbox">
+        <div class="liuYanTimeLine myul" style="left:4px;">
+            <php>
+                $tempArr = explode(' ',$vo['add_time']);
+            </php>
+            <div class="LYTime">{weikucms::str_replace('-','/',$tempArr[0])}</div>
+            <div class="Tcircle">
+                <div class="InTcircle"></div>
+            </div>
+        </div>
+        <div class="listpic" style=" background-image:url({weikucms:$vo.customer_upload_pic});">
+            <div class="liuYanLogo" style="background-image:url({weikucms:$vo.customer_pic})"></div>
+        </div>
+        <div class="listtitlebox myul">
+            <div class="titlebox" >
+                <div class="title iblue ieatXianGou"><span class="titletext">
+                    <php>
+                       echo base64_decode($vo['customer_msg']);
+                    </php>
+                   <!-- {weikucms:$vo.customer_msg}-->
+                </span></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</volist>

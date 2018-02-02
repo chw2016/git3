@@ -1,0 +1,17 @@
+ï»¿<?php
+/**
+ *ÍøÕ¾»º´æÅäÖÃ
+ *@package WeiKuCMS
+ *@author WeiKuCMS
+ **/
+return array(
+	/*»º´æ¶¨Òå*/
+	'DATA_CACHE_TYPE'       => 'File',  		//»º´æÀàÐÍ
+	'DATA_CACHE_COMPRESS'   => true,   		// Êý¾Ý»º´æÊÇ·ñÑ¹Ëõ»º´æ
+	'DATA_CACHE_SUBDIR'     => true,    	// Ê¹ÓÃ×ÓÄ¿Â¼»º´æ (×Ô¶¯¸ù¾Ý»º´æ±êÊ¶µÄ¹þÏ£´´½¨×ÓÄ¿Â¼)
+    'DATA_PATH_LEVEL'       => 2,        		// ×ÓÄ¿Â¼»º´æ¼¶±ð
+	'HTML_CACHE_ON'			=> false,			//ÊÇ·ñ¿ªÆô¾²Ì¬»º´æ
+	//'HTML_CACHE_RULES'   	=>array('*'=>array('{$_SERVER.REQUEST_URI|md5}')),			//¾²Ì¬»º´æ¹æÔò
+	'HTML_CACHE_TIME'		=>   60,			//¾²Ì¬»º´æÓÐÐ§ÆÚ£¨Ãë£©
+	'HTML_FILE_SUFFIX' 		=>'.html',			//¾²Ì¬»º´æºó×º 
+);

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="format-detection" content="telephone=no" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_214/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_214/css/index.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_214/css/style.css">
+    </head>
+    <body>
+<div class="bg1">
+	<div class="section">
+		<div class="conter-main">
+            <volist name="info" id="vo" offset="0" length="1">
+                <div class="icon-main" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                    <img src="{weikucms:$vo.img}">
+                </div>
+            </volist>
+            <volist name="info" id="vo" offset="1" length="1">
+                <div class="icon-main ml10" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                    <img src="{weikucms:$vo.img}">
+                </div>
+            </volist>
+		</div>
+		<div class="conter-main mt20">
+            <volist name="info" id="vo" offset="2" length="1">
+                <div class="icon-main" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                    <img src="{weikucms:$vo.img}">
+                </div>
+            </volist>
+            <volist name="info" id="vo" offset="3" length="1">
+                <div class="icon-main ml10" <if condition="$vo['url']">onclick="window.location.href='{weikucms:$vo.url}'+'&openid='+'{weikucms:$_GET['openid']}'+'&token='+'{weikucms:$vo.token}'"<else/>onclick="window.location.href='{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}'"</if>>
+                    <img src="{weikucms:$vo.img}">
+                </div>
+            </volist>
+		</div>
+	<!-- 	<div class="conter-main mt20">
+			<div class="icon-main">
+				<p class="icon-13 icon-trumpet"></p>
+				<p class="main-size">校园精英</p>
+				<p class="main-English-size">ELITE</p>
+			</div>
+			<div class="icon-main ml10">
+				<p class="icon-3 icon-trumpet ml10"></p>
+				<p class="main-size">讨论区</p>
+				<p class="main-English-size">DISCUSSION</p>
+			</div>
+		</div> -->
+    <volist name="info" id="vo" offset="4" length="1">
+		<div class="Trevista">
+            <img src="{weikucms:$vo.img}">
+		</div>
+    </volist>
+		<div class="project">
+			专为中国水质设计
+		</div>
+	</div>
+</div>
+    </body>
+</html>

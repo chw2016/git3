@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>在线订货</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<link type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/style.css" rel="stylesheet"/>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.event.drag-1.5.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.touchSlider.js"></script>
+        <style type="text/css">
+           /*input::-moz-placeholder{color:red;}
+		   input::-webkit-input-placeholder{color:red;line-height:100%;}*/
+		   div.flicking_con {
+    position: absolute;
+    top: 177px;
+    left: 50%;
+    z-index: 999;
+    /* width: 300px; */
+    height: 21px;
+     margin: 0 0 0 0px;
+	}
+        </style>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$dragBln = false;
+			$(".main_image").touchSlider({
+				flexible : true,
+				speed : 200,
+				btn_prev : $("#btn_prev"),
+				btn_next : $("#btn_next"),
+				paging : $(".flicking_con a"),
+				counter : function (e){
+					$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+				}
+			});
+			
+			$(".main_image").bind("mousedown", function() {
+				$dragBln = false;
+			});
+			
+			$(".main_image").bind("dragstart", function() {
+				$dragBln = true;
+			});
+			
+			$(".main_image a").click(function(){
+				if($dragBln) {
+					return false;
+				}
+			});
+			
+			timer = setInterval(function(){
+				$("#btn_next").click();
+			}, 5000);
+			
+			$(".main_visual").hover(function(){
+				clearInterval(timer);
+			},function(){
+				timer = setInterval(function(){
+					$("#btn_next").click();
+				},5000);
+			});
+			
+			$(".main_image").bind("touchstart",function(){
+				clearInterval(timer);
+			}).bind("touchend", function(){
+				timer = setInterval(function(){
+					$("#btn_next").click();
+				}, 5000);
+			});
+		});
+	</script>
+    </head>
+    <body style=" overflow: visible;">
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<header id="c-product-header">
+    		客服热线 400-880-9666
+    	</header>
+    	<!-- 轮播图 -->
+    	<div class="main_visual">
+			<div class="flicking_con">
+				<volist name="imgInfo" id="vo">
+					<a href="#">{weikucms:$i}</a>
+				</volist>
+			</div>
+			<div class="main_image">
+				<ul>
+                    <volist name="imgInfo" id="vo">
+                        <a href="{weikucms:$vo.url}">
+                            <li>
+                                <img src="{weikucms:$vo.img_path}" />
+                            </li>
+                        </a>
+                    </volist>
+				</ul>
+				<a href="javascript:;" id="btn_prev"></a>
+				<a href="javascript:;" id="btn_next"></a>
+			</div>
+		</div>
+		<div style="border-top:1px solid rgba(225,225,225,0.5);margin-top:17px;"></div>
+		<!-- 输入关键词进行搜索 -->
+		<!-- 搜索框 -->
+        <form name="form1" id="form1" action="{weikucms::U('Wap/Yanxiang/sResult',array('token'=>$token))}" method="post">
+        	<div class="wrap-div">
+        		<div class="product-search-left"></div>
+        		<div class="product-search">
+        			<div class="product-in-search-left">
+        				<input name="search" id="c-product-search" placeholder="输入关键字进行搜索" />
+        			</div>
+        			<div class="product-in-search-right">
+        				<input type="image" name="find" id="find" src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/Search.png" width="20px" height="20px">
+        			</div>
+        			
+        		</div>
+        		<div class="product-search-right"></div>
+        	</div>
+         </form>
+    	<!-- 下面的小方块 -->
+    	<div class="new-product">
+            <volist name="cats" id="vo" offset="2" length="1">
+
+            		<div class="new-pin newProductUp">
+                      <a href="{weikucms::U('Wap/Yanxiang/newUp',array('token'=>$token,'catid'=>$vo['id'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id']))}" style="display:block;font-size:16px;">
+            			<div class="interval" style="color:#fff;">{weikucms:$vo.name}</div>
+            			<div class="sign" >
+            				<div class="Transparent" style="width:74%;">
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            				</div>
+            				<div class="arrow" id="newProduct">
+            					<div class="jiantou">
+            						<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/arrows.png" />
+            					</div>
+            				</div>
+            			</div>
+                        </a>
+            		</div>
+                
+            </volist>
+    		<div class="jianxi"></div>
+             <volist name="cats" id="vo" offset="3" length="1">
+             
+            		<div class="sale">
+                      <a href="{weikucms::U('Wap/Yanxiang/saleRank',array('token'=>$token,'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id']))}" style="display:block;font-size:16px;">
+            			<div class="interval" style="color:#fff;">{weikucms:$vo.name}</div>
+            			<div class="sign">
+            				<div class="Transparent" style="width:50% !important;">
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            				</div>
+            				<div class="arrow adjust">
+            					<div class="jiantou">
+            						<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/arrows.png" />
+            					</div>
+            				</div>
+            			</div>
+                         </a>
+            		</div>
+             
+           </volist>
+    	</div>
+
+
+    	
+    	<!-- 第二层 -->
+        <!-- 这里是新添加的分类 -->
+    	<div class="new-product">
+            <volist name="cats" id="vo" offset="1" length="1">
+             
+                    <div class="new-pin updiv">
+						  <a href="{weikucms::U('Wap/Yanxiang/Preferential',array('token'=>$token,'catid'=>$vo['id'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id']))}" style="display:block;">
+                        <div class="interval" style="color:#fff;font-size:16px">{weikucms:$vo.name}</div>
+                        <div class="sign">
+                            <div class="Transparent">
+                                    <div class="gang"></div>
+                                    <div class="gang"></div>
+                                    <div class="gang"></div>
+                            </div>
+                            <div class="arrow tehui">
+                                <div class="jiantou">
+                                    <img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/arrows.png" />
+                                </div>
+                            </div>
+                        </div>
+						 </a>
+                    </div>
+             
+            </volist>
+    		
+    		<div class="jianxi"></div>
+            <!-- 这里是新的添加分类 -->
+            <volist name="cats" id="vo" offset="0" length="1">
+                 
+            		<div class="sale updiv1">
+					<a href="{weikucms::U('Wap/Yanxiang/hotSale',array('token'=>$token,'catid'=>$vo['id'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id']))}" style="display:block;font-size:16px">
+            			<div class="interval" style="color:#fff;">{weikucms:$vo.name}</div>
+            			<div class="sign">
+            				<div class="Transparent">
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            						<div class="gang"></div>
+            				</div>
+            				<div class="arrow" id="remai">
+            					<div class="jiantou">
+            						<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/arrows.png" />
+            					</div>
+            				</div>
+            			</div>
+						</a>
+            		</div>
+      			
+            </volist>
+    	</div>
+
+    <div class="abc" style="overflow: hidden; margin-top: 10px; height: auto; margin-left: 11px; margin-right: 11px; display: block;margin-bottom: 10px;">
+        
+     
+        <div class="list_01" style="height: auto; float: left; width: 60%">
+            <a href="{weikucms:$tb['0']['url']}"><img src="{weikucms:$tb['0']['pic']}" width="100%" height="110px"
+                 style="float: left;"></a>
+        </div>
+           
+            
+   
+        <div class="list_02" style="float: right; width: 37%;">
+            <a href="{weikucms:$tb['1']['url']}"> <img src="{weikucms:$tb['1']['pic']}" width="100%" height="110px"
+                 style="float: left;"></a>
+
+        </div>
+     
+        
+         
+        <div class="list_03" style="width: 100%;margin-top: 5px;">
+            <a href="{weikucms:$tb['2']['url']}"><img src="{weikucms:$tb['2']['pic']}" width="100%" height="110px"
+                 style="float: left; margin-top: 10px;"></a>
+
+        </div>
+        
+            
+    </div>
+
+    	<!-- 下面的高度值 -->
+    	<div class="other">
+    		
+    	</div>
+    <!---在这里去追加的--->
+
+		<script type="text/javascript">
+			window.onload = function(){
+				$('.main_image>ul>a>li>img').css({'width':$(window).width()+'px','max-height':$('.main_visual').height()+'px'});
+				$('.main_visual').css('height',$('.main_image>ul>li>img').height());
+				$('.flicking_con').css('top', $('.main_image>ul>a>li>img').height()-25 +'px');
+
+				// 首先初始化边框左边和右边的高度
+    			$('.product-search-left,.product-search-right').css('height', $('.product-search-left').width());
+    			$('.product-search-left').css('left', $('.product-search-left').width()/2+'px');
+    			$('.product-search-right').css('right', $('.product-search-right').width()/2+'px');
+    			// 设置搜索框的行高
+    			/*$('#c-product-search').css({'height': $('.product-search').height()*0.8+'px','line-height':$('.product-search').height()*0.8+'px','margin-top':$('.product-search').height()*0.1+'px'});*/
+                $('#c-product-search').css({'height': $('.product-search').height()+'px','line-height':$('.product-search').height()+'px'});
+    			// 搜素框图片的高度
+    			 $('.product-search > .product-in-search-right > input').css('margin-top', ($('.product-search').height() - $('.product-search > .product-in-search-right > input').height())/2+'px');
+    			// 控制缝隙与左边的距离
+    			$('.new-product').css({'margin-left':$('.jianxi').width()+'px','margin-right':$('.jianxi').width()+'px'});
+    			 // 箭头外围框的高度
+                
+                $('.arrow').css('height',$('.arrow').width()+'px');
+
+                // 里面箭头的行高
+                $('.jiantou').css('line-height', $('.arrow').height()+'px');
+                // 第二层距离上面的高度
+                $('.new-product').eq(1).css('margin-top',$('.jianxi').width()+'px');
+                $('.other').css('height','10px');
+                // li的高度
+                // 圆圈里面图片的高度
+                $('.jiantou>img').css('width',$('.jiantou').width()*0.6+'px');
+               /*三条杠的外间距*/
+               $('.Transparent').css('padding-top',($('.Transparent').height()-24)/2+'px');
+               // 三条杠的外包装距离高度
+               	var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+			}
+
+		</script>
+
+
+
+    </body>
+</html>

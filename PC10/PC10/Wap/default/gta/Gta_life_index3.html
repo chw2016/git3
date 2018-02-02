@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<!--<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />-->
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+		<div class="shadow2">
+            <div class="Promote_top clearfix">
+                <span <if condition="$_GET['sort'] eq 'degree'">class="color2 fl"<else />class="color1 fl"</if>
+                onclick="location.href='{weikucms::U('life_index3',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id'],'sort'=>'degree'))}'">保障程度&nbsp; <div class="op_arrow"></div></span>
+                <span class="Promote_xian fl"></span>
+                <span <if condition="$_GET['sort'] eq 'money_gd'">class="color2 fl"<else />class="color1 fl"</if>
+                onclick="location.href='{weikucms::U('life_index3',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id'],'sort'=>'money_gd'))}'">保费高低&nbsp;<div class="op_arrow1"></div></span>
+               
+            </div>
+		</div>
+		<!--内容模块-->
+		<section>
+			<div class="p10">
+				根据您做的选择,我们为您提供了以下产品组合
+			</div>
+	<div class="gta_bj1">
+		<div class="gta_bj2 pt10">
+			<!--<div class="shadow40">-->
+
+            <volist name="list" id="vo">
+			<div class="Safety clearfix <if condition="$i eq 1">pt20</if>" onclick="location.href='{weikucms::U('life_details',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">
+				<span class="fl">{weikucms:$vo.title}</span>
+				<span class="Symbol fr"></span>
+			</div>
+                </volist>
+			<!--<div class="Safety clearfix" style="border: 0;">
+				<span class="fl">XXXXX保险</span>
+				<span class="Symbol fr"></span>
+			</div>-->
+		</div>
+	</div>
+		</section>
+		<script>
+            //最后一个线去掉
+            $(function() {
+                $(".clearfix:last").css("border","0");
+
+            })
+
+		</script>
+	</body>
+</html>

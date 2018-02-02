@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127739.vshop.weimob.com/ -->
+<html lang="zh-CN">
+<head>
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>商品页</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <script src="{weikucms::$staticFilePath}/js/jquery-2.0.3.min.js" onerror="_cdnFallback(this)"></script>
+    <style type="text/css">
+        *{
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color:transparent;
+            font-family:"微软雅黑";
+        }
+        *:focus{
+            outline: 0px;
+        }
+        body{
+            background: rgba(246,246,246,1);
+        }
+        #header{
+            height: 55px;
+            border-bottom: 1px solid #DFD9D9;
+            text-align: center;
+        }
+        .headerone,.headertwo{
+            float: left;
+            margin: 19px 10px 3px 17px;
+        }
+        .headertwo{
+            float: right;
+        }
+        .headertwo img{
+            opacity:0;
+        }
+        #headr{
+            height: 55px;
+            line-height: 55px;
+            font-size: 20px;
+        }
+        #select{
+            height: 30px;
+            margin: 10px;
+            padding: 5px 10px;
+            background:#FFFFFF;
+            border: 1px solid #EAEAEA;
+            border-radius:50px;
+        }
+        #search_name{
+            width: 87%;
+            font-size: 19px;
+            padding: 10px 0 10px 10px;
+            position: relative;
+            bottom: 7px;
+            border: 0;
+            background: none;
+            -webkit-appearance: none;
+            margin-left: 5px;
+        }
+        .shop{
+            height:158px;
+            margin-bottom: 10px;
+            background: #FFFFFF;
+            border: 1px solid #DFD9D9;
+        }
+        .shopimg{
+            height: 73%;
+            border-radius: 74px;
+            border: 1px solid #DFD9D9;
+            width: 36%;
+            margin: 18px 18px 18px 16px;
+            float: left;
+
+        }
+		.shopimg img{
+			width: 100%;
+			height: 100%;
+			border: 1px solid #DFD9D9;
+			border-radius: 74px;
+		}
+        .details{
+            margin: 25px 0;
+        }
+        .details p{
+            padding: 5px;
+            color: rgb(103, 92, 92);
+
+        }
+        .details p span{
+            color: rgb(223, 58, 58);
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div id="header">
+        <div class="headerone">
+            <a  onclick="window.location.href='{weikucms::U('Store_new/cats',array('token' => $_GET['token'], 'catid' => $hostlist['id'], 'wecha_id' => $wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}'">
+                <img src="{weikucms::STATICS}/wapweiui/product/tubiao1.jpg" alt="1">
+            </a>
+        </div>
+        <span id="headr">商品页</span>
+        <div class="headertwo"><img src="{weikucms::STATICS}/wapweiui/product/tubiao1.jpg" alt="1"></div>
+    </div>
+    <div id="conter">
+        <div id="select">
+            <form id="search_form" name="search_form" action="" method="post">
+                <input type="hidden" name="wecha_id" value="">
+                <input type="hidden" name="openid" value="">
+                <input type="hidden" name="dopenid" value="">
+                <input type="hidden" name="token" value="">
+                <input type="search" id="search_name" placeholder="请输入商品名称进行搜索" name="search_name" value="">
+                <input type="image" src="{weikucms::STATICS}/wapweiui/product/tubiao2.jpg">
+            </form>
+        </div>
+        <div id="shoplist">
+            <ul class="jiazai">
+                <if condition="$products">
+                    <volist name="products" id="hostlist">
+                    <li class="shop">
+                        <a href="{weikucms::U('Store_new/product',array('token' => $_GET['token'], 'id' => $hostlist['id'], 'wecha_id' => $_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}" class="link js-goods clearfix" target="_blank" data-goods-id="3833477" title="{weikucms:$hostlist.name}">
+                        <div class="shopimg"><img src="{weikucms:$hostlist.logourl}"></div>
+                        <div class="details">
+                            <p>{weikucms:$hostlist.name}</p>
+                            <p><span>￥{weikucms:$hostlist.price}</span></p>
+                            <if condition="$token neq 'b9749efed643ce858d90a743253ee975'">
+                                <p><img src="{weikucms::STATICS}/wapweiui/product/tubiao3.jpg" alt=""><img src="{weikucms::STATICS}/wapweiui/product/tubiao4.jpg" alt=""></p>
+                            </if>
+                        </div>
+                        </a>
+                    </li>
+                    </volist>
+                    <else/>
+                    <li class="shop">
+                        该分类下面还没有商品哦
+                    </li>
+                </if>
+                
+            </ul>
+        </div>
+    </div>
+    <div id="footer"></div>
+</div>
+<script type="text/javascript">
+    var iPage = 0;   //定义加载的页数
+    var timeOut = null;  //时间加载器默认为空闲状态
+    var isDone  = false;
+    $(window).scroll(function(){           //滚动促发
+        var diff = Number($(window).height()) + Number(20);
+        var leftLi = $('.jiazai>li');
+        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+            if(isDone == true){ return false; }
+            if(timeOut != null) {  return false;}  //判断容器timeOut 是否在运行！
+            iPage++;
+            // 异步加载
+            timeOut = setTimeout(function(){
+                var url = "{weikucms::U('Wap/Store_new/Products',array('token'=>$token,'openid'=>$openid,'catid'=>$_GET['catid']))}";
+                $.post(url,{"page": iPage,"pLength":0,"type":1},function(data){
+                    if(data.status == 0){
+                        console.log(data.fetch);
+                        $('.jiazai').append(data.fetch);
+                        if($.trim(data.fetch) == ''){
+                            isDone = true;
+                        }
+                        timeOut = null;
+                    }else{
+                        iPage--;
+                    }
+                },'json');
+            },500);
+        }
+    });
+
+</script>
+</body>
+</html>

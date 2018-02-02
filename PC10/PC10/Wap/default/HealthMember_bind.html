@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/date.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/date.js"></script>
+<script src="tpl/Wap/default/common/health/js/iscroll.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+    <script>
+        $(function(){
+            $(".ItemName").each(function(i,o){
+                //console.log($(o).text().length)
+                if($(o).text().length==2){
+                    $(this).css("letter-spacing","37px");
+                }
+            })
+        })
+    </script>
+<script type="text/javascript">
+$(function(){
+	$('#BirthDay').date();
+	$('#BookingDate').date();
+	$(".GOGOGO").click(function(){
+		var BDval = $("#BookingDate").val();
+		var SelectedYear = parseInt(BDval.substr(0,4));
+		var SelectedMonth = parseInt(BDval.substr(5,2));
+		var SelectedDay = parseInt(BDval.substr(8,2));
+		var THISYear = GETTODAY()["year"];
+		var THISMonth = GETTODAY()["month"];
+		var THISDay = GETTODAY()["day"];
+		var name = $('#name').val();
+		var BirthDay = $('#BirthDay').val();
+		var tel = $('#tel').val();
+		var BookingDate = $('#BookingDate').val();
+		//var name = $('#name').val();
+		if(SelectedYear < THISYear){
+			alert("预约日期不能选择小于当前的日期");
+			$('#BookingDate').focus(function(){
+				
+				});
+			return false;
+			}else{
+				    if(SelectedMonth < THISMonth){
+			alert("预约日期不能选择小于当前的日期");
+	
+			return false;
+			        }else{
+						if(SelectedDay < THISDay){
+			alert("预约日期不能选择小于当前的日期");
+			
+			return false;
+			        }
+						}
+				} 
+		
+		});
+});
+myFadeIn();
+</script>
+</head>
+<body>
+<div class="top">
+    <div class="circleBorder">
+        <div class="homeBtn">
+            <span class="icon-home" onclick="window.location.href='{weikucms::U('HealthMember/index',array('token'=>$token,'openid'=>$openid))}'"></span>
+        </div>
+    </div>
+</div>
+<div class="Box">
+	<div class="BoxHead" style="font-size:18px;padding-top:15px"></div>
+<div class="inputItem myul">
+<div class="ItemName">帐号</div>
+<div class="input"><input id="username" type="text" placeholder="请填写"></div>
+</div>
+<div class="inputItem myul">
+<div class="ItemName">密码</div>
+<div class="input"><input type="password" id="pw"  placeholder="请填写"></div>
+</div>
+
+
+
+
+<div class="btn btn-default GOGOGO white-color" onclick="return login()">账号登陆</div>
+    <div class="white-color" style="width:100%; text-align:center;line-height: 10px;" onclick="window.location.href='{weikucms::U('HealthMember/VipLogin',array('token'=>$token,'openid'=>$openid))}'">非会员体检报告查询请点击此处！</div>
+
+</div>
+<div id="datePlugin"></div>
+
+</body>
+
+<script>
+    function login(){
+        var loginid=$("#username").val();
+        var passwd=$("#pw").val();
+        if(!loginid){
+            alert("账号不能为空");
+            return false;
+        }
+        if(!passwd){
+            alert("密码不能为空");
+            return false;
+        }
+        var url="{weikucms::U('HealthMember/bind',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{loginid:loginid,passwd:passwd},function(data){
+            if(data.status==1){
+                alert(data.info);
+                location.reload();
+            }else{
+                alert(data.info);
+            }
+        },"json")
+    }
+</script>
+
+<script>
+$(function(){
+	
+	
+	/*$("#name").change(function(){
+		var urname = $("#name").val();
+		var zhcn =/^[\u0391-\uFFE5]+$/;
+		if(zhcn.test(urname)){
+			return true;
+			}else{
+				alert("请输入您的中文名！");
+				$("#name").focus();
+				return false;
+				}
+		});	*/
+		
+
+	$("#phone").change(function(){
+		var urphone = $("#phone").val();
+		var phonematch=/^1[3,4,5,8]\d{9}$/;
+		if(phonematch.test(urphone)){
+			return true;
+			}else{
+				alert("请输入正确的手机号码！");
+				$("#phone").focus();
+				return false;
+				}
+		})
+	})
+</script>
+</html>

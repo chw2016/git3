@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <include file="Public:weiweb"/>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+     <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weiweb/app_headchoice2/js/TouchSlide.1.1.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>{weikucms:$tpl['name']}</title>
+</head>
+<style type="text/css">
+	/* css 重置 */
+	body, p, input, h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form { margin: 0; padding: 0; list-style: none; vertical-align: middle; font-weight:normal; }
+	img { border:0; margin: 0; padding: 0;   }
+	body { color: #000; -webkit-user-select: none; -webkit-text-size-adjust: none; font:normal 16px/200% "微软雅黑", helvetica, arial; text-align:left;   }
+	/* 多图滚动 */
+	.scrollBox{ margin:10px auto; text-align:center;  }
+	.scrollBox .bd li{ width:100%; font-size:14px; margin:0 auto;}
+	.scrollBox .bd li a{ -webkit-tap-highlight-color:rgba(0,0,0,0); }  /* 去掉链接触摸高亮 */
+	/*.scrollBox .bd li img{ width:140px;}*/
+	.scrollBox .hd{ height:20px; overflow:hidden; font-size:0; }
+	.scrollBox .hd ul{ display:inline-block; padding-top:5px; }	
+	.scrollBox .hd li{ display:inline-block; width:8px; height:8px; background:#D0D0D0; margin:0 5px; vertical-align:top; overflow:hidden; 
+	-webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; 
+	}
+	.scrollBox .hd .on{ background:#BA2636;  }
+	.scrollBox .prev,.scrollBox .next{ display:inline-block; width:25px; height:20px; overflow:hidden; margin:0 5px;  vertical-align:top; }
+	.scrollBox .next{ background-position:-105px 0; }
+	/*添加的样式*/
+	.bd ul li a img{
+		width: 100%;
+		height: 100%;
+	}
+	#scrollBox{
+		position: relative;
+	}
+	#scrollBox .hd ul{
+		position: absolute;
+		bottom: 15px;
+	}#rightnow{
+		position: relative;
+	}#rightnow .join{
+		position: absolute;
+		bottom: 40px;
+		/*border: 1px solid #ccc;*/
+		/*border-radius: 5px;*/
+		padding: 5px 25px;
+		background: #cfc;
+		color: #666;
+	}
+</style>
+
+<body>
+	<!-- 多图滚动 -->
+	<div id="scrollBox" class="scrollBox">
+		<div class="bd">
+				<ul>
+					<li>
+						<!-- 分配数据加上模板标签 -->
+						<a class="pic" href="#"><img src="{weikucms:$result.url_1}" /></a>
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<a class="pic" href="#"><img _src="{weikucms:$result.url_2}" /></a>
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<a class="pic" href="#"><img _src="{weikucms:$result.url_3}" /></a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a class="pic" href="#"><img _src="{weikucms:$result.url_4}" /></a>
+						 <p id="rightnow"><a href="{weikucms::U('Wap/Index/index',array(token=>$token))}" class="join">立即进入</a></p>
+					</li>
+				</ul>
+		</div>
+		<div class="hd">		
+				<ul></ul>		
+		</div>
+
+	</div><!-- scrollBox E -->
+	<script type="text/javascript">
+		TouchSlide({ 
+			slideCell:"#scrollBox",
+			titCell:".hd ul", 
+			effect:"leftLoop", 
+			autoPage:true, 
+			switchLoad:"_src" 
+		});
+	</script>
+
+</body>
+</html>

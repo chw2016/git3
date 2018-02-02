@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="{weikucms::RES}/laundry/logistics/css/default.css" type="text/css">
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::RES}/laundry/logistics/js/jquery-1.8.2.min.js"></script>
+<meta charset="UTF-8">
+<title>96洗衣店</title>
+<meta name="Keywords" content="96洗衣店">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+</head>
+<body>
+<!-- 员工信息-->
+<div class="bookingTips" style="line-height:25px;">
+    <strong>温馨提示</strong>
+    <div style="line-height:20px;">您好！{weikucms:$employeesInfo['employees_name']}，欢迎使用96洗衣店{weikucms:$bagInfo['bag_sn']}号洗衣袋</div>
+</div>
+<!--/员工信息 -->
+<div class="navigation clearfix">
+  <div class="m-3 clearfix">
+    <ul>
+      <li>
+        <div><a href="{weikucms::U('Laundry/search',array('token'=>$token,'openid'=>$openid))}&bagid={weikucms:$bagInfo['id']}">
+          <ol>
+            <i><img src="{weikucms::RES}/laundry/logistics/img/navigation_01.png"></i>
+            <p>添加订单</p>
+          </ol>
+          </a></div>
+      </li>
+      <li>
+        <div><a href="{weikucms::U('Laundry/bagstatusselect',array('token'=>$token,'openid'=>$openid))}&bagid={weikucms:$bagInfo['id']}">
+          <ol>
+            <i><img src="{weikucms::RES}/laundry/logistics/img/navigation_02.png"></i>
+            <p>选择状态</p>
+          </ol>
+          </a></div>
+      </li>
+      <li>
+        <div><a href="{weikucms::U('Laundry/bagorder',array('token'=>$token,'openid'=>$openid))}&bagid={weikucms:$bagInfo['id']}">
+          <ol>
+            <i><img src="{weikucms::RES}/laundry/logistics/img/navigation_03.png"></i>
+            <p>查看袋子中订单</p>
+          </ol>
+          </a></div>
+      </li>
+      <li id="clear">
+        <div><a href="javascript:void(0);">
+          <ol>
+            <i><img src="{weikucms::RES}/laundry/logistics/img/navigation_04.png"></i>
+            <p>解除绑定</p>
+          </ol>
+          </a></div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--- copyright S --->
+<div class="coyright clearfix">
+  <div class="coyrLine"><strong>版权所有：96洗衣店</strong></div>
+</div>
+<!--- copyright E --->
+<script type="text/javascript">
+$(function(){
+    $("#clear").click(function(){
+        $("#codFloat").show();
+        $("#GoPay").click(function(){
+            $("#codFloat").hide();
+            var bag_sn = "{weikucms:$bagInfo['bag_sn']}";
+            var openid = "{weikucms:$bagInfo['bag_manager_openid']}";
+            var url = "{weikucms::U('Laundry/clear',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{bag_sn:bag_sn,openid:openid},function(data){
+                if(data.status == 1){
+                    $("#error_tip").show();
+                    $("#tip_div").html(data.info);
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },1000);
+                }else{
+                    $("#error_tip").show();
+                    $("#tip_div").html(data.info);
+                    setTimeout(function(){
+                        $("#error_tip").hide();
+                    },1000);
+                }
+            },'json');
+        });
+    });
+    
+    $('#codGoPayCancel').click(function(event) {
+        $("#codFloat").hide();
+        return false;
+    });
+});
+</script>
+<!-- 提示 -->
+<div id="error_tip" style="display: none;" class="cod">
+  <div class="wx_mask"></div>
+  <div class="wx_confirm">
+    <div class="wx_confirm_inner">
+      <div class="wx_confirm_hd">
+        <div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /提示 -->
+<!-- 弹出框 提示 是否确认解除绑定 -->
+<div id="codFloat" style="display: none" class="cod">
+  <div class="wx_mask"></div>
+  <div class="wx_confirm">
+    <div class="wx_confirm_inner">
+      <div class="wx_confirm_hd">
+        <div class="wx_confirm_tit">是否确认解除绑定？</div>
+      </div>
+      <div class="wx_confirm_bd">
+        <div class="wx_confirm_cont">
+          <div class="confirm_order">
+            <p> <em>洗衣袋编号：</em> <span id="cod_fuwu">{weikucms:$bagInfo['bag_sn']}</span> </p>
+            <p> <em>管理员姓名：</em> <span>{weikucms:$bagInfo['bag_manager_name']}</span> </p>
+            <p> <em>管理员手机：</em> <span id="washing_date_tip">{weikucms:$bagInfo['bag_manager_tel']}</span> </p>
+            <p style="color:red">注意！解除绑定之后会清空袋子中的订单以及袋子的管理员信息，跳出此页面。</p>
+          </div>
+        </div>
+      </div>
+      <div class="wx_confirm_bd">
+        <div class="wx_confirm_btns">
+          <button type="cancel" id="codGoPayCancel">取消</button>
+          <button type="button" id="GoPay" style="background-color:#83cf51">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

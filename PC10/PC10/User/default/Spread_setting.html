@@ -1,0 +1,126 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<!--link rel="stylesheet" href="{weikucms::STATICS}/vote/style.css" /-->
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script src="{weikucms::STATICS}/vote/common.js"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+uploadJson : '/index.php?g=User&m=Upyun&a=kindedtiropic',
+items : [
+'source','undo','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr']
+});
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#picurl').val(),
+                    clickFn : function(url, title) {
+                        K('#picurl').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+    </script>
+
+
+<div class="cLineB">
+  <h4 style="position:relative;"> 微推广奖品设置  
+    <a href="{weikucms::U('Spread/index',array('token'=>$token))}" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;line-height:35px;padding:0 40px;">返回</a>
+  </h4>
+ </div>
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>您可以再此处添加本次推广活动的奖品名称</li>
+        <!-- <li>您可以任意设置您的</li> -->
+    </ol>
+</div>
+
+<div class="msgWrap bgfc">
+<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tbody>
+    
+    <th>奖品名称</th>
+    
+    
+  </tbody>
+<tbody id="div_add_del" name="div_add_del">    
+    <tr>
+        <td>
+            <textarea name="giftname" value="" style="width:450px;" class="px" id="giftname">{weikucms:$present}</textarea>
+        </td> 
+    </tr>
+</tbody>
+  <tbody>
+    <tr>
+      <td><button type="button" name="button" class="btn btn-primary" id="bsubmit">保存</button>
+      </td>
+       <th>&nbsp;</th>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</table>  
+</form>
+</div> 
+</div>
+<script>
+ $(function(){
+        $("#bsubmit").click(function(){
+              var giftname=$('#giftname').val();
+
+               if(! giftname){
+                notif({
+                    msg: "奖品名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+              }
+
+           $.post("{weikucms::U('Spread/giftSetting',array('token'=>$token,'id'=>$res['id']))}",
+                    {giftname:giftname},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        });
+    });
+</script>  
+<include file="Public:footer"/>

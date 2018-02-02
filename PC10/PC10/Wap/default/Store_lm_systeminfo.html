@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+    <script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+    <style type="text/css">
+        .listli{
+            padding: 6px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            margin: 10px 5px;
+            border-bottom: 1px solid #d9dbdb;
+        }
+        .listblock{
+            height: 72px;
+            display: none;
+        }
+        .listnone{
+            min-height: 72px;;
+            display: none;
+        }
+       .on{
+            display: block;
+        }
+        .titles{
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+            /* text-align: center; */
+            background: #CACACA;
+            font-size: 16px;
+            color: #595959;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $('.listli').click(function(){
+                if($(this).find('.listblock').hasClass("on")){
+                    $(this).find('.listblock').removeClass("on");
+                    $(this).find('.listnone').addClass("on");
+                }else{
+                    $(this).find('.listnone').removeClass("on");
+                    $(this).find('.listblock').addClass("on");
+
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="titles">系统公告</div>
+<div>
+    <ul class="list">
+        <volist name="list" id="vo">
+            <li class="listli">
+                <div class="listblock on">
+                    <php>
+                        if(mb_strlen(strip_tags($vo['content']),'utf8') < 80){
+                        echo $vo['content'];
+                        }else{
+                        echo mb_substr(strip_tags($vo['content']),0,80, 'utf8').'...';
+                        }
+                    </php>
+
+                </div>
+                <div class="listnone">
+                    {weikucms:$vo.content}
+                </div>
+            </li>
+        </volist>
+
+    </ul>
+</div>
+<div style="height:52px;"></div>
+<include file="Store_lm:foot" />
+</body>
+</html>

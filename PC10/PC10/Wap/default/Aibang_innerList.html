@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<head>
+    	<title>{weikucms:$tpl.name}</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Aibang/css/aibang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/service/js/jquery.form.js"></script>
+		<style type="text/css">
+			.Rewidth{
+				width:64% !important;
+			}
+			.Refont{
+				font-size: 18px !important;padding-left:11px;
+			}.Recolor{
+				background: #f0f0f0 !important;padding: 6px 0 6px 10px !important;
+			}.Resize{padding-top: 0px !important;font-size: 17px !important;}
+			.Recolor1{color: #878787 !important;padding: 11px 11px !important;font-size: 13px !important;}
+			.personal{font-size: 15px !important;color: #959595 !important;position: relative;bottom: 2px;left: 2px;}
+			.meters{float: right;}
+			#meter{-webkit-appearance:none;border-top-left-radius: 6px;-webkit-border-top-left-radius: 6px;-moz-border-top-left-radius: 6px;-ms-border-top-left-radius: 6px;-o-border-top-left-radius: 6px;border-bottom-left-radius: 6px;-webkit-border-bottom-left-radius: 6px;-moz-border-bottom-left-radius: 6px;-ms-border-bottom-left-radius: 6px;-o-border-bottom-left-radius: 6px;border: 1px solid #7b7b7b;}
+			
+			.margin{
+				margin-left: 2%;
+			}#header form input[type='button']{
+				height: 40px;
+				border:none;
+				border-left:1px solid #919191;
+				width:13%;
+				border-right:1px solid #919191;
+			}
+			.zan{
+				float:right;position:relative;bottom:2px;
+			}select{
+				width: 32%;
+				height: 30px;
+				border: 1px solid #878787;
+				border-radius: 6px;
+				-ms-border-radius: 6px;
+				-webkit-border-radius: 6px;
+				-moz-border-radius: 6px;
+				-o-border-radius: 6px;
+				color: #454545;
+			}#loadMore{
+				color: #878787;
+				font-size: 14px;
+				text-align: center;
+				letter-spacing: 3px;
+				height: 24px;
+				line-height: 24px;
+				margin-top: 20px;
+				background: #f5f5f5;
+			}
+		</style>
+    </head>
+    <body>
+        <!-- 初步进入加载框 -->
+        <!-- <div id="loading" style="position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;">
+            <img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%">
+        </div> -->
+        <div id="header">
+            <form action="" method="post" name="form1" id="form1">
+	            <div class="outline outlines">
+	                <select name="ikms" id="ikms">
+	                    <option value="5000">附近5000m</option>
+	                    <option value="4500">附近4500m</option>
+	                    <option value="4000">附近4000m</option>
+	                    <option value="3500">附近3500m</option>
+	                    <option value="3000">附近3000m</option>
+	                    <option value="2500">附近2500m</option>
+	                    <option value="2000">附近2000m</option>
+	                    <option value="1500">附近1500m</option>
+	                    <option value="1000">附近1000m</option>
+	                    <option value="500">附近500m</option>
+	                </select>
+
+	                <select name="types" id="types">
+	                    <option value="0">全部</option>
+	                    <if condition="$type eq '消费'">
+	                        <option value="1" selected="selected">消费</option>
+	                        <option value="2">购物</option>
+	                    <elseif condition="$type eq '购物'"/>
+	                        <option value="1">消费</option>
+	                        <option value="2" selected="selected">购物</option>
+	                    <else/>
+	                        <option value="1">消费</option>
+	                        <option value="2">购物</option>
+	                    </if>
+	                </select>
+
+	                <select name="iHaopin" id="iHaopin">
+	                    <option value="0">默认</option>
+	                    <option value="1">好评</option>
+	                    <option value="0">距离</option>
+	                </select>
+	            </div>
+            </form>
+        </div>
+        <!-- 出现查询排序 -->
+        <div class="findResult">
+			为您在附近找到<span id="storeName">{weikucms:$countStore}</span>个商户
+		</div>
+
+		<ul class="article-list">
+		    <php>foreach($info as $iKey=>$sVal){</php>
+	    	    <php>
+				if($sVal['openid'] == $openid){
+				    echo "<a href='/index.php?g=Wap&m=Aibang&a=store&token=".$sVal['token']."&id=".$sVal['id']."&openid=".$_GET['openid']."&type=same'>";
+				}else{
+				    echo "<a href='/index.php?g=Wap&m=Aibang&a=store&token=".$sVal['token']."&id=".$sVal['id']."&openid=".$_GET['openid']."'>";
+				}
+	    	    </php>
+	    		<li class="Recolor">
+	    			<div class="left" style="width:36%;">
+	    				<div class="circle no-circle">
+	    					<img src="<php>echo $sVal['pic'];</php>" width="100px" height="80px"/>
+	    				</div>
+	    			</div>
+	    			<div class="middle Rewidth">
+	    				<div class="title Refont"><php>echo $sVal['name'];</php></div>
+	    				
+	    				<div class="title Recolor1">
+	    					<php>echo $sVal['channel'];</php>
+	    				</div>
+	    				<div class="title Recolor1" style="padding:0px 11px !important">
+	    					<php>echo $sVal['distance']."m";</php>
+	    					<div class="zan">
+								<img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/up.png" width="18px" />(<php>echo $sVal['good'];</php>)
+								<img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/down.png" width="18px" />(<php>echo $sVal['bad'];</php>)
+						    </div>
+	    			    </div>
+	    		    </div>
+	    	    </li>
+		    <php>echo "</a>";}</php>
+		</ul>
+		<div id="loadMore" time="1">点击加载更多</div>
+		<input type="hidden" name="judge" id="judge" value="{weikucms:$search}"/>
+		<script type="text/javascript">
+            $(function(){
+            	var url = "{weikucms::U('Wap/Aibang/innerList',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'lng'=>$_GET['lng'],'lat'=>$_GET['lat']))}";
+            	// 触发不同的选择框加载数据，千米
+            	$('#ikms').change(function(){
+            		$('#judge').val("");
+            		loadMethod();
+            		var kms = $(this).val(),
+            		    type = $('#types').val(),
+            		    iHaopin = $('#iHaopin').val();
+                    $('.article-list').empty();
+            		//post AJAX
+            		$.post(url,{kms:kms,type:type,haopin:iHaopin},function(data){
+                        $(data.html).appendTo($('.article-list'));
+                        $('#storeName').text(data.count);
+            		},'json');
+
+            	})
+
+            	// 触发不同的选择框加载数据，消费类型
+            	$('#types').change(function(){
+            		$('#judge').val("");
+            		loadMethod();
+            		var type = $(this).val(),
+            		    kms = $('#ikms').val(),
+            		    iHaopin = $('#iHaopin').val();
+            		$('.article-list').empty();
+            		//post AJAX
+            		$.post(url,{kms:kms,type:type,haopin:iHaopin},function(data){
+                        $(data.html).appendTo($('.article-list'));
+                        $('#storeName').text(data.count);
+            		},'json');
+            	})
+
+            	// 触发不同的选择框加载数据，距离还是好评
+            	$('#iHaopin').change(function(){
+            		$('#judge').val("");
+            		loadMethod();
+            		var iHaopin = $(this).val(),
+            		    kms = $('#ikms').val(),
+            		    type = $('#types').val();
+            		$('.article-list').empty();
+            		//post AJAX
+            		$.post(url,{kms:kms,type:type,haopin:iHaopin},function(data){
+                        $(data.html).appendTo($('.article-list'));
+                        $('#storeName').text(data.count);
+                        
+            		},'json');
+            	})
+
+            	// 点击加载
+            	$('#loadMore').click(function(){
+            		var iHaopin = $('#iHaopin').val(),
+            		    kms = $('#ikms').val(),
+            		    type = $('#types').val(),
+            		    _This = $(this);
+            		var times = _This.attr('time');
+            		var name;
+            		name = "{weikucms:$search}";
+            		if($('#judge').val() == ""){
+            			name = "";
+            		}
+            		$.post(url,{name:name,kms:kms,type:type,haopin:iHaopin,times:times},function(data){
+            			if(data.status == 1){
+            				_This.text('没有更多数据');
+            				return;
+            			}
+                        $(data.html).appendTo($('.article-list'));
+                        $('#storeName').text(data.count);
+                        _This.attr('time',Number(times)+1);
+            		},'json');
+            	})
+
+            	// 定义一个方法
+            	function loadMethod(){
+            		$('#loadMore').text('点击加载更多');
+                    $('#loadMore').attr('time',1);
+            	}
+
+            })
+		</script>
+    </body>
+</html>

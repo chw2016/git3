@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<title>方案标题</title>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{weikucms::RES}/Jd/css/index1.css">
+	<link rel="stylesheet" href="{weikucms::RES}/Jd/css/lication.css">
+    <link rel="stylesheet" href="{weikucms::RES}/Jd/css/icon/style.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".arrow-btn").click(function(){
+			var data=$(this).html();
+			alert(1);
+			if($(this).hasClass('on')){
+				data--;
+				$(this).removeClass('on');
+			}else{
+				data++;
+				$(this).addClass('on');
+			}
+			$(this).html(data);
+		})
+	})
+	</script>
+	<style>
+	.foot {
+		position: fixed;
+		bottom: 0;
+		height: 60px;
+		background-color: #fff;
+		width: 100%;
+		display: -webkit-box;
+		border-top: 1px solid #ccc;
+		z-index: 5;
+	}
+	.foot span {
+		display: block;
+		width: 130px;
+		height: 35px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		text-align: center;
+		line-height: 35px;
+		box-shadow: 0 1px 6px #fff;
+		margin-top: 12px;
+		 margin-left:inherit;
+		color: #000;
+	}
+	</style>
+</head>
+<body>
+<if condition="$_GET['type'] eq  'enlist'">
+    <div class="main-content">
+        <div class="main-content-title">
+            <span class="main-content-title-left">报名列表  ({weikucms:$listcount})</span>
+        </div>
+        <volist name="list" id="so">
+            <div class="p10">
+                <div class="main-center">
+                    <div class="main-center-left">
+                        <if condition="$so['headpic']">
+                            <img src="{weikucms:$so.headpic}" alt="">
+                            <else/>
+                            <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                        </if>
+                    </div>
+                    <div class="main-center-right">
+                        <div class="color737373">参与人：{weikucms:$so.name}</div>
+                        <div class="color737373">报名时间：
+                            <php>
+                                $times = strtotime($so['add_time']);
+                                echo date('Y/m/d H:i',$times);
+                            </php>
+                        </div>
+                        <div class="color737373">组织名称：{weikucms:$so.organization}</div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+    <else/>
+    <div class="main-content">
+        <div class="main-content-title">
+            <span class="main-content-title-left">投标列表 ({weikucms:$listcount})</span>
+        </div>
+
+        <volist name="list" id="so">
+            <div class="p10">
+                <div class="main-center">
+                    <div class="main-center-left">
+                        <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                    </div>
+                    <div class="main-center-right">
+                        <div class="color737373">作者：{weikucms:$so.author}</div>
+                        <div class="colora4a4a4">
+                            <php>
+                                $times = strtotime($so['add_time']);
+                                echo date('Y/m/d H:i',$times);
+                            </php>
+                        </div>
+                        <div class="color3d3d3d">标书名称:《{weikucms:$so.tender}》</div>
+                        <div class="color737373">标书链接地址：{weikucms:$so.activeurl}</div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+
+
+
+</if>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+   <title>鱼美人-最新活动</title>  
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body class="professor" >
+<div id="list" class="limitShoppingBox" >
+
+
+<!--     <div id="fristlist" onclick="window.location.href='{weikucms::U('show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$vo['id'],'aid'=>$_GET['aid']))}'">
+    <img src="{weikucms:$vo.pic}" title="图片">
+    </div> -->
+  
+   
+  
+        <volist id="vo" name="list" >
+        <li class="listset"  onclick="window.location.href='{weikucms::U('show',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'lmid'=>$_GET['lmid']))}'">
+            <div class="listsetleft">
+                <h3>
+                <?php 
+    				          echo mb_substr($vo['name'],0,30,'utf-8');
+    			?>
+                </h3>
+                <p>
+                     
+                 <?php
+                   echo mb_substr($vo['ms'],0,30,'utf-8');
+                 ?>
+                </p>
+            </div>
+            <div class="listsetright">
+                <img src="{weikucms:$vo.namepic}" title="图片">
+            </div>
+            <div style="clear:both;"></div>
+        </li>
+        </volist>
+  
+ 
+</div>
+
+<script>
+   var n=0;
+   var a=0;
+   var timeOut = null;
+  
+   $(document).scroll(function(){
+	     //滚动条顶部的偏移==总个文档的高度-窗口的高度
+    	 if($(window).scrollTop()==$(document).height()-$(window).height()){//获取低部
+         if(a!=10){//显示
+        	$("#aaa").show(); 
+         }
+        // if(timeOut != null) { return false;}  //判断容器timeOut 是否在运行！
+      	 n++;
+      	 timeOut = setTimeout(function(){//1秒加载一次
+           $.post("{weikucms::U("",array('token'=>$_GET['token'],'lmid'=>$_GET['lmid']))}",{"n": n},function(html){
+        	   
+          $(html).appendTo('.limitShoppingBox');//第五步：拿到class="limitShoppingBox"看效果
+/*          	    if(!data.str){//隐藏
+        	    	    a=10;
+        	    		$("#aaa").hide(); 
+        	    } */  
+        	},'html');
+      	},1000);   
+     }
+    }) 
+</script> 
+
+
+</body>
+</html>

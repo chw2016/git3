@@ -1,0 +1,72 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Media/marketingactor',array('token'=>$token))}" >活动参与者管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以了解营销活动参与者的相关资料！</li>
+
+    </ol>
+</div>
+<div class="box-content">
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th >序号</th>
+                    <th >活动主题/名称</th>
+                    <th >微信昵称</th>
+                    <th >姓名</th>
+                    <th >报名时间</th>
+                    <th >电话</th>
+                    <th >地址</th>
+                    <th style="width: 300px;text-align: center">备注</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <volist name="actor" id="vo" key="i">
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$vo.title}</td>
+                        <td>{weikucms:$vo.nickname}</td>
+                        <td>{weikucms:$vo.aname}</td>
+                        <td>{weikucms:$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                        <td>{weikucms:$vo.phone}</td>
+                        <td>{weikucms:$vo.address}</td>
+                        <td>{weikucms:$vo.content}</td>
+                        <td>
+                            <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Media&amp;a=delmarketingactor&amp;token={weikucms:$token}&amp;mid={weikucms:$vo.mid};aid={weikucms:$vo.id}')" href="#">删除</a>
+                        </td>
+
+                    </tr>
+                </volist>
+                </tbody>
+
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+<include file="Public:footer"/>

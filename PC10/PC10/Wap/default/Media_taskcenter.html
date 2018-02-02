@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <style type="text/css">
+        .renwuPic img{
+            display: block;width: 100%;height:100%;
+        }
+        .fenpage{
+            text-align: center;
+        }
+        .fenpage a{
+            border-radius: 2px;
+            border: 1px solid #ADADAD;
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 0 2px;
+        }
+        .fenpage .current{
+            border-radius: 2px;
+            border: 1px solid #8E1A84;;
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 0 2px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+           $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').each(function(i,o){
+				$(this).click(function(){
+                   $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                   $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+			})
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+               // $(this).children('img').hide();
+            })
+        })
+    </script>
+</head>
+<body>
+
+<!--分享罩罩-->
+<div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+    <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+</div>
+<!--分享罩罩-->
+
+<div class="myul header  h3 red-bg white">
+    <div class="arrowLeft white back"></div>
+    <div class="setMiddle textMiddle">
+        任务中心
+    </div>
+</div>
+<div class="searchBox myul white-bg border-2">
+    <form id="search-form" action="{weikucms::U('Wap/Media/taskcenter',array('token'=>$token,'openid'=>$openid))}" method="post">
+        <input type="search" name="title" class="searchRW light-gray" placeholder="请输入关键字进行搜索">
+        <bottom type="submit" class="fixBg icon icon-search searchIcon"></bottom>
+    </form>
+
+</div>
+<div class="RWhav myul h4 white-bg darker-gray">
+    <volist name="bigcate" id="big" key="k">
+        <div class="textMiddle myli RWhavItem <if condition='$k eq 1'>on</if>" cid="{weikucms:$big.id}" havName="article">
+            {weikucms:$big.cname}
+        </div>
+    </volist>
+</div>
+
+<div>
+    <volist name="bigcate" id="so">
+        <div class="RWhavItemTagList gray">
+            <volist name="so['son']" id="vo" key="i">
+                <div class="getlabel">
+                    <div class="floatLeft border-4 RWhavItemTag"  lid="{weikucms:$vo.id}">
+                        {weikucms:$vo.lname}
+                    </div>
+                </div>
+            </volist>
+            <div class="clearBoth"></div>
+        </div>
+    </volist>
+</div>
+
+
+
+<!-- 任务列表循环体 -->
+<div id="rowlist">
+    <volist name="taskdata" id="data">
+        <div class="renwuList setMiddle white-bg gray border-4 ">
+            <div class="myul">
+                <div class="renwuPic fixBg"><img src="{weikucms:$data.pic}" alt="图片"/></div>
+                <div class="renwuInfo" data-url="{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$data['id']))}">
+                    <div class="renwuName light-red">{weikucms:$data.title}</div>
+                    <div class="renwuSN" style="font-size:12px;">编号：{weikucms:$data.key}</div>
+                    <div class="renwuState" style="font-size:12px;">
+                        状态：进行中
+                    </div>
+                    <div class="renwuContent light-gray" style="font-size:12px;">
+                        <php>
+                            if(strlen($data['abstract']) > 50){
+                            echo htmlspecialchars_decode(mb_substr($data['abstract'],0,50,'utf-8'))."...";
+                            }else{
+                            echo htmlspecialchars_decode($data['abstract']);
+                            }
+
+                        </php>
+                    </div>
+                </div>
+            </div>
+            <div class="myul">
+                <div class="gotton textMiddle light-gray">
+                    已有<span class="h4">{weikucms:$data.number}</span>人领取
+                </div>
+                <div class="getIt textMiddle red h4" onclick="window.location.href='{weikucms::U('Wap/Media/taskdetail',array('tid'=>$data['id'],'token'=>$token,'openid'=>$openid))}'">我要领取</div>
+                <div class="share fixBg  icon icon-QuickShare" onclick="doshare({weikucms:$data.id},'{weikucms:$data.pic}','{weikucms:$data.title}','{weikucms:$data.abstract}',{weikucms:$data.pid});"></div>
+                <div class="red-bg myul border-4 shareBox hide Invitation">
+                    <div class="myli white textMiddle shareItem icon-CN_tencentwechatmoments"></div>
+                    <div class="myli white textMiddle shareItem icon-CN_tencentqzone"></div>
+                    <div class="myli white textMiddle shareItem icon-CN_sinaweibo"></div>
+                    <div class="myli white textMiddle shareItem icon-CN_baidutieba"></div>
+                    <div class="myli white textMiddle shareItem icon-CN_doubanB"></div>
+                </div>
+            </div>
+        </div>
+    </volist>
+</div>
+<div style="text-align: center;" class="fenpage">{weikucms:$page}</div>
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var is_auth = {weikucms:$tpl['is_auth']};
+    var shareTitle="";
+    var imgUrl="";
+    var descContent="";
+    var shareUrl;
+	
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+
+    function doshare(id,pic,title,abstract,pid){
+	
+        if(is_auth ==1){	
+            if(pid == 0){			
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/openid/{weikucms:$openid}/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect";
+            }else{
+			
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/openid/{weikucms:$openid}/product_id/"+pid+"/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect";
+            }
+			
+            shareTitle = title;
+            imgUrl = "<php>echo C('site_url');</php>"+pic;//主题图片
+            descContent = abstract;
+
+        }else{
+
+            if(pid == 0){
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/openid/{weikucms:$openid}/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+            }else{
+                shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getdistributioninfo/token/{weikucms:$token}/openid/{weikucms:$openid}/product_id/"+pid+"/tid/"+id+"&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
+            }
+            shareTitle = title;
+            imgUrl = "<php>echo C('site_url');</php>"+pic;//主题图片
+            descContent = abstract;
+        }
+		
+		
+		wx.ready(function () {
+	        // 在这里调用 API
+	        wx.onMenuShareTimeline({
+	            title: shareTitle, // 分享标题
+	            link: shareUrl, // 分享链接
+	            imgUrl: imgUrl, // 分享图标
+	            success: function () {
+	
+			
+	                // 用户确认分享后执行的回调函数
+	                var url = "{weikucms::U('Media/sharecount',array('token'=>$token,'openid'=>$openid))}";
+	                $.post(url,{tid:tid},function(data){
+	                    if(data.code == 0){
+	                        alert(data.mgs);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },2000)
+	                    }else{
+	                        alert(data.mgs);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },2000)
+	                    }
+	                },'json');
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+				
+	            }
+	        });
+
+	        wx.onMenuShareAppMessage({
+	            title: shareTitle, // 分享标题
+	            desc: descContent, // 分享描述
+	            link: shareUrl, // 分享链接
+	            imgUrl: imgUrl, // 分享图标
+	            type: '', // 分享类型,music、video或link，不填默认为link
+	            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	            success: function () {
+	                // 用户确认分享后执行的回调函数
+					//alert(123);
+	                var url = "{weikucms::U('Media/sharecount',array('token'=>$token,'openid'=>$openid))}";
+	                $.post(url,{tid:tid},function(data){
+	                    if(data.code == 0){
+
+	                    }else{
+	                        alert(data.mgs);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },2000)
+	                    }
+	                },'json');
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+	            }
+	        });
+	    });
+		
+		
+    }
+	
+
+    
+
+</script>
+
+
+
+<!-- 结束 -->
+
+<script type="text/javascript">
+    function jump(id){
+        var link = "{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid))}&tid="+id;
+        window.location.href=link;
+    }
+    $(function(){
+        $('.RWhavItemTagList').find('.getlabel').css('display','none');
+        $('.RWhavItemTagList').eq(0).find('.getlabel').css('display','block');
+        $('.RWhavItem').click(function(){
+            $('.RWhavItemTagList').eq($(this).index()).find('.getlabel').show().parent().siblings().find('.getlabel').hide();
+            $('.RWhavItemTagList').eq($(this).index()).show().siblings().hide();
+        })
+        $('.RWhavItemTagList').each(function(){
+            $(this).find('.getlabel').eq(0).find('.RWhavItemTag').addClass('on');
+        });
+        $('.RWhavItemTagList').eq(0).css('display','block').siblings().css('display','none');
+        // 定义一个方法
+        function share(){
+             if($(this).next(".shareBox").is(':hidden')){
+                $(".shareBox").removeAttr('style');
+                $(this).next(".shareBox").fadeIn(50).css({
+                  "display"  : "-webkit-box"
+                });
+              }else{
+                $(this).next(".shareBox").removeAttr('style')
+              }
+        }
+        
+//        通过异步加载
+
+        $(".RWhavItemTag").each(function(i,o){
+            $(o).click(function(){
+                var lid = $(this).attr('lid');
+                var cid;
+                $(".RWhavItem").each(function(i,o){
+                    if($(o).hasClass('on')){
+                       cid = $(this).attr('cid');
+                    }
+                });
+                var url = "{weikucms::U('Media/taskcenter',array('token'=>$token,'openid'=>$openid))}";
+               
+                $.post(url,{cid:cid,lid:lid},
+                        function(data){
+                            if(data.datas ==null){
+								$('#rowlist').children().remove();
+								str = "<div class='renwuList setMiddle white-bg gray border-4' style='text-align:center;line-height:30px;font-size:10px;'>暂无数据</div>"
+                                $('#rowlist').append(str);
+							}else{
+                                $('#rowlist').children().remove();
+                                var str = '';
+                                for(var i = 0;i < data.datas.length;i++){
+                                    str +="<div class='renwuList setMiddle white-bg gray border-4'>"+
+                                    "<div class='myul'>"+
+                                    "<div class='renwuPic fixBg'><img src='"+data.datas[i].pic+"'/></div>"+
+                                    "<div class='renwuInfo'>"+
+                                    "<div class='renwuName light-red'>"+data.datas[i].title+"</div>"+
+                                    "<div class='renwuSN' style='font-size:12px;'>编号："+data.datas[i].key+"</div>"+
+                                    "<div class='renwuState' style='font-size:12px;'>"+
+                                    "状态：进行中"+
+                                    "</div>"+
+                                    "<div class='renwuContent light-gray' style='font-size:12px;'>"+ data.datas[i].abstract+
+                                    "</div>"+
+                                    "</div>"+
+                                    "</div>"+
+                                    "<div class='myul'>"+
+                                    "<div class='gotton textMiddle light-gray'>"+
+                                    "已有<span class='h4'>"+data.datas[i].number+"</span>人领取"+
+                                    "</div>"+
+                                    "<div class='getIt textMiddle red h4' onclick='jump("+data.datas[i].id+");'>我要领取</div>"+
+                                    "<div class='share fixBg  icon icon-QuickShare'></div>"+
+                                    "<div class='red-bg myul border-4 shareBox hide Invitation'>"+
+                                    "<div class='myli white textMiddle shareItem icon-CN_tencentwechatmoments'></div>"+
+                                    "<div class='myli white textMiddle shareItem icon-CN_tencentqzone'></div>"+
+                                    "<div class='myli white textMiddle shareItem icon-CN_sinaweibo'></div>"+
+                                    "<div class='myli white textMiddle shareItem icon-CN_baidutieba'></div>"+
+                                    "<div class='myli white textMiddle shareItem icon-CN_doubanB'></div>"+
+                                    "</div>"+
+                                    "</div>"+
+                                    "</div>";
+                                }
+                                $('#rowlist').append(str);
+                                $('.share').bind('touchend',share);
+                                /*$('.renwuPic').bind('touchend',function(){
+                                 window.location.href=link;
+                                 })*/
+                            }
+                        },'json');
+            });
+        });
+
+    })
+</script>
+
+<script>
+    $(function(){
+        $(".renwuInfo").click(function(e){
+            e.stopPropagation();
+            var url = $(this).data("url") ;
+            window.location.href = url;
+        })
+    })
+</script>
+<!--<script type="text/javascript">
+    var iPage = 0;   //定义加载的页数
+    var timeOut = null;  //时间加载器默认为空闲状态
+    var isDone  = false;
+    $(window).scroll(function(){           //滚动促发
+        var diff = Number($(window).height()) + Number(20);
+       /* var leftLi = $('.jiazai>li');*/
+        if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+            if(isDone == true){ return false; }
+            if(timeOut != null) {  return false;}  //判断容器timeOut 是否在运行！
+            iPage++;
+            // 异步加载
+            timeOut = setTimeout(function(){
+                var url = "{weikucms::U('Wap/Media/taskcenter',array('token'=>$token,'openid'=>$openid,'type'=>1))}";
+                $.post(url,{"page": iPage,"pLength":0},function(data){
+                    if(data.status == 0){
+                        console.log(data.fetch);
+                        $('#rowlist').append(data.fetch);
+                        if($.trim(data.fetch) == ''){
+                            isDone = true;
+                        }
+                        timeOut = null;
+                    }else{
+                        iPage--;
+                    }
+                },'json');
+            },500);
+        }
+    });
+
+</script>-->
+</body>
+</html>

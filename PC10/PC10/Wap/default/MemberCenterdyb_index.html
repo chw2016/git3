@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+    <script src="tpl/Wap/default/common/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/iscroll.js"></script>
+    <style type="text/css">
+        body{
+            background-color: rgb(240,240,240);
+        }
+        .orderBtn {
+            position: absolute;
+            bottom: 10px;
+            right: 35px;
+            font-size: 12px;
+            height: 24px;
+            line-height: 24px;
+            width: 60px;
+            text-align: center;
+            color: #fff;
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+        }
+
+        .cancelOrder {
+            background-color: rgb(248,124,124);
+        }
+        .payOrder{
+            right: 100px;
+            background-color: rgb(54, 186, 136);
+        }
+
+        .finishOrder {
+            background-color: rgb(0,150,149);
+        }
+        .finishOrder1{
+            background-color: rgb(0,150,149);
+        }
+
+    </style>
+</head>
+<body >
+<div class="header textMiddle header-green-bg white h3">
+    <div class="setLeft icon-back" onclick="location.href='javascript:history.go(-1);'"></div>
+    <span>订单列表</span>
+</div>
+
+<if condition="$orders eq null">
+<div style="width:100%;line-height:45px;text-align:center;font-size:14px;">暂无订单哦</div>
+<else/>
+<volist name="orders" id="order">
+<div class="orderListBox">
+    <div class="orderListHead">
+        <div class="orderListSn">订单号：{weikucms:$order.ordernumber}</div>
+        <div class="orderState">
+            状态：<span >
+                         
+                <?php if($order['paytype']=='微信支付'){ ?>
+                 <?php if(strtotime($order['buytime'])+10*60 > time()){ ?>
+                    <?php if($order['paystatus'] == 1){ ?>
+					    <font color="green">已支付</font>
+					<?php }else{  ?>
+					    待支付
+					<?php } ?>  
+					  
+                 <?php }else{?>
+				   <?php if($order['paystatus'] == 1){ ?>
+					    <font color="green">已支付</font>
+					<?php }else{  ?>
+					    已取消 
+					<?php } ?> 
+                 <?php } ?>
+               <?php }else{ ?>  
+                   {weikucms:$order.sendstatus}
+               <?php } ?>
+
+            </span>
+        </div>
+        <div class="orderTime">
+            下单时间：{weikucms:$order.buytime}
+        </div>
+        <div class="orderPrice">
+            实际支付：<span><?php echo $order['totalmoney']+$order['noget_money']-$order['score_money'];?>元</span>
+        </div>
+        <?php if($order['sendstatus']=="未确认"&&$order['paystatus'] == 0){ ?>
+           <?php if($order['paytype']=='微信支付'){ ?>
+             <?php if(strtotime($order['buytime'])+10*60 > time()){ ?>
+                <div class="orderBtn payOrder"  oid="{weikucms:$order.id}" onclick="wxpay('{weikucms:$order.ordernumber}',<?php echo $order['totalmoney']+$order['noget_money']-$order['score_money'];?>);">去支付</div>
+                <div class="orderBtn cancelOrder"  oid="{weikucms:$order.id}" >取消订单</div>
+             <?php } ?>
+
+           <?php }else{ ?>  
+            <div class="orderBtn cancelOrder"  oid="{weikucms:$order.id}" >取消订单</div>
+           <?php } ?>
+        <?php }?>
+        <?php if($order['sendstatus']!= '已发货' || $order['sendstatus']!= '已出单,请稍后' || $order['sendstatus']!= '已收货'){ ?>
+        <?php }else{?>
+        <div class="orderBtn cancelOrder"  oid="{weikucms:$order.id}" >取消订单</div>
+        <?php }?>
+
+        <div class="orderTurnTip tip-yellow yellowTip"></div>
+    </div>
+    <div class="orderContent">
+
+        <div class="OCWrap">
+            <volist name="order[detail]" id="list">
+            <div class="myul orderContentItem">
+                <div class="circle orderContentItemLogoWrap">
+                    <div class="circle fixBg orderContentItemLogo" style="background-image: url('{weikucms:$list.pic}')">
+
+                    </div>
+                </div>
+                <div class="orderContentItemInfo">
+                    <div class="OCIIname">
+                        {weikucms:$list.gname}
+                    </div>
+                    <div class="OCIInum">
+                        数量：{weikucms:$list.num}份
+                    </div>
+                    <div class="RMB OCIIprice">
+                        共{weikucms:$list.total}元
+                    </div>
+                </div>
+            </div>
+
+            </volist>
+
+        </div>
+
+        <div class="OCIIPay">
+            支付类型：{weikucms:$order.paytype}
+        </div>
+    </div>
+</div>
+</volist>
+
+</if>
+<form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+    <input type="hidden" id="order_money" name="order_money" value="" >
+    <input type="hidden" name="order_text" value="">
+    <input type="hidden" id="orderid" name="orderid" value="">
+    <input type="hidden" name="openid" value="{weikucms:$openid}">
+    <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=MemberCenterdyb&a=index&openid={weikucms:$openid}">
+    <input type="hidden" name="type" value="Commerce_dyb">
+</form>
+
+</body>
+<script type="text/javascript">
+    function wxpay(ordernum,money){
+        $("#order_money").val(money);
+        $("#orderid").val(ordernum);
+        $("#myweipayform").submit();
+
+    }
+    Panel($(".orderListBox"),$(".orderListHead"),$(".orderContent"));
+    /*function qeire(this){
+        if(confirm("您确认收到货了吗"))
+        {
+            var oid=this.attr('oid');
+            var url="{weikucms::U('MemberCenterdyb/qieren',array('token'=>$token,'openid'=>$openid,'oid'=>$oid))}";
+            $.post{url,{},function(data){
+                if(data.state==1){
+                    alert('成功');
+                }
+        },'json'}
+        }else{
+            return false;
+        }
+
+    }*/
+    $(function(){
+        $(".orderBtn").click(function(e){
+            e.stopPropagation();	//阻止冒泡，防止面板展开。
+            var str=$(this).text();
+            if(!confirm("您确定"+str+"吗？")){
+                return false;
+            }
+            if($(this).hasClass('finishOrder')){
+                //确认订单操作
+                var oid=$(this).attr('oid');
+                var url="{weikucms::U('MemberCenterdyb/qieren',array('token'=>$token,'openid'=>$openid))}";
+                //alert(url);
+                $.post(url,{oid:oid},function(data){
+                    if(data.state==1){
+                        location.reload();
+                    }else{
+                        alert("失败");
+                    }
+                },"json");
+            }else if($(this).hasClass('cancelOrder')){
+
+                //取消订单操作
+                var oid=$(this).attr('oid');
+                var url="{weikucms::U('MemberCenterdyb/quxia',array('token'=>$token,'openid'=>$openid))}";
+                //alert(url);
+                $.post(url,{oid:oid},function(data){
+                    if(data.state==1){
+                        location.reload();
+                    }else{
+                        alert("失败");
+                    }
+                },"json");
+            }
+        })
+    })
+
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.hideOptionMenu();
+    });
+
+</script>
+</html>

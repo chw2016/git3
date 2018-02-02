@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="{weikucms::RES}/branch/css/main.css" />
+<script language="javascript" type="text/javascript" src="{weikucms::RES}/branch/js/jquery.js"></script>
+<title>登录<if condition="$modulename eq 'Kg_super_meb'">万普微校区<elseif condition="$modulename eq 'Laundry_brandserviceproviders'" />万普微洗衣<elseif condition="$modulename eq 'Shopdoor'" />万普分门店</if></title>
+</head>
+
+<body>
+	<!--all div start-->
+	<div class="containt">
+
+
+		<div class="loginbox">
+			<div id="loginbox-title">
+				<span></span>
+			</div>
+			<div id="loginbox-logo"></div>
+
+			<div id="loginbox-form">
+				<div class="loginbox-err dn" id="err_area">
+					<span class="vm" id="err_tips"> </span>
+				</div>
+				<form action="" method="post">
+					<input type="hidden" id="modulename" name="modulename" value="{weikucms:$modulename}" />
+					<input type="hidden" id="module" name="module" value="{weikucms:$module}" />
+					<input type="hidden" id="action" name="action" value="{weikucms:$action}" />
+					<input type="hidden" id="branchid" name="branchid" value="{weikucms:$branchid}" />
+					<input type="hidden" id="token" name="token" value="{weikucms:$token}" />
+					<input type="hidden" id="form_submit" name="form_submit" value="ok" />
+					<input name="nchash" type="hidden" value="e0a9df8a" />
+					<input type='hidden' name='formhash' value='83dcc14f' />
+					<!-- 选择菜单 -->
+					<div id="loginbox-select">
+						<i class="loginbox-icon se"></i>
+						<if condition="$modulename eq 'Kg_super_meb'"> 
+						<span id="shop-name">微校区</span> 
+						<elseif condition="$modulename eq 'Laundry_brandserviceproviders'" /> 
+						<span id="shop-name">微洗衣</span>
+                        <elseif condition="$modulename eq 'Homenice_zm'" />
+                        <span id="shop-name">微商系统登录</span>
+						<elseif condition="$modulename eq 'Shopdoor'" />
+                        <span id="shop-name">分门店</span>
+						</if>
+					</div>
+					<!-- 帐号 -->
+					<div id="loginbox-name">
+
+						<i class="loginbox-icon un"></i>
+						<input type="text" name="user_name" class="input" id="input-name" placeholder="帐号" value="" onkeydown="this.style.color='rgba(230,92,32,1)'" />
+
+					</div>
+					<!-- 密码 -->
+					<div id="loginbox-password">
+
+						<i class="loginbox-icon psw"></i>
+						<input type="password" name="password" class="input" id="input-password" placeholder="密码" value="" onkeydown="this.style.color='rgba(230,92,32,1)'" />
+
+					</div>
+
+				</form>
+				<!-- 提交 -->
+				<div id="loginbox-comfirm">
+					<a href="javascript:void(0)" class="btn-comfirm" id="input-submit">登录</a>
+				</div>
+
+
+
+			</div>
+		</div>
+
+	</div>
+	<!--all div end-->
+</body>
+
+<script>
+    $(document).ready(function() {
+        $("#input-submit").click(function() {
+            var user_name = $("#input-name").val();
+            var password = $("#input-password").val();
+            var form_submit = $("#form_submit").val();
+            var formhash = $("input[name='formhash']").val();
+            var action = $("#action").val();
+            var branchid = $("#branchid").val();
+            var token = $("#token").val();
+            var module = $("#module").val();
+            var modulename = $("#modulename").val();
+            //alert(token);
+
+            if (!user_name) {
+                $("#err_tips").text("你还没输入帐号！");
+                $("#err_area").show();
+                return false;
+            }
+            if (!password) {
+                $("#err_tips").text("你还没输入密码！");
+                $("#err_area").show();
+                return false;
+            }
+            var url = "{weikucms::U('Branch/index',array('token'=>$token))}";
+            $.post(url, {
+                user_name : user_name,
+                password : password,
+                action : action,
+                branchid : branchid,
+                token : token,
+                module : module,
+                modulename : modulename,
+                form_submit : form_submit,
+                formhash : formhash
+            }, function(data) {
+                if (data.status == 1) {
+                    window.location.href = data.url;
+                } else {
+                    $("#err_tips").text(data.info);
+                    $("#err_area").show();
+                    return false;
+                }
+            }, 'json');
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,74 @@
+﻿<html>
+	<head>
+		<title>{weikucms:$tpl['name']}</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				list-style: none;
+				margin: 0;
+				text-decoration: none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			*:focus{
+				outline: 0px;
+			}
+			body{
+				background: url(../imgs/bg.jpg) center no-repeat;
+				max-width:640px;
+				margin: 0 auto;
+				font-family: "Microsoft YaHei"; 
+				font-size: 12px;
+			}#content{
+			padding-bottom: 20px;
+			}
+			#content ul{
+				margin: 0px auto;
+			}#content ul li{margin-top: 5px;width: 90%;background: #faebb2;border-radius: 6px;}
+			.clear{clear: both;}
+			#content ul li .imgs{height: 100px;background: #fff;border-top-left-radius: 12px;border-top-right-radius: 12px;}
+			
+			
+		</style>
+	</head>
+	<body>
+      <img src="{weikucms:$info['starts_pic']}" id="header"/>
+		
+		<div id="content">
+
+		
+		<ul>
+            <volist name="set" id="vo">
+				<li>
+					<div class="imgs"><a href="{weikucms::U('Works/index',array('token'=>$_GET['token'],'mid'=>$vo['id'],'sid'=>$vo['sid'],'openid'=>$_GET['openid']))}"><img src="{weikucms:$vo.pic}" style="width:100% ;height: 98%"  alt="{weikucms:$vo.name}"></a></div>
+				</li>
+			</volist>
+		</ul>
+		<div class="clear"></div>
+		</div>
+		
+		
+		<script type="text/javascript">
+			$(function(){
+				$('#header').css('max-width',$('body').width());
+				$('ul>li:even').css({'margin-left':'15px'});
+				$('ul>li:odd').css({'margin-left':'15px'});
+				$('#content').css({'height':$('body').height()*0.68+"px",'overflow':'scroll','overflow-x':'hidden'});
+			})
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+

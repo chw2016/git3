@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css">
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+    <style>
+        .content img{
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="top">
+    <div class="circleBorder">
+        <div class="homeBtn">
+            <span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span>
+        </div>
+    </div>
+</div>
+<div class="Box Stop">
+     <div class="cardBox">
+         <div class="cardSwrap myul">
+             <?php if($data[pic1]):?>
+            <div class="cardslide vipcard" style="background: url('{weikucms:$data.pic1}')"></div>
+             <?php endif;?>
+             <?php if($data[pic2]):?>
+             <div class="cardslide vipcard" style="background: url('{weikucms:$data.pic2}')"></div>
+             <?php endif;?>
+             <?php if($data[pic3]):?>
+             <div class="cardslide vipcard" style="background: url('{weikucms:$data.pic3}')"></div>
+             <?php endif;?>
+         </div>
+    </div>
+	<div class="BoxHead Title">
+        <div>{weikucms:$data[title]}</div>
+        <div>发布时间：<span><?php echo date("Y-m-d",$data[createtime]);?></span></div>
+    </div>
+    <div class="contentBox Detail">
+    <div class="border-top"></div>
+        <div class="content detailContent">
+        <span>
+        {weikucms:$data[info]}
+        </span>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--<script type="text/javascript">
+document.body.addEventListener('touchmove', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+});
+</script>-->
+<script type="text/javascript">
+$(".borderRightBox").height($(".detalListBox").height()+63);
+	slider($(".cardBox"),$('.cardSwrap'),$('.cardslide'));myFadeIn()
+</script>
+</html>

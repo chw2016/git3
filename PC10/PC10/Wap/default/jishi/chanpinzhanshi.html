@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    产品展示
+</div>
+
+<div class="produceHav myul white">
+    <foreach name='ProductType' item='Type' key='tid'>
+    <div class='textMiddle white <if condition="$type eq $tid">on</if> h5 blur-gray-bg havItem myli' onclick="window.location.href='{weikucms::U('Wap/Jishi/chanpinzhanshi',array('token'=>$token,'openid'=>$openid,'type'=>$tid))}'">
+        {weikucms:$Type}
+    </div>
+    </foreach>
+</div>
+
+<div class=" produceListBox">
+    <if condition="$Product neq ''">
+    <!-- 循环体开始 -->
+    <foreach name='Product' item='Item'>
+    <div class="produceListItem boxShadow floatLeft" onclick="window.location.href='{weikucms::U('Wap/Jishi/licaichanpinjieshao',array('token'=>$token,'openid'=>$openid,'id'=>$Item['id']))}'">
+        <div class="PLIImg fixBg" style="background-image:url({weikucms:$Item.image})"></div>
+        <div class="myul PLIHav">
+            <div class="PLIName white">
+            {weikucms:$Item.title|msubstr=0,8,'utf-8',false}
+            </div>
+            <div class="RMB white">
+            {weikucms:$Item.price}
+            </div>
+        </div>
+    </div>
+    </foreach>
+        <else/>
+        <div style="text-align: center;padding: 10px;font-size: 12px;">暂时还没有产品哦！</div>
+    </if>
+    <!-- 循环体结束 -->
+    <div class="clearBoth"></div>
+</div>
+
+</body>
+</html>

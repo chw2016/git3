@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{weikucms:$tpl.name}-关于我们</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/index.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/public-css.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/pc/css/bootstrap.min.css">
+<script src="{weikucms::STATICS}/wapweiui/loan/pc/js/jquery-1.11.1.min.js"></script>
+    <style>
+        .body_ul li { height: inherit; }
+        .fixB{
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .body_ul li { width: 100%; margin: 0; }
+        .width50 { width: 50% !important; }
+        .bs li{
+            color: #337ab7;
+        }
+    </style>
+
+</head>
+<body>
+<!--顶部-->
+<div class="top-body">
+    <div class="top-cen width50" style="margin: 0 auto;">
+        <a href="{weikucms::U('pc_index')}" class="logo bs" style="background: url();">
+            <img src="{weikucms::STATICS}/wapweiui/loan/pc/images/logo.png"  height="60px"/>
+        </a>
+        <div class="top-right">
+            <ul>
+                <a class="bs" href="{weikucms::U('pc_cjwt',array('token'=>$token,'openid'=>$openid))}"><li>常见问题</li></a>
+                <a  class="bs" href="{weikucms::U('pc_gywm',array('token'=>$token,'openid'=>$openid))}"><li>关于我们</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="top-img">
+    <volist name="list" id="vo">
+        <img style="display: block;  width: 49%; margin: auto auto;  margin-left: 25%;" src="{weikucms:$vo.pic}" >
+    </volist>
+
+</div>
+
+
+</body>
+</html>

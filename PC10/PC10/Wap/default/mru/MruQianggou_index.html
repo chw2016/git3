@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-限时抢购</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+        <style type="text/css">
+            .buyText:before{
+                content: "立即购买";
+            }
+            .limitShoppingBoxWrap.off .buyText:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+  
+    <body class="limiting professor" style="overflow-x:hidden" >
+    <div class="header">
+    	<div class="wrapHeader myul">
+    		<div class="circle icon_clock"></div>
+    		<div class="title"><if condition="$type">{weikucms:$type}推荐<else/>限时抢购</if></div>
+    	</div>
+    </div>
+    <div class="limitShoppingBox">
+ <volist name="list" id="v"  >
+        <div class="limitShoppingBoxWrap <if condition="$v['state']  eq 0 "> off </if>">
+            <div class="limitShoppingList myul" >
+            <a href="{weikucms::U('show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+                <div class="fixBg pic"  <if condition="$v['pic']" >  style=" background-image:url('{weikucms:$v.pic}');" </if>  >
+                    
+                </div>
+            </a>    
+                <div class="LSlistInfo"  style="width: 66%;" >
+                <a href="{weikucms::U('show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+                    <div class="title">
+                    
+           
+                      
+                                               <?php 
+    				          echo mb_substr($v['title'],0,23,'utf-8');
+    				       ?>
+                    </div>
+                </a>    
+                    <div class="detail">
+                        <span>已有<span class="count"><if condition="$v['num']" >{weikucms:$v.num}<else/>0</if></span>人报名抢购{weikucms:$orderid}</span>
+                       
+                       <if condition="$v['state']  eq 1 ">
+                       
+                      <a href="{weikucms::U('show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+                      <else/>
+                      <a href="{weikucms::U('show',array('id'=>$v['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}" > 
+                      </if>
+                      
+	                        
+	                        <div class="border-4 textMiddle buy buyText submit" >
+	                        </div>
+                     
+                    
+                       </a>  
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+</volist>    
+<!--   <if condition="$_GET['price'] and $_GET['orderid']">
+                   <form id="myweipayform" method="post" action="{weikucms::U('Weipay/index',array('token'=>$token,'openid'=>$_GET['openid']))}" id="form2" > 支付接口
+                    <input type="hidden" name="order_money" value="<?php print_r($_GET['price']); ?>" id="totalPrice1"> 钱
+                    <input type="hidden" name="order_text" value="六月初八（大吉大利）"> 名字
+                    <input type="hidden" name="orderid" value="<?php print_r($_GET['orderid']); ?>"> 订单id
+					<input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">openid
+                    <input type="hidden" name="returnurl" value="{weikucms::U('Store_shop/cats',array('token'=>$token,'openid'=>$_GET['openid']))}">支付成功后跳转地址
+                    <input type="hidden" name="type" value="Store_new_goods_order">类型并且还得在info.php里去设置 默认Store_new_goods_order
+				    <div class="pay_area" id="pay_area" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+                    <p class="price" id="price">支付现金:￥<strong id="totalPrice" style="font-size:22px;" price="200" market_price="250">{weikucms:$price}</strong></p>
+                    <p class="use_pay"><button type="submit" id="buyBtn1" class="btn btn-success btn-block mt10 J_payBtn"  >微信支付</button></p>
+					<p class="has_pay" style="display:none;"><button type="button" rel="2" class="btn btn-success  btn-block mt10 J_payBtn">确认支付</button></p>
+					</div>
+                </form>
+                       <script type="text/javascript">
+                           $(".J_payBtn").trigger('click');
+                       </script>
+   </if> -->
+ 
+    </div>
+<!--     <div style="height:500px;" >只是为了看效果</div> -->
+<!-- 复制开始 -->
+<style>
+.f14 { font-size: 14px; }
+.professor .pro .bg { background-color: #000; opacity: 0.4;}
+.professor .pro {   height: 30px; width: 100%;text-align: center; color: #FFF; }
+.professor .body ul li.on { background-color: #8eab01; }
+.professor .pro .bg, 
+.professor .pro .page { position: absolute; top: 0; left: 0; width: 100%; height: 30px;
+line-height: 30px; }
+.fixBottom{
+	position: fixed;
+	bottom: 0;
+	left: 0;	
+}
+</style> 
+<!-- 把总页数>1删除在本地才能看到郊果 -->
+<if condition="$firstRow gt 1" >
+
+          <?php
+              //如果没有P p==1
+               if(!$_GET['p']){
+                       $_GET['p']=1;
+                 }
+          ?>
+    <div class='fixBottom pro f14 on' style="bottom: -30px;">
+        <div style="position: relative">
+            <div class='bg'></div>
+            <div class='page'>
+                
+                
+                
+                <if condition="($_GET['p'] eq 1) or ($_GET['p'] lt 1)" >
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Qianggou&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=1" >
+                <else/>
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Qianggou&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=<?php echo $_GET['p']-1; ?>" >
+                </if>
+           
+                 上一页</a>，
+
+
+                <if condition="($_GET['p'] eq $firstRow) or ($_GET['p'] gt $firstRow)" >                          
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Qianggou&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $firstRow;?>">
+                <else/>
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Qianggou&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $_GET['p']+1; ?>">
+                </if>
+                  下一页</a>
+                
+            </div>
+        </div>
+        
+    </div>
+</if>    
+    <script type="text/javascript">
+    var timeout = null;
+    $(window).scroll(function(){
+        if (timeout != null) {
+            return;
+        };
+        var $bottom = $('.fixBottom.pro');
+        timeout = setTimeout(function(){    
+            $bottom.animate({'bottom':'0px'});
+            setTimeout(function(){
+                $bottom.animate({'bottom':'-30px'});
+            }, 2500);
+            timeout = null;
+        }, 600);
+    });
+    </script>
+ <!-- 复制结束-->    
+ <include file="./tpl/Wap/default/mrufx.html" />      
+    </body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/style.css">
+		<script src="{weikucms::RES}/sunpool/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/jquery.ld.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/main.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/core.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/iscroll.js"></script>
+        <script>
+            function BySize(){
+                var url="{weikucms::U('SunPool/BySize',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url;
+            }
+        </script>
+        <style>
+            .label {
+                top: 0px;
+            }
+        </style>
+		</head>
+    <body>
+   		<div class="header textMiddle white">
+   			免费报价
+   		</div>
+   		<div class="havBox myul border-26 overFloatHidden">
+   			<div class="hav myli textMiddle on">
+   				按用电量
+   			</div>
+   			<div class="hav myli textMiddle" onclick="BySize()">
+   				按安装面积
+   			</div>
+   		</div>
+
+   		<div class="inputWrap white-bg border-14">
+                <div class="inputItem setMiddle">
+                    <div class="inputItemName">所在地区：</div>
+                    <input type="hidden" class="area" name="info[area]"  id="area" value="">
+                    <select class="pc-select-area" name="area-1" id="area-1" width="100">
+                        <option value="">请选择菜单</option>
+                    </select>
+                    <select class="pc-select-area" name="area-2" id="area-2" width="100">
+                        <option value="">请选择菜单</option>
+                    </select>
+                    <script type="text/javascript">
+                    $(function(){
+                        var $ld5 = $(".pc-select-area");
+                        $ld5.ld({
+                            ajaxOptions : {"url" : "http://www.solarstock.cn/api.php?op=get_linkage&act=ajax_select&keyid=1"},
+                            defaultParentId : 0,
+                            style : {"width" : 120}
+                        })
+                        var ld5_api = $ld5.ld("api");
+                        ld5_api.selected();
+                        $ld5.bind("change",onchange);
+                        function onchange(e){
+                            var $target = $(e.target);
+                            var index = $ld5.index($target);
+                            $("#area-3").remove();
+                            $("#area").val($ld5.eq(index).show().val());
+                            index ++;
+                            $ld5.eq(index).show();								}
+                    })
+                    </script>
+   			    </div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName">您每个月的用电量？</div>
+   				<div class="textMiddle input-a myul">
+   					<div class="input">
+   						<input type="number" class="diannum">
+   						<div class="label">度/月</div>
+   					</div>
+   					
+   					
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName">用户电价情况？</div>
+   				<div class="textMiddle input-a myul">
+   					<div class="input">
+   						<input type="number" class="danprice">
+   						<div class="label">元/度</div>
+   					</div>
+   				</div>
+   			</div>
+   		</div>
+
+		<!-- 计算结果 -->
+		<div class="resultBox" style="display: none;">
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					月用电量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result yydl">
+						0
+					</div>
+					<div class="resultUnit">
+						度/月
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					安装系统容量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result azxtrl">
+						0
+					</div>
+					<div class="resultUnit">
+						kw
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					安装面积约：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result azmj">
+						0
+					</div>
+					<div class="resultUnit">
+						㎡
+					</div>
+				</div>
+			</div>
+
+            <div class="resultItem myul">
+                <div class="resultItemName">
+                    年发电量：
+                </div>
+                <div class="resuleContent myul">
+                    <div class="result nfdl">
+                        0
+                    </div>
+                    <div class="resultUnit">
+                        度
+                    </div>
+                </div>
+            </div>
+
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					年发电收益：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result nfdsy">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					建造成本：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result jzcb">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+			<div class="resultNotice myul">
+                备注：以上报价单数据是按照用户100%自发自用，且数据仅供参考。
+			</div>
+		</div>
+
+
+   		<div class="actionHavBox myul">
+   			<div class="actionHav myli" id="baojia_jisuan">
+   				获取报价
+   			</div>
+   			<div class="actionHav myli" onclick="Erect()">
+   				我要安装
+   			</div>
+   		</div>
+
+
+    </body>
+    <script src="{weikucms::RES}/sunpool/js/area.js"></script>
+	<script src="{weikucms::RES}/sunpool/js/location.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			showLocation();
+		});
+	</script>
+    <script>
+        $(function(){
+            //按电量
+            $("#baojia_jisuan").click(function(){
+                var diannum = $(".diannum").val().trim();
+                var danprice = $(".danprice").val().trim();
+                var area = $(".area").val().trim();
+                if(!area){
+                    alert("请选择城市");
+                    return false;
+                }
+                if(!diannum || diannum<=0){
+                    alert("请输入用电量");
+                    return false;
+                }
+                if(!danprice || danprice<=0){
+                    alert("请输入用电情况");
+                    return false;
+                }
+                var url="http://www.solarstock.cn/list-39-1.html/index.php?m=content&c=index&a=total_dianfei";
+                $.post(url,{number:diannum,price:danprice,area:area},function(data){
+                    $(".yydl").html(data.dmydf);
+                    $(".azxtrl").html(data.dxtrl);
+                    $(".azmj").html(data.dazmj);
+                    $(".nfdl").html(data.dfdl);
+                    $(".nfdsy").html(data.dfdsy);
+                    $(".jzcb").html(data.djzcb);
+                    $(".resultBox").show();
+                },'json')
+            });
+        })
+    </script>
+
+    <script>
+        function Erect(){
+            location.href="{weikucms::U('SunPool/ErectInfo',array('token'=>$token,'openid'=>$openid))}";
+        }
+
+        function capcity(){
+            location.href="{weikucms::U('SunPool/BeniftCapacity',array('token'=>$token,'openid'=>$openid))}";
+        }
+    </script>
+		<!--	<div style="width:95%;height:20px;line-height:20px;text-align:center;font-size:12px;padding:5px;0px;color:rgb(190, 186, 186)">万普微信技术支持</div>   -->
+</html>

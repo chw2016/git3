@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- 微信投票进入界面 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::RES}/wechatconferencemarking/css/default.css" type="text/css">
+    <link href="{weikucms::RES}/wechatconferencemarking/css/mobiscroll.css" rel="stylesheet" type="text/css">
+    <script src="{weikucms::RES}/wechatconferencemarking/js/jquery-1.8.2.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>{weikucms:$tpl['name']}</title>
+    <meta name="Keywords" content="微信演讲打分">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <style>
+        .deploy_ctype_tip {
+            z-index: 1001;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            margin-top: -130px;
+            left: 0;
+        }
+
+        .deploy_ctype_tip p {
+            display: inline-block;
+            padding: 13px 24px;
+            border: solid #d6d482 1px;
+            background: #000000;
+            font-size: 16px;
+            color: #FFD700;
+            line-height: 18px;
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div class="bookingTips" style="line-height: 25px;">
+    <strong style="background: #F00F21; border: 1px solid #F00A24;">活动主题</strong>
+    <div style="line-height: 20px;">{weikucms:$info['name']}</div>
+</div>
+
+<div id="baoyangYuyue1">
+    <div class="iconText" style="margin-top: 107px;">
+        <ul>
+            <li class="noAfter">
+                <div class="li-l" style="width: 50px;margin-top: -8px;margin-right:10px;" >
+                    登录号：
+                </div>
+                <div class="li-r">
+                    <input class="input" value="{weikucms:$a['tel']}" placeholder="输入您的学号（工号）" id="base_ver_code"  type="tel" maxlength="11">
+                    <input id="actid" name="actid" type="hidden" value="{weikucms:$w['actid']}">
+                    <input id="token" name="token" type="hidden" value="{weikucms:$w['token']}">
+                    <input id="openid" name="openid" type="hidden" value="{weikucms:$w['openid']}">
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    <div class="button clearfix" style="margin-top: 40px;">
+        <a href="#" id="vote_btn" style="background: #F00F21; border: 1px solid #F00A24;">进入投票</a>
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $('#vote_btn').click(function(){
+            var base_ver_code = $('#base_ver_code').val();
+            var actid = $('#actid').val();
+            var token = $('#token').val();
+            var openid = $('#openid').val();
+            var url = "{weikucms::U('WechatConferencemarking/loginVote',array('token'=>$token))}";
+            $.ajax({
+                url: url,
+                type:"POST",
+                data:{actid:actid,token:token,openid:openid,base_ver_code:base_ver_code},
+                dataType:"json",
+                success: function(data){
+                    if(data.status==1){
+                        window.location.href = data.url;
+                    }else{
+                        alert(data.info);
+                    }
+                }
+            });
+
+
+        });
+    });
+
+</script>
+
+</html>

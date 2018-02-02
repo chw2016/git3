@@ -1,0 +1,142 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            商城设置
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/index',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="{weikucms:$setting.id}" />
+        <input type="hidden" id="token" name="token" value="{weikucms:$token}" />
+
+        <div class="msgWrap ">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th valign="top">免邮设置：</th>
+                    <td>满  <input type="text" id="price" name="price" value="{weikucms:$setting.price}" class="px"/>  元免邮</td>
+                </tr>
+
+                <tr>
+                    <th valign="top">积分兑换：</th>
+                    <td><input type="text" id="score" name="score" value="{weikucms:$setting.score}" class="px"/>积分=1元 (注：写0表示积分不可兑换)</td>
+                </tr>
+
+                <tr>
+                    <th >是否支持货到付款：</th>
+                    <td>
+                        <input type="radio"  name="paymode" value="0" id="paymode_0" <if condition="$setting['paymode'] eq 0">checked</if> /><label style="display: inline" for="paymode_0">不支持</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="paymode" value="1" id="paymode_1" <if condition="$setting['paymode'] eq 1">checked</if> /><label style="display: inline"  for="paymode_1">支持</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th >是否开启购物车：</th>
+                    <td>
+                        <input type="radio"  name="is_cart" value="0" id="is_cart_0" <if condition="$setting['is_cart'] eq 0">checked</if> /><label style="display: inline" for="is_cart_0">不开启</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="is_cart" value="1" id="is_cart_1" <if condition="$setting['is_cart'] eq 1">checked</if> /><label style="display: inline"  for="is_cart_1">开启</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th >是否开启分销模式：</th>
+                    <td>
+                        <input type="radio"  name="is_distribution" value="1" id="is_distribution0" <if condition="$setting['is_distribution'] eq 1">checked</if> /><label style="display: inline" for="is_distribution0">开启</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="is_distribution" value="0" id="is_distribution1" <if condition="$setting['is_distribution'] eq 0">checked</if> /><label style="display: inline"  for="is_distribution1">不开启</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th >分佣设置：</th>
+                    <td>
+                        <input type="radio"  name="get_distribution" value="1" id="get_distribution0" <if condition="$setting['get_distribution'] eq 1">checked</if> /><label style="display: inline" for="get_distribution">购买商品自动开通</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="get_distribution" value="3" id="get_distribution3" <if condition="$setting['get_distribution'] eq 3">checked</if> /><label style="display: inline"  for="get_distribution">默认确认关系却不分佣</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="get_distribution" value="2" id="get_distribution1" <if condition="$setting['get_distribution'] eq 2">checked</if> /><label style="display: inline"  for="get_distribution">默认开启</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th >是否开启自动结算：</th>
+                    <td>
+                        <input type="radio"  name="is_auto_js" id="" value="1" <if condition="$setting['is_auto_js'] eq 1">checked</if> /><label style="display: inline" for="get_distribution">是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="is_auto_js" id="" value="0" <if condition="$setting['is_auto_js'] eq 0">checked</if> /><label style="display: inline"  for="get_distribution">否</label>
+                    </td>
+                </tr>
+                <tr>
+                    <th >热卖商品ID：</th>
+                    <td>
+                    <input type="text" name="hot_goods" value="{weikucms:$setting.hot_goods}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1级分销比例<input type="text" name="one" value="{weikucms:$setting.one}" placeholder="例如填0.1代表得10%的佣金"> 2级分销比例<input type="text" name="two" value="{weikucms:$setting.two}" placeholder="只有当开启分销模式比例才有效">3级分销比例<input type="text" name="three" value="{weikucms:$setting.three}" placeholder="填0代表此级分销没有开放"></td>
+                </tr>
+
+                <tr>
+                    <th valign="top">&nbsp;</th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>
+<include file="Public:footer" />
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var price = $("#price").val();
+            var score = $("#score").val();
+            var paymode = $("input[name='paymode']:checked").val();
+            var id = $("#id").val();
+            var is_distribution = $("input[name='is_distribution']:checked").val();
+            var get_distribution = $("input[name='get_distribution']:checked").val();
+            var is_auto_js  = $("input[name='is_auto_js']:checked").val();
+            var hot_goods = $("input[name='hot_goods']").val();
+            var posturl = "{weikucms::U('Store_new/setting',array('token'=>$token))}";
+            var one=$("input[name='one']").val();
+            var two=$("input[name='two']").val();
+            var three=$("input[name='three']").val();
+            var is_cart  = $("input[name='is_cart']:checked").val();//购物车
+            if(one>1||two>1||three>1){
+                notif({
+                    msg: "分销比例不能大于1",
+                    type: "error"
+                });
+                return false;
+            }
+            $.post(posturl,
+                    {is_cart:is_cart,three:three,one:one,two:two,price:price,score:score,id:id,paymode:paymode,token:"{weikucms:$token}",is_distribution:is_distribution,get_distribution:get_distribution, is_auto_js:is_auto_js, hot_goods: hot_goods},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>

@@ -1,0 +1,464 @@
+<include file="Public:head" />
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script>
+
+var editor1;
+
+KindEditor.ready(function(K) {
+
+    editor1 = K.create('#cat_intro', {
+
+        resizeType : 1,
+
+        allowPreviewEmoticons : false,
+
+        allowImageUpload : true,
+
+        allowFileManager:true,
+
+        afterBlur: function(){this.sync();}
+
+    })
+
+});
+
+</script>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload0').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#fenlei_img0").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+
+<div class="" style="">
+
+  <div class="cLineB">
+
+    <div class="title_tab" id="topTab">
+
+      <ul class="tab_navs title_tab" data-index="0">
+
+        <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/category',array('token'=>$token))}">返回上一页</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!--tab start-->
+
+  <div class="alert alert-info">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>
+
+    <strong>提示信息!</strong>
+
+    <ol>
+
+      <li>在这里可以添加栏目。</li>
+
+    </ol>
+
+  </div>
+
+  <!--tab end-->
+
+  <div class="box-content">
+
+     <div class="msgWrap">
+
+         <form class="form" method="post" id="form" action="">
+
+             <if condition="$op eq 1">
+
+                <input type="hidden" name="cat_id" id="cat_id" value="{weikucms:$cat[0]['cat_id']}" />
+
+             </if>
+
+      <div class="msgWrap bgfc">
+
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+
+          <tbody>
+
+            <tr>
+
+              <th>栏目名称：</th>
+
+              <td>
+
+                  <if condition="$op neq 1">
+
+                  <input type="text" id="cat_name" name="cat_name" value="" class="px require" style="width:300px;" />
+
+                  <else/>
+
+                  <input type="text" id="cat_name" name="cat_name" value="{weikucms:$cat[0]['cat_name']}" class="px require" style="width:300px;" />
+
+                </if>
+
+                <select name="style" class="title-bg" style="width:150px;">
+                    <option value="#9e6ab8" style="background:#9EBF26;"
+  <php> if($cat[0]['style']=="#9e6ab8")echo "selected='selected'";</php>
+                    >#9EBF26</option>
+                    <option value="#faca16"  style="background:#faca16"
+  <php> if($cat[0]['style']=="#faca16")echo "selected='selected'";</php>
+                    >#faca16</option>
+                    <option value="#ff6700"  style="background:#ff6700"
+  <php> if($cat[0]['style']=="#ff2400")echo "selected='selected'";</php>
+                    >#ff6700</option>
+                    <option value="#ff2400"  style="background:#ff2400"
+  <php> if($cat[0]['style']=="#ff2400")echo "selected='selected'";</php>
+                    >#ff2400</option>
+                    <option value="red"  style="background:red"
+  <php> if($cat[0]['style']=="red")echo "selected='selected'";</php>                
+                    >red</option>
+                </select>
+                (如果是商品标签，请选择颜色)
+              </td>
+
+            </tr>
+
+            
+
+           
+         
+
+
+
+
+
+
+
+           <tr>
+
+              <th>上级栏目：</th>
+
+              <td>
+
+                  <select name="parent_id" id="parent_id" style="width:314px;height: 35px;border-radius: 0px; ">
+
+                    <option p="0" value="0" type="-1">顶级分类</option>
+
+                    <volist name="cats" id="vo">
+
+                        <option type="{weikucms:$vo['type']}" p="{weikucms:$vo.parent_id}" value="{weikucms:$vo.cat_id}" <if condition="$vo['cat_id'] eq $cat[0]['parent_id']">selected</if>>
+
+                            <php>
+
+                                echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$vo['lev']),$vo['cat_name'];
+
+                            </php>
+
+                        </option>
+
+                    </volist>
+
+                  </select>
+
+              </td>
+
+            </tr>
+
+            <if condition="($cat[0]['parent_id'] eq 0) or (!isset($cat[0]['parent_id']))">
+
+            <tr id="type">
+
+              <th>子栏目类型：</th>
+
+              <td>
+
+                  <select name="type" id="sonsid" style="width:314px;height: 35px;border-radius: 0px; ">
+
+                    <option value="">请选择子栏目类型</option>
+
+                    <option value="1" <if condition="$cat[0]['type'] eq 1">selected</if>>专题文章</option>
+
+                    <option value="2" <if condition="$cat[0]['type'] eq 2">selected</if>>店铺内容</option>
+                    <option value="3" <if condition="$cat[0]['type'] eq 3">selected</if>>店铺区域</option>
+
+                  </select>
+
+              </td>
+
+            </tr>
+
+            </if>
+
+
+
+            <tr>
+                <th valign="top">
+                    <label for="keyword">
+                        图片：
+                    </label>
+                </th>
+                <td>
+                    <img id="fenlei_img0" class="fenlei_img" src="{weikucms:$cat[0]['img']}">
+                    <input type="hidden" class="px" id="pic" value="{weikucms:$cat[0]['img']}"  name="pic" style="width:300px" readonly="readonly">
+                    <span class="ke-button-common" id="upload0">上传图片</span>
+
+                   <!-- <span class="info_tip">建议图片大小320×250</span>-->
+
+                </td>
+
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+
+
+
+          <tr>
+
+            <th valign="top">栏目简介:</th>
+
+            <td valign="top">
+
+                    <textarea class="px" id="cat_intro" name="cat_intro" style="width: 560px; height: 300px; display: ;">
+
+{weikucms:$cat[0]['cat_intro']}
+
+                    </textarea>
+
+            </td>
+
+         </tr>
+
+
+
+          <tr>
+
+            <th>&nbsp;</th>
+
+            <td>
+
+                <if condition="$op neq 1">
+
+                    <input type="hidden" name="op" id="op" value="0" />
+
+                <else/>
+
+                    <input type="hidden" name="op" id="op" value="1" />
+
+                </if>
+
+              <input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+
+              <if condition="$op neq 1">添加栏目
+
+                <else/>确定编辑
+
+              </if>
+
+              </button>
+
+           </td>
+
+          </tr>
+
+          </tbody>
+
+
+
+        </table>
+
+      </div>
+
+    </form>
+
+    </div>
+
+    <div>
+
+      <ul class="pager">
+
+        {weikucms:$page}
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+
+       $("select").change(function(){
+
+           var p = $("#parent_id ").find("option:selected").attr('p');
+           var type = $("#parent_id ").find("option:selected").attr('type');
+           //console.log(type);
+           var pt = $("#parent_id ").find("option:selected").text();
+
+           if( (p == 0 && type==2) || (p==0 && type==-1) ){
+
+                $("#type").fadeIn('slow');
+
+
+           }else if( type==1 || type==0){
+
+              $("#type").fadeOut('slow').find("option").eq(0).attr('selected',true);
+
+              
+
+           }
+
+       });
+
+    });
+
+    $(function(){
+
+        $("#bsubmit").click(function(){
+
+            var cat_id = $("#cat_id").val();
+
+            var cat_name = $("#cat_name").val();
+
+            var parent_id = $("#parent_id ").find("option:selected").val();
+
+            //var type = $("#sonsid").find("option:selected").val();
+            //var type = $("#parent").find("option:selected").val();
+            var type = $("#parent_id ").find("option:selected").attr('type');
+
+            var p = $("#parent_id ").find("option:selected").attr('p');
+
+            var img = $('#pic').val();
+
+            var pt = $("#parent_id ").find("option:selected").text();
+
+            var cat_intro = editor1.html();
+
+            var op = "{weikucms:$op}";
+
+            if(!cat_id){
+
+                cat_id = null;
+
+            }
+
+            if(!cat_name){
+
+                notif({
+
+                    msg:"栏目名称不能为空",
+
+                    type:"warning"
+
+                });
+
+                return false;
+
+            }
+
+            if((p == 0) && (pt == "顶级分类")){
+
+                if(!type){
+
+                    notif({
+
+                        msg:"请选择子栏目",
+
+                        type:"warning"
+
+                    });
+
+                    return false;
+
+                }
+
+            }
+
+
+            var _style = $('select[name=style]').val();
+
+
+
+            var url = "{weikucms::U('Ieat/addcat',array('token'=>$token))}";
+
+            var data = {
+                style:_style,
+                cat_id:cat_id,
+                op:op,
+                cat_name:cat_name,
+                parent_id:parent_id,
+                type:type,
+                cat_intro:cat_intro,
+                img:img
+            };
+            $.post(url,data,function(data){
+
+                if(data.status == 1){
+
+                    notif({
+
+                        msg:data.info,
+
+                        type:"success"
+
+                    });
+
+                    setTimeout(function(){
+
+                        window.location.href = data.url;
+
+                    },'2000')
+
+                }else if(data.status == 2){
+
+                    notif({
+
+                        msg:data.info,
+
+                        type:"warning"
+
+                    });
+
+                }else{
+
+                    notif({
+
+                        msg:data.info,
+
+                        type:"error"
+
+                    });
+
+                }
+
+            },'json');
+
+        });
+
+    });
+
+</script>
+
+<include file="Public:footer" />

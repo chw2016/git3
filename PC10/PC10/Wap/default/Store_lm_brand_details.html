@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>团购</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+    </head>
+    <body>
+		<header class="header textMiddle white h3">
+	    	<div class="setLeft icon-back"></div>
+	    	<span>品牌详情页</span>
+	    </header>
+		<section class="publicBox">			
+			<div class="pinpai-photo">
+				<div><img src="{weikucms:$aBrand.logo_pic}" width="100%" /></div>
+				<div class="pinpai-show"><img src="{weikucms:$aBrand.logo_picmin}" width="80px" /></div>
+				<div class="pinpai-online">
+					<div>在线联系</div>
+					<div style="  position: relative;  left: -2px;"><img src="{weikucms:$staticFilePath}/lm/img/qq.png" width="20px" height="20px"/></div>
+				</div>
+			</div>	
+		</section>
+
+		<!--品牌详情-->
+		<section class="main-content">
+			<div>
+                {weikucms:$aBrand.intro}
+			</div>
+			
+		</section>
+
+		<!--品牌管家-->
+		<section class="pinpai-mgr-body">
+			<div class="pinpai-dongtai">
+				<div class="pinpai-title">品牌动态</div>
+				<ul class="pinpai-row">
+				<volist name="aList" id="vo">
+				<li><a href="{weikucms::U('Store_lm/b_article',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">{weikucms:$vo.title}</a></li>
+                    </volist>
+			</ul>
+			<div style="clear: both;"></div>
+			</div>
+			
+			<div class="pinpai-hr"></div>
+			<div style="position: relative">
+				<div class="block pinpai-mgr">
+				<div>品牌管家</div>
+				<div><img src="{weikucms:$aBrand.g_pic}" width="100%" /></div>
+				<div>{weikucms:$aBrand.g_name}</div>
+				</div>
+				<div class="block ad1">
+					<a href="{weikucms:$aBrand.url1}"><img src="{weikucms:$aBrand.pic4_1}" width="100%" /></a>
+				</div>
+				<div class="block ad2">
+                    <a href="{weikucms:$aBrand.url2}"><img src="{weikucms:$aBrand.pic4_2}" width="100%" /></a>
+				</div>
+				<div class="block ad3">
+                    <a href="{weikucms:$aBrand.url3}"><img src="{weikucms:$aBrand.pic4_3}" width="100%" /></a>
+				</div>
+				<div class="block ad4">
+                    <a href="{weikucms:$aBrand.url4}"><img src="{weikucms:$aBrand.pic4_4}" width="100%" /></a>
+				</div>
+				<div class="block ad5">
+					<img src="{weikucms:$staticFilePath}/lm/img/logo-bg.jpg" width="27%" />
+					<img src="{weikucms:$staticFilePath}/lm/img/logo-bg.jpg" width="27%" />
+				</div>
+				<div class="block ad6">
+					<span>关注官方公众号</span>
+					<span>关注品牌管家</span>
+				</div>
+			</div>
+			
+		</section>
+		
+		
+    </body>
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+    <!-- 假如已经结束了的抢购不需要点击跳转了，就可以使用以下代码，如果还需要，就把下面的代码删了或注释掉。 -->
+    <script type="text/javascript">
+    	$(function(){    		
+    		$(".groupon.off a").click(function(e){
+    			e.preventDefault();
+    		})
+    	})
+    </script>
+</html>

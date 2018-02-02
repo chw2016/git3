@@ -1,0 +1,121 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+<div class="cLineB">
+  <div class="title_tab" id="topTab">
+    <ul class="tab_navs title_tab" data-index="0">
+      <li data-index="0" class="tab_nav first js_top " data-id="total"> <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else/>
+          </if>">洗衣袋管理主页</a> </li>
+    </ul>
+  </div>
+</div>
+<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>提示信息!</strong>
+  <ol>
+    <li>在这里可以查看订单信息。</li>
+  </ol>
+</div>
+<div class="box-content">
+
+    <form method="post" action="{weikucms::U('Laundry/order',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">
+    <div class="form-group">
+        <if condition="$brand_id">
+        <input type="hidden" name="brand_id" value="{weikucms:$brand_id}" />
+        </if>
+        <label class="col-sm-2 control-label" style="display: inline; margin-left: 15px">订单号：</label>
+        <input value="{weikucms:$order_sn}" type="text" id="order_sn" name="order_sn" style="margin-top:10px;width:147px" placeholder="订单编号~">
+        <label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">联系电话：</label>
+        <input value="{weikucms:$order_person_tel}" type="text" id="order_person_tel" name="order_person_tel" style="margin-top:10px;width:147px" placeholder="联系电话~">
+        <label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">姓名：</label>
+        <input value="{weikucms:$order_person_name}" type="text" id="order_person_name" name="order_person_name" style="margin-top:10px;width:147px" placeholder="姓名">
+        <label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">所属店面：</label>
+        <select name="online_id" id="online_id">
+            <option value="">请选择</option>
+            <option value="-1" <if condition="-1 eq $online_id">selected</if>>96洗衣总部</option>
+            <volist name="franchisee" id="fr">
+              <option value="{weikucms:$fr.id}" <if condition="$fr.id eq $online_id">selected</if>>{weikucms:$fr.online_name}</option>
+            </volist>
+        </select>
+        <button type="submit" class="search btn btn-round btn-success">点击搜索</button>
+    </div>
+    </form>
+
+  <div class="msgWrap">
+    <form method="post" action="###" id="info">
+      <input name="delall" type="hidden" value="" />
+      <input name="wxid" type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th style="text-align: center">订单编号</th>
+              <th style="text-align: center">订单名称</th>
+              <th style="text-align: center">订单价格</th>
+              <th style="text-align: center">下单时间</th>
+              <th style="text-align: center">订单状态</th>
+              <th style="text-align: center">地址</th>
+              <th style="text-align: center">是否付款</th>
+              <th style="text-align: center">姓名</th>
+              <th style="text-align: center">联系电话</th>
+              <th style="text-align: center">所属</th>
+              <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="orderList" id="vo">
+            <tr>
+                <td style="text-align: center">{weikucms:$vo.order_sn}</td>
+                <td style="text-align: center">{weikucms:$vo.order_goods}</td>
+                <td style="text-align: center">{weikucms:$vo.order_price}元</td>
+                <td style="text-align: center">{weikucms:$vo.order_addtime}</td>
+                <td style="text-align: center;">
+                    <if condition="$vo['order_logistics_status'] eq -1">
+                        <span style="color: red;">未服务</span>
+                        <elseif condition="$vo['order_logistics_status'] eq 0" />
+                        <span style="color: #00a600;">正在装袋</span>
+                        <elseif condition="$vo['order_logistics_status'] eq 1" />
+                        <span style="color: #00a600;">正在送往洗衣中心</span>
+                        <elseif condition="$vo['order_logistics_status'] eq 2" />
+                        <span style="color: #00a600;">正在清洗</span>
+                        <elseif condition="$vo['order_logistics_status'] eq 3" />
+                        <span style="color: #00a600;">正在配送</span>
+                        <elseif condition="$vo['order_logistics_status'] egt 4" />
+                        <span style="color: #00bfff;">配送成功</span>
+                        <elseif condition="$vo['order_logistics_status'] egt -2" />
+                        <span style="color: #00bfff;">已取消</span>
+                    </if>
+                </td>
+                <td style="text-align: center">{weikucms:$vo.order_address}</td>
+                <td style="text-align: center"><if condition="$vo['order_pay_status'] eq 1"><span style="color: #00bfff;">已支付</span><else />未支付</if></td>
+                <td style="text-align: center">{weikucms:$vo.order_person_name}</td>
+                <td style="text-align: center">{weikucms:$vo.order_person_tel}</td>
+                <td style="text-align: center">
+                    <php>
+                        if($vo['online_id'] == 0){
+                            echo "96洗衣店总部";
+                        }else{
+                            $onlineInfo = M('Laundry_online_franchisee')->where(array('token'=>$token,'id'=>$vo['online_id']))->field('online_name')->find();
+                            echo $onlineInfo['online_name'];
+                        }
+                    </php>
+                </td>
+                <td>
+                    <if condition="$vo['order_logistics_status'] neq -2">
+                      <a class="btn btn-danger btn-sm" href="{weikucms::U('Laundry/cancelorder',array('id'=>$vo['id'],'brand_id'=>$_GET['brand_id']))}" title="编辑图文自定义回复">取消订单</a>
+                    </if>
+                    <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Laundry/delorder',array('id'=>$vo['id'],'brand_id'=>$_GET['brand_id']))}')" href="#" title="编辑图文自定义回复">删除订单</a>
+                </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <div>
+    <ul class="pager">
+      {weikucms:$page}
+    </ul>
+  </div>
+</div>
+<include file="Public:footer" />

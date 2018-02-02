@@ -1,0 +1,209 @@
+<include file="Public:public"/>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<script type="text/javascript" src="http://cdn.bootcss.com/select2/3.3.2/select2.js"> </script>
+<link rel="stylesheet" href="http://cdn.bootcss.com/select2/3.3.2/select2.css" />
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+<div style="width: 90%;margin: 0 auto;">
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        <if condition="$info['id'] eq ''">添加活动<else/>编辑活动</if>
+    </h4>
+</div>
+    <script>
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('#content', {
+                resizeType : 1,
+                allowPreviewEmoticons : false,
+                allowImageUpload : true,
+                allowFileManager:true
+            });
+        });
+    </script>
+    <script>
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#pic').val(),
+                        clickFn : function(url, title) {
+                            K('#pic').val(url);
+                            $("#image_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$info['id']}" name="id" style="width:300px" placeholder="">
+                <tr>
+                    <th valign="top"><label for="title">活动主题</label></th>
+                    <td>
+                        <input type="input" class="px" id="title" value="{weikucms:$info['title']}" name="title" style="width:300px" placeholder="">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="pic">活动海报</label></th>
+                    <td>
+                        <if condition="$info['id'] neq '' ">
+                            <img style="display: block;" id="image_show" class="indexs_img" src="{weikucms:$info['pic']}">
+                            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$info['pic']}" style="width:300px;"   />
+                            <span class="ke-button-common" id="upload" style="margin-left: 5px;margin-top: 10px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;line-height: 52px;">建议图片大小为：640px*427px</span>
+                            <else/>
+                            <img style="display: none;" id="image_show" class="indexs_img" src="">
+                            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="" style="width:300px;"   />
+                            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px; ">建议图片大小为：640px*427px</span>
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="abstract">活动简介：</label></th>
+                    <td valign="top">
+                        <textarea class="px" id="abstract" name="abstract" style="width: 560px; height: 240px;"rows="5">{weikucms:$info['abstract']}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">活动时间</label></th>
+                    <td>
+                        <input type="input" class="px" id="starttime" value="{weikucms:$info['starttime']}" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+                        到
+                        <input type="input" class="px" id="endtime" value="{weikucms:$info['endtime']}" name="endtime" onClick="WdatePicker()" style="width:175px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th>活动商品1：</th>
+                    <td>
+                        <select name="poid" id="poid" style="width: 315px;">
+                            <option value="0">请选择商品</option>
+                            <volist name="product" id="union">
+                                <option value="{weikucms:$union.id}" <if condition="$union['id'] eq $info['poid']">selected</if>>{weikucms:$union.name}</option>
+                            </volist>
+                        </select>
+                </tr>
+                <tr>
+
+                    <th>活动商品2：</th>
+                    <td>
+                        <select name="pwid" id="pwid" style="width: 315px;">
+                            <option value="0">请选择商品</option>
+                            <volist name="product" id="member">
+                                <option value="{weikucms:$member.id}" <if condition="$member['id'] eq $info['pwid']">selected</if>>{weikucms:$member.name}</option>
+                            </volist>
+                        </select>
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">保存
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </form>
+</div>
+<div class="cLine">
+
+    <div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#poid').select2();
+        $('#pwid').select2();
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var title = $("#title").val();
+            var pic = $("#pic").val();
+            var abstract = $("#abstract").val();
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            var poid = $("#poid").val();
+            var pwid = $("#pwid").val();
+            if(!title){
+                notif({
+                    msg: "活动主题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! pic){
+                notif({
+                    msg: "活动海报不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! abstract){
+                notif({
+                    msg: "活动简介不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! starttime){
+                notif({
+                    msg: "活动开始时间不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! endtime){
+                notif({
+                    msg: "活动结束时间不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(poid==0){
+                notif({
+                    msg: " 请选择商品1",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if(pwid==0){
+                notif({
+                    msg: "请选择商品2",
+                    type: "warning"
+                });
+                return false;
+            }
+            $.post("{weikucms::U('ShopBranch/cretaeactivi',array('token'=>$token,'branch_id'=>$_GET['branch_id']))}",
+                    {id:id,title:title,pic:pic,abstract:abstract,starttime:starttime,endtime:endtime,poid:poid,pwid:pwid},
+                    function(data){
+                        if(data.status==1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            location.href="{weikucms::U('ShopBranch/activitise',array('token'=>$token,'branch_id'=>$_GET['branch_id']))}";
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "warning"
+                            });
+                        }
+                    },"json")
+            });
+    });
+
+</script>
+<include file="Public:footer"/>

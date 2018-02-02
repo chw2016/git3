@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="恒博物业">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/baoxiu.css">
+    <script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/f.js"></script>
+    <style type="text/css">
+        .content{
+            padding: 10px;
+        }
+        .content p{
+            width: 100%;
+        }
+        .content img{
+            width: 100%;
+        }
+        span{
+            white-space: normal !important;
+        }
+        .telstyle{
+            padding: 2px 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="h-title">{weikucms:$aList.ursename}</div>
+<div class="content">
+    {weikucms:$sInfo}
+</div>
+<div class="telstyle">
+    <span>联系电话：</span><span><a href="tel:{weikucms:$aList.tel}">{weikucms:$aList.tel}</a></span>
+</div>
+<div class="telstyle" onclick="baiduMap('{weikucms:$aList.address}')">
+    <span>公司地址：</span><span>{weikucms:$aList.address}</span>
+</div>
+
+</body>
+</html>

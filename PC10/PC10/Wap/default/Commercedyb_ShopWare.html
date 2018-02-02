@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+    <script src="tpl/Wap/default/common/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/ShopCart.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/iscroll.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        wx.config({
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+            ]
+        });
+        wx.ready(function () {
+            // 在这里调用 API
+            wx.hideOptionMenu();
+        });
+
+    </script>
+    <style type="text/css">
+        body{
+            width: 100%;
+
+        }
+        .onsort{
+            overflow: hidden;
+            position: absolute;
+        }
+        .shortBox.btn-green-bg {
+            height: 100%;
+            position: relative;
+            width: 60%;
+        }
+
+        .myul.body {
+            width: 100%;
+            height: 100%;
+
+        }
+        .header{
+            -webkit-transition:all 0s;
+            z-index: 9;
+            width: 100%;
+            position: relative;
+        }
+        .goodWrap{
+            width: 100%;
+            height: 80%;
+
+        }
+        .goodScroll{
+
+            width: 100%;
+        }
+        .goodPage {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        var GoodsDatas={weikucms:$warejson};
+        var goodsshopid = {weikucms:$shopinfo.id};
+        function  Buy(obj){
+
+                    var orderinfo=localStorage['CartJson_'+goodsshopid];
+                    var flag=$(obj).attr("flag");
+                    var url="{weikucms::U('Commercedyb/BuyOrder',array('token'=>$token,'openid'=>$openid))}";
+                    if(flag==1){
+                        $(obj).html("下单中...");
+                        $.post(url,{orderinfo:orderinfo},function(data){
+                            //alert(JSON.stringify(data));return;
+                            if(data.status==1) {
+                                $(obj).attr("flag", 2);
+                                // localStorage.CartJson="";
+                                //localStorage.CartList="";
+                                location.href = "{weikucms::U('Commercedyb/account',array('token'=>$token,'openid'=>$openid,'shopid'=>$shopinfo['id']))}" + "&oid=" + data.oid + "&goods_list=" + orderinfo;
+                            }else{
+                                $(obj).attr("flag",1);
+                                show_error_tip(data.info);
+                                $(obj).html("好的，去买单");
+                            }
+                         },"json");
+                    }else{
+                        show_error_tip("订单正在生成中，请稍后!");
+                    }
+        }
+    </script>
+</head>
+<body>
+<div class="myul body onsort">
+    <div class="shortBox btn-green-bg hide">
+        <div class="sortHead">
+            分类列表
+        </div>
+        <div class="sortWrap">
+            <div class="sortScroll">
+
+                <volist name="carts" id="cart">
+                <div class="sortItem myul" <php> if(!$cart['_data']){ </php> onclick="window.location.href='{weikucms::U('Commercedyb/ShopWare',array('token'=>$token,'openid'=>$openid,'cid'=>$cart[id]))}'"<php> } </php>>
+                    <div class="sortIcon fixBg" style="background-image: url({weikucms:$cart.pic});">
+
+                    </div>
+                    <div class="sortName">
+                        {weikucms:$cart.tname}
+                    </div>
+                </div>
+                </volist>
+
+            </div>
+        </div>
+
+<script>
+  function ddlist(){
+      location.href="{weikucms::U('MemberCenterdyb/index',array('token'=>$token,'openid'=>$openid))}";
+  }
+</script>
+    </div>
+    <div class="goodPage">
+        <div class="header  textMiddle header-green-bg white h3">
+            <div class="setLeft icon icon-menu sortBtn"></div><span style="float:left;margin-left:40px;">菜单</span>
+            <span style="float:right;margin-right:40px;">订单</span>
+            <div class="setRight icon icon-user"  onclick="ddlist()"></div>
+        </div>
+<p style="  text-align: center;
+  font-size: 10px;
+  color: rgba(255, 246, 244, 0.93);
+  margin-bottom: -10px;
+  padding: 8px 0;
+  width: 100%;
+  line-height: 18px;
+  background-color: rgba(0, 0, 0, 0.33); margin-bottom: 5px;">{weikucms:$shopinfo.des}</p>
+        <div class="goodWrap onsort">
+            <div class="goodScroll" style="padding-bottom:100px;">
+
+                <!-- 循环开始 -->
+                <volist name="wareinfo" id="vo" >
+                <div class="menuItem myul goodsItem">
+                    <div class="circle menuLogoWrap border-green" key="0" data-count="0" goodsId="{weikucms:$vo.id}" id="index_{weikucms:$vo.id}">
+                        <div class="fixBg circle menuLogo" style="background-image: url('{weikucms:$vo.pic}')"></div>
+                        
+                    </div>
+                    <div class="menuInfoBox">
+                        <div class="menuName black">
+                            {weikucms:$vo.name}
+                        </div>
+                        <div class="menuDetail">
+                            {weikucms:$vo.des}&nbsp;&nbsp;
+                        </div>
+						<div style="float: left;">
+						        <if condition="$vo['price'] neq 0.0">
+					    		<span class="oldPrice">
+					    			原价{weikucms:$vo.price}元
+					    		</span>
+								</if>
+					    		<span class="priceNow text-red">
+					    			 {weikucms:$vo.vprice}元/份
+					    		</span>
+						</div>
+                        <!--<div class="circle delectOne deleteone tip-red hide" id="delete_{weikucms:$vo.id}" key="0" data-count="0" goodsId="{weikucms:$vo.id}">
+
+                        </div>
+
+                        <div class="circle delectOne deleteone tip-red hide" id="delete_{weikucms:$vo.id}" key="0" data-count="0" goodsId="{weikucms:$vo.id}">
+                            +
+                        </div>
+                        -->
+
+                        <div class="jisuanBox order">
+                           <span class="circle sub deleteone" id="delete_{weikucms:$vo.id}" key="0" data-count="0" goodsId="{weikucms:$vo.id}">-</span>
+                           <span class="countBuy {weikucms:$vo.id}">0</span>
+
+                           <span class="circle add addOne" key="{weikucms:$k-1}" data-count="0" goodsId="{weikucms:$vo.id}" id="index_{weikucms:$vo.id}">+
+                               
+                           </span>
+                        </div>
+                    </div>
+                </div>
+                </volist>
+                <!-- END -->
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="shopCart hide">
+							<span class="choose">
+								已选<span id="num">0</span>份
+							</span>
+							<span class="tPrice">
+								<span id="price">
+									0
+								</span>元
+							</span>
+                            <span style="padding-left:12%;font-size:12px;color:rgb(255, 255, 255);">
+                                (<span id="qisong">{weikucms:$shopinfo.min_price}</span>元起送)
+                            </span>
+    <div class="border-26 btn-green-bg textMiddle white goPay" onclick="return Buy(this)" flag="1" >
+        去结算
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        var h = $(window).height(),
+                w = $(window).width();
+        h -=46;
+        $(".goodWrap").height(h);
+        // 	$(".header").width(w);
+
+        var scroll1 = new IScroll(".goodWrap",{click:true});
+
+        document.addEventListener('click', function (e) { e.preventDefault(); }, false);
+    })
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        $(".sortBtn").click(function(){
+            if($(".shortBox").is(":hidden")){
+                // $(".body,.goodWrap").css({
+                // 	"overflow": "hidden",
+                // 	"position": "absolute"
+                // });
+                $(".shortBox").fadeIn(120);
+                $(".goodPage").css('position', 'absolute');
+                var scroll2 = new IScroll(".sortWrap",{click:true});
+                $(".sortItem").eq(-1).css("border-bottom","none");
+                //$(".header").removeClass('fixTop');
+
+            }else{
+                $(".body,.goodWrap").removeAttr('style');
+                $(".shortBox").fadeOut(10);
+                $(".goodPage").removeAttr('style');
+                //$(".header").addClass('fixTop');
+
+            }
+        })
+    })
+</script>
+</html>

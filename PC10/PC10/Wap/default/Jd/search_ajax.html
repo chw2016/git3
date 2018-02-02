@@ -1,0 +1,41 @@
+    <foreach name="list" item="v">
+    
+	<a href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}">
+    <li class="he" href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}" style="margin-top: 10px;padding-top: 5px; padding-bottom: 5px;">
+    <div style="width:90%;margin-left:10px;float:left;">
+        <span class="name" >{weikucms:$v.title}</span>
+<!--         <span class="tel" style="float: left;margin-left: 10px;">作者：{weikucms:$v.name|mb_substr=###,0,3,'utf-8'}</span>
+        <span class="lx">行业：{weikucms:$v.hy|mb_substr=###,0,1,'utf-8'}</span> -->
+    </div>
+    <div class="bz color" style="width:90%;margin-left: 10px;  color:#B2C5DA;">
+      <div style="width:50%;float:left;" >作者：{weikucms:$v.name}</div>
+      <div style="width:50%;float:left;" >行业：{weikucms:$v.hy}</div>
+    </div>
+    <div class="bz color" style="width:90%;margin-left: 10px;">
+       <?php echo str_substr($v['content'],40,'...') ?>
+    </div>
+    <div class="tb" style="margin-left:6px;">
+        <foreach name="v.tag" item="vo">
+        <span style="border-radius: 3px;" class="color{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+        </foreach>
+    </div>
+
+    <if condition="$v.type eq '微文浏览'">
+            <span style=" color: #F5772D; position: relative; top: -10px; display: inline-block;float: right;padding-right: 5%;text-decoration:underline;"onclick="window.location.href='{weikucms:$v.url}'">阅读</span>
+        </if>
+	</a>
+    <div class="praise clearfix">
+              <span style="color: #CCCCCC;margin-left: 10px;font-size: 12px;vertical-align: -webkit-baseline-middle;"><?php echo date("Y-m-d  H:i:s",$v['add_time']) ?></span>
+            <div class="assist-right">
+              <div class="assist <if condition="$v['praisetype'] eq 1">color</if>">
+                        <span class="love-praise fa fa-thumbs-up"></span>
+                 <!-- <?php echo $v['id']; ?>-->
+                        <span class="figure" data="{weikucms:$v.id}">{weikucms:$v.praise}</span>
+              </div>
+              <span class="fa fa-twitch ml20 twitch" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$v['id'],'type'=>'plan'))}'">{weikucms:$v['count']}</span>
+            </div>
+    </div>
+	</div>
+	</li>
+	
+    </foreach>

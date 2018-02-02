@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="{weikucms::STATICS}/jquery.min.js">
+    </script>
+    <title>iLIKE产品防伪查询</title>
+    <style>
+        body{
+            background-color: #d5edd3;
+            font-family: '微软雅黑';
+        }
+        .wrap{
+            width: 100%;
+            height: auto;
+        }
+        .head_img{
+            width: 100%;
+            height: 200px;
+            background:url('./upload/logo_i1.png') no-repeat center center;
+            background-size: 50%;
+        }
+        .form_body{
+            height: auto;
+            padding:10px 30px;
+        }
+        .form_body span{
+            display: block;
+            width: 100%;
+            margin: 10px 0px;
+        }
+        .form_body span input{
+            width: 100%;
+            height: 32px;
+            line-height:32px;
+            font-size: 14px;
+            border: none;
+            background-color:#edeeec ;
+            border-radius: 3px;
+            vertical-align:middle;
+        }
+        .footer{
+            width: 100%;
+            height: 55px;
+            background:url('./upload/logo_i1.png') no-repeat center center;
+            background-size: 80px 45px;
+        }
+        .y_btn{
+            background:url('./upload/liji_yanzheng.png') no-repeat center center;;
+            width: 100%;
+            height: 36px;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            margin-top: 25px;
+        }
+        .del_yes, .tip {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            z-index: 999;
+        }
+        .del_yes, .tip {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            z-index: 999;
+        }
+        .textPopup {
+            z-index: 9999;
+            left: 50%;
+            top: 50%;
+            padding: 25px 20px;
+            position: fixed;
+            width: 235px;
+            margin-left: -138px;
+            margin-top: -60px;
+            background-color: rgba(4, 173, 101, 0.69);
+            box-shadow: 0 0 10px rgba(19, 173, 80, 0.49);
+            border-radius: 6px;
+        }
+        .del_yes .mask, .tip .mask {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.9;
+        }
+        .textPopup h2 {
+            text-align: center;
+            color: #FFFFFF;
+            font-size: 15px;
+            line-height: 23px;
+            padding-bottom: 17px;
+            font-family: 'Arial';
+        }
+        .textPopup .two {
+            background-color: #5E5E5E;
+            border-radius: 3px 3px 3px 3px;
+            color: #FFFFFF;
+            display: inline-block;
+            float: left;
+            font-size: 16px;
+            height: 37px;
+            line-height: 37px;
+            text-align: center;
+            text-decoration: none;
+            width: 110px;
+        }
+        .textPopup .three {
+            background-color: #409f73;
+            border-radius: 3px 3px 3px 3px;
+            color: #FFFFFF;
+            display: inline-block;
+            float: left;
+            font-size: 16px;
+            height: 37px;
+            line-height: 37px;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+        }
+        .textPopup .two:nth-of-type(2) {
+            float: right;
+        }
+
+        #m_code{
+            background-color: #d1f16a;
+        }
+        #a_code{
+            background-color: #ffffff;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $("#y_btn").click(function(){
+                var m_code = $("#m_code").val();
+                var a_code = $("#a_code").val();
+                var token = $("#token").val();
+                if(m_code==''){
+                    errtip('iLike产品明码不能为空');
+                    return;
+                }
+                if(a_code == ''){
+                    errtip('iLike产品暗码不能为空');
+                    return;
+                }
+                if(token == ''){
+                    errtip('非法查询');
+                    return;
+                }
+                var btn = $(this);
+                //btn.text('产品验证中....');
+                $.post('index.php?g=Wap&m=Scode&a=ilikevalid',{m_scode:m_code,a_scode:a_code,token:token},function(data){
+                    if(data.code == 0){
+                        tipMsg(data.msg);
+                        $("#confirm_btn").data('uid',data.data.uid);
+                        $("#confirm_btn").data('id',data.data.id);
+                    }else{
+                        errtip(data.msg);
+                    }
+                    //btn.text('产品验证');
+                },'json');
+            });
+
+            $("#err_close").live('click',function(){
+                $("#tip").css("visibility","hidden");
+            });
+
+            function tipMsg(msg) {
+                $("#cart_msg").html(msg);
+                $("#cart_tip").css("visibility","inherit");
+            }
+
+            function errtip(msg){
+                $("#tip_msg").html(msg);
+                $("#tip").css("visibility","inherit");
+            }
+
+            $("#confirm_btn").click(function(){
+                btn = $(this);
+                var uid = $("#confirm_btn").data('uid');
+                var id = $("#confirm_btn").data('id');
+                var openid = $("#openid").val();
+                //btn.text('确认中....');
+                $.post('index.php?g=Wap&m=Scode&a=confirmilike',{uid:uid,id:id,openid:openid},function(data){
+                    if(data.code == 0){
+                        btn.text(data.msg);
+                        setTimeout(function(){
+                            $("#cart_tip").css("visibility","hidden");
+                        },3000);
+                    }else{
+                        //btn.text(data.msg);
+                    }
+                },'json');
+            });
+
+        });
+    </script>
+</head>
+<body>
+   <div class="wrap">
+        <section class="head_img">
+
+        </section>
+
+        <section class="form_body">
+            <input type="hidden" id="openid" name="openid" value="{weikucms:$openid}"/>
+            <input type="hidden" id="token" name="token" value="{weikucms:$token}"/>
+          <span><input type="text" id="m_code" name="m_code" placeholder="请输入iLIKE产品明码"/></span>
+          <span><input type="text" id="a_code" name="a_code" placeholder="请输入iLIKE产品暗码" /></span>
+          <span><button type="button" id="y_btn" class="y_btn"></button></span>
+        </section>
+        <!--
+        <section class="footer">
+
+        </section>
+        -->
+   </div>
+   <div class="del_yes tip" style="visibility: hidden;" id="cart_tip">
+       <div class="textPopup">
+           <h2 id="cart_msg"></h2>
+           <a class="three" href="javascript:;" id="confirm_btn">激活保险</a>
+       </div>
+       <div class="mask"></div>
+   </div>
+
+   <div class="del_yes tip" style="visibility: hidden;" id="tip">
+       <div class="textPopup">
+           <h2 id="tip_msg"></h2>
+           <a class="three" href="javascript:;" id="err_close">返回</a>
+       </div>
+       <div class="mask"></div>
+   </div>
+</body>
+</html>

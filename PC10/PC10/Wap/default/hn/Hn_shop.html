@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>生活家商城</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/common.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/user.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/personal.css">
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    </head>
+    <style>
+
+	.indent-tab-title {
+	  margin-top: inherit;
+	  background-color: #fff;
+	  margin-bottom: 10px;
+	  /* border-top: 1px solid #e6e6e6; */
+	  border-bottom: 1px solid #e6e6e6;
+	}
+	.size-right{
+		  display: table;
+		  clear: both;
+		  width: 100%;
+	}
+	.commodity1{
+		  border-bottom: 1px solid #e6e6e6;
+		  
+	}
+	.order-tab-main-content-right1{
+		  display: -webkit-box;
+		  padding: 10px;
+	}
+	.order-tab-main-content-left1{
+		border-bottom: 1px solid #e6e6e6;
+	}
+	.order-tab-main-content-right-money1 {
+		 margin-left:10px;
+		color: #f03e3e;
+		font-size: 14px;
+		text-align: left;
+		-webkit-box-flex:1;
+	}
+	.leftd{
+		  float: left;
+		  margin-left: 10px;
+		  line-height: 54px;
+	}
+	.header img{border:none;}
+    </style>
+    <body>
+	<div class="header">
+		<img src="/tpl/Wap/default/hn/img/top.jpg"/>
+	</div>
+	<div style="margin-bottom: 12px;margin-top:1px;"/></div>
+                
+                
+                <div class="indent-tab">
+                		<ul class="indent-tab-ul">
+                			<li>
+							<volist name="shop" id="v">
+                				<div class="indent-tab-title">
+									<div class="commodity1">
+										<div class="order-tab-main-content-left1">
+										<if condition="$v['link'] neq null">
+											<a href="<?php echo $v['link']?>"><img src="{weikucms:$v.pic}" /></a>
+										<else/>
+											<img src="{weikucms:$v.pic}" />
+										</if>
+										</div>
+										<div class="order-tab-main-content-right1">
+											<div class="order-tab-main-content-right-size">
+											{weikucms:$v.name}
+											</div>
+											<div class="order-tab-main-content-right-money1 clearfix">
+											￥{weikucms:$v.price}
+											</div>
+										</div>
+									</div>
+									<div class="size-right">
+									<span class="leftd">{weikucms:$v.sai}</span>
+	<!-- 	            					<span class="indent-btn">
+											<a href="logistics.html">onclick="buy({weikucms:$v.id},{weikucms:$v.price},'{weikucms:$v.name}')"
+												<span class="colorf57789">查看物流</span>
+											</a>
+										</span> -->
+										<span class="indent-btn" style="float:right" onclick="window.location.href='{weikucms::U('address',array('token'=>$token,'openid'=>$openid,'id'=>$v['id'],'price'=>$v['price'],'s_name'=>$v['name']))}'">
+											<a>
+												<span class="colorf57789" >购买</span>
+											</a>
+										</span>
+									</div>
+                				</div>
+								</volist>            			
+                			</li>
+                		</ul>
+                </div>
+                <div style="height: 48px;"></div>
+    <div onclick="location.href='{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}'"
+            style="background-color: #D33838; color: #FFF;width: 100%; height: 48px; text-align: center;line-height: 48px; position: fixed; bottom: 0px;  letter-spacing: 1px;font-size:14px">
+        		我的订单
+    </div>
+	<input type="hidden" id="shopurl" value="{weikucms::U('shop_buy',array('token'=>$token,'openid'=>$openid))}">
+	<input type="hidden" id="s_names" value="{weikucms:$add.s_name}">
+	<input type="hidden" id="s_phones" value="{weikucms:$add.s_phone}">
+	<input type="hidden" id="addresss" value="{weikucms:$add.address}">
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+    </body>
+<script type="text/javascript">
+	//购买
+	/*function buy(buy_id,price,name)
+	{		
+			var shop_name = $('#s_names').val();
+			var phone = $('#s_phones').val();
+			var address = $('#addresss').val();
+		var el=$.loading({
+	        content:'正在提交'
+	    });
+			$.post($('#shopurl').val(),{buy_id:buy_id,price:price,name:name,shop_name:shop_name,phone:phone,address:address},function(data){
+				if(data.status==3)
+				{
+					var DG=$.dialog({
+						content:'你的余额不足',
+						button:['我知道了']
+					});
+				}else
+				if(data.status==1){
+					var DG=$.dialog({
+						content:'恭喜您，购买成功！',
+						button:['我知道了']
+					});
+					DG.on('dialog:action',function(e){
+						document.location.href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}";
+					});
+				}else
+				{
+					$.dialog({
+						content:'网络错误，请重试',
+						button:['我知道了']
+					});
+				}
+			el.hide();
+			},'json');
+	}
+	*/
+</script>
+</html>

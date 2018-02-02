@@ -1,0 +1,178 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js">
+    
+</script>
+<div class="">
+	<div class="cLineB">
+		<h4 class="left">
+			<if condition="$op neq 1">添加分类 <else /> 编辑分类</if>
+		</h4>
+		<div class="searchbar">
+			<form method="post" action="">
+				<script>
+                    KindEditor.ready(function(K) {
+                        var editor = K.editor({
+                            allowFileManager : true
+                        });
+                        K('#upload').click(
+                                function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#columns_pic').val(),
+                                            clickFn : function(url, title) {
+                                                K('#columns_pic').val(url);
+                                                $("#columns_pic_show").attr(
+                                                        'src', url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+                    });
+                </script>
+				<script>
+                    var editor;
+                    KindEditor.ready(function(K) {
+editor = K.create('#columns_intro', {
+                            resizeType : 1,
+                            allowPreviewEmoticons : false,
+                            allowImageUpload : true,
+                            allowFileManager : true,
+                            items : [ 'source', 'undo', 'redo', 'copy',
+                                    'plainpaste', 'wordpaste', 'clearhtml',
+                                    'quickformat', 'selectall', 'fullscreen',
+                                    'fontname', 'fontsize', 'subscript',
+                                    'superscript', 'indent', 'outdent', '|',
+                                    'forecolor', 'hilitecolor', 'bold',
+                                    'italic', 'underline', 'hr',
+                                    'removeformat', '|', 'justifyleft',
+                                    'justifycenter', 'justifyright',
+                                    'insertorderedlist', 'insertunorderedlist',
+                                    '|', 'emoticons', 'image', 'link',
+                                    'unlink', 'baidumap', 'lineheight',
+                                    'table', 'anchor', 'preview', 'print',
+                                    'template', 'code', 'cut' ]
+                        });
+
+                    });
+                </script>
+			</form>
+		</div>
+		<div class="clr"></div>
+	</div>
+	<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以添加分类/编辑分类。</li>
+		</ol>
+	</div>
+	<!--tab end-->
+	<div class="msgWrap">
+		<form class="form" method="post" id="form" action="">
+			<if condition="$op neq 1"> <input id="columns_id" name="columns_id" value="" type="hidden" /> <else /> <input id="columns_id" name="columns_id" value="{weikucms:$w['id']}" type="hidden" /> </if>
+			<div class="msgWrap bgfc">
+				<table class="userinfoArea" style="margin: 0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tbody>
+						<tr>
+							<th>分类名称：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="columns_name" name="columns_name" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="columns_name" name="columns_name" value="{weikucms:$columns['columns_name']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+						
+						<tr>
+							<TH valign="top">分类照片：</TH>
+							<TD>
+								<if condition="$data.picurl"> <img style="display: block;" id="columns_pic_show" class="fenlei_img" src="{weikucms:$columns['columns_pic']}"> <else /> <img style="display: none;" id="columns_pic_show" class="fenlei_img" src="{weikucms:$columns['columns_pic']}"> </if>
+							</TD>
+						</tr>
+						<tr>
+							<th>上传图片：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" class="pic text textMiddle inputQ" name="columns_pic" id="columns_pic" value="" style="width: 300px;" /> <else /> <input type="hidden" class="pic text textMiddle inputQ" name="columns_pic" id="columns_pic" value="{weikucms:$columns['columns_pic']}" style="width: 300px;" /> </if>
+								<span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span>
+							</td>
+						</tr>
+						<tr>
+							<th valign="top">分类简介:</th>
+							<td valign="top">
+								<textarea class="px" id="columns_intro" name="columns_intro" style="width: 560px; height: 320px; display:;">
+{weikucms:$columns['columns_intro']}
+                        </textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<th>&nbsp;</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" name="op" id="op" value="0" /> <else /> <input type="hidden" name="op" id="op" value="1" /> </if>
+								<input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+								<button type="button" id="bsubmit" name="button" class="btn btn-primary">
+									<if condition="$op neq 1">添加分类 <else /> 确定编辑 </if>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+	<div class="cLine">
+		<div class="clr"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#bsubmit")
+                .click(
+                        function() {
+                            var columns_id = $("#columns_id").val();
+                            var columns_name = $("#columns_name").val().trim();
+                            var columns_pic = $("#columns_pic").val();
+                            var columns_intro = editor.html();
+                            
+                            var op = $("#op").val();
+                            if (!columns_name) {
+                                notif({
+                                    msg : "分类名称不能为空",
+                                    type : "warning"
+                                });
+                                return false;
+                            }
+                            var url = "{weikucms::U('Laundry/columnsmanage',array('token'=>$token))}";
+                            $.post(url, {
+                                columns_id : columns_id,
+                                columns_name : columns_name,
+                                columns_pic : columns_pic,
+                                columns_intro : columns_intro,
+                                op : op
+                            }, function(data) {
+                                if (data.status == 1) {
+                                    notif({
+                                        msg : data.info,
+                                        type : "success"
+                                    });
+                                    setTimeout(function() {
+                                        window.location.href = data.url;
+                                    }, '1000');
+                                } else {
+                                    notif({
+                                        msg : data.info,
+                                        type : "error"
+                                    });
+                                }
+                            }, 'json');
+                        });
+    });
+</script>
+<include file="Public:footer" />

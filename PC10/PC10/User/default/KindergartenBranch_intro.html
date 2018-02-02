@@ -1,0 +1,104 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#kgintro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true,
+items : [
+'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <h4>幼儿园园所简介</h4>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('KindergartenBranch/index',array('token'=>$token))}&userid={weikucms:$w['userid']}&id={weikucms:$info['id']}">返回上一级</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以查看以及编辑幼儿园的园所简介信息</li>
+    </ol>
+</div>
+<div class="" style="<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">top:150px</if>">
+  <div class="msgWrap">
+    <form class="form" method="post" id="form" action="{weikucms::U('KindergartenBranch/intro',array('token'=>$token))}">
+      <input type="hidden" name="id" id="id" value="{weikucms:$w['id']}" />
+      <input type="hidden" name="userid" id="userid" value="{weikucms:$w['userid']}" />
+      <div class="msgWrap bgfc">
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+          <tbody>
+
+           <tr>
+            <th valign="top">幼儿园简介:</th>
+            <td valign="top">
+                    <textarea class="px" id="kgintro" name="kgintro" style="width: 560px; height: 300px; display: ;">
+{weikucms:$info['kgintro']}
+                    </textarea>
+            </td>
+         </tr>
+         
+          <tr>
+            <th>&nbsp;</th>
+            <td>
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                                            提交
+              </button>
+           </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+
+</div>
+<include file="Public:footer"/>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $('#id').val();
+            var userid = $('#userid').val();
+            var kgintro = editor.html();
+            var url = "{weikucms::U('KindergartenBranch/intro',array('token'=>$token))}";
+            $.post(url,{id:id,userid:userid,kgintro:kgintro},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                    }else{
+                        notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+        });
+    });
+
+</script>

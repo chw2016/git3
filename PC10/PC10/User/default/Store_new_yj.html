@@ -1,0 +1,167 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<div class="">
+    <div class="cLineB">
+        <!--tab start-->
+
+        <!--tab end-->
+    </div>
+    <div class="cLineB">
+        <h4>
+            <a class="btn btn-success btn-sm"  >微商列表</a>
+            <a class="btn btn-success btn-sm" href="{weikucms::U('Store_new/index',array('token'=>$token))}" class="nohover" style="position: absolute; right: 130px;">返回</a>
+        </h4>
+    </div>
+
+
+        <div class="row-fluid" >
+            <ul id="custom_group_navigator_div1" class="qb_clearfix unstyled">
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_2">今日分销人数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday3"><if condition="$stat['today_num']">{weikucms:$stat.today_num}<else />0</if></strong>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">今日分销总金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday2"><if condition="$stat['today_yj']">{weikucms:$stat.today_yj}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday13" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">本月分销人数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday72">{weikucms:$stat.month_num}</strong>
+                            <div class="list-box__trend" id="NewToday182" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">本月分销金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday4"><if condition="$stat['month_yj']">{weikucms:$stat.month_yj}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday15" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+                 <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">总分销人数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday73">{weikucms:$stat.total_num}</strong>
+                            <div class="list-box__trend" id="NewToday183" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">总分销金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday5"><if condition="$stat['total_yj']">{weikucms:$stat.total_yj}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday16" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+    <div class="msgWrap">
+        <form method="post" action="" id="info">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th >编号</th>
+                    <th >微商姓名</th>
+                    <th width="70px">总佣金(元）</th>
+                    <th >创建时间</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <volist name="list" id="o" key="i">
+                    <tr>
+
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$o.nickname}</td>
+                        <td>{weikucms:$o.yongjin}</td>
+                        <td>{weikucms:$o.add_time}</td>
+                        <td class="norightborder">
+                            <a href="{weikucms::U('Store_new/js',array('token'=>$token,'id'=>$o['id'],'openid'=>$o['openid']))}"  class="btn btn-success btn-sm">去结算</a>
+                            <a class="btn btn-danger btn-sm" onclick="del_yj({weikucms:$o.id})"  >删除</a>
+
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+            <input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+        </form>
+
+        <!--<script>-->
+            <!--function showIntroDetail(id){-->
+                <!--art.dialog.open('{weikucms::U('Store_new/orderInfo',array('token'=>$token,'dining'=>$isDining))}&id='+id,{lock:false,title:'订单详情',width:1000,height:620,yesText:'关闭',background: '#000',opacity: 0.87});-->
+            <!--}-->
+        <!--</script>-->
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+<include file="Public:footer"/>
+        <script>
+            function del_yj(id){
+                if(confirm("确定要删除此佣金用户吗？")){
+                    var url="{weikucms::U('Store_new/del_yj',array('token'=>$token,'openid'=>$o['openid']))}&id="+id;
+                    location.href=url;
+                }else{
+                    return false;
+                }
+
+
+
+            }
+        </script>

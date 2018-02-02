@@ -1,0 +1,250 @@
+<html>
+	<head>
+		<title>{weikucms:$tpl['name']}</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				list-style: none;
+				margin: 0;
+				text-decoration: none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			*:focus{
+				outline: 0px;
+			}
+			body{
+                background: url({weikucms::STATICS}/works/bg.jpg) repeat-y;
+				/*background: url(../imgs/bg.jpg) center no-repeat;*/
+				max-width:640px;
+				margin: 0 auto;
+				font-family: "Microsoft YaHei"; 
+				font-size: 18px;
+			}#header{
+				height: 200px;background: #fff;
+			}#content{
+				color: #ae722a;width: 100%;
+			}.friends{
+				background: url({weikucms::STATICS}/works/toupian.png );background-repeat:no-repeat; background-size: 65%,55%; padding: 15px;border-radius: 6px;margin-left: 7px;
+			}
+
+            .friend{
+                 padding: 10px;border-radius: 6px;color: #ae722a;text-align: center;width: 120px;margin-top: -15px;font-size: 20px;
+                 padding-left: 0px;
+                 padding-top: 6px;
+            }
+
+
+
+            #content .font{font-size: 15px;}
+			#contents{margin-top: -5px;color: #b27525;font-size: 16px;text-align: center;width: 100%;}
+			input,textarea{width: 100%;background-image:transparent;height: 25px;border: none;}
+
+            .circle{width:12px;height:12px;border-radius:50%;background:#898989;float:left;margin-right: 10px;position: relative;top: 6px}
+            #mcover{position: absolute;background: #000;opacity: 0.8;display: block;z-index: 100;}
+            #mcover img{position:fixed;z-index: 200;display: block;}
+		</style>
+
+        <script>
+            $(function(){
+                $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                // 遮罩分享
+                $('#Invitation').click(function(){
+//
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+                // 遮罩消失
+                $('#mcover').click(function(){
+                    $(this).hide();
+                    $(this).children('img').hide();
+                })
+            })
+
+        </script>
+	</head>
+	<body>
+		<div id="header">
+            <img src="{weikucms:$set.img}" style="width: 100%;display: block;height: 100%">
+		</div>
+
+        <if condition="$_GET['ishow'] eq 1">
+            <div id="mcover">
+                <img src="{weikucms::STATICS}/works/guide.png" width="320px" height="320px"/>
+            </div>
+
+
+        </if>
+
+		<table id="content" cellspacing="5px">
+			<tr style="line-height: 50px; font-size: 20px;">
+				<td width="75%">&nbsp&nbsp作品排名：第&nbsp<b><span style="font-size:30px">{weikucms:$ranking}</span></b>&nbsp名</td>
+				<td><b><span style="font-size:30px">{weikucms:$set.poll}</span></b>票</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="friends">
+						<div class="friend aticles"><if condition="$set.state eq 2">审核未通过
+                            <script>
+                                $(function(){
+                                    $('.friend').removeClass('aticles');
+                                })
+                            </script>
+
+                            <else/>
+                            <if condition="$set.openid eq $openid">
+                                我的作品
+                                <script>
+                                    $(function(){
+                                        $('.friend').removeClass('aticles');
+                                    })
+                                </script>
+                                <else/>
+                                为好友投票
+
+                            </if>
+                        </if>
+                        </div>
+                        <script>
+                            $(function(){
+                                $('.aticles').click(function(){
+                                    var url = "{weikucms::U('Wap/Works/poll',array('token'=>$token,'openid'=>$openid,'sid'=>$_GET['sid'],'mid'=>$_GET['mid'],'wid'=>$_GET['wid']))}";
+                                    $.post(url,{},function(data){
+                                        if(data.status = 1){
+                                            alert(data.info);
+                                            setTimeout(function(){
+                                                window.location.href = data.url;
+                                            },1000)
+                                        }else{
+                                            alert(data.info);
+                                        }
+                                    },'json');
+                                })
+                            })
+                        </script>
+					</div>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr >
+				<td class="font">
+					&nbsp&nbsp为好友投票可赢取优惠券哦
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			</tr>
+			<tr>
+				<td>
+					<div  onclick="window.location.href ='{weikucms::U('Works/event',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'openid'=>$_GET['openid']))}'">
+                        &nbsp&nbsp<img src="{weikucms::STATICS}/works/liaojie.png" style="width: 50%;height: 50%;">
+					</div>
+				</td>
+                <td>&nbsp;</td>
+			</tr>
+		</table>
+        <table id="contents" cellspacing="15px" style="text-align:left; ">
+            <tr>
+                <td style="width:8%;"><img src="{weikucms::STATICS}/works/huojian.png" style="width: 10px; height:25px;"/></td>
+                <td style="width:24%;">作品名</td>
+                <td >{weikucms:$set.worksname}</td>
+            </tr>
+            <tr>
+                <td style="width:8%;"><img src="{weikucms::STATICS}/works/huojian.png" style="width: 10px; height:25px;"/> </td>
+                <td style="width:24%;">参赛者</td>
+                <td >{weikucms:$set.name}</td>
+            </tr>
+            <tr>
+                <td style="width:8%;"><img src="{weikucms::STATICS}/works/huojian.png" style="width: 10px; height:25px;"/> </td>
+                <td style="width:25%;">作品介绍</td>
+                <td >
+                    {weikucms:$set.reason}
+                </td>
+            </tr>
+        </table>
+        <if condition="$set.state eq 2">
+            <div id="foot" style="padding: 15px;font-size:14px;">
+                <span style="color: red;padding: 10px 0px;display: block;">审核失败原因：</span>
+                <div style="font-size: 13px;">{weikucms:$set.reasons}</div>
+                <a href="{weikucms::U('Works/set',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'openid'=>$_GET['openid'],'wid'=>$set['id']))}">
+                    <div class="friend aticles" style="margin-top: 30px;width: 100%;">我要重新参加</div></a>
+            </div>
+            <else/>
+        </if>
+
+        <if condition="$tpl['is_auth'] eq 1">
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/toupiaoget/token/{weikucms:$token}/wid/{weikucms:$set.id}/mid/{weikucms:$set.mid}/sid/{weikucms:$res.sid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+            <else />
+            <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/toupiaoget/token/{weikucms:$token}/wid/{weikucms:$set.id}/id/{weikucms:$set.mid}/sid/{weikucms:$res.sid}/&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+        </if>
+        <!--<script src="{weikucms::STATICS}/wapweiui/distribution/wxsharejs.js"></script> -->
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            var shareTitle="";
+            var imgUrl="";
+            var descContent="";
+            var shareUrl="";
+
+            $(function() {
+                shareTitle = "Rocket Play 小小设计师";
+                imgUrl = "<php>echo C('site_url');</php>{weikucms:$set.img}";
+                descContent = "{weikucms:$set.worksname}";
+                shareUrl = $("#shareUrl").text();
+            });
+
+            wx.config({
+                appId: '{weikucms:$signPackage.appId}',
+                timestamp: {weikucms:$signPackage.timestamp},
+                nonceStr: '{weikucms:$signPackage.nonceStr}',
+                signature: '{weikucms:$signPackage.signature}',
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+                ]
+            });
+            wx.ready(function () {
+                // 在这里调用 API
+                wx.onMenuShareTimeline({
+                    title: shareTitle, // 分享标题
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+
+                wx.onMenuShareAppMessage({
+                    title: shareTitle, // 分享标题
+                    desc: descContent, // 分享描述
+                    link: shareUrl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+
+        </script>
+
+
+
+
+
+
+    </body>
+</html>	

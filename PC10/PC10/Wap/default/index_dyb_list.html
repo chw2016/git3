@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+    <script src="tpl/Wap/default/common/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/iscroll.js"></script>
+    <style type="text/css">
+        body{
+            /*background-color: rgb(240,240,240);
+            padding-bottom: 6px;*/
+        }
+    </style>
+</head>
+<body class="body-green-bg">
+    	<div class="companyHead fixBg logoBgBottom"></div>
+       <volist name="res" id="so">
+	        <div class="border-4 white-bg introductionBox">
+	            <div class="inHead">
+	               {weikucms:$so.title}
+	            </div>
+	            <div class="inContent">
+	                   <div class="inImg fixBg" style="background-image:url('{weikucms:$so.pic}');"></div>
+	            </div>
+	            <div class="inForMore h3 black textMiddle" onclick="location.href='{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token'],'openid'=>$openid))}'">
+	                查看更多
+	            </div>
+	        </div>
+       </volist>
+    </body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title><?php echo (mb_substr(strip_tags($list['name']), 0, 9, 'utf-8')) ?>-鱼美人</title>   
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css5/style.css">
+		<script src="{weikucms::RES}/mru/js5/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js5/main.js"></script>
+		<script src="{weikucms::RES}/mru/js5/msg.js"></script>
+    </head>
+    <body class="prodetail"  style="overflow-x:hidden;background-color:white;"   >
+    <div class="body f14">
+        <div class='hImg'><img src="{weikucms:$list['pic']}" width="100%" /></div>
+        <div class='contain'>
+            <div><span class='c8dab00'>姓名：</span>{weikucms:$list['name']}</div>
+            <div><span class='c8dab00'>地址：</span>{weikucms:$list['dz']}</div>
+        <!--    <div><span class='c8dab00'>类型：</span><?php 
+    				          			switch ($list['type']){
+				case 1:$list['type']='减肥专家';break;
+				case 2:$list['type']='美容专家';break;
+				case 3:$list['type']='美体专家';break;
+			}
+
+  echo $list['type'];
+    				       ?>
+            </div>-->
+<style>
+#aaa2 img{
+	width:100%;
+}
+</style>
+
+            <div id="aaa2" ><span class='c8dab00'>简介：</span>
+                     <?php
+					    
+ 						$list['content']=str_replace("<div","<span",$list['content']);
+                        $list['content']=str_replace("<p","<span",$list['content']);
+                        $list['content']=str_replace("</div>","</span>",$list['content']);
+                        $list['content']=str_replace("</p>","</span>",$list['content']);
+                        echo $list['content'];
+                                          
+					 ?>
+            </div>
+        </div>
+    </div>
+<include file="./tpl/Wap/default/mru_normal_fx.html" />
+    </body>
+</html>

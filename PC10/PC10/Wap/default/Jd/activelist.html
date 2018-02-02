@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+    <title>
+	<if condition="$huodong">
+	活动及培训
+	<else/>
+	方案招标
+	</if>
+	</title>
+	<meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication1.css">
+    <style type="text/css">
+    span.comment {
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #000;
+    border:1px  solid #ccc;
+    border-radius: 5px;
+    display:inline-block;
+    letter-spacing:5px;
+}
+.assist-right{
+    display:inline-block;
+    float:right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.love-praise{
+    font-size: 20px;
+    color: #828282;
+}
+.assist{
+      display:inline-block;
+}
+.assist.color .love-praise{
+  color:red ;
+}
+.clearfix {
+  *zoom: 1;
+  clear: both;
+}
+.clearfix::after,.clearfix::before{
+  content: " ";
+  display: table;
+}
+.clearfix::after{
+  clear: both;
+}
+.figure{
+          color:#575556;
+}
+.comment-center{
+          background-color:#EDECEC;
+          font-size:14px;
+          margin-top:15px;
+}
+.comment-center .reply-btn{
+          padding: 3px 7px;
+          background-color: #FFF;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+          width: 10%;
+          color: #0C0C0C;
+          text-align: center;
+          float: right;
+          margin: 5px;
+}
+.ml10{
+          margin-left:10px;
+}
+.mt10{
+          margin-top:10px;
+}
+.padding10{
+    font-size: 12px;
+          padding: 10px;
+          border-bottom: 1px solid #D9D9D9;
+}
+.padding15{
+          padding: 5px 10px 5px 30px;
+          border-bottom: 1px solid #D9D9D9;
+}
+.comment{
+          text-align:center;
+}
+.comment-right{
+          float:right;
+}
+.color1979dc{
+          color:#1979dc;
+}
+.comment-day{
+          text-align: right;
+          color: #b4b4b4;
+          font-size: 11px;
+}
+.more{
+          font-size: 14px;
+          color: #1979dc;
+          text-align:right;
+          margin: 5px 10px;
+}
+.mt5{
+        margin-top:5px;
+}
+.reply-font{
+        padding: 0 3px;
+        font-size: 12px;
+        font-size: 12px;
+        font-weight: bold;
+}
+.color33{
+         color:#333;
+}
+.twitc{
+          color: #828282;
+}
+.search_size {
+  background-color: #F5772D;
+  text-align: center;
+  padding: 5px;
+  color: #fff;
+  width: 50%;
+  border-radius: 5px;
+  width: 41%;
+  display: inline-block;
+  font-size: 13px;
+}
+        .assist{
+            cursor: pointer;
+        }
+    </style>
+        <script type="text/javascript">
+    $(function(){
+        $(".assist").click(function(){
+            var thises = $(this);
+                var number = $(this).find(".figure").html();
+            var figure= 0;
+                var id = parseInt($(this).find(".figure").attr('data'));
+                var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'active'))}";
+              if($(this).hasClass('color')){
+                    figure--;
+                  
+                  $.post(url,{figure:figure,id:id},function(rel){
+                      if(rel.status==1){
+						  thises.removeClass('color');
+						  thises.find(".figure").css("color","#575536");
+						  number--;
+						  thises.find(".figure").html(number)
+                         //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                      }else{
+                          msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+						  });
+                      }
+                  },'json')
+
+              }else{
+                    figure++;
+                  
+                  $.post(url,{figure:figure,id:id},function(rel){
+                      console.log(rel);
+                      if(rel.status==1){
+                          thises.addClass('color');
+						  thises.find(".figure").css("color","red");
+						  number++;
+						  thises.find(".figure").html(number);
+                          //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                      }else{
+                          msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+						  });
+                      }
+                  },'json')
+
+              }
+       })
+    })
+
+    </script>
+</head>
+<body>
+
+<div class="top_search">
+    <div class="search">
+		<if condition="$huodong">
+		活动及培训列表
+		<else/>
+        招标列表
+		</if>
+    </div>
+    <ul class="lica_ul on" style="width: 100%;">
+        <volist name="list" id="vo">
+            <li class="he" style="height: initial;  padding-bottom: 10px;">
+                <a href="{weikucms::U('Jd/activeinfo',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+                <div style="height:35px;margin-left:10px;">
+
+                    <span class="name">{weikucms:$vo.title}</span>
+                    <span class="tel" style="width: 50px;">
+                        <if condition="$vo['status'] eq 0">
+                            发布中...
+                            <elseif condition="$vo['status'] eq 1"/>
+                            招标中...
+                            <elseif condition="$vo['status'] eq 2"/>
+                            评审中...
+                            <elseif condition="$vo['status'] eq 3"/>
+                            已结束
+                            <else/>
+                            其它
+                        </if>
+
+                    </span>
+                </div>
+                </a>
+				<if condition="!$huodong">
+                    <div style="text-align: center"><img src="{weikucms:$vo.pic}" style="width: 94%;"></div>
+                <div class="search_size" style="margin-left:10px;">目标奖金&nbsp;{weikucms:$vo.money}&nbsp;元</div>
+                    <if condition="($vo['time'] lt $vo['onetime']) OR ($vo['time'] gt $vo['twotime'])">
+                        <else/>
+                        <a href="{weikucms::U('Jd/setactive',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+                            <div class="search_size" style="margin-left:10px;margin-left: 10px;background-color: #fff; border: 1px solid #ccc;color: #414141;">我要报名</div>
+                        </a>
+
+                    </if>
+
+
+
+                </if>
+                    <a href="{weikucms::U('Jd/activeinfo',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}">
+				<div class="tb1">
+                    <span style="font-size: 12px; color: #a4a4a4; padding: 10px;display: -webkit-box;">
+                        <php>
+                            if(mb_strlen($vo['abstract'],'utf8') < 50){
+                            echo $vo['abstract'];
+                            }else{
+                            echo mb_substr($vo['abstract'],0,50, 'utf8').'...';
+                            }
+                        </php>
+                    </span>
+                </div>
+                </a>
+                <div style="padding: 0px 10px;">
+                    <div style="border-top:1px solid #f2f2f2;padding-top:10px">
+						<if condition="$huodong">
+						<span style="font-size:12px;color:#a4a4a4;  display: inline-block; line-height: 30px;">
+						<style>
+							.data_btn { width: 22%; }
+						</style>
+						<php>echo date('Y/m/d H:i', $vo['onetime'])</php>-
+						<php>echo date('Y/m/d H:i', $vo['twotime'])</php>
+						</span>
+						<else />
+						<span style="font-size:12px;color:#a4a4a4;  display: inline-block; line-height: 30px;">
+						<php>echo date('Y/m/d', $vo['onetime'])</php>—
+						<php>echo date('Y/m/d', $vo['twotime'])</php>
+						</span>
+						</if>
+                            <div class="assist-right">
+                                    <div class="assist <if condition="$vo['praisetype'] eq 1">color</if>">
+                                              <span class="love-praise fa fa-thumbs-up"></span>
+                                       <!-- <?php echo $v['id']; ?>-->
+                                              <span class="figure" data="{weikucms:$vo.id}">{weikucms:$vo.number}</span>
+                                    </div>
+                                    <span class="fa fa-twitch ml10 twitch" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$vo['id'],'type'=>'active'))}'">{weikucms:$vo['count']}</span>
+                            </div>
+                    </div>
+
+                <!--<if condition="$vo['evaluate']">
+                    <div class="comment-center clearfix">
+                        <volist name="vo['evaluate']" id="so"  offset="0" length="3">
+                            <if condition="$so['upuname'] eq ''">
+                                <div class="padding10 clearfix mt5">
+                                    <span class="color1979dc">{weikucms:$so.uname}:</span>
+                                    <span class="color33">{weikucms:$so.content}</span>
+                                    <div class="comment-day mt5">
+                                        <php>
+                                            $times = strtotime($so['add_time']);
+                                            echo date('Y/m/d H:i',$times);
+                                        </php>
+                                    </div>
+                                </div>
+                                <else/>
+                                <div class="padding10 clearfix mt5">
+                                    <span class="color1979dc">{weikucms:$so.upuname}<span class="reply-font">回复</span>{weikucms:$so.uname}:</span>
+                                    <span class="color33">{weikucms:$so.content}</span>
+                                    <div class="comment-day mt5">
+                                        <php>
+                                            $times = strtotime($so['add_time']);
+                                            echo date('Y/m/d H:i',$times);
+                                        </php>
+                                    </div>
+                                </div>
+                            </if>
+                        </volist>
+
+                        &lt;!&ndash; <div style="text-align: center;">该主题暂时还没有评价哦！ </div>&ndash;&gt;
+
+                        &lt;!&ndash;<div class="padding10 clearfix mt5">
+                                  <span class="color1979dc">TheSmile___<span class="reply-font">回复</span>The:</span>
+                                  <span class="color33">呵呵哒</span>
+                                  <div class="comment-day mt5">2014/09/10&nbsp;12:30:12</div>
+                        </div>&ndash;&gt;
+                        <if condition="$vo['count'] gt 3">
+                            <div class="more" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$vo['id'],'type'=>'active'))}'">更多...</div>
+                        </if>
+                    </div>
+                </if>-->
+            </li>
+        </volist>
+
+    </ul>
+    <div style="height:100px"></div>
+</div>
+</body>
+</html>

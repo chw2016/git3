@@ -1,0 +1,203 @@
+<html><head>
+    <title>余额提现</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<body>
+<style type="text/css">
+	.colorff8383{
+		color:#ff8383;
+	}
+	.account-submit {
+		width: 57%;
+		margin: 0px auto 0;
+	}
+	.colorf53a3a{
+		color:#f53a3a;
+	}
+	.t_money{
+		width:100%
+	}
+</style>
+<header class="header-top">
+    余额提现
+</header>
+<section class="ucenter-main animated fadeInDown">
+    <div class="space-10"></div>
+    <div class="money-main">
+    	<div class="money-title">可用金额：<span class="colorf53a3a">{weikucms:$count}元</span></div>
+    	<div class="money-input"><input type="text" placeholder="请输入提现的金额" class="t_money"/></div>
+    	<p class="um-tips colorff8383"> *经纪人提现时需依法提供相应金额的发票，餐饮票除外。（公司全称：海南生活家房地产顾问有限公司）<br/>
+**发票寄送地址：海口市美兰区琼山大道172号江东电子商务产业园901，胡巴，13282822446<br/>
+***受限于财务办理成本，恕不接受1000元以下提现哦，亲可以先去潮堂逛逛！</p>
+    	 <div class="space-10"></div>
+<aside class="account-submit">
+    <input type="hidden" id="Url" value="{weikucms::U('center',array('token'=>$token,'openid'=>$openid))}">
+    <input type="hidden" id="mon" value="{weikucms:$count}">
+    <input type="hidden" id="sum" value="{weikucms:$sum}">
+    <input type="hidden" id="submitUrl" value="{weikucms::U('b_check',array('token'=>$token,'openid'=>$openid))}">
+    <button class="ui-btn-lg ui-btn-danger" type="button" id="J_submit">立即提现</button>
+</aside>
+    </div>
+    <div class="amend edit"><span><img src="tpl/Wap/default/hn/img/icon-10.png" class="icon-pen"></span>修改账户信息</div>
+</section>
+<div class="space-10"></div>
+<div class="space-20"></div>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+//余额提现
+	var J_submit=$('#J_submit');
+	J_submit.tap(function(){
+	//判断是否有1000
+	var t_money=$('.t_money').val();
+	var mon=$('#mon').val();
+	
+	var sum=$('#sum').val();
+
+ 		if(t_money==''){
+ 			$.dialog({
+	            content:'提现不能为空',
+	            button:['我知道了']
+	        });
+	        return false;
+ 		}else if(!(/^[0-9]*$/.test(t_money)))
+		{
+			$.dialog({
+	            content:'请输入数字',
+	            button:['我知道了']
+	        });
+			return false;
+		}
+		else if(t_money < 1000)
+		{
+			$.dialog({
+	            content:'万万没想到，1000元以下提现暂不支持！',
+	            button:['我知道了']
+	        });
+			return false;
+		}else if(parseInt(t_money) > parseInt(mon))
+		{
+			$.dialog({
+	            content:'超出限制了',
+	            button:['我知道了']
+	        });
+			return false;
+		}else
+		if(parseInt(mon-sum) < parseInt(t_money))
+		{
+			$.dialog({
+	            content:'余额不足！',
+	            button:['我知道了']
+	        });
+			return false;
+		}
+ 		var el=$.loading({
+	       content:'正在提交'
+	    });
+	    var DATA={
+            t_money:t_money,
+
+	    };
+	    $.post($('#submitUrl').val(),DATA,function(data){
+	    	if(data.status==1){
+	    		var DG=$.dialog({
+		            content:'已收到提现信息，我们会在收到发票后2个工作日内完成转账。',
+		            button:['我知道了']
+		        });
+		        DG.on('dialog:action',function(e){
+		        	if(e.index==0){
+		        		document.location.href=$('#Url').val();
+		        	}
+			    });
+	    	}else{
+	    		$.dialog({
+		            content:'网络错误，请重试',
+		            button:['我知道了']
+		        });
+	    	}
+	    	el.hide();
+	    },'json');
+ 	});
+
+(function(window){
+    //初始化默认的分享配置
+     window._Conf={
+         title: "开启财富之旅--全民经纪人",
+         desc:"调动你的社交关系，推荐客源，获丰厚佣金!",
+//         link: "http://jjr2.weizhi.in/Home/Share/index/waid/293/uid/1141259",
+         link: "http://jjr2.weizhi.in/Home/Index/guideRegister/waid/293/uid/1141259",
+         imgUrl: "http://jjr2.weizhi.in/wap/img/share.jpg",
+         trigger:function(res){},
+         success:function(res){},
+         cancel:function(res){},
+         fail:function(res){},
+         complete:function(res){}
+     };
+      //声明默认的加载接口
+    window._DfJsApiList=[
+                     'checkJsApi',
+                     'onMenuShareTimeline',
+                     'onMenuShareAppMessage',
+                     'onMenuShareQQ',
+                     'onMenuShareWeibo',
+                     'hideMenuItems',
+                     'showMenuItems'
+                     ];
+    //处理加载config签名
+    wx.loadConfig=function(apiConfig){
+         if(apiConfig.jsApiList==undefined){
+             apiConfig.jsApiList=_DfJsApiList;
+         }
+         if(apiConfig.debug==undefined){
+             apiConfig.debug=false;
+             wx.debugstate=false;
+         }else{
+            wx.debugstate=apiConfig.debug;
+         } 
+         wx.config(apiConfig);
+     };
+       
+     //组合分享方法
+     window._Share=function(){
+         wx.showOptionMenu();
+         wx.onMenuShareAppMessage(_Conf);
+         wx.onMenuShareTimeline(_Conf);
+         wx.onMenuShareQQ(_Conf);
+         wx.onMenuShareWeibo(_Conf);
+     };
+     //异常处理
+     wx.error(function(res){
+         if(wx.debugstate){
+             alert(res.errMsg);
+         }
+     });
+})(window);
+//签名配置
+var apiConfig={
+ debug:false,//默认微false
+ appId:'wxdb23c27d23c2b7b6',
+ timestamp:'1439284421',
+ nonceStr:'JQd5RZeUgYNm7pDQ',
+ signature:'59b29bd034acf08b5dfa6a5ce7b4d6f3ac8fb7d8'
+};
+wx.loadConfig(apiConfig);//加载配置
+wx.ready(function(){
+  _Share();//分享 依赖_Conf变量 参数设置
+});
+$('.edit').click(function(){
+	window.location.href="{weikucms::U('bind',array('token'=>$token,'openid'=>$openid))}";
+})
+</script>
+</body></html>

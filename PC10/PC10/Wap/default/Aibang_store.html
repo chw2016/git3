@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{weikucms:$tpl.name}</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Aibang/css/aibang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery-1.9.1.min.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<if condition="$flag eq 1">
+        <script src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery.form.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            // 图片更改
+            var surl = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=1&id={weikucms:$_GET['id']}";
+            var surl_1 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=2&id={weikucms:$_GET['id']}";
+            var surl_2 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=3&id={weikucms:$_GET['id']}";
+            var surl_3 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=4&id={weikucms:$_GET['id']}";
+            var surl_4 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=5&id={weikucms:$_GET['id']}";
+            var surl_5 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=6&id={weikucms:$_GET['id']}";
+            var surl_6 = "/index.php?g=Wap&m=Aibang&a=drop&token={weikucms:$token}&del=7&id={weikucms:$_GET['id']}";
+            // 文字更改
+            var font_url = "/index.php?g=Wap&m=Aibang&a=addfonts&token={weikucms:$token}&id={weikucms:$_GET['id']}";
+        </script>
+        <script src="{weikucms::STATICS}/wapweiui/Aibang/js/upfile.js" type="text/javascript"></script>
+        <else/>
+        </if>
+       
+		<style type="text/css">
+			.food{
+				margin: 0 auto;margin-top: 90px;width: 90%;border-radius: 6px;-moz-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;-webkit-border-radius: 6px;border: 1px solid #878787;background: #fff;
+			}.foods{
+				display: flex;display: -webkit-box;padding:10px;
+			}.foods .left{
+				width: 40%;
+			}.foods .right{
+				width: 60%;text-align: left;padding-left: 8px;
+			}.foods .left img{width: 100%;}
+			.foods .right .foodname{
+				padding-top: 6px;font-size: 18px;
+			}.foods .right .status{
+				color: #f00;font-size: 14px;padding-top: 4px;
+			}.foods .right .type{
+				font-size: 14px;padding-top: 4px;
+			}.foods .right .type .good{margin-left: 10px;padding-top: 2px;}
+			.foods .right .type .bad{margin-left: 2px;}
+			.foods .right .type .good img,.foods .right .type .bad img{position:relative;width: 13%;top: 1px;}
+			.address{border-top: 1px solid #878787;margin-top: 2px;text-align: left;border-bottom: 1px solid #878787;display: flex;display: -webkit-box;padding: 10px;}
+			.address .left{width: 8%;padding-top: 2%;}
+			.address .right{width: 6%;margin-top: 3%;}
+			.address .middle{width: 86%;line-height: 100%;}
+			.address .left img{width: 55%;}
+			.address .right .arrow{border-top: 2px solid #878787;border-right: 2px solid #878787;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);width: 10px;height: 10px;}
+            .border{border: 0;margin-top: 0;}
+            .collect,.register{width: 90%;border-radius: 6px;-moz-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;-webkit-border-radius: 6px;background: #3cc332;letter-spacing: 5px;margin: 10px auto 6px;}
+            .collect{margin-top: 30px;}
+            .register{background: #1497f2;}
+            .collect a{color: #fff;font-size: 18px;padding: 6px 0;display: block;}
+            .register a{color:#fff;font-size: 18px;padding: 6px 0;display: block;}
+            #hotelname,#seat,#colza,#position,#telphone{height: 22px;border: 1px solid #878787;border-radius: 6px;-webkit-border-radius: 6px;-moz-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;width:80%;}
+            /*这是上传图片的样式*/
+            .demo{width:100%;}
+            .demo p{line-height:32px}
+            .btn{position: relative;
+                overflow: hidden;
+                margin-right: 4px;
+                display:inline-block;
+                
+                font-size:14px;
+                height:200px;
+                color:#fff;
+                text-align:center;
+                vertical-align:middle;
+                cursor:pointer;
+                background-color:#fff;
+                border:1px solid #cccccc;
+                border-color:#e6e6e6 #e6e6e6 #bfbfbf;
+                border-bottom-color:#b3b3b3;
+                -webkit-border-radius:6px;
+                -moz-border-radius:6px;
+                border-radius:6px;
+				border:2px solid #ccc;
+            }
+            .btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;z-index: 100;}
+            .btn .uploads{
+                position: relative;z-index: 1;
+                width: 100%;
+                height: 200px;
+                border-radius:6px;
+                -webkit-border-radius:6px;
+                -moz-border-radius:6px;
+                -ms-border-radius:6px;
+                -o-border-radius:6px;
+				top:-19px;
+				right:0;
+            }
+			.btn .uploads .sonup{
+				border:3px dashed #ccc;
+				width:20%;
+				margin:0 auto;
+				border-radius:50%;
+				-webkit-border-radius:50%;
+				-moz-border-radius:50%;
+			}
+			.btn .uploads .small{
+				border:3px dashed #ccc;
+				width:30%;
+				margin:0 auto;
+				border-radius:50%;
+				-webkit-border-radius:50%;
+				-moz-border-radius:50%;
+			}
+			.btn .uploads .small:after{
+				content:"＋";
+				font-size:30px;
+				color:#ccc;
+			}
+			.btn .uploads .sonup:after{
+				content:"＋";
+				font-size:40px;
+				color:#ccc;
+			}
+            .progress { 
+                position:relative; 
+                margin-top:-24px; 
+                width:100px;
+                text-align:center;
+                padding: 1px; 
+                border-radius:3px; 
+                display:none
+            }
+            .bar {
+                background-color: #FF8000; 
+                display:block; 
+                width:0%;
+                height:20px; 
+                border-radius: 3px; 
+            }
+            .percent { 
+                position:absolute; 
+                height:20px; 
+                display:inline-block; 
+                top:3px; 
+                left:2%; 
+                color:#fff 
+            }
+            .files{height:22px; line-height:22px; margin:5px 0}
+            .delimg{margin-left:20px; color:#090; cursor:pointer}
+            .uploadfile{
+                width: 88%;
+				height:100px;
+                margin: 0 auto;
+				position:relative;
+				top:-20px;
+            }
+            .uploadfile .left{
+                float: left;
+                width: 49%;
+                height: 80px;
+				padding-top:0px;
+            }
+            .uploadfile .right{
+                float: right;
+                width: 49%;
+                height: 80px;
+				padding-top:0px;
+            }.addfont{
+                width: 100%;
+                background: rgba(0,0,0,0.6);
+                height: 22px;
+                position: absolute;
+                top: 190px;
+				line-height:22px;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+                -webkit-border-bottom-left-radius: 6px;
+                -webkit-border-bottom-right-radius: 6px;
+                -moz-border-bottom-left-radius: 6px;
+                -moz-border-bottom-right-radius: 6px;
+				text-align:center;
+				color:#fff;
+				z-index:400;
+            }.addfonts{
+                top: 110px !important;
+            }
+		</style>
+    </head>
+    <body class="body">
+	<div id="loading" style="position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;bottom:0px;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    <!-- 上传图片 -->
+
+    <form id="myupload" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=1&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+        <div class="demo">
+            <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+            <div id="showimg" style="width:88%;position:relative;margin:10px auto 0;">
+               <if condition="$flag eq 1">
+                    <if condition="$infos['img_1'] eq ''">
+
+                    <else/>
+                        <img src="{weikucms:$infos.img_1}" style="width:100%;position:absolute;top:12px;z-index:200;left:0px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="200px">
+                        <div class="deltel" style="position:absolute;right:-6px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                        <!-- 添加文字行 -->
+                        <div class="addfont" id="addfont">
+                            <div id="img1">{weikucms:$infos['font_1']}</div>
+							<input type="text" name="font1" id="font1" style="display:none;width:50%;" placeholder="请输入文字">
+                        </div>
+                        <script type="text/javascript">
+                            $(function(){
+                                 $('#showimg .deltel').click(function(){
+                                     $('#showimg>img').remove();
+                                     $('#showimg .deltel').remove();
+                                     $('#addfont').remove();
+                                     $.post(surl,{},function(data){
+                                    },'json');
+                                })
+                                $('#showimg .deltel').click(function(){
+                                    $.post(font_url,{addfont:1,types:1},function(datas){
+                           
+                                    },'json');
+                                 });
+                            })
+                        </script>
+                    </if>
+                   
+                   
+                </div>
+               <else />
+                    <if condition="$infos['img_1'] eq ''">
+                       
+                    <else />
+                        <img src="{weikucms:$infos.img_1}" style="width:100%;position:absolute;top:12px;z-index:200;left:0px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="200px" data-url="{weikucms:$infos.img_1}" class="preview">
+                        <div class="addfont" id="addfont">
+                            <div id="img1">{weikucms:$infos['font_1']}</div>
+                            <input type="text" name="font1" id="font1" style="display:none;width:50%;" placeholder="请输入文字">
+                        </div>
+                    </if>
+               </if>
+            </div>
+            <div class="btn" style="width:88%;margin:10px auto;">
+                <input id="fileupload" type="file" name="mypic" style="width:100%;height:200px;">上传
+                <div class="uploads">
+                    <div class="sonup">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="" id='url' />  
+        </div>
+    </form>
+    <!-- 上传图片2 -->
+    <div class="uploadfile">
+        <div class="left">
+            <form id="myupload1" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=2&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                <div class="demo">
+                    <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                    <div id="showimg1" style="width:98%;position:relative;margin:10px auto 0;">
+                         <if condition="$flag eq 1">
+                            <if condition="$infos['img_2'] eq ''">
+                            <else/>
+                                 <img src="{weikucms:$infos.img_2}" style="width:100%;position:absolute;top:12px;z-index:200;left:0px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                <div class="deltel" style="position:absolute;right:-6px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                 <!-- 添加文字行 -->
+                                <div class="addfont addfonts" id="addfont1">
+                                    <div id="img2">{weikucms:$infos['font_2']}</div>
+                                    <input type="text" name="font2" id="font2" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#showimg1 .deltel').click(function(){
+                                         $('#showimg1>img').remove();
+                                         $('#showimg1 .deltel').remove();
+                                         $('#addfont1').remove();
+                                         $.post(surl_1,{},function(data){
+                                        },'json');
+                                    })
+                                    $('#showimg1 .deltel').click(function(){
+                                        $.post(font_url,{addfont:2,types:2},function(datas){
+                               
+                                        },'json');
+                                     });
+                                    })
+                                </script>
+                            </if>
+                         <else/>
+                            <if condition="$infos['img_2'] eq ''">
+                                <input type="hidden" value="" id='url' />
+                            <else />
+                                <img src="{weikucms:$infos.img_2}" style="width:100%;position:absolute;top:12px;z-index:200;left:0px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_2}" class="preview">
+                                <div class="addfont addfonts" id="addfont1">
+                                    <div id="img2">{weikucms:$infos['font_2']}</div>
+                                    <input type="text" name="font2" id="font2" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                            </if>
+                         </if>
+                    </div>
+                   <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                        <input id="fileupload1" type="file" name="mypic" style="width:100%;height:120px;">上传
+                        <div class="uploads" style="height:120px;top:-29px">
+                            <div class="small">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id='url' />
+                </div>
+            </form>
+        </div>
+        <div class="right">
+            <form id="myupload2" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=3&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                <div class="demo">
+                    <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                    <div id="showimg2" style="width:88%;position:relative;margin:10px auto 0;">
+                       <if condition="$flag eq 1">
+                            <if condition="$infos['img_3'] eq ''">
+                            <else/>
+                                <img src="{weikucms:$infos.img_3}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                <div class="deltel" style="position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                <!-- 添加文字行 -->
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont2">
+                                    <div id="img3">{weikucms:$infos['font_3']}</div>
+                                    <input type="text" name="font3" id="font3" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                                 <script type="text/javascript">
+                                    $(function(){
+                                        $('#showimg2 .deltel').click(function(){
+                                         $('#showimg2>img').remove();
+                                         $('#showimg2 .deltel').remove();
+                                         $('#addfont2').remove();
+                                         $.post(surl_2,{},function(data){
+                                        },'json');
+                                    })
+                                    $('#showimg2 .deltel').click(function(){
+                                        $.post(font_url,{addfont:3,types:3},function(datas){
+                               
+                                        },'json');
+                                     });
+                                    })
+                                </script>
+                            </if>
+                            
+                       <else />
+                            <if condition="$infos['img_3'] eq ''">
+                                <input type="hidden" value="" id='url' />
+                            <else />
+                                <img src="{weikucms:$infos.img_3}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_3}" class="preview">
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont2">
+                                    <div id="img3">{weikucms:$infos['font_3']}</div>
+                                    <input type="text" name="font3" id="font3" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                            </if>
+                       </if>
+                    </div>
+                    <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                        <input id="fileupload2" type="file" name="mypic" style="width:100%;height:120px;">上传
+                        <div class="uploads" style="height:120px;top:-29px;">
+                            <div class="small">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id='url' />
+                </div>
+            </form>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+     <!-- 上传图片3 -->
+    <div class="uploadfile" style="top:9px;">
+        <div class="left">
+            <form id="myupload3" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=4&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                <div class="demo">
+                    <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                    <div id="showimg3" style="width:88%;position:relative;margin:10px auto 0;">
+                         <if condition="$flag eq 1">
+                            <if condition="$infos['img_4'] eq ''">
+                            <else/>
+                                <img src="{weikucms:$infos.img_4}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                <div class="deltel" style="position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                <!-- 添加文字行 -->
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont3">
+                                    <div id="img4">{weikucms:$infos['font_4']}</div>
+                                    <input type="text" name="font4" id="font4" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#showimg3 .deltel').click(function(){
+                                         $('#showimg3>img').remove();
+                                         $('#showimg3 .deltel').remove();
+                                         $('#addfont3').remove();
+                                         $.post(surl_3,{},function(data){
+                                        },'json');
+                                    })
+                                    $('#showimg3 .deltel').click(function(){
+                                        $.post(font_url,{addfont:4,types:4},function(datas){
+                               
+                                        },'json');
+                                     });
+                                    })
+                                </script>
+                            </if>
+                            
+                       <else />
+                            <if condition="$infos['img_4'] eq ''">
+                                <input type="hidden" value="" id='url' />
+                            <else />
+                                <img src="{weikucms:$infos.img_4}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_4}" class="preview">
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont3">
+                                    <div id="img4">{weikucms:$infos['font_4']}</div>
+                                    <input type="text" name="font4" id="font4" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                            </if>
+                       </if>
+                    </div>
+                    <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                        <input id="fileupload3" type="file" name="mypic" style="width:100%;height:120px;">上传
+                        <div class="uploads" style="height:120px;top:-29px">
+                            <div class="small">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id='url' />
+                </div>
+            </form>
+        </div>
+        <div class="right">
+            <form id="myupload4" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=5&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                <div class="demo">
+                    <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                    <div id="showimg4" style="width:88%;position:relative;margin:10px auto 0;">
+                        <if condition="$flag eq 1">
+                            <if condition="$infos['img_5'] eq ''">
+                            <else/>
+                                <img src="{weikucms:$infos.img_5}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                <div class="deltel" style="position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                <!-- 添加文字行 -->
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont4">
+                                    <div id="img5">{weikucms:$infos['font_5']}</div>
+                                    <input type="text" name="font5" id="font5" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#showimg4 .deltel').click(function(){
+                                         $('#showimg4>img').remove();
+                                         $('#showimg4 .deltel').remove();
+                                         $('#addfont4').remove();
+                                         $.post(surl_4,{},function(data){
+                                        },'json');
+                                    })
+                                    $('#showimg4 .deltel').click(function(){
+                                        $.post(font_url,{addfont:5,types:5},function(datas){
+                               
+                                        },'json');
+                                     });
+                                    })
+                                </script>
+                            </if>
+                            
+                       <else />
+                            <if condition="$infos['img_5'] eq ''">
+                                <input type="hidden" value="" id='url' />
+                            <else />
+                                <img src="{weikucms:$infos.img_5}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_5}" class="preview">
+                                 <div class="addfont addfonts preview" style="width:111%;left:-5%;" id="addfont4">
+                                    <div id="img5">{weikucms:$infos['font_5']}</div>
+                                    <input type="text" name="font5" id="font5" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                            </if>
+                       </if>
+                    </div>
+                    <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                        <input id="fileupload4" type="file" name="mypic" style="width:100%;height:120px;">上传
+                        <div class="uploads" style="height:120px;top:-29px;">
+                            <div class="small">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id='url' />
+                </div>
+            </form>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+     <!-- 上传图片4 -->
+    <div class="uploadfile" style="top:38px;">
+        <div class="left">
+            <form id="myupload5" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=6&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                <div class="demo">
+                    <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                    <div id="showimg5" style="width:88%;position:relative;margin:10px auto 0;">
+                        <if condition="$flag eq 1">
+                            <if condition="$infos['img_6'] eq ''">
+                            <else/>
+                                <img src="{weikucms:$infos.img_6}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                <div class="deltel" style="position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                <!-- 添加文字行 -->
+                                <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont5">
+                                    <div id="img6">{weikucms:$infos['font_6']}</div>
+                                    <input type="text" name="font6" id="font6" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                                 <script type="text/javascript">
+                                    $(function(){
+                                        $('#showimg5 .deltel').click(function(){
+                                         $('#showimg5>img').remove();
+                                         $('#showimg5 .deltel').remove();
+                                         $('#addfont5').remove();
+                                         $.post(surl_5,{},function(data){
+                                        },'json');
+                                    })
+                                    $('#showimg5 .deltel').click(function(){
+                                        $.post(font_url,{addfont:6,types:6},function(datas){
+                               
+                                        },'json');
+                                     });
+                                    })
+                                </script>
+                            </if>
+                            
+                       <else />
+                            <if condition="$infos['img_6'] eq ''">
+                                <input type="hidden" value="" id='url' />
+                            <else />
+                                <img src="{weikucms:$infos.img_6}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_6}" class="preview">
+                                <div class="addfont addfonts preview" style="width:111%;left:-5%;" id="addfont5">
+                                    <div id="img6">{weikucms:$infos['font_6']}</div>
+                                    <input type="text" name="font6" id="font6" style="display:none;width:50%;" placeholder="请输入文字">
+                                </div>
+                            </if>
+                       </if>
+                    </div>
+                    <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                        <input id="fileupload5" type="file" name="mypic" style="width:100%;height:120px;">上传
+                        <div class="uploads" style="height:120px;top:-29px">
+                            <div class="small">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id='url' />
+                </div>
+            </form>
+        </div>
+                <div class="right">
+                        <form id="myupload6" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=7&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data">
+                            <div class="demo">
+                                <!-- <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span> -->
+                                <div id="showimg6" style="width:88%;position:relative;margin:10px auto 0;">
+                                   <if condition="$flag eq 1">
+                                        <if condition="$infos['img_7'] eq ''">
+                                        <else/>
+                                            <img src="{weikucms:$infos.img_7}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px">
+                                            <div class="deltel" style="position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:5px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                            <!-- 添加文字行 -->
+                                            <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont6">
+                                                <div id="img7">{weikucms:$infos['font_7']}</div>
+                                                <input type="text" name="font7" id="font7" style="display:none;width:50%;" placeholder="请输入文字">
+                                            </div>
+                                             <script type="text/javascript">
+                                                $(function(){
+                                                    $('#showimg6 .deltel').click(function(){
+                                                     $('#showimg6>img').remove();
+                                                     $('#showimg6 .deltel').remove();
+                                                     $('#addfont6').remove();
+                                                     $.post(surl_6,{},function(data){
+                                                    },'json');
+                                                })
+                                                $('#showimg6 .deltel').click(function(){
+                                                    $.post(font_url,{addfont:7,types:7},function(datas){
+                                           
+                                                    },'json');
+                                                 });
+                                                })
+                                            </script>
+                                        </if>
+                                        
+                                   <else />
+                                        <if condition="$infos['img_7'] eq ''">
+                                            <input type="hidden" value="" id='url' />
+                                        <else />
+                                            <img src="{weikucms:$infos.img_7}" style="width:111%;position:absolute;top:12px;z-index:200;left:-5%;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="120px" data-url="{weikucms:$infos.img_7}" class="preview">
+                                             <div class="addfont addfonts" style="width:111%;left:-5%;" id="addfont6">
+                                                <div id="img7">{weikucms:$infos['font_7']}</div>
+                                                <input type="text" name="font7" id="font7" style="display:none;width:50%;" placeholder="请输入文字">
+                                            </div>
+                                        </if>
+                                   </if>
+                                </div>
+                                <div class="btn" style="width:98%;margin:10px auto;height:120px;">
+                                    <input id="fileupload6" type="file" name="mypic" style="width:100%;height:120px;">上传
+                                    <div class="uploads" style="height:120px;top:-29px;">
+                                        <div class="small">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="" id='url' />
+                            </div>
+                        </form>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+                	<!-- 这里是菜品 -->
+                	<div class="food">
+                		<div class="foods">
+                			<div class="left">
+                                <form id="shoppic" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}&pic=8&id={weikucms:$_GET['id']}" method="post" enctype="multipart/form-data" style="height:80px;">
+                                <div class="demo">
+                                    
+                                    <div id="showimg7" style="width:88%;position:relative;margin:10px auto 0;">
+                                       <if condition="$flag eq 1">
+                                            <if condition="$infos['pic'] eq ''">
+
+                                            <else/>
+                                                <img src="{weikucms:$infos.pic}" style="width:104px;position:absolute;top:0px;z-index:200;left:-6px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="84px">
+                                                <div class="deltel" style="position:absolute;right:-10px;width:24px;height:24px;border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;color:#f00;z-index:300;top:-6px;font-size:20px;background:#fff;border:1px solid #ccc;font-weight:bold;line-height:24px;">×</div>
+                                               
+                                                <script type="text/javascript">
+                                                    $(function(){
+                                                         $('#showimg7 .deltel').click(function(){
+                                                             $('#showimg7>img').remove();
+                                                             $('#showimg7 .deltel').remove();
+                                                             $.post(surl_7,{},function(data){
+                                                            },'json');
+                                                        })
+                                                        
+                                                    })
+                                                </script>
+                                            </if>
+                                           
+                                           
+                                        </div>
+                                       <else />
+                                            <if condition="$infos['pic'] eq ''">
+                                               <input type="hidden" value="" id='url' />
+                                            <else />
+                                                <img src="{weikucms:$infos.pic}" style="width:104px;position:absolute;top:0px;z-index:200;left:-6px;-webkit-border-radius:6px;border-radius:6px;-moz-border-radius:6px;" height="84px" data-url="{weikucms:$infos.pic}" class="preview">
+                                                
+                                            </if>
+                                       </if>
+                                    </div>
+                                    <div class="btn" style="width:100px;height:80px;">
+                                        <input id="shopPicUpload" type="file" name="mypic" style="width:100%;height:80px;">上传
+                                        <div class="uploads">
+                                            <div class="sonup" style="margin-top:15px !important;height:50px !important;width:50px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="" id='url' />  
+                                </div>
+                            </form>   
+                <if condition="$flag eq 1">
+                    
+                <else/>
+                    </div>
+                </if>             				
+    			
+    			<div class="right">
+    				<p class="foodname">{weikucms:$infos.name}</p>
+                    <input type="text" id="hotelname" style="display:none;">
+    				<p class="status">{weikucms:$infos.ifseat}</p>
+                    <input type="text" id="seat" style="display:none;">
+                    <!-- <select name="seat" id="seat" style="display:none;">
+                        <option value="无座">无座</option>
+                        <option value="有座">有座</option>
+                    </select> -->
+    				<p class="type">
+    					<span class="colza">{weikucms:$infos.channel}</span>
+                        <input type="text" id="colza" style="display:none;width:15%;">
+    					<span class="good"><img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/up.png" />({weikucms:$infos.good})</span>
+    					<span class="bad"><img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/down.png" />({weikucms:$infos.bad})</span>
+    				</p>
+    			</div>
+    		</div>
+    		<!-- 地址 -->
+			
+    		<div class="address">
+    			<div class="left">
+    				<img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/position.jpg" />
+    			</div>
+    			<div class="middle" id="weizhi">
+    				<!-- <a href="javascript:void(0)">宝安区宝安80区宝民二路港龙城</a> -->
+                    <span class="position">{weikucms:$infos.address}</span>
+                   
+                    <input type="text" id="position" style="display:none;">
+                    
+    			</div>
+    			<div class="right">
+    				<div class="arrow"></div>
+    			</div>
+    		</div>
+            <!-- 电话 -->
+            <div class="address border">
+                <div class="left">
+                    <img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/telphone.png" />
+                </div>
+                <div class="middle">
+                    <!-- <a href="tel:0755-881234567">0755-881234567</a> -->
+                    <if condition="$flag eq 1"><else/><a href="tel:{weikucms:$infos.telphone}" style="color:#000;"></if><span class="telphone">{weikucms:$infos.telphone}</span><if condition="$flag eq 1"><else/></a></if>
+                     <input type="text" id="telphone" style="display:none;">
+                </div>
+                <div class="right">
+                    <div class="arrow"></div>
+                </div>
+            </div>
+			
+			<div class="address">
+    			<div class="left" style="width:30px;">
+    				简介
+    			</div>
+    			<div class="middle" id="weizhi">
+    				<!-- <a href="javascript:void(0)">宝安区宝安80区宝民二路港龙城</a> -->
+                    <span class="position">{weikucms:$infos.desc}</span>
+                    
+    			</div>
+    			<div class="right">
+    				<div class="arrow"></div>
+    			</div>
+    		</div>
+
+            <div class="address">
+                <div class="left" style="width:30px;">
+                    点赞
+                </div>
+                <div class="middle">
+                    <!-- <a href="javascript:void(0)">宝安区宝安80区宝民二路港龙城</a> -->
+                    <span class="position" onclick="window.location.href='{weikucms::U('Wap/Aibang/dianzanlist',array('openid'=>$openid,'token'=>$token,'uid'=>$_GET['id']))}'">点击查看点赞详情</span>
+
+                </div>
+                <div class="right">
+                    <div class="arrow"></div>
+                </div>
+            </div>
+
+    	</div>
+        <!-- 收藏 -->
+        <if condition="$flag eq 1">
+			<div style="height:10px;"></div>
+        <else />
+            <if condition="$collect eq 1">
+                <div class="collect yes"><a href="javascript:void(0)">取消收藏</a></div>
+            <else />
+                <div class="collect"><a href="javascript:void(0)">收藏</a></div>
+            </if>
+            
+        </if>
+
+       <!--  <if condition="$flag eq 1">
+           <div class="register"><a href="{weikucms::U('Wap/Aibang/register',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'type'=>1))}">注册</a></div>
+       <else/>
+           <div class="register"><a href="{weikucms::U('Wap/Aibang/register',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">注册</a></div>
+       </if> -->
+        
+    	<script type="text/javascript">
+    		window.onload = function(){
+                $('.btn .uploads .sonup').css({'height':$('.btn .uploads .sonup').width()+'px'});
+                $('.btn .uploads .sonup').css({'margin-top':($('.btn .uploads').height()-$('.btn .uploads .sonup').height())/2+'px'});
+                $('.btn .uploads .small').css({'height':$('.btn .uploads .small').width()+'px'});
+                $('.btn .uploads .small').css({'margin-top':(160-$('.btn .uploads .small').height())/2+'px'});
+                // alert($('.btn .uploads').height());
+    			$('.dotted-line').each(function(){
+    				$(this).css({'height':$(this).width()+'px','line-height':$(this).width()+'px'});
+    			})
+    			$('.address .middle').each(function(){
+    				$(this).css('line-height',$(this).height()+'px');
+    			})
+				var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+    		}
+    	</script>
+        <!-- 如果是本人的话 -->
+        <if condition="$flag eq 1">
+            <script type="text/javascript">
+            $(function(){
+				
+                $('#showimg #deltel').click(function(){
+					$('#showimg>img').remove();
+					$(this).remove();
+				})
+                // 食物名称点击的话
+                $('.foodname').click(function(){
+                    $(this).hide();
+                    $('#hotelname').show().val($(this).text());
+                    $('#hotelname').focus();
+                    $('#hotelname').select();
+                })
+                $('#hotelname').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写你的店铺名！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/fixed',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('.foodname').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{storeName:"商店名",name:$(this).val()},function(data){
+
+                        },'json');
+                    }
+                    
+                    $(this).hide();
+                    $('.foodname').show().text($(this).val());
+                })
+                // 位置点击的话
+                $('.status').click(function(){
+                    $(this).hide();
+                    $('#seat').show().val($(this).text());
+                    
+                })
+                $('#seat').bind('blur',function(){
+                    var url = "{weikucms::U('Wap/Aibang/fixed',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('.status').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{seatName:"位置名",seat:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('.status').show().text($(this).val());
+                })
+                // 菜品点击
+                 $('.colza').click(function(){
+                    $(this).hide();
+                    $('#colza').show().val($(this).text());
+                    $('#colza').focus();
+                    $('#colza').select();
+                })
+                $('#colza').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写类型！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/fixed',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('.colza').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{caiName:"菜名",cai:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('.colza').show().text($(this).val());
+                })
+                // 地址的改变
+                $('.position').click(function(){
+                    $(this).hide();
+                    $('#position').show().val($(this).text());
+                    $('#position').focus();
+                    $('#position').select();
+                })
+                $('#position').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写地址！');
+                        return;
+                    }
+                    var urls = "{weikucms::U('Wap/Aibang/fixed',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('.position').text() == $(this).val()) {
+
+                    }else{
+                        // 通过新的地址重新获取到经纬度
+                        var address = $.trim($(this).val());
+
+                         if (address != undefined && address != '') {
+
+                             var url = 'http://api.map.baidu.com/geocoder/v2/?ak=ft9tCNRzY3LkR1z1hRAwyIC4&output=json&address=' + encodeURIComponent(address);
+
+                             //根据地点名称获取经纬度信息
+							 var lng,lat;
+                             $.ajax({
+                                 type: 'POST',
+                                 url: url,
+                                 dataType: 'JSONP',
+                                 success: function (data) {
+                                     if (parseInt(data.status) == 0) {
+                                         // 获取到经纬度,先纬度后经度,lng是经度，lat是纬度
+                                             lng = data.result.location.lng;
+                                             lat = data.result.location.lat;
+                                             $.post(urls,{addre:"地址",address:address,lng:lng,lat:lat},function(data){
+                            
+                                        },'json');
+                                     }
+
+                                }
+
+                             });
+
+                         }
+                        
+                    }
+                    $('#position').hide();
+                    $('.position').show().text($(this).val());
+                })
+                // 电话号码的改变
+                $('.telphone').click(function(){
+                    $(this).hide();
+                    $('#telphone').show().val($(this).text());
+                    $('#telphone').focus();
+                    $('#telphone').select();
+                })
+                $('#telphone').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/fixed',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('.telphone').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{tel:"电话",telphone:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('.telphone').show().text($(this).val());
+                })
+                // 第一张图片的文字改变
+                $('#img1').click(function(){
+                    $(this).hide();
+                    $('#font1').show().val($(this).text());
+                    $('#font1').focus();
+                    $('#font1').select();
+                })
+                $('#font1').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img1').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:1,font1:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img1').show().text($(this).val());
+                })
+                // 第二张图片的文字改变
+                $('#img2').click(function(){
+                    $(this).hide();
+                    $('#font2').show().val($(this).text());
+                    $('#font2').focus();
+                    $('#font2').select();
+                })
+                $('#font2').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img2').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:2,font2:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img2').show().text($(this).val());
+                })
+                // 第三张图片的文字改变
+                $('#img3').click(function(){
+                    $(this).hide();
+                    $('#font3').show().val($(this).text());
+                    $('#font3').focus();
+                    $('#font3').select();
+                })
+                $('#font3').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img3').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:3,font3:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img3').show().text($(this).val());
+                })
+                 // 第四张图片的文字改变
+                $('#img4').click(function(){
+                    $(this).hide();
+                    $('#font4').show().val($(this).text());
+                    $('#font4').focus();
+                    $('#font4').select();
+                })
+                $('#font4').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img4').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:4,font4:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img4').show().text($(this).val());
+                })
+                 // 第五张图片的文字改变
+                $('#img5').click(function(){
+                    $(this).hide();
+                    $('#font5').show().val($(this).text());
+                    $('#font5').focus();
+                    $('#font5').select();
+                })
+                $('#font5').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img5').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:5,font5:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img5').show().text($(this).val());
+                })
+                // 第六张图片的文字改变
+                $('#img6').click(function(){
+                    $(this).hide();
+                    $('#font6').show().val($(this).text());
+                    $('#font6').focus();
+                    $('#font6').select();
+                })
+                $('#font6').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img6').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:6,font6:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img6').show().text($(this).val());
+                })
+                // 第七张图片的文字改变
+                $('#img7').click(function(){
+                    $(this).hide();
+                    $('#font7').show().val($(this).text());
+                    $('#font7').focus();
+                    $('#font7').select();
+                })
+                $('#font7').bind('blur',function(){
+                    if($(this).val() == ""){
+                        alert('请填写电话号码！');
+                        return;
+                    }
+                    var url = "{weikucms::U('Wap/Aibang/Fonts',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                    if ($('#img7').text() == $(this).val()) {
+
+                    }else{
+                        $.post(url,{img1:7,font7:$(this).val()},function(data){
+                            
+                        },'json');
+                    }
+                    $(this).hide();
+                    $('#img7').show().text($(this).val());
+                })
+            })
+        </script>
+        <else />
+            <script type="text/javascript">
+                $(function(){
+                     // 点击收藏
+                    $('.collect').bind('click',function(){
+                        
+                        if($(this).hasClass('yes') == false){
+                            var url = "{weikucms::U('Wap/Aibang/collect',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                             $.post(url,{},function(data){
+                                confirm(data.info);
+                                $('.collect').addClass('yes');
+                                $('.collect').html("<a href='javascript:void(0)'>取消收藏</a>");
+                            },'json');
+                        }else{
+                            // 取消收藏
+                            var url = "{weikucms::U('Wap/Aibang/delcollect',array('id'=>$_GET['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+                            $.post(url,{},function(data){
+                                confirm(data.info);
+                                $('.collect').removeClass('yes');
+                                $('.collect').html("<a href='javascript:void(0)'>收藏</a>");
+                            },'json');
+                        }
+                    })
+                    // 地址点击
+                   $('#weizhi').click(function(){
+                        var address = $.trim($('.position').text());
+
+                         if (address != undefined && address != '') {
+
+                             var url = 'http://api.map.baidu.com/geocoder/v2/?ak=ft9tCNRzY3LkR1z1hRAwyIC4&output=json&address=' + encodeURIComponent(address);
+
+                             //根据地点名称获取经纬度信息
+
+                             $.ajax({
+                                 type: 'POST',
+                                 url: url,
+                                 dataType: 'JSONP',
+                                 success: function (data) {
+                                     if (parseInt(data.status) == 0) {
+                                         // 获取到经纬度,先纬度后经度
+                                         var lng = data.result.location.lng,lat = data.result.location.lat;
+                                         window.location.href = "http://api.map.baidu.com/marker?location="+lat+","+lng+"&title="+address+"&name="+address+"&content="+address+"&output=html&src=weiba|weiweb";
+										 /*var url1 = "{weikucms::U('Wap/Aibang/Transit',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id']))}";
+                                         $.post(url1,{lng:lng,lat:lat,address:address},function(datas){
+                                                setTimeout(function(){
+                                                    
+                                                },'1200');
+                                         },'json');
+										 */
+
+                                     }
+
+                                }
+
+                             });
+
+                         }
+                        
+                   })
+				   
+                  
+                    // 差评，一天只能一个差评，点击差评过后不能当天点击好评
+                    // // 由于自己不能点击自己的商铺好评或者差评所以程序在这里执行
+                    $('.bad').bind('click',function(){
+						if(confirm('您确定要点差评吗?')){
+                            var urls = "{weikucms::U('Wap/Aibang/comment',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id']))}";
+                            $.post(urls,{bad:1,type:-1},function(data){
+    							
+                                if(data.status == 0){
+                                    confirm(data.info);
+                                    return false;                           
+                                }
+                                
+                                $('.bad').html("<img src='{weikucms::STATICS}/wapweiui/Aibang/imgs/down.png' />("+data.bad+")");
+                            },'json');
+                       }
+                    });
+                    
+                    
+                    
+					
+                    // 如果是第二天的话就绑定
+					// 判断点击
+                    if("{weikucms:$getTime}" != "{weikucms:$currentime}"){
+                        $('.good').bind('click');
+                        $('.bad').bind('click');
+                    }
+                    // 好评，一天只能五个好评，点击好评之后不能点击差评
+                    $('.good').bind('click',function(){
+                         var urls = "{weikucms::U('Wap/Aibang/comment',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id']))}";
+                        $.post(urls,{good:1,type:1},function(data){
+                            
+                            if(data.status == 0){
+                                confirm(data.info);
+                                return false;
+                            }
+                            $('.good').html("<img src='{weikucms::STATICS}/wapweiui/Aibang/imgs/up.png' />("+data.good+")");
+                        },'json');
+                    });
+
+
+
+                    var shareTitle="{weikucms:$res.title}";
+                    var imgUrl="<php>echo C('site_url');</php>{weikucms:$res.pic}";
+                    var descContent="{weikucms:$res.title}";
+                    var shareUrl="";
+
+                    $(function() {
+                        shareUrl = $("#shareUrl").text();
+                    });
+
+
+                    wx.config({
+                        appId: '{weikucms:$signPackage.appId}',
+                        timestamp: {weikucms:$signPackage.timestamp},
+                        nonceStr: '{weikucms:$signPackage.nonceStr}',
+                        signature: '{weikucms:$signPackage.signature}',
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+                            'previewImage'
+                        ]
+                    });
+                    //图片预览
+                    wx.ready(function(){
+                        
+                            $(".preview").click(function(){
+                                var picUrl = $(this).data("url");
+                                    picUrl = 'http://v.wapwei.com/'+picUrl;
+                                 var imgList = [picUrl];
+                                    wx.previewImage({
+                                        current: imgList[0],
+                                        urls:  imgList
+                                    });
+                            })
+                        
+                        })
+                })
+            </script>
+        </if>
+
+        
+    </body>
+</html>

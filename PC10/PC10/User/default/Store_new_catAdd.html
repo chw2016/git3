@@ -1,0 +1,337 @@
+<include file="Public:head"/>
+
+<div class="">
+    <div class="cLineB">
+    <h4 style="position:relative;">
+        商品分类设置
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/index',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+    <script>
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#logourl').val(),
+                        clickFn : function(url, title) {
+                            K('#logourl').val(url);
+                            $("#image_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload2').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#logourl2').val(),
+                        clickFn : function(url, title) {
+                            K('#logourl2').val(url);
+                            $("#image_show2").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload3').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#logourl3').val(),
+                        clickFn : function(url, title) {
+                            K('#logourl3').val(url);
+                            $("#image_show3").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#supload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#logourl').val(),
+                        clickFn : function(url, title) {
+                            K('#logourl').val(url);
+                            $("#simage_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#eupload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#logourl').val(),
+                        clickFn : function(url, title) {
+                            K('#logourl').val(url);
+                            $("#eimage_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+        <script>
+            function selurl() {
+
+                var url = document.getElementById("url");
+                var select1 = document.getElementById("select");
+                url.value = select1.value;
+            }
+        </script>
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{weikucms:$set.id}" />
+            <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <tr>
+                    <th valign="top">名称：</th>
+                    <td>
+                        <input type="input" class="px" id="name" value="{weikucms:$set.name}" name="name" style="width:300px" placeholder="此处填写商品分类名称">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">所属分类：</th>
+
+
+                    <td>
+                        <select name="parentid" id="parentid">
+                            <option value="0">根分类</option>
+                            <volist name="info" id="vo">
+                                <option style="text-indent:{weikucms:$vo['Count']*20}px;" value="{weikucms:$vo.id}">
+                                    <php>echo str_repeat('&nbsp;',$vo['Count']*6);</php>
+                                    <neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.name}
+                                </option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">分类类型：</th>
+                    <if condition="$token eq '7713e3f8a43af2ab6ab16c183274a979'">
+                        <td>
+                            <select name="cattype" id="cattype">
+                                <option value="3">放单类型</option>
+                            </select>
+                        </td>
+                    <else/>
+                        <td>
+                            <select name="cattype" id="cattype">
+                                <option value="1">普通</option>
+                                <option value="2">团购类型</option>
+                            </select>
+                        </td>
+                    </if>
+
+                </tr>
+                <tr>
+                    <th valign="top">Logo图片：</th>
+                    <td>
+                        <img style="display: none;" id="image_show" class="indexs_img" src="{weikucms:$set.logourl}">
+                        <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="logourl" value="{weikucms:$set.logourl}"
+                               style="width:300px;"   />
+
+                        <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传Logo图片</span>
+                   							  模版7一级分类建议统一尺寸55px*37px，二级分类建议统一尺寸250px*240px
+				    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">分类广告图片：</th>
+                    <td>
+                        <img style="display: none;" id="image_show2" class="indexs_img" src="{weikucms:$set.logourl}">
+                        <input type="hidden" class="text textMiddle inputQ"  name="gg_pic" id="logourl2" value="{weikucms:$set.logourl}"
+                               style="width:300px;"   />
+                        <span class="ke-button-common" id="upload2" style="margin-left: 5px;">上传分类广告图片</span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">分类规格：</th>
+                    <td>
+                        <input type="input" class="px" id="norms" value="{weikucms:$set.norms}" name="norms" style="width:100px" placeholder="">
+                        (如：鞋的规格是：鞋码。即填写【鞋码】。尺寸，尺码，体积...。没有外观可不填写。可参考淘宝写)
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">商品外观：</th>
+                    <td>
+                        <input type="input" class="px" id="color" value="{weikucms:$set.color}" name="color" style="width:100px" placeholder="">
+                        (如：衣服一般有颜色,即填写【颜色】；酒水一般都是没有颜色的，没有外观可不填写)
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">标签：</th>
+                    <td>
+                        <input type="input" class="px" id="label" value="{weikucms:$set.color}" name="label" style="width:100px" placeholder="">
+                        (很少用到)
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">标签小图片：</th>
+                    <td>
+                        <img style="display: none;" id="image_show3" class="indexs_img" src="{weikucms:$set.label_pic}">
+                        <input type="hidden" class="text textMiddle inputQ"  name="label_pic" id="logourl3" value="{weikucms:$set.label_pic}"
+                               style="width:300px;"   />
+                        <span class="ke-button-common" id="upload3" style="margin-left: 5px;">上传图片</span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">简介：</th>
+                    <td valign="top"><textarea class="px" id="des" name="des" style="width: 560px; height:120px;">{weikucms:$set.des}</textarea></td>
+                </tr>
+                <tr>
+                    <th valign="top">排序：</th>
+                    <td>
+                        <input type="input" class="px" id="sort" value="{weikucms:$set.sort}" name="label" style="width:100px" placeholder="数字越小越靠前">
+
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">url地址：</th>
+                    <td>
+                        <input type="input" class="px" id="url" value="{weikucms:$set.url}" name="url" style="width:700px" placeholder="选填">
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        <input type="hidden" id="time" name="time" value="<?php echo time()?>" />
+                    </th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var url = $("#url").val();
+            var name = $("#name").val();
+            var cattype = $("#cattype").val();
+            var logourl = $("#logourl").val();
+            var norms = $("#norms").val();
+            var color = $("#color").val();
+            var des = $("#des").val();
+            var time = $("#time").val();
+            var parentid = $("#parentid").val();
+            var label=$("#label").val();
+            var sort = $("#sort").val();
+            var label_pic=$("input[name=label_pic]").val();
+           // alert(label_pic);
+            //return false;
+
+            if(! name){
+                notif({
+                    msg: "名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!logourl){
+                notif({
+                    msg: "请添加logo图片",
+                    type: "warning"
+                });
+                return false;
+            }
+            var gg_pic=$("#logourl2").val();//分类广告图片
+            var posturl = "{weikucms::U('Store_new/catupdate',array('token'=>$token))}";
+            $.post(posturl, {
+                url:url,
+                cattype : cattype,
+                label_pic:label_pic,
+                label:label,
+                name:name,
+                logourl:logourl,
+                norms:norms,
+                color:color,
+                des:des,
+                time:time,
+                parentid:parentid,
+                gg_pic:gg_pic,
+                sort:sort
+            }, function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.shoufuyou.com/order/create?pid=112 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="format-detection" content="telephone=no">
+<title>{weikucms:$tpl.name}</title>
+<link type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style_2.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/index.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery.touchSlider.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/invite.js"></script>
+<!--预加载图片-->
+<img src="{weikucms::STATICS}/wapweiui/loan/images/ljfu-1.png" style="display: none;" />
+<img src="{weikucms::STATICS}/wapweiui/loan/images/fxyl.png" style="display: none;" />
+<script type="text/javascript">
+function onMimg(){
+	$("#img1").attr("src","{weikucms::STATICS}/wapweiui/loan/images/ljfu-1.png");
+}
+function onMimg2(){
+	$("#img2").attr("src","{weikucms::STATICS}/wapweiui/loan/images/fxyl.png");
+}
+$(document).ready(function(){
+
+	$dragBln = false;
+
+	$(".main_image").touchSlider({
+		flexible : true,
+		speed : 200,
+		btn_prev : $("#btn_prev"),
+		btn_next : $("#btn_next"),
+		paging : $(".flicking_con a"),
+		counter : function (e){
+			$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+		}
+	});
+
+	$(".main_image").bind("mousedown", function() {
+		$dragBln = false;
+	});
+
+	$(".main_image").bind("dragstart", function() {
+		$dragBln = true;
+	});
+
+	$(".main_image a").click(function(){
+		if($dragBln) {
+			return false;
+		}
+	});
+
+	timer = setInterval(function(){
+		$("#btn_next").click();
+	}, 3000);
+
+	$(".main_visual").hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		},3000);
+	});
+
+	$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 3000);
+	});
+
+});
+</script>
+</head>
+<body>
+
+<div class="main_visual">
+	<div class="flicking_con">
+		<volist name="imgs" id="vo">
+            <a href="#">{weikucms:$i}</a>
+		</volist>
+
+	</div>
+	<div class="main_image">
+		<ul>
+            <volist name="imgs" id="vo">
+			<li style="height: 140px;" onclick="location.href='{weikucms:$vo.url}'"><img src="{weikucms:$vo.img}" width="100%" height="100%"></li>
+            </volist>
+		</ul>
+        <a href="javascript:;" id="btn_prev"></a>
+        <a href="javascript:;" id="btn_next"></a>
+	</div>
+</div>
+<!--main_visual end-->
+
+<div class="body_body">
+	<ul class="body_ul">
+        <volist name="fl" id="vo">
+		<a href="{weikucms::U('loan_list',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}"><li  class="a1"
+                style="background-image: url({weikucms:$vo.pic});">
+			<!--<div class="ul_li_div">立即查看</div>-->
+		</li></a>
+            </volist>
+        <if condition="$cp">
+        <a href="{weikucms::U('credit_list',array('token'=>$token,'openid'=>$openid))}"><li  class="a2">
+			<!--<div class="ul_li_div">立即借款</div>-->
+		</li>
+        </a>
+         </if>
+		<li>
+			<div class="li_div"></div>
+            <div id="fx_share" style="position: relative; top: -43px; background-color: #FFF; height: 79px; width: 186px; margin: 0 auto;">
+                <div class="li_img_cen">
+                <a href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}">
+                    <div class="li_img1" onclick="onMimg()">
+                        <img id="img1" src="{weikucms::STATICS}/wapweiui/loan/images/ljfu.png" style="width:78px;">
+                    </div>
+                </a>
+                </div>
+                <div class="li_img_cen_1" >
+                <a href="{weikucms::U('fx',array('token'=>$token,'openid'=>$openid))}">
+                    <div class="li_img1" onmousedown="onMimg2()">
+                        <img id="img2" src="{weikucms::STATICS}/wapweiui/loan/images/fxyl-1.png" style="width:78px;">
+                    </div>
+                </a>
+                </div>
+
+            </div>
+		</li>
+	</ul>
+</div>
+<include file="Loan:foot"/>
+
+<div style="width:100px;height: 40px;float: left;"></div>
+
+<div style="width:100px;height: 35px;float: left;"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,409 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script type="text/javascript" src="http://cdn.bootcss.com/select2/3.3.2/select2.js"> </script>
+<link rel="stylesheet" href="http://cdn.bootcss.com/select2/3.3.2/select2.css" />
+
+	<div class="cLineB">
+		<h4 class="left">添加店铺</h4>
+
+		<div class="searchbar">
+<script>
+function setlatlng(longitude,latitude){
+	art.dialog.data('long', longitude);
+	art.dialog.data('lat', latitude);
+	art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:874,height:700,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+<script>
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#pic').val(),
+                    clickFn: function (url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src', url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_1').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_1').val(),
+                    clickFn: function (url, title) {
+                        K('#img_1').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_2').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_2').val(),
+                    clickFn: function (url, title) {
+                        K('#img_2').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_3').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_3').val(),
+                    clickFn: function (url, title) {
+                        K('#img_3').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_4').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_4').val(),
+                    clickFn: function (url, title) {
+                        K('#img_4').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_5').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_5').val(),
+                    clickFn: function (url, title) {
+                        K('#img_5').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_6').click(function () {
+            editor.loadPlugin('image', function () {
+                editor.plugin.imageDialog({
+                    fileUrl: K('#img_6').val(),
+                    clickFn: function (url, title) {
+                        K('#img_6').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            allowFileManager: true
+        });
+        K('#upload_7').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img_7').val(),
+                    clickFn : function(url, title) {
+                        K('#img_7').val(url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+	<!--<div class="alert alert-info">-->
+		<!--<button type="button" class="close" data-dismiss="alert">×</button>-->
+		<!--<strong>提示信息!</strong>-->
+		<!--<ol>-->
+			<!--<li>在这里可以了解微门店今日的订单数、订单总数、会员总数，还可以添加分店、编辑分店、删除分店，最后还可以根据分店名称进入后台管理。</li>-->
+		<!--</ol>-->
+	<!--</div>-->
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody>
+                <input type="hidden" id="id" name="id" value="{weikucms:$data.id}" class="px require" style="width:300px;" />
+			       <tr> 
+				        <th>店铺名称：</th>
+				        
+				        <td>
+				        	<input type="text" id="name" name="name" value="{weikucms:$data.name}" class="px require" style="width:300px;" />
+				        </td>
+			       </tr>
+
+			       <tr> 
+				        <th>店铺电话：</th>
+				        <td>
+				        	<input type="text" id="telphone" name="telphone" value="{weikucms:$data.telphone}" class="px require" style="width:300px;" />
+				        </td>
+			       </tr>
+
+
+                   <tr>
+                       <th>好评数：</th>
+                       <td>
+                           <input type="text" id="good" name="good" value="{weikucms:$data.good}" class="px require" style="width:100px;" />
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>差评数：</th>
+                       <td>
+                           <input type="text" id="bad" name="bad" value="{weikucms:$data.bad}" class="px require" style="width:100px;" />
+                       </td>
+                   </tr>
+
+
+                   <tr>
+                       <th>店铺地址：</th>
+                       <td>
+                           <input type="text" id="address" name="address" value="{weikucms:$data.address}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>商铺类型：</th>
+                       <td>
+                           <input type="text" id="ifseat" name="ifseat" value="{weikucms:$data.ifseat}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                       <th>收费模式：</th>
+                       <td>
+                           <select name="status" id="status" style="width: 315px;">
+                               <option value="1" <if condition="$data['status'] eq 1">checked</if>>收费</option>
+                               <option value="0" <if condition="$data['status'] eq 0">checked</if>>免费</option>
+                           </select>
+                   </tr>
+
+
+                   <tr>
+                       <th>商铺类型：</th>
+                       <td>
+                           <select name="channel" id="channel" style="width: 315px;">
+                               <option value="购物" <if condition="$data['channel'] eq '购物'">checked</if>>购物</option>
+                               <option value="消费" <if condition="$data['channel'] eq '消费'">消费</option>
+                           </select>
+                   </tr>
+
+
+               <tr>
+                   <TR>
+                       <TH valign="top">店铺图片：</TH>
+                       <TD>
+                           <input type="text" class="px" id="pic" name="pic" value="{weikucms:$data.pic}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload">上传图片</span>
+                       </TD>
+                   </TR>
+                </tr>
+
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片1：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_1" name="img_1" value="{weikucms:$data.img_1}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_1">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明1：</th>
+
+                       <td>
+                           <input type="text" id="font_1" name="font_1" value="{weikucms:$data.font_1}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片2：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_2" name="img_2" value="{weikucms:$data.img_2}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_2">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明2：</th>
+
+                       <td>
+                           <input type="text" id="font_2" name="font_2" value="{weikucms:$data.font_2}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片3：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_3" name="img_3" value="{weikucms:$data.img_3}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_3">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明3：</th>
+
+                       <td>
+                           <input type="text" id="font_3" name="font_3" value="{weikucms:$data.font_3}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片4：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_4" name="img_4" value="{weikucms:$data.img_4}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_4">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明1：</th>
+
+                       <td>
+                           <input type="text" id="font_4" name="font_4" value="{weikucms:$data.font_4}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片5：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_5" name="img_5" value="{weikucms:$data.img_5}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_5">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明5：</th>
+
+                       <td>
+                           <input type="text" id="font_5" name="font_5" value="{weikucms:$data.font_5}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片6：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_6" name="img_6" value="{weikucms:$data.img_6}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_6">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明6：</th>
+
+                       <td>
+                           <input type="text" id="font_6" name="font_6" value="{weikucms:$data.font_6}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+                   <tr>
+                   <TR>
+                       <TH valign="top">展示图片7：</TH>
+                       <TD>
+                           <input type="text" class="px" id="img_7" name="img_7" value="{weikucms:$data.img_7}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload_7">上传图片</span>
+                       </TD>
+                   </TR>
+                   </tr>
+
+                   <tr>
+                       <th>文字说明7：</th>
+
+                       <td>
+                           <input type="text" id="font_7" name="font_7" value="{weikucms:$data.font_7}" class="px require" style="width:300px;" />
+                       </td>
+                   </tr>
+
+	        <tr> 
+		        <th>店铺地址的经纬度：</th>
+		        <td>
+		        	经度 <input type="text" id="longitude" style="width:80px;" name="longitude" size="14" class="px" value="{weikucms:$data.longitude}" />
+		        	纬度 <input type="text"  name="latitude" style="width:80px;" size="14" id="latitude" class="px" value="{weikucms:$data.latitude}" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a>
+		        </td> 
+	       </tr>
+	       
+	       <tr> 
+		        <th>店铺简介信息：</th>
+		        <td>
+		        	<textarea name="desc" id="des" rows="4" style="width:500px;height:120px">{weikucms:$data.desc}</textarea>
+				</td>
+		  </tr>
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+       			<button type="submit" name="button" class="btn btn-primary">修改信息</td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>					
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant ">
+		<div class="shadow40">
+
+		    <volist name="list" id="vo">
+			<div onclick="location.href='{weikucms::U('life_index3',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'" class="Safety clearfix">
+				<span class="fl">{weikucms:$vo.name}</span>
+				<span class="Symbol fr"></span>
+			</div>
+            </volist>
+		</div>
+		</section>
+		
+	</body>
+</html>

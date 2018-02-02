@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .light-gray{
+            padding-left: 10px;
+        }
+        .icon-tixian {
+            background-position: 0 -113px;
+        }
+        .tMoney{
+            border-radius: 5px;
+            padding: 8px 5px;
+            border: 1px solid #ccc;
+        }
+        .butgx{
+            border:1px solid #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .butgxjl{
+            border:1px solid  #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .save{
+            background-color: #ED0617;
+            margin-top: 20px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            color: #FFF;
+        }
+        .on{
+            border-bottom: 2px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="light-gray h4 butgxjl myli on" onclick="javascript(0)">我要提现</div>
+        <div class="settingItemName butgx myli" onclick="window.location.href='{weikucms::U('Wap/Media/withdrawalsinfo',array('token'=>$token,'openid'=>$openid))}'">提现记录</div>
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">银行卡</div>
+        <div class="light-gray h5">{weikucms:$info['bank_card']}</div>
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户银行</div>
+        <div class="light-gray h5">{weikucms:$info['bank_name']}</div>
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户人姓名</div>
+        <div class="light-gray h5">{weikucms:$info['alipay_account']}</div>
+    </div>
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-phone"></div>
+    <div class="settingItemName">联系方式</div>
+
+    <div class="light-gray h5">{weikucms:$info['phone']}</div>
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-tixian"></div>
+    <div class="settingItemName">提现金额</div>
+
+    <div class="light-gray h5"><input type="number" value="" name="money" class="tMoney" placeholder="如：100"/></div>
+
+    <input type="hidden" name="minmo" value="{weikucms:$minmoney['money']}"/>
+</div>
+<div style="  margin-top: 5px;padding: 5px;">最低提现额为：{weikucms:$minmoney['money']}元 </div>
+
+<div class="save">
+    提&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp现
+</div>
+
+<div style="height: 65px;"></div>
+<footer class="menuTab myul fixBottom">
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/taskcenter',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-renwu">
+        </div>
+        <div class="menuTitle gray">
+            任务大厅
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+        <div class="menu menu-xiaoxi">
+
+        </div>
+        <div class="menuTitle gray">
+            我的消息
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>3))}'">
+        <div class="menu menu-shouru">
+
+        </div>
+        <div class="menuTitle gray">
+            我的收入
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/mybrother',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-yaoqing">
+
+        </div>
+        <div class="menuTitle gray">
+            我的邀请
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript">
+    $(function(){
+        $('.save').on('click',function(){
+            var money = $('input[name="money"]').val();
+            var minmo = $('input[name="minmo"]').val();
+            if(!money){
+                msg.alert('请输入您要提现的金额');
+                return false;
+            }else{
+                if(money < minmo){
+                    msg.alert('您输入金额还未达到最低可提现金额');
+                    return false;
+                }
+            }
+            var url = "{weikucms::U('Media/withdrawalsinfo',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{money:money},function(data){
+                if(data.codes==1){
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+                    })
+                }else if(data.codes==3){
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+                    })
+                }else{
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+                    })
+                }
+            },'json')
+        })
+    })
+</script>
+</body>
+</html>

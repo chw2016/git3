@@ -1,0 +1,39 @@
+<volist name="index" id="v">
+    <ul class="hp-item hp-item1">
+        <li class="pd0">
+            <figure>
+                <img src="{weikucms:$v.logopic}" alt="" data-href="{weikucms::U('book',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}" style="border-radius:0">
+            </figure>
+            <!--            <ul class="hpi-jjr">
+                           <li>
+                               <h5>169</h5><p>已关注经纪人</p>
+                           </li>
+                           <li>
+                               <h5>434</h5><p>意向客户</p>
+                           </li>
+                           <li data-href="recommend.html">
+                               <h5></h5><p>推荐</p>
+                           </li>
+                       </ul> -->
+            <div class="fn-home">
+                <div class="home-title">{weikucms:$v.jianjie}</div>
+                <h5 class="hpi-h5 f16 color191919">{weikucms:$v.title}</h5>
+                <div class="hpi-block">
+                    <div class="block-title">
+                        <span class="color2e2e2e">到访</span><span class="txt-mark1">￥{weikucms:$v.yonjing1}</span>
+                        <span class="color2e2e2e">佣金</span><span class="txt-mark1"><?php echo ($v['yonjing2']*100).'%' ;?></span>
+                    </div>
+                    <div class="client-block">
+                        <span class="f12">{weikucms:$v.other}</span>
+                        <div class="fr" onclick="location.href='{weikucms::U('recommend',array('token'=>$token,'openid'=>$openid,'id'=>$v['id']))}'" >
+                        <span class="jia"></span><span class="jia-size">推荐</span>
+                        </div>
+                    </div>
+                </div></div>
+            <div class="fn-clear"></div>
+
+
+        </li>
+    </ul>
+    <div class="space-10"></div>
+</volist>

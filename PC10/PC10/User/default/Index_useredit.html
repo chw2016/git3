@@ -1,0 +1,91 @@
+<include file="Public:head"/>
+
+          <div class="cLineB"><h4>修改密码<span class="FAQ"></span></h4></div>
+
+
+        <div class="box-content">
+            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <div class="control-group">
+                    <label class="control-label" for="old_password">原始密码</label>
+                    <div class="controls">
+                        <input type="password" name="old_password" id="old_password" data-rule-required="true" data-rule-rangelength="[1,16]">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="new_password">设置密码</label>
+                    <div class="controls">
+                        <input type="password" name="new_password" id="new_password" data-rule-required="true" data-rule-rangelength="[6,16]">
+                        <span class="maroon">*</span><span class="help-inline">长度为6~16位字符</span>
+                        <div id="passwordStrengthDiv" style="margin-top:5px;" class="is0"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="repassword">确认密码</label>
+                    <div class="controls">
+                        <input type="password" name="repassword" id="repassword" data-rule-required="true" data-rule-equalto="#new_password">
+                    </div>
+                </div>
+                <div class="form-actions" id="btn_box">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                </div>
+            </form>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var old_password = $("input[name='old_password']").val();
+            var new_password = $("input[name='new_password']").val();
+            var repassword = $("input[name='repassword']").val();
+
+            if(! old_password){
+                notif({
+                    msg: "请输入原来的密码",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! new_password){
+                notif({
+                    msg: "请输入新的密码",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(repassword != new_password){
+                notif({
+                    msg: "两次密码输入不一致",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Index/usersave')}",{password:new_password,old_password:old_password},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+
+        });
+    });
+
+</script>
+  	</div>

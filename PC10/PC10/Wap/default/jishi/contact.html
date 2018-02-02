@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>联系我们</title>
+		<link rel="stylesheet" href="css/samphay.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/iscroll.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    </head>
+    <body>
+	    <div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+	    	联系我们
+	    </div>
+	    <div id="map" class="map">
+	    	
+	    </div>
+	    <div class="contacItem lisheng-text-color white-bg myul">
+	    	<div class="icon icon-tel"></div>
+	    	<a href="tel:10068">电话：010-12345678</a>
+	    </div>
+	    <div class="contacItem lisheng-text-color white-bg myul">
+	    	<div class="icon icon-email"></div>
+	    	邮件：123456@qq.com
+	    </div>
+	    <div class="contacItem lisheng-text-color white-bg myul">
+	    	<div class="icon icon-tax"></div>
+	    	传真：010-12345678
+	    </div>
+	    <div class="contacItem lisheng-text-color white-bg myul">
+	    	<div class="icon icon-address "></div>
+	    	<div class="myul addressBox">
+	    		地址：<div id="address" lng="113.907793" lat="22.57489">广东省深圳市宝安区82区新安六路华丰科技商贸大厦A座606</div>
+	    	</div>
+	    </div>
+    </body>
+    <script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("map"),
+		Lng = null,
+		Lat = null,
+		Lng2 = $("#address").attr("lng"),
+		Lat2 = $("#address").attr("lat");
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			var mk = new BMap.Marker(r.point);
+			Lng = r.point.lng;
+			Lat = r.point.lat;
+			/*map.addOverlay(mk);
+			map.panTo(r.point);
+			alert('您的位置：'+r.point.lng+','+r.point.lat);*/
+			map.centerAndZoom(new BMap.Point(Lng,Lat), 15);
+
+			var myP1 = new BMap.Point(Lng,Lat);    //起点
+			var myP2 = new BMap.Point(Lng2,Lat2);    //终点
+			/*var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/Mario.png", new BMap.Size(32, 70), {    //小车图片
+				//offset: new BMap.Size(0, -5),    //相当于CSS精灵
+				imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+			  });*/
+			var driving2 = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});    //驾车实例
+			driving2.search(myP1, myP2);    //显示一条公交线路
+
+			window.run = function (){
+				var driving = new BMap.DrivingRoute(map);    //驾车实例
+				driving.search(myP1, myP2);
+				driving.setSearchCompleteCallback(function(){
+					var pts = driving.getResults().getPlan(0).getRoute(0).getPath();    //通过驾车实例，获得一系列点的数组
+					var paths = pts.length;    //获得有几个点
+
+					/*var carMk = new BMap.Marker(pts[0],{icon:myIcon});
+					map.addOverlay(carMk);
+					i=0;
+					function resetMkPoint(i){
+						carMk.setPosition(pts[i]);
+						if(i < paths){
+							setTimeout(function(){
+								i++;
+								resetMkPoint(i);
+							},100);
+						}
+					}
+					setTimeout(function(){
+						resetMkPoint(5);
+					},100)*/
+
+				});
+			}
+
+			setTimeout(function(){
+				run();
+			},1500);
+		}
+		else {
+			alert('failed'+this.getStatus());
+		}        
+	},{enableHighAccuracy: true})
+
+	
+</script>
+</html>

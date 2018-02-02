@@ -1,0 +1,37 @@
+<html>
+<script type="text/javascript" src="{weikucms::STATICS}/lm/loan/js/jquery-1.11.1.min.js"></script>
+<body>
+
+<input type="button" value="提交" class="tijiao" flag="1">
+</body>
+<script>
+    $(".tijiao").click(function(){
+
+        if($(this).attr('flag')==1){//这里只要求别人提交一次
+            $(this).attr('flag',2);
+
+            var y_m="2015-5";
+            var d='5';
+            var people_num='3';
+            var name1='李生';
+            var phone1='182745688496';
+            var other1='谢谢你来的，我想要其他的东西，';
+            var name2='谢光';
+            var phone2='1545688496';
+            var id='1';//产品id
+            var url="{weikucms::U('no_credit_xiadan',array('token'=>$token,'openid'=>$openid))}";
+
+
+            $.post(url,{y_m:y_m,d:d,people_num:people_num,name1:name1,phone1:phone1,other1:other1,name2:name2,phone2:phone2,id:id},function(data){
+                if(data.status==1){
+                    alert(data.id);
+                }else{
+                    alert('失败');
+                }
+            },'json');
+        }
+
+    })
+
+</script>
+</html>

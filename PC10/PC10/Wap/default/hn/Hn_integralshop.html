@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/loan/css/global.css">
+
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/main.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog.css?2014-05-21" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/jquery_min.js?2014-05-21"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/main.js?2014-05-21"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/integral/dialog_min.js?2014-05-21"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/invite.js"></script>
+    <title>{weikucms:$tpl.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<script>
+
+    function exchange(exc_id,point){
+
+        confirm('<label>扣除佣金：<span>'+point+'</span></lael>', function(){
+            loading(true);
+            $.ajax({
+                url: "{weikucms::U('Wap/Integralshop/exchange',array('token'=>$token,'uid'=>$data['id'],'openid'=>$openid))}",
+                type:"post",
+                data:{exc_id:exc_id,point:point},
+                dataType:"JSON",
+                success: function(res){
+                    loading(false);
+                    if(0 == res.status){
+                        alert(res.info);
+                        setTimeout(function(){
+                            window.location.href = res.url;
+                        },'1000');
+
+                    }else{
+                        alert(res.info);
+                        setTimeout(function(){
+                            window.location.href = res.url;
+                        },'3000');
+                        
+                    }
+                }
+            });
+//
+        });
+    }
+    $(function(){
+        $('.shareure').invite();
+    })
+
+
+</script>
+<style>
+    .list_exchange{
+        padding-top:10px;
+    }
+    .list_exchange li[data-card]:first-of-type{
+        margin-top:0;
+    }
+</style>
+
+<div class="container exchange ">
+<div class="body">
+    <ul class="list_exchange" >
+        <if condition="$data">
+        <volist name="data" id="vo">
+		<php>if($vo['ikucount']>0){</php>
+        <li data-card onclick="this.classList.toggle('on');" >
+            <header>
+                <ul class="tbox">
+                    <li>
+                        <!--<h5>{weikucms:$vo.id} </h5>-->
+                        <h5>{weikucms:$vo.title} </h5>
+                        <p>有效期至{weikucms:$vo.endtime} </p>
+                    </li>
+                </ul>
+                <!--<div class="shareure" style="float: right ;margin-top: -16%;"><img src="{weikucms::STATICS}/wapweiui/usercenter/integral/share.png"></div>-->
+            </header>
+            <section>
+                <div>
+                    <figure>
+                        <img src="{weikucms:$vo.pic}" />
+                    </figure>
+                    <article class="p">{weikucms:$vo.explain|htmlspecialchars_decode|strip_tags}</article>
+                </div>
+            </section>
+            <style type="text/css">
+                .kucun{
+                    padding-left: 10px;
+                    color: #70A2BD;
+                    font-size: 12px;
+                }
+                .num{
+                    padding: 2px;
+                }
+            </style>
+            <footer>
+                <dl class="box">
+
+                    <dd><label><big>{weikucms:$vo.integral}</big>个佣金 <span class="kucun">剩余<span class="num">
+                        <php>if($vo['ikucount']<=0){</php>0
+                        <php>}else{</php>
+                        {weikucms:$vo['ikucount']}
+                        <php>}</php></span>个</span></label></dd>
+
+                    <php>if($vo['starttime'] > date("Y-m-d") && $vo['endtime'] > date("Y-m-d")){</php>
+                    <dd><a href="javascript:;">未开始</a></dd>
+                    <php>}else if($vo['start'] < date("Y-m-d") && $vo['endtime'] > date("Y-m-d")){</php>
+                    <php>if($vo['ikucount']<=0){</php>
+                    <dd><a href="javascript:;">已下架</a></dd>
+                    <php>}else{</php>
+                    <dd><a href="javascript:;" onclick="exchange({weikucms:$vo.id},{weikucms:$vo.integral});">立即购买</a></dd>
+                    <php>}</php>
+                    <php>}else{</php>
+                    <dd><a href="javascript:;">已结束</a></dd>  
+                    <php>}</php>
+
+                </dl>
+            </footer>
+        </li>
+	    <php>}else{</php>
+		    <li style="line-height: 200px;line-height:200px;text-align: center;font-size:14px;color: #8b0000;">
+                还没有设置积分兑换活动哦
+            </li>
+		<php>}</php>
+        </volist>
+        <else/>
+            <li style="line-height: 200px;line-height:200px;text-align: center;font-size:14px;color: #8b0000;">
+                还没有设置积分兑换活动哦
+            </li>
+
+        </if>
+
+    </ul>
+</div>
+<footer style="padding: 50px;">
+
+</footer>
+<style type="text/css">
+    .action .wechat {
+        background-color: #3884FF;
+        border-color: #3884FF;
+        color: #fff;
+        position: fixed;
+        z-index: 900;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    .action a {
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        background-color: #f3f3f3;
+        border: 1px solid #cbcbcb;
+        margin-bottom: 10px;
+        font-size: 16px;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        text-align: center;
+    }
+</style>
+<p class="action">
+    <a <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">style="bottom: 50px;"</if> href="{weikucms::U('Integralshop/reveal',array('token'=>$token,'openid'=>$openid))}" id="goPay" class="wechat">我的礼品</a>
+</p>
+    <if condition="$token eq '55cad4ba46c41a8fde9c84274e36fa83'">
+    <include file="Loan:foot"/>
+        </if>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.call('hideToolbar');
+    });
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>台铃</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/style.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/font/style.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/load/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/main.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/init.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/msg.js"></script>
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    </head>
+    <body>
+    <div class="loading">
+        <!-- <img src="img/bg.png" alt="" >-->
+        <div class="loadingtext">
+            <span id="loading"><span class="loading-spinner9"></span>正在启动...</span>
+
+        </div>
+    </div>
+    <div class="header">
+    	<div class="banner containBg" style="background-image:url({weikucms::STATICS}/wapweiui/tailg/img/banner.png)">
+    	</div>
+    	<div id="map"></div>
+    </div>
+    <div class="controllBox">
+    	<div class="menuWrap none">
+            <div class="menu">
+                <img src="{weikucms::STATICS}/wapweiui/tailg/img/menuButton.png" alt="" id="menuButton">
+                <div class="menuButton m easyActive">
+                    <div class="icon">
+                        <span class="icon-open"></span>
+                    </div>
+                    <div class="text">一键启动</div>
+                </div>
+                <div class="menuButton m findCarAlert">
+                    <div class="icon">
+                        <span class="icon-alert"></span>
+                    </div>
+                    <div class="text">寻车警报</div>
+                </div>
+                <div class="menuButton m quietCarAlert">
+                    <div class="icon">
+                        <span class="icon-quiet"></span>
+                    </div>
+                    <div class="text">静音设防</div>
+                </div>
+                <div class="menuButton m unlock">
+                    <div class="icon">
+                        <span class="icon-unlock"></span>
+                    </div>
+                    <div class="text">解锁</div>
+                </div>
+                <div class="menuButton m lock">
+                    <div class="icon">
+                        <span class="icon-lock"></span>
+                    </div>
+                    <div class="text">落锁</div>
+                </div>
+                <div class="menuButton m openSeat">
+                    <div class="icon">
+                        <span class="icon-key"></span>
+                    </div>
+                    <div class="text">打开坐桶</div>
+                </div>
+                <div class="gpsButton m">gps</div>
+                <div class="menuButton closeUnlock">
+                    <div class="text">靠近解锁</div>
+                    <div class="slideButton on m">
+                        <div class="slideCircle "></div>
+                    </div>
+                </div>
+                <div class="menuButton closeActive">
+                    <div class="text">靠近启动</div>
+                    <div class="slideButton m">
+                        <div class="slideCircle "></div>
+                    </div>
+                </div>
+            </div>
+            <div class="myul hav">
+                <div class="bindButton bind">
+                    <div class="circle text">
+                        绑定
+                    </div>
+                </div>
+                <div class="noNoElectric border-26 m">
+                    <span class="icon">
+                        <span class="icon-charge"></span>
+                    </span>
+                    <span class="text">防抢断电</span>
+                </div>
+                <div class="bindButton login">
+                    <div class="circle text">
+                        登录
+                    </div>
+                </div>
+            </div>
+            <div class="sensitive">
+                <span class="text">灵敏度调节</span>
+
+                <div class="sensitiveSetting">
+                    <div class="sensitveFull"></div>
+                    <div class="sensitiveSlider"></div>
+                </div>
+                <span id="sensitiveCount" class="hide"></span>
+            </div>
+        </div>
+    </div>
+	<div class="alertBox">
+		<div class="alert">
+			<span class="alertContent">
+				操作成功！
+			</span>
+		</div>
+		<div class="alertInput">
+			<div class="input">
+				<input type="tel" id="mobile" name="mobile" placeholder="请输入您的手机号码">
+			</div>
+			<span class="confirmBind">确认绑定</span>
+		</div>
+	</div>
+    <div class="loginBox">
+
+    </div>
+    <script type="text/javascript">
+    	slideOPen(".slideButton",{
+			on:function(){
+				tips.tip("按钮开启")
+			},
+			off: function(){
+				tips.tip("按钮关闭")
+			},
+			"openClass" : "on"
+		})
+		sensitive(".sensitiveSlider",function(e){
+			tips.tip("操作成功");
+			// tips.alertClose(3000);
+		})
+
+		/*
+		* 绑定手机号码
+		*/
+		$(function(){
+			$(".bindButton.bind").click(function(){
+				tips.alertInput()
+			})
+			$(".confirmBind").click(function(){
+				var phone = $("#mobile").val();
+				check.bindPhone(phone,function(){
+					tips.tip("你输入的手机号码为"+phone)
+				})
+			})
+            $(".gpsButton").click(function(){
+                if($(this).hasClass('on')){
+                    $(this).removeClass('on');
+                    tips.tip("地图关闭");
+                    $(".header").removeClass('map');
+                }else{
+                    $(this).addClass('on');
+                    tips.tip("地图开启");
+                    $(".header").addClass('map');
+                }
+                if(!$("#map").hasClass('hasMap')){
+                    $(".header").addClass('map');
+                    getMap("map");
+                }
+            });
+            $(".menuButton").click(function() {
+                if($(this).hasClass('on')){
+                    $(this).removeClass('on');
+                }else{
+                    $(this).addClass('on')
+                }
+            });
+
+		})
+    </script>
+    </body>
+</html>

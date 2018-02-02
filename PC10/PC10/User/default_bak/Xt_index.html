@@ -1,0 +1,81 @@
+<include file="Public:head"/>
+<div class="content">
+         
+          <div class="cLineB">
+              <h4 class="left">喜帖管理</h4>
+                  <div class="searchbar right">
+                  </div>
+              <div class="clr"></div>
+          </div>
+          
+          <div class="cLine">
+    <div class="alert">
+   
+    </div>
+</div>
+          
+          <div class="cLine">
+            <div class="pageNavigator left">
+  <a href='index.php?g=User&m=Xt&a=add' class='btnGrayS vm bigbtn'><img src="{weikucms::RES}/images/text.png" class="vm" />新增喜帖</a>
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+          <div class="msgWrap">
+          <form method="post"  action="" id="info" >
+
+            <TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+
+                    <TH>喜帖标题</TH>
+<TH>关键词</TH>
+                    <TH>新郎/新娘名字</TH>
+                     <TH>相册</TH>
+<TH class="norightborder">操作</TH>
+                </TR>
+              </THEAD>
+              <TBODY>
+                 
+    <volist name="info" id="vo">             
+                 
+                <TR>
+             
+                    <TD>{weikucms:$vo.title}</TD>
+                  <TD>{weikucms:$vo.keyword}</TD>
+                  <TD>{weikucms:$vo.boyname}/{weikucms:$vo.girlname}</TD>
+                      <TD><a  class="green" href="{weikucms:$vo.fmurl}" >喜帖图片</a> </TD>
+                   <TD class="norightborder"><a href="{weikucms::U('Xtlist/index',array('token'=>$vo['token'],'hid'=>$vo['id']))}" >查看名单</a>　<a href="{weikucms::U('Xt/edit',array('id'=>$vo['id']))}" >编辑喜帖</a>　<a href="javascript:drop_confirm('您确定要删除吗?', '{weikucms::U('Xt/del',array('id'=>$vo['id']))}');">删除</a></TD>
+          
+                </TR>
+    </volist>
+      			 
+                                  <tr>
+
+                </tr>
+              </TBODY>
+            </TABLE>
+           </form> 
+
+   
+          </div>
+            
+
+
+ 
+ 
+          <div class="cLine">
+            <div class="pageNavigator right">
+                 <div class="pages"></div>
+              </div>
+            <div class="clr"></div>
+          </div>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+
+<include file="Public:footer"/>

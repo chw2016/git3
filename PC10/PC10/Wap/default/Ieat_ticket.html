@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>41 ieat限购-团购</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+</head>
+
+<body r='246' g='95' b='112'>
+
+<div class="main">
+    <volist name="ticketList" id="vo">
+    <div class="listbox">
+        <div class="listpic" style=" background-image:url({weikucms:$vo.virtual_pic});">
+        </div>
+        <div class="listtitlebox myul" style="margin-left:20%">
+            <div class="titlebox" >
+                <div class="title  ieatXianGou"><span class="titletext">【{weikucms:$vo.cat_name}】{weikucms:$vo.ticket_name}团购价：￥{weikucms:$vo.ticket_price}元</span></div>
+            </div>
+        </div>
+    </div>
+    </volist>
+</div>
+
+<div class="havbox">
+
+    <div class="hav myul" style="top:-10%">
+        <div data-tap="item" class="item tap opacity  on" style="margin-left:23%;">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        团
+                    </div></div></div>
+
+        </div>
+
+        <div data-tap="item" class="item tap opacity" style="margin-left:8%;" >
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        特
+                    </div></div></div>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var range = 50;
+        var _srollPos = 0;
+        var pageNum = 2;
+        var totalheight = 0;
+        var main = $(".main");
+        var js = 0;
+        var count = "{weikucms:$count}";
+        var zone = "{weikucms:$zone}";
+        $(window).scroll(function() {
+            var srollPos = $(window).scrollTop();
+            if (srollPos < _srollPos) {
+                return
+            } else {
+                _srollPos = srollPos
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (($(document).height() - range) <= totalheight) {
+                $.ajax({
+                    url: "/index.php?g=Wap&m=Ieat&a=restaurantUnio&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&count=" + count + "&zone=" +zone,
+                    type: "post",
+                    data: "pageNum=" + pageNum,
+                    success: function(res) {
+                        if (res == 0) {
+                            if (js == 0) {
+                                $(".main").append('<article style="display:block" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多团购券了</header></article>')
+                            }
+                            js = 1
+                        } else {
+                            main.append(res);
+                            pageNum++
+                        }
+                    }
+                })
+            }
+        })
+    });
+</script>
+</body>
+</html>

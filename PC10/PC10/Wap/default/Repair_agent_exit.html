@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>提示信息</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<meta charset="utf-8" />
+<style type="text/css">
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+#info {
+    margin: 0px auto;
+    width: 90%;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 30px;
+    background: #f0efed;
+    text-align: left;
+    vertical-align: middle;
+    color: #EE4B4B;
+    padding: 5px 10px;
+    /*line-height: 10em;*/
+}
+</style>
+</head>
+<body>
+	<if condition="$type eq 1">
+		<div id="info">
+			您已经注销退出本服务平台！！！
+		</div>
+	<elseif condition="$type eq 2"/>
+		<div id="info">
+            您的账号已被管理员禁接单<br> 原因:{weikucms:$findAgent.op_reason}。<br>如有疑问可咨询025-58460223，或通过“修业网络客服中心”服务号咨询。
+		</div>
+	<elseif condition="$type eq 3"/>
+    <div id="info">您的帐号已提交审核,请耐心等待！</div>
+
+	<elseif condition="$type eq 4"/>
+		<div id="info">
+			您的退出帐号绑定！！！
+		</div>
+	<elseif condition="$type eq 5"/>
+		<div id="info">
+			该订单已被抢了！！！
+		</div>
+	<elseif condition="$type eq 6"/>
+		<div id="info">
+			系统繁忙！！！
+		</div>
+	<else/>
+		<div id="info">
+			！！！
+		</div>
+	</if>
+	
+	<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+
+</body>
+</html>

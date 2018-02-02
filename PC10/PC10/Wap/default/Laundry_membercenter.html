@@ -1,0 +1,159 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/laundry/css/card.css" media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/laundry/css/datepicker.css" media="all">
+<link href="{weikucms::RES}/laundry/css/footer.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jQuery.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/card.js"></script>
+<style>
+.masklayer {
+    display: none; position: fixed; top: 0; left: 0; z-index: 2000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); text-align: right;
+}
+
+.masklayer.on {
+    display: block;
+}
+
+.masklayer img {
+    margin-top: 10px; margin-right: 30px; width: 160px;
+}
+</style>
+<title>会员卡</title>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="format-detection" content="telephone=no">
+</head>
+<body id="card" ondragstart="return false;" onselectstart="return false;">
+	<section class="body">
+		<div id="overlay" style="position: fixed; z-index: 100;"></div>
+
+		<div class="cardexplain">
+			<ul class="round operate navlist">
+
+					<li>
+						<div class="list-titel">
+							余额(元)：￥{weikucms:$money}
+							<i>微信充值</i>
+						</div>
+						<div class="list-item list-item-main">
+							<div class="item_input">
+								<label for="name">充值金额(元)：</label>
+								<div class="input">
+									<input name="fee" placeholder="" id="fee">
+								</div>
+							</div>
+							<div class="fshare_btn">
+								<button type="submit" class="btn_cancle btn_cancle_mini">取消</button>
+								<button type="button" class="btn_sure btn_sure_mini" id="recharge">提交</button>
+							</div>
+						</div>
+					</li>
+
+			</ul>
+			<script type="text/javascript">navList();</script>
+			<ul class="round">
+				<li>
+					<a href="{weikucms::U('Laundry/customersliquidity',array('token'=>$token,'openid'=>$openid))}">
+						<span>消费记录</span>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+		<!--输入框-->
+		<footer>
+			<div class="fix-bottom"></div>
+			<div class="bottomBox">
+				<div class="indexMsg">
+					<div class="indexMenu">
+						<a href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}">
+							<span class="home-index">首页</span>
+						</a>
+						<a href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}">
+							<span class="Order-index">订单</span>
+						</a>
+						<a href="{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}">
+							<span class="card-index-active">会员中心</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+        <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+            <input type="hidden" name="order_money" value="">
+            <input type="hidden" name="order_text" value="96洗衣店充值">
+            <input type="hidden" name="orderid" value="">
+            <input type="hidden" name="openid" value="{weikucms:$openid}">
+            <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Laundry&a=membercenter&openid={weikucms:$openid}">
+            <input type="hidden" name="type" value="Laundry_recharge">
+        </form>
+
+<script type="text/javascript">
+    /*//这个是支付宝支付，因为客户的原因，换为微信支付
+     var key = true;
+     $(function(){
+         $("#recharge").click(function(){
+             var fee = $("#fee").val().trim();
+             var reg = /^[0-9]*[1-9][0-9]*$/ ;
+             var btn = $(this);
+             if(!reg.test(fee)){
+                 alert("请输入合法的金额！");
+                 return false;
+             }
+             if(key == true){
+                 key = false;
+                 btn.text("正在生成订单");
+                 var url = "{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}";
+                 $.post(url,{fee:fee},function(data){
+                     if(data.status == 1){
+                         btn.text(data.info);
+                         setTimeout(function(){
+                             var from = "laundrycustomersrecharge";
+                             var link = "{weikucms::U('Alipay/pay',array('token'=>$token,'openid'=>$openid))}&orderid=" + data.data  + "&price=" + fee +"&orderName=96洗衣店洗客充值" + "&from=" + from;
+                             window.location.href = link;
+                         },'1000');
+                     }else{
+                        alert(data.info);
+                     }
+                 },'json');
+             }
+         });
+     });*/
+    //微信支付
+    var key = true;
+    $(function(){
+        $("#recharge").click(function(){
+            var fee = $("#fee").val().trim();
+            var reg = /^[0-9]*[1-9][0-9]*$/ ;
+            var btn = $(this);
+            if(!reg.test(fee)){
+                alert("请输入合法的金额！");
+                return false;
+            }
+            if(key == true){
+                key = false;
+                btn.text("正在生成订单");
+                var url = "{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url,{fee:fee},function(data){
+                    if(data.status == 1){
+                        btn.text(data.info);
+                        setTimeout(function(){
+                            $("input[name=order_money]").val(fee);
+                            $("input[name=orderid]").val(data.data);
+                            $("#myweipayform").submit();
+                        },'1000');
+                    }else{
+                        alert(data.info);
+                    }
+                },'json');
+            }
+        });
+    });
+
+
+</script>
+	</section>
+</body>
+</html>

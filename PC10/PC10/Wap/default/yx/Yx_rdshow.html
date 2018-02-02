@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>产品通报</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+        <style type="text/css">
+			.details img{
+				width:100%;
+			}
+		</style>
+	</head>
+    <body>
+	    <!--
+    	<header id="c-product-header">
+    		产品通报
+    	</header>
+		-->
+    	<div class="process-change">
+    		{weikucms:$info.title}
+    	</div>
+    	<div class="eplain">
+    		<div class="tosomebody">
+    			{weikucms:$info.ms}
+    		</div>
+    		<div class="tosomebody">
+    			{weikucms:$info.cc}
+    		</div>
+    	</div>
+    	<!-- 主题 -->
+    	<div class="theme">
+    		<div class="title">主题</div>
+    		<div class="tosomebody">
+    			{weikucms:$info.zt}
+    		</div>
+    	</div>
+    	<!-- 变更原因内容模块 -->
+    	<div class="details" style="text-align:left;">
+    		<php>echo html_entity_decode(htmlspecialchars_decode($info['content'],ENT_QUOTES))</php>
+    	</div>
+    	
+    	<div class="yanxiang">
+    		<div class="high">研祥智能科技股份有限公司
+    		</div>
+    		<div class="high">品质中心
+
+    		</div>
+    		<div class="high">发布日期：<php>$day = explode('-',$info['times']);echo $day[0]</php>年<php>$day = explode('-',$info['times']);echo $day[1]</php>月<php>$day = explode('-',$info['times']);echo $day[2]</php>日
+    		</div>
+    	</div>
+    </body>
+</html>

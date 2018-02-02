@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>交通在线</title>
+    <meta charset="utf-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="eric.wu" name="author">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/common.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/index.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/traffic.js"></script>
+</head>
+<body class="bj">
+<!-- 头部 -->
+<header>
+    <div class="header-top-tab">
+        <ul class="header-top-tab-ul">
+            <li class="header-top-tab-ul-li active">未完成订单</li>
+            <li class="header-top-tab-ul-li">已完成订单</li>
+        </ul>
+    </div>
+</header>
+<!-- 内容 -->
+<content>
+    <div class="indent-content">
+        <ul class="indent-content-ul">
+            <!-- 未完成订单 -->
+            <li class="indent-content-ul-li">
+                <div class="no-indent">
+                    <div class="no-indent-main">
+                            <p class="checkid" style="display:none">id</p>
+                            <p>车牌号：浙A●GX588</p>
+                            <p>违章地点：深圳市宝安区西乡地铁站</p>
+                            <p>时间：2015-09-01&nbsp;13:25:26</p>
+                            <p>违章处理：<span class="fine">罚款200元</span></p>
+                            <div class="on-line-btn">
+                                <div class="on-line-btn-text">
+                                    <a href="{weikucms:$http}/index.php?g=wap&m=Check&a=pay&token={weikucms:$token}&openid={weikucms:$openid}">
+                                        在线支付
+                                    </a>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </li>
+            <!-- 完成订单 -->
+            <li class="indent-content-ul-li hide">
+                <volist name='wanc' id='wde'>
+                    <div class="no-indent">
+                        <p>车牌号：{weikucms:$wde.cph}</p>
+                        <p>违章地点：{weikucms:$wde.site}</p>
+                        <p>时间：{weikucms:$wde.site_time}</p>
+                        <p>违章处理：罚款<span>{weikucms:$wde.dispose}元</span></p>
+                    </div>
+                </volist>
+    </li>
+    </ul>
+    </div>
+</content>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;">
+    <div style="width: 90%;margin: 0 auto;">
+
+   <style>
+.title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+</style>
+<div class="cLineB"  style="position:relative" > 
+    <div class="title_tab" id="topTab">
+   
+    
+
+        <ul class="tab_navs title_tab" data-index="0"  >
+
+<!--            
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>"></a>
+            </li> -->
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Qianggou/index',array('aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">限时抢购</a>
+            </li> -->
+<!--             
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>">最新活动</a>
+            </li> -->
+            
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Dianphd/index',array('token'=>$_GET['token'],'aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">店铺活动管理</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms:$Head.url}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">活动管理</a>
+            </li> -->
+            
+          
+        </ul>
+    
+    </div>
+</div>
+
+<div class="cLineC" style="line-height: 32px;">
+   
+   <a 
+    href="{weikucms::U('CxYy/yy',get(id))}" class="btn btn-primary {weikucms:$Opt.css}" >返回</a>
+   
+</div>
+
+   <div class="msgWrap form">
+  <div class="bdrcontent">
+    <div id="div_ptype">
+      <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <thead>
+          <tr>
+          	<th  style="text-align:center" >请输入您预定的内容</th>
+
+            
+          </tr>
+          
+        
+        </thead>
+        <!--tab start-->
+        <div class="alert alert-info">
+          <button type="button" class="tips close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+        
+           
+            <li>你可以在这里管理你的预订人数信息</li>
+            
+            
+         
+          </ol>
+
+          </script>
+        </div>
+        <form action="{weikucms::U('yd',get(time,id))}" method="post" id="form" >
+       
+
+        <tr>
+                
+	             <td  style="text-align:center;" >
+	                
+	               <!-- <input type="radio" value="{weikucms:$v['id']}" <if condition="$zhi eq $v['id']" >checked="checked"</if> name="id" />&nbsp{weikucms:$v['name']}-{weikucms:$v['bm']} -->
+	               <input name="zhi" value="<?php echo $_GET['zhi'] ?>" />注意:文字不要超过6个字。否则会破坏样式
+	             </td>
+	           
+           </tr>
+      
+       
+         </form>
+      </table>
+    </div>
+  </div>
+  <div class="footactions" style="padding-left:10px">
+    <div class="pager"   >提交</div>
+    <script type="text/javascript">
+      $(".pager").click(function(){
+    	  $("#form").submit();
+      })
+    </script>
+  </div>
+</div>
+
+
+
+    <div class="clr"></div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+
+<include file="Public:footer"/>

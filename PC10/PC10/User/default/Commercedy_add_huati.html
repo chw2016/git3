@@ -1,0 +1,205 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLine">
+
+<!-- <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="total">
+                <a href="{weikucms::U('Commercedy/postShow',array('token'=>$token))}" >帖子列表</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="financial">
+                <a href="{weikucms::U('Commercedy/popular',array('token'=>$token))}" >人气排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/stars',array('token'=>$token))}" >星级排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/noticelist',array('token'=>$token))}" >公告添加</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/setScore',array('token'=>$token))}" >积分设置</a>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+ <div class="cLineB">
+
+       <h4 class="left"><if condition="$info eq ''">新增<else/>修改</if>话题</h4>
+
+       <div class="clr"></div>
+
+   </div>
+</div>
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里您可以新增或者修改话题</li>
+    </ol>
+</div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">话题标题</label></th>
+                    <td>
+                    	<input type="input" class="px" id="title" value="{weikucms:$info.title}" name="title" placeholder="请填写话题标题">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">
+                        <label for="keyword">
+                            话题图片二：
+                        </label>
+                    </th>
+                    <td>
+                        <img  id="fenlei_img2" class="fenlei_img" src="{weikucms:$info.img_url}">
+                        <input type="hidden" class="px" id="image2" value=""  imageid="" name="img_url" style="width:300px" readonly="readonly">
+                        <span class="ke-button-common" id="upload2">上传图片</span>
+                        <span class="ke-button-common del" style="margin-left: 10px;" >删除图片</span>
+                        <span class="info_tip">建议图片大小320×250</span>
+
+                    </td>
+
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="key">开始时间</label></th>
+                    <td>
+                        <input type="input" class="px" onclick="WdatePicker()" style="width: 150px;" id="start_time" name="start_time" value="{weikucms:$info.start_time}" readonly="">
+                        结束时间
+                        <input type="input" class="px" onclick="WdatePicker()" style="width: 150px;" id="end_time" name="end_time" value="{weikucms:$info.end_time}" readonly="">
+
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="key">话题内容</label></th>
+                    <td>
+                        <textarea name="content" id="info"  rows="5" style="width:590px;height:360px">{weikucms:$info.content}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">排序</label></th>
+                    <td>
+                        <input type="input" class="px" id="sort" value="{weikucms:$info.sort}" name="sort" placeholder="值越大越靠前">
+                    </td>
+                </tr>
+                 <tr>
+                    <th></th>
+                    <td>
+                         <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary"><if condition="$info neq ''">修改<else/>添加</if></button>
+                        <a href="{weikucms::U('Commercedy/huati_index',array('token'=>$token))}" class="btn btn-primary">返回</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#bsubmit').click(function(){
+			var title = $('#title').val(),
+                content = $("#info").val(),
+                judge;
+			 if(!title){
+                notif({
+                    msg: "请填写标题",
+                    type: "warning"
+                });
+                return false;
+            }
+            /**
+             * 图片
+             *
+             */
+            var img_url=$("input[name=img_url]").val();
+            if(!content){
+                notif({
+                    msg: "请填写公告内容",
+                    type: "warning"
+                });
+                return false;
+            }
+            /**
+             * 时间
+             */
+            var start_time=$("#start_time").val();
+            var end_time=$("#end_time").val();
+            if("{weikucms:$info}"){
+                judge = "{weikucms:$info.id}";
+            }else{
+                judge = 'add';
+            }
+            var sort=$("#sort").val();
+            var url = "{weikucms::U('Commercedy/edit_huati',array('token'=>$token))}";
+            $.post(url,{sort:sort,end_time:end_time,start_time:start_time,title:title,content:content,judge:judge,img_url:img_url},function(data){
+            	if (data.status == 0) {
+            		notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+            		setTimeout(function(){
+            			window.location.href=data.url;
+            		},'1200');
+            	}else{
+            		notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+            	}
+            },'json');
+		})
+	})
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#image2').val(),
+                    clickFn : function(url, title) {
+                        K('#image2').val(url);
+                        $("#fenlei_img2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+    $(".del").click(function(){
+        $(this).parent().find("img").attr('src','');
+        $(this).parent().find("input").val('');
+    })
+
+</script>
+

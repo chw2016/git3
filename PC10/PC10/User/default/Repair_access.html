@@ -1,0 +1,144 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+	<div class="cLineB">
+		<h4 class="left">服务商权限管理</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Repair/agent',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一层</h4></a>
+		</div>
+	</div>
+	
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		 <tr>
+			<th valign="top">输入服务商编号：</th>
+			<td>{weikucms:$agentNo}</td>
+  		 </tr>
+
+         <tr>
+             <th valign="top">账户余额：</th>
+             <td>
+                 <input type="hidden" id="id" value="{weikucms:$id}" name="id"/>
+                 <input type="input" class="px" id="order_max" value="{weikucms:$accessInfo.order_max}" readonly name="order_max" style="width:208px" maxlength="16"/>
+                 <br/><span class="red">*</span><span style="padding-left:6px;">每次接单，自动减2</span>
+             </td>
+         </tr>
+
+  		 <tr>
+			<th valign="top">增加/减少余额：</th>
+			<td>
+				<input type="input" class="px"  value="" name="order_max_change" style="width:208px" maxlength="16"/>
+				<br/><span class="red">*</span><span style="padding-left:6px;">如: 新增2,减少-2</span>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">可积压订单：</th>
+			<td>
+				<input type="input" class="px" id="backlog_max" readonly value="{weikucms:$accessInfo.backlog_num}" name="backlog_max" style="width:208px" maxlength="16"/>
+				<br/><span class="red">*</span><span style="padding-left:6px;">服务中订单数不可超过该数，否则无法接单</span>
+			</td>
+  		 </tr>
+
+         <tr>
+             <th valign="top">增加/减少可积压订单：</th>
+             <td>
+                 <input type="input" class="px" value="" name="backlog_max_change" style="width:208px" maxlength="16"/>
+                 <br/><span class="red">*</span><span style="padding-left:6px;">如: 新增2,减少-2</span>
+             </td>
+         </tr>
+  		 
+  		 <tr>
+			<th valign="top">每日可接单数：</th>
+			<td>
+				<input type="input" class="px" id="day_max" readonly value="{weikucms:$accessInfo.day_order_max}" name="day_max" style="width:208px" maxlength="16"/>
+			</td>
+  		 </tr>
+
+         <tr>
+             <th valign="top">增加/减少每日可接单数：</th>
+             <td>
+                 <input type="input" class="px" value="" name="day_max_change" style="width:208px" maxlength="16"/>
+                 <br/><span class="red">*</span><span style="padding-left:6px;">如: 新增2,减少-2</span>
+             </td>
+         </tr>
+  		 <!--
+  		 <tr>
+			<th valign="top">可增加员工数：</th>
+			<td>
+				<input type="input" class="px" id="staff_max" value="{weikucms:$accessInfo.staff_mun}" name="staff_max" style="width:208px" maxlength="16"/>
+			</td>
+  		 </tr>
+  		   		-->
+  		 
+  		 <tr>
+			<th valign="top">投诉次数：</th>
+			<td>
+				<input type="input" class="px" readonly value="{weikucms:$accessInfo.complaint}" name="comp_day" style="width:208px" maxlength="16"/>
+				<br/><span class="red">*</span><span style="padding-left:6px;">客户投诉3日内未完成，则3日内无法接单</span>
+			</td>
+  		 </tr>
+
+         <tr>
+             <th valign="top">增加/减少投诉次数：</th>
+             <td>
+                 <input type="input" class="px" value="" name="comp_day_change" style="width:208px" maxlength="16"/>
+                 <br/><span class="red">*</span><span style="padding-left:6px;">如: 新增2,减少-2</span>
+             </td>
+         </tr>
+
+
+  		 <tr>
+			<th valign="top">保修押金：</th>
+			<td>
+				<input type="input" class="px" id="deposit" readonly value="{weikucms:$accessInfo.deposit}" name="deposit" style="width:208px" maxlength="16"/>
+			</td>
+  		 </tr>
+
+         <tr>
+             <th valign="top">增加/减少每日可接单数：</th>
+             <td>
+                 <input type="input" class="px" value="" name="deposit_change" style="width:208px" maxlength="16"/>
+                 <br/><span class="red">*</span><span style="padding-left:6px;">如: 新增2,减少-2</span>
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 操作原因
+             </td>
+             <td colspan="3">
+                 <textarea id="not_allow" name="not_allow"></textarea>
+             </td>
+         </tr>
+  		 
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="button" name="button" id="bsubmit" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<script>
+    $(function(){
+        $("#bsubmit").click(function(){
+            var op_reason = $("#not_allow").val();
+            if(!op_reason){
+                notif({
+                    msg: "操作原因不能为空",
+                    type: "warning"
+                });
+                return false;
+            }else{
+                $("form").submit();
+            }
+        });
+    });
+</script>
+<include file="Public:footer"/> 

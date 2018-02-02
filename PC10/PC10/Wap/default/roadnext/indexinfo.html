@@ -1,0 +1,16 @@
+
+<ul style="  width: 95%;margin: 0 auto;">
+    <volist name="info" id="vo">
+        <li class="shopListli show_{weikucms:$vo.qid}">
+            <a href="http://api.map.baidu.com/marker?location={weikucms:$vo.position_y},{weikucms:$vo.position_x}&title={weikucms:$vo.sname}&name={weikucms:$vo.sname}&content={weikucms:$vo.sname}&output=html&src=weiba|weiweb#type_id=type_{weikucms:$vo.qid}" id="type_{weikucms:$vo.qid}" style="width: 100%">
+            <div style="padding: 5px 0;float: left;font-size: 16px;;font-weight: 600;">{weikucms:$vo.sname}</div><div class="weizhi" style="margin-top: 12px;">
+                <php>
+                    $jl = $vo['jl']/1000;
+                    echo $jl;
+                </php>Km</div>
+                <div style="clear: both"></div>
+            <div>{weikucms:$vo.address}</div>
+            </a>
+        </li>
+    </volist>
+</ul>

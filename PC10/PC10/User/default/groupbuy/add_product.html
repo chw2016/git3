@@ -1,0 +1,36 @@
+<if condition="$row && $row.groupmsg">
+<foreach name="row.groupmsg" item="g" key="k">
+<tr style="position:relative" class="extra">
+    <td>团购设置</td>
+    <td>
+    人数:<input type="text" name="number[]" value="{weikucms:$k}">
+    金额:<input type="text" name="money[]" value="{weikucms:$g}">
+    <a class="addItem" href="javascript:void(0);">添加选项</a>
+    <a class="deleteItem" href="javascript:void(0);">删除</a>
+    </td>
+</tr>
+</foreach>
+<else />
+<tr style="position:relative" class="extra">
+    <td>团购设置</td>
+    <td>
+    人数:<input type="text" name="number[]" value="">
+    金额:<input type="text" name="money[]" value="">
+    <a class="addItem" href="javascript:void(0);">添加选项</a>
+    <a class="deleteItem" style="display: none;" href="javascript:void(0);">删除</a>
+    </td>
+</tr>
+</if>
+<script type="text/javascript" charset="utf-8">
+    $(function(){
+        $(document).on('click', '.addItem', function(){
+            var extra = $('.extra:first').clone();
+            extra.find('input').val('');
+            extra.find('.deleteItem').show();
+            $('.extra:last').after(extra);
+        });
+        $(document).on('click', '.deleteItem', function(){
+            $(this).parents('.extra').remove();
+        });
+    });
+</script>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css?a=123">
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css">
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/user/style.css">
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="fenlei"><span class="icon-user" onclick="window.location.href='{weikucms::U('Health/Usercenter',array('token'=>$token,'openid'=>$openid))}'"></span></div>
+     <div class="moreBox fenleiBox" style="">
+
+      </div>
+	<div class="circleBorder">
+		<div class="homeBtn">
+			<span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span>
+		</div>
+	</div>
+    <div class="gouwu"><span class="icon-cart" onclick="window.location.href='{weikucms::U('Health/carts',array('token'=>$token,'openid'=>$openid))}'"></span></div>
+</div>
+<div class="Box whiteBG">
+	<div class="ShopPicBox">
+    	<div class="ShopPicSwrap myul">
+            <volist name="pic" id="pic">
+        	<div class="ShopPic" style="background-image:url('{weikucms:$pic.img}')"></div>
+                </volist>
+        </div>
+        <div class="SliderTipBox">
+            <div class="SliderTipSwrap">
+                <volist name="pic2" id="pic2" key="k">
+               <a class="SliderTip"></a>
+                </volist>
+            </div>
+        </div>
+    </div>
+    <volist name="goods" id="good">
+        <div class="ShopIndexItem myul"  style="background-image:url('{weikucms:$good.logourl}')" onclick="window.location.href='{weikucms::U('Health/shoplist',array('token'=>$token,'openid'=>$openid,'id'=>$good[id]))}'">
+            <!--<div class="ShopIndexDescrib"></div>-->
+            <!--<div class="ShopIndexItemPic" ></div>-->
+        </div>
+    </volist>
+</div>
+
+</body>
+<script type="text/javascript">document.body.addEventListener("touchmove",function(o){o.stopPropagation()});</script>
+<script type="text/javascript">
+ $(".fenlei").click(function(){
+			 if($(".moreBox").is(":hidden")){
+				 $(".moreBox").fadeIn(50);
+				 }else{
+					 $(".moreBox").fadeOut(50);
+					 }
+			 })
+slider($(".ShopPicBox"),$('.ShopPicSwrap'),$('.ShopPic'));
+myFadeIn();
+</script>
+</html>

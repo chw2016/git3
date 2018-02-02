@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{weikucms:$tpl.name}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/common.css" />
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/font-awesome.min.css" />
+<link rel="stylesheet" href="tpl/Wap/default/rh/css/search_store.css" />
+<script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="tpl/Wap/default/rh/js/msg.js" type="text/javascript" charset="utf-8"></script>
+<script src="tpl/Wap/default/rh/js/prompt.js" type="text/javascript" charset="utf-8"></script>
+</script>
+<style>
+	body{
+		background-color:#faf7ee;
+		padding:10px;
+	}
+	input::-webkit-input-placeholder{
+		color:c1bfbb;
+	}
+</style>
+<script type="text/javascript">
+	// $(function(){
+	//        $("#shen").click(function(event) {
+	//             $(".Mask_nav").css('display', 'block');
+	//             $('.Mask').addClass('is-visible');
+
+	//         });
+	//         $(".Mask_nav ul li").click(function(event) {
+	//             $(".Mask_nav").css('display', 'none');
+	//             $("[name=shen]").val($(this).html());
+	//             if( $(event.target).is('.Mask') ||$(event.target).is('.Mask_nav ul li')) {
+	// 		event.preventDefault();
+	// 		$(".Mask").removeClass('is-visible');
+	// 	}
+	//         });        
+ 	// }）
+          $(function() {
+              $(".project_btn").click(function () {
+                  var name = $("[name=name]").val();
+                  var tel = $("[name=tel]").val();
+                  var location_p = $("#location_p").val();
+                  var location_c = $("#location_c").val();
+                  var location_a = $("#location_a").val();
+                  var store_name="{weikucms:$_GET['name']}";
+                 // alert(location_p);
+
+                  var flag = $(this).attr('flag');
+                  if (flag == 1) {//重复提交
+                      return false;
+                  }
+                  if (name == '') {
+                      show_error_tip('请填写姓名');
+                      $("[name=name]").focus();
+                      return false;
+                  }
+                  if (tel == '' || tel.length != 11) {
+                      show_error_tip('请填写正确的手机号码');
+                      $("[name=tel]").focus();
+                      return false;
+                  }
+                  if(!location_p){
+                      show_error_tip('请选择省');
+                      return false;
+                  }
+                  if(!location_c){
+                      show_error_tip('请选择市');
+                      return false;
+                  }
+                  if(!location_a){
+                      show_error_tip('请选择区');
+                      return false;
+                  }
+                  $(this).attr('flag', 1);
+                  $(".project_btn").text('提交中');
+                  var url = "{weikucms::U('yuyue',array('token'=>$token,'openid'=>$openid))}";
+                  $.post(url, {store_name:store_name,name:name,tel:tel,location_p:location_p,location_c:location_c,location_a:location_a}, function (data) {
+                      //
+                      //  console.log(data);
+                      if(data.status==1){
+                          alert(data);
+                            show_success_tip('预约成功');
+                            setTimeout(function(){
+                           //     location.href="{weikucms::U('shop_list1',array('token'=>$token,'openid'=>$openid))}";
+                            },'2000');
+                        }else{
+                            show_error_tip('预约失败');
+                        }
+                  }, 'json');
+              })
+          })
+</script>
+</head>   
+<body>
+   <if condition="$_GET['name']">
+
+       <else />
+       <div class="project mb10">
+           <div class="project_top">
+               <span class="project_jian"></span>
+               <span class="project_size">免费设计测量</span>
+           </div>
+           <div class="project_nav">
+               <p class="mb10">成功预约将获得</p>
+               <p>1、<span>免费预约上门量房</span></p>
+               <p>2、<span>免费设计</span></p>
+               <p>3、<span>免费出3D家具效果图</span></p>
+           </div>
+       </div>
+   </if>
+
+	<div class="project mb10">
+		<div class="project_top">
+			<span class="project_jian"></span>
+			<span class="project_size">填写预约资料</span>
+		</div>
+
+		<div class="project_nav">
+			<p class="mb5">您的姓名：</p>
+			<p>
+				<div class="project_nav_input mb5">
+					<input type="text" placeholder="请输入您的姓名" value="" name="name">
+				</div>
+			</p>
+			<p class="mb5">您的手机号码：</p>
+			<p>
+				<div class="project_nav_input mb5">
+					<input type="text" placeholder="请输入您的手机号码" value="" name="tel" onkeyup="value=value.replace(/[^\d]/g,'')">
+				</div>
+			</p>
+			<p class="mb5">所在省份：</p>
+			<p>
+				<div class="project_nav_input mb5" id="shen">
+					<input type="text" placeholder="请输入您的所在省份" readonly value="" name="shen">
+					<span class="project_xiala"></span>
+					<select name="location_p" id="location_p">
+   					 </select>
+				</div>
+			</p>
+			<p class="mb5">所在城市：</p>
+			<p>
+				<div class="project_nav_input mb5" id="cheng">
+					<input type="text" placeholder="请输入您的所在城市" readonly value="" name="cheng">
+					<span class="project_xiala"></span>
+					<select name="location_c" id="location_c">
+  					  </select>
+				</div>
+			</p>
+			<p class="mb5">所在地区：</p>
+			<p>
+				<div class="project_nav_input mb5" id="cheng">
+					<input type="text" placeholder="请输入您的所在城市" readonly value="" name="cheng">
+					<span class="project_xiala"></span>
+					<select name="location_a" id="location_a">
+    					</select>
+				</div>
+			</p>
+			<p class="mt10">
+				<div class="project_btn">提交</div>
+			</p>
+		</div>
+	</div>
+	<script src="tpl/Wap/default/rh/js/region_select.js"></script>
+  	  <script type="text/javascript">
+		new PCAS('location_p', 'location_c', 'location_a', '广东省', '深圳市', '');
+	</script>
+	<!-- 显示区域 -->
+	<!-- <div class="Mask">
+		<div class="Mask_nav">
+			<ul>
+				<li>选择省份</li>
+				<li>北京市</li>
+				<li>天津市</li>
+				<li>上海市</li>
+				<li>广东省</li>
+				<li>黑龙江省</li>
+				<li>江苏省</li>
+				<li>山西省</li>
+				<li>内蒙古</li>
+				<li>辽宁省</li>
+			</ul>
+		</div>
+	</div> -->
+</body>
+
+</html>

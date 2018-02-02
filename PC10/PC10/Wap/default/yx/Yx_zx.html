@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>研祥</title>
+<script src="jquery-1.11.2.min.js"></script>
+<link type="text/css" href="{weikucms::STATICS}/wapweiui/yx/css/style.css" rel="stylesheet"/>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/yx/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/yx/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/yx/js/jquery.touchSlider.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/yx/css/yx.css">
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	$dragBln = false;
+	
+	$(".main_image").touchSlider({
+		flexible : true,
+		speed : 100,
+		btn_prev : $("#btn_prev"),
+		btn_next : $("#btn_next"),
+		paging : $(".flicking_con a"),
+		counter : function (e){
+			$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+		}
+	});
+	
+	$(".main_image").bind("mousedown", function() {
+		$dragBln = false;
+	});
+	
+	$(".main_image").bind("dragstart", function() {
+		$dragBln = true;
+	});
+	
+	$(".main_image a").click(function(){
+		if($dragBln) {
+			return false;
+		}
+	});
+	
+	timer = setInterval(function(){
+		$("#btn_next").click();
+	}, 5000);
+	
+	$(".main_visual").hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		},5000);
+	});
+	
+	$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 5000);
+	});
+	$(".btn_prev").css("display","none");
+	$(".btn_next").css("display","none");
+
+	$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 5000);
+	});
+	
+});
+	$(function(){
+		$(".yx_body_li_text").width($(".yx_body_li").width()-$(".yx_body_li_img").width()-8);
+		$(".yx_body_li").eq(-1).css("border","0");
+	})
+</script>
+</head>
+<body style="width: 100%;">
+		<div class="main_visual">
+			<div class="main_image">
+				<ul>
+				<volist name="lb" id="v">
+					<a href="{weikucms:$v['url']}" ><li><span class=""><img src="{weikucms:$v['pic']}"></span></li></a>
+				</volist>	
+				</ul>
+				<a href="javascript:;" id="btn_prev"></a>
+				<a href="javascript:;" id="btn_next"></a>
+			</div>
+		</div>
+
+	<div class="yx_body">
+		<ul>
+		
+		      <volist name="list" id="vo">
+              <if condition="$vo['url']" >
+                <a href="{weikucms:$vo['url']}">
+              <else/>  
+                <a href="{weikucms::U('zxshow',array('id'=>$vo['id']))}">
+              </if>  
+			
+				<li class="yx_body_li">
+					<div class="yx_body_li_img"><img src="{weikucms:$vo['pic']}" alt=""></div>
+					<div class="yx_body_li_text">
+						<div class="yx_body_li_text_title">
+							<?php echo msub($vo['title'],17) ?>
+						</div>
+						<div class="yx_body_li_text_body">
+							<?php echo msub($vo['ms'],35) ?>
+						</div>
+					</div>
+				</li>
+			</a>
+			</volist>
+			
+		</ul>
+		
+	</div>
+	<div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+</body>
+</html>

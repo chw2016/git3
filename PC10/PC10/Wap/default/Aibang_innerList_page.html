@@ -1,0 +1,28 @@
+<php>foreach($info as $iKey=>$sVal){</php>
+<php>if($sVal['openid'] == $openid){
+				    echo "<a href='/index.php?g=Wap&m=Aibang&a=store&token=".$sVal['token']."&id=".$sVal['id']."&openid=".$sVal['openid']."&type=same'>";
+				}else{
+				    echo "<a href='/index.php?g=Wap&m=Aibang&a=store&token=".$sVal['token']."&id=".$sVal['id']."&openid=".$sVal['openid']."'>";
+				}</php>
+		<li class="Recolor">
+			<div class="left" style="width:36%;">
+				<div class="circle no-circle">
+					<img src="<php>echo $sVal['pic'];</php>" width="100px" height="80px"/>
+				</div>
+			</div>
+			<div class="middle Rewidth">
+				<div class="title Refont" style="color:#000;"><php>echo $sVal['name'];</php></div>
+				
+				<div class="title Recolor1">
+					<php>echo $sVal['channel'];</php>
+				</div>
+				<div class="title Recolor1" style="padding:0px 11px !important">
+					<php>echo $sVal['distance']."m";</php>
+					<div class="zan">
+						<img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/up.png" width="18px" />(<php>echo $sVal['good'];</php>)
+						<img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/down.png" width="18px" />(<php>echo $sVal['bad'];</php>)
+					</div>
+				</div>
+			</div>
+		</li>
+<php>echo "</a>";}</php>

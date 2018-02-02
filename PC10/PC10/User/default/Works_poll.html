@@ -1,0 +1,61 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            {weikucms:$set.worksname}投票者
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Works/index',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                <tr>
+                    <th>编号</th>
+                    <th >作品名</th>
+                    <th >微信号</th>
+                    <th >投票时间</th>
+
+                </tr>
+                </thead>
+                <volist name="pollz" id="vo" key="i">
+
+                    <tr>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$set.worksname}</td>
+                        <td>{weikucms:$vo.nickname}</td>
+
+                        <td>{weikucms:$vo.polltime|date='Y-m-d',###}</td>
+                        <!--<td><if condition="$vo.state eq 1"><span style="color:green">已授权</span><else/><span style="color:red">未授权</span></if></td>-->
+
+
+
+                    </tr>
+
+                </volist>
+            </table>
+        </form>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+

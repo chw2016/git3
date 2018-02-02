@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style.css" />
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+        <link href="{weikucms::STATICS}/wapweiui/service/css/default2.css" rel="stylesheet" type="text/css">
+        <script src="{weikucms::STATICS}/wapweiui/service/js/cst_index.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/wapweiui/service/js/common.js" type="text/javascript"></script>
+    </head>
+    <body class="darkless-green-bg" style="width:100%;height:100%">
+    	<!-- 输入 -->
+    	<div class="inputBox">
+    		<div class="inputSwrap myul">
+    			<span class="title white">请填写收货信息</span>
+    		</div>
+    		<div class="inputSwrap myul">
+    			<div class="circle white circle-icon icon icName"></div>
+    			<div class="input ">
+    				<input type="text" class="nobg lightness-green" placeholder="请填写收货人姓名" id="uname">
+    			</div>
+    		</div>
+    		<div class="inputSwrap myul">
+    			<div class="circle white circle-icon icon icContact"></div>
+    			<div class="input ">
+    				<input type="tel" class="nobg lightness-green" placeholder="请填写联系方式" id="tel">
+    			</div>
+    		</div>
+    		<div class="inputSwrap myul">
+    			<div class="circle white circle-icon icon icAddress"></div>
+    			<div class="input ">
+    				<input type="text" class="nobg lightness-green" placeholder="<if condition="$token eq 'a5114ab1a60c81d04e86447a0bd123be'">如:惠大-18栋A区603<else/>请填写地址</if>" id="address">
+    			</div>
+    		</div>
+    		<!--<div class="inputSwrap myul">-->
+    			<!--<div class="circle white circle-icon icon icNote"></div>-->
+    			<!--<div class="input ">-->
+    				<!--<input type="text" class="nobg lightness-green" placeholder="客官，可有什么特别吩咐？">-->
+    			<!--</div>-->
+    		<!--</div>-->
+    		
+    	</div>
+    	<div class="border5 white btnGoBuy" onclick="return address()">
+    		提交信息
+    	</div>	
+		<!---->
+			
+    </body>
+    <script>
+        $(document).ready(function(e) {
+            var selector = $(".circleSelector");
+            var onl = selector.length;
+            function check(){
+                for(var i = 0;i<=onl;i++){
+                    if(!selector.eq(i).hasClass("circleSelected")){
+                        selector.eq(i).parents('.myulleft').find(".circleDeleteSwrap").show()
+                    }
+                }
+            }
+
+            var selector = $(".circleSelector");
+            selector.click(function(){
+                var THIS = $(this);
+                if(THIS.hasClass("circleSelected")){
+                    check();
+                    THIS.parents(".myulleft").find(".circleDeleteSwrap").hide()
+                }else{
+                    THIS.parents(".myulleft").find(".circleDeleteSwrap").show()
+                }
+            })
+
+            var delector = $(".circleDeleteSwrap");
+            delector.click(function(){
+                var THIS = $(this);
+                THIS.parents(".inputSwrap").slideUp(200);
+            });
+
+        })
+    </script>
+
+    <script type="text/javascript">
+        mySelector($(".circleSelector"),"circleSelected",1)
+    </script>
+
+    <script type="text/javascript">
+        function address(){
+            var uname=$("#uname").val();
+            var tel=$("#tel").val();
+            var address=$("#address").val();
+            var reg1 = /^(((13[0-9]{1})|(15[0-9]{1}|18[0-9]{1}))+\d{8})$/;
+            var reg2=/^\d{5,7}$/g;
+            if(!uname){
+                show_error_tip("姓名不能为空");
+                return false;
+            }
+
+            if(!reg2.test(tel) && !reg1.test(tel)){
+                show_error_tip("请输入正确的联系方式");
+                return false;
+            }
+
+            if(!address){
+                show_error_tip("地址不能为空不能为空");
+                return false;
+            }
+            var url="{weikucms::U('Commerce/address',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{uname:uname,tel:tel,address:address},function(data){
+                if(data.status==1){
+                    location.href="{weikucms::U('Commerce/account',array('token'=>$token,'openid'=>$openid,'oid'=>$oid))}";
+                }else{
+                    show_error_tip(data.info);
+                }
+            },"json")
+        }
+    </script>
+</html>

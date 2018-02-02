@@ -1,0 +1,66 @@
+<include file="Public:head"/>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>请根据各自广告位置的不同布局</li>
+            <li>只能删除最后一个位置</li>
+
+        </ol>
+    </div>
+          <div class="cLine">
+              <div class="pageNavigator left">
+     <a href="{weikucms::U('Store_new/ggadd',array('token'=>$token))}"  class='btn btn-primary'>新增商城广告图</a>　
+                  <a href="{weikucms::U('Store_new/index',array('token'=>$token))}"  class='btn btn-primary' style="">返回</a>
+
+
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th style="width:100px">位置</th>
+                      <th style="width: 300px;">图片</th>
+                      <th style="width: 200px;">链接</th>
+                      <th>添加时间</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td>位置{weikucms:$vo.type}</td>
+                          <td><img style="width: 120px;height: 80px;" src="{weikucms:$vo.pic}" /></td>
+                          <td>{weikucms:$vo.url}</td>
+                          <td><php>echo $vo['add_time'];</php></td>
+                          <td>
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Store_new/ggedit',array('id'=>$vo['id']))}" title="编辑图文自定义回复">编辑</a>
+                              <if condition="$type eq $i">
+                              <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Store_new/ggdel',array('id'=>$vo['id']))}')" href="#">删除</a></td>
+                                </if>
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+<include file="Public:footer"/>

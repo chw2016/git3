@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+<title>{weikucms:$title}</title>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <script>
+        var ajaxUrl="{weikucms::U('Packet/start',array('openid'=>$openid,'lid'=>$lid))}";//ajax处理地址
+        var resultUrl="{weikucms::U('Packet/result',array('openid'=>$openid,'lid'=>$lid))}";
+        var inviteUrl="{weikucms::U('Packet/invite',array('uid'=>$openid,'lid'=>$lid,'linkid'=>$linkid))}";
+    </script>
+<link type="text/css" rel="stylesheet" href="tpl/Wap/default/common/packet/css/main.css?=0120777" />
+<script src="tpl/Wap/default/common/packet/js/jquery-1.8.3.min.js"></script>
+<script src="tpl/Wap/default/common/packet/js/main.js?=9"></script>
+<script type="text/javascript">
+	function touch(){
+        $.post(ajaxUrl,function(data){
+            if(data.status==1){
+                location.href=resultUrl+"&gid="+data.gid;
+            }else if(data.status==2){
+                location.href=resultUrl+"&finish="+data.info;
+            }else{
+                location.href=inviteUrl;
+            }
+        },"json")
+	}
+
+	function get(){
+        var url="{weikucms::U('Packet/result',array('lid'=>$lid,'openid'=>$openid,'gid'=>$gid))}";
+        location.href=url;
+    }
+</script>
+</head>
+
+<body>
+<div class="bg"></div>
+<style type="text/css" media="screen">
+<if condition="$_GET['token'] eq '22e38de5329d6aecd6d7dd78df0b880e'">
+.textlogo{ background-image:url('tpl/Wap/default/common/packet/img/22e38de5329d6aecd6d7dd78df0b880e.png'); }
+.logo { background-image:url(tpl/Wap/default/common/packet/img/22e38de5329d6aecd6d7dd78df0b880e_gif.png); height: 100%; }
+<else />
+.logo{ background-image:url(tpl/Wap/default/common/packet/img/logo.png); }
+.textlogo{ background-image:url('tpl/Wap/default/common/packet/img/textlogo.png');}
+</if>
+</style>
+<div class="text textlogo"></div>
+
+<div class="mid">
+ <?php if(!$tel && $sn):?>
+    <div class="finger"onclick="return get()"></div>
+    <?php else:?>
+    <div class="finger"onclick="return touch()"></div>
+    <?php endif;?>
+
+
+<!--<div  class="btn btnsmall tap" ><div class="btntext clickme"  ><div class="box move"></div></div></div>-->
+</div>
+
+<div class="texttap">
+  <div class="line">
+    <ul class="tips">
+
+        <?php if(empty($rinfo)):?>
+      <li data-tap='rull' class="tap"><div id="guizhe"></div></li>
+        <?php elseif($rinfo['tel']==''): ?>
+        <li data-tap='myrp' class="tap2"><a href="{weikucms::U('Packet/result',array('lid'=>$lid,'openid'=>$openid,'gid'=>$gid))}" style="text-decoration: none;color:white;"> <div id="hongbao"></div></a></li>
+        <?php else:?>
+        <li data-tap='myrp' class="tap"><div id="hongbao"></div></li>
+        <?php endif;?>
+      <li data-tap='rank' class="tap"><div id="jiecaobang"></div></li>
+    </ul>
+  </div>
+
+  <div class="gtip" >
+    <span>已有<span class="person">{weikucms:$count}</span>人参加此游戏</span>
+  </div>
+
+
+</div>
+
+
+<!--游戏规则-->
+<div class="showbox rull">
+<div class="close">×</div>
+<div class="showboxtitle">游戏规则</div>
+    <div class="showboxcontent">
+        <span style="font-size: 12px;">活动日期:{weikucms:$statdate|date='Y年m月d日',###}</span>-<span style="font-size: 12px;">{weikucms:$enddate|date="Y年m月d日",###}</span>
+        <br>
+        <span style="font-size: 12px;word-wrap: break-word;">
+            活动规则:
+            <br/>
+            <php>echo str_replace(';','<br/>',$rule);</php>
+</span>
+    </div>
+</div>
+<?php if(!empty($rank)):?>
+<!--节操榜-->
+<div class="showbox rank">
+<div class="close">×</div>
+ <?php if($tel):?>
+  <div class="myrank">
+      <div class="icount">我的节操指数：<span>{weikucms:$integrity}</span>点</div>
+      <div class="iranking">排名：第<span>{weikucms:$row}</span>名</div>
+  </div>
+    <?php endif;?>
+<div class="rankboxtitle">节操指数榜</div>
+<div class="ranktitlebox">
+<ul class="ul ranklisttitle">
+<li class="li">排名</li>
+<li class="li">手机号</li>
+<li class="li">节操指数</li>
+</ul></div>
+
+<div class="ranklistbox">
+<volist id="rank" name="rank" key="k">
+<ul class="ul ">
+    <li class="li">{weikucms:$k}</li>
+<li class="li"><php>echo substr_replace($rank['tel'],'****',3,4);</php></li>
+<li class="li">{weikucms:$rank.integrity}</li>
+</ul>
+</volist>
+</div>
+
+</div>
+<?php endif;?>
+
+<!--我的红包-->
+
+<div class="showbox money myrp">
+    <div class="close moneyclose">×</div>
+    <div class="rpbox">
+        <div class="myget"><span class="gift">{weikucms:$rinfo[gname]}</span></div>
+        <div class="sncodebox">SN码： <span class="sncode">{weikucms:$rinfo[sn]}</span></div>
+        <div class="howtouse">使用规则：        <br/>
+        {weikucms:$rinfo[ginfo]}
+        </div>
+        <?php if($rinfo[status]==0):?>
+        <div class="giftstate ">兑换状态：<span  data-state="0" class="state">未兑换</span></div>
+        <div class="inputpw"><input type="password"  data-state="0" placeholder="请商家输入兑奖密码" name="password" id="password"></div>
+        <div class="rpbtn getit " onclick="return exchange()">立即兑换</div>
+        <?php else: ?>
+        <div class="giftstate ">兑换状态：<span  data-state="0" class="state">已兑换</span></div>
+        <?php endif;?>
+    </div>
+
+</div>
+<script>
+
+
+    function exchange(){
+        var url="{weikucms::U('Packet/exchange',array('gid'=>$rinfo[id],'lid'=>$rinfo[lid]))}";
+        var password=$("#password").val();
+        if(!password){
+            alert("密码不能为空");
+            return false;
+        }
+        $.post(url,{password:password},function(data){
+            if(data.status==1){
+                alert(data.info);
+                location.reload();
+            }else{
+                alert(data.info);
+            }
+        },"json")
+    }
+</script>
+</body>
+</html>

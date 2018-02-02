@@ -1,0 +1,65 @@
+<include file="Public:head"/>
+<div class="cLineB"><h4>基本配置</h4></div>
+<form method="" action=""enctype="multipart/form-data" >
+    <div class="msgWrap form">
+        <table class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+
+            <tbody>
+            <input type="hidden" name="id" value="{weikucms:$info['id']}" />
+
+            <tr>
+                <th>
+                    <label for="type">开启前端只显示个人留言：</label></th>
+                <td>
+                    <select id="type">
+                        <option value="0" <if condition="$info['type'] eq 0">selected</if>>未开启</option>
+                        <option value="1" <if condition="$info['type'] eq 1">selected</if>>开启</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button type="button" id="savebtn" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <include file="./tpl/User/default/helper/list_btn.html"/>
+                    <div class="clr"></div></td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("input[name='id']").val();
+        var token ="{weikucms:$token}";
+        var type = $("#type").val();
+        var url = "{weikucms::U('Liuyan/config',array('token'=>$token))}";
+        $.post(url,{id:id,token:token,type:type},
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json')
+    }
+</script>

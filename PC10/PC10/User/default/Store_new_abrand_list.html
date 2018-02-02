@@ -1,0 +1,89 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+
+    <div class="cLineB">
+
+        <div class="cLine">
+
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0" >
+
+
+                    <!--<li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>-->
+
+
+
+                    <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                        <a href="{weikucms::U('Store_new/brand',array('token'=>$token))}" class="nohover">返回</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info">
+        <span>提示信息!
+文章排序，数值越大，排在越前</span>
+
+    </div>
+    <div class="cLineC" style="line-height: 32px;">
+        <a  class="btn btn-primary">品牌文章列表</a>　
+
+
+    </div>
+    <div class="msgWrap">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>标题名字</th>
+                <!-- <th>分类关键词</th>
+                 <th>分类描述</th>
+                 <th>分类图片</th>-->
+                <th>状态</th>
+                <th>排序</th>
+                <th style="width: 125px;text-align: center;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="list" id="vo" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td style="text-indent:{weikucms:$vo['Count']*6}px;">{weikucms:$vo.title}</td>
+                    <!-- <td>{weikucms:$vo.keywords}</td>
+                     <td>{weikucms:$vo.des}</td>
+                     <td><img src="{weikucms:$vo.pic}" alt="图片不存在" style="width: 100px;height: 100px;"/></td>-->
+                    <td><if condition="$vo['status'] eq 0">未核审<else />已核审</else></if></td>
+                    <td>{weikucms:$vo.sort}</td>
+                    <td class="norightborder">
+                        <if condition="$vo['status'] eq 0"><a class="btn btn-success btn-sm" href="{weikucms::U('Store_new/heshen',array('id'=>$vo[id],'status'=>1,'bid'=>$vo['bid']))}">审核</a>
+                            <else />
+                            <a class="btn btn-success btn-sm" href="{weikucms::U('Store_new/heshen',array('id'=>$vo[id],'status'=>0,'bid'=>$vo['bid']))}">取消审核</a>
+                            </else></if>
+
+
+                        <!--  <a class="btn btn-success btn-sm" style="background-color:#7CFC00;border-radius:8px;" href="/index.php?g=User&amp;m=Shopdoor&amp;a=manager&amp;op=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="登录分店">分店登录</a> -->
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+
+        <div>
+            <ul class="pager">
+                {weikucms:$page}                  </ul>
+        </div>
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>

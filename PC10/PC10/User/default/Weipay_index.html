@@ -1,0 +1,167 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top "
+                    data-id="total">
+                    <a
+                            href="{weikucms::U('Weipay/index',array('token'=>$token))}"
+                    <if condition="$hover1 eq 1">class="hover"</if>
+                    >微信支付设置
+                    </a>
+                </li>
+
+
+
+                <li data-index="1" class="tab_nav  js_top sub"
+                    data-id="today">
+                    <a
+                            href="{weikucms::U('Weipay/weipayorderlist',array('token'=>$token))}"
+                    <if condition="$hover2 eq 1">class="hover"</if>
+                    >微信支付订单流水
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <!--tab start-->
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>请先配置好官方微信支付授权目录、维权警告url信息</li>
+            <li>然后填写您申请的微信支付</li>
+        </ol>
+    </div>
+
+
+
+    <div class="cLineB">
+        <h4>支付授权目录 ： <php>echo C('WEIPAY_SHOUQUAN').$token.'/';</php> </h4>
+    </div>
+
+    <div class="cLineB">
+        <h4> 维权警告url ： <php>echo C('WEIPAY_WEI_QUAN').$token.'/';</php> </h4>
+    </div>
+
+
+<!--tab end-->        
+    <div class="msgWrap bgfc" style="margin-top:10px;">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	  
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+
+				<tr>
+					<th width="120">微信公众号appid：</th>
+					<td><input type="text" name="appid" value="{weikucms:$config.appid}" class="px" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th width="120">微信公众号appsecret：</th>
+					<td><input type="text" name="appsecret" value="{weikucms:$config.appsecret}" class="px" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>微信支付商户MCHID：</th>
+					<td><input type="text" name="partnerkey" value="{weikucms:$config.partnerkey}" class="px" style="width:300px;"></td>
+				</tr>
+                
+                <tr>
+					<th width="120">商户秘钥PartnerKey：</th>
+					<td><input type="text" name="appkey" value="{weikucms:$config.appkey}" class="px" style="width:300px;"></td>
+				</tr>
+
+                <tr>
+                    <th width="120">是否开启：</th>
+                    <td>
+                        <select name="is_open" id="is_open">
+                            <option value="1" <if condition="$config['is_open'] eq 1">selected</if> >开启</option>
+                            <option value="0" <if condition="$config['is_open'] eq 0">selected</if> >关闭</option>
+                        </select>
+                    </td>
+                </tr>
+
+				
+				<th>&nbsp;</th>
+					<td>
+					<input type="hidden" name="token" value="{weikucms:$token}" />
+						<button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+  </div>
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var appid = $("input[name='appid']").val();
+                var appsecret = $("input[name='appsecret']").val();
+                var partnerkey = $("input[name='partnerkey']").val();
+                var appkey = $("input[name='appkey']").val();
+                var is_open = $("#is_open").val();
+                if(! appid){
+                    notif({
+                        msg: "请输入微信公众号appid",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(! appsecret){
+                    notif({
+                        msg: "请输入微信公众号appsecret",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! partnerkey){
+                    notif({
+                        msg: "请输入微信支付商户key",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! appkey){
+                    notif({
+                        msg: "微信公众号appkey",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                $.post("{weikucms::U('Weipay/index',array('token'=>$token))}",{appid:appid,appsecret:appsecret,partnerkey:partnerkey,appkey:appkey,is_open:is_open},function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = "{weikucms::U('Weipay/index',array('token'=>$token))}";
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+
+            });
+        });
+
+    </script>
+  
+        </div>
+<include file="Public:footer"/>

@@ -1,0 +1,302 @@
+ <include file="Public:head" /> 
+ <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#intro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : false,
+allowFileManager:true,
+items : [
+'source','undo','clearhtml','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+ <script>
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#upload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#logourl').val(),
+                     clickFn : function(url, title) {
+                         K('#logourl').val(url);
+                         $("#image_show").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+
+ </script>
+<script>
+ 
+function showChildCats(value){
+	$("#catid").html('<option value="0">请选择...</option>');
+	if(value==0){
+		document.getElementById('catid').disabled=true;
+	}else{
+		$.ajax({
+			url: $('#catUrl').attr("value")+'&parentid='+value,
+			success: function( data ) {
+				document.getElementById('catid').disabled=false;
+				$("#catid").html($("#catid").html()+data);
+			}
+		});
+	}
+}
+function toDecimal(x) {  
+            var f = parseFloat(x);  
+            if (isNaN(f)) {  
+                return;  
+            }  
+            f = Math.round(x*10)/10;  
+            return f;  
+        }  
+function calDiscount(){
+	var price=$('#price').attr('value');
+	var oprice=$('#oprice').attr('value');
+	if(oprice!=0&&oprice!=''){
+		var dis=oprice-price;
+		var discount=10-toDecimal((dis/oprice)*10);
+	}else{
+		discount=10;
+	}
+	$('#discount').attr('value',discount);
+}
+</script>
+<input type="hidden" id="catUrl" value="{weikucms::U('Product/ajaxCatOptions',array('token'=>$token))}" />
+
+      <div class="cLineB">
+          <div class="title_tab" id="topTab">
+              <ul class="tab_navs title_tab" data-index="0">
+
+
+                  <li data-index="0" class="tab_nav first js_top " data-id="total">
+                      <a href="{weikucms::U('Groupon/index',array('token'=>$token))}" >团购订单管理</a>
+                  </li>
+
+
+
+                  <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                      <a href="{weikucms::U('Groupon/products',array('token'=>$token))}">团购管理</a>
+                  </li>
+
+                  <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                      <a href="{weikucms::U('Reply_info/set',array('token'=>$token,'infotype'=>'Groupon'))}">团购回复配置</a>
+                  </li>
+
+              </ul>
+          </div>
+      </div>
+
+   
+
+   <form class="form" method="post" id="form" action=""> 
+<if condition="$isUpdate eq 1">
+<input type="hidden" name="id" id="id" value="{weikucms:$set.id}" />
+</if>
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.discount}" />
+    <div class="msgWrap bgfc"> 
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      <tbody> 
+       <tr> 
+        <th>团购名称：</th>
+        <td><input type="text" id="name" name="name" value="{weikucms:$set.name}" class="px require" style="width:300px;" placeholder="填写团购的名称" />
+        <span class="info_tip">团购名称不可为空</span>
+        </td>
+       </tr> 
+       <tr style="display:none"> 
+        <th>类别：</th> 
+        <td><select id="catid" name="catid"><option value="1000000000">请选择分类...</option>{weikucms:$catsOptions}</select></td> 
+       </tr>
+        <tr style="display:none"> 
+        <th>店铺：</th> 
+        <td><input type="text" name="storeid" value="1" id="storeid" class="px" style="width:300px;" /></td>
+       </tr>
+        <tr> 
+        <th>商品价格：</th>
+        <td>
+            <div class="input-group">
+                <span class="input-group-addon">￥</span>
+                <input id="price" onchange="calDiscount();" name="price" value="{weikucms:$set.price}" type="text" style="width: 35px;" class="form-control">
+                <span class="input-group-addon">元</span>
+            </div>
+        </td>
+       </tr>
+       <tr> 
+        <th>原价：</th> 
+        <td>
+
+            <div class="input-group">
+                <span class="input-group-addon">￥</span>
+                <input id="oprice" onchange="calDiscount();" name="oprice" value="{weikucms:$set.oprice}" type="text" style="width: 35px;" class="form-control">
+                <span class="input-group-addon">元</span>
+            </div>
+        </td>
+       </tr>
+        <th>结束日期：</th>
+        <td><input type="input" style="width: 174px;" class="px" id="endtime" value="{weikucms:$set.endtime|date='Y-m-d',###}" onClick="WdatePicker()" name="endtime" /></td>
+       </tr>
+       <tr> 
+        <th>团购基础人数：</th>
+        <td><input type="text" id="fakemembercount" name="fakemembercount" value="{weikucms:$set.fakemembercount}" class="px" style="width:80px;" /> 人 <span class="info_tip"> 默认显示的基础参团人数</span></td>
+       </tr>
+        <tr> 
+        <th>关键词：</th>
+        <td><input type="text" name="keyword" id="keyword" value="{weikucms:$set.keyword}" class="px" style="width:200px;" />
+            <span class="info_tip"> 关键词不可为空,可用于关键词回复</span>
+        </td>
+       </tr>
+       <TR>
+           <TH valign="top"><label for="picurl">团购图片展示：</label></TH>
+
+           <TD><img style="display: block;" id="image_show" class="indexs_img" src="<if condition='$set.logourl neq null'>{weikucms:$set.logourl}<else/>./upload/index_img.jpg</if>"></TD>
+       </TR>
+        <tr> 
+        <th>上传团购图片：</th>
+        <td>
+            <input type="hidden" class="px"  name="logourl" id="logourl" value="<if condition='$set.logourl neq null'>{weikucms:$set.logourl}<else/>./upload/index_img.jpg</if>" style="width:300px;"   />
+            <span class="ke-button-common" id="upload">上传图片</span>
+            <span class="info_tip"> 建议图片尺寸640X400像素</span>
+        </td>
+       </tr>
+        <TR>
+                  <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+                  <TD><textarea name="intro" id="intro"  rows="5" style="width:590px;height:360px">{weikucms:$set.intro}</textarea></TD>
+                </TR>  
+       <tr>         
+       <th>&nbsp;</th>
+       <td>
+      <input type="hidden" name="groupon" id="groupon" value="1" />
+       <button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button> </td>
+       </tr>
+       <TR style="height: 150px;">
+
+       </TR>
+      </tbody> 
+     </table> 
+     </div>
+    
+   </form> 
+  </div> 
+<script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var discount = $("#discount").val();
+                var id = $("#id").val();
+                var name = $("#name").val();
+                var groupon = $("#groupon").val();
+                var catid = $("#catid").val();
+                var storeid = $("#storeid").val();
+                var keyword = $("#keyword").val();
+                var logourl = $("#logourl").val();
+                var price = $("#price").val();
+                var oprice = $("#oprice").val();
+                var endtime = $("#endtime").val();
+                var fakemembercount = $("#fakemembercount").val();
+                var intro = editor.html();
+                var __hash__ =  $("input[name='__hash__']").val();
+
+                if(! name){
+                    notif({
+                        msg: "团购的名称不能为空哦",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! keyword){
+                    notif({
+                        msg: "团购的关键词不能为空哦",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+                if(! price){
+                    notif({
+                        msg: "团购商品的价格不能为空哦",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! oprice){
+                    notif({
+                        msg: "团购商品的原价不能为空哦",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+                if(! logourl){
+                    notif({
+                        msg: "您还没上传团购图片",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! intro){
+                    notif({
+                        msg: "详细内容不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(! endtime){
+                    notif({
+                        msg: "请选择团购结束时间",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(id){
+                    var posturl = "{weikucms::U('Groupon/set',array('token'=>$token))}";
+                }else{
+                    var posturl = "{weikucms::U('Groupon/add',array('token'=>$token))}";
+                }
+                $.post(posturl,
+                        {groupon:groupon,catid:catid,storeid:storeid,keyword:keyword,intro:intro,discount:discount,id:id,name:name,logourl:logourl,price:price,oprice:oprice,endtime:endtime,fakemembercount:fakemembercount,__hash__:__hash__},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+</script>
+  <include file="Public:footer" />

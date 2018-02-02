@@ -1,0 +1,107 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="{weikucms:$list.title}";//标题
+    //var imgUrl="http://v.wapwei.com/{weikucms:$list.pic}";//图片
+    var imgUrl = '{weikucms:$tpl.headpicurl}';
+    //var descContent="http://v.wapwei.com/{weikucms:$product.logourl}";
+    var descContent=$('#itemName').text();
+    var shareUrl = window.location.href;
+
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',//朋友圈
+            'onMenuShareAppMessage',// 朋友
+            'onMenuShareQQ',//QQ
+            'onMenuShareWeibo',//微博
+            'hideMenuItems'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                $.post("{weikucms::U('',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id'],'type'=>$_GET['type'],'p'=>$_GET['p'],'aid'=>$_GET['aid']))}",function(data){
+                    alert(data.str);
+                },'json');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+              $.post("{weikucms::U('',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id'],'type'=>$_GET['type'],'p'=>$_GET['p'],'aid'=>$_GET['aid']))}",function(data){
+                 alert(data.str);
+             },'json');
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+
+
+        wx.onMenuShareQQ({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                $.post("{weikucms::U('',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id'],'type'=>$_GET['type'],'p'=>$_GET['p'],'aid'=>$_GET['aid']))}",function(data){
+                    alert(data.str);
+                },'json');
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareWeibo({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                $.post("{weikucms::U('',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id'],'type'=>$_GET['type'],'p'=>$_GET['p'],'aid'=>$_GET['aid']))}",function(data){
+                    alert(data.str);
+                },'json');
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.hideMenuItems({
+            menuList: ['menuItem:copyUrl','menuItem:openWithQQBrowser','menuItem:openWithSafari'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        });
+
+
+
+    });
+
+
+            /* $.post("{weikucms::U('',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}",function(data){
+
+                     alert(data.str);
+
+             },'json');  */
+
+
+</script>
+

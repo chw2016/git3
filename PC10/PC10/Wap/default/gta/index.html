@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/owl.carousel.js"></script>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/owl.carousel.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style1.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.event.drag-1.5.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.touchSlider.js"></script>
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/lb.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/lbTouchSlide.1.1.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('.onurl').click(function(){
+                    var _this = $(this);
+                    var type = _this.attr('data');
+                    var user_id = "{weikucms:$userinfo['id']}";
+                    var token = "{weikucms:$token}";
+                    var openid = "{weikucms:$openid}";
+                    //if(user_id){
+                        location.href = "/index.php?g=Wap&m=Gta&a="+type+"&token="+token + "&openid="+ openid;
+                   /* }else{
+                        alert('您现在还不是会员，请注册！');
+                        location.href = "{weikucms::U('user_my_info',array('token'=>$token,'openid'=>$openid))}";
+                    }*/
+                })
+            })
+        </script>
+
+	</head>
+	<style>
+		ul{
+			overflow: initial;
+		}
+	</style>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;"></h1>
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section  class="contant">
+<!--轮播图-->
+            <div>
+                <include file="./tpl/Wap/default/Public_flash.html"/>
+            </div>
+			<div class="gta_Insurance clearfix">
+				<div class="gta_Insuranceone">
+					<ul>
+						<li style="width: 50%;height: 69px;" class="gta_shadow onurl" data="money_index" >
+							<p class="sprites-icon_homes"></p>
+							<p>财产险</p>
+						</li>
+						<li style="width: 50%;" class="gta_shadow onurl" data="yiwai_index">
+							<p class="sprites-icon_People"></p>
+							<p>意外险</p>
+						</li>
+					</ul>
+				</div>
+				<!--<div class="gta_Insurancetwo clear-fix" >
+				   <ul>
+				   <li class="gta_shadow fl" style="width: 49%;height: 80px;" onclick="location.href='{weikucms::U('zeren_list',array('token'=>$token,'openid'=>$openid))}'">
+				   	<p class="sprites-icon_car" style="margin-top: 20px;"></p>
+				   	<p>责任险</p>
+				   </li>
+				   <li class="gta_shadow fr" style=" margin-left:4px;width: 49%;height: 80px;" onclick="location.href='{weikucms::U('cart_two',array('token'=>$token,'openid'=>$openid))}'">
+				   	  <p class="sprites-icon_car1" style="margin-top: 17px;"></p>
+				   	  <p>车辆保险</p>
+				   </li>
+				   </ul>
+				</div>-->
+                <div class="gta_Insuranceone">
+                    <ul>
+                        <li style="width: 50%;height: 69px;" class="gta_shadow onurl" data="zeren_list">
+                            <p class="sprites-icon_car"></p>
+                            <p style="color:rgb(184, 214, 86);">责任险</p>
+                        </li>
+                        <li style="width: 50%;" class="gta_shadow onurl" data="cart_two" >
+                            <p class="sprites-icon_car1"></p>
+                            <p style="color:rgb(184, 214, 86);">车辆保险</p>
+                        </li>
+                    </ul>
+                </div>
+				<div class="clearfix gta_Insuranceone fl">
+					<ul>
+						<li style="width: 50%;" class="gta_shadow onurl" data="life_index" onclick="location.href='{weikucms::U('life_index',array('token'=>$token,'openid'=>$openid))}'">
+							<p class="sprites-icon_People2"></p>
+							<p>人寿保险</p>
+						</li>
+						<li class="gta_shadow" style="width: 50%;height: 69px;" onclick="location.href='{weikucms:$more_url}'">
+							<p class="sprites-icon_ing" style="margin-top: 4px;"></p>
+							<p>更多险种</p>
+						</li>
+					</ul>
+				</div>
+				</div>
+			</div>
+		</section>
+
+	</body>
+
+
+<script>
+    $(function(){
+        function shareSuccess(type) {
+
+        }
+
+    })
+
+</script>
+</html>

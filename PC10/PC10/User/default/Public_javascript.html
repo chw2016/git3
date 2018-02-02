@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    $(function(){
+
+        function  Play(sound){
+            if(navigator.appName == "Microsoft Internet Explorer")
+            {
+                var snd = document.createElement("bgsound");
+                document.getElementsByTagName("body")[0].appendChild(snd);
+                snd.src = sound;
+            }
+            else{
+                var obj = document.createElement("object");
+                obj.width="0px";
+                obj.height="0px";
+                obj.type = "audio/x-wav";
+                obj.data = sound;
+                var body = document.getElementsByTagName("body")[0];
+                body.appendChild(obj);
+            }
+
+        }
+
+
+
+        var lasttime = {weikucms:$lasttime};
+        var url = "{weikucms::U('Product/gettimeorder',array('token'=>$token,'dining'=>$isDining))}";
+        setInterval(function(){
+            $.getJSON(url,{lasttime:lasttime},function(data){
+                if(data.code == 0){
+                    if(data.data > 0){
+                        var old = parseInt($("#unorders").text());
+                        $("#unorders").text((old+parseInt(data.data)));
+                        lasttime = data.lasttime;
+                        if('{weikucms:$token}' == 'e22e1837a4b8147d6cc6d77c24248ea0'){
+                            Play('/upload/kulemei.mp3');
+                        }else{
+                            Play('/upload/order-reminder.mp3');
+                        }
+                        setTimeout(function(){
+                            window.location.reload();
+                        },'60000')
+                    }
+
+                }
+            });
+        },10000);
+    });
+</script>

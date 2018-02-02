@@ -1,0 +1,241 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Ynd/user',array('token'=>$token))}" >用户管理</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total" ><!--style="display: block;float: right"-->
+                <a href="{weikucms::U('Ynd/orderlist',array('token'=>$token,'type'=>$_GET['type'],'id'=>$_GET['cat_id']))}" >订单中心</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<style type="text/css">
+    .user_content{
+        width: 99%;
+        border: 1px solid #f1f3f3;
+        border-radius: 5px;
+        padding: 10px 0;
+        margin: 3px 0;
+        font-size: 14px;
+    }
+    .user_taitle{
+        font-size: 15px;
+        font-weight: 600;
+        padding: 5px 0;
+    }
+    .ortitle{
+        display: -webkit-box;
+    }
+    .ortitleclass{
+        display: block; /* float: left; */  text-align: center;  width: 25%;
+    }
+    .fangdanlist{
+        display: block; /* float: left; */  text-align: center;  width: 22%;
+    }
+    .fangdan{
+        display: -webkit-box;
+    }
+    .btuselect{
+        border-radius: 5px;
+        background-color: #1576AD;
+        color: #FFF;
+        padding: 5px 8px;
+    }
+
+</style>
+<!--<div style="background-color: #F0F5F5;padding: 10px 0;font-size: 13px;">用户管理 ->个人资料</div>-->
+<div>
+    <div class="user_content">
+        <div class="user_taitle">基本信息</div>
+        <div class="certer" style="display: block;width: 45%;float: left;">
+            <div>
+                <span>订单号：</span>
+                <span>{weikucms:$orderinfo['id']}</span>
+            </div>
+            <div>
+                <span>订购人会员号：</span>
+                <span>{weikucms:$userinfo['uname']}</span>
+            </div>
+            <div>
+                <span>联系方式：</span>
+                <span>{weikucms:$userinfo['phone']}</span>
+            </div>
+            <div>
+                <span>支付金额：</span>
+                <span>{weikucms:$orderinfo['money']}</span>
+            </div>
+            <div>
+                <span>所需LQ：</span>
+                <span>{weikucms:$orderinfo['LQ']}</span>
+            </div>
+            <div>
+                <span>所需CQ：</span>
+                <span>{weikucms:$orderinfo['CQ']}</span>
+            </div>
+            <div>
+                <span>收货联系人</span>
+                <span>{weikucms:$shopaddress['name']}</span>
+            </div>
+        </div>
+        <div class="certer1" style="display: block;float: left;">
+            <div>
+                <span>收货地址：</span>
+                <span>{weikucms:$shopaddress['address']}</span>
+            </div>
+            <div>
+                <span>收货人联系方式：</span>
+                <span>{weikucms:$shopaddress['phone']}</span>
+            </div>
+            <div>
+                <span>付款状态：</span>
+                <span><if condition="$orderinfo['pay_status'] eq 1">付款<else/>未付款</if></span>
+            </div>
+            <div>
+                <span>发货状态：</span>
+                <span><if condition="$orderinfo['send_status'] eq 1">发货<else/>未发货</if></span>
+            </div>
+            <div>
+                <span>结算状态：</span>
+                <span><if condition="$orderinfo['is_balance'] eq 1">结算<else/>未结算</if></span>
+            </div>
+            <div>
+                <span>签收状态：</span>
+                <span><if condition="$orderinfo['is_take'] eq 1">签收<else/>未签收</if></span>
+            </div>
+
+
+           <!-- <div>
+                <span>性别：</span>
+                <span>
+                    <php>
+                        if($user['sex'] ==0){
+                        echo "男";
+                        }elseif($user['sex'] ==1){
+                        echo "女";
+                        }
+                    </php>
+                </span>
+            </div>-->
+
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div class="user_content">
+        <div class="user_taitle">物流查询</div>
+        <div class="certer">
+            <!--<div>
+                <span>提货方式：</span>
+                <span>
+                    <select class="titype">
+                        <option class="tiinfo" value="">选择提货方式</option>
+                        <option class="tiinfo" value="1">现场提货</option>
+                        <option class="tiinfo" value="2">物流发货</option>
+                    </select>
+                </span>
+            </div>-->
+            <div>
+                <div>
+                    <span>发货物流：</span>
+                     <span>
+                    <select class="titype" id="log_id">
+                        <option class="tiinfo" value="">选择快运公司</option>
+                        <volist name="logs" id="so">
+                            <option value="{weikucms:$so.id}" <if condition="$orderinfo['log_id'] eq $so['id']">selected</if>>{weikucms:$so.company}</option>
+                        </volist>
+                     <!--   <option class="tiinfo" value="1">现场提货</option>
+                        <option class="tiinfo" value="2">物流发货</option>-->
+                    </select>
+                </span>
+                </div>
+                <div>
+                    <span>物流单号：</span>
+                    <span><input type="text" name="log_order" id="log_order" value="{weikucms:$orderinfo['log_order']}" class="log_order"></span>
+                </div>
+
+               <div style="margin-left: 80px;">
+               <if condition="$orderinfo['log_order']">
+                    <a href="http://www.kuaidi100.com/chaxun?com={weikucms:$log['sncord']}&nu={weikucms:$orderinfo['log_order']}"> <span class="btuselect">查看物流</span></a>
+                   <else/>
+                   <span class="btuselect sureorder"> 确&nbsp&nbsp&nbsp&nbsp认</span>
+               </if>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="user_content">
+        <div class="user_taitle">订单详情</div>
+        <div class="certer">
+            <div class="ortitle">
+                <div class="">商品ID</div>
+                <div class="ortitleclass">商品图片</div>
+                <div class="ortitleclass">商品名称</div>
+                <div class="ortitleclass">数量</div>
+                <div class="ortitleclass">放单人详情</div>
+            </div>
+            <volist name="shoplist" id="vo">
+            <div class="ortitle">
+                <div class="">
+                    {weikucms:$vo['pro_id']['id']}</div>
+                <div class="ortitleclass"><img src="{weikucms:$vo['pro_id']['pic']}" style="width: 65px;height: 75px;"></div>
+                <div class="ortitleclass">
+                   {weikucms:$vo['pro_id']['name']}</div>
+                <div class="ortitleclass">{weikucms:$vo.num}</div>
+                <div class="ortitleclass">
+                    <div class="fangdan">
+                        <div class="fangdanlist">放单人ID</div>
+                        <div class="fangdanlist">数量</div>
+                        <div class="fangdanlist">放单指数</div>
+                        <div class="fangdanlist">放单额</div>
+                    </div>
+                    <volist name="vo['fuinfos']" id="so">
+                    <div class="fangdan">
+                        <div class="fangdanlist">{weikucms:$so['pinfo']['yuid']}</div>
+                        <div class="fangdanlist">{weikucms:$so.num}</div>
+                        <div class="fangdanlist">{weikucms:$so['pinfo']['exponent']}</div>
+                        <div class="fangdanlist">
+                            <php>
+                                echo $so['pinfo']['fprice']*$so['num'];
+                            </php>
+                        </div>
+                    </div>
+                    </volist>
+
+                </div>
+            </div>
+            </volist>
+
+        </div>
+    </div>
+</div>
+
+        <script type="text/javascript">
+            $(function(){
+                $('.sureorder').click(function(){
+                    var log_order = $('#log_order').val();
+                    var log_id = $('#log_id').val();
+                    if(!log_id){
+                        alert('请选择发货物流公司');
+                        return false;
+                    }
+                    if(!log_order){
+                        alert('请填写物流单号');
+                        return false;
+                    }
+                    var url = "{weikucms::U('Ynd/logorder',array('token'=>$token,'id'=>$_GET['id']))}";
+                    $.post(url,{log_id:log_id,log_order:log_order},function(rel){
+                        if(rel.status==1){
+                            alert('操作成功！');
+                            document.location.href = "{weikucms::U('Ynd/orderinfo',array('token'=>$token,'id'=>$_GET['id']))}";
+                        }else{
+                            alert('操作失败！');
+                        }
+                    },'json')
+                })
+            })
+        </script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <title>{weikucms:$tpl.name}-订单列表</title>
+
+	<link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <link href="tpl/Wap/default/hn/css/bootstrap.min.css" rel="stylesheet">
+    <link href="tpl/Wap/default/hn/css/style_one.css" rel="stylesheet">
+
+
+</head>
+<style>
+.ui-dialog.show{
+  display: -webkit-box !important;
+  display: box !important;
+}
+.colt{width: 33.33333333%;
+  float:right;
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+</style>
+<body>
+	<div class="top_top" style="color: #FFF;   background-color: #D5481F; text-align: center; line-height: 45px;">
+        订单列表
+	</div>
+    <div class="my-container" style="padding-top:5px; padding-bottom:10px;">
+
+
+        <volist name="list" id="vo">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <a style="display:block;">
+                            <div class="col-xs-4"><img src="{weikucms:$vo.pic}" width="100%"></div>
+                            <div class="col-xs-8" style="padding-left:0px;">
+                                <div class="order-pname">{weikucms:$vo.s_name}</div>
+                                <div class="order-ptype"></div>
+									<span style="font-size:12px; color:#999;">￥{weikucms:$vo.yonjing}</span><br />
+
+                            </div>
+                        </a>
+                    </div>
+                    <hr style="margin-top:5px; margin-bottom:5px;">
+                    <div class="order-price" >
+							
+                    {weikucms:$vo.shop_name}&nbsp;{weikucms:$vo.phone}&nbsp;{weikucms:$vo.address|str_substr=6}
+
+                    </div>
+                    <hr style="margin-top:5px; margin-bottom:5px;">
+                    <div class="row order-btn-group">
+					<if condition="$vo.status eq 2">
+                        <div class="colt" dataid="{weikucms:$vo.id}"><a style="color: #FFF;"  class="btn btn-order-main">订单完成</a></div>
+                    <else/>
+						<div class="colt affirm" dataid="{weikucms:$vo.id}"><a style="color: #FFF;float:right"  class="btn btn-order-main">确认收货</a></div>
+					</if>
+					</div>
+                    <hr hidden="" style="margin-top:5px;margin-bottom:5px;">
+
+
+                </div>
+            </div>
+
+        </volist>
+
+    </div>
+    <div style="height: 33px;"></div>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+</body>
+<script>
+    //确认收货
+    $(".affirm").click(function(){
+			var id=$(this).attr('dataid');
+			var el=$.loading({
+				content:'正在提交'
+			});
+			$.post("{weikucms::U('affirm',array('token'=>$token,'openid'=>$openid))}",{id:id},function(data){
+				if(data==1){
+					var DG=$.dialog({
+						content:'收货成功',
+						button:['我知道了']
+					});
+					DG.on('dialog:action',function(e){
+			        document.location.href="{weikucms::U('order_list',array('token'=>$token,'openid'=>$openid))}";
+			    });
+				}
+				else{
+					var DG=$.dialog({
+						content:'网络错误',
+						button:['我知道了']
+					});
+				}
+				
+				el.hide();
+			});
+    });
+
+</script>
+
+</html>

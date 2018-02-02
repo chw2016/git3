@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/dialog.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+
+    <title>{weikucms:$tpl.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+            <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            wx.config({
+                appId: '{weikucms:$signPackage.appId}',
+                timestamp: {weikucms:$signPackage.timestamp},
+                nonceStr: '{weikucms:$signPackage.nonceStr}',
+                signature: '{weikucms:$signPackage.signature}',
+                jsApiList: [
+                    'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+                ]
+            });
+            wx.ready(function () {
+                // 在这里调用 API
+                wx.hideOptionMenu();
+            });
+
+        </script>
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<script>
+
+$(function(){
+    $("#btnbaocun").click(function(){
+        var yepasswd = $("#yepasswd").val();
+        var passwd = $("#passwd").val();
+        var repasswd = $("#repasswd").val();
+        if(!repasswd){
+            alert('新密码不能为空');
+            return false;
+        }
+        if(yepasswd){
+            if(!passwd){
+                alert('原密码不能为空');
+                return false;
+            }
+            if(passwd != yepasswd){
+                alert('原密码输入错误');
+                return false;
+            }else{
+                $.post("{weikucms::U('Wap/Commercedyb/yepasswd',array('token'=>$token,'openid'=>$openid))}",{yepasswd:repasswd},function(data){
+                    if(data.code == 0){
+                        alert(data.msg);
+                        setTimeout(function(){
+                            window.location.href = "{weikucms::U('Wap/Commercedyb/myZone',array('token'=>$token,'openid'=>$openid))}";
+                        },'2000');
+                    }else{
+                        alert(data.msg);
+                    }
+                },'json'); 
+            }
+
+        }else{
+                $.post("{weikucms::U('Wap/Commercedyb/yepasswd',array('token'=>$token,'openid'=>$openid))}",{yepasswd:repasswd},function(data){
+                    if(data.code == 0){
+                        alert(data.msg);
+                        setTimeout(function(){
+                            window.location.href = "{weikucms::U('Wap/Commercedyb/myZone',array('token'=>$token,'openid'=>$openid))}";
+                        },'2000');
+                    }else{
+                        alert(data.msg);
+                    }
+                },'json'); 
+        }
+
+    });
+});
+
+</script>
+<div class="container info_tx">
+    <div class="body pt_10">
+        <ul class="list_ul_card">
+            <form id="form1" action="javascript:;" method="post">
+                <input type="hidden" name="openid" value="{weikucms:$userdata.openid}"/>
+                <input type="hidden" id="is_bind" name="is_bind" value="{weikucms:$memberdata.is_bind}"/>
+                <if condition="$usercenterdata['is_openphone'] eq 1">
+                   <input type="hidden" id="need_bind" name="need_bind" value="need"/>
+                   <else/>
+                    <input type="hidden" id="need_bind" name="need_bind" value="noneed"/>
+                </if>
+                <li data-card>
+                    <header class="center">
+                        <label style="display:inline-block;"><span>&nbsp;</span>余额支付密码</label>
+                    </header>
+                    <div class="forms">
+                     <input type="hidden" id="yepasswd"  value="{weikucms:$memberdata.yepasswd}"  maxlength="30"  class="input"/>
+                        <dl>
+                            <dt>原密码： </dt>
+                            <dd>
+                                <input type="password" name="passwd" id="passwd"  value=""  maxlength="30"  class="input"/>
+                            </dd>
+
+                        </dl>
+                        <dl>
+                            <dt>新密码： </dt>
+                            <dd>
+                                <input type="password" name="repasswd" id="repasswd"  value="" maxlength="30"  class="input"/>
+                            </dd>
+
+                        </dl>
+                        <p style="color:red;font-size:13px;padding:10px;">第一次设置不需要输入原始密码，如果忘记密码请发送"忘记密码+会员ID"到我们微信公众号,客服将会第一时间帮您处理</p>
+
+
+                </li>
+                <div class="pt_10 pb_10">
+                    <a href="#" id="btnbaocun" class="button">保&nbsp;&nbsp;&nbsp;存</a>
+                </div>
+                <!--<div class="pt_10 pb_10">
+                    <a href="javascript:bd();" class="link">绑定已有实体卡</a>
+                </div>-->
+            </form>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>

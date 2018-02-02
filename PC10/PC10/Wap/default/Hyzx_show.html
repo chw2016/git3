@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+			 <title>鱼美人-积分兑换</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/style.css">
+		<script src="{weikucms::RES}/mru/js3/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js3/main.js"></script>
+		<script src="{weikucms::RES}/mru/js3/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js3/slider.js"></script>
+    </head>
+    <body class="userCenter" style="overflow-x:hidden" >
+    <div class="info">
+    	<div class="shoppic">
+	    	<div class="sliderBox">
+			    <div class="sliderWrap myul">
+			        <volist name="pic" id="v" >
+			         <div class="slider containBg"><img src="{weikucms:$v['pic']}" alt="shoppic">0</div>
+			       </volist>
+			    </div>
+			</div>
+    	</div>
+    	<div class="shopscore">
+    		<div class="shoph4"><h4>{weikucms:$list['name']}</h4></div>
+    		<div>
+    			<div class="score">所需积分：<span class="bianji">{weikucms:$list['jf']}</span></div>
+    			<div class="score">当前积分：<span class="bianji">{weikucms:$num}</span></div>
+    			<div class="score">已领数量：<span class="bianji">{weikucms:$list['vnum']}/{weikucms:$list['num']}</span></div>
+    			<div class="score">每人仅限兑换&nbsp<span class="bianji">1</span>&nbsp次</div>
+    		</div>
+    		<a href="{weikucms::U('dh',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'num'=>$num,'jf'=>$list['jf'],'uid'=>$_GET['id'],'jfvnum'=>$list['vnum'],'jfnum'=>$list['num']))}" > 
+    		<div class="shopbtm save">立即兑换</div>
+    		</a>
+    	</div>
+<style>
+#aaa2 img{
+	width:100%;
+}
+.shopinfo { width: 90%; margin:0 auto; overflow:hidden; } 
+.shopinfo img { max-width: 100%; }
+</style>	    	
+
+    	<div class="shopinfo" id="aaa2">
+    							 <?php
+					    echo $list['content'];
+					 ?>
+    	</div>
+    </div>
+    <include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+    <script type="text/javascript">
+	    slider($(".sliderBox"),function(index){
+	    console.log(index)
+		}, {'showCount':true});
+	</script>
+</html>

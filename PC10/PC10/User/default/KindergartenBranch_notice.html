@@ -1,0 +1,146 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#notice', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true,
+items : [
+'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+
+  <div class="cLineB">
+    <h4 class="left">
+      <if condition="$op neq 1">添加幼儿园
+        <else/>
+        编辑幼儿园</if>
+    </h4>
+    <div class="searchbar">
+</div>
+<div class="clr"></div>
+</div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以了解万普幼儿园的会员总数、幼儿园数量，还可以添加幼儿园、编辑幼儿园、删除幼儿园，最后还可以根据幼儿园名称进入后台管理。</li>
+    </ol>
+  </div>
+  <div class="" style="width:100%;<if condition="($_GET['userid'] egt 0) and ($_GET['userid'] neq '')">top:150px</if>">
+  <!--tab end-->
+  <div class="msgWrap">
+    <form class="form" method="post" id="form" action="">
+      <input type="hidden" name="userid" id="userid" value="{weikucms:$w['userid']}" />
+      <input type="hidden" name="kgid" id="kgid" value="{weikucms:$w['kgid']}" />
+      <if condition="$op eq 1">
+      <input type="hidden" name="id" id="id" value="{weikucms:$w['id']}" />
+      </if>
+      <div class="msgWrap bgfc">
+        <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+          <tbody>
+          
+          <tr>
+              <th>公告标题：</th>
+              <td><if condition="$op neq 1">
+                  <input type="text" id="title" name="title" value="" class="px require" style="width:300px;" />
+                  <else/>
+                  <input type="text" id="title" name="title" value="{weikucms:$notice['title']}" class="px require" style="width:300px;" />
+                </if>
+              </td>
+            </tr>
+          
+         <tr>
+            <th valign="top">公告内容:</th>
+            <td valign="top">
+                    <textarea class="px" id="notice" name="notice" style="width: 560px; height: 300px; display: ;">
+{weikucms:$notice['notice']}
+                    </textarea>
+            </td>
+         </tr>
+            
+           <tr>
+            <th>&nbsp;</th>
+            <td>
+              <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+              <if condition="$op eq 1">确定编辑<else />保存</if>
+              </button>
+           </td>
+          </tr>
+  
+          </tbody>
+          
+        </table>
+      </div>
+    </form>
+  </div>
+  <div class="cLine">
+    <div class="clr"></div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var kgid = $("#kgid").val();
+            var userid = $("#userid").val();
+            var title = $("#title").val();
+            var notice = editor.html();
+            var op = {weikucms:$op};
+            if(!id){
+                id = null;
+            }
+            if(! title){
+                notif({
+                    msg: "公告标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            } 
+
+            if(! notice){
+                notif({
+                    msg: "幼儿园公告不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            var url = "{weikucms::U('KindergartenBranch/notice',array('token'=>$token))}" + '&op=' + op
+            $.post(url,{id:id,kgid:kgid,userid:userid,notice:notice,title:title},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                    }else{
+                        notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json'); 
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

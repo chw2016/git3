@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<title>{weikucms:$tpl['name']}</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<script type="text/javascript" src="{weikucms::STATICS}/works/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				list-style: none;
+				margin: 0;
+				text-decoration: none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			*:focus{
+				outline: 0px;
+			}
+			body{
+				background: url(../imgs/bg.jpg) center no-repeat;
+				max-width:640px;
+				margin: 0 auto;
+				font-family: "Microsoft YaHei"; 
+				font-size: 12px;
+			}#content{
+				background: #F2F2E8;padding-bottom: 20px;
+			}#content ul{
+				margin: 0px auto;
+			}#content ul li{margin-top: 20px;width: 40%;background: #faebb2;border-radius: 6px;}
+			.clear{clear: both;}
+			#content ul li .imgs{background: #fff;border-top-left-radius: 12px;border-top-right-radius: 12px;height: 120px;}
+			.font{color: #b48c4f;padding-left: 6px; max-height:15px}
+			.piao{text-align: right;padding-right: 6px;padding-bottom: 6px;}
+			table{text-align: center;width: 100%;background: #faebb2;position: fixed;bottom: 0px;border-collapse: collapse;}
+			table .border{border-right:1px solid #f6ad69;padding: 15px 0;}
+			table td {color: #b48c4f;display: block;font-size: 14px;}
+            .selected{
+               background-color: #ea6262;
+                color: white;
+            }
+		</style>
+	</head>
+	<body>
+		<img src="{weikucms::STATICS}/works/shouye.png" id="header"/>
+		<div id="content" style="margin-bottom:40px;">
+			<ul>
+                <volist name="list" id="vo">
+				<li>
+					<div class="imgs">
+                        <a href="{weikucms::U('Works/poll',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$set['sid'],'wid'=>$vo['id'],'openid'=>$_GET['openid']))}" style="display:block;">
+                            <!--<img src="{weikucms:$vo.img}">-->
+                            <img src="{weikucms:$vo.img}" style="width: 100%;display: block;height:120px;">
+                        </a>
+                    </div>
+					<div class="font" style="margin-top:6px;">作品：{weikucms:$vo.worksname}</div>
+					<div class="font">作者：{weikucms:$vo.name}</div>
+					<div class="font piao">票数{weikucms:$vo.poll}</div>
+				</li>
+                </volist>
+
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<table>
+			<tr>
+				<td class="border <if condition="$selected eq 1">selected</if>" onclick="window.location.href='{weikucms::U('Works/index',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'" >参赛作品</td>
+				<td class="border <if condition="$selected eq 2">selected</if>" onclick="window.location.href='{weikucms::U('Works/rules',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'openid'=>$_GET['openid']))}'">参与方法</td>
+				<td class="border <if condition="$selected eq 3">selected</if>"  onclick="window.location.href='{weikucms::U('Works/event',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">活动规则</td>
+				<td class="border <if condition="$selected eq 4">selected</if>" onclick="window.location.href='{weikucms::U('Works/set',array('token'=>$_GET['token'],'mid'=>$_GET['mid'],'sid'=>$_GET['sid'],'openid'=>$_GET['openid']))}'">我要投稿</td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+			$(function(){
+				$('#header').css('max-width',$('body').width());
+				$('ul>li:even').css({'float':'left','margin-left':'15px'});
+				$('ul>li:odd').css({'float':'right','margin-right':'15px'});
+				$('#content').css({'height':$('body').height()*0.68+"px",'overflow':'scroll','overflow-x':'hidden'});
+			})
+		</script>
+	</body>
+</html>

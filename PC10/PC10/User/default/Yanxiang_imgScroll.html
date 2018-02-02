@@ -1,0 +1,72 @@
+<include file="Public:head"/>
+    <div class="cLineB">
+      <h4 class="left">广告轮播图</h4>    
+      <div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+        <a href="{weikucms::U('Yanxiang/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+      </div>
+      <div class="searchbar"> 
+      </div>
+      <div class="cLine">
+
+      <div class="clr"></div>
+      </div>
+    </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>添加商城广告图,显示最新的5张</li>
+
+        </ol>
+    </div>
+          <div class="cLine">
+              <div class="pageNavigator left">
+     <a href="{weikucms::U('Yanxiang/aeimg',array('token'=>$token,'type'=>'add'))}"  class='btn btn-primary'>新增轮播图</a>　
+              
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th style="width: 400px;">图片</th>
+                      <th style="width: 200px;">链接</th>
+                      <th>轮播图位置</th>
+                      <th>添加时间</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td><img style="width: 120px;height: 80px;" src="{weikucms:$vo.img_path}" /></td>
+                          <td><if condition="$vo['link_url'] eq ''">无链接<else/>{weikucms:$vo.link_url}</if></td>
+                          <td><if condition="$vo['type'] eq 'micro'">微官网<else/>在线商城</if></td>
+                          <td>{weikucms:$vo.addtime}</td>
+                          <td>
+                              <a class="btn btn-success btn-sm" href="{weikucms::U('Yanxiang/aeimg',array('id'=>$vo['id'],'token'=>$token))}" title="编辑图文自定义回复">编辑</a>
+                              <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Yanxiang/aedel',array('id'=>$vo['id'],'token'=>$token))}')" href="#">删除</a></td>
+
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+<include file="Public:footer"/>

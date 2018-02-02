@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <!--<script src="../../common/js/jquery-easing.js"></script>-->
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <title>团购详情</title>
+    <script>
+        seajs.use("helper",function(h){
+            var img = [
+                <volist name="product.pic" id="pic">
+                {content: "{weikucms:$pic}"},
+                </volist>
+            ];
+            var slider = h.iSlider("picPlayground",img);
+            slider.addDot();
+        })
+    </script>
+    <style type="text/css" media="screen">
+        .groupBuy .content .detailBox img { max-width: 100%; }
+        .detailBox.boxShadow table { width: 100%; }
+        .movieDetail img { max-width: 100%; }
+    </style>
+</head>
+<body class="groupBuy">
+    <div class="fixTop header headerBg">
+        <div class="logo"></div>
+        <div class="title">/ 生活服务</div>
+    </div>
+    <div class="content">
+        <div class="picPlayground" id="picPlayground">
+
+        </div>
+        <div class="infoWrap">
+            <div class="shortCut">
+                <div class="title f18">
+                    {weikucms:$product.name}
+                </div>
+                <div class="text f14 movieDetail">
+                    {weikucms:$product.content}
+                </div>
+            </div>
+            <div class="groupActionBox">
+                <div class="priceAction">
+                    <span class="text setLeft">市场价:{weikucms:$product.market_price}</span>
+                    <span class="text setRight">已售:<span class="num">{weikucms:$product.total_buy}</span>件</span>
+                </div>
+                <div class="groupNote">
+                    支付开团，邀请<span class="num">多</span>人参加即可成团，人数不足自动退款。
+                </div>
+                <div class="moreDetail">
+                    了解详情请点击查看<span class="border-4 howToPlayGroup">
+                    <a href="{weikucms::U('show_rule', array('type' => 'play'))}">拼团玩法</a>
+                </span>
+                </div>
+				<!--
+                <div class="groupBtnWrap">
+                    <div class="groupByBtn groupBoxIn">
+                        <div class="wrap">
+                            <div class="price f16"><span class="RBM f12"></span><span class="num">{weikucms:$product.min_price}</span>/件</div>
+                            <div class="f12 groupPeopleCount textLeft"><span class="num">多</span>人团</div>
+                        </div>
+                    </div>
+                    <a href="{weikucms::U('buy', array('number' => 1, 'id' => $id, 'single' => 1))}">
+                    <div class="groupBuyBtn groupBoxIn2">
+                        <div class="wrap">
+                            <div class="price f16"><span class="RBM f12"></span><span class="num">{weikucms:$product.single_price}</span>/件</div>
+                            <div class="f12 groupPeopleCount textRight">单独购买</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+				-->
+				<div class="groupBtnWrap groupBoxIn">
+                    <div class="groupByBtn">
+                        <div class="circle icon">
+                            <span class="icon-yonghu"></span>
+                        </div>
+                        <div class="wrap" style="top: 10px;">
+                            <span class="price f16">最低<span class="RMB">{weikucms:$product.min_price}</span></span>
+                            <br />
+                            <span class="f12">多人团</span>
+                        </div>
+                    </div>
+                    <div class="groupBuyBtn" style="background-color: #D4D4D4;">
+                        已团完
+                    </div>
+                </div>
+
+            </div>
+            <div class="groupListBox boxShadow">
+                <div class="wrap">
+                    <div class="title f16">已开团</div>
+                    <div class="setRight text f14 checkMoreGroupList">
+                    <a href="{weikucms::U('more_group', array('id' => $id))}">查看更多···</a>
+                    </div>
+                </div>
+                <div class="box">
+                    <if condition="$group">
+                    <volist name="group" id="item">
+                    <div class="item">
+                        <div class="circle groupInfoPeopleCircle">
+                            <div class="icon f20"><span class="icon-yonghu"></span></div>
+                            <div class="text"><span class="num">{weikucms:$item.tnumber}</span>人团</div>
+                        </div>
+                        <div class="groupInfoWrap">
+                            <div class="groupInfoPeopleNum">
+                                <span class="text">
+                                团长:
+                                </span>
+                                <span class="startGroupName">
+                                    {weikucms:$item.userinfo.profile.nickname}
+                                </span>
+                                <span class="groupPeopleNow">
+                                    <span class="num">{weikucms:$item.total_buy}</span>/{weikucms:$item.tnumber}人
+                                </span>
+                            </div>
+                            <div class="groupInfoDateLimit">
+                                <span class="groupStartDate">
+                                    {weikucms:$item.add_time}
+                                </span>
+                                <!--
+                                一
+                                <span class="groupEndDate">
+                                </span>
+                                -->
+                            </div>
+                        </div>
+                        <if condition="$item.status eq 0">
+                        <!--
+                        <a href="{weikucms::U('buy', array('gid' => $item['id'], 'id' => $item['product_id'], 'number' => $item['tnumber']))}">
+                        <div class="joinMeBtn">
+                            我要加入
+                        </div>
+                        </a>
+                        -->
+                        <div class="joinMeBtn">
+                            已结束
+                        </div>
+                        <elseif condition="$item.status eq 1"/>
+                        <div class="joinMeBtn on">
+                            已成团
+                        </div>
+                        <elseif condition="$item.status eq 2"/>
+                        <div class="joinMeBtn off">
+                            已过期
+                        </div>
+                        <else />
+                        </if>
+                    </div>
+                    </volist>
+                    <else />
+                    <div style="color: #ABABAB; padding-bottom: 10px;">还是个沙发哦~</div>
+                    </if>
+                    <!--
+                    <div class="item">
+                        <div class="circle groupInfoPeopleCircle">
+                            <div class="icon f20">X</div>
+                            <div class="text"><span class="num">10</span>人团</div>
+                        </div>
+                        <div class="groupInfoWrap">
+                            <div class="groupInfoPeopleNum">
+                                <span class="text">
+                                团长:
+                                </span>
+                                <span class="startGroupName">
+                                    蒙奇·D·路飞
+                                </span>
+                                <span class="groupPeopleNow">
+                                    <span class="num">9</span>/10
+                                </span>
+                            </div>
+                            <div class="groupInfoDateLimit">
+                                <span class="groupStartDate">
+                                    1997-09-01
+                                </span>
+                                一
+                                <span class="groupEndDate">
+                                    2015-09-01
+                                </span>
+                            </div>
+                        </div>
+                        <div class="joinMeBtn on">
+                            已成团
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle groupInfoPeopleCircle">
+                            <div class="icon f20">X</div>
+                            <div class="text"><span class="num">10</span>人团</div>
+                        </div>
+                        <div class="groupInfoWrap">
+                            <div class="groupInfoPeopleNum">
+                                <span class="text">
+                                团长:
+                                </span>
+                                <span class="startGroupName">
+                                    蒙奇·D·路飞
+                                </span>
+                                <span class="groupPeopleNow">
+                                    <span class="num">9</span>/10
+                                </span>
+                            </div>
+                            <div class="groupInfoDateLimit">
+                                <span class="groupStartDate">
+                                    1997-09-01
+                                </span>
+                                一
+                                <span class="groupEndDate">
+                                    2015-09-01
+                                </span>
+                            </div>
+                        </div>
+                        <div class="joinMeBtn off">
+                            已过期
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+        <div class="detailBox boxShadow" style="overflow: hidden;">
+            <div class="title f16">团购详情</div>
+            {weikucms:$product.detail}
+        </div>
+        <!--
+        <div class="discussBox boxShadow">
+            <div class="wrap">
+                <div class="title f16">评价</div>
+                <div class="setRight text f14 checkMoreGroupList">查看更多···</div>
+            </div>
+            <div class="box">
+                <div class="item">
+                    <div class="userInfo">
+                        <div class="circle userLogo img">
+                            <img class="circle" src="http://img.woyaogexing.com/2015/08/20/f0f58349ba24fa16!200x200.jpg" alt=""/>
+                        </div>
+                        <div class="userNameBox">
+                            <div class="userName">
+                                用户名
+                            </div>
+                            <div class="userTime">
+                                2015-08-06
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        茶花，又名山茶，花期较长，从10月份到翌年5月份都有开放，盛花期通常在1-3月份。
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="userInfo">
+                        <div class="circle userLogo img">
+                            <img class="circle" src="http://img.woyaogexing.com/2015/08/18/aca529a9b81c53c1!200x200.jpg" alt=""/>
+                        </div>
+                        <div class="userNameBox">
+                            <div class="userName">
+                                用户名
+                            </div>
+                            <div class="userTime">
+                                2015-08-06
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        谁惹缱绻，相思入味，等待半世的忧伤，挽起一帘幽梦，雨在月光里穿越，你居住在我的心里。
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+
+    <div class="groupByPeopleBox">
+        <div class="title textMiddle f18">
+            请选择拼团人数
+        </div>
+        <div class="selectGroupWrap">
+        <!--
+            <volist name="product.groupmsg" id="gitem" key="gk">
+            -->
+            <foreach name="product['groupmsg']" item="gitem" key="gk">
+            <div class="selectGroup" data-url="{weikucms::U('buy', array('id' => $id, 'number' => $gk, 'is_new' => 1))}">
+                <div class="circle icon"><span class="icon-yonghu"></span></div>
+                <span class="groupPeople f18">{weikucms:$gk}人团</span>
+                <span class="groupPrice f18"><span class="f14">￥</span>{weikucms:$gitem}</span>
+            </div>
+            </foreach>
+        </div>
+        <div class="wrap">
+            <!--<div class="moreDetail">
+                了解详情请点击查看<span class="border-4 howToPlayGroup">拼团玩法</span>
+            </div>-->
+            <div class="goBuyBtn">
+                确定
+            </div>
+        </div>
+
+    </div>
+    <include file="./tpl/Wap/default/vanke/footer.html" />
+</body>
+</html>

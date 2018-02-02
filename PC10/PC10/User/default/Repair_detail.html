@@ -1,0 +1,144 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <h4>订单详情 </h4>
+            </li>
+           
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #B098FB;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>0))}" <if condition="$hover5 eq 1">class="hover"</if>>返回上一层</a>
+            </li>                       
+        </ul>                
+    </div>  
+	<div class="clr"></div>
+
+<div class="box-content" style="height: 500px;">
+    <div class="row-fluid app_ico_box">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td width="200px;">订单编号</td>
+                    <td>{weikucms:$orderDatas['order_nid']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">预约处理日期</td>
+                        <td>{weikucms:$orderDatas['appoint_day']}-{weikucms:$orderDatas['appoint_time']}</td>
+
+                </tr>
+                <tr>
+                    <td width="200px;">类别</td>
+                    <td>{weikucms:$orderDatas['service_type']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">服务维修电器名</td>
+                    <td>{weikucms:$orderDatas['repair_ele']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">服务内容</td>
+                    <td>{weikucms:$orderDatas['service_cont']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">作业类型</td>
+                    <if condition="$orderDatas.operate eq 1">
+                    	<td>高空作业</td>
+                    <else/>
+                    	<td>非高空作业</td>
+                    </if>
+                </tr>
+                
+                <tr>
+                    <td width="200px;">故障说明</td>
+                    <td><div style="width:300px;word-wrap:break-word;">{weikucms:$orderDatas['fault_info']}</div></td>
+                </tr>
+                
+                <tr>
+                    <td width="200px;">是否保修</td>
+                        <if condition="$orderDatas.period">
+                    	<td>是</td>
+                    <else/>
+                    	<td>不是</td>
+                    </if>
+                </tr>
+                
+                <tr>
+                    <td width="200px;">保修开始日期</td>
+                    <td>{weikucms:$orderDatas['finish_time']|date='Y-m-d',###}</td>
+                </tr>
+                
+                <tr>
+                    <td width="200px;">保修期</td>
+                        <td>{weikucms:$orderDatas['period']}天</td>
+                </tr>
+                <tr>
+                    <td width="200px;">技师姓名</td>
+                    <td>{weikucms:$orderDatas['staff_name']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">下单时间</td>
+                    <td>{weikucms:$orderDatas['order_time']|date='Y-m-d H:i:s',###}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">下单人的姓名</td>
+                    <td>{weikucms:$orderDatas['order_name']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">下单人的手机号码</td>
+                    <td>{weikucms:$orderDatas['order_tel']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">下单详细地址</td>
+                    <td>{weikucms:$orderDatas['order_address']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">支付方式</td>
+                    <if condition="$orderDatas.pay_type eq 0">
+                    	<td>现金支付</td>
+                    <else/>
+                    	<td>非现金支付</td>
+                    </if>
+                </tr>
+                <tr>
+                    <td width="200px;">使用积分数</td>
+                    <td>{weikucms:$orderDatas['score']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">付款金额</td>
+                    <td>{weikucms:$orderDatas['pay_money']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">服务商门店名</td>
+                    <td>{weikucms:$orderDatas['agent_name']}</td>
+                </tr>
+                <tr>
+                    <td width="200px;">维修员工名称</td>
+                    <td>{weikucms:$orderDatas['staff_name']}</td>
+                </tr>                
+                <tr>
+                    <td width="200px;">订单状态</td>
+     				<if condition="$orderDatas['status'] eq 1">
+                    <td>待确认</td>
+                    <elseif condition="$orderDatas['status'] eq 1"/>
+                    <td>服务商已接单</td>
+                    <elseif condition="$orderDatas['status'] eq 2"/>
+                    <td>员工出发维修中</td>
+                    <elseif condition="$orderDatas['status'] eq 3"/>
+                    <td>修理完成</td>
+                   <else/>
+                   	<td>维修已结束</td>
+                   </if>
+                </tr>
+                <tr>
+                    <td width="200px;">维修完成时间</td>
+                    <td>{weikucms:$orderDatas['finish_time']|date='Y-m-d H:i:s',###}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>  
+</div>
+<include file="Public:footer"/>

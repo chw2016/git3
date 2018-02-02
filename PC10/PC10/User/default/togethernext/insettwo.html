@@ -1,0 +1,76 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<div  style="background-color:white;" >
+    <div  style=" width: 90%; margin: 0 auto;" >
+        <div class="cLineB">
+            <h4>导入信息</h4>
+        </div>
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>
+            <ol>
+                <li>在导入信息的时候请按如下的格式：“验证码1,验证码2,验证码3,验证码4,......”。<span style="color: #ff0f22;font-size: 16px;">注意：最后一定要加“,”,不然最后一个会丢掉。</span></li>
+            </ol>
+        </div>
+        <div class="cLineB" id="uppict" style="display:none">
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+                <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                    <tr>
+                        <th valign="top"><label for="info">验证码：</label></th>
+                        <td valign="top"><textarea class="px" id="info" name="info" style="width: 560px; height: 240px;"rows="5"></textarea></td>
+                    </tr>
+                    <td></td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td><button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                            <include file="./tpl/User/default/helper/list_btn.html"/>
+                            <div class="clr"></div></td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="clr"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    $(function(){
+        $('#savebtn').click(function(){
+            var info = $('#info').val();
+            var url = "{weikucms::U('Shengou/add_yanzheng',array('token'=>$token))}";
+            $.post(url,{info:info},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json')
+        })
+    })
+</script>
+
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+

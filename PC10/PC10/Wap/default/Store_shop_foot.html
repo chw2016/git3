@@ -1,0 +1,66 @@
+<if condition="!$hideBottom">
+<div class="shopnav js-navmenu nav-on-bottom style-2">
+    <div class="nav-menu has-menu-3">
+        <div class='homeBody'>
+        <a href="{weikucms::U('Store_shop/cats',array('token' => $_GET['token'],'wecha_id' => $_GET['openid']))}" class="home" >首页</a>
+        </div>
+        <!--
+        <div class="one"><a class="mainmenu js-mainmenu" href="javascript:void(0);"><i class="arrow-weixin"></i>我要买</a><div class="submenu js-submenu">
+            <span class="arrow before-arrow"></span>
+            <span class="arrow after-arrow"></span>
+            <ul>
+                <li><a href="{weikucms::U('Store_shop/cats',array('token' => $_GET['token'],'wecha_id' => $_GET['openid']))}">商城首页</a></li>
+            </ul>
+        </div>
+        </div>
+        <div class="divide">&nbsp;</div>
+        -->
+        <div class="one" style="float: left;width:42% !important"><a class="mainmenu js-mainmenu" href="javascript:void(0);">
+            <!--
+            <i class="arrow-weixin"></i>
+            -->
+            我要买</a><div class="submenu js-submenu">
+        <span class="arrow before-arrow"></span>
+        <span class="arrow after-arrow"></span>
+        <ul>
+        <volist name="foot" id="vo">
+
+            <if condition="$i eq 1"><else /><li class="line-divide"></li> </if>                                                               <li><a href="{weikucms::U('Store_shop/products',array('token'=>$_GET['token'],'catid'=>$vo['id'],'wecha_id'=>$wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">{weikucms:$vo.name}</a></li>
+
+
+
+    </volist>
+        </ul>
+    </div>
+    </div>
+    <!--
+    <div class="divide">&nbsp;</div>
+    -->
+    <div class="one" style='border-right: 0; width: 41% !important;'>
+        <a class="mainmenu js-mainmenu"  href="{weikucms::U('Store_shop/orders',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">我的订单</a>
+    </div>
+    <!--
+    <div class="one"><a class="mainmenu js-mainmenu" href="javascript:void(0);"><i class="arrow-weixin"></i>会员服务</a><div class="submenu js-submenu">
+        <span class="arrow before-arrow"></span>
+        <span class="arrow after-arrow"></span>
+        <ul>
+
+            <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Store_shop/orders',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">我的订单</a></li>
+
+
+            <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Usercenterzj/index',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">会员中心</a></li>
+
+            <li class="line-divide"></li>                                                                <li><a href="{weikucms::U('Store_shop/list_cart',array('token' => $_GET['token'],'openid' => $_GET['openid']))}">购物车</a></li>
+
+
+
+        </ul>
+    </div>
+    -->
+    </div>
+
+
+    </div>
+</div>
+<script type="text/javascript" src="{weikucms:$staticFilePath}/shop/js/nav.js"></script>
+</if>

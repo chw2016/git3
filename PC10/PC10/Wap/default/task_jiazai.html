@@ -1,0 +1,38 @@
+<volist name="info" id="data">
+    <div class="renwuList setMiddle white-bg gray border-4 ">
+        <div class="myul">
+            <div class="renwuPic fixBg"><img src="{weikucms:$data.pic}" alt="图片"/></div>
+            <div class="renwuInfo" data-url="{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$data['id']))}">
+                <div class="renwuName light-red">{weikucms:$data.title}</div>
+                <div class="renwuSN" style="font-size:12px;">编号：{weikucms:$data.key}</div>
+                <div class="renwuState" style="font-size:12px;">
+                    状态：进行中
+                </div>
+                <div class="renwuContent light-gray" style="font-size:12px;">
+                    <php>
+                        if(strlen($data['abstract']) > 50){
+                        echo htmlspecialchars_decode(mb_substr($data['abstract'],0,50,'utf-8'))."...";
+                        }else{
+                        echo htmlspecialchars_decode($data['abstract']);
+                        }
+
+                    </php>
+                </div>
+            </div>
+        </div>
+        <div class="myul">
+            <div class="gotton textMiddle light-gray">
+                已有<span class="h4">{weikucms:$data.number}</span>人领取
+            </div>
+            <div class="getIt textMiddle red h4" onclick="window.location.href='{weikucms::U('Wap/Media/taskdetail',array('tid'=>$data['id'],'token'=>$token,'openid'=>$openid))}'">我要领取</div>
+            <div class="share fixBg  icon icon-QuickShare" onclick="doshare({weikucms:$data.id},'{weikucms:$data.pic}','{weikucms:$data.title}','{weikucms:$data.abstract}',{weikucms:$data.pid});"></div>
+            <div class="red-bg myul border-4 shareBox hide Invitation">
+                <div class="myli white textMiddle shareItem icon-CN_tencentwechatmoments"></div>
+                <div class="myli white textMiddle shareItem icon-CN_tencentqzone"></div>
+                <div class="myli white textMiddle shareItem icon-CN_sinaweibo"></div>
+                <div class="myli white textMiddle shareItem icon-CN_baidutieba"></div>
+                <div class="myli white textMiddle shareItem icon-CN_doubanB"></div>
+            </div>
+        </div>
+    </div>
+</volist>

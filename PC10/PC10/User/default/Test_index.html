@@ -1,0 +1,115 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+    <div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/index',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/classIndex',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >添加测试类型</a>
+            </li>
+            
+            <!-- 
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Test/addSubject',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >微测试题目管理</a>
+            </li>
+           -->
+        </ul>
+    </div>
+</div>
+<div class="cLine">
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以设置测试类型、测试题目和测试答案。</li>
+		<li>在这里还可以查看测试者对测试题的一些意见。</li>
+	</ol>
+</div>
+<div class="pageNavigator left">
+    <a href="{weikucms::U('Test/manager',array('token'=>$token, 'type'=>0))}" title="添加" class="btn btn-primary" >添加测试题库</a></div>
+	<div class="clr"></div>
+</div>
+<div class="msgWrap">
+ 	<form method="post" action="index.php?ac=vote-manage&amp;id=9878" id="info">
+ 		<input name="delall" type="hidden" value="del">
+  		<input name="wxid" type="hidden" value="gh_423dwjkewad">
+   		<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+	     	<thead>
+	       		<tr>
+					<th style="text-align:center;">编号</th>
+					<th style="text-align:center;">测试题库名称</th>
+					<th style="text-align:center;">测试题库类型</th>
+					<th class="time" style="text-align:center;">开始时间</th>
+					<th class="time" style="text-align:center;">结束时间</th>
+					<th class="norightborder" style="text-align:center;">操作</th>
+	           </tr>
+	       </thead>
+	       <tbody>
+			<tr></tr>
+	        <volist id="list" name="list">
+	          <tr>
+	            <td style="text-align:center;">{weikucms:$list.id}</td>
+	            <td style="text-align:center;">{weikucms:$list.test_name}</td>
+	            <td style="text-align:center;">{weikucms:$list.test_type_id}</td>
+	            <td style="text-align:center;">{weikucms:$list.test_start_time|date='Y-m-d',###}</td>
+	            <td style="text-align:center;">{weikucms:$list.test_end_time|date='Y-m-d',###}</td>
+	            <td class="norightborder" style="text-align:center;">       
+	             <if condition="$list['is_open'] eq 0">
+	             	<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="startOp('{weikucms::U('Test/start',array('type'=>1,'id'=>$list['id'],'token'=>$token))}')">开始</a>
+	             <else/>
+	             	<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="startOp('{weikucms::U('Test/start',array('type'=>2,'id'=>$list['id'],'token'=>$toekn))}')" style="background-color:gray">结束</a>
+	             </if>        
+                 <a class="btn btn-success btn-sm" href="{weikucms::U('Test/manager',array('token'=>$token,'type'=>1,'id'=>$list['id']))}" title="编辑">编辑</a>
+                 
+                 <if condition="$list['score_is'] eq 0">
+	             	<a class="btn btn-success btn-sm" href="{weikucms::U('Test/subject',array('token'=>$token,'id'=>$list['id']))}" title="题目管理">题目管理</a>
+	             <else/>
+	             	<a class="btn btn-success btn-sm" href="{weikucms::U('Test/titleS',array('token'=>$token,'id'=>$list['id']))}" title="题目管理">题目管理</a>
+	             </if>
+                 
+                 
+                 <a class="btn btn-success btn-sm" href="{weikucms::U('Test/addResult',array('token'=>$token,'id'=>$list['id']))}" title="添加结果标准">结果设置</a>
+                 <a href="{weikucms::U('Test/advice',array('type'=>$list['type'],'id'=>$list['id']))}" class="btn btn-success btn-sm" title="查看建议">查看建议</a>
+	            <a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Test/delClass',array('style'=>$style,'id'=>$list['id']))}');">删除</a>
+	            </td>   
+	          </tr>
+	       </volist>
+	     </tbody>
+       </table>
+   </form> 
+</div> 
+<div class="cLine">
+  <div class="clr"></div>
+</div>
+</div>
+<script>
+function startOp(url){
+    if(confirm('您确定进行此次操作')){
+        $.post(url,{},function(data){
+            if(data.status == 1){
+                notif({
+                    msg: data.info,
+                    type: "success"
+                });
+                setTimeout(function(){
+                    window.location.href = data.url;
+                },'1000');
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+    }else{
+        return;
+    }
+}
+
+</script>
+
+<include file="Public:footer"/>

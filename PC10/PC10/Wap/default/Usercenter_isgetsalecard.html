@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+    <title>
+        优惠券-{weikucms:$wxuser.name}
+    </title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/usercenter/resource/my_card.s.min.css"/>
+</head>
+
+<body>
+<div class="wx_wrap" id="coupon_content">
+    <!-- S 导航 -->
+    <div class="card_nav" id="coupon_items">
+        <a href="javascript:void(0)" onclick="window.location.href='{weikucms::U('Usercenter/salecard',array('token'=>$token,'openid'=>$openid))}'" <if condition="$allow_salecard eq 1">class="cur"</if>  nickid="noeffective_coupon">
+            可领取
+            <em id="effective_coupon_num">
+                {weikucms:$salecardcount}
+            </em>
+        </a>
+        <a href="javascript:void(0)" onclick="window.location.href='{weikucms::U('Usercenter/isgetsalecard',array('token'=>$token,'openid'=>$openid))}'" <if condition="$isget_salecard eq 1">class="cur"</if>  nickid="effective_coupon">
+            已领取
+            <em id="noeffective_coupon_num">
+                {weikucms:$usersalecardcount}
+            </em>
+        </a>
+    </div>
+    <!-- E 导航 -->
+    <!-- S 内容 -->
+    <if condition="$usersalecard neq null">
+        <volist name="usersalecard" id="vo">
+        <div class="card_content" onclick="window.location.href='{weikucms::U('Usercenter/salecarddetail',array('token'=>$token,'id'=>$vo['sale_id'],'openid'=>$openid))}'">
+            <!-- S 待使用 -->
+            <div class="card_content_pane" id="effective_coupon">
+                <!-- S 京东卡 -->
+                <!-- E 京东卡 -->
+                <div class="coupon_item ">
+                    <p class="date">有效期:{weikucms:$vo.start_date}至{weikucms:$vo.end_date}</p>
+                    <p class="id">SN: {weikucms:$vo.sale_sn} 状态:
+                        <if condition="$vo['status'] eq 0">
+                            已领取
+                            <else/>
+                            已使用
+                        </if></p>
+
+                    <p>优惠券名称:{weikucms:$vo.sale_name}</p>
+                    <p class="count">
+                        <if condition="$vo['money'] neq 0">
+                            <em>¥</em>
+                            {weikucms:$vo.money}
+                        </if>
+                        <if condition="$vo['money'] eq 0">
+                            优惠
+                        </if>
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- E 待使用 -->
+            <!-- S 不可用 -->
+
+            <!-- E 不可用 -->
+        </div>
+        </volist>
+
+    <else/>
+    <!-- E 内容 -->
+    <p class="cart_status cart_status_none" id="no_jd_coupon" style="display:block;">
+        目前还没有领取优惠券哦
+    </p>
+    </if>
+</div>
+<!-- wx_wrap -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!-- <link rel="stylesheet" href="Css/liebiao.css" type="text/css"/> -->
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_154/zepto.css" media="all" />
+		 <title>{weikucms:$tpl['name']}</title>
+	</head>
+		<body>
+			<include file="Public:audio"/> 
+			<ul id="header">
+			<volist name="res" id="so">
+				<!-- <if condition="$so['url']">
+				
+				<a href="{weikucms:$so.url}">
+				
+				<else />
+				
+				<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+				</if>
+				
+				<div class="img"><eq name="so.showpic" value="1"><img src="{weikucms:$so.pic}"></eq></div>
+				
+				<h2>{weikucms:$so.title}</h2>
+				
+				<p class="onlyheight">{weikucms:$so.text}</p>
+				
+				<div class="commentNum"></div>
+				
+				</a> -->
+					<li class="border">
+						<p>{weikucms:$so.title}</p>
+						<div class="content">
+							<if condition="$so['url']">
+				
+							<a href="{weikucms:$so.url}">
+				
+						<else />
+				
+						<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+						</if>
+							<eq name="so.showpic" value="1"><img src="{weikucms:$so.pic}"></eq>
+						</a>
+						
+							
+							<div class="bgcolor">{weikucms:$so.title}</div>
+						</div>
+						<div class="contentleft">
+							<p>
+								<if condition="$so['url']">
+				
+								<a href="{weikucms:$so.url}">
+				
+								<else />
+				
+								<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+								</if>
+								{weikucms:$so.title}
+							</a>
+							</p>
+						</div>
+						<div class="contentright">
+							<if condition="$so['url']">
+				
+							<a href="{weikucms:$so.url}">
+				
+							<else />
+				
+							<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+							</if>
+								<eq name="so.showpic" value="1"><img src="{weikucms:$so.pic}"></eq>
+							</a>
+						</div>
+						<div class="clear"></div>
+						<div class="line"></div>
+						<div class="bottom left">
+							<p>
+								<if condition="$so['url']">
+				
+								<a href="{weikucms:$so.url}">
+				
+								<else />
+				
+								<a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+				
+								</if>
+								阅读&nbsp;>>
+							</a>
+							</p>
+						</div>
+					</li>
+				</volist> 
+	
+			</ul>
+			<script type="text/javascript">
+				/*window.onload=function(){
+					var doc=document.body.clientWidth;
+					var =document.getElementsByTagName('ul')[0].width;
+				}*/
+				$(function(){
+					$('ol').css('width',$(document).width())
+				})
+			</script>
+		<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+		</body>
+</html>

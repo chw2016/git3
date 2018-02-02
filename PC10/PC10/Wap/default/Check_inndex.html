@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>交通在线</title>
+    <meta charset="utf-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="eric.wu" name="author">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/common.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/check/css/index.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/check/js/traffic.js"></script>
+    <style type="text/css">
+        .fixed {
+            position: absolute;
+            right: 10px;
+            font-size: 16px;
+            top: 9px;
+            color: #fff;
+        }
+        .icon-plus3{
+            line-height: 42px;
+            text-indent: 10px;
+        }
+        .fanh{
+            right: 10px;
+            font-size: 16px;
+            top: 9px;
+            line-height:42px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bj">
+<!-- 头部 -->
+<header>
+    <div class="header-top-Check">
+        <div class='fanh' onclick="window.location.href='{weikucms::U('Check/index',array('token'=>$token,'openid'=>$openid))}'">
+           &nbsp; 首页
+        </div>
+        <div class="fixed">
+            历史车辆
+        </div>
+        <!-- 隐藏区域 -->
+        <div class="Mask">
+            <div class="visited">
+                <volist name="listq" id="vo">
+                    <div class="visited-main" onclick="window.location.href = '{weikucms::U('Check/inndex',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">
+                        <p class="chehao" style="display:none">{weikucms:$vo.id}</p>
+                        <p>车牌号：{weikucms:$vo.cph}</p>
+                        <p>发动机号：{weikucms:$vo.fdjLastNo6}</p>
+                        <p>车架号：{weikucms:$vo.cjhLastNo6}</p>
+                    </div>
+                </volist>
+                <script type="text/javascript">
+                        $('.visited-main').touch(function(){
+                            var  cph = $('.chehao').var();
+                            alert(cph);
+                        })
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="img-Check">
+        <img src="{weikucms::STATICS}/wapweiui/check/images/weicha.png" alt="">
+    </div>
+</header>
+<!-- 内容 -->
+<content>
+    <div class="check-main">
+        <div class="check-main-user">
+            <img src="{weikucms:$wxusers.headimgurl}" alt="">
+        </div>
+        <div class="check-max-title">
+
+            <div class="check-title">
+                <b>微信昵称</b>：{weikucms:$wxusers.nickname}
+                <p><b>等级</b>：
+                    <if condition="$zhehy eq 1 "> vip秘书会员
+
+                        <elseif condition="$zhehy eq 2" />高级会员
+
+                        <else /> 注册会员
+                    </if>
+                </p>
+            </div>
+            <form action="__ROOT__/index.php?m=Users&a=index.php&g=Wap&m=Check&a=inndex&token={weikucms:$this->token}&openid={weikucms:$this->openid}"  method="post" id="form1">
+                <div class="check-content">
+                    <span class="check-content-title">车牌号 </span>
+                        <span class="check-content-input">
+                            <input type="text" placeholder="请输入车牌号码" class="name" name="cph" value="{weikucms:$list.cph}">
+                        </span>
+                </div>
+                <div class="check-content">
+                    <span class="check-content-title">发动机</span>
+                            <span class="check-content-input">
+                                <input type="text" placeholder="发动机号后六位" class="motor" name="fdjLastNo6" value="{weikucms:$list.fdjLastNo6}">
+                            </span>
+                </div>
+                <div class="check-content">
+                    <span class="check-content-title">车架号</span>
+                            <span class="check-content-input">
+                                <input type="text" placeholder="请输入车架号后六位" class="carriage" name="cjhLastNo6" value="{weikucms:$list.cjhLastNo6}">
+                            </span>
+                </div>
+                <div class="btn-pay mt20" >
+                    违章查询
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+
+        <input type="hidden" name="order_money" value="0.1" id="totalPrice1">
+        <input type="hidden" name="order_text" value="交通查询付费">
+        <input type="hidden" name="orderid" value="{weikucms:$checkid}" id="orderid">
+        <input type="hidden" name="openid" value="{weikucms:$list.openid}" >
+
+        <input type="hidden" name="cph" value="{weikucms:$list.cph}" >
+        <input type="hidden" name="fdjLastNo6" value="{weikucms:$list.fdjLastNo6}" >
+        <input type="hidden" name="cjhLastNo6" value="{weikucms:$list.cjhLastNo6}" >
+
+        <input type="hidden" name="returnurl" value="{weikucms::U('Check/qued',array('token'=>$this->token,'openid'=>$this->openid))}">
+
+        <input type="hidden" name="type" value="jiaotong_check_yi">
+    </form>
+
+</content>
+<p class="dingdan" style="display:none">{weikucms:$checkid}</p>
+<p class="buzhu" style="display:none">{weikucms:$buzhu}</p>
+<p class="tishishou" style="display:none">{weikucms:$shouf}</p>
+<script type="text/javascript">
+    var tie = $('.tishishou').text();
+    if(tie!=''){
+       /* var rer = confirm(tie, );*/
+        var rer = confirm(tie);
+    }
+   if(rer==true){
+        msg.alert(" <input type='radio' name='xuni' value='1' class='zhangh'>账户于额  <br />  <input type='radio' name='xuni' value='2' checked='checked' class='zhangh'>在线支付");
+        $(".cancelMsg").touch(function(){
+            var zhanh = $('.zhangh:checked').val();
+            var buzhu = $('.buzhu').html();
+            var cph = $('.name').val();
+            var fdjLastNo6 = $('.motor').val();
+            var cjhLastNo6 = $('.carriage').val();
+            var dingdan = $('.dingdan').text();
+                if(zhanh==1){
+                       if(buzhu < 0.1){
+                           alert('帐户于额不足');
+                       }else{
+                           location.href = "{weikucms::U('Check/shoufei',array('token'=>$token,'openid'=>$openid))}"+ '&cph=' + cph + '&fdjLastNo6=' + fdjLastNo6 + '&cjhLastNo6=' + cjhLastNo6 + '&dingdan=' + dingdan
+                       }
+                 }else{
+                    $('#myweipayform').submit();
+                }
+        })
+    }
+</script>
+</body>
+</html>
+

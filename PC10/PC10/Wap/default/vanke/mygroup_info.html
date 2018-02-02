@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/wapwei.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/style.css"/>
+    <script src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+    <script src="{weikucms::STATICS}/common/js/jquery-easing.js"></script>
+    <script src="{weikucms::STATICS}/common/js/sea.js"></script>
+    <script src="{weikucms::STATICS}/common/js/seaConfig.js"></script>
+    <script src="{weikucms::STATICS}/common/js/handlebars-1.3.0.js"></script>
+    <script src="{weikucms::STATICS}/common/js/samphay-jquery.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/vanke/js/main.js"></script>
+    <style type="text/css" media="screen">
+        .myGroupBuyDetail .content .groupPeopleBox .item .userInfoWrap .text { padding: 3px 0; }
+    </style>
+    <title>我的团购</title>
+</head>
+<body class="myGroupBuy myGroupBuyDetail">
+    <div class="fixTop header headerBg">
+        <!--<div class="logo"></div>
+        <div class="title">/ 我的团购</div>-->
+        <div class="circle goBack">
+        </div>
+        <div class="titleRight">
+            团购详情
+        </div>
+    </div>
+    <div class="content">
+        <div class="item">
+            <div class="headerTop">
+                <div class="circle icon">
+                    <span class="icon-yonghu"></span>
+                </div>
+                <span class="groupCount">
+                    {weikucms:$groupinfo.tnumber}人团
+                </span>
+                <!--
+                <span class="groupCaller f12">
+                    /团长:<span class="weChatName">{weikucms:$self_order.profile.profile.nickname}</span>
+                </span>
+                -->
+                <span class="groupCountDetail">
+                    <span class="num">{weikucms:$total_buy}</span>/<span class="allNum">{weikucms:$groupinfo.tnumber}人</span>
+                </span>
+                <if condition="$groupinfo.status eq 0">
+                <div class="stateTag">
+                    进行中···
+                </div>
+                <elseif condition="$groupinfo.status eq 1"/>
+                <div class="stateTag done">
+                    已成团
+                </div>
+                <elseif condition="$groupinfo.status eq 2"/>
+                <div class="stateTag off">
+                    已过期
+                </div>
+                </if>
+            </div>
+            <div class="groupInfoBox">
+                <div class="picBox img">
+                    <img src="{weikucms::STATICS}/common/img/wplogo.png" data-original="{weikucms:$product.headpic}" alt="" />
+                </div>
+                <div class="groupInfo">
+                    <div class="title">
+                        {weikucms:$product.name}
+                    </div>
+                    <div class="text timeDate">
+                    <span class="startDate">
+                        {weikucms:$groupinfo.add_time}
+                    </span>
+                    <!--
+                    一
+                    <span class="endDate">
+                        2015-09-23
+                    </span>
+                    -->
+                    </div>
+                </div>
+                <div class="tagName">
+                    <span class="RMB">{weikucms:$pmoney}</span>
+                    <div class="countNum">×{weikucms:$self_order.number}</div>
+                </div>
+            </div>
+        </div>
+        <if condition=" ($groupinfo['status'] eq 1 ) AND ($self_order['status'] eq 1)">
+        <div class="box couponBox">
+            <div class="boxHeader">
+                <div class="title">
+                    团购券密码
+                </div>
+                <!--
+                <div class="text f12">
+                    有效期至
+                    <span class="deadLine">
+                        2015-09-26 12:00:00
+                    </span>
+                </div>
+                -->
+            </div>
+            <div class="boxContent">
+                <foreach name="self_order.sninfo" item="info" key="k">
+                <if condition="$info">
+                <div class="item off">
+                    <div class="text">
+                        兑换码:{weikucms:$k}
+                    </div>
+                    <div class="tagBtn">
+                        已使用
+                    </div>
+                </div>
+                <else />
+                <div class="item">
+                    <div class="text">
+                        兑换码:{weikucms:$k}
+                    </div>
+                    <div class="tagBtn">
+                        未使用
+                    </div>
+                </div>
+                </if>
+                </foreach>
+                <!--
+                <div class="item">
+                    <div class="text">
+                        密码1:8880 8820 8501
+                    </div>
+                    <div class="tagBtn">
+                        未使用
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+        </if>
+        <div class="box groupPeopleBox">
+            <div class="boxHeader">
+                <div class="title">
+                    参团人员
+                </div>
+            </div>
+            <div class="boxContent">
+                <volist name="g_users" id="k">
+                <div class="item">
+                    <div class="userPic circle img">
+                        <img class="circle"  src="{weikucms::STATICS}/common/img/wplogo.png" data-original="{weikucms:$k.userinfo.profile.avatar_url}" alt=""/>
+                    </div>
+                    <div class="userInfoWrap">
+                        <div class="nameAndInfo">
+                            <span class="userName">
+                                {weikucms:$k.userinfo.profile.nickname}
+                            </span>
+                            <span class="buyInfo f12">
+                                购买数量：<span class="num">{weikucms:$k.number}</span>
+                            </span>
+                        </div>
+                        <div class="text f12">
+                            参团时间：<span class="dateIn">{weikucms:$k.add_time}</span>
+                        </div>
+                        <div class="text f12">
+                            影院：<span class="dateIn">{weikucms:$k.moviename}</span>
+                        </div>
+                    </div>
+                    <if condition="$k.status eq 0">
+                    <div class="tagBtn redBg">
+                        未付款
+                    </div>
+                    <elseif condition="$k.status eq 1"/>
+                    <div class="tagBtn redBg">
+                        已付款
+                    </div>
+                    <elseif condition="$k.status eq 2" />
+                    <div class="tagBtn redBg">
+                        已退款
+                    </div>
+                    </if>
+                </div>
+                </volist>
+                <!--
+                <div class="item">
+                    <div class="userPic circle img">
+                        <img class="circle" src="http://img.woyaogexing.com/2015/07/24/5e1424cf389c403d!200x200.jpg" alt=""/>
+                    </div>
+                    <div class="userInfoWrap">
+                        <div class="nameAndInfo">
+                            <span class="userName">
+                                微信昵称
+                            </span>
+                            <span class="buyInfo f12">
+                                购买数量:<span class="num">4</span>
+                            </span>
+                        </div>
+                        <div class="text f12">
+                            参团时间:<span class="dateIn">2015-08-26 13:46:23</span>
+                        </div>
+                    </div>
+                    <div class="tagBtn">
+                        已退款
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="userPic circle img">
+                        <img class="circle" src="http://img.woyaogexing.com/2015/07/24/5e1424cf389c403d!200x200.jpg" alt=""/>
+                    </div>
+                    <div class="userInfoWrap">
+                        <div class="nameAndInfo">
+                            <span class="userName">
+                                微信昵称
+                            </span>
+                            <span class="buyInfo f12">
+                                购买数量:<span class="num">4</span>
+                            </span>
+                        </div>
+                        <div class="text f12">
+                            参团时间:<span class="dateIn">2015-08-26 13:46:23</span>
+                        </div>
+                    </div>
+                    <div class="tagBtn">
+                        已退款
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+        <!--<div class="discussBox boxShadow hide">
+            <div class="wrap">
+                <div class="title f16">评价</div>
+                <div class="setRight text f14 checkMoreGroupList">查看更多···</div>
+            </div>
+            <div class="box">
+                <div class="item">
+                    <div class="userInfo">
+                        <div class="circle userLogo img">
+                            <img class="circle" src="http://img.woyaogexing.com/2015/08/20/f0f58349ba24fa16!200x200.jpg" alt=""/>
+                        </div>
+                        <div class="userNameBox">
+                            <div class="userName">
+                                用户名
+                            </div>
+                            <div class="userTime">
+                                2015-08-06
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        茶花，又名山茶，花期较长，从10月份到翌年5月份都有开放，盛花期通常在1-3月份。
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="userInfo">
+                        <div class="circle userLogo img">
+                            <img class="circle" src="http://img.woyaogexing.com/2015/08/18/aca529a9b81c53c1!200x200.jpg" alt=""/>
+                        </div>
+                        <div class="userNameBox">
+                            <div class="userName">
+                                用户名
+                            </div>
+                            <div class="userTime">
+                                2015-08-06
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        谁惹缱绻，相思入味，等待半世的忧伤，挽起一帘幽梦，雨在月光里穿越，你居住在我的心里。
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</body>
+</html>

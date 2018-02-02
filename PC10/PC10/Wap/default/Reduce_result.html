@@ -1,0 +1,153 @@
+<html>
+	<head>
+		<title>我肥胖的原因</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/2.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+		<style type="text/css">
+			.health{
+				margin:20px auto 0;
+				width: 90%;
+				border-radius:8px; 
+				background: #fff;
+				text-align: center;
+				padding-bottom: 20px;
+			}.health p{
+				font-weight: 800;
+				line-height: 24px;
+				background: rgba(224,224,224,1);
+				border-top-left-radius:8px; 
+				border-top-right-radius:8px; 
+				padding: 8px 0 8px 4px;
+				text-align: left;
+			}.health .nice{
+				color: rgba(180,180,180,1);
+				line-height: 24px;
+				font-size: 14px;
+				width: 90%;
+				text-align: center;
+				border-bottom: 1px solid rgba(236,236,236,1);
+				margin: 8px auto;
+				padding-bottom: 8px;
+			}.imgs{
+				text-align: center;margin: 10px 0 20px;
+			}.imgs img{
+				-moz-border-radius:15px; 
+				-o-border-radius:15px; 
+				-webkit-border-radius:15px; 
+				-ms-border-radius:15px; 
+				border-radius:15px; 
+			}body{
+				background-size:cover; 
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+    	<!--头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">我肥胖的原因</span>
+		</div> -->
+    		<if condition="$flags eq 1">
+				<div class="health">
+    				<p>我需要养成哪些习惯</p>
+    				<div class="nice">
+    					你在生活中各个方面都不错，继续保持！
+    				</div>
+    				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/nice.png" />
+    			</div>
+    		<else />
+    			
+				<!-- 头像 -->
+				<div id="portrait">
+					<div class="touxiang">
+						<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/sPeople.png" /> 
+					</div>
+					<div class="font2">
+						下面几个原因导致你的肥胖，请认真对待，改掉这些不好的习惯
+					</div>
+					<div class="clear"></div>
+				</div>
+				<!-- 内容部1 -->
+				<volist name="arrays" id="vo" key="i">
+					<div id="middle1">
+						<div class="fontTitle">
+							<if condition="$i egt 10">
+								{weikucms:$i}.{weikucms:$vo.title}
+							<else />
+								0{weikucms:$i}.{weikucms:$vo.title}
+							</if>
+							
+						</div>
+						<!-- 显示图片的位置 -->
+						<div class="imgs">
+							<img src="{weikucms:$vo.img_path}" />
+						</div>
+						<div class="_line_"></div>
+						<div class="content">
+							{weikucms:$vo.content}
+						</div>
+					</div>
+				</volist>
+    		</if>
+				
+			
+		<!-- 邀请好友来 -->
+		<!--
+		<div id="Invitation">
+            分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+		</div>
+		-->
+		<div id="iknow">
+            您需要养成的习惯
+		</div>
+		<div style="height:40px;"></div>
+		<!-- 底部固定 -->
+		<div id="footer"></div>
+		<!--
+		<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/knowBtn.png" width="90px" height="48px" class="adjust" id="adjust"/>
+		-->
+		<script type="text/javascript">
+			$(function(){
+				// 遮罩分享
+				$('#Invitation').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+					// $(this).children('img').hide();
+				})
+				// 重新测试
+				$('#adjust').click(function(){
+					var url = "{weikucms::U('Wap/Reduce/repeatTest',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{},function(data){
+						setTimeout(function(){
+							window.location.href = data.url;
+						},1000)
+					},'json');
+				})
+				// 链接我知道了
+				$('#iknow').click(function(){
+					window.location.href = "{weikucms::U('Wap/Reduce/iknow',array('token'=>$token,'openid'=>$openid))}";
+				})
+				$('.imgs>img').css('width',$('body').width()/1.5 + "px");
+			})
+		</script>
+	</body>
+</html>

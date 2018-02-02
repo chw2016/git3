@@ -1,0 +1,62 @@
+<include file="Public:head"/>
+
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>可以添加简单的活动推广，每一个推广可以对应一个唯一的二维码</li>
+            <li>可以查看对应参与人数</li>
+        </ol>
+    </div>
+
+ <div class="cLineC" style="line-height: 32px;">
+ <a href="{weikucms::U('Spread/add',array('token'=>$token))}" class="btn btn-primary">添加微推广</a>　
+</div>
+
+
+ <div class="msgWrap form">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th >活动名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th width="450px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="info" id="vo">
+            <tr>
+               
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.activityname}</td>
+                <td>{weikucms:$vo.startdate}</td>
+                <td>{weikucms:$vo.enddate}</td>
+                <td>
+                    <a href="{weikucms::U('Spread/check',array('id'=>$vo['id'],'token'=>$token))}" title="查看参与人数" class="btn btn-success btn-sm">参与人数</a>
+                     <a href="{weikucms::U('Spread/create',array('id'=>$vo['id'],'token'=>$token))}" title="生成二维码" class="btn btn-success btn-sm">二维码</a>
+                    <a href="{weikucms::U('Spread/setting',array('id'=>$vo['id'],'token'=>$token))}" title="设置奖品" class="btn btn-success btn-sm">奖品</a>
+                     <a href="{weikucms::U('Spread/edit',array('id'=>$vo['id'],'token'=>$token))}" title="编辑" class="btn btn-success btn-sm">编辑</a>
+                    <a href="#" onclick="source_delete('{weikucms::U('Spread/del',array('id'=>$vo['id'],'token'=>$token))}')" title="删除" class="btn btn-danger btn-sm">删除</a>
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pager">
+            总共{weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+
+ </div>
+
+<include file="Public:footer"/>

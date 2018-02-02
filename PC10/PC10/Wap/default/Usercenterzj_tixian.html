@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .light-gray{
+            padding-left: 10px;
+        }
+        .icon-tixian {
+            background-position: 0 -113px;
+        }
+        .tMoney{
+            border-radius: 5px;
+            padding: 8px 5px;
+            border: 1px solid #ccc;
+        }
+        .butgx{
+            border:1px solid #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .butgxjl{
+            border:1px solid  #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .save{
+            background-color: #ED0617;
+            margin-top: 20px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            color: #FFF;
+        }
+        .on{
+            border-bottom: 2px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="light-gray h4 butgxjl myli on" onclick="javascript(0)">我要提现</div>
+        <div class="settingItemName butgx myli" onclick="window.location.href='{weikucms::U('Wap/Usercenterzj/tixian_jl',array('token'=>$token,'openid'=>$openid))}'">提现记录</div>
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">银行卡</div>
+        <input class="light-gray h5" value="{weikucms:$info['bank_card']}" name="bank_card" style="width: 100%">
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户银行</div>
+        <input class="light-gray h5" value="{weikucms:$info['bank_name']}"  name="bank_name" style="margin-left: 10px;width: 100%">
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户人姓名</div>
+        <input class="light-gray h5" value="{weikucms:$info['true_name']}" style="margin-left: 10px;" name="true_name" >
+    </div>
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-phone"></div>
+    <div class="settingItemName">联系方式</div>
+
+    <input class="light-gray h5" value="{weikucms:$info['phone']}" style="margin-left: 10px;" name="phone">
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-tixian"></div>
+    <div class="settingItemName">提现金额</div>
+
+    <div class="light-gray h5"><input type="number" value="" name="money" class="tMoney" placeholder="如：100"/></div>
+
+    <input type="hidden" name="money" value="{weikucms:$info['money']}"/>
+</div>
+
+<div style="  margin-top: 5px;padding: 5px;">您目前可提佣金为：{weikucms:$info['yongjin']}元 </div>
+
+
+<div class="save">
+    提&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp现
+</div>
+
+<div style="height: 65px;"></div>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('.save').on('click',function(){
+            var money = $('input[name="money"]').val();
+            var bank_name = $('input[name="bank_name"]').val();
+            var bank_card = $('input[name="bank_card"]').val();
+            var phone = $('input[name="phone"]').val();
+            var true_name = $('input[name="true_name"]').val();
+              var minmo = {weikucms:$info['yongjin']};
+            if(!true_name){
+                msg.alert('请填写开户人姓名');
+                return false;
+            }
+            if(!bank_name){
+                msg.alert('请输入开户银行名称');
+                return false;
+            }
+            if(!bank_card){
+                msg.alert('请输入开户行帐号');
+                return false;
+            }
+            if(!phone){
+                msg.alert('请输入您的手机号码');
+                return false;
+            }
+
+            if(!money){
+                msg.alert('请输入您要提现的金额');
+                return false;
+            }else{
+               if(money > minmo){
+                    msg.alert('您没有这么多钱提现啊');
+                    return false;
+                }
+            }
+            var url = "{weikucms::U('Usercenterzj/tixian',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{money:money,bank_name:bank_name,bank_card:bank_card,phone:phone,true_name:true_name},function(data){
+                if(data.codes==1){
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+
+                    })
+                }else if(data.codes==3){
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+                    })
+                }else{
+
+                    msg.alert(data.msg,function(){
+                        window.location.href=data.urles;
+                    })
+                }
+            },'json')
+        })
+    })
+</script>
+</body>
+</html>

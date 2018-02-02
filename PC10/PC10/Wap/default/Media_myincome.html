@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .renwuPic img{
+            display: block;width: 100%;height:100%;
+        }
+        .baos{
+            background-color: #FFF;
+            margin-top: 5px;
+            width: 100%;
+            display: flex;
+            display: -webkit-flex;
+
+        }
+        .dingflo{
+
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            width: 20%;
+            overflow-wrap: break-word;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').click(function(){
+                $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            });
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                //$(this).children('img').hide();
+            })
+        })
+    </script>
+</head>
+<body style="padding-bottom:70px" >
+<!--分享罩罩-->
+<div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 99099999;background-color: rgba(0, 0, 0, 0.8);left: 0;">
+    <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+</div>
+<!--分享罩罩-->
+
+
+<div class="moneyHav red-bg white myul">
+    <!-- <div class="myli white moneyHavItem textMiddle <if condition='$iType eq 1'>on</if>" onclick="window.location.href='{weikucms::U('Wap/Media/myincome',array('openid'=>$openid,'token'=>$token,'iType'=>1))}'" income="TG">推广收入</div> -->
+    <div class="myli white moneyHavItem textMiddle <if condition='$iType eq 2'>on</if>" income="YQ" onclick="window.location.href='{weikucms::U('Wap/Media/myincome',array('openid'=>$openid,'token'=>$token,'iType'=>2))}'">积分收入</div>
+    <if condition="$product eq ''">
+        <else/>
+        <div class="myli white moneyHavItem textMiddle <if condition='$iType eq 3'>on</if>" income="JF" onclick="window.location.href='{weikucms::U('Wap/Media/myincome',array('openid'=>$openid,'token'=>$token,'iType'=>3))}'">佣金收入</div>
+    </if>
+</div>
+
+<div class="moneyIncomeBox red-bg white">
+
+    <div class="setRight fixBg  icon-shareMyIncome Invitation" style="font-size: 12px;margin: 6px 6px;background-color: #FFC000;border-radius: 7px;padding: 4px;">
+      点我分享
+    </div>
+    <div class="h6 ">
+        今日收益
+    </div>
+    <div class="IncomeMoney todayIncome">
+        {weikucms:$fOneDayMoney}
+    </div>
+    <div class="otherIncomeBox myul">
+        <div class="myli textMiddle">
+            <div class="h6 textMiddle">
+                三日收益
+            </div>
+            <div class=" threeDaysIncome textMiddle">
+                {weikucms:$fThreeDayMoney}
+            </div>
+        </div>
+        <div class="myli textMiddle">
+            <div class="h6 textMiddle">
+                本月收益
+            </div>
+            <div class=" monthDaysIncome textMiddle">
+                {weikucms:$fMonthDayMoney}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="myMoneyBox white-bg">
+    <div class="myMoneyBoxTitle h6 red">
+    	<if condition='$iType eq 2'>
+		  积分余额
+		<else/>
+		  账户余额
+		</if>
+    </div>
+    <div class="myMoneyAll red">
+        	<if condition='$iType eq 2'>{weikucms:$aMediaUser['money']}
+			<else/>
+			<if condition="$aMediaUser['yongjin']">{weikucms:$aMediaUser['yongjin']}<else/>0.00</if>
+			</if>
+    </div>
+    <div class="myMoneyAvailableBox myul">
+        <div class="myMoneyAvailable h5">
+		<if condition='$iType eq 2'>
+		可兑换积分：{weikucms:$aScores['score']}分
+		<else/>
+		可提现总额：<if condition="$aMediaUser['yongjin']">{weikucms:$aMediaUser['yongjin']}<else/>0.00</if>元
+		</if>
+
+        </div>
+        <div class="yellow-bg border-4 textMiddle white h5 getMyMoney myul">
+            <div class=" fixBg icon icon-tixian tixianIcon"></div>
+            <if condition='$iType eq 2'>
+			<div onclick="window.location.href='{weikucms::U('Integralshop/index',array('token'=>$token,'openid'=>$openid))}'">
+                兑换
+            </div>
+			<else/>
+			<div class="tixian">
+                提现
+            </div>
+			</if>
+        </div>
+    </div>
+</div>
+<if condition='$iType eq 2'>
+    <div class="myCommissionIncomeBox">
+        <div class="myCommissionIncomeHead white-bg">
+            <div class="myCommissionIncomeTitle textMiddle h3 bold">
+                我的收入/积分
+            </div>
+            <div class="myul gray border-4 setMiddle myCommissionHeadHavList ">
+                <div class="myCommissionHeadHav textMiddle myli h5  on" content="myCommissionRenwuListBox">邀请积分明细</div>
+                <div class="myCommissionHeadHav textMiddle myli h5 " content="tuiguangCommissionWrapBox">列表</div>
+            </div>
+        </div>
+        <div class="myCommissionIncomeContent">
+
+            <div class="myCommissionRenwuListBox ">
+                <if condition="$aUser eq ''">
+                    <div class="renwuList setMiddle white-bg gray border-4 " style="text-align: center;font-size: 12px;min-height: 30px;">暂无数据！</div>
+                    <else/>
+
+                    <!-- 推广佣金明细循环体 -->
+                    <volist name="aUser" id="vo">
+                        <div class="renwuList setMiddle white-bg gray border-4 ">
+                            <div class="setRight circle white missionState OK"></div>
+                            <div class="myul">
+                                <div class="renwuPic fixBg"><img src="{weikucms:$vo.headimgurl}" alt="图片"></div>
+                                <div class="renwuInfo">
+                                    <div class="renwuName h5 light-red">{weikucms:$vo.name}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                    <!-- 结束 -->
+                </if>
+            </div>
+            <div class="tuiguangCommissionWrapBox hide">
+                <if condition="$xiaxian eq ''">
+                    <div style="text-align: center;font-size: 12px;background-color: white;min-height: 20px;border: 1px white solid;border-radius: 4px;width: 80%;display: block;margin-left: auto;margin-right: auto;padding: 7px;margin-top: 6px;">
+                        暂无数据！
+                    </div>
+                    <else/>
+                    <!-- 推广佣金列表循环体 -->
+                    <volist name="xiaxian" id="so">
+                        <div class="tuiguangCommissionWrap setMiddle white-bg">
+                            <div class="tuiguangCommission myul light-gray-bg white">
+                                <div class="tuiguangDate">
+                                    {weikucms:$so.date}
+                                </div>
+                                <div class="setRight tuiguangCommissionIncome">{weikucms:$so.number}</div>
+                            </div>
+                        </div>
+                    </volist>
+                    <!-- 结束 -->
+                </if>
+            </div>
+
+
+        </div>
+
+    </div>
+
+<else/>
+    <div class="myCommissionIncomeBox">
+        <div class="myCommissionIncomeHead white-bg">
+            <div class="myCommissionIncomeTitle textMiddle h3 bold">
+                我的收入/积分
+            </div>
+            <div class="myul gray border-4 setMiddle myCommissionHeadHavList ">
+                <div class="myCommissionHeadHav textMiddle myli h5  on" content="myCommissionRenwuListBox">任务明细</div>
+                <div class="myCommissionHeadHav textMiddle myli h5 " content="tuiguangCommissionWrapBox">分销订单</div>
+            </div>
+        </div>
+        <div class="myCommissionIncomeContent">
+
+            <div class="myCommissionRenwuListBox ">
+                <if condition="$aUserTasks eq ''">
+                    <div class="renwuList setMiddle white-bg gray border-4 " style="text-align: center;font-size: 12px;min-height: 30px;">暂无数据！</div>
+                    <else/>
+
+                    <!-- 推广佣金明细循环体 -->
+                    <volist name="aUserTasks" id="vo">
+                        <div class="renwuList setMiddle white-bg gray border-4 ">
+                            <div class="setRight circle white missionState OK"></div>
+                            <div class="myul">
+                                <div class="renwuPic fixBg"><img src="{weikucms:$vo.pic}" alt="图片"></div>
+                                <div class="renwuInfo">
+                                    <div class="renwuName h5 light-red">{weikucms:$vo.task_name}</div>
+                                    <div class="renwuSN h5">编号：{weikucms:$vo.key}</div>
+                                    <div class="myul renwuDetail">
+                                        <div class="h6 light-gray myli ">
+                                            转发 {weikucms:$vo.report_times}次
+                                        </div>
+                                        <div class="h6 light-gray myli ">
+                                            点击量 {weikucms:$vo.clicks}
+                                        </div>
+                                    </div>
+                                    <!-- <div class="myul renwuDetail">
+                                         <div class="h6 light-gray myli ">
+                                             订单 5
+                                         </div>
+                                         <div class="h6 light-gray myli ">
+                                             收货佣金 260
+                                         </div>
+                                     </div>-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </volist>
+                    <!-- 结束 -->
+                </if>
+            </div>
+
+
+
+            <div class="tuiguangCommissionWrapBox hide">
+                <if condition="$yjifo eq ''">
+                    <div class="baos">
+                        <div class="dingflo">
+                            暂无数据！
+                        </div>
+                    </div>
+                    <else/>
+                    <div class="baos">
+                        <div class="dingflo">订单号</div>
+                        <div class="dingflo">商品</div>
+                        <div class="dingflo">佣金</div>
+                        <div class="dingflo">状态</div>
+                        <div class="dingflo">订单金额</div>
+                    </div>
+
+                    <volist name="yjifo" id="vo">
+                        <div class="baos">
+                            <div class="dingflo">{weikucms:$vo.orderid}</div>
+                            <div class="dingflo">{weikucms:$vo.p_name}</div>
+                            <div class="dingflo">{weikucms:$vo.yj}</div>
+                            <div class="dingflo">
+                                <php>
+                                    $weektime = $vo['add_time']+3600*24*7;
+                                    if(time()< $weektime){
+                                        echo '待确认中';
+                                    }elseif($vo['status'] ==0){
+                                        echo '未结算';
+                                    }elseif($vo['status'] ==1){
+                                        echo '已结算';
+                                    }
+                                </php>
+                            </div>
+                                <!--<if condition="$vo.status eq">{weikucms:vo.status}</div>-->
+                            <div class="dingflo">{weikucms:$vo.price}</div>
+                        </div>
+                    </volist>
+                    <div style="clear: both;"></div>
+                </if>
+
+
+
+
+
+                <!--<div class="baos">
+                    <div class="dingflo">订单号</div>
+                    <div class="dingflo">商品</div>
+                    <div class="dingflo">佣金</div>
+                    <div class="dingflo">状态</div>
+                    <div class="dingflo">订单金额</div>
+                </div>-->
+
+
+                <!--<if condition="$aUserTime eq ''">
+                    <div style="text-align: center;font-size: 12px;background-color: white;min-height: 20px;border: 1px white solid;border-radius: 4px;width: 80%;display: block;margin-left: auto;margin-right: auto;padding: 7px;margin-top: 6px;">
+                        暂无数据！
+                    </div>
+                    <else/>
+                    &lt;!&ndash; 推广佣金列表循环体 &ndash;&gt;
+                    <volist name="aUserTime" id="so">
+                        <div class="tuiguangCommissionWrap setMiddle white-bg">
+                            <div class="tuiguangCommission myul light-gray-bg white">
+                                <div class="tuiguangDate">
+                                    {weikucms:$so.date}
+                                </div>
+                                <div class="setRight tuiguangCommissionIncome">{weikucms:$so.money}</div>
+                            </div>
+                        </div>
+                    </volist>
+                    &lt;!&ndash; 结束 &ndash;&gt;
+                </if>-->
+            </div>
+
+
+        </div>
+
+    </div>
+
+</if>
+
+<footer class="menuTab myul fixBottom">
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/taskcenter',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-renwu">
+        </div>
+        <div class="menuTitle gray">
+            任务大厅
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+        <div class="menu menu-xiaoxi">
+
+        </div>
+        <div class="menuTitle gray">
+            我的消息
+        </div>
+    </div>
+    <div class="menuWrap myli on" onclick="window.location.href='{weikucms::U('Media/myincome',array('token'=>$token,'openid'=>$openid,'iType'=>2))}'">
+        <div class="menu menu-shouru">
+
+        </div>
+        <div class="menuTitle gray">
+            我的收入
+        </div>
+    </div>
+    <div class="menuWrap myli" onclick="window.location.href='{weikucms::U('Media/mybrother',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="menu menu-yaoqing">
+
+        </div>
+        <div class="menuTitle gray">
+            我的邀请
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript">
+    $(function(){
+        $('.tixian').on('click',function(){
+            var url = "{weikucms::U('Wap/Media/withdrawals',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{},function(data){
+                if(data.codes==0){
+                    msg.alert(data.msg,'知道了',function(){
+                        window.location.href = data.urles;
+                    })
+                }else{
+                    window.location.href = data.urles;
+                }
+            },'json')
+        })
+    })
+</script>
+
+
+<if condition="$tpl['is_auth'] eq 1">
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getMyhome/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+    <else />
+    <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/getMyhome/token/{weikucms:$token}/from_openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+</if>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+
+
+<script type="text/javascript">
+    var shareTitle="";
+    var imgUrl="";
+    var descContent="";
+    var shareUrl="";
+
+    $(function() {
+        shareTitle = "我是{weikucms:$wxusers.nickname}我在这里等你哦";
+        imgUrl = "{weikucms:$wxusers.headimgurl}";
+        descContent = "一切在于分享";
+        shareUrl = $("#shareUrl").text();
+    });
+
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

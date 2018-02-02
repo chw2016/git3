@@ -1,0 +1,30 @@
+
+<if condition="$aTask neq ''">
+	<volist name="aTask" id="so">
+            <div class="of row-item">
+            <a href="{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$so['id']))}">
+                <div class="fl" style="width:30%;height: 75px;"><img src="{weikucms:$so.pic}" width="100%" height="100%"/></div>
+            </a>
+                <div class="fr row-right">
+                <a href="{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$so['id']))}">
+                    <div class='row-title' style="color:#000000;">{weikucms:$so.title}</div>
+                </a>
+                    <div>
+                        <span class="img_icon"><img src="{weikucms::STATICS}/wapweiui/medias/img/jifen.png" width="100%" /></span><span>{weikucms:$so.commission}</span>
+                        <span class="img_icon"><img src="{weikucms::STATICS}/wapweiui/medias/img/money.png" width="100%"  /></span><span>30</span>
+                        <span class="img_icon Invitation" onclick="doshare({weikucms:$so.id},'{weikucms:$so.pic}','{weikucms:$so.title}','{weikucms:$so.abstract}',{weikucms:$sos.pid});"><img src="{weikucms::STATICS}/wapweiui/medias/img/forwarding.png" width="100%" /></span>已分享<span class="hlight">{weikucms:$so.number}</span>次</span></span>
+                    </div>
+                </div>
+            </div>
+        </volist>
+        <div class="zw"></div>
+	
+	<else/>
+	<div class="of row-item" style="text-align: center;">
+		暂无数据
+	</div>
+
+</if>
+        
+
+   

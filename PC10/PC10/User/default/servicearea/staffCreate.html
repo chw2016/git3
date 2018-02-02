@@ -1,0 +1,147 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(document).ready(function(){
+        $(".pxf").attr("value","0");
+        $(".pxf").click(function(){
+            $(this).val($(this).attr("checked")?"1":"0");
+        })
+    })
+</script>
+<style type="text/css">
+    .msgWrap input{
+        width: 250px;
+    }
+</style>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="cLineB">
+            <h4>小区管理</h4>
+        </div>
+        <div class="cLineB" id="uppict" style="display:none">
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+                <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <input type="hidden" class="px" id="id" value="{weikucms:$aAreas.id}" name="id">
+                        <input type="hidden" class="px" id="token" value="{weikucms:$aAreas.token}" name="token">
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="aid">小区名称</label></th>
+                        <td>
+                            <?php HtmlTagHelper::select(
+                            $areaed, 'aid', array('id' => 'ursename'),
+                            $aAreas['aid']
+                            )?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="staff_name">姓名</label></th>
+                        <td><input calss="pc" type="text" name="staff_name" id="staff_name" value="{weikucms:$aAreas.staff_name}"/></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="tel">手机</label></th>
+                        <td><input calss="pc" type="tel" name="tel" id="tel" value="{weikucms:$aAreas.tel}"/></td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="sex">性别</label></th>
+                        <td>
+                            <select name="sex" id="sex">
+                                <option value="0" selected>请选择</option>
+                                <option value="1" <if condition="$aAreas.sex eq 1">selected</if>>男</option>
+                                <option value="2" <if condition="$aAreas.sex eq 2">selected</if>>女</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+                            <include file="./tpl/User/default/helper/list_btn.html"/>
+                            <div class="clr"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div class="clr"></div>
+    </div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        var id = $("#id").val();
+        var token = $("#token").val();
+        var aid = $("select[name='aid']").val();
+        var staff_name = $("#staff_name").val();
+        var tel = $("#tel").val();
+        var sex = $("#sex").val();
+        if(aid == 0){
+            notif({
+                msg: '请选择小区',
+                type: 'warning'
+            });
+            return false;
+        }
+        if(staff_name == ''){
+            notif({
+                msg: '请填写维修师的姓名',
+                type: 'warning'
+            });
+            return false;
+        }
+        if(tel == ''){
+            notif({
+                msg: '请填写维修师的联系电话',
+                type: 'warning'
+            });
+            return false;
+        }
+        if(sex == 0){
+            notif({
+                msg: '请选择维修师性别',
+                type: 'warning'
+            });
+            return false;
+        }
+        var url = "{weikucms::U('Servicearea/staffCreate',array('token'=>$token))}";
+
+        $.post(url,{
+                    id:id,
+                    token:token,
+                    aid:aid,
+                    staff_name:staff_name,
+                    tel:tel,
+                    sex:sex,
+                    __hash__: $("input[name='__hash__']").val()
+                },
+                function(data){
+                    if(data.status == 1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            window.location.href = data.url;
+                        },'1000');
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "error"
+                        });
+                    }
+                },'json');
+    }
+</script>

@@ -1,0 +1,229 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.11.1.min.js"></script>
+        <style>
+            .selectAll,.select {
+                width: 18px;
+                height: 18px;
+                border: 1px solid #ccc;
+                position: relative;
+                z-index: 10;
+            }
+            .selectAll.on,.select.on {
+                text-align:center;
+                line-height:18px;
+                color: rgb(234, 85, 20);
+                border-color:rgb(234, 85, 20);
+            }
+            .selectAll.on:before,.select.on:before {
+                content:"√";
+            }
+        </style>
+<div class="">
+    <div class="cLineB">
+        <!--tab start-->
+
+        <!--tab end-->
+    </div>
+    <div class="cLineB">
+        <h4>
+            <a class="btn btn-success btn-sm"  onclick="jiesu()" >一键结算</a>
+            <a class="btn btn-success btn-sm" href="javascript: history.back()" class="nohover">返回</a>
+        </h4>
+    </div>
+
+
+    <div>
+        <form action="" method="post">
+            <table>
+
+
+                <tr>
+
+
+                    <th>　　处理状态：</th>
+                    <td>
+                        <select name="status" id="handled">
+                            <option value="2">请选择</option>
+                            <option value="0" >未结算</option>
+                            <option value="1" >已结算</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>下单时间：</th>
+                    <td>
+                        <input type="input" class="px" id="statdate" value="{weikucms:$statdate}" onclick="WdatePicker()" name="statdate">&nbsp;&nbsp;到&nbsp;&nbsp;
+                    </td>
+                    <td>
+                        <input type="input" class="px" id="enddate" value="{weikucms:$enddate}" name="enddate" onclick="WdatePicker()" > </td>
+
+                    </td>
+
+                    <td>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp
+                        <button type="submit" id="submit" name="button" class="btn btn-primary">
+                            筛选
+                        </button>
+                    </td>
+                </tr>
+                <tr><td>&nbsp</td></tr>
+            </table>
+        </form>
+    </div>
+
+
+    <div class="msgWrap">
+        <form method="post" action="" id="info">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th><div class="selectAll" ></div>全选</th>
+                    <th >编号</th>
+                    <th >得多少佣金</th>
+                    <th >是否结算</th>
+                    <th >获得时间</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr></tr>
+
+                <volist name="list" id="o" key="i">
+                    <tr>
+                        <td><div class="select" yid="{weikucms:$o.id}"></div></td>
+                        <td>{weikucms:$i}</td>
+                        <td>{weikucms:$o.yj}</td>
+                        <td><if condition="$o['status'] eq 1" >已结算<else />未结算</if></td>
+                        <td>{weikucms:$o.add_time|date='Y-m-d H:i:s',###}</td>
+                            <if condition="$o['status'] eq 0">
+                        <td class="norightborder">
+
+                            <a href="{weikucms::U('Store_new/jiesu',array('token'=>$token,'id'=>$o['id'],'openid'=>$_GET['openid']))}"  class="btn btn-success btn-sm">结算</a>
+
+                        </td>
+                                </if>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+            <input type="hidden" name="token" value="{weikucms:$_GET['token']}" />
+        </form>
+
+        <!--<script>-->
+            <!--function showIntroDetail(id){-->
+                <!--art.dialog.open('{weikucms::U('Store_new/orderInfo',array('token'=>$token,'dining'=>$isDining))}&id='+id,{lock:false,title:'订单详情',width:1000,height:620,yesText:'关闭',background: '#000',opacity: 0.87});-->
+            <!--}-->
+        <!--</script>-->
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+<include file="Public:footer"/>
+
+        <script type="text/javascript">
+
+            function mySelector(mySelect,Selected,only,mySelectAll_L){
+                var /*mySelect       = $(".myselect"),         //设置选择对象
+                 Selected       = "selected",             //已选的Class Name
+                 mySelectAll_L  = $(".slectAll"),         //全选按钮的位置
+                 only           = 3,                      //可选择的长度*/
+                        SelectLength   = mySelect.length,        //选择对象的长度
+                        SelectedLength = 0;                      //初始化已选择的长度
+                if(isNaN(only)){
+                    mySelectAll_L = only;
+                    only=0;
+                }else if(only==undefined||only>SelectLength){
+                    only=0;
+                }
+                //console.log(mySelectAll_L)
+                function OpenSelect(e){//开启功能
+                    mySelect.on('click',SelectToggle);
+                    if(mySelectAll_L!=undefined){mySelectAll_L.on('click',SelectAll);}
+                    return true;
+                }
+                function CloseSelect(e){//关闭功能
+                    mySelect.off('click');
+                    mySelectAll_L.off('click');
+                    return false;
+                };
+                OpenSelect();
+                function SelectToggle(){
+                    var THIS = $(this);
+                    if(!THIS.hasClass(Selected)){
+                        if(SelectedLength<only ||only==0){
+                            THIS.addClass(Selected);
+                            SelectedLength+=1;
+                            if(SelectLength==SelectedLength&&only==0){
+                                //if(mySelectAll_L!=undefined){mySelectAll_L.html("全取消")};
+                            }
+                            //console.log(SelectedLength);
+                        }else if(only==1){
+                            mySelect.removeClass(Selected);
+                            THIS.addClass(Selected);
+                        }else {
+                            alert("超过了可选范围")
+                        }
+                    }else {
+                        THIS.removeClass(Selected);
+                        SelectedLength-=1;
+                        if(mySelectAll_L!=undefined){
+                            //mySelectAll_L.html("全选")
+                            mySelectAll_L.removeClass(Selected);
+                        };
+
+                        //console.log(SelectedLength);
+                    }
+
+                }
+                function SelectAll(){
+                    if(SelectedLength<=only&&only!=0){
+                        alert("你还可以选择"+(only-SelectedLength)+"个！")
+                    }else{
+                        if(SelectedLength<SelectLength ){
+                            mySelectAll_L.addClass(Selected)
+                            mySelect.addClass(Selected);
+                            SelectedLength=SelectLength;
+                            //mySelectAll_L.html("全取消");
+                            //console.log(SelectedLength);
+                        }else {
+                            mySelectAll_L.removeClass(Selected)
+                            mySelect.removeClass(Selected);
+                            SelectedLength=0;
+                            //mySelectAll_L.html("全选");
+                            //console.log(SelectedLength);
+                        }
+                    }
+                }
+            }
+                   mySelector($(".select"),"on",0,$(".selectAll"))
+
+
+        </script>
+        <script>
+            function jiesu(){
+                var id=[];
+                $(".select").each(function(i,e){
+                    if($(this).hasClass('on')){
+                        id[i]=$(this).attr('yid');
+                    }
+                })
+                id=id.join('-');
+                var url="{weikucms::U('Store_new/jiesu',array('token'=>$token,'openid'=>$_GET['openid']))}";
+                $.post(url,{id:id},function(data){
+                    if(data.status){
+                        location.reload();
+                    }else{
+                        alert("失败");
+                    }
+                },'json');
+            }
+        </script>

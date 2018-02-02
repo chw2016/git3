@@ -1,0 +1,259 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/common/chat/main.css"  />
+        <script type="text/javascript" src="{weikucms::STATICS}/common/chat/jquery-1.11.2.min.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/chat/samphay-jquery.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/chat/iscroll-probe.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/f.js" charset="UTF-8"></script>
+
+    </head>
+    <body>
+<!-- chatPage -->
+<div class="pageBox pageBoxchat chatPage" id="chatPage">
+    <div class="header">
+        <!--
+        <div class="goBackWrap">
+            <div class="circle back arrowDown">
+            </div>
+        </div>
+        -->
+        <div class="titleBox">
+            <div class="text f18" id="to_wx_username" style="line-height: 60px;">
+                {weikucms:$title}
+            </div>
+            <div class="title f12"><span class="deviceType"></span><span class="netType"></span></div>
+        </div>
+    </div>
+    <div class="content" id="chatScroll">
+        <div class="scrollContent">
+
+        </div>
+
+    </div>
+    <if condition="$_GET['shut'] neq 1">
+    <div class="footer m">
+
+        <div class="inputEdit myul">
+            <!--
+            <div class="icon-smile" id="faceSwitch">
+                <i class="icon-smileMouth"></i>
+            </div>
+            -->
+            <div class="inputBox">
+                <input id="chatMsg" type="text" placeholder=""/>
+            </div>
+            <div class="btnReply">
+                发送
+            </div>
+        </div>
+        <div class="faceBox">
+            <div class="faceBoxContain">
+                <div class="facePage" id="faceContent">
+
+                </div>
+            </div>
+            <div class="faceList">
+                更多表情敬请期待
+            </div>
+        </div>
+    </div>
+    </if>
+
+</div>
+
+
+    </body>
+    <script type="text/javascript">
+    var chatScroll ;
+    var maxid = null;
+    var loading = 0;
+    window.onload = function(){
+        chatScroll = new IScroll("#chatScroll",{
+                        scrollbars:true,
+                        probeType: 1,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true,
+                        bounceTime : 800
+                        //momentum : true,
+                        /*MSPointerMove: function(){
+                        }*/
+        });
+        var html;
+        <volist name="msg" id="vo">
+            <if condition="$vo['openid'] eq $openid">
+                html = toMessage_('{weikucms:$vo.msg}', '{weikucms:$vo.info.headimgurl}') ;
+            <else />
+                html = fromMessage_('{weikucms:$vo.msg}', '{weikucms:$vo.info.headimgurl}') ;
+            </if>
+            showMessage(html);
+            html  = '';
+            maxid = '{weikucms:$vo.id}';
+        </volist>
+
+        setInterval(function(){
+            ajaxdata();
+        }, 3000);
+    }
+
+    //循环拿数据
+    function ajaxdata(){
+        if(loading == 0){
+            loading = 1;
+            ajax('{weikucms::U('Room/getMessages', array('token' => $token, 'openid' => $openid,  'code' => $code))}',{maxid:maxid, notmy:1}, function(ret){
+                if(ret.code == 0 && ret.data){
+                    $.each(ret.data, function(i, row){
+                        var img = '';
+                        if(typeof(row.info) != 'undefined'){
+                            img = row.info.headimgurl;
+                        }
+                        html = fromMessage_(row.msg, img) ;
+                        showMessage(html);
+                        html  = '';
+                        maxid = row.id;
+                    })
+                }
+                loading = 0;
+            });
+        }
+    }
+
+    /*
+     * 发送的信息模板
+     * msg:信息内容
+     * img:头像地址
+    * */
+    function toMessage_(msg,img){
+        if(!img)img = "";
+        if(!msg) return;
+        return '<div class="cItem to">' +
+            '<div class="cLogo">' +
+            '<img src="'+img+'">' +
+            '</div>' +
+            '<div class="myWord">' + msg+'</div>' +
+            '</div>';
+    };
+
+    /*
+     * 收到的信息模板
+     * msg:信息内容
+     * img:头像地址
+     * */
+    function fromMessage_(msg,img){
+        if(!img)img = "";
+        if(!msg) return;
+        return '<div class="cItem from">' +
+            '<div class="cLogo">' +
+            '<img src="'+img+'">' +
+            '</div>' +
+            '<div class="myWord">'+msg+'</div>' +
+            '</div>';
+    };
+
+    /*
+    * 信息模板输出
+    * */
+    function showMessage(msg){
+        /*var printf = function(msg){
+                var img = $(msg).find("img").attr("src"),
+                    word = $(msg).text();
+                if($(msg).hasClass("to")){
+                    return toMessage_(word,img);
+                }else if($(msg).hasClass("from")){
+                    return fromMessage_(word,img);
+                }
+            };*/
+        function faceData(face){
+            var data = {};
+            $.each(face,function(i,o){
+                data[o.name] = "<img width='48px' src='"+ o.img + "' >";
+            })
+            return data
+        }
+        var printf = function(msg){
+            var img = $(msg).find("img").attr("src"),
+                word = $(msg).text();
+            if($(msg).hasClass("to")){
+                return toMessage_(word,img);
+            }else if($(msg).hasClass("from")){
+                return fromMessage_(word,img);
+            }
+        };
+        $("#chatScroll").find(".scrollContent").append(printf(msg));
+        chatScroll.refresh();
+        if($(msg).hasClass("from")){
+            if(chatScroll.y - chatScroll.maxScrollY <250){
+                countMsg = 0;
+                $("#_msgTips").fadeOut(function(){
+                    $("#_msgTips").html(countMsg);
+                });
+                chatScroll.scrollToElement(document.querySelector('.cItem:last-child'),100,null,true);
+            }else{
+                countMsg++;
+                //console.log(countMsg);
+                //showMsgTips(countMsg);
+            }
+        }else{
+            chatScroll.scrollToElement(document.querySelector('.cItem:last-child'),100,null,true);
+        }
+    };
+
+
+
+    /*
+    * 发送时的加载条
+    * */
+    function sendLoading(){
+        $(".cItem.to").eq(-1).find(".myWord").before().waiting(function(this_){
+            this_.css({
+                "position" : "absolute",
+                "top": "10px",
+                "left" : "-70%"
+            });
+            /*
+            typeof callBack == "function" ? callBack(this_) : setTimeout(function(){
+                //this_.remove();
+            },500);
+            */
+            return this_;
+
+        },18);
+    };
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $(".btnReply").touch(function(){
+                var msgstr = $.trim($("#chatMsg").val());
+                if(!msgstr==""){
+                    var html = toMessage_("{weikucms:$roles}"+msgstr, "{weikucms:$wxusers.headimgurl}") ;
+                    showMessage(html);
+                    loading = 1;
+                    $("#chatMsg").val("")
+                    setTimeout(function(){
+                        ajax('{weikucms::U('Room/send', array('token' => $token, 'openid' => $openid,  'code' => $code,'role' => $role))}',{msg:msgstr}, function(ret){
+                            maxid = ret.id;
+                            if(ret.code != 0){
+                                alert('消息【'+ret.msg+'】发送失败');
+                            }
+                            loading = 0;
+                        });
+                    }, 400);
+                    /*
+                    setTimeout(function(){
+                        var html_ = fromMessage_("您好，有事请烧香！") ;
+                        showMessage(html_);
+                    },1000)
+                    */
+
+                }else{
+                    alert('请输入聊天内容');
+                    return false;
+                }
+            })
+        })
+
+    </script>
+</html>
+

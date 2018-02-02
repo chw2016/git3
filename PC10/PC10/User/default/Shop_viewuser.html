@@ -1,0 +1,166 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            查看会员
+            <if condition="$info['title']">
+                <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Commercedy/hygl',array('token'=>$token))}">
+
+                <else />
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Shop/hygl',array('token'=>$token))}">
+                </if>
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">微信昵称</label></th>
+                    <td>
+                    	<if condition="$user['name'] eq ''">
+							暂无名称
+                    	<else/>
+                    		{weikucms:$user['name']}
+                    	</if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="title">头像</label></th>
+                    <td>
+                    	<if condition="$user['headimgurl'] eq ''">
+                    		暂无头像
+                    	<else/>
+                    		<img src="{weikucms:$user.headimgurl}" width="100px" />
+                    	</if>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="cid">真实名字</label></th>
+                    <td>
+                        {weikucms:$user.truename}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">生日</label></th>
+                    <td>
+                        {weikucms:$user.birthday}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">生日类型</label></th>
+                    <td>
+                        <if condition="$user['birth_type'] eq 1">阳历<else/>阴历</if>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">得意币</label></th>
+                    <td>
+                        {weikucms:$user.dyb}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">积分</label></th>
+                    <td>
+                        {weikucms:$user.score}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">余额</label></th>
+                    <td>
+                        {weikucms:$user.money}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="cid">手机号</label></th>
+                    <td>
+                        {weikucms:$user.phone}
+                    </td>
+                </tr>
+                
+
+                <tr>
+                    <th valign="top"><label for="starttime">地址</label></th>
+                    <td>
+                        {weikucms:$user.address}
+                    </td>
+                </tr>
+
+                 <tr>
+                    <th valign="top"><label for="starttime">邮箱</label></th>
+                    <td>
+                        {weikucms:$user.mail}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">银行卡号</label></th>
+                    <td>
+                        {weikucms:$user.bank_number}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">开户行名字</label></th>
+                    <td>
+                        {weikucms:$user.bank_name}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">QQ号</label></th>
+                    <td>
+                        {weikucms:$user.qq_num}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">注册时间</label></th>
+                    <td>
+                        <php>echo date("Y-m-d H:i:s",$user['add_time']);</php>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">密码</label></th>
+                    <td>
+                        {weikucms:$user.yepasswd}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">当前等级</label></th>
+                    <td>
+                        {weikucms:$user.gradename}
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="starttime">手动升级</label></th>
+                    <td>
+                       <form action="{weikucms::U('User/Shop/update_grade',array('token'=>$token))}" method="post"> 
+                           <input type="hidden" name="openid" value="{weikucms:$user['openid']}"> 
+                           <select name="update_grade" id="update_grade">
+                               <option value="">请选择</option>
+                               <volist name="gradelist" id="vo" key="k">
+                                   <option value="{weikucms:$k}">{weikucms:$vo.name}</option>
+                               </volist>
+                           </select>
+                           <button class="btn btn-success btn-sm" type="submit">手动升级</button>
+                       </form>
+                    </td>
+                </tr>
+            </table>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>

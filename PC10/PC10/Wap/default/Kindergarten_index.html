@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>{weikucms:$data['kgname']}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Mobile Devices Support @end -->
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/kindergarten/css/style.css"/>
+
+<link type="text/css" rel="stylesheet" href="{weikucms::RES}/kindergarten/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/kindergarten/css/zoompic.css" />
+</head>
+<body style="background-image: url({weikucms::RES}/kindergarten/img/e8e15dcca845212a06debe0ffc018688.jpg);">
+<a href="{weikucms::U('Kindergarten/noticelist',array('token'=>$token,'openid'=>$openid))}&kgid={weikucms:$data['kgid']}"><div class="notice" style="background-color:rgba(234,85,20,0.5);height:35px;text-align:center;padding-top:8px;color:#fff;"><marquee direction="left">最新公告：{weikucms:$d['notice']}</marquee></div></a>
+<div style="margin-top:20%;text-align:center;font-size:300%;color:#fff;-webkit-text-stroke:1px #000;font-family:'楷体','楷体_GB2312'">{weikucms:$m['kgname']}欢迎您</div>
+<div class="container no-space padding-bottom-10">
+    <div class="row nav-panel">
+                <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/introgarden',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-1">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/page.png">
+                <div class="name">园所简介</div>
+            </a>
+        </div>
+           <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/specialcourse',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-4">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/course.png">
+                <div class="name">特色课程</div>
+            </a>
+        </div>
+       
+                <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/ttofteachers',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-3">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/teacher.png">
+                <div class="name">教师团队</div>
+            </a>
+        </div>
+              <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/weeklyrecipes',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-2">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/page.png">
+                <div class="name">每周食谱</div>
+            </a>
+        </div>
+                <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/excitingact',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-5">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/activity.png">
+                <div class="name">精彩活动</div>
+            </a>
+        </div>
+                <div class="col-sm-4">
+            <a href="{weikucms::U('Wap/Kindergarten/contactus',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}" class="nav nav-6">
+                <img class="icon" src="{weikucms::RES}/kindergarten/img/page.png">
+                <div class="name">联系我们</div>
+            </a>
+        </div>
+            </div>
+</div>
+<div class="my">
+    <div class="row">
+                <a class="col-sm-3 item" href="tel:{weikucms:$m['kgtel']}">
+            <img src="{weikucms::RES}/kindergarten/img/my-tel.png">
+            <p>通话</p>
+        </a>
+        <a class="col-sm-3 item" href="{weikucms::U('Wap/Kindergarten/feedback',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}">
+            <img src="{weikucms::RES}/kindergarten/img/my-feedback.png">
+            <p>留言</p>
+        </a>
+        <a class="col-sm-3 item" href="{weikucms::U('Wap/Kindergarten/campus',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}">
+            <img src="{weikucms::RES}/kindergarten/img/my-address.png">
+            <p>校区</p>
+        </a>
+        <a class="col-sm-3 item" href="{weikucms::U('Wap/Kindergarten/my',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid']))}">
+            <img src="{weikucms::RES}/kindergarten/img/my-my.png">
+            <p>我的</p>
+        </a>
+            </div>
+</div>
+</body>
+</html>

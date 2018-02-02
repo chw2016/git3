@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    	<title>微休闲</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<!--
+		<header id="c-product-header">
+    		微休闲
+    	</header>
+		-->
+    	<div class="xiuxian">
+    		<img src="{weikucms:$res.img_path}" />
+    	</div>
+    	<div class="gray-bg">
+    		<ul class="Leisure-list">
+    		<volist name="result" id="vo">
+    			<a href="{weikucms:$vo.link_url}">
+	    			<li>
+	    				<img src="{weikucms:$vo.img_path}" />
+	    				<p>{weikucms:$vo.a_name}</p>
+	    			</li>
+    			</a>
+    		</volist>
+    		</ul>
+    		<div style="clear:both;height:10px;"></div>
+    	</div>
+    	<script type="text/javascript">
+    		window.onload = function(){
+    			$('.xiuxian>img').css('width', $(window).width()+'px');
+    			// 下面背景的高度
+    			$('.gray-bg').css('min-height', $(window).height()-$('.xiuxian>img').height()-$('#c-product-header').height()+'px');
+    			$('.Leisure-list>a>li>img').css('width',$('.Leisure-list>a>li').width()*0.7+'px');
+    			$('.Leisure-list a li').css('margin-top', $('.Leisure-list a li').width()/7+'px');
+					var a = setTimeout(function(){
+                    		
+                    $("#loading").hide(0).remove();
+                },1200);
+    		}
+    	</script>
+    </body>
+</html>

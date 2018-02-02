@@ -1,0 +1,224 @@
+<html>
+<head>
+<meta name="keywords" content="{}">
+<meta name="description" content="{}">
+<title>{weikucms:$storeName}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=0">
+<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_common.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/es/css/store_goods_menu.css" rel="stylesheet" type="text/css" />			
+</head>
+<body style="">
+	<input type="hidden" id="localeLanguage" value="zh">
+	<input type="hidden" id="common_message_serverCannotConnection" value="由于网络故障无法连接服务器，请稍后重试">
+	<input type="hidden" id="menu_itemOrdered1" value="您已订购">
+	<input type="hidden" id="menu_itemOrdered2" value="份菜品，">
+	<input type="hidden" id="shoppingCart_html_subtotal" value="小计:">
+	<input type="hidden" id="shoppingCart_yuan" value="元">
+	<input type="hidden" id="menu_message_fail" value="数据读取错误，请重试">
+	<input type="hidden" id="menu_message_startOrder" value="开始购买">
+	<input type="hidden" id="menu_message_quantity" value="份">
+	<input type="hidden" id="home_message_orderTime" value="对不起，现在不在营业时间段，请原谅！！！">
+	<input type="hidden" id="menu_message_productUnavailable" value="产品不在售卖时间，请选择其他产品">
+	<input type="hidden" id="menu_message_addedToCart" value="已加入购物车">
+	<input type="hidden" id="shoppingCart_message_lookAtMenuFirst" value="购物车内为空，请先浏览菜单点餐">
+	<input type="hidden" id="menu_message_combineQuantity" value="份">
+	<input type="hidden" id="menu_message_flushQuantity" value="/份">
+	<input type="hidden" id="classId" value="{weikucms:$classId}"/>
+	<input type="hidden" id="token"	value="{weikucms:$token}"/>
+	<input type="hidden" id="wecha_id"	value="{weikucms:$wecha_id}"/>
+	<input type="hidden" id="storeId" value="{weikucms:$storeId}"/>	
+	
+	
+	<h1 class="hide_h">{weikucms:$className}</h1>
+		<div class="page-app menuB" id="page_menuB">
+			<div class="page-header">
+				
+				<a class="head-button-left backhome page-button bright" href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}&amp;classId={weikucms:$classId}"><span class="icon"></span>首页</a>
+				
+				<div class="page-button bright menu am-clickable">
+					<span class="text">商品</span><span class="icon"></span>
+				</div>
+				<p>{weikucms:$className}</p>
+			</div>
+
+			<div class="menuB-dropdownMenu" style="display: none">
+				<div class="menuB-title menu">
+					菜单<div class="line"></div>
+				</div>
+				<ul class="menuB-list2">
+					<!-- 循环列出 -->						
+					<volist name="classData" id="value">			
+						<li class="am-clickable" title="/index.php?g=Wap&amp;m=Store&amp;a=goodsList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}&amp;classId={weikucms:$value.id}">
+							{weikucms:$value.goods_class_name}
+						</li>
+					</volist>
+							
+				</ul>
+				<!--<div class="menuB-title">
+					优惠直通车<div class="line"></div>
+				</div>
+				<ul class="menuB-list3">
+					&lt;!&ndash; 循环列出 &ndash;&gt;
+					<volist name="classData" id="value">			
+						<li class="am-clickable" title="/index.php?g=Wap&amp;m=Store&amp;a=goodsList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}&amp;classId={weikucms:$value.id}">
+							{weikucms:$value.goods_class_name}
+						</li>
+					</volist>
+				</ul>-->
+			</div>
+
+			<div class="menuB-orderTip">
+				<p class="shoppingCartInfo">您已订购0份菜品，小计:<span class="highlight">0</span>元。</p>
+			</div>
+			
+
+			
+			<div class="subMenuContainer">
+				<ul class="setMeal-list">
+					<li class="am-clickable menuItem" style="display: none">
+						<div class="setMeal-photo"></div>
+						<div class="cornermark" style="display: none"></div>
+						<div class="orderBtn setMeal-button page-button bright am-clickable">
+							<if condition="$token eq '666ea677a79ec719978fa6e82d294bea'">购买<else />收藏</if><span class="icon"></span>
+						</div>
+						<div class="setMeal-listContent">                          
+						     <p class="title"></p>
+							<span class="price"></span>
+						</div>
+					</li>
+					<li class="addline" style="display: none">
+						<div class="setMeal-button page-button am-clickable">确定</div>
+						<div class="widget-num">
+							<div class="left am-clickable"></div>
+							<div class="right am-clickable"></div>
+							<div class="text"></div>
+						</div>
+						<p class="numTip"><!-- 58.0元/份 --></p>
+					</li>
+				</ul>
+			</div>
+
+
+		   	<div class="page-tipsTitle">友情提示</div>
+	        <div class="page-tipsContent">
+	        	<p>本店营业时间&nbsp;:&nbsp;&nbsp;{weikucms:$storeTime}
+	        	<br />本店营业地址&nbsp;:&nbsp;&nbsp;{weikucms:$storeAddress}
+	        	<br/>本店活动信息&nbsp;:&nbsp;&nbsp;{weikucms:$promptInfo}
+	        	</p>
+	        </div>
+			<div class="menuB-shoppingCartBox">
+                <div class="menuB-shoppingCartBoxA">
+                    <div class="menuB-shoppingCart"></div>
+                </div>
+            </div>
+		</div>
+
+		<div class="page-app menuC" id="page_setMeal" style="display: none">
+			<div class="page-header">
+				<a class="head-button-left backhome page-button bright" href="home.do"><span class="icon"></span>首页</a>
+				<div class="page-button bright menu am-clickable" id="setMeal-back">
+					<span class="icon"></span><span class="text">返回</span>
+				</div>
+				<p>套餐订购</p>
+			</div>
+
+			<div class="menuC-info">
+				<p class="title"></p>
+				<p class="price"></p>
+			</div>
+			<div class="menuC-num">
+				<div class="widget-num">
+					<div class="left am-clickable"></div>
+					<div class="right am-clickable"></div>
+					<div class="text"></div>
+				</div>
+				<p class="title">选择套餐份数</p>
+			</div>
+			<div class="menuC-detail">
+				<ul class="menuC-fixedItems">
+					<li></li>
+				</ul>
+				<ul class="menuC-items">
+					<li>
+						<div class="itemTitle">
+							<p class="text"></p>
+							<p class="num"><!-- <span class="highlight">1</span> 份 --></p>
+						</div>
+						<ul>
+							<li>
+								<div class="widget-num">
+									<div class="left am-clickable"></div>
+									<div class="right am-clickable"></div>
+									<div class="text"></div>
+								</div>
+								<span class="icon"></span>
+								<p class="title"></p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="page-button menuC-nextBtn am-clickable" id="setMeal_confirm">确认订购</div>
+
+			<div class="page-tipsTitle">友情提示</div>
+	        <div class="page-tipsContent">
+	        	<p>本店营业时间&nbsp;:&nbsp;&nbsp;{weikucms:$storeTime}
+	        	<br />本店营业地址&nbsp;:&nbsp;&nbsp;{weikucms:$storeAddress}
+	        	<br/>本店活动信息&nbsp;:&nbsp;&nbsp;{weikucms:$promptInfo}
+	        	</p>
+	        	
+	        </div>
+		</div>
+
+		<div class="menu-popup" style="display: none" id="page_popup">
+			<div class="menu-popup-inner">
+				<div class="title">
+					<p></p>
+					<div class="close-btn am-clickable"></div>
+				</div>
+				<div class="img">
+				</div>
+				<div class="newtip" style="display: none"></div>
+				<div class="desc-wrap">
+					<div class="desc">
+						<p></p>
+					</div>
+				</div>
+				<div class="orderBar">
+					<div class="widget-num">
+						<div class="left am-clickable"></div>
+						<div class="right am-clickable"></div>
+						<div class="text">0</div>
+					</div>
+					<p class="numTip"><!-- <span class="highlight">58.0</span> 元/份 --></p>
+					<div class="page-button am-clickable" id="popup_confirm">确认订购</div>
+				</div>
+			</div>
+		</div>			
+<!--  libs -- start -->
+<script src="{weikucms::STATICS}/wapweiui/es/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/wapweiui/es/js/am.js" type="text/javascript"></script>
+<!--  libs -- end -->
+<script src="{weikucms::STATICS}/wapweiui/es/js/menub.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/wapweiui/es/js/shoppingcart.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+
+	<if condition="$javaScriptData">
+	var menuData = {weikucms:$javaScriptData};
+	<else />
+	var menuData = null;
+	</if>
+	
+	var userinfo = '{weikucms:$userInfoData}';
+	var isService = true;
+	isService = true;
+	var isOrder = true;
+	isService = true;
+
+</script>
+</body>
+</html>

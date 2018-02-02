@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<meta content="eric.wu" name="author">
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="/tpl/Wap/default/wxdj/a/css/common.css">
+	<link rel="stylesheet" href="/tpl/Wap/default/wxdj/a/css/index.css">
+	<style>
+		      body{ -webkit-user-select:none;
+ 	        -webkit-touch-callout:none;
+}
+	</style>
+    </head>
+    <body class="content">
+	    	<div class="expiry">
+	    		<img src="/tpl/Wap/default/wxdj/a/images/bj-top2.png" alt="">
+	    	</div>
+	    	<div class="expiry-main">
+	    		<p>未中奖！</p>
+	    		<p>谢谢购买产品！</p>
+	    	</div>
+	    	<div class="expiry-btn close" id="closeWindow">
+	    		知道了
+	    	</div>
+    </body>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+    //关闭窗口
+    var readyFunc = function onBridgeReady() {
+    var curid;
+    var curAudioId;
+    var playStatus = 0;
+ 
+    
+    // 关闭当前webview窗口 - closeWindow
+    document.querySelector('#closeWindow').addEventListener('click', function(e){
+        WeixinJSBridge.invoke('closeWindow',{
+        },function(res){
+            
+            //alert(res.err_msg);
+ 
+       });
+    });    
+    
+}
+
+
+if (typeof WeixinJSBridge === "undefined") {
+  document.addEventListener('WeixinJSBridgeReady', readyFunc, false);
+} else {
+  readyFunc();
+}
+    //关闭窗口
+	wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+            'uploadImage',
+            'downloadImage',
+            'previewImage'
+        ]
+    });
+    wx.ready(function () {
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+		//$('.close').click(function(){
+			//wx.closeWindow();
+		//});
+        $(".c1").click(function(e) {    //拍照、本地选图
+
+            var a1=$(this);
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                           
+                                            a1.find(".img2").val(t);
+                                            a1.find('img').attr('src',t);
+                                            //a1.find('img').css('display','block');
+                                            a1.find('img').show();
+
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+    })
+
+	</script>
+</html>

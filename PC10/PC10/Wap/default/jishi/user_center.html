@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+    </head>
+    <body>
+	    <div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+	    	个人中心
+	    	<!-- <div class="headerRight city-ed noWrap overFloatHidden">
+	    		    	请选择
+	    		    </div>
+	    		     -->
+	    </div>
+		<div class="setMiddle circle centerLogo fixBg" style="background-image:url({weikucms::STATICS}/wapweiui/jishi/img/userlogo.png)">
+		</div>
+		<div class="centerUserName lisheng-text-color textMiddle h3">
+			<!--139012345678-->
+		</div>
+		<div class="centerList myul lisheng-text-color white-bg h3" onclick="window.location.href='{weikucms::U('Wap/Jishi/my_order',array('token'=>$token,'openid'=>$openid))}'">
+			<div class="icon icon-myorder"></div>
+			我的订单
+		</div>
+		<div class="centerList myul lisheng-text-color white-bg h3" onclick="window.location.href='{weikucms::U('Wap/Jishi/my_collect',array('token'=>$token,'openid'=>$openid))}'">
+			<div class="icon icon-mycolect"></div>
+			我的收藏
+		</div>
+		<a href="tel:{weikucms:$kf.tel}"><!-- 客服的电话号码在这 -->
+			<div class="border-12 setMiddle lisheng-red-bg callBtn white myul">
+			<div class="icon icon-call"></div>
+			客服 {weikucms:$kf.tel}<!-- 客服的电话号码在这 -->
+		</div>
+		</a>
+
+		<div class="footerHavBox myul textMiddle white-bg">
+			<div class="footerHav menu-home myli" onclick="window.location.href='{weikucms::U('Wap/Jishi/chanpinzhanshi',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="icon setMiddle icon-home">
+
+				</div>
+				<div class="footHavName">
+					产品中心
+				</div>
+			</div>
+			<div class="footerHav menu-licaishi myli " onclick="window.location.href='{weikucms::U('Wap/Jishi/licailist',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="icon setMiddle icon-licaishi">
+
+				</div>
+				<div class="footHavName">
+					理财师
+				</div>
+			</div>
+			<div class="footerHav menu-member myli on" onclick="window.location.href='{weikucms::U('Wap/Jishi/user_center',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="icon setMiddle icon-member">
+
+				</div>
+				<div class="footHavName">
+					会员中心
+				</div>
+			</div>
+		</div>
+    </body>
+
+</html>

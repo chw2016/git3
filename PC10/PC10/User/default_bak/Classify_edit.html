@@ -1,0 +1,175 @@
+<include file="Public:head"/>
+ <div class="content">
+          <div class="cLineB"><h4>编辑文章分类</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
+          
+  <script>
+$(document).ready(function(){
+	 getSection();
+    $("#pp").change(function(){
+     getCatid();
+    });
+ function getSection()
+    {
+
+		getCatid();
+ 
+    }
+  function getCatid()
+    {
+     $("#select").empty();
+	 $("<option></option>").val("").text("请选择").appendTo($("#select"));
+     $.getJSON("__URL__/getCatid",  {pp:$("#pp").val()}, function(data) {
+      $.each(data, function(i, item) {
+		  if ($("#pp").val()=="微汽车" || $("#pp").val()=="微会员"  || $("#pp").val()=="微房产" || $("#pp").val()=="微医疗" || $("#pp").val()=="微美容" || $("#pp").val()=="微投票")
+      { $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}"+item['url']+"{weikucms:$_SESSION['token']}").text(item['cname']).appendTo($("#select"));}
+	 
+	  if ($("#pp").val()=="刮刮卡")
+      { $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Guajiang&a=index&token={weikucms:$_SESSION['token']}&type=2&id="+item['id']).text("外链代码-刮刮卡"+item['id']).appendTo($("#select"));}
+	  
+	  if ($("#pp").val()=="大转盘")
+      { $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Lottery&a=index&token={weikucms:$_SESSION['token']}&type=1&id="+item['id']).text("外链代码-大转盘"+item['id']).appendTo($("#select"));}
+	  
+	  if ($("#pp").val()=="优惠券")
+      { $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Coupon&a=index&token={weikucms:$_SESSION['token']}&type=3&id="+item['id']).text("外链代码-优惠券"+item['id']).appendTo($("#select"));}
+	  if ($("#pp").val()=="砸金蛋")
+      { $("<option></option>").val("http://{weikucms:$_SERVER['HTTP_HOST']}/index.php?g=Wap&m=Zadan&a=index&token={weikucms:$_SESSION['token']}&type=4&id="+item['id']).text("外链代码-砸金蛋"+item['id']).appendTo($("#select"));}
+	  
+	  
+      });
+     });
+    }  
+});	
+</script>                  
+          
+ <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none"> 
+      <script>  
+function selurl(){    
+ 
+	var url = document.getElementById("url");
+	var select1 = document.getElementById("select");
+	url.value=select1.value;    
+}
+</script>    
+<script> 
+ function current(text){    
+   document.getElementById("uppict").style.display="block";
+	var kjname = document.getElementById("kjname");
+	kjname.value=text;    
+}
+ function leave(){    
+   document.getElementById("uppict").style.display="none";
+   
+}  
+//回调    
+function stopUpload(responseText,text){    
+    var spanObj = document.getElementById(text);   
+    spanObj.value = "上传成功";    
+    spanObj.value = responseText;    
+}
+</script>
+<form id="upForm" action="uppict.php" method="post" enctype="multipart/form-data" target="upload_target" >    
+图片上传区:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图片：<input type="file" name="myfile" id="myfile" />  
+ <input type="hidden" name="kjname" id="kjname"/>   
+<input type="submit" name="submitBtn" value="上传" />    
+</form>
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe> 
+ </div> 
+ 
+ <!--复制结束-->          
+<div class="msgWrap">
+  <form class="form" method="post"   action="{weikucms::U('Classify/upsave')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+  <THEAD>
+<TR>
+  <TH valign="top"><label for="keyword">分类名称：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="{weikucms:$info.name}" name="name" style="width:500px" onfocus="leave();" ><br />
+                  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+                            </THEAD>
+  <TBODY><input type="hidden" name="id" value="{weikucms:$info.id}"/>
+<TR>
+  <TH valign="top"><label for="keyword">分类描述：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="{weikucms:$info.info}" name="info" style="width:500px" onfocus="leave();" ><br />
+                  30个字简短分类描述，可为空   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">分类图片外链地址：</label></TH>
+  <TD><input type="input" class="px" id="img" value="{weikucms:$info.img}" name="img" style="width:500px" onfocus="current('img');"><br />
+                  为了提搞速度，建议将图片上传QQ空间然后获取链接地址，微信限制3秒内无反应将终止；图片(宽720高400)  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+
+<TR>
+
+ <TH valign="top"><label for="keyword">选择大类</label></TH> <TD> <select name="pp" id="pp" onfocus="leave();">
+                     <option value="">请选择</option>
+                      <option value="微房产">微房产</option>
+                     <option value="微汽车">微汽车</option>
+                     <option value="微医疗">微医疗</option>
+                     <option value="微美容">微美容</option>
+                     <option value="微投票">微投票</option>
+                     <option value="微会员">微会员</option>
+                     <option value="刮刮卡">刮刮卡</option>
+                     <option value="大转盘">大转盘</option>
+                     <option value="优惠券">优惠券</option>
+                     <option value="砸金蛋">砸金蛋</option>
+                    </select> </TD>
+                      <TD>&nbsp;</TD>
+</TR>
+<TR>
+ <TH valign="top"><label for="keyword">选择小类</label></TH>
+  <TD><select name="select" id="select" onchange="selurl();" onfocus="leave();">
+  <option value="">请选择</option>
+
+</select>  </TD>
+  <TD>&nbsp;</TD>
+
+
+</TR>
+
+<TR>
+  <TH valign="top"><label for="keyword">外链网站或活动 ：</label></TH>
+  <TD><input type="input" class="px" id="url" value="{weikucms:$info.url}" name="url" style="width:500px" onfocus="leave();" ><br />
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">排序：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="{weikucms:$info.sorts}" name="sorts" style="width:500px" onfocus="leave();" ><br />
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">是否显示：</label></TH>
+  <TD><input type="radio" class="px" id="keyword" value="1" name="status" <eq name="info.status" value="1"> checked</eq> />是<br />
+  <input type="radio" class="px" id="keyword" value="0" name="status"  <eq name="info.status" value="0"> checked</eq> />否
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH></TH>
+  <TD><button type="submit"  name="button"  class="btnGreen left" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  </form>
+
+
+
+  </div> 
+
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>

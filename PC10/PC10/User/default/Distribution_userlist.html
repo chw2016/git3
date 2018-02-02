@@ -1,0 +1,119 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+th,td{
+    text-align:center !important;
+}
+</style>
+<script>
+    $(document).ready(function() {
+        showLocation();
+
+    });
+</script>
+<div class="" style="<if condition="$zm_id">margin-left:-214px;</if>">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+          <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Distribution/index',array('token'=>$token))}<if condition="$zm_id">&zm_id={weikucms:$zm_id}</if>">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以查看宏耐地板的微商。</li>
+    </ol>
+  </div>
+  <!--tab end-->
+  <div>
+      <form method="post" action="<if condition="$zm_id">{weikucms::U('Distribution/userlist',array('token'=>$token,'zm_id'=>$zm_id))}<else />{weikucms::U('Distribution/userlist',array('token'=>$token))}</if>" id="search">
+          <div style="display: inline">
+              电话：<input value="<if condition="$w['phone']">{weikucms:$w['phone']}</if>" type="text" id="phone" name="phone" value="" placeholder="请输入微商电话号码" style="height: 20px;margin-top: 6px;width:150px;"/>
+          </div>
+          <div style="display: inline;">
+              姓名：<input value="<if condition="$w['name']">{weikucms:$w['name']}</if>" type="text" id="name" name="name" value="" placeholder="请输入微商姓名" style="height: 20px;margin-top: 6px;width:150px;" />
+          </div>
+          <div style="display: inline;">
+              省份：<select name="loc_province" id="loc_province" style="height: 32px;border-radius:0px;margin-top: 5px;width:150px; "></select>
+              <input type="hidden" name="location_id" />
+          </div>
+          <div style="display: inline;">
+              地级市：<select name="loc_city" id="loc_city" style="width:150px;height: 32px;border-radius:0px;margin-top: 5px;"></select>
+              <input type="hidden" name="location_id" />
+          </div>
+          <div style="display: inline;">
+              市县区：<select name="loc_town" id="loc_town" style="width:150px;height: 32px;border-radius:0px;;margin-top: 5px;"></select>
+              <input type="hidden" name="location_id" />
+          </div>
+          <div style="display: inline;">
+              <input type="submit" value="搜索" style="width: 42px;height: 30px;margin-top: -4px;color: honeydew;background-color: #138a70;border-radius: 8px!important;"/>
+          </div>
+      </form>
+  </div>
+  <div class="box-content">
+     <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th style="text-align:center">微商姓名</th>
+              <th style="text-align:center">联系电话</th>
+              <th style="text-align:center">微信号</th>
+              <th style="text-align:center">所在省份</th>
+              <th style="text-align:center">所在地级市</th>
+              <th style="text-align:center">所在县、市、区</th>
+              <th style="text-align:center">银行卡账户名</th>
+              <th style="text-align:center">银行卡号</th>
+              <th style="text-align:center">开户银行名称</th>
+              <th style="text-align:center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="userList" id="vo">
+            <tr>
+                <td>{weikucms:$vo.name}</td>
+                <td>{weikucms:$vo.phone}</td>
+                <td>
+                  
+					<php>
+                        $info = M('Wxusers')->where(array('uid'=>$tpl['id'],'openid'=>$vo['openid']))->find();
+                        if($info){
+                            echo $info['nickname'];
+                        }else{
+                            echo '游客';
+                        }
+                    </php>
+                </td>
+                <td>{weikucms:$vo.loc_province}</td>
+                <td>{weikucms:$vo.loc_city}</td>
+                <td>{weikucms:$vo.loc_town}</td>
+                <td>{weikucms:$vo.bank_card_name}</td>
+                <td>{weikucms:$vo.bank_card_number}</td>
+                <td>{weikucms:$vo.bank_name}</td>
+                <td class="norightborder" style="text-align:center;">
+                  <if condition="($vo['zmid'] eq 0) and !isset($zm_id)">
+                  <a class="btn btn-success btn-sm" style="background-color: red;" href="" title="暂无区域管理员">暂无区域管理员</a>
+                  <else />
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Distribution&amp;a=commission&amp;token={weikucms:$token}<if condition="$zm_id">&amp;zm_id={weikucms:$zm_id}<else />&amp;zmid={weikucms:$vo.zmid}</if>&amp;ws_id={weikucms:$vo.ws_id}" title="查看佣金明细">佣金结算管理</a>
+                  </if>
+                </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+  </div>
+</div>
+<include file="Public:footer" />

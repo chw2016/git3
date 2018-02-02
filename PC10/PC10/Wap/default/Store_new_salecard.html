@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://wap.koudaitong.com/v2/trade/order/list?type=topay&spm=h1_h1_sc1 -->
+<html class="no-js " lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cleartype" content="on">
+
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            height: 15px;
+            width: 86px;
+            margin: 15px auto 0 auto;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+    <title>{weikucms:$tpl['name']}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/base_49a730abe0.css" onerror="_cdnFallback(this)" />
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_0479aca844.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/order_list_1f27f8aa2c.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="{weikucms::$staticFilePath}/css/showcase_ddb08a6630.css" onerror="_cdnFallback(this)" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/usercenter/resource/my_card.s.min.css">
+</head>
+
+<body class=" ">
+<div class="container wap-goods internal-purchase">
+    <div class="header">
+        <!-- ▼顶部通栏 -->
+        <div class="js-mp-info share-mp-info">
+            <a class="page-mp-info" href="{weikucms::U('Store_new/cats',array('token' => $_GET['token'], 'catid' => $hostlist['id'], 'wecha_id' => $wecha_id,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">
+                <img class="mp-image" width="30" height="30" src="{weikucms:$tpl.headpicurl}"/>
+                <i class="mp-nickname">
+                    {weikucms:$tpl.name}
+                </i>
+            </a>
+            <div class="links">
+                <!--<a class="mp-homepage" href="{weikucms::U('Store_new/cart',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}">-->
+                <!--<span class="icon-cart" style="font-size: 18px;margin-right: 15px;"></span>-->
+                <!--<if condition="$totalProductCount neq 0" >-->
+                <!--<i class="cart_com"  id="cart_com" >-->
+                <!--{weikucms:$totalProductCount}-->
+                <!--</i>-->
+                <!--</if>-->
+                <!--</a>-->
+                <a class="js-open-follow follow-mp" href="{weikucms::U('Store_new/userCenter',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">
+               <span class="icon-my" style="font-size: 18px;">
+               </span>
+                </a>
+            </div>
+        </div>
+        <!-- ▲顶部通栏 -->
+    </div>
+        <!-- container -->
+    <div class="container ">
+
+        <div class="content ">
+            <div class="content-body">
+                <if condition="$salecardlist neq null">
+                <div class="ump-coupon-wrap">
+
+                    <ul class="ump-coupon-list">
+                        <volist name="salecardlist" id="vo">
+                        <div class="card_content">
+                            <!-- S 待使用 -->
+                            <div class="card_content_pane" id="effective_coupon">
+                                <!-- S 京东卡 -->
+                                <!-- E 京东卡 -->
+                                <div class="coupon_item" <if condition="$vo['status'] eq 1">style="background:#CDC9C9;"</if>>
+                                    <p class="date">有效期:<php>echo date('Y-m-d H:i:s',$vo['starttime']);</php>至<php>echo date('Y-m-d H:i:s',$vo['endtime']);</php></p>
+                                    <p class="name" title="{weikucms:$vo.snname}">SN码&nbsp;:&nbsp;{weikucms:$vo.sn} &nbsp;状态:<if condition="$vo['status'] eq 1">已使用<else/>未使用</if></p>
+                                    <p class="count">
+                                        ￥{weikucms:$vo.amount}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <!-- E 待使用 -->
+                            <!-- S 不可用 -->
+
+                            <!-- E 不可用 -->
+                        </div>
+                        </volist>
+                    </ul>
+                </div>
+                <else/>
+
+                <div class="block block-coupon-list block-list2 block-no-background">
+                    <div class="empty-list" style="margin-top:40px;">
+                        <div>
+                            <span class="font-size-16 c-black">我还没有券？</span>
+                        </div>
+                        <div><a href="{weikucms::U('Wap/Store_new/getsalecard',array('token'=>$token,'openid'=>$openid))}" class="tag tag-big tag-orange" style="padding:8px 30px;">马上去领取</a></div>
+                    </div>
+                </div>
+                </if>
+            </div>
+
+        </div>
+
+    </div>
+    
+
+</div>     
+
+</body>
+</html>

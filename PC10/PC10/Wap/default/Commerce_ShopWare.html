@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style.css" />
+		
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+	<!-- sdd	<script src="http://zeptojs.com/zepto.js"></script> -->
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/iscroll.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/ShopCart.js"></script>
+        <link href="{weikucms::STATICS}/wapweiui/service/css/default2.css" rel="stylesheet" type="text/css">
+        <script src="{weikucms::STATICS}/wapweiui/service/js/cst_index.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/slider.css" />
+        <script src="tpl/Wap/default/common/commerce/js/yxMobileSlider.js"></script>
+
+        <style>
+            .title{
+                line-height: 50px;
+            }
+        </style>
+		<script type="text/javascript">
+            var GoodsDatas={weikucms:$warejson};
+            var goodsshopid = {weikucms:$shopinfo.id};
+		</script>
+		
+    </head>
+    <body class="white-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg topFixed">
+		    	<div class="homeBox left">
+		    		<div class="icon person home  white" onclick="window.location.href='{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+		    	</div>
+		    	<div class="titleBox middle">
+		    		<div class="white" style="font-size: 15px;">
+                        {weikucms:$shopinfo.username}
+                        <span onclick="return collect()" style="margin-left: 0px;font-size:10px;">收藏</span>
+		    		</div>
+		    	</div>
+		    	<div class="PersonBox right myul">
+		    		<div class="icon person userCenter  white" onclick="window.location.href='{weikucms::U('MemberCenter/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+		    	</div>
+		    </div>
+			<!---->
+			<div class="top"></div>
+			<!-- Banner DIV -->
+			<div class="bannerBox">
+                <div class="slider">
+                    <ul>
+                        <volist name="flashes" id="flash">
+                            <li><a href="{weikucms:$flash.url}" target="_blank"><img src="{weikucms:$flash.pic}" ></a></li>
+                        </volist>
+                    </ul>
+                </div>
+                <script>
+                    $(".slider").yxMobileSlider({width:'100%',height:180,during:3000})
+                </script>
+			</div>
+			<!---->
+			<!-- 滚动字幕 -->
+			<marquee class="marqueeBox"  direction="left" align="absmiddle" scrollamount="3px">
+				{weikucms:$shopinfo['des']}
+			</marquee>
+			<!---->
+			<!-- loading -->
+			<div class="loadingBox">
+				<div class="loading"></div>
+			</div>
+			<!---->
+			<!-- 商品 DIV -->
+            <php>if($shopinfo['yingye_status'] == 1 && ( date("H:i:s") > $shopinfo['start_time'] && date("H:i:s") < $shopinfo['end_time'])){</php>
+			<div class="waresBox hide myul">
+				<div class="sortBox">
+                        <volist name="carts" id="cart">
+                            <div class="sortPanelBox">
+                                <div class="sortPanelFirst <php>if($_GET['cid'] == $cart['id']){ echo 'on'; }</php>"   <php> if(!$cart['_data']){ </php> onclick="window.location.href='{weikucms::U('Commerce/ShopWare',array('token'=>$token,'openid'=>$openid,'cid'=>$cart[id]))}'"<php> } </php>>
+                                    {weikucms:$cart.tname}
+                                </div>
+                                    <php> if($cart['_data']){ </php>
+                                        <div class="sortPanelFirstContent">
+                                            <div class="sortPanelSecondBox">
+                                                <volist name="cart._data" id="son">
+                                                    <div class="sortPanelSecond "  <php> if(!$son['_data']){ </php> onclick="window.location.href='{weikucms::U('Commerce/ShopWare',array('token'=>$token,'openid'=>$openid,'cid'=>$son[id]))}'"<php> } </php>>
+                                                        {weikucms:$son.tname}
+                                                    </div>
+
+                                                        <php> if($son['_data']){ </php>
+                                                            <div class="sortPanelSecondContent ">
+                                                                <volist name="son._data" id="third">
+                                                                    <div class="sortPanelThirdContent <php>if($_GET['cid'] == $third['id']){ echo 'on'; }</php>" onclick="window.location.href='{weikucms::U('Commerce/ShopWare',array('token'=>$token,'openid'=>$openid,'cid'=>$third['id']))}'">
+                                                                       {weikucms:$third.tname}
+                                                                    </div>
+                                                                </volist>
+                                                            </div>
+                                                        <php> } </php>
+                                                </volist>
+                                            </div>
+                                        </div>
+                                   <php> } </php>
+                             </div>
+                        </volist>
+				</div>
+
+				<div class="waresBoxSwrap">
+                    <volist name="wareinfo" id="shopinfo" key="k">
+					<div class="waresItem myul">
+						<div class="light-yellow waresCircleSwrap ">
+							<div class="light-green waresCircle" goods_name="{weikucms:$shopinfo.name}" desc_name="{weikucms:$shopinfo.des}" style="background-image:url('{weikucms:$shopinfo.pic}')"  scope="{weikucms:$shopinfo.pic}" onclick="return scope(this)"></div>
+						</div>
+						<div class="wareInfo">
+							
+							<div class="waresDescrib dark-gray">{weikucms:$shopinfo.name}</div>
+						    <div class="waresDescrib dark-gray" style="font-size:12px;">{weikucms:$shopinfo.desc}</div> 
+							<div class="priceTag myul" style="padding-top:4px;">
+								<span class="priceNow dark-red" id="RMB">{weikucms:$shopinfo.vprice}/{weikucms:$shopinfo.attr}</span> <span style="padding:0px 3px;font-size:13px;">/</span>
+								<span class="priceOld dark-gray" id="RMB">{weikucms:$shopinfo.price}/{weikucms:$shopinfo.attr}</span>
+								<div class="deleteone wares circle light-red hide" key="{weikucms:$k-1}" data-count="0" goodsId="{weikucms:$shopinfo.id}" id="delete_{weikucms:$shopinfo.id}">-</div>
+								<div class="addOne wares circle light-red" key="{weikucms:$k-1}" data-count="0" goodsId="{weikucms:$shopinfo.id}" id="index_{weikucms:$shopinfo.id}">
+									+
+									<div class="countBuy whitebg  dark-black">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    </volist>
+
+					<div class="loadMoreBox">
+						<span id='loadMore' count="1" class=" dark-black"></span>
+					</div>
+
+                    
+
+                    <script>
+                        function scope(obj){
+                            var pic=$(obj).attr("scope");
+                            $(".bigPic").show();
+                            $(".bigPic").css({"background-image":"url("+pic+")","background-size":"cover","background-repeat":"no-repeat","background-position":"50%"});
+							$("#goods_name").text($(obj).attr('goods_name'));
+							$("#desc_name").text($(obj).attr('desc_name'));
+                        }
+
+                        function hid(obj){
+                            $(obj).hide();
+                        }
+                    </script>
+
+				</div>
+			</div>
+			<!---->
+			<!-- 商品详情 -->
+			<div class="bigPic" style="width: 80%;height: 60%;z-index: 999;background-color:#ccc;position: fixed;top:16%;left:10%;display: none;box-shadow:0 0 8px rgba(0,0,0,.5)" onclick="return hid(this)">
+				<div id="goods_name" style="width:100%;height:30px;font-size:14px;text-align:center;line-height:30px;color:white;background-color: rgb(255, 84, 84);position:relative;top:-30px;box-shadow:0 0 8px rgba(0,0,0,.5)"></div>
+                <div id="desc_name" style="width:98%;height:21%;font-size:12px;position:relative;top:90%;text-align:left;padding:0px 3px;line-height:30px;color:white;border-top:rgb(200, 196, 196) solid 1px;background:rgb(255, 84, 84);box-shadow:0 0 8px rgba(0,0,0,.5)"></div>
+			</div>
+			<!-- 购物车 -->
+			<div class="shopCart light-gray-bg footer hide">
+				<!-- 购物车为空 -->
+					<div class="shopCartIsNullBox myul  ">
+						<div class="circle warming light-yellow">!</div>
+						<div class="shopCartIsNull dark-black">
+							购物袋里还没有东西呢~
+						</div>
+					</div>
+				<!---->
+				
+				<!-- 购物车不为空 -->
+					<div class="shopCartHasGoods myul hide">
+						<div class="circle arrowCricleSwrap darker-green-30 ">
+							<div class="circle arrowCricle darker-green"></div>
+						</div>
+						<div class="totalCount dark-black">
+							<span id="num" class="dark-red">0</span>份商品，共
+							<span id="price" class="dark-red">0</span>元		
+						</div>
+						<div class="white light-green-bg border5 goOrder" onclick="return Buy(this)" flag=1>好了，去买单</div>
+
+						<div class="shopCartContent white-bg" id="wrap">
+							<div id="scroller" class="Cartlist">
+								
+							</div>
+						</div>
+					</div>
+				<!---->
+
+
+			</div>
+
+            <php>}else{</php>
+            <div class="shopCartIsNullBox myul" style="margin-top:80px;">
+                <div class="circle warming light-yellow">!</div>
+                <div class="shopCartIsNull dark-black">
+                    店铺打烊中营业时间段<br>&nbsp;&nbsp;{weikucms:$shopinfo['start_time']} - {weikucms:$shopinfo['end_time']}
+                </div>
+            </div>
+            <php>}</php>
+			<!---->
+			
+			
+			
+    </body>
+
+    <script>
+        function Buy(obj){
+            var orderinfo=localStorage['CartJson_'+goodsshopid];
+
+            var flag=$(obj).attr("flag");
+            var url="{weikucms::U('Commerce/BuyOrder',array('token'=>$token,'openid'=>$openid))}";
+            if(flag==1){
+                $(obj).html("正在下单....");
+                $.post(url,{orderinfo:orderinfo},function(data){
+                    if(data.status==1){
+                        $(obj).attr("flag",2);
+                        localStorage['CartJson_'+goodsshopid]="";
+                        localStorage['CartList_'+goodsshopid]="";
+                        location.href="{weikucms::U('Commerce/account',array('token'=>$token,'openid'=>$openid))}"+"&oid="+data.oid;
+                    }else{
+                        $(obj).attr("flag",1);
+                        show_error_tip(data.info);
+                        $(obj).html("好的，去买单");
+                    }
+                },"json")
+            }else{
+                show_error_tip("订单正在生成中，请稍后!");
+            }
+        }
+
+        //收藏
+        function collect(){
+            url="{weikucms::U('Commerce/collect',array('token'=>$token,'openid'=>$openid,'wareid'=>$wareid))}";
+            $.post(url,function(data){
+                if(data.status==1){
+                    alert(data.info);
+                }else{
+                    alert(data.info);
+                }
+            },"json")
+        }
+
+        //           function getinfo(obj){
+        //               var cid=$(obj).attr("cid");
+        //               var url="{weikucms::U('Commerce/ShopAjax',array('token'=>$token,'openid'=>$openid))}";
+        //               $.post(url,{cid:cid},function(data){
+        //                   GoodsDatas=data.ware;
+        //                   var html="";
+        //                   $.each(data.ware,function(i,o){
+        //                      html+='<div class="waresItem floatLeft"> <div class="circle light-yellow waresCircleSwrap" key="'+i+'" data-count="0" goodsId="'+o.sid+'" id="index_'+o.sid+'"> <div class="circle light-green waresCircle" style="background-image:url('+o.pic+')"></div> <div class="countBuy dark-red-bg circle white">0</div> </div> <div class="priceTag"> <span class="priceNow dark-red" id="RMB">'+o.vprice+'</span> <span class="priceOld dark-gray" id="RMB">'+o.price+'</span> </div> <div class="waresDescrib dark-gray">'+o.name+'</div> </div>';
+        //                       square($(".waresCircleSwrap"));
+        //                   })
+        //                   $(".waresBoxSwrap").html(html);
+        //                   $(".blur").hide();
+        //               },"json")
+        //           }
+    </script>
+
+    <script type="text/javascript">
+        $("#loadMore").click(function(){
+            alert('加载');
+            var url = "{weikucms::U('Wap/Commerce/ShopWareajax',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['wareid'],'cid'=>$_GET['cid']))}";
+            $.post(url,{count:$(this).attr("count")},function(data){
+                console.log(data);
+                $(this).attr("count",parseInt($(this).attr("count"))+1);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+    myFadeIn();
+    	window.onload=function(){
+		var at = setTimeout(function(){
+			$(".waresBox").removeClass('hide');
+			$(".loadingBox").addClass('hide');
+			$(".footer").removeClass('hide') },1000)
+		
+			
+			Panel($(".shopCartHasGoods"),$(".arrowCricleSwrap"),$(".shopCartContent"));
+
+		}
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+    
+	
+    document.body.addEventListener('touchmove', function(e) {                  //阻止冒泡事件
+                e.stopPropagation();
+				});
+    $(document).on("touchstart",".shopCartContent",function(){
+    	var myScroll = new iScroll( document.getElementById('scroller') );
+    })
+    
+    </script>
+    <!-- 分类筛选 -->
+	<script type="text/javascript">
+	$(function(){
+		if($(".sortPanelBox").length >6){
+			$(".sortPanelThirdContent").eq(-1).css("padding-bottom","30px");
+			$(".sortPanelBox").eq(-1).css({"padding-bottom":"60px"});
+		}
+		var hh = $(".top").height()+$(".bannerBox").height()+$(".footer").height();
+			hh -=$(window).height();
+			hh  =-hh;
+			hh -=$(".waresBox").height();
+		if((hh)/2 >50){
+			$(".loadMoreBox").css('padding-top', (hh)/2+70);
+			$(".loadMoreBox").css('padding-bottom', (hh)/2+70);
+		}else {
+			$(".loadMoreBox").css('padding-top', "50px");
+			$(".loadMoreBox").css('padding-bottom', "50px");
+		}
+		
+	})
+
+	// 筛选面板
+	// 一级菜单
+	Panel($(".sortPanelBox"),$(".sortPanelFirst"),$(".sortPanelFirstContent"),true);
+	// 二级菜单
+	Panel($(".sortPanelSecondBox"),$(".sortPanelSecond"),$(".sortPanelSecondContent"),true);
+	
+		
+	
+
+	</script>
+
+    <!---->
+</html>

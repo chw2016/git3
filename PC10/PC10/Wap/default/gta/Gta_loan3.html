@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+        <style>
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .Mask.is-visible{
+                opacity: 1;
+                visibility: visible;
+                -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+                -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+                transition: opacity 0.3s 0s, visibility 0s 0s;
+            }
+            .Mask{
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0,0,0, 0.4);
+                opacity: 0;
+                visibility: hidden;
+                -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+                -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+                transition: opacity 0.3s 0s, visibility 0s 0.3s;
+                z-index: 9999;
+            }
+            .mg0a{
+                margin-top:50%;
+            }
+            .gta_bj{
+                width: 300px;
+                height: 55px;
+                background:url({weikucms::STATICS}/wapweiui/gta/images/sprites/gta_bj_03.png) no-repeat;
+                background-size: 100%;
+                margin:0 auto;
+                position: relative;
+            }
+            .gta_bj_btn{
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
+                text-align: center;
+                border: 1px solid #fff;
+                color: #fff;
+                background-color: #39843d;
+                border-radius: 50%;
+                display: inline-block;
+            }
+            .bf80{
+                width: 100%;
+				height: 150px;
+				line-height: 150px;
+				font-size: 14px;
+            }
+            .gr{
+                position: absolute;
+                right: 5px;
+                top: 10px;
+            }
+            .body_classone p{
+                padding: 20px;
+                color: #000000;
+                font-size: 18px;
+                text-align: center;
+
+            }
+            .body_classone{
+                border-bottom-right-radius: 5px;
+                border-bottom-left-radius: 5px;
+                background-color: rgba(238, 239, 238, 1);
+                width: 300px;
+                margin: 0 auto;
+                padding-bottom: 20px;
+            }
+            .shadow45 {
+				-webkit-box-shadow: 0px 3px 5px rgba(192,192,192,1);
+				-moz-box-shadow: 0px 3px 5px rgba(192,192,192,1);
+				box-shadow: 0px 3px 5px rgba(192,192,192,1);
+				background-color: #e5f2e5;
+				color: #91b391;
+				text-align: center;
+				width: 48.5%;
+				position: relative;
+				padding-top: 10px;
+				line-height: 35px;
+				margin-bottom: 10px;
+				}
+        </style>
+
+    </head>
+	<script>
+        $(function(){
+
+            //关闭弹出框
+            $(".gta_bj_btn").click(function(event) {
+                $(".body_class").css('display', 'none');
+                if( $(event.target).is('.Mask') ||$(event.target).is('.gta_bj_btn')) {
+                    event.preventDefault();
+                    $(".Mask").removeClass('is-visible');
+                }
+            });
+        })
+	</script>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">上传证件</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+
+	    <div class="shadow20">
+	    	<div class="bf90 clearfix ">
+	    	   <div class="bf80 shadow80 " style="position: relative;">
+	    	
+	    	      <div class="cart_imgs">观看照片</div>
+                   <!--<img src="{weikucms::STATICS}/wapweiui/gta/images/4.jpg" >-->
+	    	    <div style="position: absolute;top: 0; right: 0;">
+	    	   	<div class="gta_hs" ></div>
+	    	   </div>
+	    	   </div>
+	    	</div>
+	    </div>
+	    <div class="shadow20 mt10">
+            <if condition="$ims[0]" >
+	    	<div class="bf90 bf90_can">
+	    		<div class="z14">上传证件</div>
+	    		<ul style="width: 100%;" class="clearfix mt10">
+                    <volist name="ims" id="vo">
+	    			<li class="shadow45 fl<?php if($i%2==1){echo ' fl';}else{echo ' fr';}?>">
+	    				<span class="dashed">
+	    					+
+	    				</span>
+                        <input type="text" name="imgfile" value="" class="file1"/>
+                        <div style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;" class="file2">
+                 <!--<img src="{weikucms::STATICS}/wapweiui/gta/images/sprites/gta_bj_03.png" />-->
+                        </div>
+	    				<p>{weikucms:$vo}</p>
+	    			</li>
+                        </volist>
+	    		</ul>
+	    </div>
+                <else />
+                <p style="text-align: center">不需要上传资料图片</p>
+                </if>
+
+		</div>	
+		 <div class="add_btn"><span class="btn type_btn" flag="0">提交</span></div>
+		</section>
+        <!--显示区域-->
+        <div class="Mask">
+            <div class="mg0a">
+                <div class="gta_bj"><div class="gta_bj_text"></div>
+                    <div class="gr">
+                        <span class="gta_bj_btn">X</span>
+                    </div>
+                </div>
+                <div class="body_classone">
+                    <p>提交成功</p>
+                </div>
+            </div>
+        </div>
+	</body>
+    <script>
+
+        $(function(){
+            function test(){
+                $(".gta_bj_btn").trigger('click');
+
+            }
+            //查看大图
+             $("body").on('touchstart','img',function(){
+                 var src=$(this).attr('src');
+                 //alert(src);
+                 $(".cart_imgs").html("<img src="+src+" >");
+             })
+            //删除
+            $(document).on('touchstart','.gta_hs',function(){
+                var src=$(".shadow80 img").attr('src');
+                if(typeof(src)=='undefined'){
+                    return false;
+                }
+                msg.confirm('确定要删除吗','是',function(){
+
+                    $(".cart_imgs").html('观看照片');
+                    //  alert(src);
+                    $("img").each(function(e,t){
+                        if($(t).attr('src')==src){
+                            $(t).remove();
+                        }
+                    });
+                    $("input").each(function(e,t){
+                        if($(t).val()==src){
+                            $(t).val('');
+                        }
+                    });
+                })
+
+
+            })
+            //提交
+            $(".btn").click(function(){
+                var flag=$(this).attr('flag');
+                if(flag==1){
+
+                    return false;
+                }
+
+                var imgs=[];
+                var num=$("input").length;
+                var kk1=0;
+                for(var i=0;i<num;i++){
+                    if($("input").eq(i).val()==''){
+                      //  show_error_tip('图片资料上传不完整');
+                     //   return false;
+                        kk1=1;
+
+                    }else{
+
+                        imgs[i]=$("input").eq(i).val();
+                    }
+
+
+
+                }
+
+                imgs=imgs.join(',');
+
+                if(kk1==1){
+                    msg.confirm('资料上传不完整确定继续提交吗？','是',function(){
+                        $(".btn").attr('flag','1');
+                        $(".btn").text('提交中');
+                        var url="{weikucms:$url}";
+                        $.post(url,{imgs:imgs},function(data){
+                            if(data.status==0){
+                                show_error_tip('提交失败,请重试');
+                                $(".btn").attr('flag',0);
+
+                                return false;
+                            }else{
+                                //  alert('成功');
+
+                                $(".btn").text('提交成功');
+                                $(".body_class").css('display', 'block');
+                                $('.Mask').addClass('is-visible');
+                                i=$(".btn").textnode;
+                                //消失掉
+                                setTimeout(test,2000);
+                                //下面是成功之后跳转的地址
+                                var url2="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                                location.href=url2;
+
+                            }
+                        });
+                    })
+                }else{
+                    $(this).attr('flag','1');
+                    $(this).text('提交中');
+                    var url="{weikucms:$url}";
+                    $.post(url,{imgs:imgs},function(data){
+                        if(data.status==0){
+                            show_error_tip('提交失败,请重试');
+                            $(this).attr('flag',0);
+
+                            return false;
+                        }else{
+                            //  alert('成功');
+
+                            $(".btn").text('提交成功');
+                            $(".body_class").css('display', 'block');
+                            $('.Mask').addClass('is-visible');
+                            i=$(".btn").textnode;
+                            //消失掉
+                            setTimeout(test,2000);
+                            //下面是成功之后跳转的地址
+                            var url2="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                            location.href=url2;
+
+                        }
+                    });
+                }
+
+
+            })
+        })
+    </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'chooseImage',
+                'uploadImage',
+                'downloadImage',
+                    'previewImage'
+            ]
+        });
+        wx.ready(function () {
+            var images = {
+                localId: [],    //
+                serverId: []
+            };
+            //chooseImage
+
+            $(".file2").click(function() {    //拍照、本地选图
+                if($(this).find("img").length != 0){
+                    return false;
+                }
+                var a1=$(this);
+                wx.chooseImage({
+                    success: function (res) {
+                        images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                        var i = 0, length = images.localId.length;
+                        images.serverId = [];
+                        function upload() {
+                            wx.uploadImage({
+                                localId: images.localId[i],
+                                success: function (res) {
+                                    i++;
+                                    images.serverId.push(res.serverId);
+                                    if (i < length) {
+                                        upload();
+                                    }else{
+                                        var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                        $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                            var leng=data.imgs.length;
+                                            $.each(data.imgs, function(e,t){
+                                                a1.prev().val(t);
+                                                a1.append("<img src='"+t+"' width='90px' />");
+                                            })
+                                        },'json');
+                                    }
+                                },
+                                fail: function (res) {
+                                    alert(JSON.stringify(res));
+                                }
+                            });
+                        }
+                        upload();//上传
+
+                    }
+                });
+            })
+
+            //图片展示
+
+            $(document).on('click', '.cart_imgs img', function (){
+
+                var urls = [];
+                var $this = $(this);
+                $(".bf90_can").find("img").each(function(e,t){
+                    urls[e]=$(t).attr('src');
+                });
+                wx.previewImage({
+                    current: $this.attr('src'),
+                    urls:  urls
+
+                });
+            })
+        })
+
+        $(".body_img_left,.body_img_right").on('click',function(){
+            $(".span_btn").trigger('click');
+            $("#chooseImage").trigger('click');
+        })
+    </script>
+</html>

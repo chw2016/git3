@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/common.css" />
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/index.css" />
+       <link rel="stylesheet" href="tpl/Wap/default/rh/css/search_bed.css" />
+	<link rel="stylesheet" href="tpl/Wap/default/rh/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="tpl/Wap/default/rh/css/style.css" />
+      <link rel="stylesheet" href="tpl/Wap/default/rh/css/style1.css" />
+    <script src="/tpl/Wap/default/rh/js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="tpl/Wap/default/rh/js/jquery.event.drag-1.5.min.js" type="text/javascript" charset="utf-8" ></script>
+       <script src="tpl/Wap/default/rh/js/jquery.touchSlider.js" type="text/javascript" charset="utf-8" ></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/Smaty.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+    </head>
+	<style>
+	      	      body{ -webkit-user-select:none;
+ 	        -webkit-touch-callout:none;
+}
+	</style>
+    <body>
+	<if condition=" $end eq 1">
+		<div class = "scan_error"><span>非法扫描</span></div>
+		<else />
+			<div  style="display: none" ></div>
+	<input type="hidden" value="{weikucms:$type}" name="type" id="type">
+	<!--<div id="a" style="text-align: center;height: 200px;">扫一扫</div>-->
+    
+	</body>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+	
+        wx.config({
+            debug: false,
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'scanQRCode',
+            ]
+        });
+        wx.ready(function () {
+
+            //$("#a").click(function(){
+
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                   // desc: 'scanQRCode desc',
+                    success: function (res) {
+						
+                        var url = res.resultStr; // 当needResult 为 1 时，扫码返回的结果//v.wapwei.com/index.php?g=wap$m=wxdj&a=index&secret=fdg5665
+						//alert('url:' + url);
+						console.log(url);
+						var reg=new RegExp("secret");
+						var type = $('#type').val();
+					//	alert(type);
+						if(reg.test(url)){
+						console.log(url);
+						//alert(url);
+						url = url.replace(/:8000/, '');
+						setTimeout(function(){
+							location.href=url + '&type=1&token={weikucms:$token}&openid={weikucms:$openid}';
+						}, 1000);
+							
+						}
+						else
+						{
+							wx.closeWindow();
+						}
+                    }
+                });
+            //})
+
+            //图片展示
+
+        })
+
+    </script>
+<script>
+    $(function(){
+        $("#a").trigger('click');
+    })
+</script>
+</if>
+	
+
+
+</html>

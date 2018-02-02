@@ -1,0 +1,69 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+          <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/mallcontent',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>下面是顾客对商家的评分。</li>
+    </ol>
+  </div>
+  <!--tab end-->
+  <div class="box-content">
+      <div class="alert alert-info" style="background-color: cyan;">
+			<div>平均得分：
+                <span >环境->{weikucms:$avgscore[0]['AVG(enviroment)']}</span>
+                <span style="margin-left: 150px;">服务->{weikucms:$avgscore[0]['AVG(service)']}</span>
+                <span style="margin-left: 150px;">味道->{weikucms:$avgscore[0]['AVG(taste)']}</span>
+                <span style="margin-left: 150px;">Ieat指数->{weikucms:$avgscore[0]['AVG(ieat_index)']}</span>
+            </div>
+		</div>
+     <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align:center">微信头像</th>
+            <th style="text-align:center">微信号</th>
+            <th style="text-align:center">环境</th>
+            <th style="text-align:center">服务</th>
+            <th style="text-align:center">味道</th>
+            <th style="text-align:center">Ieat指数</th>
+            <th style="text-align:center">评分时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="foods" id="vo">
+            <tr>
+              <td style="text-align:center"></td>
+              <td style="text-align:center"></td>
+              <td style="text-align:center"></td>
+              <td style="text-align:center">{weikucms:$vo.enviroment}</td>
+              <td style="text-align:center">{weikucms:$vo.service}</td>
+              <td style="text-align:center">{weikucms:$vo.taste}</td>
+              <td style="text-align:center">{weikucms:$vo.ieat_index}</td><td style="text-align:center">{weikucms:$vo.add_time}</td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+  </div>
+</div>
+<include file="Public:footer" />

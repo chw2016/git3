@@ -1,0 +1,90 @@
+<include file="Public:head"/>
+
+
+<div class="cLineB">
+    <h4 class="left">全网通缉活动发放管理</h4>
+    <div class="clr"></div> 
+</div>
+
+<div class="cLineB">
+    本次活动中奖人数：<span class="redamount">{weikucms:$count}个</span></div>
+<div class="cLine" style=" padding: 8px 0">
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR style="text-align: center;">
+                    <TH class="select">序号</TH>
+                    <TH>SN码(中奖号)</TH>
+                    <TH>奖项</TH>
+                    <TH>姓名</TH>
+                    <TH>中奖者手机号</TH>
+					<TH>地址</TH>
+                    <TH>中奖时间</TH>
+					<TH>状态</TH>
+					<TH>操作</TH>
+                </TR>
+
+            </THEAD>
+            <TBODY>
+            <volist name="data" id="data" key='k'>
+                <TR style="line-height:30px;height: 43px;line-height: 59px;">
+                    <td class="select">{weikucms:$k}</td>
+                    <td>{weikucms:$data.sn}</td>
+                    <td>{weikucms:$data.gname}</td>
+                    <td>{weikucms:$data.uname}</td>
+                    <td>{weikucms:$data.tel}</td>
+					<td>{weikucms:$data.seng}省{weikucms:$data.si}市{weikucms:$data.xian}县{weikucms:$data.address}</td>
+                    <td>{weikucms:$data.gtime}</td>
+					<?php if($data[status]==0):?>
+					<td>未领取</td>
+					<td><a href="{weikucms::U('Flexible/getGift',array('id'=>$data[id],'lid'=>$lid))}">领取</a></td>
+					<?php else:?>
+					<td>已领取</td>
+					<td>已领取</td>
+					<?php endif;?>
+                </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form> 
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+<div class="cLine">
+
+</div>
+</div>
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<script>
+
+    function checkAll(form, name) {
+        for (var i = 0; i < form.elements.length; i++) {
+            var e = form.elements[i];
+            if (e.name.match(name)) {
+                e.checked = form.elements['chkall'].checked;
+            }
+        }
+    }
+
+    function changesort(tid, sortval) {
+
+        var image = new Image();
+        image.src = 'index.php?ac=app&op=sort&wxid=gh_423dwjkewad&tid=' + tid + '&sort=' + sortval + '&r=' + Math.random();
+
+    }
+</script>
+<!--底部-->
+</div>
+<include file="Public:footer"/>

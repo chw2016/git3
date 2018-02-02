@@ -1,0 +1,81 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+        float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+    }
+
+</style>
+<div class="cLineB">
+    <h4 style="position:relative;">
+        任务标签管理
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #19b593;" href="{weikucms::U('Media/task',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在此页面可以查看已经添加的任务标签名称，通过点击添加添加任务标签/编辑按钮对其进行添加/修改任务标签名称</li>
+        <li>点击删除按钮可以删除任务标签名称</li>
+    </ol>
+</div>
+
+<!--添加按钮-->
+<div>
+    <ul>
+        <li><a href="{weikucms::U('Media/addlabel',array('token'=>$token))}" style="text-decoration: none;"><div class="addstyle" style="margin-left: 0px;background: #1576ad;">添加任务标签</div></a></li>
+    </ul>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >序号</th>
+                <th >大类名称</th>
+                <th >标签名称</th>
+                <th >创建时间</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="list" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$vo.cname}</td>
+                    <td>{weikucms:$vo.lname}</td>
+                    <td>{weikucms:$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                    <td >
+                        <a href="{weikucms::U('Media/addlabel',array('token'=>$token,'lid'=>$vo['id']))}" title="编辑文本" class="btn btn-success btn-sm">编辑</a>
+                        <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Media&amp;a=dellabel&amp;token={weikucms:$token}&amp;lid={weikucms:$vo.id}')" href="#">删除</a>
+                    </td>
+                </tr>
+            </volist>
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,248 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+    $(document).ready(function(){
+        $(".pxf").attr("value","0");
+        $(".pxf").click(function(){
+            $(this).val($(this).attr("checked")?"1":"0");
+        })
+    })
+
+</script>
+<style type="text/css">
+    .lefts{
+        float: left;
+        width: 45%;
+        padding: 10px;
+
+    }
+    .reghts{
+        width: 45%;
+        margin: 0 10px;;
+        float: left;
+        background-color: #f1f3f3;
+        padding: 10px;
+    }
+    .fontes{
+        width: 28%;
+        padding: 0px;
+        display: inline-flex;
+    }
+    .savesure{
+        width: 20%;
+        height: 35px;
+        margin-left: 30%;
+        background-color: #1576AD;
+        text-align: center;
+        line-height: 35px;
+        color: #ffffff;
+        font-size: 15px;
+        border-radius: 8px;
+    }
+
+</style>
+
+<div class="cLineB">
+    <h4>企业信息编辑/审核
+        <a href="{weikucms::U('Labor/enterprise',array('token'=>$token))}" style="float: right;padding: 0 20px;">返回</a>
+    </h4>
+
+</div>
+<div class="cLineB" id="uppict" style="display:none">
+</div>
+<div class="msgWrap">
+    <input type="hidden" id="id" value="{weikucms:$info['id']}" name="id">
+    <div class="lefts">
+        <h5>编辑</h5>
+        <div>
+            <span class="fontes">单位名称：</span><input type="text" calss="pc" name="company" id="company" value="{weikucms:$info['company']}"/>
+        </div>
+        <div>
+            <span class="fontes">组织机构代码：</span><input type="text" calss="pc" name="code" id="code" value="{weikucms:$info['code']}"/>
+        </div>
+        <div>
+            <span class="fontes">单位地址：</span><input type="text" calss="pc" name="address" id="address" value="{weikucms:$info['address']}"/>
+        </div>
+        <div>
+            <span class="fontes">注册资金：</span><input type="text" calss="pc" name="capital" id="capital" value="{weikucms:$info['capital']}"/>
+        </div>
+        <div>
+            <span class="fontes">企业规模：</span><input type="text" calss="pc" name="scale" id="scale" value="{weikucms:$info['scale']}"/>
+        </div>
+        <div>
+            <span class="fontes">行业类型：</span><input type="text" calss="pc" name="industry" id="industry" value="{weikucms:$info['industry']}"/>
+        </div>
+        <div>
+            <span class="fontes">单位类型：</span><input type="text" calss="pc" name="unit_type" id="unit_type" value="{weikucms:$info['unit_type']}"/>
+        </div>
+        <div>
+            <span class="fontes">法定代表（负责人）：</span><input type="text" calss="pc" name="legal_person" id="legal_person" value="{weikucms:$info['legal_person']}"/>
+        </div>
+        <div>
+            <span class="fontes">法定代表联系方式：</span><input type="text" calss="pc" name="legal_phone" id="legal_phone" value="{weikucms:$info['legal_phone']}"/>
+        </div>
+        <div>
+            <span class="fontes">法定代表身份证号：</span><input type="text" calss="pc" name="identity_id" id="identity_id" value="{weikucms:$info['identity_id']}"/>
+        </div>
+        <div>
+            <span class="fontes">单位联系人：</span><input type="text" calss="pc" name="company_person" id="company_person" value="{weikucms:$info['company_person']}"/>
+        </div>
+        <div>
+            <span class="fontes">单位联系方式：</span><input type="text" calss="pc" name="compant_phone" id="compant_phone" value="{weikucms:$info['compant_phone']}"/>
+        </div>
+        <div>
+            <span class="fontes">登录密码：</span><input type="text" calss="pc" name="password" id="password" value="{weikucms:$info['password']}"/>
+        </div>
+        <div><div class="savesure" id="saves">确定更改</div></div>
+    </div>
+    <if condition="$info['type'] eq 1">
+        <div class="reghts">
+            <h5>更新数据</h5>
+            <div>
+                <span class="fontes">单位名称：</span></span><input type="text" calss="pc" name="companys" id="companys" value="{weikucms:$infos['company']}"/>
+            </div>
+            <div>
+                <span class="fontes">组织机构代码：</span><input type="text" calss="pc" name="codes" id="codes" value="{weikucms:$infos['code']}"/>
+            </div>
+            <div>
+                <span class="fontes">单位地址：</span><input type="text" calss="pc" name="addresss" id="addresss" value="{weikucms:$infos['address']}"/>
+            </div>
+            <div>
+                <span class="fontes">注册资金：</span><input type="text" calss="pc" name="capitals" id="capitals" value="{weikucms:$infos['capital']}"/>
+            </div>
+            <div>
+                <span class="fontes">行业类型：</span><input type="text" calss="pc" name="industrys" id="industrys" value="{weikucms:$infos['industry']}"/>
+            </div>
+            <div>
+                <span class="fontes">单位类型：</span><input type="text" calss="pc" name="unit_types" id="unit_types" value="{weikucms:$infos['unit_type']}"/>
+            </div>
+            <div>
+                <span class="fontes">企业规模：</span><input type="text" calss="pc" name="scales" id="scales" value="{weikucms:$info['scale']}"/>
+            </div>
+            <div>
+                <span class="fontes">法定代表（负责人）：</span><input type="text" calss="pc" name="legal_persons" id="legal_persons" value="{weikucms:$infos['legal_person']}"/>
+            </div>
+            <div>
+                <span class="fontes">法定代表联系方式：</span><input type="text" calss="pc" name="legal_phones" id="legal_phones" value="{weikucms:$infos['legal_phone']}"/>
+            </div>
+            <div>
+                <span class="fontes">法定代表身份证号：</span><input type="text" calss="pc" name="identity_ids" id="identity_ids" value="{weikucms:$infos['identity_id']}"/>
+            </div>
+            <div>
+                <span class="fontes">单位联系人：</span><input type="text" calss="pc" name="company_persons" id="company_persons" value="{weikucms:$infos['company_person']}"/>
+            </div>
+            <div>
+                <span class="fontes">单位联系方式：</span><input type="text" calss="pc" name="compant_phones" id="compant_phones" value="{weikucms:$infos['compant_phone']}"/>
+            </div>
+            <div>
+                <span class="fontes">登录密码：</span><input type="text" calss="pc" name="password" id="passwords" value="{weikucms:$infos['password']}"/>
+            </div>
+            <div>
+                <span class="fontes">审核：</span>
+                <select id="status" name="status">
+                    <option value="">请选择审核是否通过</option>
+                    <option value="1">审核通过</option>
+                    <option value="2">审核未通过</option>
+                </select>
+            </div>
+            <div><div class="savesure" id="updates">确定更新</div></div>
+        </div>
+    </if>
+    <div class="clr"></div>
+</div>
+<div class="clr"></div>
+
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    $(function(){
+        var url = "{weikucms::U('Labor/setenterprise',array('token'=>$token))}";
+        $("#updates").click(function(){
+            var infos = {
+                id:$('#id').val(),
+                company:$('#companys').val(),
+                code:$('#codes').val(),
+                address:$('#addresss').val(),
+                capital:$('#capitals').val(),
+                scale:$('#scale').val(),
+                industry:$('#industrys').val(),
+                unit_type:$('#unit_types').val(),
+                legal_person:$('#legal_persons').val(),
+                legal_phone:$('#legal_phones').val(),
+                identity_id:$('#identity_ids').val(),
+                company_person:$('#company_persons').val(),
+                compant_phone:$('#compant_phones').val(),
+                status:$("select[name='status']").val(),
+                password:$('#passwords').val()
+            };
+            $.post(url,infos,
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = "{weikucms::U('Labor/enterprise',array('token'=>$token))}";
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        })
+
+        $("#saves").click(function(){
+            var info = {
+                id:$('#id').val(),
+                company:$('#company').val(),
+                code:$('#code').val(),
+                address:$('#address').val(),
+                capital:$('#capital').val(),
+                scale:$('#scales').val(),
+                industry:$('#industry').val(),
+                unit_type:$('#unit_type').val(),
+                legal_person:$('#legal_person').val(),
+                legal_phone:$('#legal_phone').val(),
+                identity_id:$('#identity_id').val(),
+                company_person:$('#company_person').val(),
+                compant_phone:$('#compant_phone').val(),
+                password:$('#password').val(),
+                status:1
+            };
+                $.post(url,info,
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = "{weikucms::U('Labor/enterprise',array('token'=>$token))}";
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+            })
+
+
+    })
+
+
+</script>

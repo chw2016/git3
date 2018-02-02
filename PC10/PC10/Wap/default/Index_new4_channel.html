@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new4/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new4/css/style_1.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new4/css/style_2.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new4/css/style_3.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new4/css/style_4.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new3/css/style_5.css" />
+<title>{weikucms:$tpl['name']}</title>
+<script type="text/javascript">
+	$(function(){
+	window.swipe = new Swipe(document.getElementById('imgSwipe'), {
+		speed: 500,
+		auto: 5000,
+		callback: function(){
+			var lis = $(this.element).next("ol").children();
+			lis.removeClass("on").eq(this.index).addClass("on");
+		}
+	});
+});
+</script>
+<title>{weikucms:$tpl['name']}</title>
+      
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        	<div class="container" data-role="container">	
+		<header data-role="header">
+			<section id="imgSwipe" class="img_swipe">
+				<ul>
+					<volist name="flash" id="vo">
+						<li>
+								<a onclick="return false;">
+									
+							<img src="{weikucms:$vo.img}" />
+							<span>
+								<i class="ico_ad"></i>{weikucms:$vo.info}
+							</span>
+						</a>
+					</li>
+					</volist>
+						
+				</ul>
+				<ol>
+					<li class="on"></li>
+					<volist name="flash" id="vo" offset="1">
+						<li style="margin-right:1px;"></li>
+					</volist>
+					
+					
+				</ol>
+			</section>
+			<a href="javascript:void(0);" class="swipe_btn" onclick="swipe.prev();"></a>
+			<a href="javascript:void(0);" class="swipe_btn next" onclick="swipe.next();"></a>
+		</header>
+		<section class="wrap" data-role="body">
+			<ul class="list" id="list">
+				<volist name="info" id="vo">
+					<li class="listW">
+				<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>">
+								
+						<div>
+							<!-- <span class="icon-smile"></span> -->
+							<img src="{weikucms:$vo.img}" style="width:100%;height:100%;"/> </span></div>
+						<div style="position:relative;overflow:hidden;">
+							<strong style="position:absolute;top:5px;overflow:hidden;" class="name">{weikucms:$vo.name}</strong>
+							<span style="position:absolute;top:28px;font-size:12px;line-height:24px;">{weikucms:$vo.info}</span>
+						</div>
+						<div><i class="ico_arrow"></i></div>
+					</a>
+				</li>
+				</volist>
+							
+						</ul>
+		</section>
+		<footer data-role="footer">
+				<div class="copyright" ><a href="javascript::">&copy万普提供</a></div>			
+		</footer>
+	</div>	
+		<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+	<if condition="$res_1['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	<script type="text/javascript">
+		$(function(){
+			$('.name').css('height',$('.listW').height()*0.45);
+			// alert($('.listW').height());
+		})
+	</script>
+	</body>
+</html>
+

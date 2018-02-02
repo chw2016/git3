@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<link href="{weikucms::RES}/vote/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<title>微投票—请选择下列需要的投票</title>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<!-- Mobile Devices Support @begin -->
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Mobile Devices Support @end -->
+<link rel="shortcut icon" href="{weikucms::RES}/vote/img/favicon.ico" />
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<div class="wrapper" id="container">
+  <!--底部浮动按钮 开始-->
+  <footer class="nav_footer">
+    <ul class="box_db">
+      <li><a href="javascript:history.go(-1);">返回</a></li>
+      <li><a href="javascript:history.go(1);">前进</a></li>
+      <li><a href="{weikucms::U('Vote/home',array('token'=>$_GET['token'],'id'=>$info['id'],'wecha_id'=>$_GET['wecha_id']))}">首页</a></li>
+      <li><a href="javascript:location.reload();">刷新</a></li>
+    </ul>
+  </footer>
+  <!--底部浮动按钮 结束-->
+  <!-- start -->
+  <div class="box">
+    <h3>微投票————请选择下列需要的投票</h3>
+    <div class="box_type" style=" height:auto;">
+      <ul class="house_type_lp">
+        <volist name="id" id="info">
+          <li class="lisz"> <a href="{weikucms::U('Vote/index',array('token'=>$_GET['token'],'id'=>$info['id'],'wecha_id'=>$_GET['wecha_id']))}"> {weikucms:$info.title}</a> </li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+  <!-- end -->
+</div>
+<div id="popFail" style="display: none; " jqmoldstyle="block"> </div>
+</body>
+</html>

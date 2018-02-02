@@ -1,0 +1,122 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script>
+$(function(){
+    var height=$(document).height();
+    $("#con").css({"height":height});
+})
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;">
+    <div style="width: 90%;margin: 0 auto;">
+
+        <style>
+.title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+        </style>
+        <div class="cLineB"  style="position:relative" > 
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0"  >
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>">预约设置</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cLineC" style="line-height: 32px;">
+
+            <a 
+                href="javascript:history.back();" class="btn btn-primary {weikucms:$Opt.css}" >返回</a>
+
+        </div>
+
+        <div class="msgWrap form">
+            <div class="bdrcontent">
+                <div id="div_ptype">
+                    <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th  style="text-align:center; width:10%;" >日期</th>
+                                <th  style="text-align:left; width:90%;" >已预约/可预约</th>
+                            </tr>
+                        </thead>
+                        <!--tab start-->
+                        <div class="alert alert-info">
+                            <button type="button" class="tips close" data-dismiss="alert">×</button>
+                            <strong>提示信息!</strong>
+                            <ol>
+                                <li>你可以在这里管理当前顾问未来两周每天可被预约的次数</li>
+                            </ol>
+                            <script type="text/javascript">
+                                        $('.tips.close').click(function(){
+                                            $(this).parents('.alert.alert-info').hide();
+                                    });
+                                    var setConfigUrl="{weikucms::U('setConfig',array('token'=>$token))}";
+                            </script>
+                        </div>
+                        <foreach name="da" item="v">
+                        <tr>
+                            <td  style="text-align:center;" >
+                                <a target="_self" style=" width:100px; height:60px; float:left;  width:100px; height:60px;  " class="btn btn-success btn-sm" >
+                                    {weikucms:$v.date}<br/>{weikucms:$v.week}
+                                </a>
+                            </td>
+                            <td class="norightborder" style="text-align:center" >
+                                <div  class="aaa" style=" background-color:#19b593; height:60px;  line-height:60px; width:83px; color:white; " >{weikucms:$v.apply}/<a id="aaaa" >{weikucms:$v.value}</a></div>
+                                <input name="zhi" adv_id="{weikucms:$v.adv_id}" time="{weikucms:$v.time}" class="abc"  type="text" style="display:none; float:left; height:50px;line-height:50px;width:70px;text-align:center;margin-top:8px;" value="{weikucms:$v.value}"/>
+                            </td>
+                        </tr>
+                        </foreach>
+                    </table>
+                </div>
+            </div>
+            <div class="footactions" style="padding-left:10px">
+                <div class="pager">{weikucms:$page}</div>
+            </div>
+        </div>
+        <div class="clr"></div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script>
+$('.aaa').each(function(e){
+    $(this).click(function(){
+        $('.aaa').show();
+        $('input').hide();
+        $(this).hide();
+        $(this).next().fadeIn();
+        var ob=$(this);
+        var obj=$(this).next();
+    //异步提交修改
+	$(document).keypress(function(e) {//搜索框回车事件
+		if (e.which == 13){
+				if(obj.val()!='')  {
+				    //异步提交修改
+		            var adv_id=obj.attr('adv_id');
+		            var time=obj.attr('time');
+		            var value=obj.val();
+		                                $.post(setConfigUrl,{adv_id:adv_id,time:time,values:value},function(data){
+		                                if(data.status){
+		                                    obj.hide();
+		                                    ob.find('a').html(value);
+		                                    ob.fadeIn();
+		                                }else{
+		                                   notif({
+		                                     msg:'设置失败，服务器繁忙...',
+		                                     type:'error',
+		                                     position:'center'
+		                                     });
+		                                }
+		                                },'json');
+					}			
+				}
+			});
+
+    });                                
+
+});
+</script>
+<include file="Public:footer"/>

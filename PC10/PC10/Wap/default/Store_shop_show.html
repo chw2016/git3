@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+
+
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.5.1.min.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/main.js"></script>
+
+<style type="text/css">
+    ._h3{margin: 0;padding: 0;
+        display: block;height: 56px;width: 70px;
+        line-height: 56px;}
+</style>
+
+
+<![endif]-->
+</head>
+<body class="">
+
+
+<style>.address_defalut ul{color:#000}</style>
+<div class="maincontainer">
+    <div class="container wx_wrap mini-innner">
+        <!--div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" href="javascript:history.back();"></a></div>
+                    <div class="wx_bar_tit">确认订单</div>
+                </div>
+            </div>
+        </div-->
+
+
+        <div class="row" id="paycontainer">
+            <div class="col-md-12 p0">
+                <div id="sendTo" class="send_to">
+                    <div class="address_defalut temp_address_click" style="  text-align: center; padding: 10px;">
+                        <a href="{weikucms::U('Store_shop/edit',array('token'=>$token,'sid'=>$shop['id'],'openid'=>$openid,'uid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}">
+                            <if condition="$address['name']">
+
+                            <h3 style="display: block;margin: 0;padding: 0;height: 56px;width: 20%; line-height: 56px;float:left;text-align: center;">送至：</h3>
+                            <div style="width:80%;margin-left:20%;">
+                                <ul class="selected">
+                                    <li><strong id="truename">{weikucms:$address['name']}</strong> {weikucms:$address['tel']}</li>
+                                    <li id="address" style="font-size:12px;">{weikucms:$address['seng']} {weikucms:$address['si']} {weikucms:$address['xian']} {weikucms:$address['detail']}</li>
+                                </ul>   <else /><span class='goAddress'>请点击登记地址</span>
+                                    </if>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--<div class="address_defalut temp_address_click">
+                    <a href="/cart/address.html?address_type=2">
+                    <a href="/cart/address.html?address_type=2">
+                    <a href="/cart/address.html?address_type=2">
+                        <h3 style="padding-top:15px;">收礼人：</h3>
+                        <ul class="selected">
+                            <li><strong>胡芳琴</strong> 13708000833</li><li>四川省 成都市  高新区益州大道333号中航国际广场A座601房</li>
+                        </ul>
+                    </a>
+                </div>-->
+
+                <div class="order_info mt5" id="orderList">
+                    <if condition="$_GET['type'] eq 2">
+                    <li class="message" style="display:block;"><textarea tag="message" id="postscript" name="note" placeholder="祝福语"></textarea></li>
+                       </if>
+                    <div class="item-check mt5">
+                        <h3 style=" float:left;width: 90%;">订单信息</h3>
+                        <div class="checkit"></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <dl class="only">
+                        <dd>
+                            <ul>
+
+                                <li class="hproduct">
+                                    <script pagespeed_no_defer="">(function(){var g=encodeURIComponent,h=window,k=document,l="width",m="documentElement",n="height",p="length",q=this,r=function(b,d){var a=b.split("."),c=q;a[0]in c||!c.execScript||c.execScript("var "+a[0]);for(var e;a[p]&&(e=a.shift());)a[p]||void 0===d?c[e]?c=c[e]:c=c[e]={}:c[e]=d};var t=function(b){var d=b[p];if(0<d){for(var a=Array(d),c=0;c<d;c++)a[c]=b[c];return a}return[]};var u=function(b){var d=h;if(d.addEventListener)d.addEventListener("load",b,!1);else if(d.attachEvent)d.attachEvent("onload",b);else{var a=d.onload;d.onload=function(){b.call(this);a&&a.call(this)}}};var v,w=function(b,d,a,c,e){this.f=b;this.h=d;this.i=a;this.c=e;this.e={height:h.innerHeight||k[m].clientHeight||k.body.clientHeight,width:h.innerWidth||k[m].clientWidth||k.body.clientWidth};this.g=c;this.b={};this.a=[];this.d={}},x=function(b,d){var a,c,e=d.getAttribute("pagespeed_url_hash");if(a=e)if(a=!(e in b.d))if(0>=d.offsetWidth&&0>=d.offsetHeight)a=!1;else{c=d.getBoundingClientRect();var f=k.body;a=c.top+("pageYOffset"in h?h.pageYOffset:(k[m]||f.parentNode||f).scrollTop);c=c.left+("pageXOffset"in
+                                    h?h.pageXOffset:(k[m]||f.parentNode||f).scrollLeft);f=a.toString()+","+c;b.b.hasOwnProperty(f)?a=!1:(b.b[f]=!0,a=a<=b.e[n]&&c<=b.e[l])}a&&(b.a.push(e),b.d[e]=!0)};w.prototype.checkImageForCriticality=function(b){b.getBoundingClientRect&&x(this,b)};r("pagespeed.CriticalImages.checkImageForCriticality",function(b){v.checkImageForCriticality(b)});r("pagespeed.CriticalImages.checkCriticalImages",function(){y(v)});var y=function(b){b.b={};for(var d=["IMG","INPUT"],a=[],c=0;c<d[p];++c)a=a.concat(t(k.getElementsByTagName(d[c])));if(0!=a[p]&&a[0].getBoundingClientRect){for(c=0;d=a[c];++c)x(b,d);a="oh="+b.i;b.c&&(a+="&n="+b.c);if(d=0!=b.a[p])for(a+="&ci="+g(b.a[0]),c=1;c<b.a[p];++c){var e=","+g(b.a[c]);131072>=a[p]+e[p]&&(a+=e)}b.g&&(e="&rd="+g(JSON.stringify(z())),131072>=a[p]+e[p]&&(a+=e),d=!0);A=a;if(d){c=b.f;b=b.h;var f;if(h.XMLHttpRequest)f=new XMLHttpRequest;else if(h.ActiveXObject)try{f=new ActiveXObject("Msxml2.XMLHTTP")}catch(s){try{f=new ActiveXObject("Microsoft.XMLHTTP")}catch(B){}}f&&(f.open("POST",c+(-1==c.indexOf("?")?"?":"&")+"url="+g(b)),f.setRequestHeader("Content-Type","application/x-www-form-urlencoded"),f.send(a))}}},z=function(){var b={},d=k.getElementsByTagName("IMG");if(0==d[p])return{};var a=d[0];if(!("naturalWidth"in a&&"naturalHeight"in a))return{};for(var c=0;a=d[c];++c){var e=a.getAttribute("pagespeed_url_hash");e&&(!(e in b)&&0<a[l]&&0<a[n]&&0<a.naturalWidth&&0<a.naturalHeight||e in b&&a[l]>=b[a.src].k&&a[n]>=b[a.src].j)&&(b[e]={rw:a[l],rh:a[n],ow:a.naturalWidth,oh:a.naturalHeight})}return b},A="";r("pagespeed.CriticalImages.getBeaconData",function(){return A});r("pagespeed.CriticalImages.Run",function(b,d,a,c,e,f){var s=new w(b,d,a,e,f);v=s;c&&u(function(){h.setTimeout(function(){y(s)},0)})});})();pagespeed.CriticalImages.Run('/var/cache/nginx/ngx_pagespeed_beacon','http://wx.sisterzhong.com/payment_js/index','RG0pd6hibv',true,false,'CkjBIhE-JY8');</script><img class="photo" src="{weikucms:$shop['logourl']}" alt="钟姐三羊开泰新年礼盒" pagespeed_url_hash="1541764222" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                                    <p class="fn">{weikucms:$shop['name']}</p>
+                                    <p class="sku ffc004d"><em>价格：</em>￥<span id="priceSale" class="retail_price f16" retail_price="200.00" market_price="250.00">
+                                        <if condition="$shop['vprice']">
+                                            {weikucms:$shop['vprice']}
+                                            <else />
+                                            {weikucms:$shop['price']}
+                                        </if>
+
+                                    </span></p>
+
+                                    <p class="sku mini_num_wrap"><em>数量：</em>
+
+                                        <span class="minus" href="javascript:void(0)" onClick="plus_minus( {weikucms:$shop['price']},-1,{weikucms:$shop['num']});"></span>
+                                        <input class="num"  name="total" type="1" rel="30" id="pamount_30" onblur="plus({weikucms:$shop['price']},{weikucms:$shop['num']})" value="1" size="5" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"    onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  >
+                                        <span class="plus" href="javascript:void(0)" onClick="plus_minus( {weikucms:$shop['price']},1,{weikucms:$shop['num']});"></span>
+
+                                    </p>
+
+                                    <div class="icon_x" suit_id="0" rel="30" title="删除"></div>
+                                </li>
+                                <if condition="$product_shuxi">
+                                <li style="margin-left: 95px;">
+                                    规格:
+                                    <volist name="product_shuxi" id="vo">
+                                    <input type="radio"  <if condition="$i eq 1">checked</if>  name="product_shuxi" value="{weikucms:$vo.id}" price="{weikucms:$vo.vprice}" num="{weikucms:$vo.num}">
+                                        {weikucms:$vo.color_value}{weikucms:$vo.value}
+                                        </volist>
+                                </li>
+                                    </if>
+
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <script>
+                    /**
+                     * 选择规格
+                     */
+                    $(function(){
+                        /**
+                         * 页面加载，就把价格换成第一种规格的价格
+                         */
+
+                     $("input[name=product_shuxi]").click(function(){
+                         var price=$(this).attr('price');
+                         var id=$(this).val();
+                         var num=$("#pamount_30").val();
+                         var discount=$("#discount").text();//抵扣金额
+                         $("#priceSale").text(price);
+                         $("#totalPrice").text(price*num-discount);
+                         $("#totalPrice1").val(price*num-discount);
+
+                     });
+                    })
+
+                    function plus(price,totalNum){
+                        var num=$("#pamount_30").val();
+                        if(num <=0){
+                            num=1;
+                        }
+                        if($("input[name=product_shuxi]").is(":checked")){
+                            var price1=$("input[name=product_shuxi]:checked").attr('price');
+                            var num1=$("input[name=product_shuxi]:checked").attr('num');
+                            price=price1;
+                            if(parseInt(num)>parseInt(num1)) {
+                                num = num1;
+                            }
+                        }else{
+                            if(num > totalNum){
+                                num=totalNum;
+                            }
+                        }
+                        $('#pamount_30').attr('value',num);
+
+                        var totalPrice=num*price;
+                        var sprice=$("#discount").html();
+                        totalPrice=totalPrice-sprice;
+                        totalPrice=totalPrice.toFixed(1);
+                     //   $("#totalPrice").html(totalPrice);
+                       // $("#totalPrice1").val(totalPrice);
+                        /**
+                         * 满多少包邮
+                         */
+                        var mail_price="{weikucms:$shop['mailprice']}";
+                        var minyao="{weikucms:$y_price}";
+                        if(totalPrice>=minyao){
+                            $("#totalPrice").html(totalPrice);
+                            $("#totalPrice1").val(totalPrice);
+                        }else{
+                            $("#totalPrice").html(totalPrice*1+(mail_price*1));
+                            $("#totalPrice1").val(totalPrice*1+(mail_price*1));
+                        }
+                      //  $("#totalPrice1").val(totalPrice);
+                    }
+
+                    function plus_minus(totalPrice,number,price) {
+
+                        var num = parseInt($('#pamount_30').val());
+                        num = num + parseInt(number);
+                        if (num <= 0) {
+                            num=1;
+                        }
+
+                        if($("input[name=product_shuxi]").is(":checked")){
+                            var price1=$("input[name=product_shuxi]:checked").attr('price');
+                            var num1=$("input[name=product_shuxi]:checked").attr('num');
+                            if (num > num1) {
+                                num = num1;
+                            }
+                            $('#pamount_30').attr('value',num);
+                            var totalPrice=num*price1;
+                            var sprice=$("#discount").html();
+                            totalPrice=totalPrice-sprice;
+                            totalPrice=totalPrice.toFixed(1);
+                            /**
+                             * 满多少包邮
+                             */
+                            var mail_price={weikucms:$shop['mailprice']};
+                            var minyao={weikucms:$y_price};
+                            if(totalPrice>=minyao){
+                                $("#totalPrice").html(totalPrice);
+                                $("#totalPrice1").val(totalPrice);
+                            }else{
+                                $("#totalPrice").html(totalPrice*1+(mail_price*1));
+                                $("#totalPrice1").val(totalPrice*1+(mail_price*1));
+                            }
+                        }else{
+                            if (num > parseInt(price)) {
+                                num = parseInt(price);
+                            }
+                            $('#pamount_30').attr('value',num);
+                            var totalPrice=num*totalPrice;
+                            var sprice=$("#discount").html();
+                            totalPrice=totalPrice-sprice;
+                            totalPrice=totalPrice.toFixed(1);
+                            /**
+                             * 满多少包邮
+                             */
+                            var mail_price={weikucms:$shop['mailprice']};
+                            var minyao={weikucms:$y_price};
+                            if(totalPrice>=minyao){
+                                $("#totalPrice").html(totalPrice);
+                                $("#totalPrice1").val(totalPrice);
+                            }else{
+                                $("#totalPrice").html(totalPrice*1+(mail_price*1));
+                                $("#totalPrice1").val(totalPrice*1+(mail_price*1));
+                            }
+                        }
+                    }
+
+                </script>
+                <div class="coupons_select">
+                    <div class="listli_defalut score_select">
+                        <h3>选择物流：</h3>
+                        <ul class="selected">
+
+
+                            <li id="choosdelivery">
+                        <volist name='wuliu' key='k' id='wl'>
+                            <span style="color:#333;margin-right: 3px; display:inline-block;">
+                                <input type="radio"  name="logistics" <if condition="$k eq 1">checked</if>  id="delivery_{weikucms:$k}" value="{weikucms:$wl}" >{weikucms:$wl}</span>
+                        </volist>
+
+                        <br />
+                                <span>运费{weikucms:$shop['mailprice']}元</span>
+                                <span style="padding-left:2px; margin-left: 5px;" id="ship_fee">满{weikucms:$y_price}元免运费</span>
+
+
+                            </li><!--快递费根据实际多少显示-->
+                        </ul>
+
+                    <span style="padding-left:2px;display:none;" id="shop_list">
+<select >
+    <option value="0" selected="">请选择门店</option>
+    <option value="1">南国书香节活动现场</option>
+    <option value="2">广州广百旗舰店</option>
+</select>
+</span>
+
+                    </div>
+
+
+
+                     <if condition="$token neq '589ff5e121279844f49e2f677cb92965'">
+                    <div class=" address_defalut temp_coupon_select">
+                        <h3 style="font-size:14px;">使用优惠卷：</h3>
+                        <ul class="selected" id="showmycoupons">
+                            <li id="choosecoupons"><a href="{weikucms::U('Store_shop/isgetsalecard',array('token'=>$token,'openid'=>$_GET['openid'],'id'=>$_GET['id']))}">
+                                <if condition="$slist.id gt 0">
+                                       <span flag="{weikucms:$slist.id}" id="sid">优惠卷：</span> {weikucms:$slist.snname}
+                                    <else />
+                                    您有 <font id="coupons_num" style="color:
+                                        #000;font-size: 24px; line-height:16px;">{weikucms:$snum}</font> 张可用，<span class="fred">点击选择</span>
+                                </if>
+                            </a><div style="clear:both;"></div></li>
+
+                        </ul>
+
+                    </div>
+                         </if>
+                </div>
+
+
+                <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>" >
+                    <input type="hidden" name="order_money" value="{weikucms:$shop['price']}" id="totalPrice1">
+                    <input type="hidden" name="order_text" value="{weikucms:$shop['name']}">
+                    <input type="hidden" name="orderid" value="" id="orderid">
+                    <input type="hidden" name="openid" value="{weikucms:$_GET['openid']}">
+                    <input type="hidden" name="returnurl" value="{weikucms::U('Store_shop/cats',array('token'=>$token,'openid'=>$_GET['openid']))}">
+                    <input type="hidden" name="type" value="Store_new_goods_order">
+                    <div class="pay_area" id="pay_area" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+                    <p class="price" id="price">支付现金:<span class='ffc004d'>￥</span><strong id="totalPrice" class="f16" price="200" market_price="250">0</strong>元 &nbsp; <span <if condition="$token eq '589ff5e121279844f49e2f677cb92965'">style="display: none;"</if>>抵扣:￥<em id="discount"><if condition="$slist.amount gt 0">{weikucms:$slist.amount}<else />0</if> </em>元</span></p>
+                    <p class="use_pay"><button type="button" id="buyBtn1" class="btn btn-success btn-block mt10 J_payBtn" onclick="quickbuy11()" flag="1" >微信支付</button></p>
+                    <p class="has_pay" style="display:none;"><button type="button" rel="2" class="btn btn-success  btn-block mt10 J_payBtn">确认支付</button></p>
+                </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--配送方式选择-->
+    <script>
+        $(function(){//这里是有优惠卷的价格
+            if($("input[name=product_shuxi]").is(":checked")){
+                var price1=$("input[name=product_shuxi]:checked").attr('price');
+                $("#priceSale").text(price1);
+            }else{
+                var price1=$("#totalPrice").html();
+            }
+
+           // $("#totalPrice").html(price1);
+           // $("#totalPrice1").html(price1);
+
+            var sprice=$("#discount").html();
+           // var totalPrice=$("#totalPrice").html();
+            var a=price1-sprice;
+
+            $("#totalPrice").html(a);
+            $("#totalPrice1").val(a);
+
+        });
+        //$('.num').val(0);
+        function quickbuy11(){
+            /**
+             * 当购买数量为0时中止
+             *
+             */
+            var bbc=$("#pamount_30").val();
+            if(bbc==0){
+                show_error_tip('您把购买数量告诉我！');
+                return false;
+            }
+
+            if($("input[name=product_shuxi]").is(":checked")){
+                var type1='son';
+                var productid=$("input[name=product_shuxi]:checked").val();
+            }else{
+                var type1='par';
+                var productid={weikucms:$shop.id};
+            }
+            var  url="{weikucms::U('Store_shop/show',array('token' => $_GET['token'],'wecha_id' => $_GET['openid'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}&type="+type1+"&productid="+productid;
+
+            var total=$("#pamount_30").val();
+            var price=$("#totalPrice").html();
+            var truename=$("#truename").html();
+            var address=$("#address").html();
+            var sid=$("#sid").attr('flag')//优惠卷ID
+
+            var logistics=$('input[name=logistics]:checked').val();
+
+            if(!address){
+                show_error_tip('请先登记地址');
+                setTimeout(function(){
+                    $('.goAddress').trigger('click');
+                }, 1500);
+                return false;
+            }
+            if(!logistics){
+                show_error_tip('请选择邮寄方式');
+                return false;
+            }
+            if(parseInt($('.order_money').val()) == 0){
+                return;
+            }
+            var tel= '{weikucms:$address['tel']}';
+            var note=$("#postscript").val();
+            var flag=$("#buyBtn1").attr('flag');
+            if(flag==1) {
+                $("#buyBtn1").attr('flag',2);
+                $("#buyBtn1").html('正在支付中...');
+                $.post(url, {
+                    'type':type1,//商品属性是否开启了
+                    'sid':sid,//优惠卷ID
+                    'total': total,
+                    'price': price,
+                    'truename': truename,
+                    'tel': tel,
+                    'logistics': logistics,
+                    'address': address,
+                    'note': note
+                }, function (data) {
+                    if (data.state) {
+                        $("#orderid").val(data.orderid);
+                        $("#myweipayform").submit();
+                    } else {
+                        alert(0);
+                    }
+                }, 'json');
+            }else{
+                show_error_tip('请重新下单');
+            }
+        }
+		
+		$('.plus').trigger('click');
+    </script>
+    <div class="modal fade" id="mydelivery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:120px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header tac">
+                    <button type="button" class="close" id="closemydelivery" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title" id="myModalLabel">货到付款加收5%手续费,最低5元</h5>
+                </div>
+                <div class="modal-body tac" id="choosedelivery">
+                    <div class="btn-group">
+
+                        <div class="price">商品总价： ￥<strong id="want_pay" style="font-size:20px;color: #FC004D;"></strong></div>
+                        <div class="price">订单总价： ￥<strong id="want_pay_order" style="font-size:20px;color: #FC004D;"></strong></div>
+                        <br/>
+                        <div class="col-xs-6 pl0" style="width:120px;"><button type="button" rel="4" class="btn btn-success btn-block J_payBtn">确认下单</button></div>
+                        <div class="col-xs-6 pr0" style="width:120px;"><button type="button" class="btn btn-info btn-block">返回重选</button></div>
+                        <br/><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<include file="./tpl/Wap/default/mrufx.html" />
+</body>
+</html>

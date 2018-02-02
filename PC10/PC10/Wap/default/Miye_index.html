@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="银波米业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/miye/css/style.css">
+		<script src="{weikucms::RES}/miye/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/miye/js/main.js"></script>
+		<script src="{weikucms::RES}/miye/js/core.js"></script>
+		<script src="{weikucms::RES}/miye/js/iscroll.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+		<script type="text/javascript">
+		    var URL = "{weikucms::U('Wap/Miye/localReturn',array('token'=>$token))}";
+		    var URL2 = "{weikucms::U('Wap/Miye/localReturn2',array('token'=>$token))}";
+		    var send_URL = "{weikucms::U('Wap/Miye/sends',array('token'=>$token))}";
+		</script>
+		<style type="text/css">
+			/*.show{
+				display: block !important;
+			}*/
+			#map{
+				width: 100%;
+				height: 90%;
+				
+			}
+			section.baiduMap {
+			    width: 100%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    display: none;
+			}
+		</style>
+    </head>
+    <body>
+        <if condition="$logo">
+        <div class="logo {weikucms::$_GET['token']}" style="background:url('{weikucms:$logo}'); background-size: 100%; height: 90px;" ></div>
+        <else />
+    	<div class="logo"></div>
+        </if>
+		<div class="form">
+			<div class="inputBox ">
+				<div class="icon icon-tag"></div>
+				<div class="input selectMi">
+				<if condition="$pinzhong neq ''">
+					<volist name="pinzhong" id="so" offset="0" length="1">
+						<span class="selectedMi on" data-id="{weikucms:$so.id}">
+						   {weikucms:$so.pinzhong}	
+						</span>
+					</volist>
+				<else/>
+					<span class="selectedMi" data-id="-1">
+						暂无品牌				
+					</span>
+				</if>
+					
+				</div>
+				<div class="selectMiList" id="selectMiList">
+					<ul>
+						<volist name="pinzhong" id="vo">
+						    <li class="miList" data-id="{weikucms:$vo.id}">{weikucms:$vo.pinzhong}</li>
+						</volist>
+					</ul>
+				</div>
+				
+				
+	
+				
+			</div>
+			
+		<!-- 无名开始 -->
+		<if condition="$tokenaa neq 1"  >
+			<div class="inputBox ">
+				<div class="icon icon-tag"></div>
+				<div class="input selectMiwm">
+				<if condition="$wm neq ''">
+					<volist name="wm" id="so" offset="0" length="1">
+						<span class="selectedMiwm on" data-id="{weikucms:$so.id}">
+						   {weikucms:$so.name}	
+						</span>
+					</volist>
+				<else/>
+					<span class="selectedMiwm" data-id="-1">
+						暂无区域		
+					</span>
+				</if>
+					
+				</div>
+				<div class="selectMiList" id="selectMiListwm">
+					<ul>
+						<volist name="wm" id="vo">
+						    <li class="miListwm" data-id="{weikucms:$vo.id}">{weikucms:$vo.name}</li>
+						</volist>
+					</ul>
+				</div>
+				
+				
+	
+				
+			</div>
+		</if>	
+		<!-- 无名结束 -->
+		
+		<if condition="$tokenaa neq 1"  >
+			<div class="inputBox ">
+				<div class="icon icon-tag1"></div>
+				<div class="input adc">
+				<if condition="$xiaoqu neq ''">
+					<volist name="xiaoqu" id="so" offset="0" length="1">
+						<span class="selectedMi1 on" data-id="{weikucms:$so.id}" id="abc">
+                      	     请选择您附近的社区	!					  
+						</span>
+					</volist>
+				<else/>
+					<span class="selectedMi1" data-id="-1">
+						暂无社区				
+					</span>
+				
+					
+				</div>
+		</if>	
+		
+		
+			
+		
+		
+		
+		
+		
+				<div class="selectMiList1" id="selectMiList1">
+					<ul>
+						
+						    <li class="miList1" data-id="{weikucms:$vo.id}"></li>
+						
+					</ul>
+				</div>
+				
+				
+	
+				
+			</div>
+		</div>
+			</if>
+			
+		
+			
+			
+			<div class="inputBox ">
+				<div class="icon icon-phone"></div>
+				<div class="input phone">
+					<input type="tel" placeholder="联系电话">
+				</div>
+			</div>
+			<div class="inputBox ">
+				<div class="icon icon-sign"></div>
+				<div class="input selectShop">
+					<span class="selectedShop">
+						选择您附近的商店
+					</span>
+				</div>		
+			</div>
+			<div class="inputBox ">
+				<div class="icon icon-map"></div>
+				<div class="input location">
+					<div class="located" id="located" data-lng="0" data-lat="0">
+						请定位获取您的位置
+					</div>					
+				</div>
+				<div class="locate" id="locate">
+					定位
+				</div>				
+			</div>
+			<div class="inputBox ">
+				<div class="icon icon-pen"></div>
+				<div class="input notice">
+					<input type="text" placeholder="填写您的购米需求">
+				</div>
+			</div>
+            <input type="hidden" id="openid" value="<?php print_r($_GET['openid']) ?>" />
+			<div class="inputBox submit">
+				发送
+			</div>
+		</div>
+		<div class="blur">
+			<section class="selectShopList">
+				<header>
+					附近商店
+				</header>
+				<div class="listWrap">
+					<ul>
+						
+					</ul>
+				</div>
+				<footer class="myul">
+					<div class="myli cancel">
+						取消
+					</div>
+					<div class="myli confirm">
+						确认
+					</div>
+				</footer>
+			</section>
+			<section class="tips">
+				<header></header>
+				<div class="tipsContent"></div>
+				<footer class="myul">
+					<div class="myli confirmTips">
+						确认
+					</div>
+				</footer>
+			</section>
+		</div>
+		<section class="baiduMap">
+			<header>
+				请选择您的位置
+			</header>
+			<div id="map">
+				
+			</div>
+			<div class="dragSelect" id="dragSelect"></div>
+			<footer class="myul">
+				<div class="myli cancelMap">
+					取消
+				</div>
+				<div class="myli confirmMap">
+					确认
+				</div>
+			</footer>
+		</section>
+			
+    </body>
+    <script type="text/javascript">
+    window.onload= function(){
+    	$("#locate").trigger('click');
+    }
+    </script>    
+ 	
+</html>

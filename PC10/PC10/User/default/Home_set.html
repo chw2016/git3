@@ -1,0 +1,225 @@
+<include file="Public:head"/>
+<div class="">
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+    $(function(){
+        $("#bsubmit").click(function(){
+            var btn = $(this);
+            if(! $("input[name='keywords']").val()){
+                notif({
+                    msg: "关键词不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! $("input[name='title']").val()){
+                notif({
+                    msg: "回复标题为空,用于回复图文信息的标题",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! $("input[name='picurl']").val()){
+                notif({
+                    msg: "请上传封面图片哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+        });
+    });
+
+
+</script>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+        <li data-index="0" class="tab_nav first js_top " data-id="total">
+            <a href="{weikucms::U('Home/set',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if> >首页回复配置</a>
+        </li>
+
+
+
+        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+            <a href="{weikucms::U('Classify/index',array('token'=>$token))}" <if condition="$hover2 eq 1">class="hover"</if>>分类管理</a>
+        </li>
+
+        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+            <a href="{weikucms::U('Tmpls/index',array('token'=>$token))}" <if condition="$hover3 eq 1">class="hover"</if>>微官网风格</a>
+        </li>
+
+        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+            <a href="{weikucms::U('Flash/index',array('token'=>$token))}" <if condition="$hover4 eq 1">class="hover"</if>>轮播图</a>
+        </li>
+
+        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+            <a href="{weikucms::U('speeddial/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>导航与版权</a>
+        </li>
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Flash/gonggao',array('token'=>$token))}" <if condition="$hover6 eq 1">class="hover"</if>>公告信息</a>
+            </li>
+
+
+        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+            <a href="{weikucms::U('Home/base_set',array('token'=>$token))}" <if condition="$hover6 eq 1">class="hover"</if>>设置</a>
+        </li>
+       <if condition="($token eq '36462b4a0fac12ef6ae630e398759ea9')OR($token eq '5d8a87bab30de695954b17fc835b9d12')">
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Gta_appset/index',array('token'=>$token))}" <if condition="$hover6 eq 1">class="hover"</if>>应用管理</a>
+            </li>
+           </if>
+
+        <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+            <a href="#" onclick="window.open('{weikucms::U('Yulan/index',array('token'=>$token))}', 'bindweixin', 'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,title=0,height=1100,width=720');" class="nohover">微官网预览</a>
+        </li>
+       </ul>
+    </div>
+ </div>
+    <!--复制开始-->
+
+
+
+ <!--复制结束-->
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里可以设置你的微官网的首页回复信息</li>
+        </ol>
+    </div>
+    <div class="msgWrap bgfc">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+            <if condition="$token neq '55cad4ba46c41a8fde9c84274e36fa83'">
+                <tr>
+				  <th valign="top">微官网首页地址：</th>
+				  <td>
+                      <span class="badge badge-success"><php>echo C('site_url');</php>index.php/Wap/Index/index/token/{weikucms:$_SESSION['token']} </span>
+                       请手工复制地址
+                      <br>
+                      <span>微官网系统默认关键词 ：<span class="badge badge-success">首页</span> </span>
+                  </td>
+				</tr>
+                </if>
+
+                <input type="hidden" name="keywords" value="首页" class="px" style="width:300px;" onfocus="leave();" readonly="readonly">
+				<tr>
+					<th width="120">回复标题：</th>
+					<td><input type="text" id="title" name="title" value="{weikucms:$home.title}" class="px" style="width:300px;" placeholder="微官网图文消息回复标题"></td>
+				</tr>
+				<tr>
+					<th width="120">内容介绍：</th>
+					<td><textarea style="width:300px;height:75px" name="info" id="info" class="px" >{weikucms:$home.info}</textarea><br/>最多输入120个汉字</td>
+				</tr>
+                <TR>
+                    <TH valign="top"><label for="picurl">封面图片展示：</label></TH>
+
+                    <TD><img style="display: block;" id="image_show" class="indexs_img" src="<if condition='$home.picurl neq null'>{weikucms:$home.picurl}<else/>./upload/index_img.jpg</if>"></TD>
+                </TR>
+				<tr>
+					<th>图文消息封面图片：</th>
+					<td>
+                    <input type="hidden" class="text textMiddle inputQ"  name="picurl" id="pic" value="<if condition='$home.picurl neq null'>{weikucms:$home.picurl}<else/>./upload/index_img.jpg</if>" style="width:300px;"   />
+                    <span class="ke-button-common" id="upload">上传图片</span>
+                </tr>
+				<th>&nbsp;</th>
+					<td>
+						<button type="button" id="bsubmit"  name="button" class="btn btn-primary">保存</button>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</form>
+  </div>
+<div id="rightshow" style="margin-left: 550px; margin-top: -586px; width: 450px; height: 466px; display: block; ">
+    <div class="words_float"><span style="font-size: 15px; lift:60px; padding:0px 94px;">首页回复配置效果：</span></div>
+    <img src="{weikucms::STATICS}/shouyeshow.jpg" style="width:250px; height: 440px; margin-left: 125px; padding: 6px" class="help_image2">
+</div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var title = $("#title").val();
+                var info = $("#info").val();
+                var picurl = $("#pic").val();
+                var id = $("input[name='id']").val();
+                var __hash__ =  $("input[name='__hash__']").val();
+
+                if(!title){
+                    notif({
+                        msg: "回复标题不能为空哦",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(!picurl){
+                    notif({
+                        msg: "您还没有上传封面图片",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+                if(! info){
+                    notif({
+                        msg: "回复简介不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+
+
+                $.post("{weikucms::U('Home/set')}",
+                        {id:id,title:title,picurl:picurl,info:info,__hash__:__hash__},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+    </script>
+
+
+        </div>
+<include file="Public:footer"/>

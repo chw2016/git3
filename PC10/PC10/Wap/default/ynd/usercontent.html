@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>个人中心</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+        <script src="{weikucms::STATICS}/common/msg.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                var userinfo = "{weikucms:$userinfo}";
+                if(!userinfo){
+                    msg.alert('您现在还不是会员，请注册！',function(){
+                        location.href = "{weikucms::U('userregister',array('token'=>$token,'openid'=>$openid))}";
+                    });
+                }
+            })
+        </script>
+    </head>
+    <body>
+<a href="personal.html">
+	<div class="user-header">
+        <a href="{weikucms::U('Ynd/addressselect',array('token'=>$token,'openid'=>$openid))}">
+            <div class="user-top">
+                收货地址管理
+                <span class="icon-chevron-right"></span>
+            </div>
+        </a>
+		<div class="user-account" onclick="window.location.href='{weikucms::U('Ynd/userregister',array('token'=>$token,'openid'=>$openid))}'">
+			<div class="user-img">
+                <if condition="$wxUinfo['headimgurl']">
+                    <img src="{weikucms:$wxUinfo['headimgurl']}" />
+                    <else/>
+                    <img src="{weikucms::STATICS}/wapweiui/ynd/images/1.jpg" />
+                </if>
+			</div>
+			<div class="user-name">
+				<p>{weikucms:$userinfo['uname']}</p>
+				<p>会员状态：{weikucms:$userinfo['states']}</p>
+			</div>
+		</div>
+		<div class="record">
+			<ul class="record_ul">
+				<li class="record_ul_li" onclick="window.location.href='{weikucms::U('Ynd/recharge',array('token'=>$token,'openid'=>$openid))}'">
+					<span class="icon-hghg tab-title-size"></span>
+					<span>充值</span>
+				</li>
+				<li class="record_ul_li" onclick="window.location.href='{weikucms::U('Ynd/cue',array('token'=>$token,'openid'=>$openid))}'">
+					<span class="icon-uniE626 tab-title-size"></span>
+					<span>提现</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</a>
+	<!-- 内容区域 -->
+	<div class="main animated fadeInDown">
+
+		<div class="main-content">
+			<div class="main-title clearfix">
+				<div class="main-title-left">
+					<span class="icon-uniE62B"></span>
+					<span class="main-title-left-me">我的钱包</span>
+				</div>
+                <div class="main-title-right" onclick="window.location.href='{weikucms::U('Ynd/mRecord',array('token'=>$token,'openid'=>$openid))}'">
+                    <span>查看钱包记录</span>
+                    <!-- <span class="arrow-right"></span> -->
+                </div>
+			</div>
+			<div class="main-tab">
+				<ul class="main-tab-ul">
+					<li class="main-tab-li">
+						<p>{weikucms:$userinfo['LQ']}</p>
+						<p>LQ</p>
+					</li>
+					<li class="main-tab-li">
+						<p>{weikucms:$userinfo['CQ']}</p>
+						<p>CQ</p>
+					</li>
+					<li class="main-tab-li">
+						<p>{weikucms:$userinfo['money']}</p>
+						<p>人民币</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+        <div class="main-content">
+            <div class="main-title clearfix">
+                <div class="main-title-left">
+                    <span class="icon-uniE629"></span>
+                    <span class="main-title-left-me">我的订单</span>
+                </div>
+                <div class="main-title-right" onclick="window.location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid))}'">
+                    <span>查看全部订单</span>
+                    <!-- <span class="arrow-right"></span> -->
+                </div>
+            </div>
+            <div class="main-tab">
+                <ul class="main-tab-ul center">
+                    <li class="main-tab-li line-right" onclick="window.location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid,'type'=>2))}'">
+                        <p>待收货</p>
+                    </li>
+                    <li class="main-tab-li" onclick="window.location.href='{weikucms::U('Ynd/record',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+                        <p>待付款</p>
+                    </li>
+                </ul>
+            </div>
+           <!-- <div class="main-tab">
+                <ul class="main-tab-ul">
+                    <li class="main-tab-li">
+                        <a href="indent.html">
+                            <p class="icon-card f16"></p>
+                            <p>待付款</p>
+                        </a>
+                    </li>
+                    <li class="main-tab-li">
+                        <a href="indent.html">
+                            <p class="icon-truck f16"></p>
+                            <p>待收货</p>
+                        </a>
+                    </li>
+                    <li class="main-tab-li">
+                        <a href="indent.html">
+                            <p class="icon-uniE622 f16"></p>
+                            <p>待评价</p>
+                            <div class="await">1</div>
+                        </a>
+                    </li>
+                    &lt;!&ndash; <li class="main-tab-li">
+                        <p class="icon-uniE627 f16"></p>
+                        <p>退换</p>
+                    </li> &ndash;&gt;
+                </ul>
+            </div>-->
+        </div>
+
+
+        <if condition="$userinfo['type'] eq 1">
+        <div class="main-content">
+            <div class="main-title clearfix">
+                <div class="main-title-left">
+                    <span class="icon-uniE62A"></span>
+                    <span class="main-title-left-me">我的放单</span>
+                </div>
+                <div class="main-title-right" onclick="window.location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid))}'">
+                    <span>查看全部放单</span>
+                    <!-- <span class="arrow-right"></span> -->
+                </div>
+            </div>
+            <div class="main-tab">
+
+                <ul class="main-tab-ul center">
+                    <li class="main-tab-li line-right" onclick="window.location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">
+                        <p>正在放单</p>
+                    </li>
+                    <li class="main-tab-li" onclick="window.location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid,'type'=>2))}'">
+                        <p>历史放单</p>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        </if>
+		<div class="main-content">
+	<!-- 		<div class="main-title clearfix" onclick="window.location.href='{weikucms::U('Ynd/cue',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="main-title-left">
+					<span class="icon-uniE626"></span>
+					<span class="main-title-left-me">提现</span>
+				</div>
+				<div class="main-title-right">
+					<span class="arrow-right"></span>
+				</div>
+			</div>
+			<div class="main-title clearfix" onclick="window.location.href='{weikucms::U('Ynd/addressselect',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="main-title-left">
+					<span class="icon-hghg"></span>
+					<span class="main-title-left-me">充值</span>
+				</div>
+				<div class="main-title-right">
+					<span class="arrow-right"></span>
+				</div>
+			</div> -->
+
+			<div class="main-title clearfix" onclick="window.location.href='{weikucms::U('Ynd/QRCode',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="main-title-left">
+					<span class="icon-uniE623"></span>
+					<span class="main-title-left-me">我的二维码</span>
+				</div>
+				<div class="main-title-right">
+					<span class="arrow-right"></span>
+				</div>
+			</div>
+
+			<div class="main-title clearfix" onclick="window.location.href='{weikucms::U('Ynd/band',array('token'=>$token,'openid'=>$openid))}'">
+				<div class="main-title-left">
+					<span class="icon-card"></span>
+					<span class="main-title-left-me">我的银行卡</span>
+				</div>
+				<div class="main-title-right">
+					<span class="arrow-right"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--脚部模块-->
+		<footer>
+			<ul class="footertab">
+				<li class="footselect">
+                    <a href="{weikucms::U('Ynd/index',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-232"></p>
+						<p class="tab-title">首页</p>
+					</a>
+				</li>
+				<li>
+                    <a href="{weikucms::U('Ynd/shoping',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-uniE624"></p>
+						<p class="tab-title">购物车</p>
+					</a>
+				</li>
+				<li>
+                    <a href="{weikucms::U('Ynd/usercontent',array('token'=>$token,'openid'=>$openid))}">
+						<p class="icon-uniE628 colorf57d8e"></p>
+						<p class="tab-title colorf57d8e">我的</p>
+					</a>
+				</li>
+			</ul>
+		</footer>
+    </body>
+</html>

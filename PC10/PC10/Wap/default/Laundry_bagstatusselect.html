@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="{weikucms::RES}/laundry/logistics/css/default.css" type="text/css">
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::RES}/laundry/logistics/js/jquery-1.8.2.min.js"></script>
+
+<meta charset="UTF-8">
+<title>96洗衣店</title>
+<meta name="Keywords" content="96洗衣店">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+</head>
+
+
+
+<body>
+<div class="bookingTips" style="line-height:25px;">
+    <strong>状态选择</strong>
+    <div style="line-height:20px;">Hello,{weikucms:$employees['employees_name']},请为{weikucms:$bagInfo['bag_sn']}号洗衣袋选择状态</div>
+</div>
+<div id="baoyangYuyue1">
+    <div class="iconText">
+        <ul>
+            <li>
+                <div class="li-l"><img src="{weikucms::RES}/laundry/logistics/img/noI24727upM3y4iSH7eI7s05O72mo0.png"></div>
+                <div class="li-r">
+                    <select name="serviceId" id="serviceId" class="select" style="width:100%">
+                    <option value="">选择袋子状态</option>
+                    
+                    <if condition="$bagInfo['bag_status'] egt 1">
+                    <else />
+                    <option value="1">袋子已满</option>
+                    </if>
+                    
+                    <if condition="$bagInfo['bag_status'] egt 2">
+                    <else />
+                    <option value="2">送达洗衣中心，正在清洗</option>
+                    </if>
+                    
+                    <if condition="$bagInfo['bag_status'] egt 3">
+                    <else />
+                    <option value="3">正在配送</option>
+                    </if>
+                    
+                    <if condition="$bagInfo['bag_status'] egt 4">
+                    <else />
+                    <option value="4">配送成功</option>
+                    </if>
+                    </select>
+                </div>
+
+        </ul>
+    </div>
+    <div class="button clearfix"><a href="javascript:void(0);" id="s">确定</a></div>
+    
+</div>
+<!-- 提示 -->
+<div id="error_tip" style="display: none" class="cod">
+	<div class="wx_mask"></div>
+	<div class="wx_confirm">
+	    <div class="wx_confirm_inner">
+	        <div class="wx_confirm_hd">
+	            <div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<!-- /提示 -->
+<script type="text/javascript">
+$(function(){
+    $("#s").click(function(){
+        var bagStatus = $("#serviceId").find("option:selected").val();
+        if(bagStatus == ''){
+            $("#error_tip").show();
+            $("#tip_div").html('只有选择了袋子状态才能提交哦~');
+            setTimeout(function(){
+                $("#error_tip").hide();
+            },1000);
+            return false;
+        }
+        if(bagStatus - {weikucms:$bagInfo['bag_status']} > 1){
+            $("#error_tip").show();
+            $("#tip_div").html('流程不能跳跃哦，违规会被罚款的~');
+            setTimeout(function(){
+                $("#error_tip").hide();
+            },1000);
+            return false;
+        }
+        var openid = "{weikucms:$bagInfo['bag_manager_openid']}";
+        var bag_sn = "{weikucms:$bagInfo['bag_sn']}";
+        var url = "{weikucms::U('Laundry/bagstatusselect',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{bagStatus:bagStatus,openid:openid,bag_sn:bag_sn},function(data){
+            if(data.status == 1){
+                $("#error_tip").show();
+                $("#tip_div").html(data.info);
+                setTimeout(function(){
+                    window.location.reload();
+                },1000);
+            }else{
+                $("#error_tip").show();
+                $("#tip_div").html(data.info);
+                setTimeout(function(){
+                    $("#error_tip").hide();
+                },1000);
+            }
+        },'json');
+        
+    });
+});
+
+</script>
+</body>
+</html>

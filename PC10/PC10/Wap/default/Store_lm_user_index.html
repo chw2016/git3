@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>个人中心</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/Untitled.css">
+        <link rel="stylesheet" href="/tpl/static/lm/css/prompt.css">
+        <link rel="stylesheet" href="/tpl/Wap/default/common/css/store/css/showcase_ddb08a6630.css" onerror="_cdnFallback(this)" />
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/msg.js"></script>
+		<!--<script src="{weikucms:$staticFilePath}/lm/js/slider.js"></script>-->
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+        <script src="/tpl/static/lm/js/prompt.js"></script>
+        <style>
+            .payState{
+                text-align: center;
+            }
+            .container {
+            background-color: #f9f9f9;
+        }
+            .block {
+                overflow: hidden;
+                margin: 20px 0;
+                background-color: #fff;
+                display: block;
+            }
+            .block.block-order .header {
+                height: 37px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 0 10px;
+                padding-left: 10px;
+                line-height: 37px;
+            }
+            .block.block-list {
+                margin: 0;
+                padding: 0;
+                padding-left: 10px;
+                list-style: none;
+                font-size: 14px;
+                box-sizing: border-box;
+            }
+            .block.block-order .bottom {
+                padding: 10px;
+                padding-left: 10px;
+                height: 16px;
+                font-size: 14px;
+                line-height: 16px;
+            }
+            .name-card .thumb img {
+                position: absolute;
+                margin: auto;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100px;
+                height: 100px;
+                max-width: 100%;
+                max-height: 100%;
+            }
+            .name-card.name-card-3col .price-num {
+                position: absolute;
+                right: 0px;
+                top: 7px;
+                width: 78px;
+                padding-right: 10px;
+                font-size: 12px;
+            }
+            .name-card .thumb {
+                width: 100px;
+                height: 100px;
+                float: left;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                overflow: hidden;
+                background-size: cover;
+            }
+            .block.block-order .bottom {
+                padding: 10px;
+                padding-left: 10px;
+                height: 16px;
+                font-size: 14px;
+                line-height: 16px;
+            }
+            .c-orange {
+                color: #f90 !important;
+            }
+            .opt-btn {
+                display: inline-block;
+                margin-top: -6px;
+                float: right;
+            }
+            .opt-btn .btn {
+                margin-left: 5px;
+                padding: 4px 4px;
+                text-align: center;
+                line-height: 19px;
+                width: 50px;
+                height: 28px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .btn.btn-yellow {
+                color: #fff;
+                background-color: #f09000;
+                border-color: #f09000;
+            }
+            .opt-btn .btn {
+                margin-left: 5px;
+                padding: 4px 4px;
+                text-align: center;
+                line-height: 19px;
+                width: 50px;
+                height: 28px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .btn.btn-red {
+                color: #fff;
+                background-color: #ed5050;
+                border-color: #b93232;
+            }
+            .name-card .detail {
+                margin-left: 110px;
+                width: auto;
+                position: relative;
+            }
+            .name-card .detail h3 {
+                margin-top: 10px;
+                color: #333;
+                font-size: 12px;
+                line-height: 16px;
+            }
+            .name-card .detail p {
+                position: relative;
+                font-size: 12px;
+                line-height: 16px;
+                white-space: nowrap;
+                margin: 10px 0 2px;
+                width: 100%;
+                color: #ccc;
+            }
+            .ellipsis {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .name-card.name-card-3col {
+                padding: 7px 0;
+                padding-right: 85px;
+            }
+            .block {
+                overflow: hidden;
+                -webkit-border-image: url("/v2/image/wap/border-line.png") 2 stretch;
+                -moz-border-image: url("/v2/image/wap/border-line.png") 2 stretch;
+                border-image: url("/v2/image/wap/border-line.png") 2 stretch;
+                border-bottom: 2px solid #e5e5e5;
+                margin: 10px 0;
+                background-color: #fff;
+                display: block;
+                position: relative;
+            }
+        </style>
+		
+    </head>
+    <body>
+		<!-- 主页用户信息 -->
+        <header class="header textMiddle white h3 goodsTitle">
+	    	<div class="setLeft closeIcon"><img src="{weikucms:$staticFilePath}/lm/img/close.png" /></div>
+	    	<span>我的每赞</span>
+            <div class="setRight closeIcon" style="top:7px;"><img src="{weikucms:$staticFilePath}/lm/img/3po.png" /></div>
+	    </header>
+	    <div class="header userInfo fixBg" style="background-image:url({weikucms:$staticFilePath}/lm/img/userBg.png)">
+	    	<div class="userLessInfo myul">
+	    		<div class="userBlog white myli">
+	    			<a href="javascript:;" class="Ring"><span class="set"></span></a>
+	    		</div>
+	    		<div class="dateLocate myli">
+	    			<div class="daLo">
+                    	<a href="javascript:;">逼格帮部落 <img class="plus" src="{weikucms:$staticFilePath}/lm/img/plus.png" /></a>
+	    			</div>
+	    		</div>
+	    	</div>
+            <br/>
+	    	<div class="setMiddle myul userMainInfo">
+	    		<div class="circle settingWrap Yz-Head">
+	    		</div>
+	    		<div class="circle userLogoWrap">
+	    			<!-- <img src="img/logo-bg.jpg" alt="头像" class=" userLogo" width="100%" height="100%"> -->
+	    			<div class="circle userLogo fixBg" style="background-image: url({weikucms:$userData.headimgurl});"></div>
+	    		</div>
+	    	</div>
+	    	<div class="textMiddle white userName" style="margin-top:12px;">
+                {weikucms:$userData.nickname}
+	    	</div>
+	    	<!--<div class="userMoreInfo myul Yz-Ranking" style="margin-top:8px;">
+	    		<div class="textMiddle Yz-font12">
+	    			<span>我的积分 </span>
+		    		<span>56584</span>
+		    		<span>我的排名</span>
+		    		<span>45125位</span>
+	    		</div>
+                
+                    <a href="javascript:;"><span class="Yz-code"></span></a>
+                    <a href="javascript:;"><span class="Yz-Modify"></span></a>
+	    	</div>-->
+	    </div>
+		<!-- END -->
+        <!-- conter -->
+        <section class="privateBox">
+            <nav class="myul" style="color:#fb405f ;background:#FFFFFF;">
+                <div class="myli item textMiddle kong_1">
+                	<a href="javascript:;" class="kong_2 choose">账户设置</a>
+                </div>
+                <div class="myli item textMiddle kong_1">
+                	<a  class="kong_2" id="act" act="0">我的订单</a>
+                </div>	
+            </nav>
+            <script>
+                $(function(){
+                    $(".myul .kong_1").click(function(){
+                        $(".myul .kong_1 a.kong_2").removeClass("choose");
+                        $(this).children("a.kong_2").addClass("choose");
+                        $num=$(this).index(); //alert($num);
+                        $(".other").hide();
+
+                        if($num==1){
+                            var act=$("#act").attr('act');
+                            var url="{weikucms::U('Store_lm/orders',array('token'=>$token,'openid'=>$openid))}";
+                            $.post(url,{act:act},function(data){
+                                   if(data.status==1){
+                                     $("#bbc").html(data.bbc);
+                                   }
+                            },'json');
+                        }
+                        $(".other").eq($num).show();
+                    });
+                })
+            </script>
+        </section>
+        	<!-- 账户设置 -->
+                <div class="other">
+                    <div class="Yz-p">
+                    	<p>
+                        	我的昵称
+                            <input type="text" maxlength="20" name="name" value="{weikucms:$vo.name}" />
+                        </p>
+                    	<p>
+                        	年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄
+                            <input type="text" maxlength="20" name="age" value="{weikucms:$vo.age}" />
+                        </p>
+                    	<p>
+                        	职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业
+                            <input type="text" maxlength="20" name="occupation" value="{weikucms:$vo.occupation}" />
+                        </p>
+                    	<p>
+                        	联系电话
+                            <input type="tel" maxlength="12" name="phone" value="{weikucms:$vo.phone}"/>
+                        </p>
+                    	<p>
+                        	邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱
+                            <input type="text" maxlength="20"  name="mail" value="{weikucms:$vo.mail}"/>
+                        </p>
+                    	<p>
+                        	<a href="javascript:;">收货地址<span onclick="edit_address()">修改</span></a>{weikucms:$address.seng}省
+                            {weikucms:$address.si}市{weikucms:$address.xian}县{weikucms:$address.detail}
+                        </p>
+                        
+                    	<p class="Yz-an">
+                        	账号绑定
+                        </p>
+                    	<p>
+
+                            绑定支付宝
+                            <input type="text" maxlength="30" name="alipay" value="{weikucms:$vo.alipay}"/>
+                        </p>
+                        <p>
+                            银行卡开户行
+                            <input type="text" maxlength="30" name="bank_name" value="{weikucms:$vo.bank_name}"/>
+                        </p>
+                    	<p>
+                            绑定银行卡
+                            <input type="text" maxlength="30" name="bank_card" value="{weikucms:$vo.bank_card}"/>
+
+                        </p>
+                    	<p>
+                            绑定财付通
+                            <input type="text" maxlength="30" name="cafutong" value="{weikucms:$vo.cafutong}"/>
+                        </p>
+                        <p>
+                            社交名称
+                            <input type="text" maxlength="30" name="shejiao_name" value="{weikucms:$vo.shejiao_name}"/>
+                        </p>
+                    	<p>
+                           绑定社交账号
+                            <input type="text" maxlength="30" name="shejiao_card" value="{weikucms:$vo.shejiao_card}"/>
+                        </p>
+                       <!-- <p>
+                            <a href="javascript:;">绑定社交账号<span class="plus-2"></span></a>
+                        </p>-->
+                    	<p>
+                            <a href="javascript:;"></a>
+                        </p>
+                        
+                        <p class="Yz-an">
+                        	我的服务
+                        </p>
+                    	<p>
+                        	<a href="javascript:;">我的消息</a>
+                        </p>
+                    	<p>
+                            <a href="{weikucms::U('Store_lm/love_article',array('token'=>$token,'openid'=>$openid))}">我喜欢的</a>
+                        </p>
+                    	<!--<p>
+                            <a href="javascript:;">我的评价</a>
+                        </p>-->
+
+                    	<p>
+                            <a href="{weikucms::U('Liuyan/index',array('token'=>$token,'wecha_id'=>$openid))}">意见反馈</a>
+                        </p>
+                    </div>
+                </div>
+                
+            <!-- 我的订单 -->
+                <div class="other none" id="bbc">
+
+                </div>
+        <!-- conter END -->
+		
+		<!-- 占位符 -->
+		<div style="height:52px;"></div>
+        <include file="Store_lm:foot" />
+    </body>
+    <script type="text/javascript">
+    	new slider($(".sliderBox"));
+    // slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+<!--考备过来的-->
+    <script>
+        function cancel(obj){
+            var id=$(obj).attr("gid");
+            $.post("{weikucms::U('Store_lm/cancel',array('token'=>$token,'wecha_id'=>$wecha_id))}&id="+id,function(data){
+                $(".myul .kong_1").trigger('click');
+
+            },"json")
+        }
+    </script>
+<script>
+    function edit_address(){
+        var url="{weikucms::U('Store_lm/edit2',array('token'=>$token,'openid'=>$openid))}";
+        location.href=url;
+    }
+    //保存个人资料
+    $(".Yz-Modify").click(function(){
+        var name=$("input[name=name]").val();
+        var age=$("input[name=age]").val();
+        var mail=$("input[name=mail]").val();
+        var phone=$("input[name=phone]").val();
+        var occupation=$("input[name=occupation]").val();
+        var alipay=$("input[name=alipay]").val();
+        var bank_name=$("input[name=bank_name]").val();
+        var bank_card=$("input[name=bank_card]").val();
+        var cafutong=$("input[name=cafutong]").val();
+        var shejiao_name=$("input[name=shejiao_name]").val();
+        var shejiao_card=$("input[name=shejiao_card]").val();
+        var add_time=$("input[name=add_time]").val();
+        var url="{weikucms::U('Store_lm/user_index',array('token'=>$token,'openid'=>$openid))}";
+        $.post(url,{name:name,age:age,mail:mail,phone:phone,occupation:occupation,alipay:alipay,bank_name:bank_name,
+        bank_card:bank_card,cafutong:cafutong,shejiao_name:shejiao_name,shejiao_card:shejiao_card},function(data){
+            if(data.status==1){
+
+                show_success_tip('修改个人资料成功')
+                location.href=url;
+            }else{
+                show_error_tip('修改失败');
+                location.href=url;
+            }
+        },'json');
+
+    });
+</script>
+</html>

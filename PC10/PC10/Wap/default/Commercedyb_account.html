@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+    <script src="tpl/Wap/default/common/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/iscroll.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        wx.config({
+            appId: '{weikucms:$signPackage.appId}',
+            timestamp: {weikucms:$signPackage.timestamp},
+            nonceStr: '{weikucms:$signPackage.nonceStr}',
+            signature: '{weikucms:$signPackage.signature}',
+            jsApiList: [
+                'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+            ]
+        });
+        wx.ready(function () {
+            // 在这里调用 API
+            wx.hideOptionMenu();
+        });
+
+    </script>
+    <style type="text/css">
+        body{
+            background-color: rgb(240,240,240);
+        }
+    </style>
+</head>
+<body>
+<div class="orderInfoBox white-bg">
+    <div class="continueOrdering textMiddle border-4 white btn-green-bg">
+        <a href="javascript:history.go(-1);" >继续点餐</a>
+    </div>
+    <div class="orderInfo">
+
+<volist name="goods_list" id="vo" >
+    <if condition="$vo.count gt 0">
+        <div class="orderInfoItem">
+            <div class="orderInfoItemHead ">
+                <span>{weikucms:$vo.goodsname}</span>
+                <div class="setRight orderPriceInfo">
+	   						<span class="text-red">
+	   							{weikucms:$vo.price}元/份
+	   						</span>X
+	   						<span class="orderCount">
+	   							{weikucms:$vo.count}
+	   						</span>
+                </div>
+                <div class="yellowTip tip-yellow"></div>
+            </div>
+            <div class="orderInfoItemContent myul">
+                <div class="orderDetail">
+                    {weikucms:$vo.des}
+                </div>
+                <div class="orderEdit myul hide">
+                    <div class="orderdel circle"></div>
+                    <div class="orderAdd circle"></div>
+                </div>
+            </div>
+        </div>
+    </if>
+</volist>
+        <div class="orderInfoItem checkBill black h3 textMiddle">
+            <span>数量共<span id="totalCount" class="text-red">{weikucms:$orderinfo.totalnum}</span>份，总计：<span id="totalPrice" class="text-red h2">{weikucms:$orderinfo.totalmoney}</span>元</span>
+        </div>
+
+    </div>
+</div>
+
+<div class="orderMoreInfoBox">
+    <div class="orderMoreInfo contact">
+	    <div class="moreinfoName">
+               备注信息
+        </div>
+        <div class="inputBox">
+            <input type="text" placeholder="点餐如有特殊要求,请备注" value="" id="beizhuinfo">
+        </div>
+        <div class="moreinfoName">
+            联系人信息
+        </div>
+        <div class="inputBox">
+            <input type="text" placeholder="请填写收寄人的姓名" value="{weikucms:$address.uname}" id="uname">
+        </div>
+        <div class="inputBox">
+            <input type="tel" placeholder="请填写收寄人的电话号码" value="{weikucms:$address.tel}" id="tel">
+        </div>
+
+
+    </div>
+
+    <div class="orderMoreInfo addressInfo">
+        <div class="moreinfoName">
+            订单信息
+        </div>
+        <div class="inputBox">
+            <input type="text" placeholder="请输入收货人的地址" value="{weikucms:$address.address}"  id="address" >
+        </div>
+        <div class="moreinfoName">
+            到店时间
+        </div>
+        <div class="inputBox">
+            <select id="hour">
+                <option value="">请选择几时</option>
+                <php>for($j=5;$j < 25;$j++){</php>
+                <option value="<php>echo $j;</php>"><php>echo $j;</php>时</option>
+                <php>}</php>
+            </select>
+            <select id="minute">
+                <option value="">请选择几分</option>
+                <php>for($i=0;$i < 60;$i++){</php>
+                <option value="<php>if($i<10){ echo '0'.$i;}else{echo $i;}</php>"><php>echo $i;</php>分</option>
+                <php>}</php>
+            </select>
+            <!--<input type="text" placeholder="堂吃或打包外带请备注到店时间" id="instruct">-->
+        </div>
+        <div style="color: rgb(138,138,138); margin-top: 3px;">
+        <input type="radio" name="wm" checked value="1">堂吃<input type="radio" name="wm" value="0"  style="margin-left: 15px;" >外卖<span>({weikucms:$waimai_price}元)</span><input type="radio" name="wm" value="2" style="margin-left: 15px;" >打包
+        </div>
+    </div>
+
+    <div class="orderMoreInfo jifenInfo">
+        <div class="moreinfoName">
+            得意币 <strong style="color: rgb(255,22,10)">{weikucms:$dyb}</strong><span style="margin-left: 10px;">(<span id="tDeyibi" class="text-red" style="margin-left: 5px;">{weikucms:$shopScoresetdata.moneyscore}</span>得意币可抵扣1元现金)</span>
+        <div class="myul">
+            <div class="selectBox selectDeyibi">
+
+            </div>
+
+            <span>使用得意币</span>
+            <div class="deyibiBox" >
+                <!--<select name="deyibi" id="deyibi" class="deyibi" >
+                    <option value="0">0</option>
+                </select>-->
+                <input type="hidden" id="oldscoreid" value="{weikucms:$userscore.score}" />
+                <input type="hidden" id="qisong" value="{weikucms:$shopinfo.min_price}" />
+                <input type="text"  class="deyibi" id="scoreid"  onBlur="jifen()">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="orderMoreInfo payType yc">
+        <div class="moreinfoName">
+            支付类型
+        </div>
+        <div class="myul">
+            <div class="myli payStyle textMiddle white-bg " id="yepay">
+                余额支付
+            </div>
+            <div class="myli payStyle textMiddle white-bg" id="wxpay">
+                微信支付
+            </div>
+            <div class="myli payStyle textMiddle white-bg" id="xxpay">
+                线下支付
+            </div>
+        </div>
+        <input type="hidden" value="{weikucms:$userscore.yepasswd}" id="suijicode">
+        <div id="yezf" style=" display:none; margin-top: 5px; color: rgb(138,138,138);">
+        <if condition="$userscore.yepasswd neq null">
+                    <p >你目前的总余额为：<span id="zu_money" style="color: rgb(255,22,10);">{weikucms:$money}元</span></p>
+            <p >此订单需要要支付：<span id="ye_money" style="color: rgb(255,22,10);">{weikucms:$orderinfo.totalmoney}元</span></p>
+            <input type="hidden" value="{weikucms:$userscore.yepasswd}" id="suijicode">
+             <p>余额支付密码 ：<input type="password" style="width:120px;height:28px;line-height:28px;margin-left:5px;border:none;padding-left:3px;" id="anquancode" value="" placeholder="请输入余额支付密码" />
+             </p>
+        <else/>
+            <p style="font-size:10px;padding:5px;">您还没有设置余额支付密码,<a href="{weikucms::U('Wap/Commercedyb/yepasswd',array('token'=>$token,'openid'=>$openid))}" style="color:red;">请点击设置</a></p>
+        </if>
+
+            </div>
+    </div>
+
+    <button type="submit" class="btn-green-bg textMiddle white border-26 marginTop40 payBill " fs="" id="zhifu" onclick="return pay()" flag="1">去支付</button>
+</div>
+<form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+    <input type="hidden" name="order_money" value="{weikucms:$orderinfo.totalmoney}" >
+    <input type="hidden" name="order_text" value="">
+    <input type="hidden" name="orderid" value="{weikucms:$orderinfo.ordernumber}">
+    <input type="hidden" name="openid" value="{weikucms:$openid}">
+    <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=MemberCenterdyb&a=index&token={weikucms:$token}&openid={weikucms:$openid}">
+    <input type="hidden" name="type" value="Commerce_dyb">
+</form>
+
+
+</body>
+<script type="text/javascript">
+
+   mySelector($(".payStyle"),"on",1);//选择三种不同的支付
+   var goodsshopid = {weikucms:$shopid};
+   var randomstr='';
+    $(function(){
+         
+         $(".myli").click(function(){
+            var a=$(this).attr('id');
+            if(a=='yepay'){
+               var total_money={weikucms:$money};
+                var money=$("#totalPrice").html();
+                if(money>total_money){
+                    if(confirm('余额不足,您确定去充值吗?')){
+                        window.location.href ="{weikucms::U('Wap/Commercedyb/ye_cz',array('token'=>$token,'openid'=>$openid))}";
+                    }else{
+                        $(this).removeClass('on');
+                        return;
+                        die;
+                    }
+
+                }else{
+                    $("#yezf").show();
+                }
+            }else{
+                $("#yezf").hide();
+            }
+            $("#zhifu").attr('fs',a);
+        });
+    });
+    
+
+    function jifen(){
+        if($(".selectDeyibi").hasClass("on")){
+            //用了德亿币
+            var scoreset = {weikucms:$shopScoresetdata.moneyscore};
+            var usedscore = 2;//规定用了积分的话就为2
+            var scoreid = $("#scoreid").val();//积分
+            var oldscoreid = {weikucms:$dyb};
+            var totalPrice={weikucms:$orderinfo.totalmoney};
+            var type=$("#zhifu").attr('fs');//获取支付方式
+            if(scoreid > oldscoreid){
+                show_error_tip("您目前没有这么多得意币");
+                return false;
+            }
+            var reg1 =  /^-?\d+\.?\d{0,1}$/;
+            if(!reg1.test(scoreid)){
+                show_error_tip("请输入合法得意币数字,如1.0或2.2");
+                return false;
+            }
+
+            if(totalPrice-scoreid/scoreset<0){
+                show_error_tip("您不需要支付这么多咯！");
+                return false;
+            }
+
+            $("#totalPrice").html(totalPrice-scoreid/scoreset);
+            $("input[name=order_money]").val(totalPrice-scoreid/scoreset);
+            $("#ye_money").html(totalPrice-scoreid/scoreset);
+            if(totalPrice-scoreid/scoreset==0){
+                $(".yc").hide();
+            }
+        }else{
+            $(".selectDeyibi").addClass('on');
+            jifen();
+        }
+    }
+/**
+ * 德亿币的选取
+ * */
+   $(".selectDeyibi").click(function(){
+       var THIS = $(this);
+       if(THIS.hasClass("on")){
+           THIS.removeClass("on");
+           $("#totalPrice").html({weikucms:$orderinfo.totalmoney});
+           $("#ye_money").html({weikucms:$orderinfo.totalmoney});
+           $("#scoreid").val(0);
+       }else{
+           THIS.addClass("on");
+
+       }
+   })
+    /**
+     * 支付
+     */
+    /**不同支付
+     * */
+
+    function pay(){
+        if($(".selectDeyibi").hasClass("on")){
+            //用了德亿币
+            var scoreset = {weikucms:$shopScoresetdata.moneyscore};
+            var usedscore = 2;//规定用了积分的话就为2
+            var scoreid = $("#scoreid").val();//积分
+            var oldscoreid = {weikucms:$dyb};
+            var totalPrice={weikucms:$orderinfo.totalmoney};
+            if(scoreid > oldscoreid){
+                show_error_tip("您目前没有这么多得意币");
+                return false;
+            }
+            var reg1 =  /^-?\d+\.?\d{0,1}$/;
+            if(!reg1.test(scoreid)){
+                show_error_tip("请输入合法得意币数字,如1.0或2.2");
+                return false;
+            }
+            if(totalPrice-scoreid/scoreset<0){
+                show_error_tip("您不需要支付这么多咯！");
+                return false;
+            }
+        }
+
+
+        var wm=$("input[name=wm]:checked").val();
+        
+        if($(".selectDeyibi").hasClass("on")){
+            //用了德亿币
+
+            var usedscore = 2;//规定用了积分的话就为2
+            var scoreid = $("#scoreid").val();//积分
+        }else{
+            var usedscore = 1;//规定不用了积分的话就为1
+            var scoreid = 0;//积分
+        }
+
+        /**
+         * 先验证地址有没有 支付方式有没有选择
+         * */
+
+        var uname=$("#uname").val();
+        var tel=$("#tel").val();
+        var address=$("#address").val();
+        var hour = $("#hour").val();
+        var minute = $("#minute").val();
+        if($.trim(hour) != '' && $.trim(minute) != ''){
+            var instruct = $("#hour").val()+':'+$("#minute").val();
+        }else{
+            var instruct ='';
+        }
+        var reg1 = /^(((13[0-9]{1})|(15[0-9]{1}|18[0-9]{1}))+\d{8})$/;
+        var reg2=/^\d{5,7}$/g;
+        var scoreset = {weikucms:$shopScoresetdata.moneyscore};
+
+        if(!uname){
+            show_error_tip("姓名不能为空");
+            return false;
+        }
+
+        if(!reg1.test(tel)){
+            show_error_tip("请输入正确的联系方式");
+            return false;
+        }
+        
+        if(wm == 0){
+            if(!address){
+                show_error_tip("地址不能为空");
+                return false;
+            }
+        }
+
+        if(wm == 1 || wm == 2){
+            if(!instruct){
+                show_error_tip("请备注到店时间");
+                return false;
+            }
+        }
+		
+		if($("#beizhuinfo").val()){
+			instruct +='('+$("#beizhuinfo").val()+')';
+		}
+
+
+
+
+
+        var type=$("#zhifu").attr('fs');//获取支付方式
+        //这里是当用得意币全额支付时的情况，视作余额支付
+        if($(".selectDeyibi").hasClass("on")){
+            var price=$("#totalPrice").html();
+            if(price==0){
+                type='yepay';
+            }
+        }
+        if(!type){
+            show_error_tip("请选择支付方式");
+            return false;
+        }
+
+        if(type == 'yepay'){
+            if($("#suijicode").val() == ''){
+                show_error_tip("您还没有设置余额支付密码");
+                return false;
+            }
+            if($("#anquancode").val() != $("#suijicode").val()){
+                show_error_tip("支付密码输入错误");
+                return false;
+            }
+        }
+
+
+       // localStorage.CartJson="";//清空本地储存
+        localStorage['CartJson_'+goodsshopid]="";
+
+        var uname=$("#uname").val();
+        var tel=$("#tel").val();
+        var address=$("#address").val();
+        /**
+         * 外卖单不能少于10元
+         * */
+
+       // show_error_tip("外卖需加收");
+         if(wm==0){
+            var total_price2={weikucms:$orderinfo.totalmoney};
+
+             var min_price={weikucms:$min_price};
+            if(total_price2<min_price){
+                show_error_tip("您的订单还未达到最低起送金额"+min_price+"元哦,请继续点餐");
+                return false;
+            }
+            var waimai_price={weikucms:$waimai_price};
+            show_success_tip("外卖需加收"+waimai_price+'元');
+             var totalPrice1=$("#totalPrice").text();
+             $("#totalPrice").text(totalPrice1*1+waimai_price*1);//价格改过来
+             $("input[name=order_money]").val(totalPrice1*1+waimai_price*1);//价格改过来
+          // show_error_tip("外卖需加收");
+
+        }else{
+             var waimai_price=0;//跑腿费
+
+         }
+          var url="{weikucms::U('Commercedyb/EditOrder',array('token'=>$token,'openid'=>$openid,'oid'=>$oid))}"+"&paytype="+type+"&tel="+tel+"&uname="+uname+"&address="+address;
+        /*if(!check()){
+            show_error_tip("请选择地址");
+            return false;
+        }else{
+            var wid=check();
+        }*/
+       // $.post(url,{paytype:type,wid:wid,instruct:instruct,usedscore:usedscore,scoreid:scoreid},function(data){
+        var flag=$("#zhifu").attr('flag');
+        if(flag==1){
+            $.post(url,{waimai_price:waimai_price,paytype:type,instruct:instruct,usedscore:usedscore,scoreid:scoreid,uname:uname,wm:wm},function(data){
+                if(data.status==1){
+                    $("#zhifu").attr('flag','2');
+                    if(type=="wxpay"){
+                        $("#myweipayform").submit();
+                    }else if(type=="yepay"){
+                        show_success_tip("余额支付成功");
+                       location.href="{weikucms::U('MemberCenterdyb/index',array('token'=>$token,'openid'=>$openid))}";
+                        //alipayurl="{weikucms::U('AlipayC/pay',array('openid'=>$openid,'token'=>$token,'orderid'=>$oid,'price'=>$orderinfo[totalmoney],'orderName'=>$orderinfo[ordernumber],'single_orderid'=>$oid,'from'=>'O2O'))}";
+                        //window.location.href=alipayurl;
+                    }else if(type="xxpay"){
+                        show_success_tip("下单成功");
+                        location.href="{weikucms::U('MemberCenterdyb/index',array('token'=>$token,'openid'=>$openid))}";
+                    }else{
+                        show_error_tip(data.info);
+                        window.location.href = "{weikucms::U('Wap/MemberCenter/index',array('token'=>$token,'openid'=>$openid))}";
+                    }
+                }else{
+                    show_error_tip(data.info);
+                }
+            },"json")
+        }else{
+            show_error_tip("正在支付中，请稍等");
+        }
+
+    }
+</script>
+
+<script type="text/javascript">
+    mySelector($(".circleSelector"),"circleSelected",1);//商品展示隐藏
+    Panel($(".orderInfoItem"),$(".orderInfoItemHead"),$(".orderInfoItemContent"));
+
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+ <volist name="list" id="vo">
+                <div class="shadow_arrow mb10">
+                    <div class="MY_top clearfix">
+                        <span class="MY_insure">
+                            <font>
+
+
+                                <if condition="$vo['status'] eq 0" >
+                                    新订单
+                                    <elseif condition="$vo['status'] eq 1" />
+                                    处理中
+                                    <elseif condition="$vo['status'] eq 2" />
+                                    待录佣
+                                    <elseif condition="$vo['status'] eq 3" />
+                                    待处理
+                                    <elseif condition="$vo['status'] eq 4" />
+                                    待核审
+                                    <elseif condition="$vo['status'] eq 5" />
+                                    交易成功
+                                    <elseif condition="$vo['status'] eq -2" />
+                                    交易失败
+                                    <else />
+                                </if>
+
+                               <!-- <if condition="$vo['status'] eq 0">
+                                    订单处理中
+                                <elseif condition="$vo['status'] eq 1" />
+                                    订单处理中
+                                    <elseif condition="$vo['status'] eq 2" />
+                                    完成交易
+                                    <elseif condition="$vo['status'] eq '-2'" />
+                                    交易失败
+                                    <else />
+                                    </if>-->
+                            </font>
+                        </span>
+                        <span>
+                            <if condition="$vo['title']">
+                                名称：{weikucms:$vo.title}（{weikucms:$vo.typename}）
+                                <else />
+                                {weikucms:$vo.typename}
+                                </if>
+                        </span>
+                        <span>
+                            订单号：{weikucms:$vo.orderid}
+                        </span>
+                        <span>
+                            下单时间：{weikucms:$vo.add_time|date='Y-m-d H:i:s',###}
+                        </span>
+                        <div class="my_line">
+
+                            <div class="look_insure" onclick="location.href='{weikucms::U('user_order_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'type'=>$vo['type']))}'">
+                                查看订单详情
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                    </volist>
+

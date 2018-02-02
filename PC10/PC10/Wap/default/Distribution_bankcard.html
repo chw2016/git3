@@ -1,0 +1,128 @@
+
+<!doctype html>
+<html>
+	<head>
+		<title>{weikucms:$tpl.name}绑定银行卡</title>
+		<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="Description" content="{weikucms:$tpl.name}" />
+<meta name="Keywords" content="{weikucms:$tpl.name}" />
+<script style="text/javascript" src="{weikucms::STATICS}/jquery.min.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/distribution/mod.broker.css"/>
+<link href="{weikucms::RES}/laundry/css/base.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/item.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/order.css" rel="stylesheet" type="text/css">
+	</head>
+	<body style="background:#e7e7e7 url(none);">
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+                <input type="hidden" id="submit_url" value="/Home/Broker/bindBankInfo"/>
+				<p class="rb-row"><input type="text" placeholder="请输入您的户名" class="input" id="bank_card_name" value="{weikucms:$bankInfo['bank_card_name']}"/></p>
+                <p class="rb-row"><input type="tel" placeholder="请输入您的银行卡号" class="input" id="bank_card_number" value="{weikucms:$bankInfo['bank_card_number']}"/></p>
+				<p class="rb-row"><input type="text" placeholder="请输入您的银行名称" class="input" id="bank_name" value="{weikucms:$bankInfo['bank_name']}"/></p>
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>为了您能快速结佣请提供详细的开户行信息,如招商银行深圳科苑支行。</p>
+				</div>
+				<p class="rb-submit"><button type="button"  class="btn" id="J_saveCard">保存</button></p>
+			</div>
+		</section>
+		<footer class="foot"><a>&copy; Powered by <a href="http://www.wapwei.com/">万普</a></a></footer>
+<script src="{weikucms::STATICS}/wapweiui/distribution/seed.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/distribution/mod.jjr.js"></script>
+<script>
+	$(function(){
+        $("#J_saveCard").click(function(){
+            var bank_card_name = $("#bank_card_name").val().trim();
+            var bank_card_number = $("#bank_card_number").val().trim();
+            var bank_name = $("#bank_name").val().trim();
+            var reg = /^(\d{19}|\d{16})$/g;   // 以19位数字开头，以19位数字结尾
+            if(!bank_card_name){
+                $(".wx_confirm_tit").text("姓名不能为空！");
+                $("#codFloat").show();
+                return false;
+            }
+            if(!bank_card_number){
+                $(".wx_confirm_tit").text("银行卡号不能为空！");
+                $("#codFloat").show();
+                return false;
+            }
+            if(!reg.test(bank_card_number)){
+                $(".wx_confirm_tit").text("银行卡号不合法！");
+                $("#codFloat").show();
+                return false;
+            }
+            if(!bank_name){
+                $(".wx_confirm_tit").text("请填写详细的银行信息！");
+                $("#codFloat").show();
+                return false;
+            }
+            var url = "{weikucms::U('Distribution/bankcard',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{bank_card_name:bank_card_name,bank_card_number:bank_card_number,bank_name:bank_name},function(data){
+                if(data.status == 1){
+                    $(".F").text(data.info);
+                    $("#AcodFloat").show();
+                    setTimeout(function(){
+                        $("#AcodFloat").hide();
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    $(".F").text(data.info);
+                    $("#AcodFloat").show();
+                    setTimeout(function(){
+                        $("#AcodFloat").hide();
+                    },'1000');
+                }
+            },'json');
+        });
+
+        $('#Cancel').click(function(event) {
+            $("#codFloat").hide();
+            return false;
+        });
+    });
+
+
+</script>
+<!-- 弹出框 提示 -->
+    <div id="codFloat" style="display: none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit"></div>
+                </div>
+                <div class="wx_confirm_bd">
+                    <div class="wx_confirm_btns">
+                        <button type="button" id="Cancel" style="width: 260px;background-color:#e31e00">我知道了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 弹出详情框 -->
+
+
+<!-- 弹出框 提示 -->
+    <div id="AcodFloat" style="display: none" class="A cod">
+        <div class="B wx_mask"></div>
+        <div class="C wx_confirm">
+            <div class="D wx_confirm_inner">
+                <div class="E wx_confirm_hd">
+                    <div class="F wx_confirm_tit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 弹出详情框 -->
+
+
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!-- store footer start-->
+<footer>
+  <a href="javascript(0)">技术支持：万普微信</a>
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function(){      
+
+      // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+      document.addEventListener('WeixinJSBridgeReady', function() {
+        var WJ = WeixinJSBridge;
+        // 发送给好友
+        WJ.on('menu:share:appmessage', function() {
+          WJ.invoke('sendAppMessage', config, function(res) {
+            // _report('sendAppMessage', res.err_msg);
+          });
+        });
+        // 发送到朋友圈
+        WJ.on('menu:share:timeline', function() {
+          WJ.invoke('shareTimeline', config, function(res) {
+            // _report('shareTimeline', res.err_msg);
+          });
+        });
+
+        // 发送到微博
+        WJ.on('menu:share:weibo', function() {
+          WJ.invoke('shareWeibo', config, function(res) {
+            // _report('shareWeibo', res.err_msg);
+          });
+        });
+      });
+
+    });
+  </script>
+
+
+<style type="text/css">
+        /*pop*/
+    .pop-zoom{display:none;width:100%;height:100%;color:#fff;position:fixed;left:0;top:0;background:rgba(0,0,0,0.5);z-index:10000;}
+    .pop-zoom-img{background:#000;text-align:center;overflow:hidden;}
+    .show-img{width:100%;height:100%;overflow:hidden;position:relative;}
+    .show-img img{max-width:100%;}
+    .zoom-close{position:fixed;right:5px;top:5px;display:block;z-index:99999;}
+    .zoom-close .fa{width:30px;height:30px;font-size:25px;line-height:30px;border-radius:50%;color:#fff;background:#999;}
+</style>
+<script src="{weikucms::STATICS}/wapweiui/es/js/iScroll.js"></script>
+<style>
+.jiazai {
+  width: 75%;
+  margin: 0 auto;
+  padding: 6px;
+  text-align: center;
+}
+.jiazai a {
+  position: relative;
+  top: -5px;
+  color: #b0b0b0;
+  font-size: 12px;
+  padding-left: 5px;
+}
+</style>
+</body>  
+</html>
+<!-- store footer end -->

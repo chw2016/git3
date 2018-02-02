@@ -1,0 +1,477 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            <if condition="$op neq 1">添加课程<else/>编辑课程</if>
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Course/index',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+
+    <script>
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('#context', {
+                resizeType : 1,
+                allowPreviewEmoticons : false,
+                allowImageUpload : true,
+                allowFileManager:true
+            });
+        });
+    </script>
+
+
+
+    <script>
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#pic').val(),
+                        clickFn : function(url, title) {
+                            K('#pic').val(url);
+                            $("#image_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+        <script>
+            function selurl() {
+
+                var url = document.getElementById("url");
+                var select1 = document.getElementById("select");
+                url.value = select1.value;
+            }
+        </script>
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea" style="ma" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <tr>
+                    <th valign="top"><label for="title">课程名称</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <input type="input" class="px" id="title" value="" name="title" style="width:300px" placeholder="此处填写课程名称">
+                        </td>
+                        <else/>
+                        <td>
+                            <input type="input" class="px" id="title" value="{weikucms:$list['title']}" name="title" style="width:300px" placeholder="此处填写课程名称">
+                        </td>
+                    </if>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="pic"> 课程海报图片：</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <img style="display: none;" id="image_show" class="indexs_img" src="">
+                            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="" style="width:300px;"   />
+                            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;">建议图片大小为：640px*427px</span>
+                        </td>
+                        <else/>
+                        <td>
+                            <img id="image_show" class="indexs_img" src="{weikucms:$list['pic']}">
+                            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$list['pic']}" style="width:300px;"   />
+                            <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;">建议图片大小为：640px*427px</span>
+                        </td>
+                    </if>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="starttime">报名截至时间：</label></th>
+                    <if condition="$op neq 1">
+                        <td><input type="input" class="px" id="starttime" value="" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+                            到
+                            <input type="input" class="px" id="endtime" value="" name="endtime" onClick="WdatePicker()" style="width:175px;"></td>
+                        <else/>
+                        <td><input type="input" class="px" id="starttime" value="{weikucms:$list['starttime']}" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+                            到
+                            <input type="input" class="px" id="endtime" value="{weikucms:$list['endtime']}" name="endtime" onClick="WdatePicker()" style="width:175px;"></td>
+                    </if>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="money">类型</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                        
+                            <input type="text" class="px" id="type" value="" name="type" style="width:300px" placeholder="" onchange="check(this.value)"><span style="font-size: 14px;padding: 10px;">如按正确的方式输入&nbsp如：半程,全程,体验</span>
+                        </td>
+                        <else/>
+                        <td>
+                        
+                            <input type="text" class="px" id="type" value="{weikucms:$list['type']}" name="type" style="width:300px" placeholder="" onchange="check(this.value)"><span style="font-size: 14px;padding: 10px;">如按正确的方式输入&nbsp如：半程,全程,体验</span>
+                        </td>
+                    </if>
+                   
+                </tr>
+                
+                
+                                <tr>
+                    <th valign="top"><label for="money">所需费用</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                        
+                            <input type="text" class="px" id="money" value="" name="money" style="width:300px" placeholder="" onchange="check(this.value)"><span style="font-size: 14px;padding: 10px;">如按正确的方式输入&nbsp如：100,102,150</span>
+                        </td>
+                        <else/>
+                        <td>
+                        
+                            <input type="text" class="px" id="money" value="{weikucms:$list['money']}" name="money" style="width:300px" placeholder="" onchange="check(this.value)"><span style="font-size: 14px;padding: 10px;">如按正确的方式输入&nbsp如：100,102,150</span>
+                        </td>
+                    </if>
+                   
+                </tr>
+				
+				<tr>
+                    <th valign="top"><label for="abstract">地址：</label></th>
+                    <td>
+                    <input type="text" class="px" id="address" value="{weikucms:$list['address']}" name="address" style="width:300px" placeholder="">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th valign="top"><label for="abstract">课程简介：</label></th>
+                    <if condition="$op neq 1">
+                        <td valign="top"><textarea class="px" id="abstract" name="abstract" style="width: 560px; height: 240px;"rows="5"></textarea></td>
+                        <else/>
+                        <td valign="top"><textarea class="px" id="abstract" name="abstract" style="width: 560px; height: 240px;"rows="5">{weikucms:$list['abstract']}</textarea></td>
+                    </if>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="context">详细内容：</label></th>
+                    <if condition="$op neq 1">
+                        <td valign="top"><textarea class="px" id="context" name="context" style="width: 560px; height: 360px;"onfocus="leave();"></textarea></td>
+                        <else/>
+                        <td valign="top"><textarea class="px" id="context" name="context" style="width: 560px; height: 360px;"onfocus="leave();">{weikucms:$list['context']}</textarea></td>
+                    </if>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="number">最多报名人数：</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <input type="number" class="px" id="number" value="" name="title" style="width:60px" placeholder="如：60"><span style="padding: 5px; font-size: 15px;">人</span>
+                        </td>
+                        <else/>
+                        <td>
+                            <input type="number" class="px" id="number" value="{weikucms:$list['number']}" name="title" style="width:60px" placeholder="如：60"><span style="padding: 5px; font-size: 15px;">人</span>
+                        </td>
+                    </if>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="score">报名获取积分数：</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <input type="number" class="px" id="score" value="" name="score" style="width:60px" placeholder="如：5">
+                        </td>
+                        <else/>
+                        <td>
+                            <input type="number" class="px" id="score" value="{weikucms:$list['score']}" name="score" style="width:60px" placeholder="如：5">
+                        </td>
+                    </if>
+                </tr>
+
+
+                <tr>
+                    <th valign="top"><label for="tel">联系电话：</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <input type="tel" class="px" id="tel" value="" name="tel" style="width:300px" placeholder="填写对接此课程的联系电话"><span style="padding: 5px; font-size: 15px;"></span>
+                        </td>
+                        <else/>
+                        <td>
+                            <input type="tel" class="px" id="tel" value="{weikucms:$list['tel']}" name="tel" style="width:300px" placeholder="填写对接此课程的联系电话"><span style="padding: 5px; font-size: 15px;"></span>
+                        </td>
+                    </if>
+                </tr>
+
+                <tr>
+                    <th valign="top"><label for="scores">分享获取积分数：</label></th>
+                    <if condition="$op neq 1">
+                        <td>
+                            <input type="number" class="px" id="scores" value="" name="scores" style="width:60px" placeholder="如：5">
+                        </td>
+                        <else/>
+                        <td>
+                            <input type="number" class="px" id="scores" value="{weikucms:$list['scores']}" name="scores" style="width:60px" placeholder="如：5">
+                        </td>
+                    </if>
+                </tr>
+                
+                
+                              <tr>
+                    <th valign="top"><label for="scores">选择该项目需镇的资料：</label></th>
+             			 <td>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('name',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="name" />姓名<br/>
+                           <input type="checkbox" name="zl"   <if condition="$list" > <?php if(in_array('sex',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="sex" />性别<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('age',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="age" />出生日期<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('mc',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="mc" />您曾参加过马拉松赛事名称及组别<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('cj',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="cj" />您以往马拉松成绩<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('jjz',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="jjz" />是否有赛事举办地户籍或居住证<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('gj',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="gj" />国籍<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('address',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="address" />所居城市<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('type',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="type" />证件类型<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('hm',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="hm" />证件号码<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('xx',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="xx" />血型<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('email',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="email" />电子邮箱地址<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('tel',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="tel" />联系电话<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('jname',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="jname" />紧急联系人<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('jtel',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="jtel" />紧急联系人电话<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('gx',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="gx" />紧急联系人关系<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('zm',$zl)){ echo "checked='checked'"; 
+
+} ?> <else/>checked="checked"</if> value="zm" />衣服尺码<br/>
+                            <input type="checkbox" name="zl"  <if condition="$list" > <?php if(in_array('money',$zl)){ echo 
+
+"checked='checked'"; } ?> <else/>checked="checked"</if> value="money" />类型及费用<br/>
+
+                        </td>
+                 
+                </tr>
+                
+
+                <tr>
+                    <th>
+                    </th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var pic = $("#pic").val();
+            var starttime = $("#starttime").val();
+            var endtime =$("#endtime").val();
+            var money =$("#money").val();
+            var number =$("#number").val();
+            var score =$("#score").val();
+            var abstract = $("#abstract").val();
+            var tel = $("#tel").val();
+            var context = editor.html();
+			var address = $("#address").val();
+            var scores =$("#scores").val();
+            var type =$("#type").val();
+            //var zl = 
+            	var zl=[];
+            	$("input[name=zl]:checked").each(function(e,t){
+            		zl[e]=$(t).val();
+            	});
+            	
+             //	zl=join(',',zl);
+            
+            	
+            if(! title){
+                notif({
+                    msg: "活动主题不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if(! pic){
+                notif({
+                    msg: "还没上传分类图片",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! starttime){
+                notif({
+                    msg: "开始日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! endtime){
+                notif({
+                    msg: "结束日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!abstract ){
+                notif({
+                    msg: "课程简介不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!money ){
+                notif({
+                    msg: "请填写报名课程的费用",
+                    type: "warning"
+                });
+                return false;
+                /*if(typeof money !== "Number"){
+                    notif({
+                        msg: "你确定这是钱么？",
+                        type: "warning"
+                    });
+                    $("#money").val(null).focus();
+                    return false;
+                    }*/
+            }
+            
+            
+            if(!type){
+                notif({
+                    msg: "类型不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+            if(! context){
+                notif({
+                    msg: "课程详细内容不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! score){
+                notif({
+                    msg: "课程报名获得的积分不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! tel){
+                notif({
+                    msg: "联系电话不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! scores){
+                notif({
+                    msg: "分享课程获得的积分不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            var posturl = "{weikucms::U('Course/addcourse',array('token'=>$token,'op'=>$op,'lid'=>$list['id']))}";
+            $.post(posturl,
+                    {
+					title:title,
+					pic:pic,
+					starttime:starttime,
+					endtime:endtime,
+					money:money,
+					abstract:abstract,
+					context:context,
+					score:score,
+					number:number,
+					tel:tel,
+					scores:scores,
+					type:type,
+					address:address,
+					zl:zl
+					},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+
+<include file="Public:footer" />
+
+
+
+
+
+
+
+
+
+
+

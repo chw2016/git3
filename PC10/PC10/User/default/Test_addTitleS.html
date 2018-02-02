@@ -1,0 +1,139 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script src="{weikucms::STATICS}/vote/common.js"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+
+<div class="cLineB">
+  <h4><if condition="$type neq 1">添加微测试题目<else/>编辑微测试题目</if></h4>
+</div>
+<div class="msgWrap bgfc">
+	<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+			<tr>
+				<th width="120">测试题目名：</th>
+				<td>
+					<input type="text" name="name" id="name" value="{weikucms:$data['subject_title']}" class="px" style="width:375px;">
+				</td>
+			</tr>
+			<tr>
+				<th width="120">选项A的内容：</th>
+				<td>
+					<input type="text" name="answer_a" id="answer_a" value="{weikucms:$oneData['answer_content']}" class="px">
+					<span style="padding-left:10px;padding-right:10px;" class="red">*分值：</span>
+					<input type="text" name="answer_a_score" id="answer_a_score" value="{weikucms:$oneData['answer_score']}" class="px" style="width:80px;">
+				</td>
+			</tr>
+			<tr>
+				<th width="120">选项B的内容：</th>
+				<td>
+					<input type="text" name="answer_b" id="answer_b" value="{weikucms:$twoData['answer_content']}" class="px">
+					<span style="padding-left:10px;padding-right:10px;" class="red">*分值：</span>
+					<input type="text" name="answer_b_score" id="answer_b_score" value="{weikucms:$twoData['answer_score']}" class="px"  style="width:80px;">
+				</td>
+			</tr>
+			<tr>
+				<th width="120">选项C的内容：</th>
+				<td>
+					<input type="text" name="answer_c" id="answer_c" value="{weikucms:$threeData['answer_content']}" class="px">
+					<span style="padding-left:10px;padding-right:10px;" class="red">*分值：</span>
+					<input type="text" name="answer_c_score" id="answer_c_score" value="{weikucms:$threeData['answer_score']}" class="px"  style="width:80px;">
+				</td>
+			</tr>
+			<tr>
+				<th width="120">选项D的内容：</th>
+				<td>
+					<input type="text" name="answer_d" id="answer_d" value="{weikucms:$fourData['answer_content']}" class="px">
+					<span style="padding-left:10px;padding-right:10px;" class="red">*分值：</span>
+					<input type="text" name="answer_d_score" id="answer_d_score" value="{weikucms:$fourData['answer_score']}" class="px"  style="width:80px;">
+				</td>
+			</tr>
+			<tr>
+				<th width="120">选项E的内容：</th>
+				<td>
+					<input type="text" name="answer_e" id="answer_e" value="{weikucms:$fiveData['answer_content']}" class="px">
+					<span style="padding-left:10px;padding-right:10px;" class="red">*分值：</span>
+					<input type="text" name="answer_e_score" id="answer_e_score" value="{weikucms:$fiveData['answer_score']}" class="px"  style="width:80px;">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div style="float:left;padding-left:100px;">
+						<button  name="button" type="button" id="bsubmit" class="btn btn-primary">保存</button>
+					</div>
+					<div style="float:left; padding-left:40px;">
+						<a href="{weikucms::U('Test/index',array('token'=>$token))}" class="btn btn-primary">取消</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		<input type="hidden" id="type" value="{weikucms:$type}"/>
+		<input type="hidden" id="sid" value="{weikucms:$id}"/>
+	</table>  	
+	</form>
+ </div> 
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){       	
+            var name = $("#name").val();
+            var answer_a = $("#answer_a").val();
+            var answer_b = $("#answer_b").val();
+            var answer_c = $("#answer_c").val();
+            var answer_d = $("#answer_d").val();
+            var answer_e = $("#answer_e").val();
+            var answer_a_score = $("#answer_a_score").val();
+            var answer_b_score = $("#answer_b_score").val();
+            var answer_c_score = $("#answer_c_score").val();
+            var answer_d_score = $("#answer_d_score").val();
+            var answer_e_score = $("#answer_e_score").val();
+            var id = $("#sid").val();
+            
+            
+            if(! name){
+                notif({
+                    msg: "商品名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            var type = $("#type").val();
+            
+            if (type == 1) {
+            	var url = "{weikucms::U('Test/addTitleS', array('token'=>$token,'type'=>$type, 'tid'=>$data['id']))}";
+            } else {
+            	var url = "{weikucms::U('Test/addTitleS', array('token'=>$token,'type'=>$type))}";
+            }
+            
+            $.post(url,
+                    {id:id,name:name, answer_a:answer_a,answer_b:answer_b,answer_c:answer_c,answer_d:answer_d,answer_e:answer_e,answer_a_score:answer_a_score,answer_b_score:answer_b_score,answer_c_score:answer_c_score,answer_d_score:answer_d_score,answer_e_score:answer_e_score},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

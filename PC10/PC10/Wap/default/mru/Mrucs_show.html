@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		 <title>{weikucms:$type}在线检测-鱼美人</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js/slider.js"></script>
+    </head>
+    <body class="userCenter testing"  style="overflow-x:hidden;background-color:white;">
+    	<div class="tset">
+    		<div class="titles"><img src="{weikucms::RES}/mru/img/daan.png" alt="biaoti"><span class="fonts">在线检测</span></div>
+            <!--第一题-->
+            <volist name="list" id="v" >
+    		<div class="question f14 <if condition="$i neq 1" >hide</if> " data-id={weikucms:$v['id']}>
+    			<div class="qutitle">{weikucms:$i}、{weikucms:$v['name']}</div>
+    			<div class="answer">
+    				<div class="answers">
+    					<div class="answerslsft">
+    						<span class="selectimg on" data-item='a'></span>A、{weikucms:$v['aname']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+    				<div class="answers">
+    					<div class="answerslsft">
+    						<span class="selectimg" data-item='b'></span>B、{weikucms:$v['bname']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+
+    				    				<div class="answers">
+    					<div class="answerslsft">
+    						<span class="selectimg" data-item='c'></span>C、{weikucms:$v['cname']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+
+    				    				<div class="answers">
+    					<div class="answerslsft">
+    						<span class="selectimg" data-item='d'></span>D、{weikucms:$v['dname']}
+    					</div>
+    					<div class="clearBoth"></div>
+    				</div>
+
+    			</div>
+    		</div>
+    		</volist>
+            <!--第二题-->
+         <!--    <div class="question f14 hide" data-id='2'>
+                <div class="qutitle">2、在任何情况下，当你过于沉溺于食物中，你会</div>
+                <div class="answer">
+                    <div class="answers">
+                        <div class="answerslsft">
+                            <span class="selectimg on" data-item='A'></span>A、厌烦eeee或者压力挺大
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                    <div class="answers">
+                        <div class="answerslsft">
+                            <span class="selectimg" data-item='B'></span>B、在家人、efasdf得不考虑自己吃了些什么
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                </div>
+            </div>
+ -->
+            <div class='fixBottom btn'>
+            <if condition="$list" >
+               <ul class='myul'>
+                    <li class='myli prev hide'>上一题</li>
+                    <li class='myli next'>下一题</li>
+                </ul>
+             <else/>
+<!--                <ul class='myul'>
+                    <li class='myli prev hide'>上一题</li>
+                    <li class='myli next'>抱歉！该栏目没有检测题目</li>
+                </ul> -->
+             </if>
+            </div>
+    	</div>
+        <script type="text/javascript">
+            var data = {};
+            $('.question').each(function(i, ques){
+                data[$(ques).data('id')] = 'a';
+            })
+            $(document).on('click', '.answerslsft', function(){
+                $(this).find('.selectimg').trigger('touchstart');
+            });
+            $(document).on('touchstart', '.answerslsft', function(){
+                var $parents = $(this).parents('.question')
+                $parents.find('.selectimg').removeClass('on')
+                $(this).find('.selectimg').addClass('on')
+
+                data[$parents.data('id')] = $(this).find('.selectimg').data('item')
+
+            });
+
+            $('.next').click(function(){
+                var $QV = $('.question:visible')
+                //console.log($QV)
+              //  document.write($QV);
+                var $Next = $QV.next('.question')
+                //如果是提交
+                if($QV.nextAll('.question').length == 0){
+                    //这里做数据提交
+                      $.post("{weikucms::U('ajax',array('token'=>$_GET['token']))}",{"data":data},function(data){
+                    	    var a=data.str;
+
+                    	    location.href="{weikucms::U('da',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$_GET['id']))}"
+	                 },'json');
+                    console.log(data)
+                    return false;
+                }
+                $('.btn .prev').show()
+
+                if ($QV.nextAll('.question').length == 1 ) {
+
+                    $(this).text('提交')
+                }
+                $QV.hide();
+                $Next.show();
+            })
+            $('.prev').click(function(){
+                $('.next').text('下一题')
+                $QV = $('.question:visible')
+                if ($QV.prev('.question').length > 0) {
+                    $QV.hide();
+                    $QV.prev('.question').show();
+                };
+
+            })
+        </script>
+<include file="./tpl/Wap/default/mrufx.html" />          
+    </body>
+</html>

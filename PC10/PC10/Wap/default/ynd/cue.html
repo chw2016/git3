@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>{weikucms:$tpl.name}-提现</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/personal.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/prompt.js"></script>
+    <script type="text/javascript">
+     var eq;
+            function check_num(){
+                var num;
+                $(".Mask_password_ul li").each(function(i){
+                    // console.log(i);
+                    num=$(this).children("input").val();
+                    if(num==""){
+                        eq=i;
+                        return false;
+                    }
+                });
+                // alert("eq"+eq)
+                return eq;
+            }
+            
+            $(function(){
+                 $(".icon-outtest").touch(function(){
+                        $(".Mask").removeClass('is-visible')
+                    })
+                var user = "{weikucms:$bank['id']}"
+                if(!user){
+                    msg.alert('您还没有绑定银行卡，请绑定！',function(){
+                        location.href = "{weikucms::U('band',array('token'=>$token,'openid'=>$openid))}";
+                    })
+                }
+//                var  values=$(this).html();
+            $(".rolloff_btn").touch(function(){
+                var money1=parseInt($(".avail-money").html());
+                var money2=parseInt($(".bank-input").val());
+                $("[name=money]").blur();
+                var money=$("[name=money]").val();
+                var flag=$(this).attr('flag');                
+                if(money==''){
+                    show_error_tip('请输入转入金额');
+                    $("[name=money]").focus();
+                    return false;
+                }else{
+                        if(money1<money2){
+                         msg.alert("您输出的金额超出了可用的金额");
+                        }else{
+                            $('.Mask').addClass('is-visible');
+                           $(".Mask_btn").removeClass('outstanding');
+                        }
+                        // $('.Mask').addClass('is-visible');
+                        //  $(".Mask_btn").removeClass('outstanding');
+                }    
+           })
+
+                $(".key_li").touch(function(){
+                    if(eq==6){
+                        // alert("不能输入了")
+                        return false;
+                    }
+                    else{
+                        var  values=$(this).html();
+                        var  index=check_num();
+                        if(index==5){
+                                // alert("不能输入了")
+                                eq=6;
+                                // $(".key .key_li ").addClass('select')
+                                $(".Mask_btn").addClass('outstanding'); 
+                        }else{
+                                 $(".Mask_btn").removeClass('outstanding');
+                        }
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val(values);
+                        //alert($(".Mask_password_ul").find("li").eq(index).children("input").val(values));
+                    }
+                })
+                $(".key_del").touch(function(){
+                        var index;
+                        if(eq==6){
+                            index=eq-1;
+                            eq--;
+                        }else{
+                            index=check_num()-1
+                        } 
+                         $(".Mask_btn").removeClass('outstanding');
+                        $(".Mask_password_ul").find("li").eq(index).children("input").val("");              
+                });
+                $(".Mask_btn").click(function(event) {
+                    var btns = ""; 
+                    $('.Mask_password_ul_li input').each(function(key,value){
+                            btns += $(this).val();
+                    });
+
+                        $(".Mask_password_ul_li").find("input").val("");
+                        if(eq==6){
+                            $(".Mask").removeClass('is-visible');
+                            var money = $(".bank-input").val();
+                            var url = "{weikucms::U('Ynd/cue',array('token'=>$token,'openid'=>$openid))}";
+                            $.post(url,{password:btns,money:money},function(rel){
+                                if(rel.status ==1){
+                                    msg.alert(rel.info,function(){
+                                        window.location.href = "{weikucms::U('Ynd/cue',array('token'=>$token,'openid'=>$openid))}";
+                                    });
+                                }else{
+                                    msg.alert(rel.info);
+                                }
+                            },'json')
+
+                        }
+                        $(".Mask_password_ul_li").find("input").html("");
+                        eq=0;
+                })
+                $(".Mask_abolish").touch(function(){
+                    $(".Mask").removeClass('is-visible');
+                    $(".Mask_btn").removeClass('outstanding');
+                    // $(".Mask_password_ul_li").find("input").val("");
+                     $("input").val("");
+                     eq=0;
+                 })
+        })  
+            </script>
+    </head>
+    <body>
+                <div class="top-details border-inherit">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                            提现
+                        </div>
+                </div>
+                <div class="animated fadeInDown">
+                <div class="bank">
+                    <if condition="$bank['bank'] eq 1">
+                        <img src="{weikucms::STATICS}/wapweiui/ynd/images/logo-(4).png"  class="icon-bank"/>
+                        <elseif condition="$bank['bank'] eq 2"/>
+                        <img src="{weikucms::STATICS}/wapweiui/ynd/images/logo-(2).png"  class="icon-bank"/>
+                        <elseif condition="$bank['bank'] eq 3"/>
+                        <img src="{weikucms::STATICS}/wapweiui/ynd/images/logo (2).png"  class="icon-bank"/>
+                        <elseif condition="$bank['bank'] eq 4"/>
+                        <img src="{weikucms::STATICS}/wapweiui/ynd/images/logo-(3).png"  class="icon-bank"/>
+                        <else/>
+                        <img src="{weikucms::STATICS}/wapweiui/ynd/images/logo (2).png"  class="icon-bank"/>
+                    </if>
+
+                    <div class="bank-header">
+                    <div class="bank-title">{weikucms:$bank['bank_room']}</div>
+                    <div class="tail">尾号
+                        <php>
+                            $code = $bank['bank_code'];
+                            echo substr($code,-4);
+                        </php>
+                    </div>
+                    </div>
+                </div>
+        <div class="info-money">
+                可转出金额：<span class="avail-money">{weikucms:$info['money']}</span>元
+        </div>
+        <div class="bank f16">
+            金额<input type="tel"  placeholder="转出金额" class="bank-input" name="money"/>
+        </div>
+         <div class="rolloff_btn">确认转出</div> 
+        </div> 
+             <!-- 弹出框 -->
+              <div class="Mask">
+                        <div class="Mask_pop">
+                        <div class="icon-outtest"></div>
+                        <div class="pass_word">
+                                <div class="zepass">请输入你的安全密码</div>
+                        </div>
+                        <div class="Mask_password">
+                            <ul class="Mask_password_ul">
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password"  readonly="false" value=""/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false" value=""/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false" value=""/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false" value=""/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false" value=""/>
+                                    </li>
+                                    <li class="Mask_password_ul_li">
+                                        <input type="password" readonly="false" value=""/>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="Mask_main clearfix">
+                                    <span class="Mask_abolish">取消</span>
+                                    <span class="Mask_btn">确认</span>
+                                </div>
+                        </div>
+                        <div class="keyboard">
+                                <ul class="key">
+                                    <li class="key_li">1</li>
+                                    <li class="key_li">2</li>
+                                    <li class="key_li">3</li>
+                                    <li class="key_li">4</li>
+                                    <li class="key_li">5</li>
+                                    <li class="key_li">6</li>
+                                    <li class="key_li">7</li>
+                                    <li class="key_li">8</li>
+                                    <li class="key_li">9</li>
+                                    <li class="key_li">&nbsp;</li>
+                                    <li class="key_li">0</li>
+                                    <li class="key_del">×</li>
+                                </ul>
+                        </div>
+              </div>
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

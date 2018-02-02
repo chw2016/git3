@@ -1,0 +1,318 @@
+﻿<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>
+        <if condition="$titles eq ''">
+        奇特餐厅联盟
+        <else />
+        {weikucms:$titles}
+        </if>
+    </title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+
+	<!--<script type="text/javascript" src="{weikucms::STATICS}/works/GetLocation.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/api"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/getscript"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/works/convertor.js"></script>-->
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <style type="text/css">
+        .listpic { width: 90%; }
+        .listbox { margin: 0 auto; }
+        .myul { overflow: hidden; }
+    </style>
+   
+
+</head>
+
+
+
+<body r='0' g='195' b='255'>
+
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <volist name="list" id="vo">
+     <style type="text/css">
+        .shop.title:before {
+            content: "";
+            border-bottom: none !important;
+            border-right: 5px solid rgba(0, 0, 0, 0);
+            border-left: 5px solid rgba(0, 0, 0, 0);
+            position: absolute;
+            left: 3px;
+            top: -3px;
+        }
+    </style>
+       <div class="shop listbox" style="text-align: center;" onClick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id']))}'">
+        <img class="shop listpic"  style="" src="{weikucms:$vo.img}" />
+        <div class="shop listtitlebox myul">
+        <div class="shop titlebox" >
+           <div class="title shop" style="background-color: {weikucms:$vo.style}"><span class="titletext">{weikucms:$vo.cat_name}</span></div>
+           </div></div>
+        </div>
+<!--
+    <div class="shop listbox" onClick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id']))}'">
+
+        <div class="shop listpic" style="background-image:url({weikucms:$vo.virtual_pic})"></div>
+
+        <div class="shop listtitlebox myul">
+
+            <div class="date">
+
+               <div class="dd">28</div>
+
+               <div class="mmyy"><span class="mm">Oct.</span><span class="yy">2014</span></div>
+
+            </div>
+
+            <div class="shop titlebox" >
+
+                 <div class="arrow"></div>
+
+                <div class="title shop" style="background-color:{weikucms:$vo.style}"><span class="titletext">{weikucms:$vo.cat_name}</span></div>
+
+            </div>
+
+        </div>
+
+    </div>
+-->
+    </volist>
+
+
+
+</div>
+
+
+
+<!-- <div class="havbox">
+
+
+
+    <div class=" myul" style="top:-10%; overflow-x: auto;">
+    <input type="hidden" value="{weikucms::$_GET['zone']}" id="checkZoneHidden" />
+
+        <volist name="mallAddress" id="vo" key="k">
+
+        <div data-tap="item" class="item tap opacity" style="margin:0" onClick="location.href='{weikucms::U('Ieat/restaurantUnio',array('token'=>$token,'openid'=>$openid,'zone'=>$vo['cat_id']))}'">
+
+            <div class="item-logo l d">
+
+                <div class="item-logo m e" id="checkZone_{weikucms:$vo['cat_id']}">
+
+                    <div class="item-logo s f" >
+
+                        {weikucms:$vo['cat_name']}
+
+                    </div></div></div>
+
+
+
+        </div>
+        </volist>
+
+
+
+    </div>
+
+
+
+</div> -->
+
+<script>
+
+    $(function(){
+
+        var t = "{weikucms:$get['t']}";
+
+        $("#qq"+t).css({'border':'1px solid rgb(0, 195, 255)','background-color':'rgba(194,1,22,0)'});
+
+
+
+    });
+
+</script>
+
+<script>
+
+$(function(){
+
+    var num = $(".item").length;
+
+    if(num == 1){
+
+        $(".item").css("width","100%");
+
+    }else if(num == 2){
+
+        $(".item").css("width","50%");
+
+    }else if(num == 3){
+
+        $(".item").css("width","33%");
+
+    }else if(num == 4){
+
+        $(".item").css("width","25%");
+
+    }else if(num == 5){
+
+        $(".item").css("width","20%");
+
+    }
+
+
+
+});
+
+</script>
+
+<script type="text/javascript">
+var pageNum = 2;
+var _do = 1;
+var main = $(".main");
+var js = 0;
+    $(document).ready(function() {
+
+    //hover
+    $('#checkZone_' + $('#checkZoneHidden').val()).css({'border':'1px solid rgb(0, 231, 250)'});
+
+
+	var count = "{weikucms:$count}";
+	var zone = "{weikucms:$_GET['zone']}";
+
+	//获取地理位置
+	var lng=0;
+        var lat=0;
+        var getLocation_Loading = 0;
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+	             if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+		             lng = r.point.lng;
+		             lat = r.point.lat;
+				getPage(1, count, zone, lng, lat);
+			}
+             });
+
+        var range = 50;
+
+        var _srollPos = 0;
+
+        
+
+        var totalheight = 0;
+
+        
+
+
+
+        
+
+        
+
+	
+
+        $(window).scroll(function() {
+
+            var srollPos = $(window).scrollTop();
+
+            if (srollPos < _srollPos) {
+
+                return
+
+            } else {
+
+                _srollPos = srollPos
+
+            }
+
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+
+            if (($(document).height() - range) <= totalheight) {
+                if(_do==1){
+                    _do = 0;
+                      getPage(pageNum, count, zone, lng, lat);
+                }
+              
+
+            }
+
+        })
+
+    });
+	
+	function getPage(pageNum, count, zone, lng, lat){
+	$.ajax({
+
+                            url: "/index.php?g=Wap&m=Ieat&a=restaurantUnio&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&count=" + count + "&zone=" +zone + "&lng=" + lng + "&lat=" + lat,
+
+                            type: "post",
+
+                            data: "pageNum=" + pageNum,
+
+                            success: function(res) {
+
+                                if (res == 0) {
+
+                                    if (js == 0) {
+
+                                        $(".main").append('<article style="display:block; margin-top:30px;" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多商家了</header></article>')
+
+                                    }
+
+                                    js = 1
+
+                                } else {
+
+                                    main.append(res);
+                                    $('img.listpic').css('height',$('img.listpic:first').width() + 'px');
+
+                                    pageNum++;
+                                    _do=1;
+
+                                }
+
+                            }
+
+                    })
+}
+
+
+</script>
+
+<script>
+	
+	
+</script>
+
+</body>
+
+</html>
+

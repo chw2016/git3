@@ -1,0 +1,56 @@
+ <!--滑动菜单开始-->
+<link href="{weikucms::RES}/css/Estate/css/reset_ny.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::RES}/css/Estate/css/home-38.css" rel="stylesheet" type="text/css" />
+<script src="{weikucms::RES}/css/Estate/js/swipe.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/css/Estate/js/zepto.js" type="text/javascript"></script>
+<!--滑动菜单结束-->
+ 
+ <!--滑动菜单开始-->
+  <!--防止菜单遮挡内容 开始-->
+  <div style=" clear:both; height:40px;"></div>
+  <!--防止菜单遮挡内容 结束-->
+  <section>
+    <div id="navList_box" class="box_swipe">
+      <ul>
+        <li>
+          <volist name="gfl" id="infofl" offset="0" length='4'> <a href="{weikucms:$infofl.url}" class="weimob-list-item"> <span><img src=" {weikucms:$infofl.img}" /></span>
+            <div>{weikucms:$infofl.name}</div>
+            </a></volist>
+          <!-- 
+		 <a href="{weikucms:$info.url}" class="weimob-list-item"> <span class="icon-home"></span>
+          <div>{weikucms:$info.name}</div>
+          </a> 
+		   <a href="#" class="weimob-list-item"> <span class="icon-picture"></span>
+          <div>附近景观</div>
+          </a> <a href="{weikucms::U('Estate/lp',array('token'=>$_GET['token'],'id'=>$estate['id']))}" class="weimob-list-item"> <span class="icon-building"></span>
+          <div>户型全景</div>
+          </a> <a href="{weikucms::U('Estate/zjdp',array('token'=>$_GET['token'],'id'=>$estate['id']))}" class="weimob-list-item"> <span class="icon-check"></span>
+          <div>客户印象</div>
+          </a> </li>
+        <li> <a href="#" class="weimob-list-item"> <span class="icon-rss-sign"></span>
+          <div>新闻动态</div>
+          </a> <a href="#" class="weimob-list-item"> <span class="icon-edit"></span>
+          <div>预约看房</div>
+          </a> <a href="#" class="weimob-list-item"> <span class="icon-credit-card"></span>
+          <div>会员尊享</div>
+          </a> <a href="#" class="weimob-list-item"> <span class="icon-phone"></span>
+          <div>联系我们</div>
+          </a>-->
+        </li>
+        <li>
+          <volist name="gfl" id="infofl" offset="4" length='4'> <a href="{weikucms:$infofl.url}" class="weimob-list-item"> <span><img src=" {weikucms:$infofl.img}" /></span>
+            <div>{weikucms:$infofl.name}</div>
+            </a></volist>
+        </li>
+      </ul>
+      <ol>
+        <a href="javascript:navList_box.prev();">&nbsp;</a> <a href="javascript:navList_box.next();">&nbsp;</a>
+      </ol>
+    </div>
+  </section>
+  <script>
+			$(document).ready(function(){
+				window.navList_box = new Swipe(document.getElementById('navList_box'), {auto:0});
+			});
+		</script>
+  <!--滑动菜单结束-->

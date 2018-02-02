@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/style.css">
+		<script src="{weikucms::RES}/sunpool/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/main.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/core.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/iscroll.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/jquery.ld.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/sunshine.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/irr.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/pace.js"></script>
+        <script src="{weikucms::STATICS}/chart/esl.js"></script>
+        <style>
+            .label{
+                top: 0px;
+            }
+        </style>
+
+    </head>
+    <body>
+   		<div class="header textMiddle white">
+   			装机评估
+   		</div>
+   		<div class="havBox myul border-26 overFloatHidden hide">
+   			<div class="hav myli textMiddle ">
+   				按用电量
+   			</div>
+   			<div class="hav myli textMiddle on">
+   				按安装面积
+   			</div>
+   		</div>
+
+   		<div class="inputWrap marginTop20 white-bg border-14">
+			
+			<div class="inputItem setMiddle">
+   				<div class="inputItemName">电站类型</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="electStationStyle myli myul on" msg="1">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>屋顶分布式</div>
+					</div>
+					<div class="electStationStyle myli myul" msg="2">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>地面分布式</div>
+					</div>		
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName"><font color="red">*</font>屋顶类型：</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="wudingStyle myul on" msg="1">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>水泥屋顶</div>
+					</div>
+					<div class="wudingStyle myul" msg="2">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>斜屋顶</div>
+					</div>
+					<div class="wudingStyle myul" msg="3">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>彩钢瓦</div>
+					</div>  					
+   				</div>
+   			</div>
+
+
+
+            <div class="inputItem setMiddle" onclick="getAngle();getsunshine()">
+                <div class="inputItemName"><font color="red">*</font>地理位置：</div>
+                <input type="hidden" class="area" name="info[area]"  id="area" value="">
+                <select class="pc-select-area" name="area-1" id="area-1" width="100">
+                    <option value="">请选择菜单</option>
+                </select>
+                <select class="pc-select-area" name="area-2" id="area-2" width="100">
+                    <option value="">请选择菜单</option>
+                </select> <script type="text/javascript">
+                $(function(){
+                    var $ld5 = $(".pc-select-area");
+                    $ld5.ld({
+                        ajaxOptions : {"url" : "http://www.solarstock.cn/api.php?op=get_linkage&act=ajax_select&keyid=1"},
+                        defaultParentId : 0,
+                        style : {"width" : 120}
+                    })
+                    var ld5_api = $ld5.ld("api");
+                    ld5_api.selected();
+                    $ld5.bind("change",onchange);
+                    function onchange(e){
+                        var $target = $(e.target);
+                        var index = $ld5.index($target);
+                        $("#area-3").remove();
+                        $("#area").val($ld5.eq(index).show().val());
+                        index ++;
+                        $ld5.eq(index).show();								}
+                })
+            </script>
+            </div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName">朝向：</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="directionStyle myul on" msg="n">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>南</div>
+					</div>
+					<div class="directionStyle myul" msg="dn">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>东南</div>
+					</div>
+					<div class="directionStyle myul" msg="d">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>东</div>
+					</div>	
+					<div class="directionStyle myul" msg="xn">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>西南</div>
+					</div>
+											
+   				</div>
+   				<div class="textMiddle input-b myul">
+
+   					<div class="directionStyle myul" msg="x">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>西</div>
+					</div>
+					<div class="directionStyle myul" msg="pp">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>平铺（0°）</div>
+					</div>
+					<div class="directionStyle myul">
+   						
+					</div>
+					<div class="directionStyle myul">
+   						
+					</div>			
+   				</div>
+   			</div>
+			
+			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						倾角范围：
+   					</div>
+   					<div class="input input-ex">
+                        <span id="angle" style="width:60px;"></span>°
+                        <span id="tuoliu" style="display:none"></span>
+                        <span id="sunshine" style="display:none"></span>
+                    </div>
+   				</div>   				
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						<font color="red">*</font>屋顶可用面积：
+   					</div>
+   					<div class="input">
+   						<input type="number" value="" class="keyongmianji">
+   						<div class="label">㎡</div>
+   					</div>
+   				</div>   				
+   			</div>
+			
+
+   		</div>
+
+		<!-- 计算结果 -->
+		<div class="resultBox" style="display: none;">
+
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					预估装机容量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result rongliang_result">
+						0
+					</div>
+					<div class="resultUnit">
+						kW
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					预估报价：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result baojia_result">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+   		<div class="actionHavBox myul">
+   			<div class="actionHav myli" onclick="getRongliang()">
+   				计算
+   			</div>
+   			<div class="actionHav myli" onclick="window.location.href='{weikucms::U('SunPool/ErectInfo',array('token'=>$token,'openid'=>$openid))}'">
+   				我要安装
+   			</div>
+   		</div>
+
+	<script type="text/javascript">
+		mySelector($(".wudingStyle"),"on",1);
+		mySelector($(".directionStyle"),"on",1);
+		mySelector($(".electStationStyle"),"on",1);
+	</script>
+	<script src="{weikucms::RES}/sunpool/js/area.js"></script>
+	<script src="{weikucms::RES}/sunpool/js/location.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			showLocation();
+		});
+	</script>
+        <script>
+            function getRongliang(){
+                var eStyle=$(".electStationStyle");//电站类型
+                var wdStyle=$(".wudingStyle ");//屋顶类型
+                var pStyle=$(".directionStyle");//朝向
+                var dzleixing=1;
+                var wudingleixing=1;
+                var chaoxiang=1;
+                var qjfw=$("#angle").text();
+                var keyongmianji = $(".keyongmianji").val().trim();
+                $.each(eStyle,function(o,i){
+                    if($(this).hasClass("on")){
+                        dzleixing=$(this).attr("msg");
+                    }
+                })
+
+                $.each(wdStyle,function(o,i){
+                    if($(this).hasClass("on")){
+                        wudingleixing=$(this).attr("msg");
+                    }
+                })
+
+                $.each(pStyle,function(o,i){
+                    if($(this).hasClass("on")){
+                        chaoxiang=$(this).attr("msg");
+                    }
+                })
+                if(!qjfw || qjfw<=0){
+                    alert("请选择地区倾角范围");
+                    return false;
+                }
+                if(wudingleixing==1)
+                {
+                    if(isNaN(keyongmianji) || !keyongmianji || keyongmianji<=0)
+                    {
+                        alert("请输入可用面积");
+                        return false;
+                    }else{
+                        var rongliang = keyongmianji*66/1000;
+                        var rl = rongliang.toFixed(0);
+                        if(rl>0&&rl<=50)
+                        {
+                            var xtztr1 = rl*8.5/10;
+                        }else if(rl>50&&rl<=200)
+                        {
+                            var xtztr1 =rl*8/10;
+                        }else if (rl>200)
+                        {
+                            var xtztr1 =rl*8/10;
+                        }
+                    }
+                }else {
+                    if(isNaN(keyongmianji || !keyongmianji || keyongmianji<=0))
+                    {
+                        alert("请输入数字");
+                        return false;
+                    }else{
+                        var rongliang = (keyongmianji)*100/1000;
+                        var rl = rongliang.toFixed(0);
+                        if(rl>0&&rl<=50)
+                        {
+                            var xtztr1 =rl*8.5/10;
+                        }else if(rl>50&&rl<=200)
+                        {
+                            var xtztr1=rl*8/10;
+                        }else if (rl>200)
+                        {
+                            var xtztr1 =rl*8/10;
+                        }
+                    }
+                }
+                localStorage.setItem('dzleixing',dzleixing);
+                localStorage.setItem('wudingleixing',wudingleixing);
+                localStorage.setItem('chaoxiang',chaoxiang);
+                localStorage.setItem('qjfw',qjfw);
+                localStorage.setItem('keyongmianji',keyongmianji);
+                localStorage.setItem('rl',rl);
+                localStorage.setItem('xtztr',xtztr1);
+                $(".rongliang_result").text(rl);
+                $(".baojia_result").text(xtztr1);
+                $(".resultBox").show();
+                //var url="{weikucms::U('SunPool/BeniftTotal',array('token'=>$token,'openid'=>$openid))}";
+                //location.href=url;
+            }
+
+        </script>
+		<!--		<div style="width:95%;height:20px;line-height:20px;text-align:center;font-size:12px;padding:5px;0px;color:rgb(190, 186, 186)">万普微信技术支持</div>  -->
+    </body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+	<head>
+		<title>玩转微信，马上有礼</title>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<style type="text/css">
+			*{padding: 0;margin: 0;list-style: none;text-decoration: none;}
+			body{font-family: "Microsoft YaHei";font-size: 18px;}
+			section{margin-top: 20px;}
+			p{line-height: 2em;text-align: center;border-radius: 6px;font-size: 18px;
+				width: 92%;margin: 0 auto;background: rgba(255,255,255,0.8);color: #000;}
+			footer{width: 85%;margin: 0 auto;margin-top: 20px;
+				border-radius: 6px;padding: 20px 10px;text-align: center;line-height: 24px;background: rgba(255,255,255,0.8);color: #000;}
+			footer span{color: #f00;font-size: 15px;text-align: left;display: block;
+				margin-bottom: 10px;}
+			ul li{margin-top: 10px;text-align: left;font-size: 15px;}
+			#data{margin: 0 auto;width: 92%;margin-top: 10px;text-align: center;font-size: 16px;}
+			#data .span{margin-bottom: 5px;display: block;}
+			/*#data form{width: 92%;}*/
+			#data form .span_1{margin-bottom: -15px;display: block;}
+			#data form .span_1 input{width: 94%;height:30px;line-height:30px;padding: 8px 5px;margin-top: 10px;border: none;
+border: 1px solid rgb(214, 213, 213);
+border-radius: 5px;}
+			#btn{
+				background:#4ab86b;color: #fff;display: block;width: 98.6%;padding: 8px 5px;border-radius: 4px;border: 1px solid #4ab86b;margin: 0 auto;margin-top: 10px;
+			}
+		</style>
+        <script src="{weikucms::STATICS}/wapweiui/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    </head>
+	</head>
+	<body style="background:url(jpg/bg_lot.jpg);">
+		<section>
+			<p>一体化抽奖结果</p>
+		</section>
+        <!--没有中奖-->
+        <?php if(empty($data)):?>
+        <footer>
+            <span>您还没有获得任务奖品，加油额</span>
+        </footer>
+            <div id="data">
+                <!-- <span class="span">请填写你的详细资料</span> -->
+                <form method="post" name="form1" onclick="return false;">
+                <span class="span_1">
+					<input type="text" name="uname" id="uname" size="15px" placeholder="请填写您的姓名"/>
+				</span><br/>
+				<span class="span_1">
+					<input type="text" name="tel" id="tel" size="15px"  placeholder="请填写您的电话号码"/>
+				</span><br/>
+                <span class="span_1">
+					<input type="text" name="address" id="add" size="15px"  placeholder="请填写地址"/>
+				</span><br/>
+                    <button type="submit" onclick="return info()" id="btn" value="">提交</button>
+                </form>
+            </div>
+        <!--中奖没有填写资料，补填-->
+      <?php elseif(empty($info)):?>
+        <footer>
+            <span>恭喜你获得以下奖品</span>
+        <ul>
+            <volist name="data" id="data">
+                <li>{weikucms:$data.id}.{weikucms:$data.level}{weikucms:$data.gname}</li>
+            </volist>
+        </ul>
+        </footer>
+        <div id="data">
+            <!-- <span class="span">请填写你的详细资料</span> -->
+            <form method="post" name="form1">
+                <span class="span_1">
+					<input type="text" name="uname" id="uname" size="15px" placeholder="请填写您的姓名" value="{weikucms:$info[tel]}"/>
+				</span><br/>
+				<span class="span_1">
+					<input type="text" name="tel" id="tel" size="15px"  placeholder="请填写您的电话号码" value="{weikucms:$info[tel]}"/>
+                    <input type="hidden" name="lid" size="15px" value="{weikucms:$lid}" />
+                    <input type="hidden" name="uid" id="tel" value="{weikucms:$uid}"/>
+				</span><br/>
+                <span class="span_1">
+					<input type="text" name="address" id="add" size="15px"   placeholder="请填写地址" value="{weikucms:$info[address]}"/>
+				</span><br/>
+                <button type="submit" onclick="return info()" id="btn" value="">提交</button>
+            </form>
+        </div>
+        <?php else: ?>
+        <!--修改中奖资料-->
+        <footer>
+            <span>恭喜你获得以下奖品</span>
+            <ul>
+                <volist name="data" id="data">
+                    <li>{weikucms:$data.id}.{weikucms:$data.level}{weikucms:$data.gname}</li>
+                </volist>
+            </ul>
+        </footer>
+        <div id="data">
+            <!-- <span class="span">请填写你的详细资料</span> -->
+            <form method="post" name="form1">
+                <span class="span_1">
+					<input type="text" name="uname" id="uname" size="15px" placeholder="请填写您的姓名" value="{weikucms:$info[uname]}"/>
+				</span><br/>
+				<span class="span_1">
+					<input type="text" name="tel" id="tel" size="15px"  placeholder="请填写您的电话号码" value="{weikucms:$info[tel]}"/>
+                    <input type="hidden" name="id" size="15px" value="{weikucms:$id}" />
+				</span><br/>
+                <span class="span_1">
+					<input type="text" name="address" id="add" size="15px"  placeholder="请填写地址" value="{weikucms:$info[address]}"/>
+				</span><br/>
+                <button type="submit" onclick="return info()" id="btn">提交</button>
+            </form>
+        </div>
+    <?php endif;?>
+	</body>
+</html>

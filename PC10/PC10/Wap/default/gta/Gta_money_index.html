@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/owl.carousel.js"></script>
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/owl.carousel.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/style1.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.event.drag-1.5.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery.touchSlider.js"></script>
+		<script>
+			$(function(){
+				$(".flicking_con").css("left",$(".main_visual").width()/2-$(".flicking_con").width()/2); 
+				$(".Basic").height($(window).height());
+			})
+			
+		</script>
+        <script>
+            $(function(){
+                $(".Basic").height($(window).height());
+            })
+
+            function onMimg(){
+                $("#img1").attr("src","http://www.rudofq.com/./tpl/static/wapweiui/loan/images/ljfu-1.png");
+            }
+            function onMimg2(){
+                $("#img2").attr("src","http://www.rudofq.com/./tpl/static/wapweiui/loan/images/fxyl.png");
+            }
+            $(document).ready(function(){
+
+                $dragBln = false;
+
+                $(".main_image").touchSlider({
+                    flexible : true,
+                    speed : 200,
+                    btn_prev : $("#btn_prev"),
+                    btn_next : $("#btn_next"),
+                    paging : $(".flicking_con a"),
+                    counter : function (e){
+                        $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+                    }
+                });
+
+                $(".main_image").bind("mousedown", function() {
+                    $dragBln = false;
+                });
+
+                $(".main_image").bind("dragstart", function() {
+                    $dragBln = true;
+                });
+
+                $(".main_image a").click(function(){
+                    if($dragBln) {
+                        return false;
+                    }
+                });
+
+                timer = setInterval(function(){
+                    $("#btn_next").click();
+                }, 3000);
+
+                $(".main_visual").hover(function(){
+                    clearInterval(timer);
+                },function(){
+                    timer = setInterval(function(){
+                        $("#btn_next").click();
+                    },3000);
+                });
+
+                $(".main_image").bind("touchstart",function(){
+                    clearInterval(timer);
+                }).bind("touchend", function(){
+                    timer = setInterval(function(){
+                        $("#btn_next").click();
+                    }, 3000);
+                });
+
+            });
+        </script>
+	</head>
+	<style>
+		.Basic{
+			width: 100%;
+			margin-top: 20px;
+		}
+		.Basic_text{
+			width: 80%;
+			margin: 0 auto;
+			height: 50px;
+		}
+		.border-top{
+			border-top: 1px solid #CCCCCC;
+		}
+		.Basic_car{
+			height: 26px;
+			width: 26px;;
+			margin-top: 12px;
+		}
+		.Basic_car1{
+			height: 26px;
+			width: 26px;;
+			margin-top: 12px;
+		}
+		.Basic_text span{
+			display: block;
+			float: left;
+			font-size: 17px;
+		}
+		.span_{
+			height: 50px;
+			line-height: 50px;
+			margin-left: 10px;
+			font-size: 14px;
+			color: #000000;
+		}
+	</style>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;"></h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section style="padding-top: 48px;">
+
+            <div class="main_visual">
+                <div class="flicking_con">
+                    <volist name="flash" id="vo">
+                        <a  >{weikucms:$i}</a>
+                    </volist>
+                </div>
+                <div class="main_image">
+                    <ul style="width: 320px; overflow: visible;">
+
+                        <volist name="flash" id="vo" >
+                            <li style="height: 188px; float: none; display: block; position: absolute; top: 0px; left: 0px; width: 320px;"  <if condition="$vo['url']">onclick="location.href='{weikucms:$vo.url}'"</if>>
+                                <img src="{weikucms:$vo.img}" width="100%" height="100%">
+                            </li>
+                        </volist>
+                    </ul>
+                    <a href="javascript:;" id="btn_prev" style="width: 320px; overflow: visible;"></a>
+                    <a href="javascript:;" id="btn_next" style="width: 320px; overflow: visible;"></a>
+                </div>
+            </div>
+
+			    <div class="Basic shadowtext" style="margin-top: 8px;">
+                        <volist name="list" id="vo">
+                        <div onclick="location.href='{weikucms::U('money_choice',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'" <if condition="$i eq 1">class="Basic_text"<else />class="border-top Basic_text"</if>>
+                            <span class="Basic_car1" style="background: url({weikucms:$vo.logo_pic});background-size: 100%;border-radius: 50%;"></span>
+                            <span class="span_">{weikucms:$vo.name}</span>
+                        </div>
+                       </volist>
+			</div>
+		</section>
+	</body>
+</html>

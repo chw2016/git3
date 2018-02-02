@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>产品保修期查询</title>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+</head>
+<body class="beijing">
+<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+<div class="c-baoxiu-title">
+    请输入条形码
+</div>
+<div class="c-search">
+    <form action="{weikucms::U('Yanxiang/baoxiu2',array('token'=>$token))}" method="post" name="product-fix" id="product-fix">
+        <input type="text" class="c-chaxun" placeholder="请输入条形码" id="two-code" name="two-code" />
+        <input type="button" value="搜索" class="c-chaxun-btn" id="Submit"/>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#Submit').click(function(){
+            $('#product-fix').submit();
+        })
+    })
+</script>
+<!-- 下面的条形码显示 -->
+<div class="tiaoxingma">
+    <p class="tiao-position">条形码位置</p>
+    <p class="tiao-gray">条形码以字母E开头，由字母和数字组成</p>
+    <!-- 显示图片的位置 -->
+    <div class="tiao-img">
+        <div class="left">
+            <div class="inner">
+                <img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/tu1.jpg"/>
+            </div>
+            <p>机箱上</p>
+        </div>
+        <div class="middle">
+            <div class="inner">
+                <img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/tu2.jpg"/>
+
+            </div>
+            <p>板卡上</p>
+        </div>
+        <div class="right">
+            <div class="inner">
+                <img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/tu3.jpg"/>
+            </div>
+            <p>纸箱上</p>
+        </div>
+    </div>
+</div>
+<!-- 温馨提示 -->
+<p class="weixin">
+    温馨提示
+</p>
+<p class="wenxin-next">如果对结果有异议</p>
+<p class="wenxin-next">请致电400-880-9666客服热线咨询</p>
+<div style="height:30px;"></div>
+<script type="text/javascript">
+    window.onload = function(){
+        $('.beijing').css('background-size',$(window).width()+'px '+$(document).height()+'px');
+        // 内部圆圈的高度
+        $('.inner').css('height', $('.inner').width()+5+'px');
+        // 头像高度
+        $('.inner').css('width', $('.inner').width()+5+'px')
+        $('.inner img').css('width',$('.inner').width()*0.55+'px');
+        $('.inner img').css('margin-top',($('.inner').height()-$('.inner img').height()-2)/2+1+'px');
+        var a = setTimeout(function(){
+            $("#loading").hide(0).remove();
+        },1200);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <title>{weikucms:$list['title']}</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+    <if condition="$hisrecord['age']">
+        <else/>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/dater_min.js"></script>
+        <script>
+            $().ready(function(){
+                new dater({
+                    selectYear:document.getElementById("selectYear"),
+                    selectMonth:document.getElementById("selectMonth"),
+                    selectDate:document.getElementById("selectDate"),
+                    minDat: new Date("1950/1/1"),
+                    maxDat: new Date(),
+                    curDat: new Date("{weikucms:$birth_day[0]}/{weikucms:$birth_day[1]}/{weikucms:$birth_day[2]}")
+                }).init();
+            });
+        </script>
+    </if>
+
+
+</head>
+<body>
+
+<div id="contents" class="contents two">
+
+<?php
+   if(in_array('name',$zl)){
+
+?>
+     <div class="set" >
+        <ul>
+        <!--     <li><img src="{weikucms::STATICS}/course/img/1.png" title="图片"><div class="ftl">姓名</div></li>  -->
+            <li><input type="text" msg="123"  id="name" name="name" value="{weikucms:$hisrecord['name']}" placeholder="请输入您的姓名"/></li>
+        </ul>
+    </div> 
+<?php } ?>
+<?php
+   if(in_array('sex',$zl)){
+
+?>  
+    <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/2.png" title="图片" style="width:14px;"><div class="ftl">性别</div></li> -->
+          <!--   <li><input type="tel" id="sex" name="sex" value="{weikucms:$hisrecord['sex']}" placeholder="请输入您的性别"/></li> -->
+       
+             <li>
+                <select id="sex" msg="123" name="sex" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                         <option  value="">请选择性别</option>
+                          <option <if condition="$hisrecord['sex'] eq '男'" >selected=selected</if>  value="男">男</option>
+                  
+                            <option  <if condition="$hisrecord['sex'] eq '女'" >selected=selected</if> value="女">女</option> 
+                        
+                   
+
+                </select>
+             <!--    <input type="number" id="money" name="money" value="{weikucms:$list['money']}" placeholder="qing" readonly="readonly"/> -->
+            </li> 
+       
+        </ul>
+    </div>
+    
+<!-- 在加的 -->
+<?php } ?> 
+<?php
+   if(in_array('age',$zl)){
+
+?>
+      <div class="set" >
+        <ul>
+         		<li>
+                    <if condition="$hisrecord['age']">
+                        <input type="text" msg="123"  id="age" name="age" value="{weikucms:$hisrecord['age']}" placeholder="请输入您的出生日期"/>
+                        <else/>
+                        出生日期:        <select style="width:23%; height:32px;" name="birth_year" readonly="readonly"  class="select" id="selectYear" value="1970"><!--auth Eric_wu--></select>
+                        <select style="width:23%;height:32px;"  name="birth_month" readonly="readonly"  class="select" id="selectMonth" value="01"><!--auth Eric_wu--></select>
+                        <select style="width:23%;height:32px;"  name="birth_date" readonly="readonly"  class="select" id="selectDate" value="01"><!--auth Eric_wu--></select>
+
+                    </if>
+         		  <!--  <input type="text" msg="123"  id="age" name="age" value="{weikucms:$hisrecord['age']}" placeholder="请输入您的出生日期"/> -->
+         		</li>
+        </ul>
+    </div> 
+    <?php } ?> 
+<?php
+   if(in_array('mc',$zl)){
+
+?>
+    <div class="set" >
+        <ul>
+        <!--     <li><img src="{weikucms::STATICS}/course/img/1.png" title="图片"><div class="ftl">姓名</div></li>  -->
+            <li><input type="text" msg="123"  id="mc" name="mc" value="{weikucms:$hisrecord['mc']}" placeholder="请输入您曾参加过马拉松赛事名称及组别"/></li>
+        </ul>
+    </div> 
+    <?php } ?> 
+<?php
+   if(in_array('cj',$zl)){
+
+?>
+    <div class="set" >
+        <ul>
+        <!--     <li><img src="{weikucms::STATICS}/course/img/1.png" title="图片"><div class="ftl">姓名</div></li>  -->
+            <li><input type="text" msg="123"  id="cj" name="cj" value="{weikucms:$hisrecord['cj']}" placeholder="请输入您以往马拉松成绩"</li>
+        </ul>
+    </div> 
+    <?php } ?> 
+<?php
+   if(in_array('jjz',$zl)){
+
+?>
+   <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/3.png" title="图片"><div class="ftl">国籍</div></li> -->
+          <!--   <li><input type="text" id="gj" name="gj" value="{weikucms:$hisrecord['gj']}" placeholder="请输入您的国籍"/></li> -->
+          
+          
+                       <li>
+                <select id="jjz" msg="123" name="jjz" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                          <option  value="">是否有赛事举办地户籍或居住证</option>
+                          <option  <if condition="$hisrecord['jjz'] eq '有'" >selected=selected</if>   value="有">有</option>
+                          <option <if condition="$hisrecord['jjz'] eq '无'" >selected=selected</if>  value="无">无</option> 
+                 </select>
+             <!--    <input type="number" id="money" name="money" value="{weikucms:$list['money']}" placeholder="qing" readonly="readonly"/> -->
+            </li> 
+            
+          
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('gj',$zl)){
+
+?>
+    <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/3.png" title="图片"><div class="ftl">国籍</div></li> -->
+          <!--   <li><input type="text" id="gj" name="gj" value="{weikucms:$hisrecord['gj']}" placeholder="请输入您的国籍"/></li> -->
+          
+          
+                       <li>
+                <select id="gj" msg="123" name="gj" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                          <option  value="">请选择国籍</option>
+                          <option  <if condition="$hisrecord['gj'] eq '中华人民中和国'" >selected=selected</if>   value="中华人民中和国">中华人民中和国</option>
+                          <option <if condition="$hisrecord['gj'] eq '其它'" >selected=selected</if>  value="其它">其它</option> 
+                 </select>
+             <!--    <input type="number" id="money" name="money" value="{weikucms:$list['money']}" placeholder="qing" readonly="readonly"/> -->
+            </li> 
+            
+          
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('address',$zl)){
+
+?>
+    <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">所居城市</div></li> -->
+            <li><input type="text" id="address" msg="123" name="address" value="{weikucms:$hisrecord['address']}" placeholder="请输入您的所居城市"></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('type',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">证件类型</div></li> -->
+            <!-- <li><input type="text" id="type" name="type" value="{weikucms:$hisrecord['type']}" placeholder="请输入您的证件类型"/></li> -->
+            <li>
+                 <select id="type" msg="123" name="type"  style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                          <option  value="">请选择证件类型</option>
+                          <option <if condition="$hisrecord['type'] eq '身份证'" >selected=selected</if>   value="身份证">身份证</option>
+                          <option <if condition="$hisrecord['type'] eq '户口本'" >selected=selected</if>  value="户口本">户口本</option> 
+                         <option <if condition="$hisrecord['type'] eq '护照'" >selected=selected</if>  value="护照">护照</option> 
+                         <option <if condition="$hisrecord['type'] eq '军官证'" >selected=selected</if>  value="军官证">军官证</option> 
+                       
+                 </select>
+            </li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('hm',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">证件号码</div></li> -->
+            <li><input type="text" id="hm" msg="123" name="hm" value="{weikucms:$hisrecord['hm']}" placeholder="请输入您的证件号码"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('name',$zl)){
+
+?>
+        <div class="xx">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">血型</div></li> -->
+            <!-- <li><input type="text" id="xx" name="xx" value="{weikucms:$hisrecord['xx']}" placeholder="请输入您的血型"/></li> -->
+        
+          <li>
+                 <select  id="xx" name="xx" msg="123" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                          <option   value="">请选择血型</option>
+                          <option  <if condition="$hisrecord['xx'] eq 'A型'" >selected=selected</if>  value="A型">A型</option>
+                          <option <if condition="$hisrecord['xx'] eq 'B型'" >selected=selected</if>   value="B型">B型</option> 
+                         <option <if condition="$hisrecord['xx'] eq 'AB型'" >selected=selected</if>  value="AB型">AB型</option>  
+                         <option <if condition="$hisrecord['xx'] eq 'O型'" >selected=selected</if>  value="O型">O型</option> 
+                       
+                 </select>
+            </li>
+        
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('email',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+<!--             <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">电子邮箱地址</div></li> -->
+            <li><input type="text" id="email" msg="123" name="email" value="{weikucms:$hisrecord['email']}" placeholder="请输入您的电子邮箱地址"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('tel',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+    <!--         <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">联系电话</div></li> -->
+            <li><input type="text" id="tel" msg="123" name="tel" value="{weikucms:$hisrecord['tel']}" placeholder="请输入您的联系电话"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('jname',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+   <!--          <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">紧急联系人</div></li> -->
+            <li><input type="text" id="jname" msg="123" name="jname" value="{weikucms:$hisrecord['jname']}" placeholder="请输入您的紧急联系人"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('jtel',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+     <!--        <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">紧急联系人电话</div></li> -->
+            <li><input type="text" id="jtel" msg="123" name="jtel" value="{weikucms:$hisrecord['jtel']}" placeholder="请输入您的紧急联系人电话"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('gx',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+ <!--            <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">紧急联系人关系</div></li> -->
+            <li><input type="text" id="gx" msg="123" name="gx" value="{weikucms:$hisrecord['gx']}" placeholder="请输入您的紧急联系人关系"/></li>
+        </ul>
+    </div>
+    <?php } ?> 
+<?php
+   if(in_array('zm',$zl)){
+
+?>
+        <div class="set">
+        <ul>
+   <!--          <li><img src="{weikucms::STATICS}/course/img/4.png" title="图片"><div class="ftl">衣服尺码</div></li> -->
+
+                  <select  id="cm" name="cm" msg="123" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                          <option   value="">请输入您的衣服尺码</option>
+                          <option  <if condition="$hisrecord['cm'] eq 'XS'" >selected=selected</if>  value="XS">XS</option>
+                          <option <if condition="$hisrecord['cm'] eq 'S'" >selected=selected</if>   value="S">S</option> 
+                         <option <if condition="$hisrecord['cm'] eq 'M'" >selected=selected</if>  value="M">M</option>  
+                         <option <if condition="$hisrecord['cm'] eq 'L'" >selected=selected</if>  value="L">L</option> 
+                         <option <if condition="$hisrecord['cm'] eq 'XL'" >selected=selected</if>  value="XL">XL</option>
+                      <option <if condition="$hisrecord['cm'] eq 'XXL'" >selected=selected</if>  value="XXL">XXL</option>
+                      <option <if condition="$hisrecord['cm'] eq 'XXXL'" >selected=selected</if>  value="XXXL">XXXL</option>
+                  </select>
+            </li>
+        </ul>
+    </div>
+ <?php } ?>    
+<?php
+   if(in_array('money',$zl)){
+
+?>    
+    <div class="set">
+        <ul>
+        <?php
+           //P($type_money);
+         ?>
+        <!--  <li><img src="{weikucms::STATICS}/course/img/5.png" title="图片"><div class="ftl">费用</div></li>  -->
+           <li>
+                <select id="money" msg="123" style="border-radius: 5px;height: 35px;width: 98%;text-indent: 1%;">
+                         <option value="枯井地可耕地无可厚非票友票友-1000000000">请选择类型及费用</option>
+                    <volist name="type_money" key='key' id="so">
+                        <option id="type2" <if condition="$hisrecord['money'] eq $so" >selected=selected</if> msg="{weikucms:$key}"  value="{weikucms:$key}-{weikucms:$so}">{weikucms:$key}-{weikucms:$so}元</option>
+                    </volist>
+
+                </select>
+             <!--    <input type="number" id="money" name="money" value="{weikucms:$list['money']}" placeholder="qing" readonly="readonly"/> -->
+            </li> 
+        </ul>
+    </div>
+<?php } ?>    
+    <input type="hidden" name="openid" id="openid" value="{weikucms:$_GET['openid']}"/>
+    <input type="hidden" name="token" id="token" value="{weikucms:$_GET['token']}"/>
+    <input type="hidden" name="from_openid" id="from_openid" value="{weikucms:$_GET['from_openid']}"/>
+    <!--微信支付隐藏表单-->
+    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+        <input type="hidden" name="order_money" id="order_money" value="">
+        <input type="hidden" name="order_text" value="六月初八（大吉大利）">
+        <input type="hidden" id="orderid" name="orderid" value="">
+        <input type="hidden" name="openid" value="<?php print_r($_GET['openid']); ?>">
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Course&a=share&openid={weikucms:$openid}&token={weikucms:$token}&cid={weikucms::$_GET['cid']}">
+        <input type="hidden" name="type" value="Course_order">
+    </form> 
+    <!--微信支付隐藏表单结束-->
+</div>
+<div style="height: 50px;"></div>
+<div id="foot" class="foots">确认报名</div>
+<script type="text/javascript">
+    $(function(){
+        $("#foot").click(function(){
+
+            var name = $("#name").val();
+            var sex = $("#sex").val();
+            var gj = $("#gj").val();
+            var address = $("#address").val();
+            var type = $("#type").val();
+            var hm = $("#hm").val();
+            var xx = $("#xx").val();
+            var email = $("#email").val();
+            var tel = $("#tel").val();
+            var jname = $("#jname").val();
+            var jtel = $("#jtel").val();
+            var gx = $("#gx").val();
+            var cm = $("#cm").val();
+		    var money=$("#money").val();
+		
+			
+			var mc=$("#mc").val();
+			var cj=$("#cj").val();
+			var jjz=$("#jjz").val();
+		    var money2=money.substr(money.indexOf("-")+1);
+            var ages = "{weikucms:$hisrecord['age']}";
+            if(ages){
+                var age = $("#age").val();
+            }else{
+                var selectYear = $("#selectYear").val();
+                var selectMonth = $("#selectMonth").val();
+                var selectDate = $("#selectDate").val();
+                var age=selectYear+'年'+selectMonth+'月'+selectDate+'日';
+            }
+			/*alert(age);*/
+			
+	           if($("#name").attr("msg")){
+	        	   if(!name ){
+	                     alert('您的姓名不能为空');
+	                     return false;
+	                 }
+	           }
+	        		
+	        	
+	     if($("#sex").attr("msg")){
+            if( !sex ){
+                alert('您的性别不能为空');
+                return false;
+            }
+	     }
+	     if($("#gj").attr("msg")){
+            if( !gj ){
+                alert('您的国籍不能为空');
+                return false;
+            }
+	     }
+	     if($("#address").attr("msg")){
+            if( !address ){
+                alert('您的居住城市不能为空');
+                return false;
+            }
+	     }  
+	     if($("#type").attr("msg")){
+            if( !type ){
+                alert('您的证件类型不能为空');
+                return false;
+            }
+	     }   
+	     if($("#hm").attr("msg")){
+            if( !hm ){
+                alert('您的证件号码不能为空');
+                return false;
+            }
+	     }  
+        if($("#xx").attr("msg")){   
+            if( !xx ){
+                alert('您的血型不能为空');
+                return false;
+            }
+         }
+        if($("#email").attr("msg")){
+            if( !email ){
+                alert('您的电子邮箱地址不能为空');
+                return false;
+            }
+        }  
+        if($("#tel").attr("msg")){
+            if( !tel ){
+                alert('您的手机不能为空');
+                return false;
+            }
+        }    
+        if($("#jname").attr("msg")){
+            if( !jname ){
+                alert('您的紧急联系人不能为空');
+                return false;
+            }
+        }
+        if($("#jtel").attr("msg")){
+            if( !jtel ){
+                alert('您的紧急联系人电话不能为空');
+                return false;
+            }
+        }
+        if($("#gx").attr("msg")){
+            if( !gx ){
+                alert('您的与紧急联系人关系不能为空');
+                return false;
+            }
+        }
+        if($("#cm").attr("msg")){
+            if( !cm ){
+                alert('您的衣服尺码不能为空');
+                return false;
+            }
+        }
+        if($("#money").attr("msg")){
+            if( !money ){
+                alert('您的类型及费用不能为空');
+                return false;
+            }
+        }  
+        
+        if($("#age").attr("msg")){
+            if( !age ){
+                alert('您的出生日期 不能为空');
+                return false;
+            }
+        }  
+        
+        
+        if($("#mc").attr("msg")){
+            if( !mc ){
+                alert('您的曾参加过马拉松赛事名称及组别不能为空');
+                return false;
+            }
+        }  
+        
+        
+        if($("#cj").attr("msg")){
+            if( !cj ){
+                alert('您的以往马拉松成绩不能为空');
+                return false;
+            }
+        }  
+        
+        if($("#jjz").attr("msg")){
+            if( !jjz ){
+                alert('您的是否有赛事举办地户籍或居住证不能为空');
+                return false;
+            }
+        }  
+         
+        /*     $("input[name='order_money']").val(money); */
+			var btn = $('#foot');
+            btn.unbind('click');
+            btn.text('保存信息中...');
+			//console.log(1);
+            //return false;
+          
+            var url = "{weikucms::U('Course/set',array('token'=>$token,'openid'=>$_GET['openid'],'cid'=>$_GET['cid']))}";
+            
+
+            
+            
+            $.post(url,{name:name,sex:sex,gj:gj,address:address,type:type,hm:hm,xx:xx,email:email,tel:tel,jname:jname,gx:gx,jtel:jtel,cm:cm,money:money,age:age,mc:mc,cj:cj,jjz:jjz},
+                    function(data){
+            	console.log(data);
+                        if(data.code == 0){
+                            btn.text('保存成功！');
+                            if(data.type ==1){
+                                btn.attr("id","foot");
+                                window.location.href = data.url
+                            }else{
+                                $("#orderid").val(data.orderid);
+                                $("#order_money").val(money2);
+                                setTimeout(function(){
+                                	 $("#myweipayform").submit();
+                                },'100');
+                               
+                                
+                                btn.attr("id","foot");
+                            }
+                        }else if(data.code == 2){
+                            alert(data.msg);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else if(data.code == 3){
+                            alert(data.msg);
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            btn.text('保存失败！');
+                        }
+
+                    },'json');
+
+        });
+    })
+</script>
+</body>
+</html>

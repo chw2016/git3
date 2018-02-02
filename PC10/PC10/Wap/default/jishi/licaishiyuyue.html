@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    预约确认
+</div>
+<div class="produceLicaishiBox white-bg lisheng-text-color myul boxShadow" style="margin: 10px 5px 30px 5px;">
+    <div class="produceLicaishiLogowrap">
+        <div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$planner.image})"></div>
+    </div>
+    <div class="produceLicaishiInfoBox">
+        <div class="pLicaishiName">{weikucms:$planner.name}</div>
+        <div class="licaishiDengJiBox">
+            <div class="licaishiDengJiWrap  myul" data-zhuanshi="{weikucms:$planner.stars}">
+            </div>
+        </div>
+        <div class="myul">
+            <div class="myli">
+                专业：{weikucms:$planner.specialty_level}
+            </div>
+            <div class="myli">
+                沟通：{weikucms:$planner.communication_level}
+            </div>
+            <div class="myli">
+                服务：{weikucms:$planner.service_level}
+            </div>
+        </div>
+        <div class="pLicaishiContent">
+            <if condition="$vo.desc">
+                {weikucms:$planner.desc|htmlspecialchars_decode}
+                <!--<php>echo htmlspecialchars_decode($Planner['desc'])</php>-->
+                <else />
+                这个理财师很懒，什么也没留下
+            </if>
+        </div>
+    </div>
+</div>
+
+<div class="stepIndex">
+    <div class="dateSelectionBox textMiddle border-12 setMiddle myul white blur-gray-bg">
+        <div class="myli dateSelect on" id="day0" date="{weikucms:$date0}">
+            <div class="dateName  h4">今天</div>
+            <div class="date">{weikucms:$day0}</div>
+        </div>
+        <div class="myli dateSelect" id="day1" date="{weikucms:$date1}">
+            <div class="dateName  h4">明天</div>
+            <div class="date">{weikucms:$day1}</div>
+        </div>
+        <div class="myli dateSelect" id="day2" date="{weikucms:$date2}">
+            <div class="dateName  h4">后天</div>
+            <div class="date">{weikucms:$day2}</div>
+        </div>
+        <div class="myli dateSelect" id="day3" date="{weikucms:$date3}">
+            <div class="dateName  h4">大后天</div>
+            <div class="date">{weikucms:$day3}</div>
+        </div>
+    </div>
+    <div class="white-bg timeSelectBox setMiddle">
+        <!-- <span id="TimeBox" class="h7">- <span id="time" IFTime="1">没有可预约时间</span> -</span> -->
+        <select name="TimeBox" id="TimeBox" >
+            <!-- <option value="0">没有可预约时间</option> -->
+            <option value="09.30">09.30</option>
+            <option value="10.00">10.00</option>
+            <option value="10.30">10.30</option>
+            <option value="11.00">11.00</option>
+            <option value="14.30">14.30</option>
+            <option value="15.00">15.00</option>
+            <option value="15.30">15.30</option>
+            <option value="16.00">16.00</option>
+            <option value="16.30">16.30</option>
+        </select>
+    </div>
+</div>
+<div class="stepIndex">
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-tel lisheng-text-color"></div><span>电话</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderTel" type="tel" placeholder='请输入您的手机号码' value="{weikucms:$user['tel']}">
+        </div>
+    </div>
+    <div class="orderItem">
+        <div class="myul orderLable"><div class="icon icon-address lisheng-text-color"></div><span>地址</span></div>
+        <div class="inputBox border-6 ">
+            <input id="orderAddress" type="text" placeholder='请输入您的详细地址' value="{weikucms:$user['address']}">
+        </div>
+    </div>
+</div>
+<div class="myul stepHavList" style="position: inherit;">
+    <div class="nextBg subMit myli textMiddle h4 lisheng-text-color ">
+        <button type="submit" id="submit" form="orderForm" value="Submit">提交预约</button>
+    </div>
+</div><script type="text/javascript">
+    $(function() {
+        $(".licaishiDengJiWrap").each(function (i, o) {
+            var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi')),
+                    di = 0,
+                    zhuanshi = '<div class="zhuanshi fixBg"></div>';
+            for (di; di < d; di++) {
+                $(this).append(zhuanshi);
+            }
+        })
+
+        $(".dateSelect").click(function(){
+            $(".dateSelect").removeClass("on");
+            $(this).addClass("on");
+            if($(this).attr("id")=="day0"){
+               
+            }else if($(this).attr("id")=="day1"){
+                
+            }else if($(this).attr("id")=="day2"){
+               
+            }else if($(this).attr("id")=="day3"){
+               
+            }
+        })
+
+        $("#submit").click(function(event) {
+            /* Act on the event */
+
+            if($("#TimeBox").find("option:selected").val() == "0") return;
+            if($("#time").attr("IFTime") == "0") return;
+                var date = $.trim($(".dateSelect.on").attr("date"));
+                var time = $("#TimeBox").find("option:selected").val();
+                if($("#orderTel").val() == "" || $("#orderAddress").val() == "") return;
+                var urphone = $("#orderTel").val();
+                var phonematch=/^1[3,4,5,8]\d{9}$/;
+                if(phonematch.test(urphone)){
+                    $(this).addClass('hide');
+                    $(".subMit").removeClass('hide');
+                }else{
+                    alert("请输入正确的手机号码！");
+                    $("#orderTel").val("").focus();
+                    return false;
+                }
+            var sDate    = date +" "+ time;
+            var sTel     = $("#orderTel").val();
+            var sAddress = $("#orderAddress").val();
+            var product_id ={weikucms:$_GET['id']};            
+            $.ajax({
+                url: "{weikucms::U('Jishi/order',array('token'=>$token,'openid'=>$openid))}",
+                type:"POST",
+                data:{"pid":product_id,"time" : sDate, "tel" : sTel, "address" : sAddress},
+                dataType:"json",
+                success: function(res){
+                    if(res.status == 0){
+                        alert('预约成功');
+                        window.location.href = "{weikucms::U('Jishi/user_center',array('token'=>$token,'openid'=>$openid))}";
+                    }else{
+                        alert(res.info);
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

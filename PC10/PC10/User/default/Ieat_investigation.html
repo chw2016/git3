@@ -1,0 +1,990 @@
+<include file="Public:head" />
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<script>
+
+     KindEditor.ready(function(K) {
+
+        var editor = K.editor({
+
+            allowFileManager: true
+
+        });
+
+        // console.log(K('#pic'));
+
+        K('#pic').click(function() {
+
+            editor.loadPlugin('image',
+
+            function() {
+
+                editor.plugin.imageDialog({
+
+                    fileUrl: K('#pic').val(),
+
+                    clickFn: function(url, title) {
+
+                        K('#pic').val(url);
+
+                        K("#pic").attr('src', url).show();
+
+                        editor.hideDialog();
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+
+</script>
+
+<div class="" style="">
+
+    <div class="cLineB">
+
+        <div class="title_tab" id="topTab">
+
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/mallcontent',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}">返回上一页</a></li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!--tab start-->
+
+    <div class="alert alert-info">
+
+        <button type="button" class="close" data-dismiss="alert">×</button>
+
+        <strong>提示信息!</strong>
+
+        <ol>
+
+            <li>在这里可以进行问卷调查的设置。</li>
+
+        </ol>
+
+    </div>
+
+    <!--tab end-->
+
+    <div class="box-content">
+
+        <div class="msgWrap">
+
+            <form class="form quest_form" method="POST"  id="form" action="{weikucms::U('Ieat/investigation',array('token'=>$token))}&cat_id={weikucms:$_GET['cat_id']}">
+
+                <div class="cLineB">
+
+                    <div class="title_tab" id="topTab1">
+
+                        <ul class="tab_navs title_tab" data-index="0" style="position: relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ieat信息发掘</ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="msgWrap bgfc">
+
+                    <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+
+                        <thead>
+
+                            <th style="text-align: center;">名称</th>
+
+                            <th style="text-align: center;">选项</th>
+
+                            <th style="text-align: center;">选择项</th>
+
+                        </thead>
+
+                        <tbody id="msg">
+
+                        <tr>
+
+                            <td>
+
+                                <input type="text"   class="msg_name px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：服务态度" disabled/>
+
+                            </td>
+
+
+
+                            <td>
+
+                                <input type="text" class="msg_select px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：好|不好" disabled/>
+
+                            </td>
+
+                            <td>
+
+                                <input type="text" class="msg_select px require" style="margin-left: 25%;margin-top: 2px;" placeholder="如果选项是：好|不好。填其中一个" disabled/>
+
+                            </td>
+
+                            <td style="width: 50px;">
+
+                                <button type="button" class="btn btn-success" style="width: 75px;margin-left: 22%" onclick="addDom()">添加</button>
+
+                            </td>
+
+                        </tr>
+
+                        <if condition="$investigation">
+
+                            <volist name="investigation" id="vo">
+
+                            <tr>
+
+                                <td>
+                                  
+                                    <input type="text" name="in_name[{weikucms:$vo.id}]" value="{weikucms:$vo.name}" class="px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：服务态度" />
+
+                                </td>
+
+
+
+                                <td>
+
+                                    <input type="text" name="in_select[{weikucms:$vo.id}]" value="{weikucms:$vo.select}" class="px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：好|不好" />
+
+                                </td>
+
+                                 <td>
+
+                                    <input type="text" name="in_value[{weikucms:$vo.id}]" value="{weikucms:$vo.value}" class="px require" style="margin-left: 25%;margin-top: 2px;" placeholder="如果选项是：好|不好。填其中一个" />
+
+                                </td>
+
+                                <td style="width: 50px;">
+
+                                    <button type="button" class="btn btn-danger" style="margin-left: 22%" onclick="deltrue({weikucms:$vo.id},'msg')">删除</button>
+
+                                </td>
+
+                            </tr>
+
+                            </volist>
+
+                        </if>
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+
+
+                <div class="cLineB">
+
+                    <div class="title_tab" id="topTab2">
+
+                        <ul class="tab_navs title_tab" data-index="0" style="position: relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;十项评分问卷</ul>
+
+                    </div>
+
+                </div>
+
+
+
+              <div class="msgWrap bgfc">
+
+                    <table class="userinfoArea" style=" margin:5;padding:5px" border="0" cellspacing="0" cellpadding="0" width="100%">
+
+                        <thead>
+
+                        <th style="text-align: center;">图片</th>
+
+                        <th style="text-align: center;">描述</th>
+
+                        <th style="text-align: center;">名称</th>
+
+                        <th style="text-align: center;">选项</th>
+
+                        <th style="text-align: center;">选择项</th>
+
+                        </thead>
+
+                        <tbody id="ten">
+
+                        <tr>
+
+                            <td>
+
+                                <img style="display: inline;width: 150px;height: 150px;text-align: center;" id="pic" class="fenlei_img" src="">
+
+
+                            </td>
+
+
+
+                            <td>
+
+                                <textarea style="width: 130px;height: 100px;text-align: center;" disabled></textarea>
+
+                            </td>
+
+
+
+                            <td>
+
+                                <input type="text" name="name" value="" class="px require" style="text-align: center;margin-top: 9px;" placeholder="名称  例如：整体采光" disabled/>
+
+                            </td>
+
+
+
+                            <td>
+
+                                <input type="text" name="select" value="" class="px require" style="text-align: center;margin-top: 9px;" placeholder="两选项用“|”号隔开 如：光亮|阴暗"  disabled/>
+
+                            </td>
+
+                            <td>
+
+                                <input type="text" name="select" value="" class="px require" style="text-align: center;margin-top: 9px;" placeholder="如选择：光亮|阴暗。可以填：光亮"  disabled/>
+
+                            </td>
+
+
+
+                            <td style="width: 50px;">
+
+                                <button type="button" class="btn btn-success" style="width: 75px;" onclick="addPic()">添加</button>
+
+                            </td>
+
+                        </tr>
+
+                        <if condition="$ten">
+
+                            <volist name="ten" id="vo" key="k">
+
+                            <tr>
+
+                                <td>
+
+                                    <img style="display: inline;width: 150px;height: 150px;" 
+                                    id="pic{weikucms:$k}"  onclick="actAdd({weikucms:$k})"    class="fenlei_img" src="{weikucms:$vo.pic}">
+                                    <input type="hidden" class="pic{weikucms:$k}" name="ten_pic[{weikucms:$vo.id}]" value="{weikucms:$vo.pic}" >
+                                </td>
+
+
+
+                                <td>
+
+                                    <textarea name="ten_des[{weikucms:$vo.id}]" style="width: 130px;height: 100px;" >{weikucms:$vo.des}</textarea>
+
+                                </td>
+
+
+
+                                <td>
+
+                                    <input type="text" name="ten_name[{weikucms:$vo.id}]" value="{weikucms:$vo.name}" class="px require" style="margin-top: 9px;" placeholder="名称  例如：整体采光" />
+
+                                </td>
+
+
+
+                                <td>
+
+                                    <input type="text" name="ten_select[{weikucms:$vo.id}]" value="{weikucms:$vo.select}" class="px require" style="margin-top: 9px;" placeholder="两选项用“|”号隔开 如：光亮|阴暗"  />
+
+                                </td>
+
+                                 <td>
+
+                                    <input type="text" name="ten_value[{weikucms:$vo.id}]" value="{weikucms:$vo.value}" class="px require" style="margin-top: 9px;" placeholder="如果是：光亮|阴暗。填光亮或阴暗"  />
+
+                                </td>
+
+
+
+                                <td style="width: 50px;">
+
+                                    <button type="button" class="btn btn-danger" onclick="deltrue({weikucms:$vo.id},'ten')" >删除</button>
+
+                                </td>
+
+                            </tr>
+
+                            </volist>
+
+                        </if>
+
+                        </tbody>
+
+
+
+                    </table>
+
+                </div>
+
+
+
+
+
+                <div class="cLineB">
+
+                    <div class="title_tab" id="topTab3">
+
+                        <ul class="tab_navs title_tab" data-index="0" style="position: relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主管横向评分问卷</ul>
+
+                    </div>
+
+                </div>
+
+
+
+                  <div class="msgWrap bgfc">
+
+                <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                        <thead>
+
+                        <th style="text-align: center;" colspan="3">问卷名</th>
+
+                        </thead>
+
+                        <td style="text-align: center;" colspan="3">
+
+                            <input type="text" name="sub_value" value="{weikucms:$info.value}"  class="px require" style="" placeholder="问卷名"  />
+
+                        </td>
+
+
+                        <thead>
+
+                        <th style="text-align: center;">名称</th>
+
+                        <th style="text-align: center;">选项</th>
+
+                        </thead>
+
+                        <tbody id="x">
+
+                        <tr>
+
+                            <td>
+
+                                <input type="text"  class="px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：口味,两个字" disabled/>
+
+                            </td>
+
+
+
+                            <td>
+
+                                <input type="text"  class="px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：更棒|更差" disabled />
+
+                            </td>
+
+                            <td style="width: 50px;">
+
+                                <button type="button" class="btn btn-success" style="width: 75px;margin-left: 22%" onclick="addX()">添加</button>
+
+                            </td>
+
+                        </tr>
+
+                        <if condition="$subjective">
+
+                            <volist name="subjective" id="vo">
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="text" name="sub_name[{weikucms:$vo.id}]" value="{weikucms:$vo.name}" class="px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：口味" />
+
+                                </td>
+
+
+
+                                <td>
+
+                                    <input type="text" name="sub_select[{weikucms:$vo.id}]" value="{weikucms:$vo.select}" class="px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：更棒|更差"  />
+
+                                </td>
+
+                                <td style="width: 50px;">
+
+                                    <button type="button" class="btn btn-danger" style="margin-left: 22%" onclick="deltrue({weikucms:$vo.id},'x')">删除</button>
+
+                                </td>
+
+                            </tr>
+
+                            </volist>
+
+                        </if>
+
+                        </tbody>
+
+
+
+                    </table>
+
+                </div>
+                 <!-- id="bsubmit"  -->
+ <!-- <button type="submit" name="button" class="btn btn-primary" style="width:100%;">提交</button> -->
+            </form>
+               <button type="button" id="bsubmit"  name="button" class="btn btn-primary" style="width:100%;">提交</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function addDom(){
+
+        var str = "";
+
+        str += '<tr>';
+
+        str += '<td>';
+
+        str += '<input type="text"  name="in_name[-1][]"  class="msg_name px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：服务态度" />';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="in_select[-1][]" class="msg_select  px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：好|不好" />';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="in_value[-1][]" class="msg_select  px require" style="margin-left: 25%;margin-top: 2px;" placeholder="如果选项是：好|不好。填其中一个" />';
+
+        str += '</td>';
+
+        str += '<td style="width:50px;">';
+
+        str += '<button type="button" class="btn btn-danger" style="margin-left: 22%" onclick="delDom(this)">删除</button>';
+
+        str += '</td>';
+
+        str += '</tr>';
+
+        $("#msg").append(str);
+
+    }
+
+    function delDom(thi){
+
+        $(thi).parents("tr").remove();
+
+    }
+
+    function addPic(){
+
+        var i = $("#ten").children().length;
+
+        var str = "";
+
+        str += '<tr>';
+
+        str += '<td>';
+
+        str += '<img style="display: inline;width: 150px;height: 150px;" id="pic'+i+'" onclick="actAdd('+i+')"  class="fenlei_img" src="">';
+        str += '<input class="pic'+i+'" type="hidden" name="ten_pic[-1][]" value="" > ';
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<textarea name="ten_des[-1][]" style="width: 130px;height: 100px;"></textarea>';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="ten_name[-1][]" value="" class="px require" style="margin-top: 9px;" placeholder="名称  例如：整体采光" />';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="ten_select[-1][]" value="" class="px require" style="margin-top: 9px;" placeholder="两选项用“|”号隔开 如：光亮|阴暗"  />';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="ten_value[-1][]" value="" class="px require" style="margin-top: 9px;" placeholder="如果是：光亮|阴暗。填光亮或阴暗"  />';
+
+        str += '</td>';
+
+        str += '<td style="width:50px;">';
+
+        str += '<button type="button" class="btn btn-danger" onclick="delPic(this)">删除</button>';
+
+        str += '</td>';
+
+        str += '</tr>';
+
+  
+
+        $("#ten").append(str);
+
+    }
+    var arr = [];
+    var has = 0;
+    function actAdd(num){
+        has = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if(arr[i]==num){
+                has=1;
+            }
+        };
+        if(has==1) return;
+        arr.push(num);
+        var editor1 = KindEditor.editor({
+
+            allowFileManager: true
+
+        });
+
+        
+
+        KindEditor('#pic'+num).click(function() {
+
+            editor1.loadPlugin('image',
+
+                function() {
+
+                    editor1.plugin.imageDialog({
+
+                        fileUrl: KindEditor('#pic'+num).val(),
+
+                        clickFn: function(url, title) {
+
+                            KindEditor('#pic'+num).val(url);
+
+                            $("#pic"+num).attr('src', url).show();
+                            $(".pic"+num).val(url);
+
+
+                            editor1.hideDialog();
+
+                        }
+
+                    });
+
+                });
+
+        });
+        KindEditor('#pic'+num).click();
+        has = 0;
+    }
+
+    function delPic(thi){
+
+        $(thi).parents("tr").remove();
+
+    }
+
+    function addX(){
+
+        var str = "";
+
+        str += '<tr>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="sub_name[-1][]" value="" class="px require" style="margin-left: 25%;margin-top: 9px;" placeholder="名称  例如：口味" />';
+
+        str += '</td>';
+
+        str += '<td>';
+
+        str += '<input type="text" name="sub_select[-1][]" value="" class="px require" style="margin-left: 25%;margin-top: 2px;" placeholder="两选项用“|”号隔开 如：更棒|更差" />';
+
+        str += '</td>';
+
+        str += '<td style="width:50px;">';
+
+        str += '<button type="button" class="btn btn-danger" style="margin-left: 22%" onclick="delX(this)">删除</button>';
+
+        str += '</td>';
+
+        str += '</tr>';
+
+        $("#x").append(str);
+
+    }
+
+    function delX(thi){
+
+        $(thi).parents("tr").remove();
+
+    }
+
+    function deltrue(id,key){
+
+        if(!confirm('您确定删除此条记录')){
+
+            return false;
+
+        }
+
+        var url = "{weikucms::U('Ieat/deltrue',array('token'=>$token))}&cat_id={weikucms:$_REQUEST['cat_id']}";
+
+        $.post(url,{id:id,key:key},function(data){
+
+            if(data.status == 1){
+
+                notif({
+
+                    msg:data.info,
+
+                    type:"success"
+
+                });
+
+                setTimeout(function(){
+
+                    window.location.reload();
+
+                },'2000');
+
+            }else if(data.status == 0){
+
+                notif({
+
+                    msg:data.info,
+
+                    type:"warning"
+
+                });
+
+            }else if(data.status == -1){
+
+                notif({
+
+                    msg:data.info,
+
+                    type:"error"
+
+                });
+
+            }
+
+        },'json');
+
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(function(){
+
+
+
+        $("#bsubmit").click(function(){
+
+            var Str = {};
+
+            var msgstr = {};
+
+            var tenstr = {};
+
+            var xstr = {};
+
+            var v1 = true;
+
+            var v2 = true;
+
+            var v3 = true;
+
+            var key1 = false;
+
+            var key2 = false;
+
+            var key3 = false;
+
+            $("#msg").children().next().each(function(i,o){
+
+                key1 = true;
+
+                var str = {};
+
+                str["name"] = $(o).children().eq(0).children().val();
+
+                str["select"] = $(o).children().eq(1).children().val();
+
+                if(!str["name"]){
+
+                    notif({
+
+                        msg:"Ieat信息发掘名称不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v1 = false;
+
+                    return false;
+
+                }
+
+                if(!str["select"]){
+
+                    notif({
+
+                        msg:"Ieat信息发掘选项不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v1 = false;
+
+                    return false;
+
+                }
+
+                if(str["select"].split("|").length != 2){
+
+                    notif({
+
+                        msg:"Ieat信息发掘选项要填两个",
+
+                        type:"warning"
+
+                    });
+
+                    v1 = false;
+
+                    return false;
+
+                }
+
+                msgstr[i] = str;
+
+                Str[0] = msgstr;
+                console.log(Str);
+
+            });
+
+            $("#ten").children().next().each(function(i,o){
+
+                key2 = true;
+
+                var str = {};
+
+                str["pic"] = $(o).children().eq(0).children().attr('src');
+
+                str["des"] = $(o).children().eq(1).children().val();
+
+                str["name"] = $(o).children().eq(2).children().val();
+
+                str["select"] = $(o).children().eq(3).children().val();
+
+                if(!str["pic"]){
+
+                    notif({
+
+                        msg:"十项评分问卷图片不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v2 = false;
+
+                    return false;
+
+                }
+
+                if(!str["des"]){
+
+                    notif({
+
+                        msg:"十项评分问卷描述不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v2 = false;
+
+                    return false;
+
+                }
+
+                if(!str["name"]){
+
+                    notif({
+
+                        msg:"十项评分问卷名称不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v2 = false;
+
+                    return false;
+
+                }
+
+                if(!str["select"]){
+
+                    notif({
+
+                        msg:"十项评分问卷选项不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v2 = false;
+
+                    return false;
+
+                }
+
+                tenstr[i] = str;
+
+                Str[1] = tenstr;
+
+            });
+
+            $("#x").children().next().each(function(i,o){
+
+                key3 = true;
+
+                var str = {};
+
+                str["name"] = $(o).children().eq(0).children().val();
+
+                str["select"] = $(o).children().eq(1).children().val();
+
+                if(!str["name"]){
+
+                    notif({
+
+                        msg:"主管横向评分名称不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v3 = false;
+
+                    return false;
+
+                }
+
+                if(!str["select"]){
+
+                    notif({
+
+                        msg:"主管横向评分选项不能为空",
+
+                        type:"warning"
+
+                    });
+
+                    v3 = false;
+
+                    return false;
+
+                }
+
+                xstr[i] = str;
+
+                Str[2] = xstr;
+
+            });
+
+            if((v1 && v2 && v3) == false){
+
+                return false;
+
+            }
+
+            if((key1 || key2 || key3) == false){
+
+                notif({
+
+                    msg:"您还没有填写任何资料",
+
+                    type:"warning"
+
+                });
+
+                return false;
+
+            }
+
+            Str = JSON.stringify(Str);
+
+            // var url = "{weikucms::U('Ieat/investigation',array('token'=>$token))}&cat_id={weikucms:$get['cat_id']}";
+
+            $.post($('.quest_form').attr('action'),$('.quest_form').serialize(),function(data){
+
+                if(data.status == 1){
+
+                    notif({
+
+                        msg:data.info,
+
+                        type:"success"
+
+                    });
+
+                    setTimeout(function(){
+
+                        window.location.reload();
+
+                    },'2000');
+
+                }else{
+
+                    notif({
+
+                        msg:data.info,
+
+                        type:"error"
+
+                    });
+
+                }
+
+            },'json');
+
+        });
+
+    });
+
+</script>
+
+<include file="Public:footer" />

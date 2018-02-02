@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/common.css" />
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/vanke/css/index.css" />
+        <script type="text/javascript" src="{weikucms::STATICS}/common/js/jquery-1.11.3.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg_pc.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            $(".code-btn").click(function(){
+                if($(this).hasClass('verify')){
+                    $('#verify').val(1);
+                };
+                var  text = $(".code").val();
+                if(text==""){
+                    return msg.alert("你还没输入验证码")
+                }
+                if($('#verify').val() == 1){
+                    if(confirm('确定要将票验证为已使用吗？')){
+                        $('#form').submit();
+                    }
+                }else{
+                    $('#form').submit();
+                }
+            })
+
+            $(".allcode-btn").click(function(){
+                if($(this).hasClass('allget')){
+                    $(".code").val("");
+                    $(".show").eq(0).css("display","none");
+                    $('#allget').val(1);
+                    $('#form').submit();
+                }
+            })
+        })
+        </script>
+        <style type="text/css" media="screen">
+            .main-code { margin-top: 5%; }
+            .red { color: red; }
+            .b { font-weight: bold;}
+            .code-btn { width: 160px; }
+            .show { width: 70%; }
+        </style>
+    </head>
+    <body>
+    	<div>
+    		<form action="{weikucms::U('Vanke_v/index')}" method="GET" class="form-code" id="form">
+                            <input type="hidden" name="g" value="Wap">
+                            <input type="hidden" name="m" value="Vanke_v">
+                            <input type="hidden" name="a" value="index">
+                            <input type="hidden" name="verify" value="0" id="verify">
+                            <input type="hidden" name="allget" value="0" id="allget"> 
+    			<div class="main-code">
+		    		<input type="text" style="font-size: 40px;" name="code" value="{weikucms:$code}" placeholder="输入验证码" class="code">
+		    		<div class="code-btn get">查询</div>
+		    		<div class="code-btn verify">验证</div>
+	    		</div>
+                <if condition="count($msg) gt 0">
+	    		<div style="display: block;" class="show">
+		    		<p class="p-size">基本信息</p>
+		    		<p>头像：<img src="{weikucms:$vankeuser.profile.avatar_url}" width="150" /></p>
+                    <if condition="!$time">
+		    		<p class="red b">状态：未使用</p>
+                    <else />
+		    		<p class="red b">状态：已使用</p>
+		    		<p class="red b">使用时间：{weikucms:$time}</p>
+                    </if>
+                    </p>
+		    		<p class="red b">姓名：{weikucms:$vankeuser.profile.nickname}</p>
+					<p class="red b">影院：{weikucms:$moviename}</p>
+					<p>团购电影票名称：{weikucms:$product.name}</p>
+					<!--
+		    		<p class="red b">购买张数：{weikucms:$msg.number}</p>
+
+		    		<p>参团人数：{weikucms:$msg.tnumber}</p>
+		    		<p>总金额：{weikucms:$msg.total}</p>
+					-->
+                    <!--
+		    		<p>SN码：{weikucms:$msg.sn}</p>
+                    -->
+	    		</div>
+                <elseif condition="$_GET['code']" />
+	    		<div style="display: block;" class="show">
+		     		<p class="p-size red b">对不起，没有查到信息</p>
+	    		</div>
+                
+                <elseif condition="count($sn_list) gt 0" />
+                            <div>
+                                <table style="display: block;" class="show">
+                                    <thead>
+                                      <tr>
+                                        <th></th>
+                                        <th>影院</th>
+                                        <th>验证码</th>
+                                        <th>使用时间</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <volist name="sn_list" id="vo">
+                                          <tr>
+                                            <td></td>
+                                            <td>{weikucms:$vo.movieid}</td>
+                                            <td>{weikucms:$vo.used_sn}</td>
+                                            <td>{weikucms:$vo.used_time}</td>
+                                          </tr>  
+                                      </volist>                        
+                                    </tbody>
+                                </table>
+                            </div>
+                </if>
+                <div class="allcode-btn allget">验证查询</div>
+    		</form>
+    	</div>
+    </body>
+</html>

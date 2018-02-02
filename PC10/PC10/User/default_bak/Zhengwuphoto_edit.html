@@ -1,0 +1,105 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+				<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+				<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+				<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+				<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+				<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+				<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+				<script>
+				var editor;
+				KindEditor.ready(function(K) {
+					editor = K.create('#content', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+					'source','undo','clearhtml','hr',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+					});
+				});
+				</script>
+ <div class="content">
+          <div class="cLineB"><h4>编辑相册名称：</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
+    <div class="cLineB" id="uppict" style="display:none">    
+<script> 
+ function current(text){    
+   document.getElementById("uppict").style.display="block";
+	var kjname = document.getElementById("kjname");
+	kjname.value=text;    
+}
+ function leave(){    
+   document.getElementById("uppict").style.display="none";
+   
+}  
+function stopUpload(responseText,text){    
+    var spanObj = document.getElementById(text);   
+    spanObj.value = "上传成功";    
+    spanObj.value = responseText;    
+}
+</script>
+<form id="upForm" action="uppict.php" method="post" enctype="multipart/form-data" target="upload_target" >    
+图片上传区:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图片：<input type="file" name="myfile" id="myfile" />  
+ <input type="hidden" name="kjname" id="kjname"/>   
+<input type="submit" name="submitBtn" value="上传" />    
+</form>
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe> 
+ </div> 
+<div class="msgWrap">
+  <form class="form" method="post"  action="{weikucms::U('Zhengwuphoto/upsave')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+  <TBODY><input type="hidden" class="px" id="id" value="{weikucms:$_GET['id']}" name="id" style="width:500px" ><input type="hidden" class="px" id="token" value="{weikucms:$_SESSION['token']}" name="token" style="width:500px" ><TR>
+  <TH valign="top"><label for="keyword">名称</label></TH>
+  <TD><input type="input" class="px" id="name" value="{weikucms:$info.name}" name="name" style="width:300px" onfocus="leave();"  ><br/>
+         请输入关键词,10个字以内         </TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">选择相册分类：</label></TH>
+  <TD><input type="input" class="px" id="namephoto" value="{weikucms:$info.namephoto}" name="namephoto" style="width:300px" onfocus="leave();"  ><br/>
+                  </TD>
+  <TD></TD>
+</TR>
+
+<TR>
+  <TH valign="top"><label for="keyword">排序</label></TH>
+  <TD><input type="input" class="px" id="sort" value="{weikucms:$info.sort}" name="sort" style="width:30px" onfocus="leave();"  ><br/>
+         请输入数字 0-9         </TD>
+  <TD></TD>
+</TR><TR>
+  <TH valign="top"><label for="keyword">相册图片：</label></TH>
+  <TD><input type="input" class="px" id="picurl" value="{weikucms:$info.picurl}" name="picurl" style="width:400px" onfocus="current('picurl');"  ><br/>
+         点击后 可在图片上传区上传图片         </TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">描述：</label></TH>
+  <TD><input type="input" class="px" id="content" value="{weikucms:$info.content}" name="content" style="width:400px" onfocus="leave();"  ><br/>
+         请输入数字 0-9         </TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TH></TH>
+  <TD><button type="submit"  name="button"  class="btnGreen left" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  </form>
+
+
+
+  </div> 
+
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>

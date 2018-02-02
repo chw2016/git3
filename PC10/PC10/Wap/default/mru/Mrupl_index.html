@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		
+		 <title>鱼美人-评价</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css3/style.css">
+		<script src="{weikucms::RES}/mru/js3/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js3/main.js"></script>
+		<script src="{weikucms::RES}/mru/js3/msg.js"></script>
+		<script src="{weikucms::RES}/mru/js/jquery.validate.js"></script>
+		<script src="{weikucms::RES}/mru/js/jquery.validate_helper.js"></script>
+
+
+    </head>
+    <body class="userCenter" style="overflow-x:hidden">
+<style>
+
+.myxingitem {
+
+height: 18px;
+}
+</style>    
+    <form action="" method="post" id="form" >
+    	<div class="assess">
+    		<div class="assess action">
+    			<span class="actionh4">我要点评：</span>
+    			<div class="assessl">
+    				<div class="tname">
+    					<div class="tanemes tnames">{weikucms:$data['title']}</div>
+    					<input type="hidden" class="" name="token" value="<?php print_r($_GET['token']); ?>" />
+    					<input type="hidden" class="" name="openid" value="<?php print_r($_GET['openid']); ?>" />
+    					<input type="hidden" class="" name="mdain" value="{weikucms:$dname}" /><!-- 拿到门店 -->
+    					<input type="hidden" class="" name="name" value="{weikucms:$data['title']}" /><!-- 拿到商品-->
+    	
+    					<input type="hidden" class="ccc" name="xin" value="4" /><!-- 拿到几个星 -->
+    					
+    					<div id="aaa" class="tanemes tnameitem"><span class="myxingitem on aaa"></span>
+	    					<span class="myxingitem on aaa"></span>
+	    					<span class="myxingitem on aaa"></span>
+	    					<span class="myxingitem on aaa"></span>
+	    					<span class="myxingitem aaa"></span></div>
+    					<div class="tanemes tnameass bbb">很好</div>
+    					<div class="clearBoth"></div> <!-- 清除浮动的影响 -->
+    				</div>
+    				
+    				<div class="assessn">评价</div>
+    				<div><textarea name="content" value="" class="textareas" placeholder="请您写下不少于10字的评价"></textarea></div>
+    				<div class="assess btm save submit" style="width:97%;margin:0 auto;" >提交</div>
+    				<div class="clearBoth"></div>
+    			</div>
+    		</div>
+   </form> 		
+    		<div class="list" style="margin-bottom:60px;" >
+    		<volist name="list" id="v" >
+    			<div class="assess list li">
+    				<div class="tname">
+    					<div class="tanemes assessli tnames">{weikucms:$v['name']}</div>
+    					<div class="tanemes assessli tnameitem">
+	    					<span class="xingitem 
+	                         	<?php
+	                         	   if($v['xin']==1){
+                                       echo "on";
+                                   }else if($v['xin']==2){
+                                       echo "on";
+                                   }else if($v['xin']==3){
+                                       echo "on";
+                                   }else if($v['xin']==4){
+                                       echo "on";
+                                   }else if($v['xin']==5){
+                                       echo "on";
+                                   }
+    					       ?>
+	    					"></span>
+	    					<span class="xingitem 
+	    					 <?php
+    					           if($v['xin']==2){
+                                       echo "on";
+                                   }else if($v['xin']==3){
+                                       echo "on";
+                                   }else if($v['xin']==4){
+                                       echo "on";
+                                   }else if($v['xin']==5){
+                                       echo "on";
+                                   }
+    					       ?>
+	    					
+	    					"></span>
+	    					<span class="xingitem 
+	    					 <?php
+	    					  	   if($v['xin']==3){
+                                       echo "on";
+                                   }else if($v['xin']==4){
+                                       echo "on";
+                                   }else if($v['xin']==5){
+                                       echo "on";
+                                   }
+    					       ?>
+    					       
+	    					"></span>
+	    					<span class="xingitem 
+	    					 <?php
+	    					  
+	    					  	   if($v['xin']==4){
+                                       echo "on";
+                                   }else if($v['xin']==5){
+                                       echo "on";
+                                   }
+    					       ?>
+	    					  
+	    					"></span>
+	    					<span class="xingitem
+	    					 <?php
+	    					   	   if($v['xin']==5){
+                                       echo "on";
+                                   }
+    					       ?>
+	    					
+	    					"></span>
+    					</div>
+    					<div class="tanemes assessli tnameass">
+    					       <?php
+    					           if($v['xin']==0||$v['xin']==1){
+                                       echo "差";
+                                   }else if($v['xin']==2){
+                                       echo "一般";
+                                   }else if($v['xin']==3){
+                                       echo "好";
+                                   }else if($v['xin']==4){
+                                       echo "很好";
+                                   }else if($v['xin']==5){
+                                       echo "超好";
+                                   }
+    					       ?>
+    					</div>
+    					<div class="clearBoth"></div> <!-- 清除浮动的影响 -->
+    					<div class="zhjia">
+    						<div class="zhess zhassess">
+    											 <?php
+					    echo $v['content'];
+					 ?>
+    						             
+    						</div>
+    						<div class="zhess zhtime"><!-- {weikucms:$v['add_time']} -->
+    						    <?php
+    						     echo date("Y-m-d H:i",$v['add_time']);
+    						    ?>
+    						</div>
+    					</div>
+    					
+    					<div class="clearBoth"></div> 
+    				</div>
+    			</div>
+    		</volist>	
+    		<div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+    		</div>
+    	</div>
+<script>
+   $(".aaa").click(function(){
+	   if($(this).hasClass('on')){//如果他有on
+		   $(this).removeClass('on');//本身去on
+		   $(this).prevAll().addClass("on");//后面的加on
+		   $(this).nextAll().removeClass("on");//前面的去on
+		   var index=$('#aaa>.on').length;//拿到#aaa下面.on的长度
+		       if(index==1||index==0){
+		    	   $('.bbb').html('差');
+		       }else if(index==2){
+		    	   $('.bbb').html('一般');
+		       }else if(index==3){
+		    	   $('.bbb').html('好');
+		       }else if(index==4){
+		    	   $('.bbb').html('很好');
+		       }else if(index==5){
+		    	   $('.bbb').html('超好');
+		       } 
+		   $(".ccc").val(index);
+	   }else{//如果没有on
+		    $(this).addClass('on');//本身加on
+		    $(this).prevAll().addClass("on");//前面的加on
+		       var index=$('#aaa>.on').length;//拿到#aaa下面.on的长度
+		       if(index==1||index==0){
+		    	   $('.bbb').html('差');
+		       }else if(index==2){
+		    	   $('.bbb').html('一般');
+		       }else if(index==3){
+		    	   $('.bbb').html('好');
+		       }else if(index==4){
+		    	   $('.bbb').html('很好');
+		       }else if(index==5){
+		    	   $('.bbb').html('超好');
+		       } 
+		      $(".ccc").val(index);   
+	   }
+	 })
+	 
+	 
+	 
+	 $(function(){
+        if($('#form').length > 0){
+            $('#form').validate({
+                //声明
+                rules: {
+                	content : "required",
+               
+                   
+                },
+                //跳出内容
+                messages: {
+                    content: "请输入评论",
+              
+                   
+                },
+                //错误信息
+                errorPlacement: function(error, element) {
+                    var tipsContent = error.html();
+                    msg.alert(tipsContent,"知道了");
+                    //error.appendTo(element.parent());
+                    return false;
+                },
+                //提交方式
+                submitHandler:function(form){
+                    form.submit();   //post提交表单
+
+                },
+                onkeyup: false,
+                onfocusout: false
+            });
+        }
+        //给class="submit" 点击事件 ,触发submit
+        $('.submit').click(function(){
+            $('form').trigger('submit');
+        })
+    })
+</script>
+<include file="./tpl/Wap/default/mrufx.html" />  
+    </body>
+</html>

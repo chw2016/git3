@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcore.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcalendar.js"></script>
+
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CP U.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+  #thisnext{
+    padding: 5px 0 !important;
+  }
+</style>
+</head>
+
+
+
+<body>
+<div class="pageTitle" style="color:#fff;font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="javascript::" style="color:#fff;">服务商首页</a>&nbsp;>>&nbsp;技师资料
+</div>
+
+<div style="text-align:center;margin:18px auto;background:#F15151;width:80%;padding:10px;border-radius:5px;color:#fff;font-size:14px;">教育培训<span style="color:#fff">*</div></div>
+
+<div class="publicList wml100">
+
+    <ul id="edu">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+			<div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_1"/></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+            <div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="毕业时间" id="end_1"></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">学校/培训机构</div>
+            <div class="li-r"><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_1"></div>
+        </li>
+      	
+      	 <li class="noAfter">
+            <div class="li-l">专业</div>
+            <div class="li-r"><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_1"></div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100 hideblock" id="Nofour">
+
+    <ul id="edu">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+      <div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_2"/></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+            <div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="毕业时间" id="end_2"></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">学校/培训机构</div>
+            <div class="li-r"><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_2"></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">专业</div>
+            <div class="li-r"><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_2"></div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100 hideblock" id="Nofive">
+
+    <ul id="edu">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+      <div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="begintime[]" ts="开始时间" id="begin_3"/></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+            <div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="endtime[]" onclick="J.calendar.get();" ts="毕业时间" id="end_3"></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">学校/培训机构</div>
+            <div class="li-r"><input name="org[]" placeholder="请输入学校/培训机构" class="input" value="" ts="组织名称" id="org_3"></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">专业</div>
+            <div class="li-r"><input name="Profession[]" placeholder="请输入专业" class="input" value="" ts="专业"  id="profess_3"></div>
+        </li>
+    </ul>
+</div>
+ <div style="padding:10px;">
+    <div style="width:49%;float:left;display:none;">
+        <button href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="eduadd">如果你好</button>
+    </div>
+    <div style="width:100%;">
+        <button href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="edusave" class="gray">添加</button>
+    </div>
+  
+</div>
+<div style="text-align:center;margin:18px auto;background:#F15151;width:80%;padding:10px;border-radius:5px;color:#fff;font-size:14px;">行业简历<span style="color:#fff">*</span></div>
+
+<div class="publicList wml100">
+
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+			<div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_1"/></div>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+			<div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="毕业时间" id="over_1"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+            <div class="li-r"><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_1"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+            <div class="li-r"><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_1"/></div>
+        </li>
+         
+         
+    </ul>
+</div>
+
+<div class="publicList wml100 hideblock" id="Notwo">   
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+      <div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_2"/></div>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+      <div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="毕业时间" id="over_2"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+            <div class="li-r"><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_2"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+            <div class="li-r"><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_2"/></div>
+        </li>
+         
+        
+    </ul>
+</div>
+<style type="text/css">
+  .hideblock{
+      display: none;
+  }
+</style>
+<div class="publicList wml100 hideblock" id="Nothree">   
+    <ul id="hy">
+        <li class="noAfter">
+            <div class="li-l">开始时间</div>
+            
+      <div class="li-r"><input value="" placeholder="请输入开始时间" class="input" onclick="J.calendar.get();" name="bbtime[]" ts="开始时间" id="start_3"/></div>
+        <li class="noAfter">
+            <div class="li-l">毕业时间</div>
+      <div class="li-r"><input value="" placeholder="请输入毕业时间" class="input" name="eetime[]" onclick="J.calendar.get();" ts="毕业时间" id="over_3"/></div>
+        <li class="noAfter">
+            <div class="li-l">公司名称</div>
+            <div class="li-r"><input name="companyname[]" placeholder="请输入公司名称" class="input" value="" ts="公司名称" id="com_3"/></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">职位</div>
+            <div class="li-r"><input name="position[]" placeholder="请输入职位" class="input" value="" ts="职位" id="pos_3"/></div>
+        </li>       
+    </ul>
+</div>  
+<div style="padding:10px;">
+     <div style="width:49%;float:left;display:none;">
+            <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="resadd" disabled="true" onclick="eduadd();">如果</a>
+        </div>
+        <div style="width:100%;">
+            <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;width:100%;display:block;" id="ressave" onclick="ressave();" class="gray">添加</a>
+        </div> 
+        <!-- <div style="clear:both;"></div> -->
+        <style type="text/css">
+            .gray{
+                border-top:2px solid #ddd !important;
+                border-left:2px solid #ddd !important;
+                border-right:2px solid #888 !important;
+                border-bottom:2px solid #888 !important;
+            }.red{
+                border-top:2px solid #888 !important;
+                border-left:2px solid #888 !important;
+                border-right:2px solid #ddd !important;
+                border-bottom:2px solid #ddd !important;
+            }
+        </style>
+</div>
+
+<div class="button clearfix">
+    <div style="width:100%;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;padding:0;" id="sureAdd" class="gray">确定添加</a>
+   </div>
+</div>
+
+<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>
+
+<script type="text/javascript">
+  $(function(){
+	  var total = new Array();
+	  var jsonstr = "[{";
+	  
+        $('#resadd').css('background','#ccc');
+        $('#resadd').attr('disabled','disabled');
+
+        //按钮ressave
+        contralmouse('#ressave');
+
+        //自动获取数据,行业简历第一行
+        $('#start_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['start_1'] = $(this).val();
+            }
+        })
+
+        $('#over_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['over_1'] = $(this).val();
+            }
+        })
+
+        $('#com_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('公司不能为空！');
+                return false;
+            }else{
+                total['com_1'] = $(this).val();
+            }
+        })
+
+        $('#pos_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+                total['pos_1'] = $(this).val();
+            }
+        })
+        //行业简历第二行
+        $('#start_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['start_2'] = $(this).val();
+            }
+        })
+
+        $('#over_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['over_2'] = $(this).val();
+            }
+        })
+
+        $('#com_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('公司不能为空！');
+                return false;
+            }else{
+                total['com_2'] = $(this).val();
+            }
+        })
+
+        $('#pos_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+                total['pos_2'] = $(this).val();
+            }
+        })
+        //行业简历第三行
+
+         $('#start_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['start_3'] = $(this).val();
+            }
+        })
+
+        $('#over_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['over_3'] = $(this).val();
+            }
+        })
+
+        $('#com_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('公司不能为空！');
+                return false;
+            }else{
+                total['com_3'] = $(this).val();
+            }
+        })
+
+        $('#pos_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('职位不能为空！');
+                return false;
+            }else{
+                total['pos_3'] = $(this).val();
+            }
+        })
+        
+        //教育培训自动获取数据，第一行
+        $('#begin_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['begin_1'] = $(this).val();
+            }
+        })
+
+        $('#end_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['end_1'] = $(this).val();
+            }
+        })
+
+        $('#org_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('学校/培训机构不能为空！');
+                return false;
+            }else{
+                total['org_1'] = $(this).val();
+            }
+        })
+
+        $('#profess_1').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+                total['profess_1'] = $(this).val();
+            }
+        })
+
+
+        //教育培训第二行
+        $('#begin_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['begin_2'] = $(this).val();
+            }
+        })
+
+        $('#end_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['end_2'] = $(this).val();
+            }
+        })
+
+        $('#org_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('学校/培训机构不能为空！');
+                return false;
+            }else{
+                total['org_2'] = $(this).val();
+            }
+        })
+
+        $('#profess_2').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+                total['profess_2'] = $(this).val();
+            }
+        })
+
+        //教育培训第三行
+
+        $('#begin_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('开始时间不能为空！');
+                return false;
+            }else{
+                total['begin_3'] = $(this).val();
+            }
+        })
+
+        $('#end_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('毕业时间不能为空！');
+                return false;
+            }else{
+                total['end_3'] = $(this).val();
+            }
+        })
+
+        $('#org_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('学校/培训机构不能为空！');
+                return false;
+            }else{
+                total['org_3'] = $(this).val();
+            }
+        })
+
+        $('#profess_3').blur(function(){
+            if($(this).val() == null ||$(this).val() == ""){
+                show_error_tip('专业不能为空！');
+                return false;
+            }else{
+                total['profess_3'] = $(this).val();
+            }
+        })
+
+        //获取数据
+        /*$('#profess_1').blur(function(){
+            for(var key in total) {
+                jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\",";              
+            }
+            jsonstr += "\"idd\":\"1\"}]";
+            alert(jsonstr);
+        })*/
+        
+
+        $('#ressave').click(function(){
+        	if( !$('#start_1').val() ){
+                show_error_tip('开始时间不能为空！'); 
+                return false;
+            }
+
+            if( !$('#over_1').val() ){
+                show_error_tip('毕业时间不能为空！'); 
+                return false;
+            }
+
+            if( !$('#com_1').val() ){
+                show_error_tip('公司名称不能为空！'); 
+                return false;
+            }
+
+            if( !$('#pos_1').val() ){
+                show_error_tip('职位名称不能为空！'); 
+                return false;
+            } 
+            if($('#Notwo').hasClass('hideblock') == false){
+            	if( !$('#start_2').val() ){
+                    show_error_tip('开始时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#over_2').val() ){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#com_2').val() ){
+                    show_error_tip('公司名称不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#pos_2').val() ){
+                    show_error_tip('职位名称不能为空！'); 
+                    return false;
+                }
+
+            }
+
+            if($('#Nothree').hasClass('hideblock') == false){
+            	if( !$('#start_3').val() ){
+                    show_error_tip('开始时间不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#over_3').val() ){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#com_3').val() ){
+                    show_error_tip('公司名称不能为空！'); 
+                    return false;
+                } 
+
+                if( !$('#pos_3').val() ){
+                    show_error_tip('职位名称不能为空！'); 
+                    return false;
+                }
+            }
+            if($('#Notwo').hasClass('hideblock') == false && $('#Nothree').hasClass('hideblock') == false){
+                    $(this).css('background','#ccc');
+                    show_error_tip('最多只能添加三条！'); 
+                    return false;
+          }
+           
+            document.getElementById('resadd').removeAttribute('disabled');
+             if($('#Notwo').hasClass('hideblock') == true){
+               
+                $('#Notwo').removeClass('hideblock');
+              
+          }else{
+             
+                  $('#Nothree').removeClass('hideblock');
+                  
+          }  
+          
+        });
+
+        //按钮效果
+        function contralmouse(obj){
+            // 当鼠标放下的时候
+            $(obj).mousedown(function(){
+                $(this).removeClass('gray').addClass('red');
+            })
+
+            //当鼠标上去的时候
+            $(obj).mouseup(function(){
+                $(this).removeClass('red').addClass('gray');
+            })
+        }
+        
+
+
+        contralmouse('#edusave');
+        $('#edusave').click(function(){
+
+      	     if( !$('#begin_1').val()){
+                show_error_tip('开始时间不能为空！'); 
+                return false;
+         	  } 
+
+            if( !$('#end_1').val()){
+                show_error_tip('毕业时间不能为空！'); 
+                return false;
+              }
+          	 
+
+            if( !$('#org_1').val()){
+               show_error_tip('学校/培训机构不能为空！'); 
+               return false;
+              }
+          	
+
+            if( !$('#profess_1').val()){
+               show_error_tip('专业不能为空！'); 
+               return false;
+              }
+
+          
+     
+           if($('#Nofour').hasClass('hideblock') == false){
+          	 if( !$('#begin_2').val()){
+                   show_error_tip('开始时间不能为空！'); 
+                   return false;
+              	}
+
+                if( !$('#end_2').val()){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#org_2').val()){
+                    show_error_tip('学校/培训机构不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#profess_2').val()){
+                    show_error_tip('专业不能为空！'); 
+                    return false;
+                }
+           }
+
+
+           if($('#Nofive').hasClass('hideblock') == false){
+          	 if( !$('#begin_3').val()){
+                   show_error_tip('开始时间不能为空！'); 
+                   return false;
+              	}
+
+                if( !$('#end_3').val()){
+                    show_error_tip('毕业时间不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#org_3').val()){
+                    show_error_tip('学校/培训机构不能为空！'); 
+                    return false;
+                }
+
+                if( !$('#profess_3').val()){
+                    show_error_tip('专业不能为空！'); 
+                    return false;
+                }
+           }
+          
+           
+
+           if($('#Nofour').hasClass('hideblock') == false && $('#Nofive').hasClass('hideblock') == false){
+                    $(this).css('background','#ccc');
+                    show_error_tip('最多只能添加三条！'); 
+                    return false;   
+                }   
+
+                    $('#eduadd').css('background','#f00');
+                    document.getElementById('eduadd').removeAttribute('disabled');
+                    if($('#Nofour').hasClass('hideblock') == true){
+                        $('#Nofour').removeClass('hideblock');
+           
+                    }else{
+            
+                        $('#Nofive').removeClass('hideblock');
+                    }  
+               
+       });
+        
+        contralmouse('#sureAdd');
+        $("#sureAdd").click(function(){
+        	window.history.go(-1);
+   		 //技师资料
+   		  /* var staffno = $("#staffno").val();
+		   var password = $("#password").val();
+           var yname=$('#yname').val();
+           var ysex=$('#ysex').val();
+           var birthday=$('#birthday').val();
+           var yheight=$('#yheight').val();
+           var idcard=$('#idcard').val();
+           var yphone=$('#yphone').val();
+           var yplace=$('#yplace').val();
+           var fixedtel=$('#fixedtel').val();
+           var qq=$('#qq').val();
+           var yemail=$('#yemail').val();
+           var contact=$('#contact').val();
+           var contacttel=$('#contacttel').val();
+           var education=$('#education').val();
+           var bankname=$('#bankname').val();
+           var openbank=$('#openbank').val();
+           var bankNo=$('#bankNo').val();
+           var stagnation=$('#stagnation').val();
+           var Traffic=$('#Traffic').val();
+
+           //行业基本信息
+           var Experience=$('#Experience').val();
+           var work=$('#work').val();
+           var Apprentice=$('#Apprentice').val();
+           var Certificate=$('#Certificate').val();
+           var licenses=$('#licenses').val();
+
+           //技师资料
+           total['yname']=yname;
+           total['ysex']=ysex;
+           total['birthday']=birthday;
+           total['yheight']=yheight;
+           total['idcard']=idcard;
+           total['yphone']=yphone;
+           total['yplace']=yplace;
+           total['fixedtel']=fixedtel;
+           total['qq']=qq;
+           total['contact']=contact;
+           total['contacttel']=contacttel;
+           total['education']=education;
+           total['bankname']=bankname;
+           total['openbank']=openbank;
+           total['bankNo']=bankNo;
+           total['stagnation']=stagnation;
+           total['Traffic']=Traffic;
+           //行业基本信息
+           total['Experience']=Experience;
+           total['work']=work;
+           total['Apprentice']=Apprentice;
+           total['Certificate']=Certificate;
+           total['licenses']=licenses;
+           
+           if( !staffno ){
+               show_error_tip('请输入技师工号！'); 
+               return false;
+           }
+           if( !password ){
+               show_error_tip('请输入技师登录密码！'); 
+               return false;
+           }
+           if( !yname ){
+               show_error_tip('请输入姓名！'); 
+               return false;
+           }
+           if( !ysex ){
+               show_error_tip('请输入性别！'); 
+               return false;
+           }
+           if( !birthday ){
+               show_error_tip('请输入出生日期！'); 
+               return false;
+           }
+           if( !yheight ){
+               show_error_tip('请输入身高！'); 
+               return false;
+           }
+           if( !idcard ){
+               show_error_tip('请输入身份证号！'); 
+               return false;
+           }
+           if( !yphone ){
+               show_error_tip('请输入手机号码！'); 
+               return false;
+           }
+           if( !contact ){
+               show_error_tip('请输入紧急联系人！'); 
+               return false;
+           }
+           if( !contacttel ){
+               show_error_tip('请输入紧急联系人！'); 
+               return false;
+           }
+           if( !stagnation ){
+               show_error_tip('请输入现居住地！'); 
+               return false;
+           }
+           if( !Experience ){
+               show_error_tip('请输入行业经验！'); 
+               return false;
+           }
+   		for(var key in total) {
+   			jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\","; 				
+   		}
+   		jsonstr += "\"idd\":\"1\"}]";
+	  alert(jsonstr);
+          var url="index.php?g=Wap&m=Repair&a=manStaff&token={weikucms:$token}&openid={weikucms:$openid}";
+          $.post(url,{jsonstr:jsonstr},
+          function(data){ 
+            if(data.status == 100){
+            	show_success_tip(data.info);
+                setTimeout(function(){                            
+                    window.location.href = data.url;
+                },'1000');
+            }else if(data.status == 1 ){
+              show_error_tip(data.info);
+            }else if(data.status == 2 ){
+              show_error_tip(data.info);
+            }
+        },'json');*/
+   	});
+        
+  })
+</script>
+</body>
+</html>

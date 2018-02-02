@@ -1,0 +1,77 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+            <div class="cLineB">
+                <div class="title_tab" id="topTab">
+                    <ul class="tab_navs title_tab" data-index="0">
+
+
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                            <a href="{weikucms::U('Groupon/index',array('token'=>$token))}" >团购订单管理</a>
+                        </li>
+
+
+
+                        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                            <a href="{weikucms::U('Groupon/products',array('token'=>$token))}">团购管理</a>
+                        </li>
+
+                        <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                            <a href="{weikucms::U('Reply_info/set',array('token'=>$token,'infotype'=>'Groupon'))}">团购回复配置</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+<!--tab end-->
+<div class="cLine">
+<div class="pageNavigator"> <a href="{weikucms::U('Groupon/add',array('token'=>$token))}" title="添加" class="btn btn-primary" >添加团购</a></div>
+<div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>商品名称</th>
+            <th>原价(元)</th>
+            <th>现价(元)</th>
+            <th>关键词</th>
+            <th>团购开始日期</th>
+            <th>团购结束日期</th>
+            <th>出售数量</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="hostlist">
+            <tr>
+                <td>{weikucms:$hostlist.id}</td>
+                <td>{weikucms:$hostlist.name}</td>
+                <td><span class="badge badge-info">{weikucms:$hostlist.oprice}</span></td>
+                <td><span class="badge badge-success">{weikucms:$hostlist.price}</span></td>
+                <td>{weikucms:$hostlist.keyword}</td>
+                <td>{weikucms:$hostlist.time|date="Y-m-d",###} </td>
+                <td>{weikucms:$hostlist.endtime|date="Y-m-d",###} </td>
+                <td><span class="badge badge-success">{weikucms:$hostlist.salecount}</span> </td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Groupon/set',array('id'=>$hostlist['id'],'token'=>$token))}">修改</a>
+                    <a class="btn btn-danger btn-sm"  href="#" onclick="source_delete('{weikucms::U('Groupon/del',array('id'=>$hostlist['id'],'token'=>$token))}')">删除</a>
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+</div>
+            <div>
+                <ul class="pager">
+                    {weikucms:$page}
+                </ul>
+            </div>
+    </div>
+</div>
+
+<include file="Public:footer"/>

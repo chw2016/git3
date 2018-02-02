@@ -1,0 +1,96 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="<if condition="$brand_id">left:0px<else /></if>">
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">洗衣店管理主页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li> 在这里可以查看<if condition=" $w['c_id'] neq '' ">洗客<elseifcondition="$w['brand_id'] neq '' " />品牌代理商<else />在线加盟商</if>的账单。</li>
+        </ol>
+    </div>
+    <div class="box-content">
+        <div class="cLineB">
+            <h4 style="display: inline;">所有账单</h4>
+        </div>
+
+        <div class="msgWrap">
+            <form method="post" action="###" id="info">
+                <input name="delall" type="hidden" value="" />
+                <input name="wxid" type="hidden" value="" />
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">姓名</th>
+                            <th style="text-align: center">时间</th>
+                            <th style="text-align: center">类型</th>
+                            <th style="text-align: center">渠道</th>
+                            <th style="text-align: center">金额</th>
+                            <th style="text-align: center">方式</th>
+                            <th style="text-align: center">优惠比例</th>
+                            <th style="text-align: center">状态</th>
+                            <if condition="$w['c_id'] neq ''"><else /><th style="text-align: center">收益</th></if>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <if condition="$w['c_id'] neq ''"> 
+						<volist name="bill" id="vo">
+                        <tr>
+                            <td style="text-align: center">{weikucms:$vo.c_name}</td>
+                            <td style="text-align: center">{weikucms:$vo.c_flow_recorde_addtime}</td>
+                            <td style="text-align: center"><if condition="$vo['flow_type'] eq 1">充值<elseif condition="$vo['flow_type'] eq 2" />支出</if></td>
+                            <td style="text-align: center"><if condition="($vo['recharge_channel'] eq 0) and ($vo['recharge_channel'] neq '')">官方后台充值<elseif condition="$vo['recharge_channel'] eq 1" />品牌服务商充值<elseif condition="$vo['recharge_channel'] eq 2" />微信充值</if></td>
+                            <td style="text-align: center">{weikucms:$vo.c_flow_amount}</td>
+                            <td style="text-align: center"><if condition="$vo['c_flow_recorde_type'] eq 1">在线<else />现金</if></td>
+                            <td style="text-align: center">{weikucms:$vo.offers_proportion}</td>
+                            <td style="text-align: center"><if condition="$vo['c_flow_status'] eq 1">成功<else />失败</if></td>
+                        </tr>
+                        </volist> 
+						<elseif condition="$w['brand_id']" /> <volist name="bill" id="vo">
+                        <tr>
+                            <td style="text-align: center">{weikucms:$vo.brand_name}</td>
+                            <td style="text-align: center">{weikucms:$vo.brand_flow_time}</td>
+                            <td style="text-align: center"><if condition="$vo['flow_type'] eq 1">充值<elseif condition="$vo['flow_type'] eq 2" />支出</if></td>
+                            <td style="text-align: center"><if condition="$vo['recharge_channel'] eq 0">官方后台充值<elseif condition="$vo['recharge_channel'] eq 2" />品牌服务商后台支出</if></td>
+                            <td style="text-align: center">{weikucms:$vo.brand_flow_amount}</td>
+                            <td style="text-align: center"><if condition="$vo['brand_flow_type'] eq 1">在线<else />现金</if></td>
+                            <td style="text-align: center">{weikucms:$vo.offers_proportion}</td>
+                            <td style="text-align: center"><if condition="$vo['brand_flow_status'] eq 1">成功<else />失败</if></td>
+                            <td style="text-align: center">{weikucms:$vo.brand_earnings}</td>
+                        </tr>
+                        </volist>
+						<else />
+						<volist name="bill" id="vo">
+                        <tr>
+                            <td style="text-align: center">{weikucms:$vo.online_name}</td>
+                            <td style="text-align: center">{weikucms:$vo.online_flow_time}</td>
+                            <td style="text-align: center"><if condition="$vo['flow_type'] eq 1">充值<elseif condition="$vo['flow_type'] eq 2" />支出</if></td>
+                            <td style="text-align: center"><if condition="$vo['recharge_channel'] eq 0">官方后台充值<elseif condition="$vo['recharge_channel'] eq 1" />品牌服务商充值<elseif condition="$vo['recharge_channel'] eq 2" />微信充值</if></td>
+                            <td style="text-align: center">{weikucms:$vo.online_flow_amount}</td>
+                            <td style="text-align: center"><if condition="$vo['online_flow_type'] eq 1">在线<else />现金</if></td>
+                            <td style="text-align: center">{weikucms:$vo.offers_proportion}</td>
+                            <td style="text-align: center"><if condition="$vo['online_flow_status'] eq 1">成功<else />失败</if></td>
+                            <td style="text-align: center">{weikucms:$vo.online_earnings}</td>
+                        </tr>
+                        </volist> 
+						</if>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div>
+            <ul class="pager">{weikucms:$page}
+            </ul>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />

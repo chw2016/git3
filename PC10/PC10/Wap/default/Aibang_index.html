@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<head>
+    	<title>{weikucms:$tpl.name}</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Aibang/css/aibang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery-1.9.1.min.js"></script>
+		
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/GetLocation.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/api"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/getscript"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/convertor.js"></script>
+        <style type="text/css">
+            .local,.LeftRight{
+                position: fixed;
+                bottom: 40px;
+                width: 100%;
+                height: 18px;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+				font-size:12px;
+				text-align:left;
+				padding-left:6px;
+            }
+			.LeftRight{
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                height: 40px;
+                background: rgba(0,0,0,1);
+                text-align: center;
+                display: -webkit-box;
+                display: fixed;
+                line-height: 40px;
+            }.LeftRight .left{
+                width: 33.3%;
+            }.LeftRight .right{
+                width: 33.3%;
+            }
+            .LeftRight .right1{
+                width: 33.3%;
+            }
+            /*下拉框的显示*/
+            .panelBox{
+                width: 100%;
+                min-height:30px;
+                position: relative;
+                /*margin-left: 5px;*/
+                background-color: #fff;
+                border-radius: 6px;-webkit-border-radius: 6px;-ms-border-radius: 6px;-moz-border-radius: 6px;-o-border-radius: 6px;
+            }
+            .panelHead{
+                border:1px solid #919191;border-radius: 6px;-webkit-border-radius: 6px;-ms-border-radius: 6px;-moz-border-radius: 6px;-o-border-radius: 6px;
+                height: 32px;
+                width: 97%;
+                border: 1px solid #7b7b7b;
+                position: relative;
+                z-index: 123;
+                font-size: 12px;line-height: 30px;text-align: left;text-indent: 6px;
+                border-right:none;
+            }
+            .panelContent{
+                position: absolute;
+                width: 100%;
+                max-height: 160px;
+                overflow-y: scroll;
+                background: #fff;
+                z-index: 0;
+            }
+            .panelContent div{
+                padding: 6px;border-top: 1px solid #878787;
+            }
+            .panelContent div:nth-of-type(1){
+                border-top:0;
+            }
+            .myul{
+                display: flex;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -moz-box;  }
+            .myli{
+                -webkit-box-flex: 1;
+                -moz-box-flex: 1;
+                -ms-flex: 1;
+                flex:1; 
+                /*max-height: 90px;*/
+            }
+            .abc{
+                position: absolute;
+                width: 24px;
+                height: 100%;
+                background: #878787;
+                top: 0;
+                right: 0;
+                z-index: 0;
+                border-top-right-radius: 6px;-webkit-border-top-right-radius: 6px;-ms-border-top-right-radius: 6px;-moz-border-top-right-radius: 6px;-o-border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;-webkit-border-bottom-right-radius: 6px;-ms-border-bottom-right-radius: 6px;-moz-border-bottom-right-radius: 6px;-o-border-bottom-right-radius: 6px;
+            }
+            .abc:after{
+                content: "";
+                border-top: 6px solid #fff;
+                border-right: 6px solid transparent;
+                border-left: 6px solid transparent;
+                position: absolute;
+                display: inline-block;
+                top: 44%;right: 25%;
+            } 
+            .PB{
+                width: 40%;
+                position: relative;
+                /*margin:0 auto;*/
+                z-index: 0;
+                float: left;
+            }
+            .margin{
+                margin-left: 2%;
+            }.searchFind{
+                float: right;
+                width: 99%;
+                border: 1px solid rgba(135,135,135,1);
+                border-radius:6px;
+                -webkit-border-radius:6px;
+                -moz-border-radius:6px; 
+				background:rgba(135,135,135,1);
+            }.register{border-radius: 6px;-moz-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;-webkit-border-radius: 6px;background: #3cc332;letter-spacing: 5px;margin: 10px auto 6px;width:94%;}
+             .register{background: #1497f2;}
+             .register a{color:#fff;font-size: 18px;padding: 6px 0;display: block;}
+             .finds{
+                padding:7px 5px 7px 5px;float: right;width: 18px;height: 18px;
+             }
+        </style>
+    </head>
+    <body>
+	<script>
+            $(function(){
+                var getLocation_Loading = 0;
+                var locationAddress = '';//存储定位后的地址详情字符串
+                baiduGetLocaltion();
+            });
+        </script>
+    <!-- 头部搜索框 -->
+	<div id="loading" style="position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<div id="header">
+    		<div class="outline outlines">
+                <form action="{weikucms::U('Wap/Aibang/innerList',array('token'=>$_GET['token'],'know'=>1))}" name="form1" id="form1" method="POST">
+                <input type="hidden" name="lat" id="lat_id"/>
+                <input type="hidden" name="lng" id="lng_id"/>
+                <input type="hidden" name="know" value="1" id="know"/>
+                <input type="hidden" name="token" value="{weikucms:$token}" id="know"/>
+                <input type="hidden" name="openid" value="{weikucms:$openid}" id="know"/>
+                    <!-- 这里改成下拉列表三个下拉框
+                    <div class="myul PB">
+                        <div class="panelBox myli">
+                       
+                        <div class="panelHead neighbors">附近2500m</div>
+                        
+                        <div class="panelContent near">
+                                <div>附近5000m</div>
+                                <div>附近4500m</div>
+                                <div>附近4000m</div>
+                                <div>附近3500m</div>
+                                <div>附近3000m</div>
+                                <div>附近2500m</div>
+                                <div>附近2000m</div>
+                                <div>附近1500m</div>
+                                <div>附近1000m</div>
+                                <div>附近500m</div>
+                        </div>
+                        <div class="abc"></div>
+                        </div>
+                    </div>
+					 -->
+                    <!-- 搜索查询 -->
+                    <div class="searchFind">
+                        <input type="text" name="name" placeholder="帮您找商户、地址" id="search"/>
+                        <!-- <input type="image" src="{weikucms::STATICS}/wapweiui/Aibang/imgs/Search.jpg" name="find" id="find"/> -->
+                        <img src="{weikucms::STATICS}/wapweiui/Aibang/imgs/Search.jpg" id="find" class="finds"/>
+                    </div>
+					<div style="clear:both"></div>
+                </form>
+            </div>
+    	</div>
+        <script type="text/javascript">
+        $(function(){
+                function Panel(panelBox,panelHead,panelContent,ifSibling){//面板展开
+                        if(ifSibling){ifSibling=true;}else{ifSibling=false;}
+                        panelContent.hide(0);
+                        function OpenPanel(e){//开启功能
+                                panelHead.on('click',PanelToggle);
+                                return true;
+                            }
+                        function ClosePanel(e){//关闭功能
+                                panelHead.off('click');
+                                return false;
+                            };          
+                        OpenPanel();            
+                        function PanelToggle(){
+                            var THIS = $(this);         
+                           if(THIS.parent().find(panelContent).is(":hidden")){
+                            if(ifSibling) {panelBox.find(panelContent).slideUp(80);panelHead.removeClass('on');}
+                            THIS.parent().find(panelContent).slideDown(180)//.fadeIn(80);
+                            THIS.addClass('on');
+                            }else{
+                                THIS.parent().find(panelContent).slideUp(80)//.fadeOut(80);
+                                THIS.removeClass('on');
+                            }   
+                    }
+            }
+            
+            Panel($(".panelBox"),$(".panelHead"),$(".panelContent"),true);
+            // 附近
+            $('.near>div').bind('click',function(){
+                if($(this).text()==$(this).parents(".panelBox").find(".panelHead").text()){
+                    
+                }else{
+                    
+                }
+                $('.neighbors').html($(this).text());
+                $(this).parent().hide();
+            })
+        })
+        </script>
+        <ul class="article-list">
+        	<volist name="cate" id="vo">
+                <if condition="$i % 2 eq 1">
+                    <a href="{weikucms::U('Wap/Aibang/innerList',array('token'=>$token,'id'=>$vo['id'],'openid'=>$openid))}" class="getlnglat">
+                        <li style="background:rgba(84,81,172,1)">
+                            <div class="left">
+                                <div class="circle no-circle">
+                                    <img src="{weikucms:$vo.cate_img}" width="140px" />
+                                </div>
+                            </div>
+                            <div class="middle">
+                                <div class="title" style="color:#fff;">{weikucms:$vo.cate}</div>
+                            </div>
+                        </li>
+                    </a>
+                <else/>
+                    <a href="{weikucms::U('Wap/Aibang/innerList',array('token'=>$token,'id'=>$vo['id'],'openid'=>$openid))}" class="getlnglat">
+                        <li style="background:rgba(198,57,135,1)">
+                            <div class="left">
+                                <div class="circle no-circle">
+                                    <img src="{weikucms:$vo.cate_img}" width="140px" />
+                                </div>
+                            </div>
+                            <div class="middle">
+                                <div class="title" style="color:#fff;">{weikucms:$vo.cate}</div>
+                            </div>
+                        </li>
+                    </a>
+                </if>
+        		
+        	</volist>
+        </ul>
+        <div class="register">
+            <a href="{weikucms::U('Wap/Aibang/register',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}">注册</a>
+        </div>
+		<div style="height:50px"></div>
+        <div class="local"></div>
+        <div class="LeftRight">
+            <div class="left">附近</div>
+            <div class="right">收藏夹</div>
+            <div class="right1" onclick="window.location.href='{weikucms::U('Wap/Aibang/my',array('token'=>$token,'openid'=>$openid))}'">我的店铺</div>
+        </div>
+        <div style="height:10px;"></div>
+        <script type="text/javascript">
+        	window.onload = function(){
+        		 // 首先初始化边框左边和右边的高度
+                $('.product-search-left,.product-search-right').css('height', $('.product-search-left').width());
+                $('.product-search-left').css('left', $('.product-search-left').width()/2+'px');
+                $('.product-search-right').css('right', $('.product-search-right').width()/2+'px');
+               
+                // 列表显示 
+                $('.circle').css('height', $('.circle').width()+'px');
+    			$('.day,.month,.year').css('top', ($('.circle').height()-$('.day').height()-$('.year').height())/2+'px');
+    			$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height())/2+'px');
+    			// 控制图片距离上面的高度
+    			/*$('.circle>img').each(function(){
+    				$(this).css('margin-top', ($('.circle').height()-$(this).height())/2+'px');
+    			}) */
+    			// 控制标题距离上面的高度
+    			$('.middle>.title').each(function(){
+    				$(this).css('padding-top', ($('.middle').height()-$(this).height())/2+'px');
+    			}) 
+    			
+				var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+                // 搜索框的大小
+				var lat;
+				var lng;
+                 var b = setInterval(function(){
+                    if ($(".local").text() == "正在定位，请稍后…") {
+                        // 不做任何事情
+                    }else{
+                        clearInterval(b);
+                        // 请求Ajax
+                        var address = $.trim($('.local').text());
+
+                         if (address != undefined && address != '') {
+
+                             var url = 'http://api.map.baidu.com/geocoder/v2/?ak=ft9tCNRzY3LkR1z1hRAwyIC4&output=json&address=' + encodeURIComponent(address);
+
+                             //根据地点名称获取经纬度信息
+
+                             $.ajax({
+                                 type: 'POST',
+                                 url: url,
+                                 dataType: 'JSONP',
+                                 success: function (data) {
+                                     if (parseInt(data.status) == 0) {
+                                         // 获取到经纬度,先纬度后经度
+                                         var lng = data.result.location.lng,
+                                             lat = data.result.location.lat,
+											 urls;
+											 $("#lat_id").val(lat);
+											 $("#lng_id").val(lng);
+                                             // 已经获取到了经纬度，然后获取
+                                             $('.getlnglat').each(function(){
+                                                $(this).attr('href',$(this).attr('href')+'&lng='+lng+'&lat='+lat+'&type='+$(this).children('li').children('.middle').children('.title').text());
+                                             })
+                                              $('#find').click(function() {
+                                                if($('#search').val() == ""){
+                                                    confirm('请填写搜索项！');
+                                                    return false;
+                                                }else{
+													//查询条件根据附近距离以及类型来搜索
+													urls = "{weikucms::U('Wap/Aibang/innerList',array('token'=>$_GET['token'],'know'=>1))}&lng="+lng+"&lat="+lat+"&openid={weikucms:$openid}&name="+$('#search').val()
+
+													 window.location.href = urls;
+													 
+													 
+												}
+												
+                                               
+                                            });
+
+
+										$('.LeftRight>.left').click(function(){
+                                               window.location.href = "{weikucms::U('Wap/Aibang/innerList',array('token'=>$token,'openid'=>$openid))}&lng="+lng+"&lat="+lat+"&openid={weikucms:$openid}";
+                                        });
+
+                                    }
+
+                                }
+
+                             });
+
+                         }
+                    }
+                },'1000');
+                // 收藏夹
+                $('.LeftRight>.right').click(function(){
+                    window.location.href = "{weikucms::U('Wap/Aibang/collection',array('token'=>$token,'openid'=>$openid))}";
+                })
+        	}
+        </script>
+    </body>
+</html>

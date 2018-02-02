@@ -1,0 +1,102 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{uuuyi::RES}/css/cymain.css" />
+<div class="content right" style="width:920px; background:none; margin-left:275px; border:none; margin-bottom:30px;" >
+<div class="cLineB">
+<h4 class="left"><span style="font-size:18px; text-align:inherit; color:#666">{uuuyi:$diaoyan.title} </span> 的题目列表 -- 参与人数 <span style="font-size:18px; text-align:inherit; color:#666">{uuuyi:$count}</span> 人 </h4>
+<div class="searchbar right">
+<form method="post" action="">
+</form>
+</div>
+<div class="clr"></div>
+</div>
+
+<div class="cLine">
+<div class="clr"></div>
+ <a href="{uuuyi::U('Diaoyan/index',array('token'=>$token))}" class="right  btnGreen" style="margin-top:0">返回</a> 
+</div>
+
+<div class="msgWrap">
+
+
+	<form method="post" action="" id="info">
+	<input name="delall" type="hidden" value="">
+	<input name="wxid" type="hidden" value="">
+	<table class="table table-striped" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<volist name="timu" id="item"> 
+			<thead>
+				<tr>
+					<th width="100">{uuuyi:$item.title}</th>
+					<th width="100">选项票数</th>
+				</tr>
+			</thead>
+			<tbody>
+				<php>
+					if($item['optia'] != ''){
+				</php>
+					<tr>
+						<td>{uuuyi:$item.optia}</td>
+						<td>{uuuyi:$item.perca}</td>
+					</tr>
+				<php>
+					}
+				</php>
+				
+				<php>
+					if($item['optib'] != ''){
+				</php>
+					<tr>
+						<td>{uuuyi:$item.optib}</td>
+						<td>{uuuyi:$item.percb}</td>
+					</tr>
+				<php>
+					}
+				</php>
+				
+				<php>
+					if($item['optic'] != ''){
+				</php>
+					<tr>
+						<td>{uuuyi:$item.optic}</td>
+						<td>{uuuyi:$item.percc}</td>
+					</tr>
+				<php>
+					}
+				</php>
+				
+				<php>
+					if($item['optid'] != ''){
+				</php>
+					<tr>
+						<td>{uuuyi:$item.optid}</td>
+						<td>{uuuyi:$item.percd}</td>
+					</tr>
+				<php>
+					}
+				</php>
+				
+				<php>
+					if($item['optie'] != ''){
+				</php>
+					<tr>
+						<td>{uuuyi:$item.optie}</td>
+						<td>{uuuyi:$item.perce}</td>
+					</tr>
+				<php>
+					}
+				</php>
+			</tbody>
+		</volist>
+		
+	</table>
+	</form>
+
+
+</div>
+<div class="cLine">
+<div class="pageNavigator right">
+<div class="pages">{uuuyi:$page}</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>

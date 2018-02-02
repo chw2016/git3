@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>我喜欢</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/msg.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/slider.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+        <style>
+            .pImg{
+                height: 120px;
+                width: 48%;
+            }
+        </style>
+    </head>
+    <body>
+		<!-- 主页用户信息 -->
+	    <div class="header userInfo fixBg" style="background-image:url({weikucms:$staticFilePath}/lm/img/userBg.png)">
+	    	<div class="userLessInfo myul">
+	    		<div class="userBlog white myli">
+	    			乐活部落
+	    		</div>
+	    		<div class="dateLocate myli">
+	    			<div class="daLo">
+	    				<span>25</span>
+	    				<span>/5</span>
+	    				<span>/2015</span>
+	    				<span>/</span>
+	    				<span>广州</span>
+	    			</div>
+	    			<div class="userFeeling myul">
+	    				<span>心情-开心</span>
+	    				<div id="changeFeeling" class="changeFeeling border-4">换</div>
+	    			</div>
+	    		</div>
+	    	</div>	
+	    	<div class="setMiddle myul userMainInfo">
+	    		<div class="circle settingWrap">
+	    			<div class="circle setting containBg"></div>
+	    		</div>
+	    		<div class="circle userLogoWrap">
+	    			<!-- <img src="{weikucms:$staticFilePath}/lm/img/logo-bg.jpg" alt="头像" class=" userLogo" width="100%" height="100%"> -->
+	    			<div class="circle userLogo fixBg" style="background-image: url({weikucms:$userData.headimgurl});"></div>
+	    		</div>
+	    		<div class="circle msgWrap">
+	    			<div class="circle msg containBg">
+	    				<div class="msgTip circle"></div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="textMiddle white userName">
+	    		{weikucms:$userData.nickname}
+	    	</div>
+	    	<div class="userMoreInfo myul">
+	    		<div class="textMiddle userMIB">
+	    			<span>人品 </span>
+		    		<span>0</span>
+		    		<span>/ 排名</span>
+		    		<span>23548位</span>
+	    		</div>
+	    		<div class="shareUser">分享挣人品</div>
+	    	</div>
+	    </div>
+		<!-- END -->
+		<section class="privateBox">
+			<nav class="myul">
+				<div class="myli item textMiddle hav" >我喜欢</div>
+			</nav>
+
+
+            <!--我喜欢-->
+            <div >
+            <volist name="list" id="vo">
+
+                   <!-- <if condition="$i eq 1">
+
+                        <div class="picLikeBox">
+                            <div class="pic fixBg" style="background-image: url({weikucms:$vo.pic})  ;"></div>
+                            <div class="likeBox myul">
+					<span class="picTitle">
+						{weikucms:$vo.title}
+					</span>
+					<span class="picLike">
+						{weikucms:$vo.click}
+					</span>
+                            </div>
+                        </div>
+                        <else />-->
+
+
+                        <div class="aLink">
+                            <a href="{weikucms:$vo.url|htmlspecialchars_decode}">{weikucms:$vo.name}</a>
+                        </div>
+
+                   <!-- </if>-->
+
+            </volist>
+            </div>
+            <!--结束-->
+		</section>
+
+
+
+
+
+<include file="Store_lm:foot" />
+
+
+    </body>
+    <script type="text/javascript">
+        slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    	new slider($(".sliderBox"));
+    // slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+</html>

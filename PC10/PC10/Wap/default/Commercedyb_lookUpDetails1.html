@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css?v=123">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.form.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/common/msg.js" type="text/javascript"></script>
+        <script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/upfile.js" type="text/javascript"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+        
+
+    </head>
+    <style>
+        .a1{
+            position: absolute;
+            right: 8px;
+            top: 6px;
+            color: #999;
+        }
+
+    </style>
+    <body style="background:#F0F0F0;">
+	        <script type="text/javascript">
+				    function showshare(){
+                        $("#topsharebar").show();
+                        $("#marks").show();
+                    }
+			</script>
+        <if condition="$iszhuanfa eq 1">
+            <script type="text/javascript">
+                $(function(){
+                    $("#marks").click(function(){
+                        $("#topsharebar").hide();
+                        $("#marks").hide();
+					
+                    });
+                });
+            </script>
+            <div id="topsharebar" class="topsharebar" style="width:100%;height:25px;line-height:25px;text-align:center;background-color:rgba(255, 11, 11, 0.6);position:fixed;top:0px;font-size:12px;color:white;">喜欢这个话题请点击右上角分享给朋友</div>
+            <div style="top:0px;left:0px;position:fixed;background-color:rgba(0,0,0,0.5);width:100%;height:100%;z-index:999998;" id="marks"></div>
+        </if>
+            	<div class="bbsBox white-bg">
+
+            <div class="bbsUserInfo myul">
+                <div class="circle bbsuserLogo fixBg"
+                <if condition="$article['token'] eq $article['openid']">
+                    style="background-image:url({weikucms:$tpl.headpicurl})"
+                    <else />
+                    style="background-image:url({weikucms:$article['headimg']})"
+                    </if>
+                    >
+                    
+                </div>
+                <div class="bbsUserMoreInfo">
+                    <div class="bbsUserName">
+                        <if condition="$article['token'] eq $article['openid']">
+                            {weikucms:$tpl.name}
+                            <else />
+                        {weikucms:$article['nickname']}
+                            </if>
+                    </div>
+                    <div class="bbsGrade myul">
+                        <div class="icon icon-grade">
+                            
+                        </div>
+                        <div class="bbsGradeDetail crown-yellow-bg white">{weikucms:$article.lvl}</div>
+                    </div>
+                </div>
+                <if condition="$article['openid'] eq $openid">
+                    <div class="deletes">
+                        <a href="javascript:void(0);" data-url="{weikucms::U('Wap/Commercedyb/deletes',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'did'=>$vo['id']))}">删除</a>
+                    </div>
+                <else/>
+                </if>
+            </div>
+                <if condition="$article['start_time']">
+                <div style="font-size:12px;line-height:25px;">
+                    <span>话题时间:{weikucms:$article.start_time}</span>~<span>{weikucms:$article.end_time}</span>
+                </div>
+                    </if>
+                <div class="bbsContent">
+                    <span class="topic_shap">#{weikucms:$article.title}#</span>
+                    <?php echo html_entity_decode($article['content']);?>
+                </div>
+                <if condition="$article['img_url'] eq ''">
+                <else/>
+                    <div class="bbsPic fixBg" style="background-image:url({weikucms:$article.img_url})" data-url="{weikucms:$article.img_url}"></div>
+                </if>
+            
+            <div class="postAddress">{weikucms:$article.address}</div>
+                <div class=" bbsAction myul">
+					<div class="timeshows">
+					<php>
+					 if(intval(time()-strtotime($article['add_time'])>3600))
+                    {
+                        echo date("Y-m-d H:i",strtotime($article['add_time']));
+                    }elseif(intval(time()-strtotime($article['add_time'])<60)){
+                        echo intval(time()-strtotime($article['add_time']))."秒前";
+                    }else{
+                        echo intval(intval((time()-strtotime($article['add_time']))/60))."分钟前";
+                    }
+					</php>
+					</div>
+
+                    <div class="zhuanfa border-20 bbsBtn"  onclick="showshare();return false;"></div>
+                    <div class=" border-20 bbsBtn bbsLike <if condition='$article["ifzan"] eq 1'>on<else/></if>">
+                    <!-- 显示是否是以及帖子的ID号码 -->
+                        <input type="hidden" value="{weikucms:$article['ifzan']}-{weikucms:$article['id']}" />
+						
+                        <div class="icon icon-like"></div>
+                        <div class="likeCount">{weikucms:$article.dianzan}</div>
+                    </div>
+                    <div class=" border-20 bbsBtn bbsReply" kk="1">
+                        <div class="icon icon-reply "></div>
+                        <div id="replyCount">{weikucms:$article.pinglun}</div>
+                    </div>
+
+                </div>
+
+
+                <div class="replyInputBox">
+                    <div class="reInputReply myul hide cde" >
+                        <div class="inputReplyBox">
+                            <input type="text" id="replaycon" placeholder="请输入回复内容" />
+                        </div>
+                        <span class="replayBtn" data-replay="{weikucms:$article.openid}" data-id="{weikucms:$article.id}">
+
+                           <button style="display: none;" id="kk">
+
+                           </button>
+                            回复
+
+                        </span>
+                    </div>
+                    <div style="margin-left:0px;width:18%;padding:3px 0 6px 0;text-align:center; display:none;" id="checkimg" >
+                        <form id="myupload" action="{weikucms::U('Wap/Commercedyb/uploadsT',array('token'=>$token,'openid'=>$openid))}" method="post" enctype="multipart/form-data">
+                            <div class="demo">
+
+                                <div class="btn" style="width:45px;">
+                                    <span class="icon-camera addImg" id="chooseImage"></span>
+                                    <span class="fixColor"></span>
+                                    <input id="fileupload" type="file" name="mypic" style="position: relative;top: -47px;left: -65px;opacity: 0;">
+                                </div>
+                                
+                                <input type="hidden" value="" id='url' name="imgurl"/>
+                            </div>
+                        </form>
+                        <div id="showimg" style="text-align:left;width:60%;height:60px;margin-left:20px;position: relative;left: 80px;top: -70px;"></div>
+                    </div> 
+                    <!-- 表情图片位置 -->
+                    <div class="showIcon huati_showIcon">
+                        <div class="smile">
+                            <div class="content" style="display:none;">
+                                <div id="smileScroll" class="smiles">
+                                    <for start="0" end="105">
+                                        <img class="smilesImg" src="./Common/qqMagic/{weikucms:$i}.gif" data-url = "./Common/qqMagic/{weikucms:$i}.gif"/>
+                                    </for>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <volist name="article.comments" id="so">
+                        <if condition="$so['comment'] neq ''">
+                             <div class="RPBItem1 myul">
+                                <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$so['headimg']})"></div>
+                                <div class="reContent1" data-openid="{weikucms:$so.openid}" data-id="{weikucms:$so['id']}">
+                                    <span class="nickname">{weikucms:$so['nickname']}</span>：{weikucms:$so.comment}
+                                    <!--图片开始--><br>
+                                    <if condition="$so['img']">
+                                        <img src="{weikucms:$so.img}"  style="width:120px;margin-top:5px;">
+                                    </if>
+                                    <!--图片结束-->
+                                    <input type="hidden" name="replayId" class="replayId" />
+
+                                    <!--点赞开始-->
+                                            <if condition="$openid neq $so['openid']">
+                                                <div class="btnbox">
+                                                    <div replayid="{weikucms:$so.id}" class="border-20 bbsBtn bbsBtn1 bbsLike bbsLike1 <if condition='$so["isme_zan"] eq 1'>on<else/></if>">
+                                                            <!-- 显示是否是以及帖子的ID号码 -->
+                                                            <input type="hidden" value="{weikucms:$so['isme_zan']}-{weikucms:$article['id']}" />
+
+                                                            
+                                                            <div class="icon icon-like "></div>
+                                                            <div class="likeCount" >{weikucms:$so.dianzan}</div>
+                                                    </div>
+
+                                                    <div class=" border-20 bbsBtn bbsBtn1 bbsReply" type="1">
+                                                        <div class="icon icon-reply "></div>
+                                                        <div id="replyCount1" class="a1">{weikucms:$so.pinglun}</div>
+                                                    </div>
+                                                </div>
+                                            </if>
+
+
+                                    <!--点赞结束-->
+
+
+                                    <!--这里是非话题评论-->
+                                    <div class="reInputReply myul hide abc" style="padding-top: 28px;" >
+                                        <div class="inputReplyBox">
+                                            <input type="text" placeholder="请输入回复内容" />
+                                        </div>
+                                        <span class="replayBtn" data-replay="{weikucms:$article.openid}" data-id="{weikucms:$article.id}" replay_id="{weikucms:$so.id}">
+                                            回复
+                                        </span>
+                                    </div>
+                                    <!--这里是非话题评论结束-->
+                                </div>
+
+
+
+                                <if condition="$openid eq $so['openid']">
+                                    <div class="delYouComment" data-openid="{weikucms:$openid}" data-url="{weikucms::U('Wap/Commercedyb/delComment',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                                    删除
+                                    </div>
+	                            <else/>
+	                            </if>
+
+
+                             </div>
+                         <else/>
+                         </if>
+
+
+
+                    </volist>
+
+                    <div class="loadMore" id="loadMore"></div>
+        
+
+
+
+
+
+                </div>
+            </div>
+            
+            <!-- 分享到朋友圈以及好友 -->
+            <if condition="$tpl['is_auth'] eq 1">
+                <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/commercedybhuati/token/{weikucms:$token}/id/{weikucms:$article.id}/type/1/dopenid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+            <else/>
+                <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/commercedybhuati/token/{weikucms:$token}/id/{weikucms:$article.id}/type/1/dopenid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+            </if>
+
+            <script type="text/javascript">
+                <if condition="$is_subscribe eq 0">
+
+                   setTimeout(function(){
+                       if(confirm('亲,您还没关注我们的公众号,赶快去关注下吧!')){
+                            window.location.href = "{weikucms::U('Home/Nofind/isnotsub',array('token'=>$token,'openid'=>$openid,'from_openid'=>$_GET['from_openid']))}";
+                       }else{
+                            return false;
+                       }
+                   },'10000');
+
+                </if>  
+
+    		$(function(){
+		    	// 发帖
+                $("body").on('touchend','.postTextBox',function(){
+		    	//$(".postTextBox").click(function(){
+		            $(".local").trigger('click');
+		            if($(".postEditBox").hasClass('on')){
+		                 $("body").removeClass('fixTop');
+		                $(".postEditBox").removeClass('on');
+		            }else {
+		                $("body").addClass('fixTop')
+		                $(".postEditBox").addClass('on');
+		            }
+		        });
+                $("body").on('touchend','.PEBClose',function(event){
+		     //   $(".PEBClose").click(function(event) {
+		           $(".postTextBox").trigger('click');
+		        });
+		        // 点赞按钮
+                $("body").on('touchend','.bbsLike',function(){
+		       // $(".bbsLike").click(function(event) {
+		            /* Act on the event */
+		            if($(this).hasClass('on')){
+		                $(this).removeClass('on');
+		            }else{
+		                $(this).addClass('on');
+		            }
+        		});
+        		// 点击使得回复出现边框样式
+               $("body").on('touchend','.bbsReply',function(){
+                    var type=$(this).attr('type');
+                    if(type){
+                        $(".huati_showIcon").hide();
+                        if ($(this).parents(".RPBItem1").find(".abc").hasClass('hide')) {
+                            $(this).addClass("on");
+                            $(this).parents(".RPBItem1").find(".abc").removeClass('hide');
+                            $("#checkimg").hide();
+                        } else {
+                            $(this).removeClass('on');
+                            $(this).parents(".RPBItem1").find(".abc").addClass('hide');
+                            $("#checkimg").hide();
+                        }
+                    }else {
+                        if ($(this).parents(".bbsBox").find(".replyInputBox").find('.cde').hasClass('hide')) {
+                            $(".huati_showIcon").show();
+                            $(this).addClass("on");
+                            $(this).parents(".bbsBox").find(".replyInputBox").find('.cde').removeClass('hide');
+                            $("#checkimg").show();
+                        } else {
+                            $(".huati_showIcon").hide();
+                            $(this).removeClass('on');
+                            $(this).parents(".bbsBox").find(".replyInputBox").find('.cde').addClass('hide');
+                            $("#checkimg").hide();
+                        }
+                    }
+
+
+		           // $(this).parents(".bbsBox").find(".replyInputBox").trigger("click")
+
+		        })
+		    // 点击赞发生的事情
+                $("body").on('touchend','.bbsLike',function(){
+	     //   $('.bbsLike').click(function(){
+                var replay_id=$(this).attr('replayid');
+               // alert(replay_id);
+                if(replay_id){//这里是评论话主的点赞
+                    if($(this).hasClass('on')){
+                        $(this).removeClass('on');
+                    }else{
+                        $(this).addClass('on');
+                    }
+                    var _THIS = $(this);
+                    var likeVal = _THIS.find('input').val(),
+                            url = "{weikucms::U('Wap/Commercedyb/zan1',array('token'=>$_GET['token'],'openid'=>$openid))}";
+                    $.post(url,{replay_id:replay_id,openid:"{weikucms:$openid}",like:likeVal},function(data){
+                        if(data.status == 0){
+                            msg.alert(data.info,1000);
+                            var cut = likeVal.split('-');
+                            var $Count = _THIS.find('.likeCount');
+                            var iCount = parseInt($Count.text());
+                            if (cut[0] == 1) {
+                                _THIS.removeClass('on');
+                                iCount -= 1;
+                                _THIS.find('input').val("0-"+cut[1]);
+                            }else{
+                                _THIS.addClass('on');
+                                iCount += 1;
+                                _THIS.find('input').val("1-"+cut[1]);
+                            }
+                            $Count.text(iCount);
+                        }else{
+                            msg.alert(data.info,1000);
+                        }
+                    },'json');
+                }else{//这是话题主点赞
+                    if($(this).hasClass('on')){
+                        $(this).removeClass('on');
+                    }else{
+                        $(this).addClass('on');
+                    }
+                    var _THIS = $(this);
+                    var likeVal = _THIS.find('input').val(),
+                            url = "{weikucms::U('Wap/Commercedyb/zan',array('token'=>$_GET['token'],'openid'=>$openid))}";
+                    $.post(url,{openid:"{weikucms:$openid}",like:likeVal},function(data){
+                        if(data.status == 0){
+                            msg.alert(data.info,1000);
+                            var cut = likeVal.split('-');
+                            var $Count = _THIS.find('.likeCount');
+                            var iCount = parseInt($Count.text());
+                            if (cut[0] == 1) {
+                                _THIS.removeClass('on');
+                                iCount -= 1;
+                                _THIS.find('input').val("0-"+cut[1]);
+                            }else{
+                                _THIS.addClass('on');
+                                iCount += 1;
+                                _THIS.find('input').val("1-"+cut[1]);
+                            }
+                            $Count.text(iCount);
+                        }else{
+                            msg.alert(data.info,1000);
+                        }
+                    },'json');
+                }
+
+	        })
+
+	        // 点击回复发生的事情
+                $("body").on('touchend','.replayBtn',function(){
+	    //    $('.replayBtn').click(function(){
+	        	var _this = $(this);
+	        	
+	            var content = _this.prev().find('input').val();
+	            if(!content){
+                    msg.alert("评论内容不能为空！",1000);
+	                return false;
+	            }
+	            var iRlyId = $(this).attr('replay_id');
+	            if(typeof(iRlyId) == 'undefined' || !iRlyId){//这里是主评论这里
+                    var img=$("#showimg").find('img').attr('src');
+	                // 如果值为空的情况下
+	                 _this.unbind('click'); 
+	                var url= "{weikucms::U('Wap/Commercedyb/comments',array('token'=>$_GET['token'],'openid'=>$_GET['openid']))}";
+	                $.post(url,{img:img,content:content,replay:"{weikucms:$openid}",id:_this.data('id')},function(data){
+	                    if (data.status == 0) {
+	                        msg.alert(data.info,1000);
+	                        setTimeout(function(){
+	                            window.location.reload(); 
+	                        },0);
+	                    }else{
+	                        msg.alert(data.info,1000);
+	                    }
+	                },'json');
+	                
+	            }else{
+	                // 如果值不为空的情况下
+	                var url= "{weikucms::U('Wap/Commercedyb/replayData',array('token'=>$_GET['token'],'openid'=>$openid))}";
+	                // 获取点赞情况
+	                var ifzan = _this.parents('.replyInputBox').prev().find('.bbsBtn').find('input').val();
+	                ifzan = ifzan.split('-');
+	                ifzan = ifzan[0]; 
+	                // 获取文章的openid;
+	                
+	                $.post(url,{content:content,replay:"{weikucms:$openid}",id:_this.data('id'),pid:iRlyId,articleOpenid:_this.data('replay'),ifzan:ifzan},function(data){
+	                    if (data.status == 0) {
+	                        msg.alert(data.info,1000);
+	                        setTimeout(function(){
+	                            // window.location.href = data.url;
+	                            window.location.reload(); 
+	                        },0);
+	                    }else{
+	                        msg.alert(data.info,1000);
+	                    }
+	                },'json');
+	            }
+	            
+	        	
+	        })
+
+			// 点击删除
+                $("body").on('touchend','.deletes > a',function(){
+	      //  $('.deletes > a').click(function(){
+	            if(confirm('您确定要删除此帖么？') == true){
+	                $.post($(this).data('url'),{},function(data){
+	                    if (data.status == 0) {
+	                        msg.alert(data.info,1000);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },1000);
+	                    }else{
+	                        msg.alert(data.info,1000);
+	                    }
+	                },'json');
+	            }
+	        })
+
+	        // 删除自己的评论
+                $("body").on('touchend','.delYouComment',function(e){
+	        	e.stopPropagation();
+	            if(confirm('您确定要删除此评论么？') == true){
+	                $.post($(this).data('url'),{},function(data){
+	                    if (data.status == 0) {
+	                        msg.alert(data.info,1000);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },1000);
+	                    }else{
+	                        msg.alert(data.info,1000);
+	                    }
+	                },'json');
+	            }
+	        })
+
+	        // 点击评论回复那个人  这里啊
+                $("body").on('touchend','.RPBItem',function(){
+	       // $('.RPBItem').click(function(){
+	            if($(this).find('.reContent').data('openid') != "{weikucms:$openid}"){
+	                $Replay = $(this).find('.replayId');
+	                if($(this).parent().find('.reInputReply').hasClass('hide')){
+	                    $(this).parent().find('.reInputReply').removeClass('hide');
+                        $("#checkimg").hide();
+	                    var replayIDs =$(this).find('.reContent').data('id');
+	                    $(this).parent().find('.reInputReply').find(".replayBtn").attr('replay_id',replayIDs);
+	                }else{
+	                    $(this).parent().find('.reInputReply').addClass('hide');
+                        $("#checkimg").hide();
+	                    $Replay.val("");
+	                }
+	            }
+	        })
+
+		        
+		        var shareTitle="{weikucms:$res.title}";
+		        var imgUrl="<php>echo C('site_url');</php>{weikucms:$res.pic}";
+		        var descContent="{weikucms:$res.title}";
+		        var shareUrl="";
+
+		        $(function() {
+		            shareUrl = $("#shareUrl").text();
+		        });
+
+
+		        wx.config({
+		            appId: '{weikucms:$signPackage.appId}',
+		            timestamp: {weikucms:$signPackage.timestamp},
+		            nonceStr: '{weikucms:$signPackage.nonceStr}',
+		            signature: '{weikucms:$signPackage.signature}',
+		            jsApiList: [
+		                'onMenuShareTimeline',
+		                'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+						'previewImage'
+		            ]
+		        });
+				//图片预览
+				wx.ready(function(){
+					$(".bbsPic").click(function(){
+						var picUrl = $(this).data("url");
+							picUrl = 'http://v.wapwei.com/'+picUrl;
+						 var imgList = [picUrl];
+				            wx.previewImage({
+				                current: imgList[0],
+				                urls:  imgList
+				            });
+					})
+				})
+				// 分享
+				
+		    })
+
+            //点击加载更多
+            $(window).scroll(function(){
+                var diff = Number($(window).height()) + Number(20);
+                if($(document).height() - $(window).scrollTop() < diff){
+                    // 异步加载
+                    setTimeout(function(){
+                        var url = "{weikucms::U('Wap/Commercedyb/loadMore1',array('token'=>$token,'openid'=>$openid,'articleId'=>$_GET['articleId']))}",
+                                length = $('.RPBItem').size(),//求多少个
+                                _This = $('#loadMore');
+                        $.post(url,{bbs:length},function(data){
+                            if(data.status == 0){
+
+                                $('.RPBItem:last').after($(data.fetch));
+                            }else{
+                                _This.show().text(data.info);
+                                _This.off('scroll');
+                            }
+                        },'json');
+                    },500);
+                }
+               //* console.log("文档高度:"+$(document).height()+",窗口距顶高度："+$(window).scrollTop()+",差距:"+($(document).height()-$(window).scrollTop()));*//*
+            })
+
+
+            //点击表情出现表情
+            /*$(".smile").click(function(event) {
+                event.stopPropagation();
+                $(this).find('.content').toggle();
+                //点击空白处或者自身隐藏弹出层，下面分别为滑动和淡出效果。  
+            });*/ 
+            $('.smile').click(function (event) {
+                event.stopPropagation();
+                $(this).find('.content').show()
+            });
+             
+             
+             
+             // 点击微笑图片
+            $('.smilesImg').on('touchend',function(){
+                var url = $(this).data('url');
+                strings = url.substr(17,3);
+                if (strings.indexOf('g') > 0) {
+                    strings = url.substr(17,1);
+                }else if(strings.indexOf('.') > 0){
+                    strings = url.substr(17,2);
+                }
+                // 获取到了前面的每张图片的序列名称
+                var getContent = $('#replaycon').val();
+                $('#replaycon').val(getContent+"["+strings+"]");
+                $('.smile').find('.content').hide();
+            })
+            // 点击使得回复出现边框样式
+            $("#load").on("click",".bbsReply",function(){
+                if($(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').hasClass('hide')){
+                    $(this).addClass("on");
+                    $(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').removeClass('hide');
+                }else{
+                    $(this).removeClass('on');
+                    $(this).parents(".bbsBox").find(".replyInputBox").find('.reInputReply').addClass('hide');
+                }
+            })
+	</script>
+
+    <script type="text/javascript">
+            var shareTitle="{weikucms:$article.title}";
+            var imgUrl="<php>echo C('site_url');</php>{weikucms:$article.img_url}";
+            var descContent="{weikucms:$article.title}";
+            var shareUrl = $("#shareUrl").text();
+
+            wx.config({
+                appId: '{weikucms:$signPackage.appId}',
+                timestamp: {weikucms:$signPackage.timestamp},
+                nonceStr: '{weikucms:$signPackage.nonceStr}',
+                signature: '{weikucms:$signPackage.signature}',
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',// 所有要调用的 API 都要加到这个列表中
+                    'previewImage'
+                ]
+            });
+            //图片预览
+            wx.ready(function(){
+                    //图片展示
+                    $('#load').on('click',".bbsPic",function(event){
+                        event.stopPropagation();
+                        event.preventDefault();
+                        var picUrl = $(this).data("url");
+                            picUrl = '<php>echo C('site_url');</php>'+picUrl;
+                         var imgList = [picUrl];
+                            wx.previewImage({
+                                current: imgList[0],
+                                urls:  imgList
+                            });
+                    })
+                     // 在这里调用 API
+                    wx.onMenuShareTimeline({
+                        title: shareTitle, // 分享标题
+                        link: shareUrl, // 分享链接
+                        imgUrl: imgUrl, // 分享图标
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            var url = "{weikucms::U('Wap/Commercedyb/shareSuccess',array('token'=>$token,'openid'=>$openid))}";
+                            $.post(url,{},function(data){
+                                if(data.status == 0){
+                                    msg.alert(data.info,1000);
+                                    setTimeout(function(){
+                                        window.location.href = data.url;
+                                    },0)
+                                }else{
+                                    msg.alert(data.info,1000);
+                                }
+                            },'json');
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                    wx.onMenuShareAppMessage({
+                        title: shareTitle, // 分享标题
+                        desc: descContent, // 分享描述
+                        link: shareUrl, // 分享链接
+                        imgUrl: imgUrl, // 分享图标
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function () {
+                           var url = "{weikucms::U('Wap/Commercedyb/shareSuccess',array('token'=>$token,'openid'=>$openid))}";
+                            $.post(url,{},function(data){
+                                if(data.status == 0){
+                                    msg.alert(data.info,1000);
+                                    setTimeout(function(){
+                                        window.location.href = data.url;
+                                    },0)
+                                }else{
+                                    msg.alert(data.info,1000);
+                                }
+                            },'json');
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                
+                })
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,132 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('user_index',array('token'=>$token))}" >用户管理</a>
+                </li>
+
+
+           <!--     <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('index',array('token'=>$token))}" >分销商</a>
+                </li>-->
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('adduserlevel',array('token'=>$token))}" <if condition="$hover eq 6" >class="hover"</if>>会员等级</a>
+                </li>
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('tixianinfo',array('token'=>$token))}" <if condition="$hover eq 7" >class="hover"</if>>提现管理</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>设置会员等级,</li>
+
+        </ol>
+    </div>
+
+    <div class="msgWrap">
+
+        <div class="box-content">
+            <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                <div class="control-group">
+                    <label for="title" class="control-label">金卡：</label>
+                    <div class="controls">
+                        <input type="text" name="name" id="name" value="关注成功就是金卡会员" class="input-large" data-rule-required="true" readonly>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="title" class="control-label">白金：</label>
+                    <div class="controls">
+                        <input type="text" name="yongjing1" id="yongjing1" value="{weikucms:$info.yongjing1}" class="input-large" data-rule-required="true" placeholder="达多少佣金以上为白金" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="title" class="control-label">钻石：</label>
+                    <div class="controls">
+                        <input type="text" name="yongjing1" id="yongjing2" value="{weikucms:$info.yongjing2}" class="input-large" data-rule-required="true" placeholder="达多少佣金以上为钻石" >
+                    </div>
+                </div>
+             <!--   <div class="control-group" style="display: none;">
+                    <label for="title" class="control-label">等级类型：</label>
+                    <div class="controls">
+                        <select name="level_type" id="level_type">
+                            <option value="1" selected>按积分</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="title" class="control-label">积分大于：</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" placeholder="大于多少分" name="score" id="score" value="" class="input-small" data-rule-required="true" data-rule-ismoney="true">
+                            <span class="add-on"></span>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="form-actions">
+                    <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">修改</button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <include file="Public:footer"/>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var yongjing1 = $("#yongjing1").val();
+            var yongjing2 = $("#yongjing2").val();
+            if(yongjing1>=yongjing2){
+                notif({
+                    msg: '钻石设置的佣金应该大于白金',
+                    type: "error"
+                });
+            }
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            $.post("{weikucms::U('insertuserlevel',array('token'=>$token))}",
+                    {yongjing1:yongjing1,yongjing2:yongjing2,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+
+
+</div>

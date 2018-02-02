@@ -1,0 +1,112 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+<div class="content right">
+	<div class="cLineB">
+		<h4 class="left">积分礼品兑换</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Servicestore/index',array('token'=>$token, 'storeId'=>$storeId))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		  <tr>
+			<th valign="top">输入会员帐号：</th>
+			<td>
+				<input type="input" class="px" id="title" value="" name="title" style="width:208px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">会员可用积分数：</th>
+			<td>
+				<span id="available_score">0</span>
+				<input type="hidden" id="avail_score" value=""/>
+			</td>
+  		 </tr>
+  		 <tr> 
+	        <th valign="top">兑换礼品名称：</th>				        
+	        <td>
+	        	<select name="name" id="name">
+	        		 <option value="0">请选择</option>
+		        	 <volist name="data" id="value" key="i">
+		        		<option value="{weikucms:$i}">{weikucms:$value.gift_name}</option>
+		        	</volist>
+	        	</select>
+	        </td>
+	     </tr>
+	     <tr>
+			<th valign="top">单个礼品兑换积分数：</th>
+			<td>
+				<span id="single_score">0</span>
+			</td>
+  		 </tr>	
+  		 <tr>
+			<th valign="top">VIP最多可兑换个数：</th>
+			<td>
+				<span id="max_num">0</span><span style="padding-left:10px;">个</span>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">目前礼品库存数：</th>
+			<td>
+				<span id="gift_num">0</span><span style="padding-left:10px;">个</span>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">VIP兑换个数：</th>
+			<td>
+				<input type="input" class="px" id="num" value="" name="num" style="width:208px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="button" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<script>
+$(function(){
+	$("#title").focusout(function(){
+		var title = $("#title").val();
+		var url = 'index.php?g=User&m=Servicestore&a=vipInfo&token='+$("#token").val();
+        $.post(url,{title:title},function(data){  
+           if(data.status == 100){                   	
+               $("#available_score").text(data.score);
+               $("#avail_score").val(data.score);
+           }else{
+           	notif({
+                   msg: data.info,
+                   type: "error"
+               });
+           } 
+       },'json');
+	});
+	
+	$("#name").change(function(){
+		var name = $("#name").val();
+		var url = 'index.php?g=User&m=Servicestore&a=scoreInfo&token='+$("#token").val();
+		$.post(url,{name:name},function(data){
+			if(data.status == 100){ 
+				$("#single_score").text(data.gift_score);
+				var max = ($("#avail_score").val()) / (data.gift_score);
+				$("#max_num").text(max);
+				$("#gift_num").text(data.gift_num);
+				
+            }else{
+                notif({
+                    msg: data.info,
+                    type: "error"
+                });
+            }
+        },'json');
+	});
+});
+</script>
+<include file="Public:footer"/> 

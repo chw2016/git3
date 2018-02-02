@@ -1,0 +1,190 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+<div class="">
+	<div class="cLineB">
+		<h4 class="left">
+			<if condition="$op neq 1">添加品牌服务商 <else /> 编辑品牌服务商</if>
+		</h4>
+		<div class="searchbar">
+			<form method="post" action="">
+				<script>
+function selectall(name) {
+    var checkItems=$('.cbitem');
+    if ($("#check_box").attr('checked')==false) {
+        $.each(checkItems, function(i,val){
+            val.checked=false;
+        });
+        
+    } else {
+        $.each(checkItems, function(i,val){
+            val.checked=true;
+        });
+    }
+}
+function setlatlng(longitude,latitude){
+    art.dialog.data('longitude', longitude);
+    art.dialog.data('latitude', latitude);
+    art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:800,height:650,yesText:'关闭',background: '#000',opacity: 0.87});
+}
+</script>
+
+			</form>
+		</div>
+		<div class="clr"></div>
+	</div>
+	<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以了解洗衣店品牌服务商的总数、还可以添加品牌服务商、编辑品牌服务商、删除品牌服务商。</li>
+		</ol>
+	</div>
+	<!--tab end-->
+	<div class="msgWrap">
+		<form class="form" method="post" id="form" action="">
+			<if condition="$op neq 1"> <input id="brand_id" name="brand_id" value="" type="hidden" /> <else /> <input id="brand_id" name="brand_id" value="{weikucms:$w['id']}" type="hidden" /> </if>
+			<div class="msgWrap bgfc">
+				<table class="userinfoArea" style="margin: 0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tbody>
+						<tr>
+							<th>品牌服务商名称：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_name" name="brand_name" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="brand_name" name="brand_name" value="{weikucms:$brand['brand_name']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+
+						<tr>
+							<th>品牌服务商联系电话：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_tel" name="brand_tel" value="" class="px require" style="width: 300px; margin-top: 10px" size="11" /> <else /> <input type="text" id="brand_tel" name="brand_tel" value="{weikucms:$brand['brand_tel']}" class="px require" style="width: 300px;" size="11" /> </if>
+							</td>
+						</tr>
+
+						<tr>
+							<th>品牌服务商地区：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_zone" name="brand_zone" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="brand_zone" name="brand_zone" value="{weikucms:$brand['brand_zone']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+
+						<tr>
+							<th>品牌服务商地址：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_address" name="brand_address" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="brand_address" name="brand_address" value="{weikucms:$brand['brand_address']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+						<tr>
+							<th>品牌服务商地址经纬度：</th>
+							<td>
+								<if condition="$op neq 1"> 经度 <input type="text" id="longitude" style="width: 80px;" name="longitude" size="14" class="px" /> 纬度 <input type="text" style="width: 80px;" name="latitude" size="14" id="latitude" class="px" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a> <else /> 经度 <input type="text" id="longitude" style="width: 80px;" name="longitude" size="14" class="px" value="{weikucms:$brand['longitude']}" /> 纬度 <input type="text" name="latitude" style="width: 80px;" size="14" id="latitude" class="px" value="{weikucms:$brand['latitude']}" /> <a href="###" onclick="setlatlng($('#longitude').val(),$('#latitude').val())">在地图中查看/设置</a> </if>
+							</td>
+						</tr>
+
+						<tr>
+							<th>品牌服务商登录名：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_login_name" name="brand_login_name" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="brand_login_name" name="brand_login_name" value="{weikucms:$brand['username']}" class="px require" style="width: 300px;" /> </if>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span style="padding-top: 5px">品牌服务商登录名称和品牌服务商名称要相同~</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th>品牌服务商登录密码：</th>
+							<td>
+								<if condition="$op neq 1"> <input type="text" id="brand_pwd" name="brand_pwd" value="" class="px require" style="width: 300px; margin-top: 10px" /> <else /> <input type="text" id="brand_pwd" name="brand_pwd" value="{weikucms:$brand['brand_pwd']}" class="px require" style="width: 300px;" /> </if>
+							</td>
+						</tr>
+
+						<tr>
+							<th>&nbsp;</th>
+							<td>
+								<if condition="$op neq 1"> <input type="hidden" name="op" id="op" value="0" /> <else /> <input type="hidden" name="op" id="op" value="1" /> </if>
+								<input type="hidden" name="uid" id="uid" value="{weikucms::$uid}" />
+								<button type="button" id="bsubmit" name="button" class="btn btn-primary">
+									<if condition="$op neq 1">添加品牌服务商 <else />确定编辑 </if>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</form>
+	</div>
+	<div class="cLine">
+		<div class="clr"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var brand_id = $("#brand_id").val();
+            var brand_name = $("#brand_name").val().trim();
+            var brand_tel = $("#brand_tel").val().trim();
+            var brand_zone = $("#brand_zone").val().trim();
+            var brand_address = $("#brand_address").val().trim();
+            var brand_pwd = $("#brand_pwd").val().trim();
+            var longitude = $("#longitude").val().trim();
+            var latitude = $("#latitude").val().trim();
+            var brand_login_name = $("#brand_login_name").val().trim();
+            var op = $("#op").val();
+             if(! brand_name){
+                notif({
+                    msg: "品牌服务商名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }  
+            if(! brand_address){
+                notif({
+                    msg: "品牌服务商地址不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! brand_tel){
+                notif({
+                    msg: "品牌服务商电话不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(brand_name !== brand_login_name){
+                 notif({
+                     msg: "品牌服务商名称须和品牌服务商登录名一样",
+                     type: "warning"
+                 });
+                 return false;
+             }
+            $.post("{weikucms::U('Laundry/brandmanage',array('token'=>$token))}",{brand_id:brand_id,brand_name:brand_name,brand_tel:brand_tel,brand_zone:brand_zone,brand_address:brand_address,brand_pwd:brand_pwd,longitude:longitude,latitude:latitude,brand_login_name:brand_login_name,op:op},function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                    }else{
+                        notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json'); 
+        });
+    });
+
+</script>
+<include file="Public:footer" />

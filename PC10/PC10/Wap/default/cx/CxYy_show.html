@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>创鑫激光</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Cx/css/index.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Cx/css/font-awesome.min.css">
+<script src="{weikucms::STATICS}/wapweiui/Cx/js/jquery-1.11.1.min.js"></script>
+
+<style type="text/css">
+*{margin: 0;padding: 0;}
+.top{height: 60px;background-color: #e8e8e6;}
+.top_logo{
+  float: left;
+  margin-top: 16px;
+  margin-left: 22%;
+  width: 204px;
+  height: 30px;
+  background: url("images/logo.png");
+  background-size: 100%;
+  clear: both;
+}
+.top_hr{width: 100%;height:5px;background-color: #484848;}
+</style>
+
+</head>
+<body>
+<!--头部-->
+<div class="top">
+	<a href="#"></a><div class="top_logo"></div></div>
+</div>
+<div class="top_hr"></div>
+
+<div class="form_group">
+	
+    <select id="lc" class="form_control4">
+
+	   <option <if condition="$_GET['lc'] eq 1" >selected=selected</if> value="1" >F1</option>
+	   <option <if condition="$_GET['lc'] eq 2" >selected=selected</if> value="2" >F2</option>
+	   <option <if condition="$_GET['lc'] eq 3" >selected=selected</if> value="3" >F3</option>
+	   <option <if condition="$_GET['lc'] eq 4" >selected=selected</if> value="4" >F4</option>
+    </select>
+    
+    <select id="hys" class="form_control4" style="width:35%;">
+	    <volist name="hys" key='ke' id="v" >
+	     <option <if condition="$_GET['name'] eq $v['name']" >selected=selected</if>  value="{weikucms:$v['name']}" >{weikucms:$v['name']}</option>
+	    </volist>
+    </select>
+   
+   
+    <select id="aaa"  class="form_control4" style="width:35%;">
+          <option  value="<?php echo date('Y-m-d',time()) ?>" >当前时间</option>
+		  <volist name="aDate" id="v" >
+		     <option <if condition="$_GET['time'] eq $v" >selected=selected</if> value="{weikucms:$v}" >{weikucms:$v}</option>
+		  </volist>
+    </select>
+    
+</div>
+<div class="days" style="border:0;box-shadow:0 0 0;">
+<volist name="aDate"  id="v" >
+   <if condition="$i eq 1" >
+          	<a href="{weikucms::U('show',get1('time',$v,name,lc))}" ><span  id="day1" class="days_left" >{weikucms:$v}</span></a>
+   </if>
+      <if condition="$i eq 2" >
+          	<a href="{weikucms::U('show',get1('time',$v,name,lc))}" ><span id="day2" class="days_cen">{weikucms:$v}</span></a>
+   </if>
+      <if condition="$i eq 3" >
+          <a href="{weikucms::U('show',get1('time',$v,name,lc))}" ><span id="day3" class="days_right">{weikucms:$v}</span></a>
+   </if>
+</volist>
+</div>
+
+
+<div style="background-color:#e8e8e6;">
+
+   <php>
+      for($i=1;$i<count($atime)+25;$i++){
+   </php>
+	<div class="pre  
+	   <?php
+	      $date=$_GET['time'];
+	      if($list[$date.','.$i]){
+	           if($list[$date.','.$i]==$zhi){
+	            echo 'red';
+	          }else{
+	            echo 'orange';
+	         }
+	      }else{
+	        echo 'green';
+	      }
+	   ?>
+	"><!--  orange  red -->
+		<span class="pre_time">
+		           
+		            <if condition="$i eq 1" >08:30-09:00</if>
+		            <if condition="$i eq 2" >09:00-9:30</if>
+		            <if condition="$i eq 3" >09:30-10:00</if>
+		            <if condition="$i eq 4" >10:00-10:30</if>
+		            <if condition="$i eq 5" >10:30-11:00</if>
+		            <if condition="$i eq 6" >11:00-11:30</if>
+		            <if condition="$i eq 7" >11:30-12:00</if>
+		            <if condition="$i eq 8" >12:00-12:30</if>
+		            <if condition="$i eq 9" >12:30-13:00</if>
+		            <if condition="$i eq 10" >13:00-13:30</if>
+		            <if condition="$i eq 11" >13:30-14:00</if>
+		            <if condition="$i eq 12" >14:00-14:30</if>
+		            <if condition="$i eq 13" >14:30-15:00</if>
+		            <if condition="$i eq 14" >15:00-15:30</if>
+		            <if condition="$i eq 15" >15:30-16:00</if>
+		            <if condition="$i eq 16" >16:00-16:30</if>
+		            <if condition="$i eq 17" >16:30-17:00</if>
+		            <if condition="$i eq 18" >17:00-17:30</if>
+		            <if condition="$i eq 19" >17:30-18:00</if>
+		            <if condition="$i eq 20" >18:00-18:30</if>
+		            <if condition="$i eq 21" >18:30-19:00</if>
+		            <if condition="$i eq 22" >19:00-19:30</if>
+		            <if condition="$i eq 23" >19:30-20:00</if>
+		            <if condition="$i eq 24" >20:00-20:30</if>
+		            <if condition="$i eq 25" >20:30-21:00</if>
+		</span>
+		<?php
+		  if(!$_GET['time']) $_GET['time']=date("Y-m-d",time());
+	      $date=$_GET['time'];
+	      if($list[$date.','.$i]){
+	    ?>
+		<a>
+		<?php
+		  }else{
+		?>
+		<a href="{weikucms::U('yd',get1(i,$i,time,name,lc))}" >
+		<?php
+		  }
+		?>
+			<span class="pre_btn">
+				<span>预定</span>
+			</span>
+		</a>
+		<span class="pre_zt">
+		<?php
+	      $date=$_GET['time'];
+	      if($list[$date.','.$i]){
+	         $z=$list[$date.','.$i];
+             if($z==$zhi){
+              echo '我已预定';
+             }else{
+              $zhis=M('cx_member')->where(array('id'=>$z))->find();
+              echo $zhis['bm'].$zhis['name']."预定";
+             }
+          }else{
+             echo '点击按钮预定';
+          }
+	   ?>
+		</span>
+	</div>
+   <php>
+      }
+   </php>
+	
+	
+</div>
+<div style="height:100px;background-color:#e8e8e6"></div>
+
+
+
+<!--底-->
+<div class="foot">
+	<button>预定记录</button>
+</div>
+</body>
+</html>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.core.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.frame.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.scroller.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.util.datetime.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.datetimebase.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.datetime.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/mobiscroll.frame.ios.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/js/i18n/mobiscroll.i18n.zh.js"></script>
+
+<link href="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/css/mobiscroll.frame.ios.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+<link href="{weikucms::STATICS}/wapweiui/Cx/common/plugin/mobiscroll-master/css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
+
+
+
+<script type="text/javascript">
+$(function(){
+   scrollDate({
+      "obj":".dsays_day",
+      "minDate": new Date(2010,0,1),
+      "maxDate" : new Date(2020,0,1)
+   },function(a){
+    var date = a.inst._getVal().split("-"),
+        dates = {},
+        a = new Date(2015,1,2).getTime()-new Date(2015,1,1).getTime();
+    $.each(date,function(i,o){
+      if(i==1){
+        dates[i]=Number(o)-1;
+      }else{
+        dates[i]=Number(o);
+      }
+    })
+    var selDay = new Date(dates[0],dates[1],dates[2]).getTime(),
+    bDay = new Date(selDay-a).Format('MM-dd'),
+    nDay = new Date(selDay).Format('MM-dd'),
+    aDay = new Date(selDay+a).Format('MM-dd');
+      $("#day1").text(bDay);
+      $("#day2").text(nDay);
+      $("#day3").text(aDay);
+   })
+});
+
+
+
+   function scrollDate(opt,callback){
+      $(opt.obj).mobiscroll().date({
+          theme: 'ios',     // Specify theme like: theme: 'ios' or omit setting to use default
+          mode: 'Scroller',       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+          display: 'bottom', // Specify display mode like: display: 'bottom' or omit setting to use default
+          lang: "zh",       // Specify language like: lang: 'pl' or omit setting to use default
+          onSelect: function (valueText, inst) {
+              function _setVal(obj,date){
+                  $(obj).mobiscroll("setVal",date)
+              }
+              if(typeof callback === "function"){
+                  callback({
+                      valueText:valueText,
+                      inst:inst,
+                      _setVal :_setVal
+                  });
+              }
+          },
+          minDate: opt.minDate,  // More info about minDate: http://docs.mobiscroll.com/2-14-0/datetime#!opt-minDate
+          maxDate: opt.maxDate,   // More info about maxDate: http://docs.mobiscroll.com/2-14-0/datetime#!opt-maxDate
+          stepMinute: 1  // More info about stepMinute: http://docs.mobiscroll.com/2-14-0/datetime#!opt-stepMinute
+      });
+
+   }
+</script>
+
+
+<script>
+   $("#aaa").change(function(){
+	//alert(0);
+	  var time = $("#aaa").val();
+	 // alert(time);
+	  location.href = "{weikucms::U('show',array('time'=>'"+time+"','lc'=>$_GET['lc'],'name'=>$_GET['name']))}";
+	
+   })
+   
+   $("#hys").change(function(){
+	//alert(0);
+	  var name = $("#hys").val();
+	
+	  location.href = "{weikucms::U('show',array('time'=>$_GET['time'],'lc'=>$_GET['lc'],'name'=>'"+name+"'))}";
+	
+   })
+   
+      $("#lc").change(function(){
+	//alert(0);
+	  var lc = $("#lc").val();
+	
+	  location.href = "{weikucms::U('show',array('time'=>$_GET['time'],'lc'=>'"+lc+"','name'=>$_GET['name']))}";
+	
+   })
+</script>

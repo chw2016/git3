@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <title>劳动局</title> 
+  <link rel="stylesheet" href="css/common.css" /> 
+  <link rel="stylesheet" href="css/index.css" /> 
+  <link rel="stylesheet" href="css/font-awesome.min.css" /> 
+  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/msg.js"></script> 
+  <script src="js/prompt.js"></script> 
+  <style>
+	body{
+	 background-color: #f2f1f0;
+	}
+	</style>
+  <script>
+		$(function(){		
+			$(".complaint_header_top li").click(function(){
+				  $(this).addClass("active").siblings().removeClass("active");
+				  var index = $(this).index();
+				  $(".complaint_header_nav>li").eq(index).show().siblings().hide();
+			});
+			$(document).on('click','.btn',function(){
+					var name=$("[name=name]").val();
+					var tel=$("[name=tel]").val();
+					var sex=$("[name=sex]").val();
+					var Education=$("[name=Education]").val();
+					var Place=$("[name=Place]").val();
+					var home=$("[name=home]").val();
+					var id=$("[name=id]").val();
+                    var lid=$("input[name=lid]").val();
+                    var Result=$("input[name=Result]").val();
+                    var  Company=$("input[name=Company]").val();
+                    var  Event=$("input[name=Event]").val();
+                    var flag=$(this).attr('flag');                
+                    if(flag==1){//重复提交
+                        return false;
+                    }
+                    if(name==''){
+                        show_error_tip('请填写姓名');
+                        $("[name=name]").focus();
+                        return false;
+                    }
+                    if(sex==''){
+                        show_error_tip('请填写性别');
+                        $("[name=sex]").focus();
+                        return false;
+                    }
+                    if(Education==''){
+                        show_error_tip('请填写学历');
+                        $("[name=Education]").focus();
+                        return false;
+                    }
+                     if(Place==''){
+                        show_error_tip('请填写籍贯');
+                        $("[name=Place]").focus();
+                        return false;
+                    }
+                      if(home==''){
+                        show_error_tip('请填写户口所在地');
+                        $("[name=home]").focus();
+                        return false;
+                    }
+                       if(id==''||id.length!=18){
+                        show_error_tip('请填写正确的身份证');
+                        $("[name=id]").focus();
+                        return false;
+                    }
+                          if(tel==''||tel.length!=11){
+                        show_error_tip('请填写正确的手机号码');
+                        $("[name=tel]").focus();
+                        return false;
+                    }
+                    if(Company==''){
+                        show_error_tip('请填写单位');
+                        $("[name=Company]").focus();
+                        return false;
+                    }
+                    if(Result==''){
+                        show_error_tip('请填写希望达成结果');
+                        $("[name=Result]").focus();
+                        return false;
+                    }      
+                    if(Event==''){
+                        show_error_tip('请填写希望达成结果');
+                        $("[name=Event]").focus();
+                        return false;
+                    }
+                    $(this).attr('flag',1);
+                    $(".btn").text('提交中');
+                   msg.confirm('<p style=font-size:19px;>信息已提交成功</p>')
+				})
+		});
+
+	</script>
+ </head>   
+ <body> 
+  <div class="complaint_header"> 
+   <ul class="complaint_header_top"> 
+    <li class="active">我要申述</li> 
+    <li>申述记录</li> 
+   </ul> 
+   <ul class="complaint_header_nav"> 
+    <li> 
+     <div class="w90"> 
+      <div class="complaint_user"> 
+       <p>姓名</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的姓名" value="" name="name" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>性别</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的性别" value="" name="sex" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>学历</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的学历" value="" name="Education" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>籍贯</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="籍贯" value="" name="Place" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>户口所在地</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的户口所在地" value="" name="home" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>身份证号码</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的身份证号码" value="" name="id" onkeyup="value=this.value.replace(/\D+/g,'')" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>联系方式</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的联系方式" value="" name="tel" onkeyup="value=this.value.replace(/\D+/g,'')" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>单位</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的单位" value="" name="Company" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>希望达成结果</p> 
+       <div class="complaint_header_user shadow"> 
+        <input type="text" placeholder="请输入您的希望达成结果" value="" name="Result" /> 
+       </div> 
+      </div> 
+      <div class="complaint_user"> 
+       <p>事件</p> 
+       <div class="complaint_header_user shadow"> 
+        <textarea placeholder="请输入你的申诉事件" name="Event"></textarea> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="mt10 mb10"> 
+      <span class="btn">提交信息</span> 
+     </div> </li> 
+    <li class="hide"> 
+     <div class="p5 clearfix" style="background-color: #f2f1f0;"> 
+      <span style="color:#e23840" class="fr">申诉次数：10次</span> 
+     </div> 
+     <div class="shadow Company mb10"> 
+      <p>姓名：</p> 
+      <p>时间：2015-07-04</p> 
+      <p>单位：</p> 
+      <div class="Handle "> 
+       <div class="Handle_nav"> 
+        <span>等到处理</span> 
+        <span class="Handle_nav_red">申诉成功</span> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="shadow Company mb10"> 
+      <p>姓名：</p> 
+      <p>时间：2015-07-04</p> 
+      <p>单位：</p> 
+      <div class="Handle "> 
+       <div class="Handle_nav"> 
+        <span class="Handle_nav_green">等到处理</span> 
+        <span>申诉成功</span> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="shadow Company mb10"> 
+      <p>姓名：</p> 
+      <p>时间：2015-07-04</p> 
+      <p>单位：</p> 
+      <div class="Handle "> 
+       <div class="Handle_nav"> 
+        <span>等到处理</span> 
+        <span class="Handle_nav_red">申诉成功</span> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="shadow Company mb10"> 
+      <p>姓名：</p> 
+      <p>时间：2015-07-04</p> 
+      <p>单位：</p> 
+      <div class="Handle "> 
+       <div class="Handle_nav"> 
+        <span>等到处理</span> 
+        <span class="Handle_nav_red">申诉成功</span> 
+       </div> 
+      </div> 
+     </div> </li> 
+   </ul> 
+  </div>   
+ </body>
+</html>

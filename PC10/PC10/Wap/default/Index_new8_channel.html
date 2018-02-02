@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="format-detection" content="telephone=no" />
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_213/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weiweb/new_213/css/index.css">
+    <style>
+    .bg{
+    background: url(<?php echo $bg?>) no-repeat;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: 50%;
+    }
+    </style>
+    </head>
+    <body>
+	<div class="bg">
+		<div class="header">
+            <volist name="info" id="vo" offset="0" length="1">
+			校园招聘
+            </volist>
+			<!--<div class="btn-right">
+				<a class="arrow-right"></a>
+			</div>-->
+		</div>
+		<div class="conter">
+			<div class="conter-title">
+                <volist name="info" id="vo" offset="0" length="1">
+				<span class="conter-Leaflet" onclick="window.location.href='<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else />{weikucms:$vo.url}</if>'">{weikucms:$vo.name}</span>
+                </volist>
+                <volist name="info" id="vo" offset="1" length="1">
+				<span class="conter-Leaflet ml5" onclick="window.location.href='<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else />{weikucms:$vo.url}</if>'">{weikucms:$vo.name}</span>
+                </volist>
+			</div>
+			<div class="conter-title mt5">
+                <volist name="info" id="vo" offset="2" length="1">
+				<span class="conter-Leaflet" onclick="window.location.href='<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else />{weikucms:$vo.url}</if>'">{weikucms:$vo.name}</span>
+                </volist>
+                <volist name="info" id="vo" offset="3" length="1">
+				<span class="conter-Leaflet ml5" onclick="window.location.href='<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else />{weikucms:$vo.url}</if>'">{weikucms:$vo.name}</span>
+                </volist>
+			</div>
+		</div>
+	</div>
+    </body>
+</html>

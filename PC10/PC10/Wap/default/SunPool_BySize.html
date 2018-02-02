@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/style.css">
+		<script src="{weikucms::RES}/sunpool/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::RES}/sunpool/js/jquery.ld.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/main.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/core.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/iscroll.js"></script>
+        <script>
+            function ByEcNum(){
+                var url="{weikucms::U('SunPool/ByEcNum',array('token'=>$token,'openid'=>$openid))}";
+                location.href=url;
+            }
+        </script>
+        <style>
+            .label {
+                top: 0px;
+            }
+        </style>
+    </head>
+    <body>
+   		<div class="header textMiddle white">
+   			免费报价
+   		</div>
+   		<div class="havBox myul border-26 overFloatHidden">
+   			<div class="hav myli textMiddle " onclick="ByEcNum()">
+   				按用电量
+   			</div>
+   			<div class="hav myli textMiddle on">
+   				按安装面积
+   			</div>
+   		</div>
+
+   		<div class="inputWrap white-bg border-14">
+            <div class="inputItem setMiddle">
+                <div class="inputItemName">所在地区：</div>
+                <input type="hidden" class="area" name="info[area]"  id="area" value="">
+                <select class="pc-select-area" name="area-1" id="area-1" width="100">
+                    <option value="">请选择菜单</option>
+                </select>
+                <select class="pc-select-area" name="area-2" id="area-2" width="100">
+                    <option value="">请选择菜单</option>
+                </select>
+                <script type="text/javascript">
+                    $(function(){
+                        var $ld5 = $(".pc-select-area");
+                        $ld5.ld({
+                            ajaxOptions : {"url" : "http://www.solarstock.cn/api.php?op=get_linkage&act=ajax_select&keyid=1"},
+                            defaultParentId : 0,
+                            style : {"width" : 120}
+                        })
+                        var ld5_api = $ld5.ld("api");
+                        ld5_api.selected();
+                        $ld5.bind("change",onchange);
+                        function onchange(e){
+                            var $target = $(e.target);
+                            var index = $ld5.index($target);
+                            $("#area-3").remove();
+                            $("#area").val($ld5.eq(index).show().val());
+                            index ++;
+                            $ld5.eq(index).show();								}
+                    })
+                </script>
+            </div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName">屋顶类型：</div>
+   				<div class="textMiddle input-b myul">
+   					<div class="wudingStyle myul on" msg="1">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>水泥屋顶</div>
+					</div>
+					<div class="wudingStyle myul" msg="2">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>斜屋顶</div>
+					</div>
+					<div class="wudingStyle myul" msg="3">
+   						<div class="circle iRadioWrap">
+   							<div class="circle iRadio"></div>
+   						</div>
+   						<div>彩钢瓦</div>
+					</div>  					
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName myul input-c">
+   					<div class="inputLabel">
+   						屋顶可用面积：
+   					</div>
+   					<div class="input">
+   						<input type="number" class="squre">
+   						<div class="label">㎡</div>   						
+   					</div>
+
+   				</div>
+   				
+   			</div>
+
+   		</div>
+
+		<!-- 计算结果 -->
+		<div class="resultBox" style="display: none;">
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					安装面积：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result azmj">
+						0
+					</div>
+					<div class="resultUnit">
+						㎡
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					系统容量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result xtrl">
+						0
+					</div>
+					<div class="resultUnit">
+						kw
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					系统总投入：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result xtztr">
+						0
+					</div>
+					<div class="resultUnit">
+						万元
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					年发电量：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result nfdl">
+						0
+					</div>
+					<div class="resultUnit">
+						度
+					</div>
+				</div>
+			</div>
+            <div class="resultItem myul">
+                <div class="resultItemName">
+                    年售电收益：
+                </div>
+                <div class="resuleContent myul">
+                    <div class="result nsdsy1">
+                        0
+                    </div>
+                    <div class="resultUnit">
+                        元
+                    </div>
+                </div>
+            </div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+					回本时间：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result hbnx">
+						0
+					</div>
+					<div class="resultUnit">
+						年
+					</div>
+				</div>
+			</div>
+			<div class="resultItem myul">
+				<div class="resultItemName">
+                    年收益率：
+				</div>
+				<div class="resuleContent myul">
+					<div class="result nbsyl">
+						0
+					</div>
+					<div class="resultUnit">
+					</div>
+				</div>
+			</div>
+			<div class="resultNotice myul">
+				<div>备注：以上报价单中光伏电站按1.2元/度（含补贴）计算的，报价单中的实际仅供参考。</div>
+
+
+			</div>
+		</div>
+
+
+   		<div class="actionHavBox myul">
+   			<div class="actionHav myli" id="baojia_jisuan">
+   				获取报价
+   			</div>
+   			<div class="actionHav myli" onclick="Erect()">
+   				我要安装
+   			</div>
+   		</div>
+
+	<script type="text/javascript">
+		mySelector($(".wudingStyle"),"on",1)
+	</script>
+	<script src="{weikucms::RES}/sunpool/js/area.js"></script>
+	<script src="{weikucms::RES}/sunpool/js/location.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			showLocation();
+		});
+	</script>
+        <script>
+            $("#baojia_jisuan").click(function(){
+                //按面积
+                var wdStyle=$(".wudingStyle ");
+                var simple=0;
+                var area = $(".area").val().trim();
+                var number=$(".squre").val().trim();
+                $.each(wdStyle,function(o,i){
+                    if($(this).hasClass("on")){
+                        simple=$(this).attr("msg").trim();
+                    }
+                })
+                if(!area){
+                    alert("请选择城市");
+                    return false;
+                }
+                if(simple==0){
+                    alert("请选择屋顶类型");
+                    return false;
+                }
+                if(number<=0){
+                    alert("请输入屋顶可用面积");
+                    return false;
+                }
+                var url="http://www.solarstock.cn/list-39-1.html/index.php?m=content&c=index&a=totalnumber";
+                $.post(url,{simple:simple,number:number,area:area},function(data){
+                    $(".azmj").html(data.azmj);
+                    $(".xtrl").html(data.xtrl);
+                    $(".xtztr").html(data.xtztr);
+                    $(".hbnx").html(Math.round(data.hsnx*10000));
+                    $(".nfdl").html(data.nfdl1);
+                    $(".nsdsy1").html(data.nsdsy1);
+                    $(".nbsyl").html(data.nbsyl);
+                    $(".resultBox").show();
+                },'json')
+            });
+
+        </script>
+        <script>
+            function Erect(){
+                location.href="{weikucms::U('SunPool/ErectInfo',array('token'=>$token,'openid'=>$openid))}";
+            }
+            function capcity(){
+                location.href="{weikucms::U('SunPool/BeniftCapacity',array('token'=>$token,'openid'=>$openid))}";
+            }
+        </script>
+		<!-- <div style="width:95%;height:20px;line-height:20px;text-align:center;font-size:12px;padding:5px;0px;color:rgb(190, 186, 186)">万普微信技术支持</div> -->
+    </body>
+</html>

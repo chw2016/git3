@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="银波米业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>投诉建议</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/baoxiu.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/suggest.js"></script>
+        <script type="text/javascript">
+            var url = "{weikucms::U('Hengbo/complaints',array('tokrn'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}"
+        </script>
+    </head>
+    <body>
+		<div class="h-title">投诉建议</div>
+		<form id="form">
+		<div class="form bx-message bx-suggest">
+
+			<div class="inputBox">
+				<div class="input">
+					<textarea type="tel" class="icon-bx-detail-input" name="suggest" placeholder="请输入要投诉与建议的内容"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="zhanwei"></div>
+            <input type="hidden" value="{weikucms:$token}" name="token">
+            <input type="hidden" value="{weikucms:$openid}" name="openid">
+            <input type="hidden" value="{weikucms:$_GET['aid']}" name="aid">
+		</form>
+		<div class="inputBox submit fixBottom" submit='1'>
+			提交
+		</div>
+    </body>
+</html>

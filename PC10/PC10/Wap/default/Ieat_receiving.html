@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>填写收货信息-ieat限购</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+    <script src="{weikucms::RES}/ieat/js/api"></script>
+    <style type="text/css">
+        .inputBox { width: 75%; margin: 0% auto; /* border: 1px solid; */ margin-bottom: 30px; }
+        .InputBox input[type="text"],
+        .InputBox input[type="tel"] { right:-50px; }
+        .inputSwrap { width: 100%; /*height: 75px;*/ border-bottom: 1px solid rgb(0,196,254); position: relative; min-height: 75px; height: auto; }
+        .inputSwrap .title { display: block; width: 100%; text-align: center; font-size: 20px; line-height: 55px; background: none; color: rgb(0,196,254); font-weight: 600; }
+        .circle-icon { width: 40px; height: 40px; border: 2px solid; position: absolute; top: 15px; left: 11px; text-align: center; line-height: 40px; }
+        .input { position: relative; width: 68%; /* border: 1px solid red; */ min-height: 50px; height: auto; top: 12px; margin-bottom: 15px; }
+        .infoItem{ line-height: 26px; font-size: 18px; }
+        .input input { width: 100%; height: 100%; border: 0px solid; font-size: 18px; font-weight: lighter; }
+        .btnGoBuy { width: 50%; height: 45px; border: 1px solid rgb(0,195,254); margin: auto auto; text-align: center; line-height: 45px; border-radius: 10px; -webkit-border-radius: 10px; font-family: "微软雅黑"; }
+        .xuanze { position: relative; top: 0; height: auto; margin: 4% 0; }
+        .circleSelectorSwrap { border: 2px solid; height: 25px; width: 25px; position: absolute; top: 8%; left: 8%; }
+        .circleSelector { width: 19px; height: 19px; position: relative; top: 3px; left: 3px; }
+        .circleSelected{ background-color: rgb(33,132,127); }
+        .circleDeleteSwrap { width: 27px; height: 27px; position: absolute; /*border: 2px solid;*/ bottom: 8%; left: 8%; background-color: rgba(239,88,88,0.7); }
+        .circleDelete { width: 40%; margin: 12px auto; border: 1px solid #fff; }
+        .circle { border-radius: 50%; -webkit-border-radius: 50%; }
+        .inputSwrap .input { border: 0; }
+        .icon{ background-image: url(img/icon.png); }
+        .icon.home { background-repeat: no-repeat; background-size: 125%; background-position: -4px -428px; }
+        .icon.userCenter { background-repeat: no-repeat; background-size: 155%; background-position: -10px -140px; }
+        .icon.customerService { background-repeat: no-repeat;  background-size: 155%;  background-position: -9px -211px; }
+        .icon.getSort { background-repeat: no-repeat;  background-size: 155%;  background-position: -9px -111px; }
+        .icon.icName { background-repeat: no-repeat; background-size: 155%; background-position: -10px -495px; }
+        .icon.icContact { background-repeat: no-repeat;  background-size: 155%;  background-position: -10px -275px; }
+
+        .icon.icAddress { background-repeat: no-repeat;  background-size: 155%;  background-position: -10px -45px; } 
+        .icon.icNote { background-repeat: no-repeat;  background-size: 155%;  background-position: -11px -575px; }
+        .icon.getlocation { background-repeat: no-repeat;      background-size: 120%;      background-position: -6px -105px; }
+        span#delX { position: relative; font-size: 27px; left: 10px; top: 1px; color:RGBA(255,255,255,0); }
+        .circle.white.circle-icon.icon.icName { color: rgb(94,206,182); } 
+        .icName+.input input::-webkit-input-placeholder{ color:rgb(94,206,182); }
+        .icName+.input input{ color:rgb(94,206,182); }
+
+        .circle.white.circle-icon.icon.icContact { color: rgb(88,181,214); }
+
+        .icContact+.input input::-webkit-input-placeholder{ color:rgb(88,181,214); }
+        .icContact+.input input{ color:rgb(88,181,214); }
+
+        .circle.white.circle-icon.icon.icAddress { color: rgb(212,107,208); }
+
+        .icAddress+.input textarea::-webkit-input-placeholder{ color:rgb(212,107,208); line-height: 50px; }
+        .icAddress+.input textarea{ color:rgb(212,107,208); line-height: 30px; }
+	
+        .InputBox {border: 0px;}
+
+        textarea { width: 100%;border: 0px solid;  font-size: 18px;  font-weight: lighter; }
+
+        .InputBox input[type="text"],
+        .InputBox input[type="tel"] { margin-left: 10px; left: 50px; }
+</style>
+
+</head>
+<body class="TuanGou">
+
+<!-- 输入 -->
+<div class="inputBox">
+
+    <form id="myweipayFoodform" method="post" action="{weikucms::U('Ieat/order_confirm', array('token' => $token, 'openid' => $openid))}">
+
+    <div class="inputSwrap myul">
+        <span class="title white" style="padding-left: 0;">请填写收货信息</span>
+    </div>
+    <div class="inputSwrap myul">
+        <div class="input " style="height: 50px;">
+            <span class="confirmIcon iConName">
+                <img src="tpl/Wap/default/common/ieat/img/headUser.png" width="51px" height="51px" />
+            </span>
+            <input name="consignee" type="text" id="consignee"  placeholder="请填写收货人姓名">
+        </div>
+    </div>
+    <div class="inputSwrap myul">
+        <div class="input " style="height: 50px;">
+            <span class="confirmIcon iConTel">
+                <img src="tpl/Wap/default/common/ieat/img/userMobile.png" width="51px" height="51px" />
+            </span>
+            <input name="contact" type="tel" id="contact"  placeholder="请填写联系方式">
+        </div>
+    </div>
+    <div class="inputSwrap myul">
+        <div class="input ">
+            <span class="confirmIcon iConAddress">
+                <img src="tpl/Wap/default/common/ieat/img/userLocation.png" width="51px" height="51px" />
+            </span>
+            <textarea name="shopping_address" id="shopping_address" placeholder="请填写收货地址" style='overflow-y: hidden; margin-top: 10px; left: 60px; height: 50px;' onpropertychange="this.style.height = this.scrollHeight + 'px';" ></textarea> 
+        </div>
+    </div>
+	
+    <input type="hidden" name="order_yunfei" value="{weikucms:$_POST['order_yunfei']}" >
+
+    <input type="hidden" name="order_name" value="{weikucms:$_POST['order_name']}" >
+
+    <input type="hidden" name="order_money" value="{weikucms:$_POST['order_money']}" >
+
+    <input type="hidden" name="order_text" value="{weikucms:$_POST['order_text']}" >
+
+    <input type="hidden" name="orderid" value="{weikucms:$_POST['orderid']}">
+
+    <input type="hidden" name="openid" value="{weikucms:$_POST['openid']}">
+
+    <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Ieat&a=ticketANDfood&openid={weikucms:$_POST['openid']}&t=2">
+
+    <input type="hidden" name="type" value="Ieat_Food">
+
+    </form>
+    
+    
+</div>
+<div class="border5 white btnGoBuy" onclick="payFood()">
+    写好了，去付钱
+</div>  
+<script>
+function payFood(){
+	var $consignee = $('#consignee');
+	var $contact   = $('#contact');
+	var $shopping_address = $('#shopping_address');
+
+	var consignee = $.trim($consignee.val());
+	var contact   = $.trim($contact.val());
+	var shopping_address = $.trim($shopping_address.val());
+	
+    if(consignee == '' || contact == '' || shopping_address == ''){
+        alert('请填写完信息');
+        return false;
+	}
+    $("#myweipayFoodform").submit();
+
+}
+</script>
+</body>
+</html>

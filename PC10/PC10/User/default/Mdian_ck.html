@@ -1,0 +1,135 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/map.js"></script>
+<script src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&v=1.1&services=true" type="text/javascript"></script>
+
+
+<script>
+                function selectall(name) {
+                    var checkItems=$('.cbitem');
+                    if ($("#check_box").attr('checked')==false) {
+                        $.each(checkItems, function(i,val){
+                            val.checked=false;
+                        });
+
+                    } else {
+                        $.each(checkItems, function(i,val){
+                            val.checked=true;
+                        });
+                    }
+                }
+				
+                function setlatlng(longitude,latitude){
+                    art.dialog.data('longitude', longitude);
+                    art.dialog.data('latitude', latitude);
+                    art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:874,height:700,yesText:'关闭',background: '#000',opacity: 0.87});
+                }
+</script>
+<script>
+                KindEditor.ready(function(K){
+                    var editor = K.editor({
+                        allowFileManager:true
+                    });
+                    K('#upload').click(function() {
+                        editor.loadPlugin('image', function() {
+                            editor.plugin.imageDialog({
+                                fileUrl : K('#pic').val(),
+                                clickFn : function(url, title) {
+                                    K('#pic').val(url);
+                                    $("#image_show").attr('src',url).show();
+                                    editor.hideDialog();
+                                }
+                            });
+                        });
+                    });
+                });
+
+
+</script>
+
+  <div class="cLineB">
+    <h4>录入活动信息</h4>
+</div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>您可以在此录入活动信息</li>
+        </ol>
+    </div>
+  <div class="msgWrap">
+
+      <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+          <tr>
+            <input type="hidden" class="px" id="id"  name="id" value="{weikucms:$id}" style="width:300px" >
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION["token"]}" name="token" style="width:300px" >
+      
+           
+
+            <tr>
+                <th valign="top"><label for="keyword">活动名称</label></th>
+                <td><input type="input" class="px" id="name" value="{weikucms:$list.dname}" name="name" style="width:300px" >
+                </td>
+                <td></td>
+            </tr>
+           
+            
+            <tr>
+                <th valign="top"><label for="keyword">活动每天开启时间</label></th>
+                <td><input type="input" class="px" id="name" value="{weikucms:$list.hd_time}" name="name" style="width:300px" >
+                </td>
+                <td></td>
+            </tr>
+            
+              <tr>
+                    <th valign="top">活动图片显示：</th>
+                    <td>
+                        <img  style=" width:100px; height:100px;" id="image_show" class="fenlei_img" src="{weikucms:$list.pic}">
+                    </td>
+                </tr>
+               <br/>
+
+            
+    
+          <tr>
+           <th valign="top"><label for="keyword">简介</label></th>
+                <td valign="top">
+                    <textarea class="px" id="info" name="desc" style="width: 560px; height: 120px; display: ;">{weikucms:$list.content}</textarea>
+                </td>
+            </td>
+            <td></td>
+          </tr>
+          
+
+        <tr>
+          <th></th>
+          <td><button class="btn btn-primary" onclick='location.href="{weikucms::U('audit',get(token))}"' >返回</button>
+              <include file="./tpl/User/default/helper/list_btn.html"/>
+            <div class="clr"></div></td>
+        </tr>
+        </TBODY>
+
+      </TABLE>
+
+  </div>
+</div>
+<script src="{weikucms::RES}/js/baidu.js" type="text/javascript" ></script>
+<script type="text/javascript">
+    baidu_map();
+</script>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>

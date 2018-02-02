@@ -1,0 +1,45 @@
+<html lang="zh-CN">
+<head>
+<title>我的特色课程</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8"
+    http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent">
+<!-- Mobile Devices Support @end -->
+<link type="text/css" rel="stylesheet"
+    href="{weikucms::RES}/kindergarten/css/style.css">
+</head>
+<body>
+    <div class="ui-refresh">
+        <div id="list" class="container">
+            <volist name="data" id="vo"> <a class="row"
+                href="{weikucms::U('Wap/Kindergarten/specialcoursedetail',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid'],'course_id'=>$vo['course_id']))}">
+                <div class="col-sm-3">
+                    <img src="{weikucms:$vo.course_pic}"
+                        class="img-responsive">
+                </div>
+                <div class="col-sm-9 padding-left-10">
+                    <h4 class="title-light">{weikucms:$vo.course_name}</h4>
+                    <p>姓名：{weikucms:$vo.name}</p>
+                    <p>手机：{weikucms:$vo.tel}</p>
+                    <p>时间：{weikucms:$vo.course_time}</p>
+                    <p>地点：{weikucms:$vo.course_address}</p>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+            <hr>
+            </volist>
+        </div>
+        <div class="ui-refresh-down" style="display: none;"></div>
+    </div>
+</body>
+</html>

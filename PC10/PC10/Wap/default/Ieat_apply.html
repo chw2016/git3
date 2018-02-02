@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ieat联盟-申请加入</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/font/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+    <script src="{weikucms::RES}/ieat/js/core.js"></script>
+
+</head>
+
+<body r='234' g='134' b='255'>
+
+<div id="blur" ></div>
+<div id="AlertBox"></div>
+
+<style>
+    div#blur {
+        display:none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 998;
+        background-color: RGBA(0,0,0,0.6);
+    }
+    div#AlertBox {
+        display:none;
+        width: 50%;
+        /* height: 50%; */
+        /* border: 1px solid; */
+        position: absolute;
+        margin-top: 50%;
+        margin-left: 25%;
+        color: #fff;
+        z-index: 999;
+        text-align: center;
+    }
+    #type{
+        width: 195px;
+        height: 40px;
+        border: 0px;
+        border-radius: 8px;
+        color: #aaa;
+        position: absolute;
+        left: 4%;
+        -webkit-appearance: none;
+    }
+    .myul:nth-of-type(4) .InputBox:after {
+        content:"";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-right: 1px solid rgb(188,141,237);
+        border-bottom: 1px solid rgb(188,141,237);
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        position: absolute;
+        right: 5%;
+        top: 12px;
+    }
+</style>
+<div class="main ShenQing">
+    <div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="c1">
+            <div class="c2">
+                <div class="c3 logo"></div>
+            </div>
+        </div>
+    </div>
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="请填写餐厅名" name="name" id="name" />
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="请填写餐厅位置" name="position" id="position" />
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="餐厅开张年月" name="date" id="date" />
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <select name="type" id="type" >
+                <option value="1">餐饮类别</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="你的联系方式" name="tel" id="tel" />
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="你认为餐厅最吸引人的地方" name="attract" id="attract" />
+        </div>
+    </div>
+
+    <div class="myul ">
+        <div class="lableIcon">
+            <div class="iconBox">2</div>
+        </div>
+        <div class="InputBox">
+            <input type="text" placeholder="开店景愿" name="vision" id="vision" />
+        </div>
+    </div>
+
+</div>
+
+<div class="ShenqingJiaru myul">
+    <div class="lcirle"></div><div class="lcirle"></div><div class="bcirle"></div>
+
+    <div data-tap="item" class="item  opacity  " style="margin-left:4%;">
+        <div class="item-logo l d" onclick="applyJoin()">
+            <div class="item-logo m e">
+                <span class="icon iconplus">+</span>
+                <span class="smallText">申请加入</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bcirle"></div><div class="lcirle"></div><div class="lcirle"></div>
+</div>
+
+
+
+<div class="havbox wenjuan">
+
+    <div class="hav myul" style="top:68%">
+        <div data-tap="item" class="item tap opacity on" style="margin-left:12%;">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-wenzhang"></span>
+                        <span class="smallText">了解我们</span>
+                    </div></div></div>
+
+        </div>
+
+        <div data-tap="item" class="item tap opacity  " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/apply',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-jiaru"></span>
+                        <span class="smallText">申请加入</span>
+                    </div></div></div>
+
+        </div>
+
+        <div data-tap="item" class="item tap opacity " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/unioMember',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-members"></span>
+                        <span class="smallText">联盟成员</span>
+                    </div></div></div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    myFadeIn(50);
+</script>
+<script>
+    function applyJoin(){
+        var name = $("#name").val();
+        var position = $("#position").val();
+        var date = $("#date").val();
+        var type = $("#type").find("option:selected").val();
+        var tel = $("#tel").val();
+        var attract = $("#attract").val();
+        var vision = $("#vision").val();
+        var reg = /^1[3,4,5,8]\d{9}$/;
+        if(!name){
+            alert("请填入餐厅名");
+            return false;
+        }
+        if(!position){
+            alert("请填入餐厅位置");
+            return false;
+        }
+        if(!date){
+            alert("请填入餐厅开张日期");
+            return false;
+        }
+        if(!type){
+            alert("请选择餐饮类别");
+            return false;
+        }
+        if(!tel){
+            alert("请填入您的联系方式");
+            return false;
+        }
+        if(!reg.test(tel)){
+            alert("请填入合法的手机号码");
+            return false;
+        }
+        if(!attract){
+            alert("你认为餐厅最吸引人的地方");
+            return false;
+        }
+        if(!vision){
+            alert("请填写开店景愿");
+            return false;
+        }
+        $.ajax({
+            url:"{weikucms::U('Ieat/apply',array('token'=>$token,'openid'=>$openid))}",
+            type:"POST",
+            dataType:"JSON",
+            data:{name:name,position:position,date:date,type:type,tel:tel,attract:attract,vision:vision},
+            success:function(data){
+                if(data.status){
+                    $("#AlertBox").fadeIn(2000).text(data.info).delay(4000).fadeOut(2000);
+                    $("#blur").fadeIn(2000).delay(2000).fadeOut(2000);
+                    setTimeout(function(){
+                        window.location.href = "{weikucms::U('Ieat/unioMember',array('token'=>$token,'openid'=>$openid))}";
+                    },'2000');
+                }
+            }
+        });
+
+    }
+</script>
+</html>

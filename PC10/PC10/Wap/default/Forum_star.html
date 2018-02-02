@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<meta content="samphay@163.com" name="Author">
+<title>{weikucms:$tpl['name']}</title>
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/forum.css?v=1.0" />
+<script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/star/js/index.js?m=1"></script>
+<script src="{weikucms::STATICS}/star/js/foot.js?v=2014"></script>
+</head>
+<body>
+<div class="index">
+<div class="indexbg"></div>
+<div class="index hav">
+    <div class="ul">
+    <div data-tap="forum" class="li white tap" onClick="window.location.href='{weikucms::U('Forum/index',array('token'=>$token,'openid'=>$openid))}'">讨论区</div>
+    <div data-tap="shop" class="li white tap" onClick="window.location.href='{weikucms:$store}'">店铺</div>
+    </div>
+    <div class="ul">
+    <div data-tap="news" class="li white tap" onClick="window.location.href='http://v.wapwei.com/index.php?g=Wap&m=Index&a=lists&classid=3235&token=8d6c5f62afee2198ce8e95e518282478&openid={weikucms:$openid}'" >资讯</div>
+    <div data-tap="lightapp" class="li white tap"  onClick="window.location.href='http://v.wapwei.com/index.php?g=Wap&m=Microscene&a=index&pid=10&token=8d6c5f62afee2198ce8e95e518282478&openid={weikucms:$openid}'">吴尚哲</div>
+    </div>
+</div>
+
+
+<footer class="myul">
+    <div data-foot="home" class="tapfoot myli home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="tapfoot myli more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="tapfoot myli user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="circle">
+            <if condition="($messageNum neq '0') or ($messageNum neq 0)">
+                <span data-tip="{weikucms:$messageNum}" class="icons_my"></span>
+            </if>
+            <span class="icon-user"></span>
+        </div>
+    </div>
+</footer>
+
+
+
+<div class="fmore">
+<!--<div class="onlyu moreli"><div><span class="icon-eye"></span>只看Hi<span class="icon-uniE638 arrowright"></span></div></div>-->
+<div class="iwrite moreli" onClick="window.location.href='{weikucms::U('Forum/add',array('token'=>$token,'openid'=>$openid))}'" ><div><span class="icon-pencil"></span>发帖<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="gotop moreli"><div><span class="icon-arrow-up"></span>回到顶部<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="helpcenter moreli" onclick="window.location.href='http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&id=5304&token=8d6c5f62afee2198ce8e95e518282478&openid={weikucms:$openid}'"><div><span class="icon-question"></span>帮助中心<span class="icon-uniE638 arrowright"></span></div></div>
+</div>
+<div id="shade"></div>
+
+
+
+</div>
+
+
+
+
+</body>
+</html>

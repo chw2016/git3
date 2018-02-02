@@ -1,0 +1,164 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js">
+    
+</script>
+<div class="" style="<if condition="$brand_id">left:0px<else /></if>">
+	<div class="cLineB">
+		<h4 class="left">充值</h4>
+	</div>
+	<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>
+				在这里可以给
+				<if condition="($a[0] eq customer_id) OR ($b[0] eq customer_id)">洗客<elseif condition="($a[0] eq b_id)" />品牌服务商<else />在线加盟商</if>
+				账户充值。
+			</li>
+		</ol>
+	</div>
+	<!--tab end-->
+	<div class="msgWrap" style="<if condition="$brand_id">padding-left:100px<else /></if>">
+		<form class="form" method="post" id="form" action="">
+			<div class="msgWrap bgfc">
+				<table class="userinfoArea" style="margin: 0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+					<tbody>
+						<tr>
+							<th>
+								<if condition="($a[0] eq customer_id) OR ($b[0] eq customer_id)">洗客<elseif condition="($a[0] eq b_id)" />品牌服务商<else />在线加盟商</if>
+								名称：
+							</th>
+							<td>
+								<if condition="($a[0] eq customer_id) OR ($b[0] eq customer_id)"> <input type="text" id="c_name" name="{weikucms:$info['id']}" value="{weikucms:$info['c_name']}" class="px require" style="width: 300px;" readonly="readonly" /> <elseif condition="($a[0] eq b_id)" /> <input type="text" id="brand_name" name="{weikucms:$info['id']}" value="{weikucms:$info['brand_name']}" class="px require" style="width: 300px;" readonly="readonly" /> <else /> <input type="text" id="online_name" name="{weikucms:$info['id']}" value="{weikucms:$info['online_name']}" class="px require" style="width: 300px;" readonly="readonly" /> </if>
+							</td>
+						</tr>
+						<tr>
+							<th>充值金额：</th>
+							<td>
+								<input type="text" id="recharge_amount" name="recharge_amount" value="" class="px require" style="width: 300px; margin-top: 10px" />
+							</td>
+						</tr>
+						<tr>
+							<th>充值优惠比例：</th>
+							<td>
+								<input type="text" id="offers_proportion" name="offers_proportion" value="" class="px require" style="width: 300px; margin-top: 10px" placeholder="请手动填写优惠比例~" />
+								<span>例如：填写0.01，在充值成功之后，用户充值100元，用户的账户会增加100元+100*0.01元=101元</span>
+							</td>
+						</tr>
+						<tr>
+							<th>&nbsp;</th>
+							<td>
+								<if condition="$brand_id"> <input id="key" value="1" type="hidden"> <input id="brand_id" value="{weikucms:$brand_id}" type="hidden"> <else /> <input id="key" value="0" type="hidden"> </if>
+								<input id="balance" value="{weikucms:$info['balance']}" type="hidden">
+								<input id="all_earnings" value="{weikucms:$info['all_earnings']}" type="hidden">
+								<input id="x" value="{weikucms:$x}" type="hidden">
+								<input id="where" value="{weikucms:$where['id']}" type="hidden">
+								<input id="u" value="{weikucms:$u}" type="hidden">
+								<input id="g" value="{weikucms:$g}" type="hidden">
+								<input id="brand_balance" value="{weikucms:$brand['balance']}" type="hidden">
+								<button type="button" id="bsubmit" name="button" class="btn btn-primary">充值</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+	<div class="cLine">
+		<div class="clr"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#bsubmit")
+                .click(
+                        function() {
+                            var c_id = $("#c_name").attr('name');
+                            var brand_id = $("#brand_name").attr('name');
+                            var online_id = $("#online_name").attr('name');
+                            var key = $("#key").val();
+                            var brand_id = $("#brand_id").val();
+                            var balance = $("#balance").val();
+                            var all_earnings = $("#all_earnings").val();
+                            var x = $("#x").val();
+                            var where = $("#where").val();
+                            var u = $("#u").val();
+                            var g = $("#g").val();
+                            if (c_id !== undefined) {
+                                var id = c_id;
+                            } else if (brand_id !== undefined) {
+                                var id = brand_id;
+                            } else {
+                                var id = online_id;
+                            }
+                            var recharge_amount = $("#recharge_amount").val();
+                            if(!recharge_amount){
+                                notif({
+                                    msg: "充值金额不能为空！",
+                                    type: "warning"
+                                });
+                                return false;
+                            }
+                            if(!isNaN(recharge_amount)){
+                                notif({
+                                    msg: "充值金额不为合法数字！",
+                                    type: "warning"
+                                });
+                                return false;
+                            }
+                            var offers_proportion = $("#offers_proportion").val();
+                            var brand_balance = $("#brand_balance").val();
+                            if((brand_balance !== '')){
+	                            if(parseFloat(brand_balance) < parseFloat(recharge_amount)){
+		                            notif({
+			                            msg: "您的余额不足！",
+			                            type: "warning"
+		                            });
+		                            return false;
+	                            }
+                            }
+                            if (key == 1) {
+                                var url = "{weikucms::U('Laundry/recharge',array('token'=>$token))}&brand_id=" + brand_id;
+                            } else {
+                                var url = "{weikucms::U('Laundry/recharge',array('token'=>$token))}";
+                            }
+                            $.post(url, {
+                                id : id,
+                                recharge_amount : recharge_amount,
+                                offers_proportion : offers_proportion,
+                                balance : balance,
+                                all_earnings : all_earnings,
+                                x : x,
+                                where : where,
+                                u : u,
+                                g : g
+                            }, function(data) {
+                                if (data.status == 1) {
+                                    notif({
+                                        msg : data.info,
+                                        type : "success"
+                                    });
+                                    setTimeout(function() {
+                                        window.location.href = url.replace(
+                                                /recharge/, u);
+                                    }, '1000');
+                                } else {
+                                    notif({
+                                        msg : data.info,
+                                        type : "error"
+                                    });
+                                }
+                            }, 'json');
+                        });
+    });
+</script>
+<include file="Public:footer" />

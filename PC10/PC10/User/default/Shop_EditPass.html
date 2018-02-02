@@ -1,0 +1,110 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+	<div class="cLineB">
+		<h4 class="left">修改分店管理员</h4>
+
+		<div class="searchbar">
+
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以了解微门店今日的订单数、订单总数、会员总数，还可以添加分店、编辑分店、删除分店，最后还可以根据分店名称进入后台管理。</li>
+		</ol>
+	</div>
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody> 
+			       <tr> 
+				        <th> 管理员账号：</th>
+				        
+				        <td>
+				        	<input type="text" id="username" name="username" value="{weikucms:$data.username}" class="px require" style="width:300px;" readonly/>
+				        </td>
+			       </tr>
+
+			       <tr> 
+				        <th>原始密码</th>
+				        <td>
+				        	<input type="password" id="old" name="old" value="" class="px require" placeholder="请输入原始密码" style="width:300px;" />
+				        </td>
+			       </tr>
+			       <tr> 
+				        <th>新密码</th>
+				        <td>
+				        	<input type="password" id="news" name="news" value="" placeholder="请输入新密码" class="px require" style="width:300px;" />
+			       </tr>
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+       			<button type="button" id="bsubmit" name="button" class="btn btn-primary">提交</button>
+               </td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var old = $("#old").val().trim();
+            var news = $("#news").val().trim();
+            if(! old){
+                notif({
+                    msg: "原始密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! news){
+                notif({
+                    msg: "新密码不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            $.post("{weikucms::U('Shop/EditPass',array('token'=>$token,'id'=>$id))}",{old:old,news:news},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        setTimeout(function(){
+                            location.href="{weikucms::U('Shop/member',array('token'=>$token))}";
+                        },"3000");
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "warning"
+                        });
+                    }
+            },"json")
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

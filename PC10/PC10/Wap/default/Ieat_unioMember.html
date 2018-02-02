@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ieat联盟-联盟成员</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/font/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+</head>
+
+<body r='234' g='134' b='255'>
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+    <div class="c1">
+        <div class="c2">
+            <div class="c3 logo"></div>
+        </div>
+    </div>
+</div>
+<div class="top ">
+    联盟成员
+</div>
+<div class="main member">
+    <volist name="res" id="vo">
+    <div class="listbox" onclick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id']))}'">
+        <div class="listpic" style=" background-image:url({weikucms:$vo.virtual_pic});">
+        </div>
+        <div class="listtitlebox myul" style="margin-left:20%">
+            <div class="titlebox" >
+                <div class="title  ieatXianGou"><span class="titletext">{weikucms:$vo.cat_name}</span></div>
+            </div>
+        </div>
+    </div>
+    </volist>
+</div>
+
+<div class="havbox member">
+
+    <div class="hav myul" style="top:-10%">
+        <div data-tap="item" class="item tap opacity" style="margin-left:12%;">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-wenzhang"></span>
+                        <span class="smallText">了解我们</span>
+                    </div></div></div>
+
+        </div>
+
+        <div data-tap="item" class="item tap opacity  " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/apply',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-jiaru"></span>
+                        <span class="smallText">申请加入</span>
+                    </div></div></div>
+
+        </div>
+
+        <div data-tap="item" class="item tap opacity " style="margin-left:4%;" onclick="location.href='{weikucms::U('Ieat/unioMember',array('token'=>$token,'openid'=>$openid))}'">
+            <div class="item-logo l d">
+                <div class="item-logo m e">
+                    <div class="item-logo s f">
+                        <span class="icon icon-members"></span>
+                        <span class="smallText">联盟成员</span>
+                    </div></div></div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

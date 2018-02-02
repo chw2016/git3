@@ -1,0 +1,266 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+th,td{
+    text-align:center !important;
+}
+</style>
+<div class="" style="<if condition="$zm_id">margin-left:-214px;</if>">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+          <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Distribution/userlist',array('token'=>$token))}<if condition="$zm_id">&zm_id={weikucms:$zm_id}</if>">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+<!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以进行佣金结算。</li>
+    </ol>
+  </div>
+<!--tab end-->
+  <div class="box-content">
+      <form method="post" action="<if condition="$zm_id">{weikucms::U('Distribution/commission',array('token'=>$token))}&zm_id={weikucms:$zm_id}&ws_id={weikucms:$get['ws_id']}<else/>{weikucms::U('Distribution/commission',array('token'=>$token))}&zmid={weikucms:$get['zmid']}&ws_id={weikucms:$get['ws_id']}</if>">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" style="display: inline;">是否已经结算：</label>
+				<select style="width: 206px;height: 34px;border-radius: 0px;margin-top: 9px;" name="is_commission" id="is_commission">
+                    <option value="3" selected>请选择结算状态</option>
+                    <option value="1" <if condition="$post['is_commission'] eq 1 ">selected</if>>已结算</option>
+                    <option value="2" <if condition="isset($post['is_commission']) and ($post['is_commission'] eq 2)">selected</if>>未结算</option>
+                </select>
+
+                <label class="col-sm-2 control-label" style="display: inline;margin-left: 100px;">是否已经兑现：</label>
+                <select style="width: 206px;height: 34px;border-radius: 0px;margin-top: 9px;" name="ispay" id="ispay">
+                    <option value="3" selected>请选择兑现状态</option>
+                    <option value="1" <if condition="$post['ispay'] eq 1 ">selected</if>>已兑现</option>
+                    <option value="2" <if condition="isset($post['ispay']) and ($post['ispay'] eq 2)">selected</if>>未兑现</option>
+                </select>
+				<button type="submit" class="search btn btn-round btn-success">点击搜索</button>
+			</div>
+      </form>
+     <div class="msgWrap">
+    <form method="post"  action="###" id="jiesuan" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th style="text-align:center">姓名</th>
+              <th style="text-align:center">订号</th>
+              <th style="text-align:center">下单人</th>
+              <th style="text-align:center">订金</th>
+              <th style="text-align:center">支付</th>
+              <th style="text-align:center">记录时间</th>
+              <th style="text-align:center">单价</th>
+              <th style="text-align:center">数量</th>
+              <th style="text-align:center">比例</th>
+              <th style="text-align:center">总额</th>
+              <th style="text-align:center">佣金</th>
+              <th style="text-align:center">结算</th>
+              <th style="text-align:center">结算时间</th>
+              <th style="text-align:center">兑现</th>
+              <th style="text-align:center">兑现时间</th>
+              <if condition="$zm_id">
+                  <th style="text-align:center">操作</th>
+              <else />
+              </if>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="commissionRecorder" id="vo" key="k">
+            <tr class="x">
+                <td>{weikucms:$vo.ws_name}</td>
+                <td>{weikucms:$vo.order_id}</td>
+                <td>{weikucms:$vo.order_name}</td>
+                <td>{weikucms:$vo.order_price}</td>
+                <td><if condition="$vo['paid'] eq 1"><span style="color: #00a600;">是</span><else /><span style="color: red;">否</span></if></td>
+                <td>{weikucms:$vo.add_time}</td>
+                <if condition="$zm_id and ($vo['single_price'] eq '0.000') and ($vo['commission_proportion'] eq '0.000') and ($vo['attribution'] eq '0.000')">
+                <td><input id="{weikucms:$k}1" style="width: 70px;" value="{weikucms:$vo.single_price}" onchange="setS(this.value,{weikucms:$k})"/>元/㎡</td>
+                <td><input id="{weikucms:$k}3"  style="width: 70px;" value="{weikucms:$vo.attribution}" onchange="setA(this.value,{weikucms:$k})" />㎡</td>
+                <td><input id="{weikucms:$k}2"  style="width: 70px;" value="{weikucms:$vo.commission_proportion}" onchange="setP(this.value,{weikucms:$k})"/></td>
+                <else />
+                <td>{weikucms:$vo.single_price}元/㎡</td>
+                <td>{weikucms:$vo.attribution}㎡</td>
+                <td>{weikucms:$vo.commission_proportion}</td>
+                </if>
+                <td id="{weikucms:$k}4">{weikucms::$vo['single_price']*$vo['attribution']}元</td>
+                <td id="{weikucms:$k}5">{weikucms::$vo['single_price']*$vo['attribution']*$vo['commission_proportion']}元</td>
+                <td><if condition="$vo['is_commission'] eq 1"><span style="color: #00a600;">已结算</span><else /><span style="color: red;">未结算</span></if></td>
+                <td>{weikucms:$vo.commission_time}</td>
+                <td><if condition="$vo['ispay'] eq 2"><span style="color: red;">未兑现</span><elseif condition="$vo['ispay'] eq 1" /><span style="color:#00a600 ">已兑现</span></if></td>
+                <td>{weikucms:$vo.pay_time}</td>
+                <if condition="$zm_id">
+                <td>
+                    <if condition="($vo['is_commission'] eq 1) and ($vo['ispay'] eq 2)">
+                        <a class="btn btn-success btn-sm" title="兑现" onclick="payCash({weikucms:$vo.id})">兑现</a>
+                        <elseif condition="($vo['is_commission'] eq 2) and ($vo['ispay'] eq 2)" />
+                        <a class="btn btn-success btn-sm" title="结算" onclick="commission({weikucms:$vo.id},{weikucms:$k},{weikucms:$vo.paid})">结算</a>
+                        <elseif condition="($vo['is_commission'] eq 1) and ($vo['ispay'] eq 1)" />
+                        <a class="btn btn-success btn-sm" title="已兑现">已兑现</a>
+                    </if>
+                </td>
+                <else />
+                </if>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+<script>
+function setS(thv,k){
+    var attribution = $("#"+k+3).val().trim();
+    var re = /^[0-9]+.?[0-9]*$/;
+    if(re.test(thv)){
+        if(re.test(attribution)){
+            var all_amount = parseFloat(attribution) * parseFloat(thv);
+            $("#"+k+4).text(all_amount+"元");
+        }
+    }
+}
+function setA(thv,k){
+    var single = $("#"+k+1).val().trim();
+    var re = /^[0-9]+.?[0-9]*$/;
+    if(re.test(thv)){
+        if(re.test(single)){
+            var all_amount = parseFloat(single) * parseFloat(thv);
+            $("#"+k+4).text(all_amount+"元");
+        }
+    }
+}
+function setP(thv,k){
+    var all_amount = $("#"+k+4).text().trim();
+    var re = /^[0-9]+.?[0-9]*$/;
+    if(re.test(thv)){
+        if(re.test(all_amount)){
+            var commission = parseFloat(thv) * parseFloat(all_amount);
+            $("#"+k+5).text(commission+"元");
+        }
+    }
+}
+function commission(cid,k,paid){
+    var zmid = "{weikucms:$zm_id}";
+    var ws_id = "{weikucms:$get['ws_id']}";
+    var re = /^[0-9]+.?[0-9]*$/;
+    if(zmid){
+        var single_price = $("#"+k+"1").val().trim(0);
+        var p = $("#"+k+"2").val().trim();
+        var attribution = $("#"+k+"3").val().trim();
+        if(!single_price || single_price == '0.00'){
+            notif({
+                msg:"请输入单价",
+                type:"warning"
+            });
+            return false;
+        }
+        if(!re.test(single_price)){
+            notif({
+                msg:"请输入合法的单价",
+                type:"warning"
+            });
+            return false;
+        }
+        if(!re.test(attribution)){
+            notif({
+                msg:"请输入合法的属性",
+                type:"warning"
+            });
+            return false;
+        }
+        if(!attribution || attribution == '0.00'){
+            notif({
+                msg:"请输入属性",
+                type:"warning"
+            });
+            return false;
+        }
+        if(!p || p == '0.00'){
+            notif({
+                msg:"请输入佣金比例",
+                type:"warning"
+            });
+            return false;
+        }
+        if(paid !== 1){
+            notif({
+                msg:"该订单未支付成功，不能结算",
+                type:"warning"
+            });
+            return false;
+        }
+        $.ajax({
+            url:"{weikucms::U('Distribution/docommission',array('token'=>$token))}&zm_id={weikucms:$zm_id}&ws_id={weikucms:$get['ws_id']}",
+            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:"json",
+            data:{cid:cid,single_price:single_price,p:p,attribution:attribution},
+            success:function(data){
+                if(data.status == 1){
+                    notif({
+                        msg:data.info,
+                        type:"success"
+                    });
+                    setTimeout(function(){
+                        window.location.reload();
+                    },'1000');
+                }else if(data.stauts == 0){
+                    notif({
+                        msg:data.info,
+                        type:"warning"
+                    });
+                }else if(data.statua == -1){
+                    notif({
+                        msg:data.info,
+                        type:"error"
+                    });
+                }
+            }
+        });
+    }
+}
+function payCash(cid){
+    if(confirm("您确定兑现吗？")){
+        $.ajax({
+            url:"{weikucms::U('Distribution/payCash',array('token'=>$token))}&zm_id={weikucms:$zm_id}&ws_id={weikucms:$get['ws_id']}",
+            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            dataType:"json",
+            data:{cid:cid},
+            success:function(data){
+                if(data.status == 1){
+                    notif({
+                        msg:data.info,
+                        type:"success"
+                    });
+                    setTimeout(function(){
+                        window.location.reload();
+                    },'1000');
+                }else if(data.status == 0){
+                    notif({
+                        msg:data.info,
+                        type:"warning"
+                    });
+                }else{
+                    notif({
+                        msg:data.info,
+                        type:"error"
+                    });
+                }
+            }
+        });
+    }
+}
+
+</script>
+
+  </div>
+</div>
+<include file="Public:footer" />

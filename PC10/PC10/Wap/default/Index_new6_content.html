@@ -1,0 +1,68 @@
+<html>
+<head>
+	<include file="Public:weiweb"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{weikucms:$tpl['name']}</title>
+	<style type="text/css">
+		body{
+			list-style: none;
+			margin-top:10px;
+			padding: 0;
+		}
+		#header{
+			width: 97%;
+			margin: 0 auto;
+			padding: 0;
+			/*text-align: center;*/
+			background:#fffcd7;
+		}#header img{
+			margin-bottom: 0;
+			/*border: 2px solid #393;*/
+			width: 100%;
+			height: 48%;
+			margin-top:20px;
+			margin-left: -1px;
+		}#header .size{
+			text-indent: 1.0em;
+			font-size: 13px;
+			
+		}.size_1{
+			font-size: 17px;
+			text-align:center;
+		}.size_2{
+			font-size: 11px;
+			text-align:center;
+		}.all{
+			font-family: "Microsoft YaHei";
+			color: #666;
+			line-height: 26px;
+			text-shadow:1px 1px 1px ##e9ebf4;
+		}.size_3{
+			font-size: 13px;
+			text-align: center;
+			margin-top:15px;
+		}
+	</style>
+</head>
+<body>
+	<include file="Public:audio"/> 
+	<div id="header">
+		
+			<img src="{weikucms:$res.pic}" />
+			<div class="content">
+			<p class="size_1 all">{weikucms:$res.title}</p>
+			<p class="size_2 all">时间：<php> echo date('Y-m-d',$res['createtime']);</php></p>
+			<p class="size all">{weikucms:$res.info|htmlspecialchars_decode}</p>
+	
+		
+		<p class="all size_3">
+			<span>
+				&copy;{weikucms:$tpl.name}-
+				<php>echo C('site_my');</php>
+			</span>
+		</p>
+		</div>
+	</div>
+	<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+</html>

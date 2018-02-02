@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:weiweb"/>
+    <title>{weikucms:$tpl['name']}</title>
+    <link href="{weikucms::STATICS}/wapweiui/weiweb/new_144/index.css" rel="stylesheet" />
+    <link href="{weikucms::STATICS}/wapweiui/weiweb/new_144/theme_tea.css" rel="stylesheet" />
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<include file="Public:audio"/> 
+<div data-role="container" class="body index">
+    <header data-role="header">
+        <section id="scroll_pic_view" class="scroll_pic_view">
+            <div id="scroll_pic_view_div">
+                <ul id="scroll_pic_view_ul">
+                    <volist name="flash" id="so">
+                    <li>
+                        <a onclick="return false;">
+
+                            <img src="{weikucms:$so.img}" />
+                        </a>
+                    </li>
+                   </volist>
+                </ul>
+                <div class="tmc"></div>
+            </div>
+            <div>
+                <ol id="scroll_pic_nav" class="scroll_pic_nav">
+                    <script>
+                        (function(d, $){
+                            var scrollPicView = d.getElementById("scroll_pic_view"),
+                                    scrollPicViewDiv = d.getElementById("scroll_pic_view_div"),
+                                    lis = scrollPicViewDiv.querySelectorAll("li"),
+                                    w = scrollPicView.offsetWidth,
+                                    len = lis.length;
+                            for(var i=0; i<len; i++){
+                                lis[i].style.width = w+"px";
+                                if(i == len-1){
+                                    scrollPicViewDiv.style.width = w * len + "px";
+                                }
+                            }
+
+                            var scroll_pic_view = new iScroll('scroll_pic_view', {
+                                snap: true,
+                                momentum: false,
+                                hScrollbar: false,
+                                useTransition: true,
+                                onScrollEnd: function() {
+                                    $("#scroll_pic_nav li").removeClass("on").eq(this.currPageX).addClass("on");
+                                }
+                            });
+                            //
+                            var nav_lis = new Array(lis.length);
+                            nav_lis[0] = '<li class="on"></li>';
+                            d.write(nav_lis.join('<li></li>') );
+                        })(document, $);
+                    </script>
+                </ol>
+            </div>
+    </header>
+    <section data-role="body">
+        <div class="tel_div">
+            <a class="tel hotline" href="tel:{weikucms:$speeddial.phone}">电话拨打  </a>
+        </div>
+        <ul>
+            <volist name="info" id="vo">
+            <li>
+                <a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token'],'wecha_id'=>$_GET['openid'],'openid'=>$_GET['openid']))}<else/>{weikucms:$vo.url}&openid=<php>echo $_GET['openid'];</php>&wecha_id=<php>echo $_GET['openid'];</php></if>"></span>
+
+                    <label style="line-height:5.5em;">{weikucms:$vo.name}</label>
+                </a>
+            </li>
+            </volist>
+        </ul>
+
+    </section>
+
+    <footer class="footer" style="text-align: center;padding: 10px;font-size: 13px;">
+        <span>©<php>echo $tpl['name'];echo '-';echo C('site_my');</php></span>
+    </footer>
+</div>
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="恒博物业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>恒博物业-我要报修</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/baoxiu.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/main.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+    </head>
+    <body>
+		<div class="h-title">
+			<div class="input selectMi education">
+				<span class="selectedMi"><if condition="$aAname neq ''">{weikucms:$aAname.ursename}<else/>当前小区</if></span>
+			</div>
+			<div class="selectMiList educationBox">
+				<ul>
+                    <volist name="aArea" id="vo">
+					    <li class="miList"><a href="{weikucms::U('Hengbo/index',array('token'=>$token,'openid'=>$openid,'aid'=>$vo['id']))}">{weikucms:$vo.ursename}</a></li>
+				    </volist>
+                </ul>
+			</div>
+		</div>
+		<div class="my-bx">
+			<table>
+				<tr>
+					<td>
+						<a id="isuser">
+						<div><img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-bx.png" /></div>
+						<div class="bx-title">我要报修</div>
+						</a>
+					</td>
+					<td>
+						<a href="{weikucms::U('Hengbo/myorders',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+						<div><img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-mybx.png" /></div>
+						<div class="bx-title">我的报修</div>
+						</a>
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+                        <a href="{weikucms::U('Hengbo/bulletin',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+						<div class="rl">
+							<div class="new"></div>
+							<img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-gg.png" />
+						</div>
+						<div class="bx-title">通知公告</div>
+						</a>
+					</td>
+					<td>
+                        <a id="isusercom">
+						<div><img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-ts.png" /></div>
+						<div class="bx-title">投诉建议</div>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+                        <a href="{weikucms::U('Hengbo/areainfo',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+						<div><img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-lx.png" /></div>
+						<div class="bx-title">联系物业</div>
+						</a>
+					</td>
+					<td>
+                        <a href="{weikucms::U('Hengbo/usersbo',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}">
+						<div><img src="{weikucms::STATICS}/wapweiui/hengbo/img/bx-info.png" /></div>
+						<div class="bx-title">会员信息</div>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+    </body>
+<script type="text/javascript">
+    $(function(){
+        $("#isuser").click(function () {
+            var url = "{weikucms::U('Hengbo/isusers',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}";
+            $.post(url, {type:1},
+                    function(datas){
+                        if(datas.codes ==1){
+                            window.location.href = datas.urles;
+                        }else{
+                            msg.alert(datas.mgs,"知道了",function(){
+                                window.location.href = datas.urles;
+                            });
+                            /*alert(datas.mgs);
+                            window.location.href = datas.urles;*/
+                        }
+                    },'json');
+        });
+        $("#isusercom").click(function () {
+            var url = "{weikucms::U('Hengbo/isusers',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}";
+            $.post(url, {type:2},
+                    function(datas){
+                        if(datas.codes ==1){
+                            window.location.href = datas.urles;
+                        }else{
+                            msg.alert(datas.mgs,"知道了",function(){
+                                window.location.href = datas.urles;
+                            });
+                        }
+                    },'json');
+        })
+    })
+</script>
+</html>

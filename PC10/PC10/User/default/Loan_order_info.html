@@ -1,0 +1,70 @@
+<include file="Public:head"/>
+
+
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            联系人物资料
+            <if condition="$info['title']">
+                <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="{weikucms::U('Commercedy/huati_index',array('token'=>$token))}">
+
+                <else />
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #C4E238;" href="javascript:history.go(-1);">
+                </if>
+                返回
+            </a>
+        </h4>
+    </div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+                <tr>
+                    <th valign="top"><label for="key">订单编号(消费码)</label></th>
+                    <td>
+                        <p><span style="margin-right: 50px;">{weikucms:$info.orderid}</p>
+                    </td>
+                </tr>
+                <if condition="$info['date_time']">
+
+                <tr>
+                    <th valign="top"><label for="key">出团日期</label></th>
+                    <td>
+                        <p><span style="margin-right: 50px;">{weikucms:$info.date_time}</p>
+
+                    </td>
+                </tr>
+                    </if>
+                <volist name="list" id="vo">
+                <tr>
+                    <th valign="top"><label for="key">联系人（{weikucms:$i}）</label></th>
+                    <td>
+                        <p><span style="margin-right: 50px;">姓名{weikucms:$vo.name}</span>电话号码:{weikucms:$vo.phone}</p>
+                        <span style="margin-right: 10px; color: #000080">其他需求:</span>{weikucms:$vo.other}
+                    </td>
+                </tr>
+                    </volist>
+
+
+
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+

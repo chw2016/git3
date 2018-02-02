@@ -1,0 +1,59 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+  <div class="cLineB">
+    <h4>订单详细信息</h4>
+  </div>
+  <div class="cLineB" id="uppict" style="display:none">
+  </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>订单详细信息</li>
+        </ol>
+    </div>
+  <div class="msgWrap">
+      <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+          <tr>
+            <input type="hidden" class="px" id="id" value="{weikucms:$id}" name="id">
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION["token"]}" name="token">
+            <foreach name="info" key="key" item="item">
+            <tr>
+                <th valign="top"><label for="keyword">{weikucms:$key}</label></th>
+                <td>
+                    <if condition="in_array($key, $aListImg['container'])">
+                    <img src="{weikucms:$item}" width="{weikucms:$aListImg['width']}" height="{weikucms:$aListImg['width']}">
+                    <else />
+                    <php>echo htmlspecialchars_decode($item);</php>
+                    </if>
+                </td>
+                <td></td>
+            </tr>
+            </foreach>
+        </TBODY>
+      </table>
+    <a target="_self" class="btn btn-success btn-sm" href="{weikucms::U('order')}">返回</a>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<include file="Public:footer"/>
+<script>
+    document.getElementById('savebtn').onclick = function(){
+        //地区
+        if($('#title').val() == ''){
+            notif({
+                msg: '请填写地区名称',
+                type: 'warning'
+            });
+            return false;
+        }
+        return true;
+    }
+</script>

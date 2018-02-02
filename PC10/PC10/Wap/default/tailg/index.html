@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>台铃</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/style.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/font/style.css">
+        <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/tailg/css/load/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/main.js"></script>
+		<script src="{weikucms::STATICS}/common/f.js"></script>
+		<script src="{weikucms::STATICS}/common/samphay-jquery.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/init.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/tailg/js/msg.js"></script>
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    </head>
+    <body>
+    <div class="loading">
+        <!-- <img src="img/bg.png" alt="" >-->
+        <div class="loadingtext">
+            <span id="loading"><span class="loading-spinner9"></span>正在启动...</span>
+
+        </div>
+    </div>
+    <div class="mapOpen" style="display: none;position: absolute; top: 10px; left: 10px; z-index: 9999999999999; background-color: #FFFFFF; color: #000; border-radius: 5px; font-size: 12px; padding: 3px 10px; border: 1px solid rgb(151, 151, 249);">关闭</div>
+    <div class="header">
+    	<div class="banner containBg" style="background-image:url({weikucms::STATICS}/wapweiui/tailg/img/banner.png)">
+    	</div>
+    	<div id="map"></div>
+    </div>
+    <div class="controllBox">
+    	<div class="menuWrap none">
+            <div class="menu">
+                <img src="{weikucms::STATICS}/wapweiui/tailg/img/menuButton.png" alt="" id="menuButton">
+                <div class="menuButton m easyActive" data="easyActive">
+                    <div class="icon">
+                        <span class="icon-open"></span>
+                    </div>
+                    <div class="text">一键启动</div>
+                </div>
+                <div class="menuButton m findCarAlert" data="findCarAlert">
+                    <div class="icon">
+                        <span class="icon-alert"></span>
+                    </div>
+                    <div class="text">寻车警报</div>
+                </div>
+                <div class="menuButton m quietCarAlert" data="quietCarAlert">
+                    <div class="icon">
+                        <span class="icon-quiet"></span>
+                    </div>
+                    <div class="text">静音设防</div>
+                </div>
+                <div class="menuButton m unlock" data="unlock">
+                    <div class="icon">
+                        <span class="icon-unlock"></span>
+                    </div>
+                    <div class="text">解锁</div>
+                </div>
+                <div class="menuButton m lock" data="lock">
+                    <div class="icon">
+                        <span class="icon-lock"></span>
+                    </div>
+                    <div class="text">落锁</div>
+                </div>
+                <div class="menuButton m openSeat" data="openSeat">
+                    <div class="icon">
+                        <span class="icon-key"></span>
+                    </div>
+                    <div class="text">打开坐桶</div>
+                </div>
+                <div class="gpsButton m online"></div>
+                <div class="menuButton m closeUnlock" data="closeUnlock">
+                    <span class="icon">
+                        <span class="icon-charge"></span>
+                    </span>
+                    <div class="text">防抢断电</div>
+                </div>
+
+                <div class="menuButton closeActive" >
+                    <div class="text">解锁上电</div>
+                    <div class="slideButton m" data="closeActive">
+                        <div class="slideCircle "></div>
+                    </div>
+                </div>
+            </div>
+            <div class="myul hav">
+                <div class="bindButton bind">
+                    <div class="circle text">
+                        绑定
+                    </div>
+                </div>
+                <div class="noNoElectric f16 border-26 m" >
+                    <!--
+                    <span class="icon">
+                        <span class="icon-charge"></span>
+                    </span>
+                    -->
+                    <!--
+                    <span class="text TonoNoElectric">防抢断电</span>
+                    -->
+                    <span class="text">
+                        <a href="{weikucms::U('Tailg/map', array('token'=>$token,'openid' => $openid))}">轨迹回放</a>
+                    </span>
+                </div>
+                <a href='{weikucms::U("Tailg/login",array("token"=>$token,"openid"=>$openid, "logout" => 1))}'>
+                    <div class="bindButton login">
+                        <div class="circle text">
+                            退出
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="sensitive">
+                <span class="text">灵敏度调节</span>
+
+                <div class="sensitiveSetting">
+                    <div class="sensitveFull"></div>
+                    <div class="sensitiveSlider"></div>
+                </div>
+                <span id="sensitiveCount" class="hide"></span>
+            </div>
+        </div>
+    </div>
+	<div class="alertBox" style="position: fixed !important;">
+		<div class="alert">
+			<span class="alertContent">
+				操作成功！
+			</span>
+		</div>
+		<div class="alertInput" style="bottom: 135px;display:flex; min-height: 130.413793px !important;">
+            <div>
+           <if condition="$iNum lt 3">
+                <div class="input">
+                    <input type="tel" id="mobile" name="mobile" placeholder="请输入您的手机号码">
+                </div>
+                <span class="confirmBind">确认绑定</span>
+                <div style="clear: both"> </div>
+            <else/>
+                <div  style="position: absolute;top: 20px;height: 40px;line-height: 40px;left: 15px;">
+                    对不起，此处最多只能绑定三个手机号！
+                </div>
+           </if>
+           </div>
+            <div style="position: absolute;top: 60%;left: 19px;color: #B8B6B6;">
+                <h5 style="position: relative;">已绑定的手机号码：(最多只能绑定三个)</h5>
+                <div class="bindPhone" style="position: absolute;font-size: 13px;">
+                    {weikucms:$sphone}
+                    <!--15243565655,15465455465,15465455465-->
+                </div>
+                <input type="hidden" id="phone1" value="">
+                <input type="hidden" id="phone2" value="">
+                <input type="hidden" id="phone3" value="">
+            </div>
+		</div>
+	</div>
+    <div class="loginBox">
+
+    </div>
+    <script type="text/javascript">
+    /*
+    	slideOPen(".slideButton",{
+			on:function(){
+				tips.tip("按钮开启")
+			},
+			off: function(){
+				tips.tip("按钮关闭")
+			},
+			"openClass" : "on"
+		})
+       */
+
+		/*
+		* 绑定手机号码
+		*/
+		$(function(){
+
+                //判断用户状态
+                $('.gpsButton.online').waiting(null, 20);
+                $.post(
+                    "{weikucms::U('Tailg/info',array('token'=>$token,'openid'=>$openid))}",
+                    {},
+                    function(ret){
+                        if(ret.code == 0){
+                            if(ret.is_online == 0){//离线
+                                $('.gpsButton.online').addClass('off').text('离线');
+                            }else if(ret.geo == 0){//定位失败
+                                $('.gpsButton.online').text('未定位');
+                            }else{
+                                $('.gpsButton.online').text('gps');
+                            }
+                        }
+                        if(ret.status.cf == '00'){
+                            $('.menuButton.unlock').addClass('on');
+                            $('.menuButton.lock').removeClass('on');
+                        }else if(ret.status.cf == '01'){
+                            $('.quietCarAlert').addClass('on');
+                        }else if(ret.status.cf == '10'){
+                            $('.menuButton.lock').addClass('on');
+                            $('.menuButton.unlock').removeClass('on');
+                        }
+                        if(ret.status.jssd == 1){
+                            $(".closeActive .slideButton").addClass('on');
+                        }
+                    }
+                ,'json');
+
+
+                //获取用户绑定的手机号码
+                i = 0;
+                var PhoneTime = null;
+                var pnum = 10;
+
+                var url = "{weikucms::U('Tailg/ajaximei',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url, {'aimei':'#A116###'}, function(ret){
+                    if(ret.code == 0){
+
+                PhoneTime = setInterval(function(){
+                    i++;
+                    ajax(
+                        "{weikucms::U('Wap/Tailg/getResult',array('token'=>$token,'openid'=>$openid))}",
+                        {'aimei':'#A116###'},
+                        function(ret){
+                            if(ret['code'] == 0){//成功
+                                    clearTimeout(PhoneTime)
+                                    var sPhone = ret.aData;
+                                    var lastIndex = sPhone.lastIndexOf(',');
+                                    if(lastIndex != -1 && lastIndex == (sPhone.length -1)){
+                                        sPhone = sPhone.substring(0, lastIndex)
+                                    }
+                                    $('.bindPhone').text(sPhone);
+                                    var aPhone = sPhone.split(',')
+                                    $('.bindPhone').val(ret.aData)
+                                    if(typeof(aPhone[0]) != 'undefined'){
+                                        $('#phone1').val(aPhone[0])
+                                    }
+                                    if(typeof(aPhone[1]) != 'undefined'){
+                                        $('#phone2').val(aPhone[1])
+                                    }
+                                    if(typeof(aPhone[2]) != 'undefined'){
+                                        $('#phone3').val(aPhone[2])
+                                    }
+                            }else{
+                                if(i > pnum ){
+                                    clearTimeout(PhoneTime)
+                                }
+                            }
+                        }
+                    );
+                }, 1000);
+
+
+                    }else{
+                        return msgAlert('错误：设置失败', 1000);
+                    }
+                }, 'json');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            sensitive(".sensitiveSlider",function(e){
+                var aimei = "#A108#"+e+"##";
+                tips.tip("正在设置...", 100000);
+                var data = {aimei:aimei};
+                ajaxval(aimei, $(this));
+            },6,15)
+
+
+
+			$(".bindButton.bind").click(function(){
+				tips.alertInput()
+			})
+			$(".confirmBind").click(function(){
+				var phone = $("#mobile").val();
+                $('#mobile').attr('cur', phone)
+                //var urlone = "{weikucms::U('Tailg/index',array('token'=>$token,'openid'=>$openid))}";
+				check.bindPhone(phone,function(){
+
+                    if(
+                        phone == $('#phone1').val() ||
+                        phone == $('#phone2').val() ||
+                        phone == $('#phone3').val()
+                    ){
+                        return tips.tip('该号码已经设置', 1000);
+                    }
+
+
+                tips.tip('正在设置...', 1000000);
+                //获取用户绑定的手机号码
+                i = 0;
+                var PhoneTime = null;
+                var pnum = 3;
+
+                var url = "{weikucms::U('Tailg/ajaximei',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url, {'aimei':'#A116###'}, function(ret){
+                    if(ret.code == 0){
+
+                PhoneTime = setInterval(function(){
+                    i++;
+                    ajax(
+                        "{weikucms::U('Wap/Tailg/getResult',array('token'=>$token,'openid'=>$openid))}",
+                        {'aimei':'#A116###'},
+                        function(ret){
+                            if(ret['code'] == 0){//成功
+                                    clearTimeout(PhoneTime)
+                                    var aPhone = ret.aData.split(',')
+                                    $('.bindPhone').val(ret.aData)
+                                    if(typeof(aPhone[0]) != 'undefined'){
+                                        $('#phone1').val(aPhone[0])
+                                    }
+                                    if(typeof(aPhone[1]) != 'undefined'){
+                                        $('#phone2').val(aPhone[1])
+                                    }
+                                    if(typeof(aPhone[2]) != 'undefined'){
+                                        $('#phone3').val(aPhone[2])
+                                    }
+                                    var $msgBlur = $('#msgBlur')
+                                    //tips.tip("正在设置...", 100000);
+                                    msgAlert('正在设置...', 100000);
+                                    var phone1 = $('#phone1').val()
+                                    var phone2 = $('#phone2').val()
+                                    var phone3 = $('#phone3').val()
+                                    /*
+                                    if(phone3 != ''){
+                                        $msgBlur.find('.msgContent').text('亲，最多只能绑三个哦')
+                                        setTimeout(function(){
+                                            $msgBlur.remove();
+                                        }, 1000)
+                                    }
+                                    */
+                                    ajaxval('#A113#'+phone+'#'+ phone1 +'#'+phone2 +'##', $(this), {"phone": phone})
+                            }else{
+                                if(i > pnum ){
+                                    clearTimeout(PhoneTime)
+                                    msgAlert('设置失败', 1000);
+                                    setTimeout(function(){
+                                        $('.alertBox').trigger('click');
+                                    }, 1000)
+                                    //tips.tip('设置失败', 2000);
+                                }
+                            }
+                        }
+                    );
+                }, 1000);
+
+
+                    }else{
+                        return msgAlert('错误：设置失败', 1000);
+                    }
+                }, 'json');
+
+
+
+
+
+
+
+
+				})
+			})
+            $(".gpsButton").click(function(){
+                /*
+                if($(this).hasClass('off')){
+                    return false;
+                }
+                */
+
+                var $msgBlur = $('#msgBlur');
+                $msgBlur.remove();
+                if($(this).hasClass('on')){
+                    $(this).removeClass('on');
+                    tips.tip("地图关闭");
+                    $('.controllBox').removeClass('open');
+                    $('.mapOpen').hide();
+                    $(".header").removeClass('map');
+                    return;
+                }else{
+                    $(this).addClass('on');
+                }
+
+                tips.tip('正在获取地点...', 100000);
+
+                var url = "{weikucms::U('Tailg/ajaximei',array('token'=>$token,'openid'=>$openid))}";
+                var data = {aimei:'#A111###'}
+				queryMap();
+				return;
+                $.post(url, data, function(json){
+                    getResult(json, data, function(ret){
+                        if(parseInt(ret.aData.longitude) > 0){
+                            $(this).addClass('on');
+                            tips.tip("地图开启", 1000);
+                            $(".header").addClass('map');
+                            $('.controllBox').addClass('open');
+                            $('.mapOpen').show();
+                            getMap("map", ret.aData);
+                        }else{
+                            queryMap();
+                        }
+                    }, queryMap);
+                }, 'json');
+
+            });
+
+            $('.slideButton').click(function(){
+                tips.tip("正在设置...", 100000);
+                var type = $(this).attr('data');
+                if($(this).hasClass('on')){
+                    if(type == 'closeUnlock'){
+                        var aimei = "#A101#0##";
+                    }else if(type == 'closeActive'){
+                        var aimei = "#A114#0##";
+                    }
+                    ajaxval(aimei, $(this));
+                }else{
+                    if(type == 'closeUnlock'){
+                        var aimei = "#A101#1##";
+                    }else if(type == 'closeActive'){
+                        var aimei = "#A114#1##";
+                    }
+                    ajaxval(aimei, $(this));
+                }
+            });
+
+
+            $(".menuButton").not('.closeActive').click(function() {
+                var type = $(this).attr('data');
+                if(!$(this).hasClass('on')){
+                    if(type == 'easyActive'){
+                        var aimei = "#A100###";
+                    }else if(type == 'findCarAlert'){
+                        var aimei = "#A105###";
+                    }else if(type == 'quietCarAlert'){
+                        var aimei = "#A107###";
+                    }else if(type == 'unlock'){
+                        var aimei = "#A103###";
+                    }else if(type == 'lock'){
+                        var aimei = "#A104###";
+                    }else if(type == 'openSeat'){
+                        var aimei = "#A106###";
+                    }else if(type == 'closeUnlock'){
+                        var aimei = '#A109###';
+                    }
+                    ajaxval(aimei, $(this));
+                }
+            });
+            $('.TonoNoElectric').click(function(){
+                var aimei = "#A109###";
+                ajaxval(aimei, $(this));
+            })
+
+        function msgAlert(msg, time){
+            var $msgBlur = $('#msgBlur')
+            $('.alertBox').trigger('click')
+            if($msgBlur.length > 0){
+                $msgBlur.find('.msgContent').text(msg)
+                setTimeout(function(){
+                    $msgBlur.remove();
+                }, time)
+            }else{
+                msg.alert(msg, time)
+            }
+        }
+
+        function queryMap(data){
+            var $msgBlur = $('#msgBlur');
+            $(".header").addClass('map');
+            var url = "{weikucms::U('Tailg/getGEO',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url, {}, function(json){
+                $msgBlur.remove();
+                if(typeof(json.aData['longitude']) != 'undefined'){
+                    //$(this).addClass('on');
+                    tips.tip("地图开启", 1000);
+                    $(".header").addClass('map');
+                    $('.controllBox').addClass('open');
+                    $('.mapOpen').show();
+                    console.log(json.aData)
+                    getMap("map", json.aData);
+                }else{
+                    //$msgBlur.find('.msgContent').text('获取地点失败')
+                    tips.tip('没有地理位置数据', 1000);
+                    $(".header").removeClass('map');
+                }
+            }, 'json');
+        }
+
+
+
+
+        var Timeout = false;
+        var i       = 0;
+        var num     = 10;
+        function getResult(json, data, callback, err){
+            if(json['code'] != 0){
+                //$('#msgBlur').remove();
+                //msg.alert('获取失败，请重试', '', 1000);
+                if(typeof(err) != 'function'){
+                    msgAlert('获取失败，请重试', 1000)
+                }else{
+                    err();
+                }
+                $('.alertBox').trigger('click')
+                return;
+            }
+            i = 0;
+            Timeout = setInterval(function(){
+                i++;
+                ajax(
+                    "{weikucms::U('Wap/Tailg/getResult',array('token'=>$token,'openid'=>$openid))}",
+                    data,
+                    function(ret){
+                        if(ret['code'] == 0){//成功
+                            clearTimeout(Timeout)
+                            if(typeof(callback) == 'function'){
+                                callback(ret);
+                            }
+                        }else{
+                            if(i > num){
+                                clearTimeout(Timeout)
+                                //msg.alert('获取失败，请重试', '', 1000);
+                                if(typeof(err) == 'function'){
+                                    err();
+                                }else{
+                                    msgAlert('获取失败，请重试', 1000);
+                                }
+                            }
+                        }
+                    }
+                );
+            }, 1000);
+        }
+
+
+
+
+            /*数据上传至后台*/
+            function ajaxval(aimei, $this){
+                tips.tip("正在设置...", 100000);
+                var url = "{weikucms::U('Tailg/ajaximei',array('token'=>$token,'openid'=>$openid))}";
+                var data = {aimei:aimei}
+                $.post(url, data, function(json){
+                    getResult(json, data, function(ret){
+                        var $msgBlur = $('#msgBlur');
+                        if(ret.code == 0 ){
+                            var type = $this.attr('data');
+                            /*
+                            if($this.hasClass('on')){
+                                if(
+                                    type != 'easyActive' &&
+                                    type != 'findCarAlert' &&
+                                    type != 'openSeat' &&
+                                    type != 'quietCarAlert'
+                                ){
+                                    $this.removeClass('on');
+                                }
+                            }
+                            */
+                            reset($this);
+                            $this.toggleClass('on')
+                            var sCurPhone = $('.bindPhone').text();
+                            var sPhone1 = $('#phone1').val();
+                            var sPhone2 = $('#phone2').val();
+                            var bindPhone = $('#mobile').attr('cur');
+                            if( sPhone1 != ''){
+                                bindPhone += (',' + sPhone1);
+                            }
+                            if( sPhone2 != ''){
+                                bindPhone += (',' + sPhone2);
+                            }
+
+                            $('.bindPhone').text(bindPhone);
+                            $('.alertBox').trigger('click')
+                            $msgBlur.find('.msgContent').text('成功!');
+                        }else{
+                            $msgBlur.find('.msgContent').text('失败');
+                        }
+                        setTimeout(function(){
+                            //$msgBlur.remove();
+                            $(".cancelMsg").trigger('click');
+                        }, 1000)
+                    })
+                },'json')
+            }
+
+            function reset($this){
+                $('.easyActive, .quietCarAlert, .openSeat, .lock, .unlock').not($this).removeClass('on')
+                if($this.hasClass('lock')){
+                    $('.menuButton.unlock').removeClass('on')
+                    return;
+                }else if($this.hasClass('unlock')){
+                    $('.menuButton.lock').removeClass('on')
+                    return;
+                }
+                setTimeout(function(){
+                    if(
+                        $this.hasClass('findCarAlert') ||
+                        $this.hasClass('easyActive') ||
+                        $this.hasClass('unlock') ||
+                        $this.hasClass('lock') ||
+                        $this.hasClass('quietCarAlert') ||
+                        $this.hasClass('closeUnlock') ||
+                        $this.hasClass('openSeat')
+                    ){
+                        $this.removeClass('on');
+                    }
+                }, 3000);
+            }
+		})
+
+
+        $('.mapOpen').click(function(){
+            $('.gpsButton.online').trigger('click');
+        })
+    </script>
+    </body>
+</html>

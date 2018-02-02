@@ -1,0 +1,171 @@
+<include file="Public:head"/> 
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script>
+    KindEditor.ready(function(K){
+
+        var editor = K.editor({
+
+            allowFileManager:true
+
+        });
+
+
+        K('#upload_site_map_1').click(function() {
+
+            editor.loadPlugin('image', function() {
+
+                editor.plugin.imageDialog({
+
+                    fileUrl : K('#pic').val(),
+
+                    clickFn : function(url, title) {
+
+                        if(url.indexOf("http") > -1){
+
+                            K('#pic').val(url);
+
+                        }else{
+
+                            K('#pic').val(url);
+
+                        }
+
+                        editor.hideDialog();
+
+                    }
+
+                });
+
+            });
+
+        });
+    });
+</script>
+
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>奖品添加</h4>
+
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%"><TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>奖品名称：</th>
+                    <TD>
+                        <input type="input" class="px" value="奖品名称" style="width:400px;" name="gname" id="gname"><br />
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>商品中奖总量：</th>
+                    <TD>
+                        <input type="input" class="px" value="0" style="width:400px" name="tnum" id="tnum"/>
+                        <input type="hidden" class="px" value="{weikucms:$id}" style="width:400px" name="lid" id="tnum"/>
+                        <br>中奖总量不能为0
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>中奖级别：</th>
+                    <td>
+                        <select name="level" style="width:413px;" id="level">
+                            <option value=0>请选择</option>
+                            <option value="不中奖">不中奖</option>
+                            <option value="一等奖">一等奖</option>
+                            <option value="二等奖">二等奖</option>
+                            <option value="三等奖">三等奖</option>
+                            <option value="四等奖">四等奖</option>
+                            <option value="五等奖">五等奖</option>
+                            <option value="六等奖">六等奖</option>
+                        </select>
+                    </td>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>商品图片：</th>
+                    <td><input type="text" name="pic" value="" id="pic" class="px" style="width:400px;"  readonly="readonly"/><span class="ke-button-common" id="upload_site_map_1" style="margin-top: 3px;margin-left: 5px;"><input type="button" class="ke-button-common ke-button" value="上传图片"></span></td>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>中奖概率：</th>
+                    <td><input type="text" value="0" style="width:400px;" name="prob" id="prob">
+                        <br/>中奖概率=单品中奖概率/所有商品概率总和
+                    </td>
+                </TR>
+
+                <TR>
+                    <th valign="top">奖品使用说明：</th>
+                    <td>
+                        <textarea name="ginfo" id="ginfo" cols="30" rows="10">奖品使用说明</textarea>
+                    </td>
+                </TR>
+
+                <TR>
+                    <td><button type="submit" class="btn btn-primary" id="submit" >保存</button>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div> 
+
+    <!--活动结束-->
+
+
+
+
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    $(function() {
+        $("#submit").click(function() {
+            var gname = $("#gname").val();
+            var tnum = parseInt($("#tnum").val());
+            var level = $("#level").val();
+            var prob = $("#prob").val();
+            var pic=$("#pic").val();
+            if (!gname) {
+                notif({
+                    msg: "奖品名不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if (!(/^\d+$/.test(tnum)) || tnum == 0) {
+                notif({
+                    msg: "请输入数字",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (level == 0) {
+                notif({
+                    msg: "请选择奖品等级",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (!pic) {
+                notif({
+                    msg: "奖品图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (!(/^\d+$/.test(prob))) {
+                notif({
+                    msg: "中奖概率必需为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+
+        })
+    })
+</script>
+<include file="Public:footer"/> 

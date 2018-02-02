@@ -1,0 +1,61 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="" style="">
+  <div class="cLineB">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs title_tab" data-index="0">
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today"> <a href="{weikucms::U('Ieat/editarticle',array('token'=>$token,'cat_id'=>$get['cat_id']))}" <if condition="$hover5 eq 1">class="hover"</if>>添加文章</a> </li>
+           <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/subjectarticle',array('token'=>$token))}">返回上一页</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--tab start-->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+      <li>在这里可以查看/编辑专题的文章。</li>
+    </ol>
+  </div>
+  <!--tab end-->
+  <div class="box-content">
+     <div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+      <input name="delall"  type="hidden" value="" />
+      <input name="wxid"  type="hidden" value="" />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align:center">文章标题</th>
+            <th style="text-align:center">文章展示图</th>
+            <th style="text-align:center">文章添加时间</th>
+            <th style="text-align:center">文章上次修改时间</th>
+            <th style="text-align:center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="articleList" id="vo">
+            <tr>
+              <td style="text-align:center">{weikucms:$vo.article_title}</td>
+              <td style="text-align:center"><img src="{weikucms:$vo.article_pic}" style="width:80px;height: 60px;"></td>
+              <td style="text-align:center">{weikucms:$vo.add_time}</td>
+              <td style="text-align:center">{weikucms:$vo.last_edit_time}</td>
+              <td class="norightborder" style="text-align:center">
+                  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Ieat&amp;a=editarticle&amp;op=1&amp;token={weikucms:$token}&amp;cat_id={weikucms:$vo.cat_id}&amp;article_id={weikucms:$vo.article_id}" title="编辑">编辑</a>
+                  <a class="btn btn-danger btn-sm" onClick="source_delete('/index.php?g=User&amp;m=Ieat&amp;a=del_article&amp;token={weikucms:$token}&amp;cat_id={weikucms:$vo.cat_id}&amp;article_id={weikucms:$vo.article_id}')" href="javascript:void(0)">删除</a>
+              </td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </form>
+  </div>
+    <div>
+      <ul class="pager">
+        {weikucms:$page}
+      </ul>
+    </div>
+  </div>
+</div>
+<include file="Public:footer" />

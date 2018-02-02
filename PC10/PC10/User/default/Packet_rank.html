@@ -1,0 +1,48 @@
+<include file="Public:head"/>
+
+<div class="cLineB">
+    <h4 class="left"><span>排行榜</span>
+                <a class="btn btn-success btn-sm" href="{weikucms::U('Packet/exportRank',array('lid'=>$lid))}">导出数据</a></h4>
+    <div class="clr"></div>
+</div>
+<div class="cLine">
+    <div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR>
+                    <TH>排名</TH>
+                    <TH>微信昵称</TH>
+                    <TH>手机号</TH>
+                    <TH>最高分</TH>
+                    <TH class="norightborder">操作</TH>
+                </TR>
+            </THEAD>
+            <TBODY>
+                <TR></TR>
+            <volist id="users" name="users" key="k">
+                <TR>
+                    <TD>{weikucms:$k}</TD>
+                    <TD>{weikucms:$users.nickname}</TD>
+                    <TD>{weikucms:$users.tel}</TD>
+                    <TD>{weikucms:$users.integrity}</TD>
+                    <TD class="norightborder">
+                        <a class="btn btn-success btn-sm" href="{weikucms::U('Packet/editRank',array('id'=>$users[id],'lid'=>$lid))}">修改</a>
+                    </TD>
+                </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form>
+
+</div>
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+<include file="Public:footer"/>

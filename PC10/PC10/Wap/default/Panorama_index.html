@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{weikucms:$tpl.name}微全景</title>
+<include file="Public:head"/>
+<link href="/tpl/Wap/default/common/css/yl/news.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/flash/css/plugmenu.css">
+<style type="text/css">
+    .photo_banner {
+        height: 50px;
+        line-height: 50px;
+        font-size: 15px;
+        text-indent: 10px;
+        background-color: #1abc9c;
+        color: white;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+</style>
+</head>
+
+<body>
+<div class="photo_banner">
+    {weikucms:$tpl.name}微全景
+</div>
+<div class="Listpage">
+    <div id="todayList">
+<ul  class="todayList">
+   <volist name="list" id="so">   
+<li>
+<a href="{weikucms::U('Panorama/item',array('id'=>$so['id'],'token'=>$so['token']))}">
+<div class="img"><img src="{weikucms:$so.frontpic}"></div>
+<h2>{weikucms:$so.name}</h2>
+<p class="onlyheight">{weikucms:$so.intro}</p>
+<div class="commentNum"></div>
+</a>
+</li>
+ </volist>
+
+</ul>
+</div>
+    <footer class="footer">
+        <span><a href="#">©{weikucms:$tpl.name}-<php>echo C('site_my');</php></a></span>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#intro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : false,
+allowFileManager:true,
+items : [
+'source','undo','clearhtml','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+
+
+
+
+<script>
+function selectall(name) {
+	var checkItems=$('.cbitem');
+	if ($("#check_box").attr('checked')==false) {
+		$.each(checkItems, function(i,val){
+			val.checked=false;
+		});
+
+	} else {
+		$.each(checkItems, function(i,val){
+			val.checked=true;
+		});
+	}
+}
+function setlatlng(longitude,latitude){
+	art.dialog.data('longitude', longitude);
+	art.dialog.data('latitude', latitude);
+	// 此时 iframeA.html 页面可以使用 art.dialog.data('test') 获取到数据，如：
+	// document.getElementById('aInput').value = art.dialog.data('test');
+	art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:800,height:600,yesText:'关闭',background: '#fff',opacity: 1});
+}
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+
+
+
+
+                <div class="cLineB">
+                    <div class="title_tab" id="topTab">
+                        <ul class="tab_navs title_tab" data-index="0">
+
+
+                            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                                <a href="{weikucms::U('Company/index',array('token'=>$token))}"  class="hover">门店信息</a>
+                            </li>
+
+                            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                                <a href="{weikucms::U('Company/branches',array('token'=>$token,'isBranch'=>1))}">分店</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+
+<!--tab end-->
+<div class="msgWrap">
+ <form class="form" method="post" id="form" action="">
+<if condition="$isUpdate eq 1">
+<input type="hidden" name="id" id="id" value="{weikucms:$set.id}" />
+</if>
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.discount}" />
+    <div class="msgWrap bgfc">
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+       <tr>
+        <th>门店名称：</th>
+        <td>
+            <input type="text" id="name" name="name" value="{weikucms:$set.name}" class="px require" style="width:300px;" placeholder="此处填写门店名称,不可为空"/>
+
+        </td>
+       </tr>
+       <tr>
+        <th>门店简称：</th>
+        <td><input type="text" id="shortname" name="shortname" value="{weikucms:$set.shortname}" class="px require" style="width:200px;" />
+        <span class="info_tip">此处填写门店的简称,可以为空</span>
+        </td>
+       </tr>
+       <tr>
+        <th>电话：</th>
+        <td><input type="text" id="tel" name="tel" value="{weikucms:$set.tel}" class="px require" style="width:200px;" />
+            <span class="info_tip">此处填写电话号码,不能为空</span></td>
+       </tr>
+       <tr>
+        <th>手机：</th>
+        <td><input type="text" id="mp" name="mp" value="{weikucms:$set.mp}" class="px require" style="width:200px;" />
+            <span class="info_tip">此处填写手机号码,不能为空</span></td>
+        </td>
+       </tr>
+       <tr>
+        <th>地址：</th>
+        <td><input type="text" id="address" name="address" value="{weikucms:$set.address}" class="px require" style="width:300px;" /></td>
+       </tr>
+       <tr>
+       <TR>
+           <TH valign="top">标志图片：</TH>
+
+           <TD>
+               <if condition="$set.picurl neq null">
+               <img style="display: block;" id="image_show" class="fenlei_img" src="{weikucms:$set.logourl}">
+                   <else/>
+                   <img style="display: block;" id="image_show" class="fenlei_img" src="./upload/index_img.jpg">
+               </if>
+           </TD>
+       </TR>
+        <th>上传标志：</th>
+        <td>
+            <input type="hidden" class="text textMiddle inputQ"  name="logourl" id="pic" value="<if condition='$set.picurl neq null'>{weikucms:$set.logourl}<else/>./upload/index_img.jpg</if>" style="width:300px;"   />
+            <span class="ke-button-common" id="upload">上传图片</span>
+        </td>
+       </tr>
+        <tr>
+        <th>经纬度：</th>
+        <td>经度 <input type="text" id="longitude"  name="longitude" size="8" class="px" value="{weikucms:$set.longitude}" /> 纬度 <input type="text"  name="latitude" size="8" id="latitude" class="px" value="{weikucms:$set.latitude}" />
+            <a href="###" class="btn btn-primary btn-success" onclick="setlatlng($('#longitude').val(),$('#latitude').val())" style="position: relative;top:-4px;">地图设置</a></td>
+       </tr>
+       <tr>
+        <th><span class="red"></span>顺序：</th>
+        <td><input type="text" id="taxis" name="taxis" value="{weikucms:$set.taxis}" class="px require" style="width:100px;" /></td>
+       </tr>
+        <TR>
+                  <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+                  <TD><textarea name="intro" id="intro"  rows="5" style="width:590px;height:360px">{weikucms:$set.intro}</textarea></TD>
+                </TR>
+       <tr>
+       <th>&nbsp;</th>
+       <td>
+       <if condition="$isBranch eq 1">
+      <input type="hidden" name="isbranch" id="isbranch" value="1" />
+	  <else/>
+	  <input type="hidden" name="isbranch" id="isbranch" value="0" />
+      </if>
+      <input type="hidden" name="token" id="token" value="{weikucms::$token}" />
+       <button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</button></td>
+       </tr>
+       <TR style="height: 150px;">
+
+       </TR>
+      </tbody>
+     </table>
+     </div>
+
+   </form>
+
+
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var discount = $("#discount").val();
+            var name = $("#name").val();
+            var tel = $("#tel").val();
+            var mp = $("#mp").val();
+            var address = $("#address").val();
+            var shortname = $("#shortname").val();
+            var intro = editor.html();
+            var logourl = $("#pic").val();
+            var longitude = $("#longitude").val();
+            var latitude = $("#latitude").val();
+            var taxis = $("#taxis").val();
+            var isbranch = $("#isbranch").val();
+            if(isbranch){
+                isbranch = 1;
+            }else{
+                isbranch = 0;
+            }
+            var token = $("#token").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(! name){
+                notif({
+                    msg: "门店名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! tel){
+                notif({
+                    msg: "门店电话不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if(! intro){
+                notif({
+                    msg: "详细内容页面不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+
+            $.post("{weikucms::U('Company/index')}",
+                    {discount:discount,token:token,shortname:shortname,isBranch:isbranch,id:id,name:name,tel:tel,mp:mp,address:address,intro:intro,logourl:logourl,longitude:longitude,latitude:latitude,taxis:taxis,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

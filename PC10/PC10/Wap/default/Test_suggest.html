@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+</script>
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+</head>
+<body style="background-color:#ffebea;">	
+<div class="pageTitle" style="background-color:#ffebea;"><i></i><span class="arrow-r"></span><span style="color:black;">我要提建议</span></div>
+<div class="textarea clearfix">
+	<textarea name="reason" cols="" rows="" placeholder="写下你对本次测试的建议！" style="height:300px;"></textarea>
+</div>
+<div class="button clearfix"  id="btn"><a href="javascript:void(0);" onclick="submit();">确认提交</a></div>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+<input type="hidden" id="itemid" value="{weikucms:$id}"/>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+	//var submit = function(){
+		function submit(){
+		reason = $("textarea[name='reason']").val();
+		if( reason == '' ){
+			show_error_tip("请填写反馈内容");
+			$("textarea[name='reason']").focus();
+			return false;
+		}	
+        
+		var id = $("#itemid").val();
+        var param = {id:id, reason:reason};       
+        var url = 'index.php?g=Wap&m=Test&a=suggest&token='+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,param,
+                function(data){ 
+                    if(data.status == 100){                 	
+  						alert(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 1 ){
+                    	alert(data.info);
+                    	WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+                        });
+                    }
+                },'json');
+	}
+</script>
+</body>
+</html>

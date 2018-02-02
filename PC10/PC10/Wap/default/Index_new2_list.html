@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{weikucms:$tpl.name}</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragram" content="no-cache">
+    <link href="{weikucms::STATICS}/wapweiui/css/base.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+    <include file="Public:audio"/> 
+<div id="htmlBox" >
+<div class="top-wrap">
+    <div class="fn-clear tr-box top">
+        <span class="fn-left logo" id="logo_wrap"><a href="#" class="logo-box" style="background:url({weikucms:$tpl.headpicurl}); background-size: 45px;">{weikucms:$tpl.name}</a></span>
+        <div class="menu-list" id="menuListBtn">
+            <span>{weikucms:$tpl.name}</span>
+
+        </div>
+
+    </div>
+</div>
+
+ <div class="wrap" >
+    <ul class="ul-list focus-list">
+        <volist name="res" id="so">
+        <li>
+               <if condition="$so['url']">
+                <a href="{weikucms:$so.url}">
+                <else />
+                <a href="{weikucms::U('Index/content',array('id'=>$so['id'],'token'=>$so['token']))}">
+                </if>
+                 <p class="p1">
+                    <b>{weikucms:$so.title}</b>
+                    <span class="thumb-img"><img src="{weikucms:$so.pic}"></span>
+                </p>
+                <p class="p2">
+                    {weikucms:$so.text}
+                </p>
+            </a>
+            <p class="fn-clear p-btm">
+                <u><a href="#">{weikucms:$tpl.name}</a></u>
+                <i><a href="#">浏览({weikucms:$so.click})</a></i>
+            </p>
+        </li>
+        </volist>
+    </ul>
+    <div class="pages">
+        <span class="no-pg">
+            <a href="{weikucms::C('site_url')}/index.php?g=Wap&m=Index&a=lists&classid=<php>echo $_GET['classid'];</php>&token={weikucms:$tpl.token}&p=<php>echo $p-1;</php>"> 上一页</a>
+        </span>
+        <span>
+            <?php
+              if($p<$page){
+                  echo '<a class="next" href="'.C('site_url').'/index.php?g=Wap&m=Index&a=lists&classid='.(int)$_GET['classid'].'&token='.$tpl['token'].'&p='.($p+1).'">';
+                }else{
+                    echo '<a class="no-pg">';
+                }
+            ?>
+            下一页</a>
+        </span>
+    </div>
+    </div>
+<footer class="footer">
+    <span><a href="#">©{weikucms:$tpl.name}-<php>echo C('site_my');</php></a></span>
+</footer>
+<div id="msg_point"></div>
+</div>
+<script src="/static/js/mobile.min.js"></script>
+<div style="display: none">
+
+</div>
+<if condition="$speeddial['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+</body>
+</html>

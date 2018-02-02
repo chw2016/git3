@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+
+
+
+<script src="{weikucms:$staticFilePath}/shop/js/jquery-1.5.1.min.js"></script>
+<script src="{weikucms:$staticFilePath}/shop/js/main.js"></script>
+<script src="/misc/js/bootstrap.min.js.pagespeed.jm.B8AY9yluei.js"></script>
+
+
+
+<!--[if lt IE 9]>
+<script src="/misc/js/html5shiv.min.js"></script>
+<script src="/misc/js/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">var _Hasync=_Hasync||[];_Hasync.push(["Histats.start","1,2927607,4,0,0,0,00010000"]);_Hasync.push(["Histats.fasi","1"]);_Hasync.push(["Histats.track_hits",""]);(function(){var hs=document.createElement("script");hs.type="text/javascript";hs.async=true;hs.src=("http://s10.histats.com/js15_as.js");(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(hs);})();</script><noscript><a href="http://www.histats.com" target="_blank"><img src="http://sstatic1.histats.com/0.gif?2927607&101" alt="web tracker" border="0" pagespeed_url_hash="1575736314"></a></noscript>
+</head>
+<body class="">
+
+
+<script src="/misc/js/order.js.pagespeed.jm.gtiRSnjtIO.js"></script>
+<style type="text/css">.my_nav{width:100%;border:1px solid #e0e0e0;border-width:1px 0;background-color:#fff;margin:15px 0 15px 0;-webkit-box-sizing:border-box;box-sizing:border-box}.my_nav ul{display:box;display:-ms-box;display:-webkit-box;display:flex;display:-ms-flexbox;display:-webkit-flex;overflow:hidden}.my_nav li{display:block;flex:1;-ms-flex:1;-webkit-flex:1;box-flex:1;-ms-box-flex:1;-webkit-box-flex:1;width:100px;text-align:center;font-size:16px;line-height:36px;border-left:1px solid #e0e0e0;padding:0px;background-color:#f3f3f3}.my_nav li:first-child{border-left:0}.my_nav li:active{background-color:rgba(0,0,0,.2)}.my_nav li.cur{background-color:#e5e5e5}.my_nav a{display:block;min-height:36px;padding:12px 0}.my_nav .num{color:#fc004d;padding-left:5px}.my_nav li:last-child em{line-height:10px}.btn-primary{color:#fff;background-color:#428bca;border-color:#357ebd}.order_info li .btn{padding:6px 5px}</style>
+
+<div class="maincontainer">
+    <div class="container wx_wrap mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" href="javascript:history.go(-1);"></a></div>
+                    <div class="wx_bar_tit">订单列表</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="my_nav">
+                    <ul>
+                        <li class="tiao <?php if($_GET['act']==0){echo cur;}?>" id="order_tab_1"><a href="{weikucms::U('Store_shop/orders',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id'],'act'=>0))}">待付款</a></li>
+                        <li class="tiao <?php if($_GET['act']==3){echo cur;}?>" id="order_tab_2"><a href="{weikucms::U('Store_shop/orders',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id'],'act'=>3))}">待收货/提货</a></li>
+                        <li class="tiao <?php if($_GET['act']==2){echo cur;}?>" id="order_tab_3"><a href="{weikucms::U('Store_shop/orders',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'wecha_id'=>$_GET['wecha_id'],'act'=>2))}">全部订单</a></li>
+                    </ul>
+                </div>
+
+                <if condition="$data">
+                <div class="order_info mt20" id="orderList">
+
+
+
+
+
+
+                    <volist name="data" id="data">
+                    <div class="item-check mt10">
+                        <h3 style=" float:left;width: 70%;"><a href="javascript: void(0)" title="点击查看订单详情">订单编号：{weikucms:$data[orderid]}</a></h3>
+                        <div class="order_status">
+
+                            <span style="color:red;">
+                                <if condition="$data.sent eq 2">
+                                 交易完成
+                                    <elseif condition="$data.sent eq 1" />
+                                        已发货
+                                    <elseif condition="$data.paid eq 0" />
+                                    未支付
+                                    <elseif condition="($data.paid eq 1) AND ($data.sent eq 0)" />
+                                    已支付
+                                    <else />
+                                </if>
+                            </span>                    </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <dl class="only">
+                        <dd>
+                            <ul>
+
+                                <if condition="$data['is_cart']">
+                                    <volist name="data['cart_info']" id="vo2">
+                                        <li class="hproduct">
+                                            <a ><img class="photo" src="{weikucms:$vo2.gpic}" pagespeed_url_hash="4111614180" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                                                <p class="fn">{weikucms:$vo2.gname}<if condition="$vo2['norms']">({weikucms:$vo2.norms})</if></p></a>
+
+                                            <p class="fn" style="color:#999;font-size:12px;"></p></a>
+                                            <p class="sku"><em>价格：</em><span id="priceSale">￥{weikucms:$vo2['price']}</span> &nbsp; <em>数量：</em><span> {weikucms:$vo2.num}</span><span>件</span></p>
+
+                                        </li>
+                                    </volist>
+                                    <else />
+                                    <li class="hproduct">
+                                        <a ><img class="photo" src="{weikucms:$data['logourl']}" pagespeed_url_hash="4111614180" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                                            <p class="fn">{weikucms:$data[name]}</p></a>
+
+                                        <p class="fn" style="color:#999;font-size:12px;"></p></a>
+                                        <p class="sku"><em>价格：</em><span id="priceSale">￥{weikucms:$data['price']}</span> &nbsp; <em>数量：</em><span> {weikucms:$data[total]}</span><span>件</span></p>
+
+                                    </li>
+                                    </if>
+
+
+                                <li style="padding: 1px 10px;" class="sku">物流：{weikucms:$data[logistics]} </li>
+                                <li style="padding: 1px 10px;" class="sku">物流单号：{weikucms:$data.logisticsid} </li>
+
+
+                                <li>
+                                    <div class="pt10 pl0 price fl" id="price">订单金额： <strong id="totalPrice" style="font-size:22px;color:#FC004D"><?php if($data['is_cart']==1){echo $data['price']+$data['mailpay'];}else{echo $data[price]*$data['total']+$data['mailpay'];}?>元</strong></div>
+                                    <div class=" fr mobile_operation">
+                                        <if condition="$data.paid eq 0">
+                                       <span class="buy_again" order_sn="142621230414818"> <a class="qfk1" flag="{weikucms:$data.is_cart}"
+                                                                                              <if condition="$data['is_cart'] eq 1">
+                                                                                                  href="{weikucms::U('Store_shop/zhifu',array('pid'=>$data['id'],'token'=>$token,'openid'=>$openid,'price'=>$data[price]+$data['mailpay'],'orderid'=>$data['orderid']))}"
+                                                                                                  <else />
+                                                                                                  href="{weikucms::U('Store_shop/zhifu',array('pid'=>$data['id'],'token'=>$token,'openid'=>$openid,'price'=>$data[price]*$data['total']+$data['mailpay'],'orderid'=>$data['orderid']))}"
+                                                                                              </if>
+                                               > 去付款</a></span><span style="margin-left: 10px;" class="buy_again" order_sn="142621230414818"><a gid="{weikucms:$data['id']}" onclick="return cancel(this)"> 取消订单</a></span>
+                                            <elseif condition="$data.sent eq 1"/>
+                                            <span class="buy_again" order_sn="142621230414818"><a gid="{weikucms:$data['id']}" onclick="return queren(this)"> 确认收货</a></span>
+                                        </if>
+                                    </div>
+                                </li>
+                                    <if condition="$data['pingjia']">
+                                        <li>您的评价：{weikucms:$data.pingjia}</li>
+                                        <elseif condition="$data['sent'] eq 2" />
+                                        <li>
+                                            <textarea style="width: 100%" name="content"></textarea><br />
+                                            <input name="pid" type="hidden" value="{weikucms:$data['productid']}">
+                                            <input name="oid" type="hidden" value="{weikucms:$data['id']}">
+                                            <input name="openid" type="hidden" value="{weikucms:$openid}">
+                                            <input style="margin-left: 83%;"  type="button" value="提交" id="pingjia">
+
+                                        </li>
+                                        </if>
+
+                            </ul>
+
+                        </dd>
+                    </dl>
+                    </volist>
+                    <script>
+
+                        //评价
+                        $("#pingjia").click(function(){
+                            var content=$("textarea[name=content]").val();
+                            var pid=$("input[name=pid]").val();
+                            var oid=$("input[name=oid]").val();
+                            var openid=$("input[name=openid]").val();
+                            var url=window.location.href;
+                            $.post(url,{content:content,pid:pid,oid:oid,openid:openid},function(data){
+                              //  alert(data.status);
+
+                                   if(data.status==1){
+                                       show_success_tip('评价成功');
+                                       location.reload();
+                                   } else{
+
+                                       show_error_tip('评价失败');
+                                       location.reload();
+                                   }
+                            },'json');
+                        })
+                        /**
+                         * 取消订单
+                         * @param obj
+                         */
+                        function cancel(obj){
+                            if(confirm("确定要取消吗!")){
+                                var id=$(obj).attr("gid");
+                                $.post("{weikucms::U('Store_shop/cancel',array('token'=>$token))}&id="+id,function(data){
+                                    if(data.status) {
+                                        show_success_tip('取消成功');
+                                        location.reload();
+                                    }
+                                },"json")
+                            }
+                        }
+                        /**
+                         * 确认收货
+                         * @param obj
+                         */
+                        function queren(obj){
+                            if(confirm("您确定收到货了吗!")){
+                                var id=$(obj).attr("gid");
+                                $.post("{weikucms::U('Store_shop/queren',array('token'=>$token))}&id="+id,function(data){
+                                    if(data.status) {
+                                        show_success_tip('确认成功');
+                                        location.reload();
+                                    }
+                                },"json")
+                            }
+                        }
+                    </script>
+
+                </div>
+                    <else />
+                    没有订单
+                    </if>
+
+
+            </div>
+        </div>
+
+        <div class="wap_page"> </div>
+    </div>
+    <script>$(document).ready(function(){$('.mobile_operation span').addClass('btn btn-default');$('.mobile_operation span').css('width','auto');$('.mobile_operation span.J_payOrder').addClass('btn-primary');$('.J_closeOrder').css('margin-right','10px');});</script>
+    <div class="footnav mini-innner">
+
+    </div>
+</div>
+
+<script type="text/javascript" src="/misc/js/nav.js.pagespeed.jm.YsJ5Oxc6fv.js"></script>
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>wx.config({appId:'wx56e7c69c9dac6f3c',timestamp:1427266667,nonceStr:'bq9sfpRyDvOfIbig',signature:'f66fa4b1f44e00ae0bccdd134ceb186aafa8c431',jsApiList:['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo']});wx.ready(function(){var shareData={title:'钟姐手信微信商城 － 钟姐食品',desc:'送礼我选钟姐手信。钟姐手信，粤港澳台最受欢迎的手信礼品！',link:'http://wx.sisterzhong.com/personal/order/index?cps_id=180047',imgUrl:'http://www.sisterzhong.com/upload/product/ad/52/07/ad520712b64c2d0bc6100060c182c5a9.jpg',trigger:function(res){},success:function(res){},cancel:function(res){},fail:function(res){alert(JSON.stringify(res));}};wx.onMenuShareAppMessage(shareData);wx.onMenuShareTimeline(shareData);wx.onMenuShareQQ(shareData);wx.onMenuShareWeibo(shareData);});wx.error(function(res){});</script>
+
+</body>
+</html>

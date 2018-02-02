@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>研祥</title>
+<script src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.11.2.min.js"></script>
+<link type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/style2.css" rel="stylesheet"/>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery.touchSlider.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yx.css">
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	$dragBln = false;
+
+	$(".main_image").touchSlider({
+		flexible : true,
+		speed : 100,
+		btn_prev : $("#btn_prev"),
+		btn_next : $("#btn_next"),
+		paging : $(".flicking_con a"),
+		counter : function (e){
+			$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+		}
+	});
+
+	$(".main_image").bind("mousedown", function() {
+		$dragBln = false;
+	});
+
+	$(".main_image").bind("dragstart", function() {
+		$dragBln = true;
+	});
+
+	$(".main_image a").click(function(){
+		if($dragBln) {
+			return false;
+		}
+	});
+
+	timer = setInterval(function(){
+		$("#btn_next").click();
+	}, 5000);
+
+	$(".main_visual").hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		},5000);
+	});
+
+	$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 5000);
+	});
+	$(".btn_prev").css("display","none");
+	$(".btn_next").css("display","none");
+
+	/*$(".main_image").bind("touchstart",function(){
+		clearInterval(timer);
+	}).bind("touchend", function(){
+		timer = setInterval(function(){
+			$("#btn_next").click();
+		}, 5000);
+	});*/
+
+});
+	$(function(){
+		$(".yx_body_li_text").width($(".yx_body_li").width()-$(".yx_body_li_img").width()-8);
+		$(".yx_body_li").eq(-1).css("border","0");
+	})
+</script>
+    <style>
+        button.btn {
+            width: 100%;
+            border: 0;
+            outline: 0;
+            -webkit-appearance: none;
+            position:fixed;
+           bottom: 0px;
+            left: 0px;
+        }
+        .btn {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 14px;
+            padding-right: 14px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            overflow: visible;
+            height: 50px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            color: #ffffff;
+            line-height: 35px;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        }
+        .btn_primary {
+            background-color: #04BDFE;
+        }
+    </style>
+</head>
+<body >
+
+		<div class="main_visual">
+			<div class="main_image">
+				<ul>
+                    <volist name="flash" id="vo">
+                        <li <if condition="$vo['url']">onclick="location.href='{weikucms:$vo.url}'"</if>><span class=""><img src="{weikucms:$vo.pic}"></span></li>
+                    </volist>
+				</ul>
+				<a href="javascript:;" id="btn_prev"></a>
+				<a href="javascript:;" id="btn_next"></a>
+			</div>
+		</div>
+
+	<div class="yx_body">
+		<ul>
+            <volist name="list" id="vo">
+			<a <if condition="$vo['url']">href="{weikucms:$vo.url}"<else />href="{weikucms::U('content2',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}"</if>>
+				<li class="yx_body_li">
+					<div class="yx_body_li_img"><img src="{weikucms:$vo.pic}" alt=""></div>
+					<div class="yx_body_li_text">
+						<div class="yx_body_li_text_title">
+                            <?php echo str_substr($vo['title'],13) ?>
+						</div>
+						<div class="yx_body_li_text_body">
+                            {weikucms:$vo.ms}
+						</div>
+					</div>
+				</li>
+			</a>
+                </volist>
+
+		</ul>
+	</div>
+
+        <div style="width: 100%; height: 52px;"></div>
+<div>
+    <button class="btn btn_primary Invitation" onclick="location.href='{weikucms::U('ck_kan',array('token'=>$token,'openid'=>$openid))}'">加载更多</button>
+</div>
+</body>
+</html>

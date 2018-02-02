@@ -1,0 +1,47 @@
+
+<volist name="list" id="v" >
+<a href="{weikucms::U('show',array('token'=>$_SESSION['token'],'id'=>$v['id'],'openid'=>$_SESSION['openid']))}" >
+    	<div class="shopList myul">
+    		<div class="shopPic fixBg"  <if condition="$v['pic']" >  style="background-image:url('{weikucms:$v.pic}')" </if> >
+    			
+    		</div>
+    		<div class="shopInfo">
+    		 
+    			<div class="shopName"  style="font-weight:800;font-size:15px; color:black;" >
+    				    				      			<if condition="$v['name']" >
+    			
+    			      				     <?php 
+    				         echo mb_substr($v['name'],0,11,'utf-8');
+    				       ?>
+    			<else/>
+    			   无标题
+    			</if>
+    				       
+    				     
+    			</div>
+    	  	 
+    			<div class="shopAddress">
+    				<span class="text"  style="font-size:12px; color:#666;letter-spacing:2px;line-height:20px;" >
+    				     	{weikucms:$v['dz']}
+    				</span>
+    				  <span class="distance" style="position: absolute;right: 4px;top:-25px;font-size:13px;"  ><?php  $jl=$v['jl']/1000;  print_r(substr($jl,0,strrpos($jl,'.')+3)); ?> km</span>
+    				
+    			</div>
+    			<div class="contact">
+    				<span class="tel" style="font-size:12px; color:#666;letter-spacing:2px;line-height:20px;" >
+    				    				     <?php 
+    				          echo mb_substr($v['dh'],0,14,'utf-8');
+    				       ?>
+    				</span>
+    				<a href="tel:{weikucms:$v['dh']}" >
+    				<span class="icon-tel">
+    					
+    				</span>
+    				</a>
+    			</div>
+    		</div>
+    	</div>
+    </a>		
+      </volist>	
+      
+       <div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>

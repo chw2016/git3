@@ -1,0 +1,188 @@
+<include file="Public:head"/>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#starpicurl').val(),
+                    clickFn : function(url, title) {
+                        K('#starpicurl').val(url);
+//                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+
+    <!--活动开始-->
+    <div class="cLineB">
+        <h4>添加活动内容</h4>
+
+    </div> 
+    <div class="msgWrap bgfc"> 
+        <TABLE class="userinfoArea" style=" margin:0;" border="0" cellSpacing="0" cellPadding="0" width="100%"><TBODY>
+                <TR>
+                    <th valign="top"><span class="red">*</span>关键词：</th>
+                    <TD>
+                        <input type="input" class="px" id="keyword" value="" style="width:400px;" name="keyword" placeholder="请输入关键词"><br />
+                        <span class="red">只能写一个关键词</span>，用户输入此关键词将会触发此活动。
+                    </TD>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>活动名称：</th>
+                    <TD>
+                        <input type="input" class="px" id="title" value="" style="width:400px" name="title" placeholder="请输入活动名称"/>
+                        <br />
+                        请不要多于50字!
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th valign="top"><span class="red">*</span>活动类型：</th>
+                    <TD>
+                        <select name="type" id="type" style="width: 400px;">
+                            <option value="0">请选择活动类型</option>
+                            <option value="25">大转盘</option>
+                            <option value="26">优惠券</option>
+                            <option value="27">砸金蛋</option>
+                        </select>
+                    </TD>
+                </TR>
+
+
+                <TR>
+                    <th valign="top">分享标题：</th>
+                    <TD>
+                        <input type="text" class="px" id="txt" name="txt" style="width: 400px;" placeholder="请输入活动标题"/>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th valign="top">分享内容：</th>
+                    <TD>
+                        <input type="text" class="px" id="sttxt" name="sttxt" style="width: 400px;"  placeholder="请填写分享内容"/>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th valign="top"><span class="red">*</span>每人最大抽奖次数：</th>
+                    <TD>
+                        <input type="input" class="px" id="canrqnums" value="" style="width:400px" name="canrqnums" placeholder="请填写抽奖次数"/>
+                        <br />
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th valign="top">分享图片地址：</th>
+                    <TD>
+                        <input type="text" class="px" id="starpicurl" name="starpicurl" style="width: 400px;" readonly/>
+                        <span class="ke-button-common" id="upload">上传图片</span>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <th><span class="red">*</span>活动时间：</th>
+                    <td><input type="input" class="px" value="<?php echo date('Y-m-d H:i:s');?>" did="statdate" value="" onClick="WdatePicker()" name="statdate" />
+                        到
+                        <input type="input" class="px" value="<?php echo date('Y-m-d H:i:s');?>" id="enddate" value="" name="enddate" onClick="WdatePicker()"  />
+                    </td>
+                </TR>
+                <TR>
+                    <th valign="top"><span class="red">*</span>活动规则：</th>
+                    <td><textarea  class="px" id="info" name="info"  style="width:400px; height:125px" placeholder="请填写活动规则"></textarea>
+                        <br/>
+                        如需换行，请以;结尾
+                    </td>
+                </TR>
+                <TR>
+                    <th>&nbsp;</th>
+                    <td><button type="submit" class="btn btn-primary" id="submit">保存</button></td>
+                </TR>
+            </TBODY>
+        </TABLE>
+    </div>
+</div> 
+</div>
+</form>
+<div class="clr"></div>
+</div>
+</div>
+</div> 
+<!--底部-->
+</div>
+<script>
+    $(function() {
+        $("#submit").click(function() {
+            var keyword = $("#keyword").val();
+            var start = $("input[name=statdate]").val();
+            var end = $("input[name=enddate]").val();
+            var info = $("#info").val();
+            var title=$("#title").val();
+            var type=$("#type").val();
+            var canrqnums=$("#canrqnums").val();
+            if (!keyword) {
+                notif({
+                    msg: "关键词不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (!title) {
+                notif({
+                    msg: "活动名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if (type==0) {
+                notif({
+                    msg: "请选择活动类型",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!(/^\d+$/.test(canrqnums)) || canrqnums == 0){
+                notif({
+                    msg: "每人最大抽奖次数不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+
+            if (!start) {
+                notif({
+                    msg: "起始时间不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (!end) {
+                notif({
+                    msg: "截止不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (!info) {
+                notif({
+                    msg: "活动规则不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+        })
+    })
+</script>
+<include file="Public:footer"/> 

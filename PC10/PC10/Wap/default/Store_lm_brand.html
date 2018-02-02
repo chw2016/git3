@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>品牌</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+    </head>
+    <body>
+		<header class="header textMiddle white h3">
+	    	<div class="setLeft icon-back"></div>
+	    	<span>品牌</span>
+	    </header>
+		<section class="publicBox">
+
+
+            <include file="Store_lm:flash" />
+
+            <include file="Store_lm:nav" />
+		</section>
+		<!-- 图片品牌列表 -->
+		<section class="brandList">
+                <volist name="brandDate" id="vo">
+			<a href="{weikucms::U('Store_lm/brand_details',array('id'=>$vo['id'],'openid'=>$openid,'token'=>$token))}"><div class="fixBg brandImage" style="background-image:url({weikucms:$vo.logo_pic})"></div></a>
+                    </volist>
+		</section>	
+		<!-- 占位符 -->
+		<div style="height:52px;"></div>
+        <include file="Store_lm:foot" />
+    </body>
+    <script type="text/javascript">
+    
+    slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>
+</html>

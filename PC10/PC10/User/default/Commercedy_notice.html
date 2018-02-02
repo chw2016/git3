@@ -1,0 +1,106 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLine">
+
+ <div class="cLineB">
+
+       <h4 class="left"><if condition="$info eq ''">新增<else/>修改</if>公告</h4>
+
+       <div class="clr"></div>
+
+   </div>
+</div>
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里您可以修改社区里面的显示公告</li>
+    </ol>
+</div>
+    
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+       
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <input type="hidden" class="px" id="id" value="{weikucms:$task['id']}" name="id" style="width:300px" placeholder="">
+
+                <tr>
+                    <th valign="top"><label for="key">公告标题</label></th>
+                    <td>
+                    	<input type="input" class="px" id="notice" value="{weikucms:$info.title}" name="notice" placeholder="请填写公告标题">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"><label for="key">公告内容</label></th>
+                    <td>
+                        <textarea name="lou_info" id="info"  rows="5" style="width:590px;height:360px">{weikucms:$info.content}</textarea>
+                    </td>
+                </tr>
+                 <tr>
+                    <th></th>
+                    <td>
+                         <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary"><if condition="$info neq ''">修改<else/>添加</if></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#bsubmit').click(function(){
+			var notice = $('#notice').val(),
+                content = $("#info").val(),
+                judge;
+			 if(!notice){
+                notif({
+                    msg: "请填写公告",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!content){
+                notif({
+                    msg: "请填写公告内容",
+                    type: "warning"
+                });
+                return false;
+            }
+            if("{weikucms:$info}"){
+                judge = "{weikucms:$info.id}";
+            }else{
+                judge = 'add';
+            }
+            var url = "{weikucms::U('Commercedy/noticeFix',array('token'=>$token))}";
+            $.post(url,{notice:notice,content:content,judge:judge},function(data){
+            	if (data.status == 0) {
+            		notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+            		setTimeout(function(){
+            			window.location.href=data.url;
+            		},'1200');
+            	}else{
+            		notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+            	}
+            },'json');
+		})
+	})
+</script>

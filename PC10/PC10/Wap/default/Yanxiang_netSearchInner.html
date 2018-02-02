@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>研祥网点查询</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+        <style>
+            .net-right-font .map {
+                position: relative;
+                left: 10px;
+
+                width: 52px;
+                line-height: 16px;
+                border: 1px solid #3a9ed7;
+                border-radius: 3px;
+                -webkit-border-radius: 3px;
+                -ms-border-radius: 3px;
+                -moz-border-radius: 3px;
+                -o-border-radius: 3px;
+                color: #3a9ed7;
+            }
+            .net-right-font .map a{
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+		<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<!-- 标注位置 -->
+		
+    	<div class="net-position">
+    		<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/position.png" /><span class="net-pos-font">您当前的位置为：{weikucms:$Province}</span>
+    	</div>
+    	<!-- 网点查询总部 -->
+    	<if condition="$result eq ''">
+    		<div class="no-net">抱歉！暂无网点</div>
+    	<else/>
+            
+    		<volist name="result" id="vo">
+    		<div class="net-address">
+	    		<div class="net-left-img">
+	    			<img src="{weikucms:$vo.img_path}" />
+	    			<div class="net-says">
+	    				<span class="all-text">{weikucms:$vo.comType}</span>
+	    			</div>
+	    		</div>
+	    		<div class="net-right-font">
+	    			<p class="title">{weikucms:$vo.title}</p>
+	    			<div class="dizhi">
+	    				地址：{weikucms:$vo.address}
+	    			</div>
+	    			<div class="youbian">
+	    				<span style="display: block; ">邮编：{weikucms:$vo.zipcode}</span>
+
+                        <div class="map">
+                        <a href="{weikucms::U('Yanxiang/baidu_map',array('id'=>$vo['id']))}">
+                            进入地图
+                        </a>
+                    </div>
+	    			</div>
+	    			<div class="dianhua">
+	    				<a href="tel:{weikucms:$vo.phone}" style="color: #8a8a8a;">电话：{weikucms:$vo.phone}<img  src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/abc.png"  width="15px" style="margin-left: 12px; position:relative;top: 3px;" /></a>
+	    			</div>
+	    			<div class="chuanzhen">
+	    				传真：{weikucms:$vo.fax}
+	    			</div>
+	    			<!-- 根据不同的ID进入地图 -->
+
+	    		</div>
+    	</div>
+    	</volist>
+    	</if>
+    	
+    	<!-- 底部 -->
+    	<!--<div class="net-footer">
+    		<div class="net-footer-wrap">
+    			<div class="left">
+				<a href="tel:4008809666">
+    				<div class="img">
+    					<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/telphone.png" />
+    					
+    				</div>
+    				<p class="hot-line">热线电话</p>
+				</a>	
+    			</div>
+    			<div class="right">
+    				<div class="img">
+    					<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/kefu1.png" style="position:relative;bottom:5px;" />
+    					
+    				</div>
+    				<p class="hot-line">客服中心</p>
+    			</div>
+    		</div>
+    	</div>
+    	<div style="height:100px;"></div>-->
+    	<script type="text/javascript">
+       
+    	window.onload = function(){
+                	abc();
+					var a = setTimeout(function(){
+                    		
+                    $("#loading").hide(0).remove();
+                },1200);
+          	}
+		
+			 function abc(){
+			
+            	$('.net-position>img').css('height', (Number($('.net-pos-font').height())+Number(5))+'px');
+                $('.net-left-img').css('height', $('.net-left-img').width()+'px');
+                $('.net-left-img>img').css({'width': $('.net-left-img').width()+'px','height': $('.net-left-img').width()+'px'});
+                $('.net-says').css('height', $('.net-says').width()+'px');
+                $('.all-text').css('top', ($('.net-says').height()-$('.all-text').height())/2);
+                $('.net-footer-wrap .left .img,.net-footer-wrap .right .img').css('height', $('.net-footer-wrap .left .img').width()+'px');
+                // 头像控制
+                $('.img img').css('width',$('.img').width()*0.5+'px');
+                $('.img img').css('margin-top',($('.img').height()-$('.img img').height()-2)/2+'px');
+
+                $('.net-position').css('height', (Number($('.net-pos-font').height())+Number(15))+'px');
+            	$('.net-footer>.net-footer-wrap>.right').bind('click',function(){
+					 var url = "{weikucms::U('Wap/Duokf/sendkfmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+		            $.post(url,{},function(data){
+		                if(data.code == 0){
+		                    $(".motify-inner").text(data.msg);
+		                    $(".motify").show();
+		                    setTimeout(function(){
+		                        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+		                        });
+		                    },'2000');
+
+		                }else{
+		                    $(".motify-inner").text(data.msg);
+		                    $(".motify").show();
+		                    setTimeout(function(){
+		                        $(".motify").hide();
+		                    },'2000');
+		                    return false;
+		                }
+		            },'json');
+				})
+    
+        
+                // 图片高度
+        }
+    	</script>
+    </body>
+</html>

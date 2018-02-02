@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:weiweb"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new6/css/style.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new6/css/style_1.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new6/css/style_2.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/channel_new6/css/style_3.css" media="all" />
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        <div class="body">
+	<div class="list">
+		<ul>
+			<volist name="info" id="vo">
+				<li>						
+				<a href="<if condition="$vo['url'] eq ''">{weikucms::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{weikucms:$vo.url}</if>" 
+					  class="tbox">{weikucms:$vo.name}</a></li>
+			</volist>
+		</ul>
+	</div>
+	<div class="leftbg">
+		<volist name="flash" offset='0' length='1' id="so">
+			<img src="{weikucms:$so.img}" />
+		</volist>
+		
+	</div>
+			
+</div>
+
+        	<footer style="overflow:visible;">
+				<div class="weimob-copyright" style="padding-bottom:50px;">
+					<span class="weimob-support" >&copy;万普提供</span>
+				</div>
+			</footer>
+				<div mark="stat_code" style="width:0px; height:0px; display:none;">
+				</div>
+			<if condition="$res_1['ifmenu'] eq 0">&nbsp;<else /><include file="Public:custommenu"/></if>
+	</body>
+</html>

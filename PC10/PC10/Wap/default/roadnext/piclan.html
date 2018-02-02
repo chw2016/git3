@@ -1,0 +1,333 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/road/css/map.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/road/css/map1.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/road/js/jquery.touchSlider.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/road/js/jquery.event.drag-1.5.min.js"></script>
+    <title></title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .Map_mask{
+            width: 95%;
+            margin: 0 auto;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #1a7b69;
+            color: #fff;
+/*            height:376px;*/
+        }
+        .Map_conter{
+            text-align: center;
+            padding-top: 10px;
+              border-bottom: 1px solid #ccc;
+           padding-bottom: 10px;
+        }
+        .map {
+            width: 100%;
+            height: 100%;
+            background: url({weikucms::STATICS}/wapweiui/road/images/dg_img1.png) no-repeat;
+            position: relative;
+            background-size: 100% 100%;
+        }
+        .icon_map{
+            background: url({weikucms::STATICS}/wapweiui/road/images/icon_map.png) no-repeat;
+            width: 20px;
+            height: 20px;
+            background-size:100% 100%;
+            position: absolute;
+        }
+         .camera {
+                      font-size: 14px;
+                      backgroud-color: #000;
+                      color: #fff;
+                        padding: 15px 0;
+                      background-color: rgba(0,0,0,0.4);
+                      letter-spacing: 2px;
+                      line-height: 20px;
+                      position:absolute;
+                      width:100%;
+                      text-align:center;
+                    }
+        .btn{
+            padding: 10px;
+            background: #1A7B69;
+            text-align: center;
+            -webkit-border-radius: 9px;
+        }
+        .Mask.is-visible {
+            opacity: 1;
+            visibility: visible;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+            transition: opacity 0.3s 0s, visibility 0s 0s;
+        }
+        .Mask {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0,0,0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            z-index: 9999;
+        }
+        .pink_nav{
+   /*         height: 295px;*/
+    overflow: auto;
+        }
+        .pink  img{
+            width: 100%;
+            height: 200px;
+        }
+        .pink_size{
+            padding: 10px 0;
+            text-align: center;
+            background-color: #4dad9b;
+        }
+        ::-webkit-scrollbar{
+            width:10px;
+            height:5px;
+            background:-webkit-gradient(linear,left top,right top,color-stop(0%,rgba(202,202,202,0.07)),color-stop(100%,rgba(229,229,229,0.07)));
+            background:-webkit-linear-gradient(left,rgba(202,202,202,0.07) 0%,rgba(229,229,229,0.07) 100%);
+            background-color:rgba(229,229,229,.3);
+            -webkit-box-shadow:0 0 1px 0 rgba(0,0,0,.15) inset,0 1px 0 0 #fff;
+            box-shadow:0 0 1px 0 rgba(0,0,0,.15) inset,0 1px 0 0 #fff;
+            overflow:visible;
+            border-radius:4px;
+            border:solid 1px #A6A6A6;
+        }
+        ::-webkit-scrollbar-button {
+                width:0;
+                height:0;
+                display:block;
+                background-color:transparent;
+                }
+                ::-webkit-scrollbar-thumb {
+                background:-webkit-gradient(linear,left top,right top,color-stop(0%,rgba(233,233,233,0.05)),color-stop(100%,rgba(221,221,221,0.05)));
+                background:-webkit-linear-gradient(left,rgba(233,233,233,0.05) 0%,rgba(221,221,221,0.05) 100%);
+                -webkit-box-shadow:0 2px 1px 0 rgba(0,0,0,.05),inset 1px 1px 0 0 #FFF;
+                box-shadow:0 2px 1px 0 rgba(0,0,0,.05),inset 1px 1px 0 0 #FFF;
+                background-color:rgba(229,229,229,.9);
+                overflow:visible;
+                border-radius:4px;
+                border:solid 1px #A6A6A6;
+                }
+                ::-webkit-scrollbar-thumb:hover {
+                background-color:rgba(229,229,229,.4);
+                }
+            /*    ::-webkit-scrollbar-thumb:active {
+                background-color:rgba(229,229,229,1);
+                -webkit-box-shadow:0 0 1px 0 rgba(0,0,0,.15) inset;
+                box-shadow:0 0 1px 0 rgba(0,0,0,.15) inset;
+                }
+                ::-webkit-scrollbar-corner {
+                }
+                ::-webkit-resizer {
+                }
+                ::-webkit-scrollbar{width:12px;height:12px}
+                ::-webkit-scrollbar-button:vertical{display:none}
+                ::-webkit-scrollbar-track:vertical{background-color:black}
+                ::-webkit-scrollbar-track-piece{background:#FFF}
+                ::-webkit-scrollbar-thumb:vertical{background-color:#999;}
+                ::-webkit-scrollbar-thumb:vertical:hover{background-color:#9f9f9f}
+                ::-webkit-scrollbar-corner:vertical{background-color:#535353}
+                ::-webkit-scrollbar-resizer:vertical{background-color:#FF6E00}*/
+    </style>
+    <script>
+        $(function(){
+            var i = 0;
+            $(".icon_map").touch(function(){
+                 var names = new Array();
+                 var imgs = new Array();
+                event.preventDefault();
+                names=$(this).attr("data-title");
+                imgs=$(this).attr("data-imgs");
+                // alert(imgs);
+                var namedata=names.split(",");
+                var imges =imgs.split(",");
+                $.each(imges,function(i,o){
+                       $(".pink_nav").append("<div class='pink_size'>"+namedata[i]+"</div><div class='pink'><img src="+o+" \/></div>");
+                });
+
+                // $(".pink_nav").append("<div class="pink_size">高速公路地点1</div><div class="pink"><img src="{weikucms::STATICS}/wapweiui/road/images/b2.jpg" /></div>")
+
+
+
+
+
+                $(".main_visual").css("display","block");
+
+                if(i == 0){
+                    i++;
+                    console.log(1)
+                    $.each(['http://img.diytrade.com/cdimg/2006116/31348662/0/1355366628.jpg','http://p4.yokacdn.com/pic/cr/2011/1108/1874107958.jpg','http://img.ycwb.com/news/attachement/jpg/site2/20090702/xin_220706020828343170559.jpg'],function(i,obj){
+                        $('<li style="height: 140px; float: none; display: block; position: absolute; top: 0px; left: 0px; width: 320px;" onclick="location.href=\'\'"><img src="'+obj+'"></li>').attr('src', obj).appendTo($(".main_image ul"));
+                    });
+
+                    $(".main_image").touchSlider({
+                        flexible : true,
+                        //speed : 200,
+                        namespace: "touchslider",
+                        btn_prev : $("#btn_prev"),
+                        btn_next : $("#btn_next"),
+                        autoplay: false, // 自动播放
+                        paging : $(".flicking_con a"),
+                        counter : function (e){
+                            $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+//                      $('.Mask').addClass('is-visible');
+//                      i = $(this).textnode;
+                        }
+                    })
+                }
+
+
+
+                $('.Mask').addClass('is-visible');
+                i = $(this).textnode;
+                function onMimg(){
+                    $("#img1").attr("src","{weikucms::STATICS}/wapweiui/loan/images/ljfu-1.png");
+                }
+                function onMimg2(){
+                    $("#img2").attr("src","{weikucms::STATICS}/wapweiui/loan/images/fxyl.png");
+                }
+                $(document).ready(function(){
+                    $dragBln = false;
+//              $(".main_image").touchSlider({
+//                  flexible : true,
+//                  speed : 200,
+//                  btn_prev : $("#btn_prev"),
+//                  btn_next : $("#btn_next"),
+//                  paging : $(".flicking_con a"),
+//                  counter : function (e){
+//                      $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+//              }
+
+
+                    $(".main_image").bind("mousedown", function() {
+                        $dragBln = false;
+                    });
+
+                    $(".main_image").bind("dragstart", function() {
+                        $dragBln = true;
+                    });
+
+                    $(".main_image a").click(function(){
+                        if($dragBln) {
+                            return false;
+                        }
+                    });
+
+                    timer = setInterval(function(){
+                        $("#btn_next").click();
+                    }, 3000);
+
+                    $(".main_visual").hover(function(){
+                        clearInterval(timer);
+                    },function(){
+                        timer = setInterval(function(){
+                            $("#btn_next").click();
+                        },3000);
+                    });
+
+                    $(".main_image").bind("touchstart",function(){
+                        clearInterval(timer);
+                    }).bind("touchend", function(){
+                        timer = setInterval(function(){
+                            $("#btn_next").click();
+                        }, 3000);
+                    });
+                });
+            })
+            $(".Mask").click(function(event) {
+                if ($(event.target).is('.Mask') || $(event.target).is('.main_visual')) {
+                    event.preventDefault();
+                    $(".Mask").removeClass('is-visible');
+                }
+                //$(".main_image").data("touchslider").stop();
+            })
+            $(".btn").click(function() {
+                $(".Mask").removeClass('is-visible');
+                $(".pink_nav").html("")
+
+            })
+            var height =$(window).height()
+            $(".pink_nav").height($(window).height() - 90);
+        })
+
+
+
+    </script>
+</head>
+<body style="overflow: hidden;">
+<div class="map" style="overflow: hidden;">
+<div class="camera">
+    注意:点击摄像头图标查看视频抓拍图
+</div>
+    <div style="width: 100%;height: 20%;position: relative;">
+        <div class="icon_map" style="top: 98%;right: 58%;" data-imgs="http://183.63.201.221/DgGsPhoto/0/dgroad.jpg" data-title="增莞至石碣(北行K71+389)"></div>
+    </div>
+
+    <div class="icon_map" style="top: 27%;right: 47%;" data-imgs="http://183.63.201.221/DgGsPhoto/1/dgroad.jpg,http://183.63.201.221/DgGsPhoto/2/dgroad.jpg" data-title="石碣立交(北行K70+489),石碣至莞龙(北行K66+389)"></div>
+<!--     <div class="icon_map" style="top: 30%;right: 27%;" data-imgs="4.jpg,6.jpg,3.jpg" data-title="广东高速,深圳高速,广西高速"></div> -->
+    <div class="icon_map" style="top: 32%;right: 57%;" data-imgs="http://183.63.201.221/DgGsPhoto/3/dgroad.jpg,http://183.63.201.221/DgGsPhoto/4/dgroad.jpg" data-title="莞龙立交(南行K63+784),莞龙至东莞(北行K63+784)"></div>
+    <!-- <div class="icon_map" style="top: 39%;right: 36%;" data-imgs="4.jpg,5.jpg" data-title="四川高速,北京高速"></div> -->
+    <div class="icon_map" style="top: 38%;left: 35%;" data-imgs="http://183.63.201.221/DgGsPhoto/5/dgroad.jpg,http://183.63.201.221/DgGsPhoto/6/dgroad.jpg" data-title="东莞至上屯(南行K57+789),上屯立交(南行K54+589)"></div>
+    <div class="icon_map" style="top: 41%;right: 45%;" data-imgs="http://183.63.201.221/DgGsPhoto/7/dgroad.jpg,http://183.63.201.221/DgGsPhoto/8/dgroad.jpg" data-title="上屯至中心(北行K52+459),中心至石大(中间分隔带K48+789)"></div>
+
+    <div class="icon_map" style="top: 46%;left: 39%;" data-imgs="http://183.63.201.221/DgGsPhoto/9/dgroad.jpg,http://183.63.201.221/DgGsPhoto/10/dgroad.jpg" data-title="石大立交(北行K47+609),石大至大朗(北行K43+289)"></div>
+
+    <div class="icon_map" style="top: 47%;left: 55%;" data-imgs="http://183.63.201.221/DgGsPhoto/11/dgroad.jpg,http://183.63.201.221/DgGsPhoto/12/dgroad.jpg" data-title="大朗立交(北行K41+039),大朗至常虎立交(北行K39+089)"></div>
+
+    <div class="icon_map" style="top: 54%;left: 53%;" data-imgs="http://183.63.201.221/DgGsPhoto/13/dgroad.jpg" data-title="常虎立交(南行K39+289)"></div>
+    <div class="icon_map" style="top: 55%;left: 62%;" data-imgs="http://183.63.201.221/DgGsPhoto/14/dgroad.jpg,http://183.63.201.221/DgGsPhoto/15/dgroad.jpg" data-title="黄江服务区(南行K36+039),黄江服务区至黄江(北行K34+289)"></div>
+    <div class="icon_map" style="top: 63%;left: 55%;" data-imgs="http://183.63.201.221/DgGsPhoto/16/dgroad.jpg,http://183.63.201.221/DgGsPhoto/17/dgroad.jpg" data-title="黄江立交(南行K32+439),黄江至龙林立交(南行K30+289)"></div>
+    <div class="icon_map" style="top: 66%;right: 31%;" data-imgs="http://183.63.201.221/DgGsPhoto/18/dgroad.jpg,http://183.63.201.221/DgGsPhoto/19/dgroad.jpg,http://183.63.201.221/DgGsPhoto/21/dgroad.jpg" data-title="龙林立交(北行K23+213),龙林立交至大坪(中间分隔带K22+850),龙林立交至迎宾(东行K24+500)"></div>
+     <div class="icon_map" style="top: 57%;right: 22%;" data-imgs="http://183.63.201.221/DgGsPhoto/22/dgroad.jpg,http://183.63.201.221/DgGsPhoto/23/dgroad.jpg" data-title="田心立交(东行K20+000),田心至林村(西行K17+985)"></div>
+     <div class="icon_map" style="top: 74%;right: 39%;" data-imgs="http://183.63.201.221/DgGsPhoto/20/dgroad.jpg" data-title="大坪至梅观高速(南行K19+360)"></div>
+
+    <!--轮播图显示区域-->
+    <div class="Mask">
+        <div class="main_visual" style="display: block; margin-top: 2%;">
+            <!--<div class="flicking_con">
+                <a class="on">1</a><a >2</a><a >3</a>
+            </div>-->
+            <div class="Map_mask">
+                <div class="Map_conter">摄像区域</div>
+                <!--<div class="main_image">
+                    <ul style="width: 320px; overflow: visible;">
+
+                    </ul>
+                    <a href="javascript:;" id="btn_prev" style="width: 320px; overflow: visible;"></a>
+                    <a href="javascript:;" id="btn_next" style="width: 320px; overflow: visible;"></a>
+                </div>-->
+                <div class="pink_nav"></div>
+
+
+                <!--<div class="pink">
+                    <p>高速公路</p>
+                    <p><img src="http://pic1.nipic.com/2008-08-14/2008814172516346_2.jpg" /></p>
+                </div>-->
+                <div style="border-top:1px solid #ccc;">
+                    <div class="btn">关闭</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body></html>

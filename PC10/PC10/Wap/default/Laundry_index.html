@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>96洗衣服务－精选商品</title>
+<link href="{weikucms::RES}/laundry/css/index.css" rel="stylesheet" type="text/css">
+<link href="{weikucms::RES}/laundry/css/box.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jquery-1.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/laundry/js/jscommon.js"></script>
+</head>
+<body>
+	<section>
+		<div class="banner">
+			<!--slider滑动图样式存放在UI内部 JS为模块名称 动结构-->
+			<section style="visibility: visible;" id="slider" class="swipe">
+				<div style="width: 5760px;" class="swipe-wrap">
+					<volist name="goods" id="vo">
+					<div data-index="0" style="width: 1440px; left: 0px; transition-duration: 300ms; transform: translateX(-1440px);" class="wrap">
+						<a href="{weikucms::U('Laundry/goods',array('token'=>$token,'openid'=>$openid))}&goods_id={weikucms:$vo.id}">
+							<img src="{weikucms:$vo.goods_index_pic}" alt="{weikucms:$vo.goods_name}" title="{weikucms:$vo.goods_name}" width="100%">
+						</a>
+					</div>
+					</volist>
+				</div>
+				<div class="bgboxgo">
+					<div class="botton-box mBxCm" id="sbsd">
+						<span class=""></span>
+						<span class="on"></span>
+					</div>
+				</div>
+			</section>
+			<!--幻灯结束-->
+		</div>
+		<div class="menu-con">
+			<volist name="goods" id="vo">
+			 <a href="{weikucms::U('Laundry/goods',array('token'=>$token,'openid'=>$openid))}&goods_id={weikucms:$vo.id}" style="height:90px;">
+				<img src="{weikucms:$vo.goods_pic}">
+				<em>{weikucms:$vo.goods_name}</em>
+			</a> </volist>
+		</div>
+		<div class="Explain">
+			<volist name="columns" id="vo"> <a href="{weikucms::U('Laundry/others',array('token'=>$token,'openid'=>$openid))}&columns_id={weikucms:$vo.id}">
+				<img src="{weikucms:$vo.columns_pic}">
+				<p style="dispaly: block; font-size: 10px;">{weikucms:$vo.columns_name}</p>
+			</a> </volist>
+			<!-- 清除浮动 -->
+			<div style="clear: both;"></div>
+		</div>
+	</section>
+	<footer>
+		<div class="fix-bottom"></div>
+		<div class="bottomBox">
+			<div class="indexMsg">
+				<div class="indexMenu">
+					<a href="{weikucms::U('Laundry/index',array('token'=>$token,'openid'=>$openid))}">
+						<span class="home-index-active">首页</span>
+					</a>
+					<a href="{weikucms::U('Laundry/orders',array('token'=>$token,'openid'=>$openid))}">
+						<span class="Order-index">订单</span>
+					</a>
+					
+					<a href="{weikucms::U('Laundry/membercenter',array('token'=>$token,'openid'=>$openid))}">
+						<span class="card-index">会员中心</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="{weikucms::RES}/laundry/js/Swipe.js"></script>
+	<script>
+        $(function() {
+            slider(3000);//参数为自动切换描述
+            searchFun(".searchbar section");
+            tapclassFun(".blockbox > div");
+            tapclassFun(".blockbox:last > div", "tapclasseee");
+            tapclassFun(".yanzhengBtn", "cloecab00");
+            touchNavFun(".navlistbox");
+        });
+    </script>
+</body>
+</html>

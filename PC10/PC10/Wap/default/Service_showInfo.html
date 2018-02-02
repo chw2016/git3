@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta charset="UTF-8">
+<title>万普微盟Wapwei</title>
+<meta name="Keywords" content="万普微盟Wapwei">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" /> 
+<style type="text/css">
+</style>
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+</head>
+<body>
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+	        <div class="li-l">车型</div>
+			<div class="li-r blue" id="carName">
+				<input id="model_id" value="{weikucms:$data['car_models']}" placeholder="不对外公开" class="input">
+			</div>
+		</li>
+        <li>
+            <div class="li-l">车牌号</div>
+            <div class="li-r">{weikucms:$data['car_licence']}			
+            	<a href="index.php?g=Wap&amp;m=Service&amp;a=editCar&amp;type=2&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}" class="operate">修改</a>                        
+				<input type="hidden" id="car_licence" value="{weikucms:$data['car_licence']}">
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">车主名</div>
+            <div class="li-r">
+				<input id="czname" placeholder="行驶证上的车主名" value="{weikucms:$data['car_username']}" class="input" maxlength="20">
+			</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">联系方式</div>
+            <div class="li-r"><input id="phone" placeholder="输入您的联系方式" value="{weikucms:$data['user_phone']}" class="input" type="tel" maxlength="11"></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">车架号</div>
+            <div class="li-r"><input id="fnum" placeholder="输入您的车架号" class="input" value="{weikucms:$data['car_frame']}"></div>
+        </li>
+        
+        <li class="">
+            <div class="li-l">车辆上牌时间</div>
+            <div class="li-r"><input placeholder="输入车辆上牌时间" class="input" id="sptime" max="{weikucms:$time}" readonly="" value="{weikucms:$data['regist_time']}"/></div>
+        </li>
+        <!-- 
+        <li>
+            <div class="li-l">驾照类型</div>
+            <div class="li-r">
+				<select id="dtype" class="select">
+					<option value="1">A</option>
+					<option value="2">B</option>
+					<option value="3" selected="selected">C</option>
+				</select>
+            </div>
+        </li>
+        <li class="">
+            <div class="li-l">驾照领证时间</div>
+            <div class="li-r">
+			<input class="input" placeholder="初次领取驾照日期" id="dltime" max="{weikucms:$time}" readonly="" value="{weikucms:$data['license_time']}"/>
+			</div>
+        </li>
+        
+       -->
+        <li class="">
+            <div class="li-l">上次投保时间</div>
+            <div class="li-r">
+			<input class="input" id="bxtime" placeholder="请输入上次投保时间" max="{weikucms:$time}" readonly="" value="{weikucms:$data['insurance_time']}"/></div>
+        </li>
+    </ul>
+    <input type="hidden" value="{weikucms:$token}" id="token"/>
+    <input type="hidden" value="{weikucms:$openid}" id="openid"/>
+    <input type="hidden" value="{weikucms:$cid}" id="cid"/>
+</div>
+
+<div class="button clearfix"><a href="#" id="save">保　存</a></div>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery.mobile-1.2.0.min.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/mobiscroll.custom-2.4.5.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+//var info = {'car_name':'奥迪A6', 'cpnum':'粤B12345', 'uname':'多了', 'phone':'', 'fnum':'', 'sptime':'', 'dtype':'3', 'dltime':'', 'bxtime':''};
+var info ={weikucms:$jsonData};
+var params = {'uid':'{weikucms:$data.id}'};
+$(function(){
+	var options = {
+			'preset':'date',
+			'theme':'ios',
+			'mode':'scroller',
+			'display':'bottom',
+			'lang':'en'
+		};
+	$('#sptime').scroller('destroy').scroller(options);
+	$('#sptime').next().click(function(){$('#sptime').focus();});
+
+	$('#dltime').scroller('destroy').scroller(options);
+	$('#dltime').next().click(function(){$('#dltime').focus();});
+	
+	$('#bxtime').scroller('destroy').scroller(options);
+	$('#bxtime').next().click(function(){$('#bxtime').focus();});
+	$('#back').unbind().click(function(){
+		if(match_info()) {
+			sure_box();	
+			return false;
+		}		
+		showAlert2('提示','车辆信息已修改，是否保存？', {'sureFun':'sure_box','sureTitle':'否', 'cancelFun':'sure_modi_info', 'cancelTitle':'是'});
+		return false;
+	});
+	$("#save").click(function(){
+		var cid = $('#cid').val();
+		var params  = {'cid' : cid};
+		params['carname']  	= $('#model_id').val();
+		params['cpnum']	= $('#car_licence').val();
+		params['czname'] = $('#czname').val();
+		params['phone']	= $('#phone').val();		
+		params['fnum'] = $('#fnum').val();		
+		params['sptime'] = $('#sptime').val();
+		//params['dtype']	= $('#dtype').val();
+		//params['dltime'] = $('#dltime').val();
+		params['bxtime'] = $('#bxtime').val();
+		if( !params['czname'] ){
+		  show_error_tip('请输入车主姓名');  return false;
+    	}
+        else if ( !checkName(params['czname']) ){
+   		  show_error_tip('姓名请输入<br />至少2位中文字符'); return false;
+    	}
+		if ( params['fnum'] && !checkVIN( params['fnum'] ) ){
+			show_error_tip('请输入<br />正确的后6位车架号'); return false;
+		}
+		
+		if( !params['sptime']){
+			show_error_tip('请输入车辆上牌时间');  return false;
+		}
+		
+		/*if( !params['dltime'] ){
+			show_error_tip('请输入驾照领证时间');  return false;
+		}*/
+		
+		if( !params['bxtime'] ){
+			show_error_tip('请输入上次投保时间');  return false;
+		}		
+		var url = 'index.php?g=Wap&m=Service&a=editCar&token='+$("#token").val()+"&openid="+$("#openid").val();
+		$.post(url,params,
+                function(data){        	
+                    if(data.status == 100){  
+                    	show_success_tip(data.info);
+                        setTimeout(function(){                        	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 1 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 2 ){
+                    	show_error_tip(data.info);
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }
+                },'json');		
+		});
+	});
+
+</script>
+</body>
+</html>

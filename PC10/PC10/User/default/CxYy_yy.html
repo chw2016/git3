@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/index.css?2014-9-27"  media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/bootstrap_min.css?2014-9-27"  media="all">
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/style.css?2014-9-27" media="all">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/themes.css?2014-9-27">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/style.css?2014-9-27">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/resource.css?2014-9-27">
+<link href="{weikucms::STATICS}/newwapweiui/css/notifIt.css?2014-9-27" rel="stylesheet" type="text/css">
+<link href="{weikucms::STATICS}/newwapweiui/css/style.css?2014-9-27" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css?2014-9-27" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css?2014-9-27" />
+
+<script src="{weikucms::STATICS}/newwapweiui/js/jquery.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/newwapweiui/js/notifIt.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/newwapweiui/js/jquery.form.js" type="text/javascript"></script>
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/application.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/wapwei/bootstrap_min.js"></script>
+
+<script type="text/javascript">
+	function source_delete(url){
+		if(confirm('您确定删除此条记录')){
+			$.post(url,{},function(data){
+				if(data.status == 1){
+					notif({
+						msg: data.info,
+						type: "success"
+					});
+					setTimeout(function(){
+						window.location.href = data.url;
+					},'1000');
+				}else{
+					notif({
+						msg: data.info,
+						type: "error"
+					});
+				}
+			},'json');
+		}else{
+			return;
+		}
+	}
+
+	function go_url(url){
+		$.post(url,{},function(data){
+			if(data == null){
+				window.location.href = url;
+			}else{
+				if(data.status == 1){
+					notif({
+						msg: data.info,
+						type: "success"
+					});
+					setTimeout(function(){
+						window.location.href = data.url;
+					},'1000');
+				}else{
+					notif({
+						msg: data.info,
+						type: "error"
+					});
+					if(data.url != null){
+						setTimeout(function(){
+							window.location.href = data.url;
+						},'1000');
+					}else{
+						setTimeout(function(){
+							window.location.href = url;
+						},'1000');
+					}
+					return false;
+				}
+			}
+
+
+		},'json');
+   }
+
+</script>
+
+<title>{weikucms::C('site_title')}-{weikucms::C('site_name')}</title>
+</head>
+
+<body>
+<!--头部start!-->
+<div id="head"  >
+
+  <div id="head-box">
+  
+     <div id="head-logo" onClick="window.location='{weikucms::C('site_url')}'">
+
+     </div>
+     <div id="head-user">
+         <a name="zhideng"></a>
+         <div id="user-logo">
+             <if condition="$wecha['headpicurl'] neq null">
+                 <img style="width: 45px; height: 45px;" src="{weikucms:$wecha.headpicurl}" />
+                 <else/>
+                 <img style="width: 45px; height: 45px;" src="<php>echo C('site_url');</php>upload/w_client.jpg" />
+             </if>
+             <if condition="$wecha['headpicurl'] neq null">
+
+             </if>
+
+         </div>
+
+         <div id="user-title">
+
+					<span>
+                        <if condition="$wecha['name'] neq null">
+                            <a class="link" href="#">{weikucms:$wecha.name}</a>
+                            <else/>
+                            <a class="link" href="#">未授权</a>
+                        </if>
+					</span>
+
+             <if condition="$wecha['is_auth'] eq 1">
+                 <if  condition="$wecha['service_type_info'] eq 0 or $wecha['service_type_info'] eq 1">
+                     <a href="#" class="type icon_subscribe_label">订阅号</a>
+                 </if>
+                 <if  condition="$wecha['service_type_info'] eq 2">
+                     <a href="#" class="type icon_service_label">服务号</a>
+                 </if>
+                 <php> if($wecha['verify_type_info'] < 0){</php>
+                 <a href="#" class="type icon_verify_label fail">未认证</a>
+                 <php>}</php>
+
+                 <php> if($wecha['verify_type_info'] >= 0){</php>
+                 <a href="#" class="type icon_verify_label success">已认证</a>
+                 <php>}</php>
+
+             </if>
+
+
+         </div>
+
+       <div id="user-logut"><span><a class="link" href="{weikucms::U('Admin/Admin/logout')}">退出</a></span></div>
+     </div>
+     <!--<div id="user-massage" title="你有99个新通知！" style="display:block"><a class="a-num">99</a>-->
+     </div>
+  </div>
+  
+</div>
+<!--头部end!-->
+
+
+
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="height: 100%;background-color: white;">
+    <div style="width: 90%;margin: 0 auto;">
+
+   <style>
+.title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+</style>
+<div class="cLineB"  style="position:relative" > 
+    <div class="title_tab" id="topTab">
+   
+    
+
+        <ul class="tab_navs title_tab" data-index="0"  >
+
+<!--            
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>"></a>
+            </li> -->
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Qianggou/index',array('aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">限时抢购</a>
+            </li> -->
+<!--             
+                        <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="#" class="<if condition='$Head.url eq $HeadHover'>hover</if>">最新活动</a>
+            </li> -->
+            
+            
+<!--             <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Dianphd/index',array('token'=>$_GET['token'],'aid'=>$_GET['aid']))}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">店铺活动管理</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms:$Head.url}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">活动管理</a>
+            </li> -->
+            
+          
+        </ul>
+    
+    </div>
+</div>
+
+<div class="cLineC" style="line-height: 32px;">
+   
+   <a 
+    href="{weikucms::U('CxYy/index',array('aid'=>$_GET['aid'],'modulename'=>$_GET['modulename'],'token'=>$_GET['token']))}" class="btn btn-primary {weikucms:$Opt.css}" >返回</a>
+   
+</div>
+
+   <div class="msgWrap form">
+  <div class="bdrcontent">
+    <div id="div_ptype">
+      <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <thead>
+          <tr>
+          	<th  style="text-align:center" >日期</th>
+            <th  style="text-align:center" >8:30-9:00</th>
+            <th  style="text-align:center" >9:00-9:30</th>
+            <th  style="text-align:center" >9:30-10:00</th>
+            <th  style="text-align:center" >10:00-10:30</th>
+            <th  style="text-align:center" >10:30-11:00</th>
+            <th  style="text-align:center" >11:00-11:30</th>
+            <th  style="text-align:center" >11:30-12:00</th>
+            <th  style="text-align:center" >12:00-12:30</th>
+            <th  style="text-align:center" >12:30-13:00</th>
+            <th  style="text-align:center" >13:00-13:30</th>
+            <th  style="text-align:center" >13:30-14:00</th>
+            <th  style="text-align:center" >14:00-14:30</th>
+            <th  style="text-align:center" >14:30-15:00</th>
+            <th  style="text-align:center" >15:00-15:30</th>
+            <th  style="text-align:center" >15:30-16:00</th>
+            <th  style="text-align:center" >16:00-16:30</th>
+            <th  style="text-align:center" >16:30-17:00</th>
+            <th  style="text-align:center" >17:00-17:30</th>
+            <th  style="text-align:center" >17:30-18:00</th>
+            <th  style="text-align:center" >18:00-18:30</th>
+            <th  style="text-align:center" >18:30-19:00</th>
+            <th  style="text-align:center" >19:00-19:30</th>
+            <th  style="text-align:center" >19:30-20:00</th>
+            <th  style="text-align:center" >20:00-20:30</th>
+            <th  style="text-align:center" >20:30-21:00</th>
+          </tr
+        </thead>
+        <!--tab start-->
+        <div class="alert alert-info" style="width:2420px;" > 
+          <button type="button" class="tips close" data-dismiss="alert">×</button>
+          <strong>提示信息!</strong>
+          <ol>
+        
+           
+            <li>你可以在这里管理你的预订人数信息</li>
+            
+            
+         
+          </ol>
+          <script type="text/javascript">
+            $('.tips.close').click(function(){
+               $(this).parents('.alert.alert-info').hide();
+            });
+          </script>
+        </div>
+                 <?php 
+		/*	foreach($dates as $date){
+
+				echo $date;//输出日期
+				for($i=9;$i<count($atime)+25;$i++){//循环
+					if(isset($list[$date.','.$i])){//如果$list['2015-04-28,9']存在就输出  ，这样输出的就是特殊的
+						echo (int)$list[$date.','.$i];
+					}else{
+						echo (int)$default['hour'.$i];//否则就输出，$default['hour9']
+					}
+					echo str_repeat('&nbsp;', 5);//
+				}
+				echo "<br />";
+		} 
+         */
+         ?>
+          <?php  
+             foreach($dates as $date){  
+          ?>
+            <tr>
+	             <td  style="text-align:center;" >
+	                 <a target="_self" style=" width:100px; height:60px;  width:100px; height:60px;  " class="btn btn-success btn-sm" >
+	                               <?php 
+                                          echo $date; 
+                                          $add=strtotime($date);
+                                          $add=date('w',$add);
+                                       switch ($add){
+			                            	case 1:$aa='星期一';break;
+			                             	case 2:$aa='星期二';break;
+			                             	case 3:$aa='星期三';break;
+			                             	case 4:$aa='星期四';break;
+			                             	case 5:$aa='星期五';break;
+			                             	case 6:$aa='星期六';break;
+			                             	case 0:$aa='星期日';break;
+			                             }
+                                     echo "<br/>";
+                                       print_r($aa);
+	                               ?>
+	                 </a>
+	             </td>
+	             <?php for($i=1;$i<26;$i++){ ?>
+                 <td class="norightborder" style="text-align:center" >
+                  
+	               <div  class="aaa" style=" background-color:#19b593; height:60px;line-height:60px; width:83px; color:white; " >
+	              <?php
+	            
+	                  if($list[$add.','.$i]){
+                       
+                           echo "<a style='color:white;text-decoration:none' href='".C(site_url)."index.php?g=User&m=CxYy&a=yd&time=".$add.','.$i."&id=".$_GET['id']."&zhi=".$list[$add.','.$i]."'>".$list[$add.','.$i]."</a>";
+                      }else{
+	              ?>    
+	                   <a href="{weikucms::U('yd',array('time'=>$add.','.$i,'id'=>$_GET['id']))}" >预定</a> 
+	              <?php
+	                  }
+	              ?>     
+	               </div>
+	           
+	                    <input type="hidden"  class="time" name="time" value="<?php print_r($date.",".$i); ?>"  />
+	                    <input type="hidden"  class="token" name="token" value="<?php print_r($token); ?>"  />
+	                    <input type="hidden"  class="pid" name="pid" value="<?php print_r($pid); ?>"  />
+	             
+
+	             </td>
+	             <?php } ?>
+           </tr>
+       <?php
+           }
+       ?>
+       
+    
+      </table>
+    </div>
+  </div>
+  <div class="footactions" style="padding-left:10px">
+    <div class="pager">{weikucms:$page}</div>
+  </div>
+</div>
+
+
+
+    <div class="clr"></div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+
+<include file="Public:footer"/>

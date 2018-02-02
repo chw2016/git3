@@ -1,0 +1,219 @@
+<html><head>
+    <title>绑定银行卡</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<style>
+.upload-item {
+  background: #fff;
+  padding: 20px 5% 30px;
+  width: 90%;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.upload-preview>p {
+  margin-top: 20px;
+}
+
+</style>
+<body>
+
+<div class="space-20"></div>
+<header class="ucenter-t">
+   您可以选择下列任意一种方式进行提现
+</header>
+<section class="ucenter-main animated fadeInDown">
+    <div class="space-10"></div>
+	<header class="ucenter-t">
+    绑定支付宝
+    </header>
+    <div class="space-10"></div>
+    <ul class="um-list um-list-form">
+        <!--<li><label for="bank_user1" class="label">户名</label><input type="text" value="" placeholder="请输入账户名" id="bank_user1"></li>-->
+		<li><label for="bank_user" class="label">户名</label><input type="text" value="{weikucms:$v.name}" id="bank_user"></li>
+		 <li><label for="bank_user2" class="label">账号</label><input type="text" value="{weikucms:$v.alipay}" placeholder="请输入账号" id="bank_user2"></li>
+
+	</ul>
+	<div class="space-10"></div>
+	<header class="ucenter-t">
+    绑定银行卡
+    </header>
+    <ul class="um-list um-list-form">
+
+        <li><label for="bank_name" class="label">开户行</label><input type="text" value="{weikucms:$v.bank}" placeholder="示例：招商银行XX省XX市XX支行" id="bank_name"></li>
+        <li><label for="bank_code" class="label">银行卡号</label><input type="text" value="{weikucms:$v.brand}" placeholder="请输入正确的银行卡号" pattern="[0-9]*" id="bank_code"></li>
+
+	</ul>
+    <div class="space-10"></div>
+	<div class="space-10"></div>
+	<ul class="um-list um-list-form">
+
+        
+        <li><label for="bank_phone" class="label">手机</label><input type="text" readonly value="{weikucms:$v.phone}" id="bank_phone" pattern="[0-9]*"></li>
+		<li><label for="bank_userid" class="label">身份证号</label><input type="text" value="{weikucms:$v.idcard}" placeholder="请输入您的身份证号码" id="bank_userid"></li>
+
+    </ul>
+      <div class="space-10"></div>
+    <div class="upload-item">
+        <input type="hidden" id="ID_img" name="">
+        <div class="upload-preview c1" id="J_uploadId">
+            <img src="{weikucms:$v.img}" <if condition="$v['img']"><else />style="display:none "</if> />
+
+            <div class="space-20"></div>
+                <!--<i class="icon-add">--><input type="hidden" id="img" class="img2" name="img" value="{weikucms:$v.img}"><!--</i>-->
+                <p>点击上传您的身份证正面图片</p>
+                    </div>
+        <div class="upload-change" id="J_idChange">
+        <button class="ui-btn" type="button">重新上传身份证正面</button>
+        </div>
+        <div class="upload-example">
+            <button class="ui-btn" type="button" data-img="tpl/Wap/default/hn/img/img-id-1.jpg">查看示例</button>
+        </div>
+    </div>
+    <div class="upload-item">
+        <input type="hidden" id="ID_Sideimg" name="">
+        <div class="upload-preview c1" id="J_uploadSideId">
+            <img src="{weikucms:$v.img1}" <if condition="$v['img1']"><else />style="display:none "</if> />
+
+            <div class="space-20"></div>
+                <!--<i class="icon-add">--><input type="hidden" id="img1" class="img2" name="img1" value="{weikucms:$v.img1}"><!--</i>-->
+                <p>点击上传您的身份证反面图片</p>
+                    </div>
+        <div class="upload-change" id="J_idSideChange">
+        <button class="ui-btn" type="button">重新上传身份证反面</button>
+        </div>
+        <div class="upload-example">
+            <button class="ui-btn" type="button" data-img="tpl/Wap/default/hn/img/img-id-2.jpg">查看示例</button>
+        </div>
+    </div>
+    <div class="upload-item">
+        <input type="hidden" id="CARD_img" name="">
+        <div class="upload-preview c1" id="J_uploadCard">
+            <img src="{weikucms:$v.img2}" <if condition="$v['img2']"><else />style="display:none "</if>  />
+            <div class="space-20"></div>
+                <!--<i class="icon-add">--><input id="img2" type="hidden" class="img2" name="img2" value="{weikucms:$v.img2}"><!--</i>-->
+                <p>请上传您的银行卡正面图片</p>
+
+                    </div>
+        <div class="upload-change" id="J_cardChange">
+        <button class="ui-btn" type="button">重新上传银行卡正面</button>
+        </div>
+        <div class="upload-example">
+            <button class="ui-btn" type="button" data-img="tpl/Wap/default/hn/img/img-bankcard.jpg">查看示例</button>
+        </div>
+    </div>
+</section>
+<aside class="account-submit">
+    <button class="ui-btn-lg ui-btn-danger" type="button" data-type="add" id="J_submitInfo">保存</button>
+</aside>
+<div class="space-20"></div>
+<input type="hidden" id="Url" value="{weikucms::U('balance',array('token'=>$token,'openid'=>$openid))}">
+<script>
+    var bankinfo = "{weikucms::U('bank_check',array('token'=>$token,'openid'=>$openid))}";
+</script>
+
+<footer class="foot">
+    提交真实完整的资料是您快速结佣的关键，经纪人对所上传资料的真实性负责,因经纪人自身提交上传资料有误造成的延迟支付或无法支付后果由经纪人承担。 本活动最终解释权归举办方所有 </footer>
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+            'uploadImage',
+            'downloadImage',
+            'previewImage'
+        ]
+    });
+    wx.ready(function () {
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+        //chooseImage
+
+        $(".c1").click(function(e) {    //拍照、本地选图
+
+            var a1=$(this);
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                           // a1.prev().val(t);
+                                           // a1.append("<img src='"+t+"' width='90px' />");
+                                            a1.find(".img2").val(t);
+                                            a1.find('img').attr('src',t);
+											a1.find('img').css('display','block');
+                                            a1.find('img').show();
+
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+
+        //图片展示
+
+        /*$(document).on('click', '.fadeInDown img', function (e){
+            e.preventDefault();
+			e.stopPropagation();
+            alert(2);
+            var urls = [];
+            var $this = $(this);
+            $(".fadeInDown").find("img").each(function(e,t){
+                urls[e]=$(t).attr('src');
+            });
+            wx.previewImage({
+                current: $this.attr('src'),
+                urls:  urls
+
+            });
+        })*/
+    })
+
+
+</script>
+
+</body>
+</html>

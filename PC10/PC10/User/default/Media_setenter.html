@@ -1,0 +1,164 @@
+<include file="Public:head"/>
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        添加任务
+
+    </h4>
+</div>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+<table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+<input type="hidden" class="px" id="id" value="{weikucms:$info['id']}" name="id" style="width:300px" placeholder="">
+
+<tr>
+    <th valign="top"><label for="username">企业名称</label></th>
+    <td>
+        <input type="input" class="px" id="username" value="{weikucms:$info['username']}" name="username" style="width:300px" placeholder="此处填写企业名称">
+    </td>
+</tr>
+    <tr>
+        <th valign="top"><label for="password">密码</label></th>
+        <td>
+            <input type="password" class="px" id="password" value="" name="password" style="width:300px" placeholder="此处填写密码">
+        </td>
+    </tr>
+<tr>
+    <th valign="top"><label for="license">营业执照编号</label></th>
+    <td>
+        <input type="input" class="px" id="license" value="{weikucms:$info['license']}" name="license" style="width:300px" placeholder="此处填写企业的营业执照编号">
+    </td>
+</tr>
+<tr>
+    <th valign="top"><label for="brand">品牌管家</label></th>
+    <td>
+        <input type="input" class="px" id="brand" value="{weikucms:$info['brand']}" name="brand" style="width:300px" placeholder="此处填写企业品牌管家">
+    </td>
+</tr>
+<tr>
+    <th valign="top"><label for="phone">联系电话</label></th>
+    <td>
+        <input type="input" class="px" id="phone" value="{weikucms:$info['phone']}" name="phone" style="width:300px" placeholder="此处填写企业的联系电话">
+    </td>
+</tr>
+<tr>
+    <th valign="top"><label for="qq">联系QQ</label></th>
+    <td>
+        <input type="input" class="px" id="qq" value="{weikucms:$info['qq']}" name="qq" style="width:300px" placeholder="此处填写企业的联系QQ">
+    </td>
+</tr>
+<tr>
+    <th valign="top"><label for="weixin">微信号</label></th>
+    <td>
+        <input type="input" class="px" id="weixin" value="{weikucms:$info['weixin']}" name="weixin" style="width:300px" placeholder="此处填写企业的微信号">
+    </td>
+</tr>
+
+
+
+<tr>
+    <th>
+    </th>
+    <td>
+        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+            保存
+        </button>
+        <include file="./tpl/User/default/helper/list_btn.html"/>
+        <div class="clr"></div></td>
+    </td>
+</tr>
+
+
+</table>
+</form>
+</div>
+
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $('#id').val();
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var license = $('#license').val();
+            var brand = $('#brand').val();
+            var phone = $('#phone').val();
+            var qq = $('#qq').val();
+            var weixin = $('#weixin').val();
+            if(!username){
+                notif({
+                    msg: "请填写企业名称",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!license){
+                notif({
+                    msg: "请填写企业的营业执照编号",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!phone){
+                notif({
+                    msg: "请填写企业的联系方式",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!qq){
+                notif({
+                    msg: "请填写企业的联系QQ",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!weixin){
+                notif({
+                    msg: "请填写企业的微信号",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            var url = "{weikucms::U('Media/setenter',array('token'=>$token))}";
+            $.post(url,{id:id,username:username,password:password,license:license,brand:brand,phone:phone,qq:qq,weixin:weixin},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+        });
+    });
+</script>
+
+

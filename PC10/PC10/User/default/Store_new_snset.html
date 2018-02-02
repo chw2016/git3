@@ -1,0 +1,192 @@
+<include file="Public:head"/>
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            商城优惠券设置
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Store_new/sn',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <input type="hidden" name="id" id="id" value="{weikucms:$set.id}" />
+            <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <tr>
+                    <th valign="top">优惠券名称：</th>
+                    <td>
+                        <input type="input" class="px" id="snname" value="" name="name" style="width:300px" placeholder="此处填写商品优惠券名称">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">优惠券主题图片：</th>
+                    <td>
+                        <img  id="image_show" class="indexs_img" src="{weikucms:$set.pic}">
+                        <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="" style="width:300px;"   />
+                        <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传礼品图片</span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top">生成优惠券的数量：</th>
+                    <td>
+                        <input type="number" class="px" id="num" value="" name="name" style="width:50px">此处填写生成商品优惠券的数量，如：100；
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">优惠券SN码的长度：</th>
+                    <td>
+                        <input type="number" class="px" id="length" value="" name="name" style="width:50px">此处填写生成商品优惠券SN码的长度，如：8；
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">截至时间：</th>
+                    <td><input type="input" class="px" id="starttime" value="" onClick="WdatePicker()" name="starttime" style="width:175px;" placeholder="此处填写使用开始时间"/>
+                        到
+                        <input type="input" class="px" id="endtime" value="" name="endtime" onClick="WdatePicker()" style="width:175px;" placeholder="此处填写使用结束时间"/></td>
+                </tr>
+                <tr>
+                    <th valign="top">兑换金额：</th>
+                    <td>
+                        <input type="input" class="px" id="amount" value="" name="amount" style="width:300px" placeholder="此处填写商品优惠券兑换的金额">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            生成
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var snname = $("#snname").val();
+            var pic = $("#pic").val();
+            var num = $("#num").val();
+            var length = $("#length").val();
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            var amount = $("#amount").val();
+
+            if(! snname){
+                notif({
+                    msg: "名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(isNaN(num)){
+                notif({
+                    msg: "优惠券的数量格式不正确，必须为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(isNaN(length)){
+                notif({
+                    msg: "优惠券SN码的长度格式不正确，必须为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! starttime){
+                notif({
+                    msg: "开始时间不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! endtime){
+                notif({
+                    msg: "结束不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! amount){
+                notif({
+                    msg: "兑换金额不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+
+
+            var posturl = "{weikucms::U('Store_new/snset',array('token'=>$token))}";
+            $.post(posturl,
+                    {id:id,snname:snname,pic:pic,num:num,length:length,starttime:starttime,endtime:endtime,amount:amount,token:'{weikucms:$token}'},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+
+<include file="Public:footer" />

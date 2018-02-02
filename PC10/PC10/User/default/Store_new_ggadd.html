@@ -1,0 +1,142 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+
+          <div class="cLineB">
+              <span class="glyphicon glyphicon-picture"></span>
+              <h4>编辑广告内容</h4>
+          </div>
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post"   action=""  enctype="multipart/form-data" >
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+                <tr>
+                    <th>位置{weikucms:$type+1}</th>
+
+                </tr>
+
+                <TR>
+                  <TH valign="top"><label for="picurl">广告图片：</label></TH>
+
+                  <TD><img id="image_show" class="indexs_img" src=""></TD>
+                </TR>
+                
+                          <TR>
+                  <TH valign="top"><label for="pic">上传广告图片：</label></TH>
+                  <TD><input type="hidden" class="text textMiddle inputQ"  name="pic" id="img" value="" style="width:300px;"   />
+                      <span class="ke-button-common" id="upload">上传广告图片</span>
+</TD>
+                </TR>
+
+
+                 <TR>
+                  <TH valign="top"><label for="url">自定义链接地址：</label></TH>
+                  <TD><input type="input" class="px" id="url" value="" name="url" style="width:500px;" placeholder="可以选填广告跳转链接"></TD>
+                </TR>
+                <TR>
+                  <TH></TH>
+                  <TD><button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button></TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+  	</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var pic = $("#img").val();
+            var url = $("#url").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            var type={weikucms:$type+1};
+            var app="Store_new";
+
+            if(!pic){
+                notif({
+                    msg: "您还没上传广告图片哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+
+
+            $.post("{weikucms::U('Store_new/ggadd',array('token'=>$token))}",
+                    {pic:pic,url:url,__hash__:__hash__,type:type,app:app},
+                    function(data){
+                if(data.status == 1){
+                    notif({
+                        msg: data.info,
+                        type: "success"
+                    });
+                    setTimeout(function(){
+                        window.location.href = data.url;
+                    },'1000');
+                }else{
+                    notif({
+                        msg: data.info,
+                        type: "error"
+                    });
+                }
+            },'json');
+
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+    <title>
+        优惠券-{weikucms:$wxuser.name}
+    </title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/usercenter/resource/my_card.s.min.css"/>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+</head>
+
+<body>
+<div class="wx_wrap" id="coupon_content">
+    <!-- S 导航 -->
+    <div class="card_nav" id="coupon_items">
+        <a href="javascript:void(0)" class="cur" nickid="effective_coupon">
+            优惠券详情
+        </a>
+
+    </div>
+    <!-- E 导航 -->
+    <!-- S 内容 -->
+
+    <!-- E 内容 -->
+    <p class="cart_status cart_status_none" style="padding-top: 20px;text-align: left;padding-left: 15px;padding-right: 15px;" id="no_jd_coupon" style="display:block;">
+       <span>优惠券名&nbsp;&nbsp;:&nbsp;&nbsp;{weikucms:$saledata.name}</span>
+       <!--<span>优惠金额&nbsp;&nbsp;:&nbsp;&nbsp;{weikucms:$saledata.sale_money}元</span>-->
+       <span>状态&nbsp;&nbsp;:&nbsp;&nbsp;
+           <if condition="$usersalecard neq null">
+               <if condition="$usersalecard['status'] eq 0">
+                   已领取
+                   <else/>
+                   已使用
+               </if>
+               <else/>
+               可领取
+           </if>
+       </span>
+       <span>优惠券有效期&nbsp;&nbsp;:&nbsp;&nbsp;{weikucms:$saledata.start_date}至{weikucms:$saledata.end_date}</span>
+       <span>优惠券使用描述&nbsp;&nbsp;:&nbsp;&nbsp;{weikucms:$saledata.desc}</span>
+        <if condition="$usersalecard neq null">
+            <if condition="$usersalecard['status'] eq 0">
+                 <span style="font-size:16px;width: 100%;height: 40px;line-height: 40px;background-color: #ACABAB;color: white;text-align: center;margin-top: 20px;border-radius: 5px;">
+                       已领取
+                 </span>
+            <else/>
+                 <span style="font-size:16px;width: 100%;height: 40px;line-height: 40px;background-color: #DB8788;color: white;text-align: center;margin-top: 20px;border-radius: 5px;">
+                       已使用
+                 </span>
+            </if>
+            <else/>
+           <span id="getsalecard" data="{weikucms:$saledata.id}" style="font-size:16px;width: 100%;height: 40px;line-height: 40px;background-color: #e4393c;color: white;text-align: center;margin-top: 20px;border-radius: 5px;">
+               领&nbsp;&nbsp;取
+           </span>
+        </if>
+
+    </p>
+
+</div>
+<!-- wx_wrap -->
+<script type="text/javascript">
+    $(function(){
+        $("#getsalecard").click(function(){
+            var sid = $(this).attr('data');
+            var btn = $(this);
+            btn.text('优惠券领取中...');
+            $.ajax({
+                type: "post",
+                url: "{weikucms::U('Usercenter/getsalecard',array('token'=>$token,'openid'=>$openid))}",
+                dataType: "json",
+                data:{sid:sid},
+                success: function(html){
+                    if (html.code == 0) {
+                        msg.alert(html.msg,function(){
+                            window.location.href="{weikucms::U('Usercenter/salecarddetail',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+                        });
+                        //window.location.reload();
+                    }else{
+                        btn.text(html.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

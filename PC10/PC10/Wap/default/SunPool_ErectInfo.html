@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/sunpool/css/style.css">
+		<script src="{weikucms::RES}/sunpool/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/main.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/core.js"></script>
+		<script src="{weikucms::RES}/sunpool/js/iscroll.js"></script>
+    </head>
+    <body>
+   		<div class="header textMiddle white">
+   			我要安装
+   		</div>
+
+   		<div class="inputWrap marginTop20 white-bg border-14">
+   			
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName icon icon-name">
+   					<font color="red">*</font>姓名：
+   				</div>
+   				<div class="textMiddle  myul">
+   					<div class="input">
+   						<input type="text" id="uname">
+   					</div>   					
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName icon icon-phone">
+   					<font color="red">*</font>手机号码：
+   				</div>
+   				<div class="textMiddle  myul">
+   					<div class="input">
+   						<input type="tel"  id="tel">
+   					</div>   					
+   				</div>
+   			</div>
+
+            <div class="inputItem setMiddle">
+                <div class="inputItemName icon icon-email">
+                    电子邮箱：
+                </div>
+                <div class="textMiddle  myul">
+                    <div class="input">
+                        <input type="email"  id="email">
+                    </div>
+                </div>
+            </div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName icon icon-address">
+   					安装地址：
+   				</div>
+   				<div class="textMiddle  myul">
+   					<div class="input select select-ex">
+   						<select name="province" id="loc_province">
+   							
+   						</select>
+
+   					</div>
+   				</div>
+   				<div class="textMiddle marginTop8 myul">
+   					<div class="input select select-ex">
+   						<select name="city" id="loc_city">
+   							
+   						</select>
+
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName icon icon-house">
+   					屋顶可安装面积：
+   				</div>
+   				<div class="textMiddle  myul">
+   					<div class="input">
+   						<input type="number"  id="squre" placeholder="㎡">
+   					</div>
+   				</div>
+   			</div>
+
+   			<div class="inputItem setMiddle">
+   				<div class="inputItemName icon icon-host">
+   					是否业主：
+   				</div>
+   				<div class="textMiddle  myul">
+   					<div class="input select select-ex">
+   						<select name="ifHostMan" id="ifHostMan">
+   							<option value="1">是</option>
+   							<option value="2">否</option>
+   						</select>
+   					</div>
+   				</div>
+   			</div>
+			
+			
+
+   		</div>
+
+
+
+   		<div class="actionHavBox myul">
+   			<div class="onBtn" onclick="tijiao()">
+   				提 交
+   			</div>
+   		</div>
+
+
+    </body>
+   <script src="{weikucms::RES}/sunpool/js/area.js"></script>
+   <script src="{weikucms::RES}/sunpool/js/location.js"></script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+         showLocation();
+      });
+   </script>
+    <script>
+        function tijiao(){
+            var uname=$("#uname").val().trim();
+            var tel=$("#tel").val().trim();
+            var email=$("#email").val().trim();
+            var province=$("#loc_province").find("option:selected").text().trim();
+            var city=$("#loc_city").find("option:selected").text().trim();
+            var squre=$("#squre").val().trim();
+            var host=$("#ifHostMan").val().trim();
+            var reg = /^(((13[0-9]{1})|(15[0-9]{1}|18[0-9]{1}))+\d{8})$/;
+            if(!uname){
+                alert("请填写姓名!");
+                return false;
+            }
+
+            if(!reg.test(tel)){
+                alert("电话号码格式错误!");
+                return false;
+            }
+            if(city=="请选择城市"){
+                alert("请选择城市!");
+                return false;
+            }
+            if(squre<=0){
+                alert("请填写安装面积!");
+                return false;
+            }
+            $.post("{weikucms::U('SunPool/ErectInfo',array('token'=>$token,'openid'=>$openid))}",{uname:uname,tel:tel,email:email,city:city,province:province,squre:squre,host:host},function(data){
+                if(data.status==1){
+                    alert('提交成功');
+					history.back();
+                }else{
+                    alert(data.info);
+                }
+            },"json")
+        }
+    </script>
+	<!-- <div style="width:95%;height:20px;line-height:20px;text-align:center;font-size:12px;padding:5px;0px;color:rgb(190, 186, 186)">万普微信技术支持</div> -->
+</html>

@@ -1,0 +1,295 @@
+<html>
+	<head>
+		<title>测试结果</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/6.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				var BMI = "{weikucms:$BMI}",aimBMI = "{weikucms:$aimBMI}";
+				$('.aimpos').css('left','-7px');
+				$('.aimpos').delay(400).animate({'left':aimBMI + 'px'},1500);
+				$('.nowpos').css('left','-7px');
+				$('.nowpos').delay(400).animate({'left':BMI + 'px'},1500);
+			})
+		</script>
+		<style type="text/css">
+			.showline{
+				width: 100%;
+				height: 8px;
+				margin:0 auto;
+				display: flex;display: -webkit-box; 
+			}.showline .one{text-align:center;font-size:10px;line-height:20px;width: 110px;height:20px;background: rgba(29,162,200,1);border-bottom-left-radius: 4px;border-top-left-radius: 4px;}
+			.showline .two{text-align:center;font-size:10px;line-height:20px;width: 45px;height:20px;background: rgba(91,206,200,0.4);}
+			.showline .three{text-align:center;font-size:10px;line-height:20px;width: 49px;height:20px;background: rgba(91,206,200,1);}
+			.showline .four{text-align:center;font-size:10px;line-height:20px;width: 71px;height:20px;background: rgba(255,101,101,1);border-bottom-right-radius: 4px;border-top-right-radius: 4px}
+			.number{width: 100%;margin:45 auto 0;display: flex;display: -webkit-box; }
+			.number .one{width: 48%;text-align: right;}
+			.number .two{width: 17%;}
+			.number .three{width: 11%;}
+			/*肥胖下面的文字*/
+			.fatfont{width: 100%;margin:0 auto;display: flex;display: -webkit-box;}
+			.fatfont .one{width: 44%;}
+			.fatfont .two{width: 12%;}
+			.fatfont .three{width: 15%;}
+			.fatfont .four{width: 29%;}
+			/*当前体重*/
+			.current{position: absolute;top: -10px;left:-32px;width: 100px;font-size: 10px;padding-top:4px; }
+			#current{-webkit-transform:rotate(180deg) !important;-moz-transform:rotate(180deg) !important;}
+			.before{top: 8px !important;}
+			.after{top: 17px !important;}
+			#diffColor{width: 80%;font-size: 12px;margin-top: 65px;}
+			.diffLeft{float: left;width: 10px;height: 10px;margin-right: 5px;position: relative;top: 4px;}
+			.stop{
+				width: 90%;
+				/* display: flex;
+				display: -webkit-box; */
+				text-align: center;
+				margin-top: 15px;
+				margin-left: 10px;
+			}.stop ul li{color: #000;padding: 5px 6px;font-size: 14px;background: rgba(177,231,248,1);margin-right: 5px;float: left;margin-top: 5px;}
+			.xiugai{font-size: 14px;margin-left: 15px;position: relative;top: 15px;}
+		</style>
+	</head>
+	<body>
+		<!-- 邀请好友来 -->
+		 <div id="mcover">
+        	<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/guide.png" width="320px" height="320px"/>
+    	</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">测试结果</span>
+		</div> -->
+		<!-- 身体状况 -->
+		<div class="state">
+			<div class="circle"></div>
+			身体状况
+		</div>
+		<!-- 身体状况说明 -->
+		<div id="condition">
+			<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/blueMan.png" class="blueman"/>
+			<div class="cons">
+				<table>
+					<tr>
+						<td class="trClass">
+							<span>BMI：{weikucms:$result['BMI']}</span>&nbsp;
+							<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/hint.png" width="12px" height="12px" id="PromptInfo"/>
+							<div class="promptText">
+								<div class="whiteTangle"></div>
+								<span>
+									BMI是目前国际上常用的衡量人体胖瘦程度以及是否健康的一个标准。计算公式为：BMI = 体重（kg）/（身高 [cm]）^ 2
+								</span>
+							</div>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>年龄：{weikucms:$result['age']}</td>
+						<td>当前体重：{weikucms:$result['weight']}</td>
+					</tr>
+					<tr>
+						<td>身高：{weikucms:$result['height']}</td>
+						<td>目标体重：{weikucms:$aimlose}kg</td>
+					</tr>
+				</table>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!-- 健康状况 -->
+		<div class="state states">
+			<div class="circle"></div>
+			健康状况
+		</div>
+		<div class="scale">
+			当前体重状况：<span>{weikucms:$result['health']}</span>
+		</div>
+		<div class="line">
+			<span class="loca aimpos">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/position.png" width="10.5px" height="14px" />
+				<!-- IBM值 -->
+				<span class="current">
+					<span class="site">目标体重:</span>
+					<span class="site">{weikucms:$aimlose}kg</span>
+				</span>
+				
+			</span>
+			<!-- 四格条显示 -->
+			<div class="showline">
+				<div class="one">BMI < 18.5</div>
+				<div class="two">18.6~23.9</div>
+				<div class="three">24.0~29.8</div>
+				<div class="four">>30</div>
+			</div>
+			<!-- 下面的指示框 -->
+			<span class="loca before nowpos" style="margin-top:15px;">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/position.png" width="10.5px" height="14px" id="current"/>
+				<!-- IBM值 -->
+				<span class="current after">
+					<span class="site">当前体重:</span>
+					<span class="site">{weikucms:$result['weight']}</span>
+				</span>
+			</span>
+			<!-- 下面的指示框 -->
+			<!-- <div class="number">
+				<div class="one">18.5</div>
+				<div class="two">23.9</div>
+				<div class="three">29.9</div>
+			</div> -->
+			<!-- 
+			<div class="fatfont">
+				<div class="one">偏瘦</div>
+				<div class="two">标准</div>
+				<div class="three">过重</div>
+				<div class="four">肥胖</div>
+			</div> -->
+			<!-- 四种不同颜色的表示方法 -->
+			<table id="diffColor">
+				<tr>
+					<td>
+						<div class="diffLeft" style="background: rgba(29,162,200,1);">
+						</div>
+						偏瘦
+					</td>
+					<td>
+						<div class="diffLeft" style="background: rgba(91,206,200,0.4);">
+						</div>
+						健康
+					</td>
+					<td>
+						<div class="diffLeft" style="background: rgba(91,206,200,1);">
+						</div>
+						偏胖
+					</td>
+					<td>
+						<div class="diffLeft" style="background: rgba(255,101,101,1);">
+						</div>
+						肥胖
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 健康状况 -->
+		<div class="state states">
+			<div class="circle"></div>
+			瘦身方案
+		</div>
+		<!--
+		<div id="Invitation">
+            分享到朋友圈<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/topArrow.png" />
+		</div>
+		-->
+		<div class="clear"></div>
+		<!-- 底部显示 -->
+		<div class="footer">
+			<div class="img_left">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/drink.png" width="100px" height="100px"  onclick="window.location.href = '{weikucms::U('Wap/Reduce/dietplan',array('token'=>$token,'openid'=>$openid))}'"/>
+				<div class="yellowPrompt">
+					每日新陈代谢的量{weikucms:$result.BMR}KCAL&nbsp;&nbsp;
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/hint.png" width="13px" height="13px" id="promptsInfo"/>
+
+					<div class="YellTriangle"></div>
+					<div class="prompts">
+						<span>
+							新陈代谢是指人体在清醒而又极端安静的状态下，不受肌肉活动、环境温度、食物及精神紧张等影响时的能量代谢率。
+						</span>
+						<div class="whiteTangle"></div>
+					</div>
+				</div>
+			</div>
+			<!-- <span class="img_middle">
+				<div class="redL">
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/arrowRed.png" width="15px" height="20px"/>
+				</div>
+				<span><span class="mass">每日<br/>所需能量<br/></span><span>{weikucms:$everyNeed}</span>kcal</span>
+				<div class="redR">
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/arrowRed.png" width="15px" height="20px"/>
+				</div>
+			</span> -->
+			<div class="img_right">
+				<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/sports.png" width="100px" height="100px" onclick="window.location.href = '{weikucms::U('Wap/Reduce/runplan',array('token'=>$token,'openid'=>$openid))}'"/>
+			</div>
+		</div>
+		<!-- 左右的提示 -->
+		<div>
+			<div class="bluePrompt">
+				<div class="BlueTriangle"></div>
+				每日饮食摄入<br/>{weikucms:$result.getlow}KCAL
+			</div>
+			<div class="redPrompt">
+				<div class="RedTriangle_1"></div>
+				每日运动消耗<br/>{weikucms:$result.move}KCAL
+			</div>
+			<div class="clear"></div>
+		</div>
+		
+		<div class="clear"></div>
+		<if condition="$arrays neq ''">
+
+		<p class="xiugai">要改掉以下习惯</p>
+			<div class="stop">
+			<ul>
+				<volist name="arrays" id="vo">
+					<li>{weikucms:$vo.no_text}</li>
+				</volist>
+			</ul>
+			</div>
+		<else />
+			<p class="xiugai" onclick="window.location.href='{weikucms::U('Wap/Reduce/analysis',array('token'=>$token,'openid'=>$openid))}'">
+    					尚未填写分析肥胖原因,请<span style="padding:0px 5px;color:rgb(52, 127, 128);">点击</span>前往分析吧
+    		</p>
+		</if>
+		<div style="height:20px;"></div>
+		<!-- 底部 -->
+		<div style="height:100px;"></div>
+		<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/repeatBtn.png" width="90px" height="48px" class="adjust" id="adjust"/> 
+		<script type="text/javascript">
+			$(function(){
+				$('#PromptInfo').click(function(){
+					$('.promptText').show();
+
+				})
+				$('.promptText').click(function(){
+					$(this).hide();
+				})
+				// 下面的提示
+				$('#promptsInfo').click(function(){
+					$('.prompts').show();
+				})
+				$('.prompts').click(function(){
+					$(this).hide();
+				})
+				// 遮罩分享
+				$('#Invitation').click(function(){
+					$('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height()});
+					$('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px'});
+				})
+				// 遮罩消失
+				$('#mcover').click(function(){
+					$(this).hide();
+					// $(this).children('img').hide();
+				})
+				// 可以将后台的数据统一分配到前台
+				// 点的位置
+				// $('.loca').css('left',);
+				// 重新定制
+				$('#adjust').click(function(){
+					// alert(1);
+					var url = "{weikucms::U('Wap/Reduce/repeatDingZhi',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{},function(data){
+						setTimeout(function(){
+							window.location.href = data.url;
+						},1000)
+					},'json');
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/commerce/dyb/css/style.css">
+		<script src="{weikucms::RES}/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/main.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/core.js"></script>
+		<script src="{weikucms::RES}/commerce/dyb/js/iscroll.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+		    wx.config({
+		        appId: '{weikucms:$signPackage.appId}',
+		        timestamp: {weikucms:$signPackage.timestamp},
+		        nonceStr: '{weikucms:$signPackage.nonceStr}',
+		        signature: '{weikucms:$signPackage.signature}',
+		        jsApiList: [
+		            'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+		        ]
+		    });
+		    wx.ready(function () {
+		        // 在这里调用 API
+		        wx.hideOptionMenu();
+		    });
+
+		</script>
+    </head>
+    <body>
+    	<div class="bbsUserInfoBox myul">
+    		<div class="bbsCenterLogoWrap circle">
+    			<div class="bbsCenterLogo circle fixBg" style="background-image:url({weikucms:$wxusers.headimgurl})"></div>
+    		</div>
+    		<div class="bbsCenterMoreInfo">
+    			<div class="bbsCUserName">
+    				{weikucms:$wxusers.nickname}
+    			</div>
+                <input type="text" class="hide" id="editUserName" placeholder="请输入"/>
+    			<div class="bbsUserNameEdit border-20">
+    				<a href="{weikucms::U('Wap/Commercedyb/user_edit',array('token'=>$_GET['token'],'openid'=>$openid))}">编辑</a>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="listMenu black" id="topic">
+    		我发表的话题
+    	</div>
+    	<div class="listMenu black" id="replay">
+    		我回复帖子
+    	</div>
+    	<div class="listMenu black" id="info">
+    		<span class="msgnum">{weikucms:$countComm}</span>我收到回复
+    	</div>
+
+	   	
+
+    </body>
+    <script type="text/javascript">
+        $(function(){
+        	// 话题
+        	$('#topic').bind('click',function(){
+        		window.location.href="{weikucms::U('Wap/Commercedyb/myTopic',array('token'=>$_GET['token'],'openid'=>$openid))}";
+        	})
+        	// 回复
+        	$('#replay').bind('click',function(){
+        		window.location.href="{weikucms::U('Wap/Commercedyb/myReplay',array('token'=>$_GET['token'],'openid'=>$openid))}";
+        	})
+        	// 我的回复
+        	$('#info').bind('click',function(){
+        		window.location.href="{weikucms::U('Wap/Commercedyb/myInfo',array('token'=>$_GET['token'],'openid'=>$openid))}";
+        	})
+                        // 我的回复
+            $('#active').bind('click',function(){
+                window.location.href="{weikucms::U('Wap/Commercedyb/yepasswd',array('token'=>$_GET['token'],'openid'=>$openid))}";
+            })
+        })
+    </script>
+</html>

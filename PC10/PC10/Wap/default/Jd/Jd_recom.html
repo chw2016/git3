@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>顾问注册</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/tpl/static/common/msg.js"></script>
+<style type="text/css">
+*{margin: 0;padding :0;}
+.ceng{width: 100%;height: 90px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+.col-sm-2.control-label{margin:10px 0 ;color:#2f2f2f;}
+.form-control{background-color: #f6f6f6;height: 40px;font-size: 13px;}
+.ceng1{width: 100%;height: 150px;background-color: #fff;overflow: hidden;margin-bottom: 5px;font-size: 13px;}
+</style>
+</head>
+<body style="background-color:#ededed;">
+<form action="{weikucms::U('recom',array('token'=>session('token'),'openid'=>$openid))}" method="post" id="form" />
+	<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">顾问姓名</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="name" class="form-control" id="firstname" placeholder="请填写您要推荐人的姓名" readonly value="{weikucms:$info['name']}">
+                <else/>
+                <input type="text" name="name" class="form-control" id="firstname" placeholder="请填写您要推荐人的姓名">
+            </if>
+
+      	</div>
+	</div>
+	
+ <style>
+	    
+	    .ceng_eag {
+display: block;
+width: 100%;
+padding: 6px 12px;
+font-size: 14px;
+line-height: 1.42857143;
+color: #888;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #f6f6f6;
+height: 40px;
+font-size: 13px
+
+	    </style>
+	
+<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">顾问分类</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="type" class="form-control" id="type" readonly value="{weikucms:$info['type']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="type" id="hy" class="ceng_eag">
+                    <option>请选择顾问分类</option>
+                    <option value="总部顾问" >总部顾问</option>
+                    <option  value="机构顾问"  >机构顾问</option>
+                    <option  value="伙伴顾问"  >伙伴顾问</option>
+                </select>
+            </if>
+
+ 
+      	</div>
+	</div>
+	
+	
+	<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">顾问类型</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="cate" class="form-control" id="cate" readonly value="{weikucms:$info['cate']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="cate" id="hy" class="ceng_eag">
+                    <option>请选择顾问类型</option>
+                    
+                     <volist name="adv_cate" id="v" >
+                       <option value="{weikucms::$v['name']}" >{weikucms::$v['name']}</option>
+                    </volist>
+                    
+                </select>
+            </if>
+
+ 
+      	</div>
+	</div>
+	
+	
+		<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">所属公司</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="gs" class="form-control" id="firstname" placeholder="请填写所属公司 readonly value="{weikucms:$info['name']}">
+                <else/>
+                <input type="text" name="gs" class="form-control" id="firstname" placeholder="请填写所属公司">
+            </if>
+
+      	</div>
+	</div>
+	
+	
+			 <!--    	<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">方案所属行业</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="hy" class="form-control" id="firstname" readonly value="{weikucms:$info['hy']}" placeholder="请填写方案作者">
+                <else/>
+                <select name="hy" id="hy" class="ceng_eag">
+                    <option>请选择行业</option>
+                    <option value="食品" >食品</option>
+                    <option  value="服装"  >服装</option>
+                </select>
+            </if>
+
+ 
+      	</div>
+	</div> -->
+	
+	
+	<div class="ceng">
+		<label for="firstname"  class="col-sm-2 control-label">联系手机</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <input type="text" name="phone" class="form-control" id="firstname" value="{weikucms:$info['phone']}" placeholder="请填写您要推荐人的联系手机" readonly>
+                <else/>
+                <input type="text" name="phone" class="form-control" id="firstname" placeholder="请填写您要推荐人的联系手机">
+            </if>
+
+      	</div>
+	</div>
+	<div class="ceng">
+    <label for="firstname"  class="col-sm-2 control-label">擅长领域</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <textarea style="width:100%; height:50px;"  name="trade" class="form-control" id="firstname" placeholder="请填写您要推荐人的擅长领域" readonly>{weikucms:$info['trade']}</textarea>
+                <else/>
+                <textarea style="width:100%; height:50px;"  name="trade" class="form-control" id="firstname" placeholder="请填写您要推荐人的擅长领域" ></textarea>
+            </if>
+
+<!--          	<input type="text" name="trade" class="form-control" id="firstname" placeholder="请填写您要推荐人的擅长领域"> -->
+      	</div>
+	</div>
+	<div class="ceng1">
+		<label for="firstname" class="col-sm-2 control-label">主要履历</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <textarea name="remark" class="form-control" id="firstname" placeholder="请填写您要推荐人的主要履历" style="height: 105px;" readonly >{weikucms:$info['remark']}</textarea>
+                <else/>
+                <textarea name="remark" class="form-control" id="firstname" placeholder="请填写您要推荐人的主要履历" style="height: 105px;" ></textarea>
+            </if>
+
+       <!--   	<input type="text" name="remark" class="form-control" id="firstname" placeholder="请填写您要推荐人的主要履历"> -->
+      	</div>
+	</div>
+	<div class="ceng1">
+		<label for="firstname" class="col-sm-2 control-label">项目经历</label>
+      	<div class="col-sm-10">
+            <if condition="$info['id']">
+                <textarea name="exper" class="form-control" id="firstname" placeholder="请填写您要推荐人的项目经历" style="height: 105px;" readonly>{weikucms:$info['exper']}</textarea>
+                <else/>
+                <textarea name="exper" class="form-control" id="firstname" placeholder="请填写您要推荐人的项目经历" style="height: 105px;"></textarea>
+            </if>
+
+         	<!-- <input type="text" name="exper" class="form-control" id="firstname" placeholder="请填写您要推荐人的项目经历"> -->
+      	</div>
+	</div>
+	
+		<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">推荐人</label>
+      	<div class="col-sm-10">
+         	<input type="text" value="{weikucms:$name}" name="referee" class="form-control" id="firstname" placeholder="请填写您的名字">
+      	</div>
+	</div>
+	<div class="ceng">
+		<label for="firstname" class="col-sm-2 control-label">推荐人电话</label>
+      	<div class="col-sm-10">
+         	<input type="text" value="{weikucms:$phone}" name="ref_phone" class="form-control" id="firstname" placeholder="请填写您的联系方式">
+      	</div>
+	</div>
+
+	<div style="height:80px;float:left;"></div>
+    </form>
+<if condition="$info['id']">
+    <else/>
+    <div class="foot">
+        <span id="put">确认注册</span>
+    </div>
+</if>
+
+    <script type="text/javascript">
+$(function(){
+        var sub=0;
+        $('#put').click(function(){
+        $('#form').find('input').each(function(){
+            if($(this).val()==''){
+               
+                msg.alert($(this).attr('placeholder'));
+                sub=0;
+                return false;
+            }else{
+                sub=1;
+            }
+        });
+        if(sub==1) $('#form').submit();
+        });
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以根据相应的条件查询某个用户的体重信息</li>
+	</ol>
+</div>
+
+
+<div class="box-content">
+    <table class="table table-bordered">
+        <form action="" method="post">
+            <tr>
+                <th>时段查询：</th>
+                <td>
+                    <input type="text" name="dateMin" id="dateMin" value="{weikucms:$dateMin}" onclick="WdatePicker()"/>&nbsp; &nbsp;到&nbsp; &nbsp;
+                    <input type="text" name="dateMax" id="dateMax" value="{weikucms:$dateMax}"  onclick="WdatePicker()"/>
+                    <span style="color:#f00;">注意：前面输入框日期应该小于后面输入框日期</span>
+                </td>
+                <td>
+                    <button type="submit" id="lookup" name="lookup" class="btn btn-primary">查询</button>
+                </td>
+            </tr>
+        </form>
+    </table>
+    <div class="cLineB">
+        <h4>体重记录</h4>
+    </div>
+		
+    <div class="msgWrap">
+		
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>日期</th>
+                      <th>体重</th>
+                      <th>BMI</th>
+                  </tr>
+                  </thead>
+                  <tbody id="human">
+                  <volist name="info" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.date}</td>
+                  			<td>{weikucms:$vo.weight}</td>
+                          	<td>
+                             	{weikucms:$vo.BMI}
+                          	</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+<include file="Public:footer"/>

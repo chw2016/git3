@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta name="format-detection" content="telephone=no"/>  
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+</head>
+
+<body>
+
+<div class="top">
+	<div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('HealthMember/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+<div class="Box">
+   <div class="AcountBox">
+   
+   <div class="Opacity10Circle yellow-border">
+       <div class="yellow-border userLogoCircle" style="background-image:url('{weikucms::STATICS}/headimg.png')"></div>
+   </div>
+   <div class="AcountItem">{weikucms:$vipinfo.name}：<span id="AcountName">{weikucms:$vipinfo.vipnumber}</span></div>
+    <div class="AcountItem">余额：<span id="AcountMoney" class="red-color">{weikucms:$vipinfo.zhye}</span></div>
+   </div>
+   <!--消费记录-->
+   <?php if($costlist):?>
+   <div class="ConsumingRecordsBox">
+       <div class="Title">消费记录</div>
+       <div class="border-top"></div>
+   </div>
+   <div class="ConsumingRecordsDetailBox d2">
+   <div class="myul ConsumeItemBox">
+       <volist name="costlist" id="costlist">
+       <div class="ConsumeItem c1">
+           <div class="UpBox2">
+               <span>消费内容<br/><span id="CheckItem"><?php echo mb_substr($costlist['payDes'],0,10,"utf-8");?></span></span>
+               <span>消费金额<br/><span id="ConsumeMoney"><?php echo abs($costlist['payje']);?></span></span>
+           </div>
+           <div class="orange-border circlePoint" ></div>
+           <div class="TimePoint">
+            <span id="date">{weikucms:$costlist.@attributes.paytime}</span>
+           </div>
+       </div>
+       </volist>
+   </div>
+   <div class="orange-border Line l1"></div>
+   </div>
+    <?php else:?>
+    <div class="ConsumingRecordsBox">
+        <div class="Title">消费记录</div>
+        <div class="border-top"></div>
+    </div>
+    <div style="width: 100%;height: 100px;text-align: center;line-height: 100px;color:white;">
+        您目前还未有任何消费，赶紧去消费吧!
+    </div>
+    <?php endif;?>
+    <!--消费记录结束-->
+
+    <div class="ConsumingRecordsBox">
+        <div class="Title">权益列表</div>
+        <div class="border-top"></div>
+    </div>
+
+
+    <div class="ConsumingRecordsDetailBox d2">
+
+        <div class="myul ConsumeItemBox">
+            <volist name="rightlist" id="rightlist">
+                <div class="ConsumeItem c2">
+                    <div class="UpBox2">
+                        <span><span id="CheckItem">{weikucms:$rightlist.@attributes.name}</span></span>
+                        <span><span id="ConsumeMoney"></span></span>
+                    </div>
+                    <div class="orange-border circlePoint" ></div>
+                    <div class="TimePoint">
+                        <span id="date"></span>
+                    </div>
+                </div>
+            </volist>
+
+        </div>
+        <div class="orange-border Line l2"></div>
+    </div>
+
+
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	var l= $(".c1").length;
+	var sl = $(".c1").width()+2*parseInt($(".c1").css("margin-left"));
+	$(".l1").width(l*sl);
+    var l2= $(".c2").length;
+    var sl2 = $(".c2").width()+2*parseInt($(".c2").css("margin-left"));
+    $(".l2").width(l2*sl2);
+	$(".d1").animate({'scrollLeft':l*sl},1500,"easeInQuint");
+    $(".d2").animate({'scrollLeft':l2*sl2},1500,"easeInQuint");
+	})
+
+
+    document.body.addEventListener('touchmove', function(e) {                  //阻止冒泡事件
+                e.stopPropagation();
+				//e.preventDefault();
+				});
+	myFadeIn()
+</script>
+</html>

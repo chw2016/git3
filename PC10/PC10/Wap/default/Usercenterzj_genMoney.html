@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<meta name="keywords" content="牛轧糖、手信、凤梨酥、{weikucms:$tpl.name}">
+<meta name="description" content="广州市{weikucms:$tpl.name}有限公司官方微店。">
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/a.css">
+<link rel="stylesheet" href="/tpl/Wap/default/common/css/store/shop/b.css">
+<script type="text/javascript" src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.5.1.min.js"></script>
+<![endif]-->
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+    <div class="container itemdetail mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack"  onclick="javascript:history.go(-1);"></a></div>
+                    <div class="wx_bar_tit">账户充值</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-md-12 p0 tal">
+                <div id="chongzhi">
+                    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+                        <input type="hidden" name="order_text" value="会员充值">
+                        <input type="hidden" name="openid" value="{weikucms:$openid}">
+                        <input type="hidden" id="order_id" name="orderid" value="">
+                        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Usercenterzj&a=index&openid={weikucms:$openid}">
+                        <input type="hidden" name="type" value="Usercenter_order">
+
+                       <span><input onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="请输入您要充值的金额" type="text" id="money" name="order_money" style="height: 30px;width: 100%;line-height: 30px;
+                padding: 5px 0px;margin-bottom: 15px;border-radius: 5px;border: 1px solid #C0C0C0;font-size: 14px;text-indent: 10px;"> </span>
+                        </form>
+                    <p class="note">
+                        温馨提示：
+                        <br>1、储值金额永久有效且适用于{weikucms:$tpl.name}商城购物；赠送金额不予退款；
+                        <br>2、在线充值及赠送金额不提供发票，按每次实际消费金额在消费门店开据发票；如需开具发票，请与客服联系。
+                    </p>
+                    <input type="hidden" value="200" name="money"/>
+                    <br/>
+                    <div class="sbout"><button rel="wxjspay" class="btn btn-success btn-block J_payBtn" type="button" onclick="zhufu()" id="wx" flag="1">微信支付</button></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+       function zhufu(){
+            var money = $("#money").val();
+
+            var btn = $("#wx");
+           var flag=$("#wx").attr('flag');;
+            if(!money){
+                show_error_tip("请输入金额");
+            }
+            btn.html('正在生成订单...');
+           if(flag==1){
+               $("#wx").attr('flag',2);
+               $.ajax({
+                   type: "post",
+                   url: "{weikucms::U('Usercenterzj/genMoney',array('token'=>$token,'openid'=>$openid))}",
+                   dataType: "json",
+                   data:{money:money},
+                   success: function(html){
+                       if (html.code == 0) {
+                           btn.text(html.msg);
+                           $("#order_id").val(html.order_id);
+                           setTimeout(function(){
+                               $("#myweipayform").submit();
+                           },'1000');
+                       } else if(html.code == -1) {
+                           show_error_tip(html.msg);
+                       }else{
+                           show_error_tip(html.msg);
+                       }
+                       btn.text(btntext);
+                   }
+               });
+           }else{
+               show_error_tip("已经提交订单");
+           }
+
+        }
+
+</script>
+
+</body>
+</html>

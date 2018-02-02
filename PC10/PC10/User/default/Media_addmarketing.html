@@ -1,0 +1,241 @@
+<include file="Public:head"/>
+<div class="">
+<div class="cLineB">
+    <h4 style="position:relative;">
+        <if condition="$task['id'] eq ''">添加活动<else/>编辑活动</if>
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background:#19b593;" href="{weikucms::U('Media/marketing',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#content', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+    });
+</script>
+
+
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+<form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+<table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+    <input type="hidden" class="px" id="id" value="{weikucms:$activity['id']}" name="id" style="width:300px" placeholder="">
+
+    <tr>
+        <th valign="top"><label for="title">活动名称</label></th>
+        <td>
+            <input type="input" class="px" id="title" value="{weikucms:$activity['title']}" name="title" style="width:300px" placeholder="此处填写活动的名称">
+        </td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="pic"> 活动主题图片：</label></th>
+        <td>
+            <if condition="$id neq '' ">
+                <img style="display: block;" id="image_show" class="indexs_img" src="{weikucms:$activity['pic']}">
+                <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$activity['pic']}" style="width:300px;"   />
+                <span class="ke-button-common" id="upload" style="margin-left: 5px;margin-top: 10px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;line-height: 52px;">建议图片大小为：640px*427px</span>
+                <else/>
+                <img style="display: none;" id="image_show" class="indexs_img" src="">
+                <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="" style="width:300px;"   />
+                <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传图片</span><span style="font-size: 12px; color:#9FA39D;padding: 10px;">建议图片大小为：640px*427px</span>
+            </if>
+        </td>
+        <td>
+            &nbsp;
+        </td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="starttime">截止时间</label></th>
+        <td>
+            <input type="input" class="px" id="starttime" value="{weikucms:$activity['starttime']}" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+            到
+            <input type="input" class="px" id="endtime" value="{weikucms:$activity['endtime']}" name="endtime" onClick="WdatePicker()" style="width:175px;">
+        </td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="abstract">任务简介：</label></th>
+        <td valign="top"><textarea class="px" id="abstract" name="abstract" style="width: 560px; height: 240px;"rows="5">{weikucms:$activity['abstract']}</textarea></td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="content">详细内容：</label></th>
+        <td valign="top"><textarea class="px" id="content" name="content" style="width: 560px; height: 360px;"onfocus="leave();">{weikucms:$activity['content']}</textarea></td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="number">最多报名人数：</label></th>
+        <td>
+            <input type="number" class="px" id="number" value="{weikucms:$activity['number']}" name="title" style="width:60px" placeholder="如：60"><span style="padding: 5px; font-size: 15px;">人</span>
+        </td>
+    </tr>
+
+    <tr>
+        <th valign="top"><label for="tel">联系电话：</label></th>
+        <td>
+            <input type="tel" class="px" id="tel" value="{weikucms:$activity['tel']}" name="tel" style="width:300px" placeholder="填写对接此活动的联系电话"><span style="padding: 5px; font-size: 15px;"></span>
+        </td>
+    </tr>
+
+
+    <tr>
+        <th>
+        </th>
+        <td>
+            <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                保存
+            </button>
+            <div class="clr">
+            </div>
+        </td>
+    </tr>
+
+
+</table>
+</form>
+</div>
+
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var title = $("#title").val();
+            var pic = $("#pic").val();
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            var abstract = $("#abstract").val();
+            var content = editor.html();
+            var number =$("#number").val();
+            var tel = $("#tel").val();
+
+            if(!title){
+                notif({
+                    msg: "活动/主题名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!pic){
+                notif({
+                    msg: "请上传活动主题图片！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!starttime){
+                notif({
+                    msg: "请填写活动开始时间！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!endtime){
+                notif({
+                    msg: "请填写活动结束时间！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(!abstract){
+                notif({
+                    msg: "请填写活动简介！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! content){
+                notif({
+                    msg: "活动详细内容不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! number){
+                notif({
+                    msg: "活动人数上限不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! tel){
+                notif({
+                    msg: "联系电话不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var posturl = "{weikucms::U('Media/addmarketing',array('token'=>$token))}";
+            $.post(posturl,
+                    {id:id,title:title,pic:pic,starttime:starttime,endtime:endtime,abstract:abstract,content:content,number:number,tel:tel},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+
+        });
+    });
+</script>
+
+

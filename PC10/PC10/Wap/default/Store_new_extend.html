@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)http://trade.koudaitong.com/wxpay/pay?order_no=E20141125220141517232&forbid_wxpay=1 -->
+<html class="no-js " lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_1728f7a531.css" onerror="_cdnFallback(this)">
+    <link rel="stylesheet" href="tpl/Wap/default/common/shop/css/trade_8c1bc19b80.css" onerror="_cdnFallback(this)">
+      <style>
+    #test select{
+        width:20%;
+        margin-left:20px;
+        line-height: 30px;
+        font-size: 15px;
+    }
+
+  </style>
+    <script src="tpl/Wap/default/common/shop/js/jquery-1[1].2.6.js" type="text/javascript"></script>
+    <script src="tpl/Wap/default/common/shop/js/jquery.provincesCity.js" type="text/javascript"></script>
+    <script src="tpl/Wap/default/common/shop/js/provincesdata.js" type="text/javascript"></script>
+    <style type="text/css" media="screen">
+        .radioInput {   position: relative; top: 8px; left: -4px; }
+    </style>
+    </head>
+<body class=" ">
+<form class="js-address-fm address-ui address-fm" method="post" action="">
+    <div class="block" style="margin-bottom:10px;">
+        <volist name="extend" id="vo">
+        <if condition="$key eq '是否开发票'">
+        <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label" style="width: 130px;">{weikucms:$key}</em>
+                <span class="input-wrapper">
+                    <input type="radio" name="val1" class='radioInput' value="是" style="margin-left: 50px;" >是
+                    <input type="radio" name="val1" class="radioInput" value="否" style="margin-left: 50px;" >否
+                </span>
+            </label>
+        </div>
+        <else />
+        <div class="block-module">
+            <label class="form-row form-text-row">
+                <em class="form-text-label" style="width: 130px;">{weikucms:$key}</em>
+                <span class="input-wrapper"><input type="text" name="val1" class="form-text-input" value="" style="margin-left: 50px;" ></span>
+            </label>
+        </div>
+        </if>
+        </volist>
+
+
+
+    </div>
+
+    <div>
+        <div class="action-container">
+            <button type="button" class="js-address-save btn btn-block btn-blue" onclick="return address1()">保存信息</button>
+        </div>
+    </div>
+</form>
+
+</div></div></body></html>
+        <script>
+            function address1(){
+                var bErr = false;
+                var val1=[];
+                $("input[name=val1]").each(function(e,t){
+                    if($(t).is(':radio')){
+                        if(!$(t).is(':checked')){
+                            return;
+                        }
+                    }
+                    var a=$(t).val();
+                    if(!a){
+                        alert('资料必须填写完整');
+                        bErr = true;
+                        return false;
+                    }else{
+                        val1[e]=a;
+                    }
+                })
+                if (bErr) { return ; }
+                var em=[];
+                $("em").each(function(e,t){
+                    var b=$(t).text();
+
+                        em[e]=b;
+
+                })
+
+                var data_area = 0;
+                <if condition="$_GET['token'] eq '5e06d4d7477b35508c07d8ec81250286'">
+                    data_area_val = $('input:radio.radioInput:checked').val();
+                    if(data_area_val == '否'){
+                        data_area = 1;
+                    }
+                </if>
+
+                var url="{weikucms::U('Store_new/extend',array('pid'=>$_GET['pid'],'token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}";
+                val1=val1.join(',');
+                em=em.join(',');
+                $.post(url,{val1:val1,em:em},function(data){
+                    if(data.status==1){
+                        if(data.type==1){//这里跳到填写地址页面
+                            location.href = "{weikucms::U('Store_new/address',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&wecha_id='+data.wecha_id + '&pid=' + data.pid + '&area='+data_area;
+                        }else{//
+                            location.href = "{weikucms::U('Store_new/show',array('token'=>$token,'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}"+ '&pid=' + data.pid+'&wecha_id='+data.wecha_id + '&area='+data_area;
+
+                        }
+
+                    }
+                },'json')
+
+            }
+        </script>

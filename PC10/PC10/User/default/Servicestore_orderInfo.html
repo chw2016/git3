@@ -1,0 +1,75 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+	<div class="cLineB">
+		<h4 class="left"><if condition="$type eq 0">未处理的预约订单<elseif condition="$type eq 1"/>已处理的预约订单<else/>所有预约订单</if></h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Servicestore/index',array('token'=>$token, 'storeId'=>$storeId))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	<div class="clr"></div>
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info">
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th  style="text-align:center;">订单编号</th>
+                      <th style="width:400px;text-align:center;">订单详情</th>
+                      <th  style="text-align:center;">订单价格</th>
+                      <th  style="text-align:center;">下单用户</th>
+                      <th  style="text-align:center;">联系方式</th>
+                      <th  style="text-align:center;">下单时间</th>
+                      <th  style="text-align:center;">所属门店</th>
+                      <th  style="text-align:center;">订单状态</th> 
+                      <if condition = "$type neq 2">
+                      <th  style="text-align:center;">操作</th> 
+                      </if>                     
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo">
+                  		<tr>
+        					<td  style="text-align:center;">{weikucms:$vo.id}</td>
+                  			<td><div style="width:400px;word-wrap:break-word;">{weikucms:$vo.server_info}</div></td>
+                  			<td  style="text-align:center;"><div class="answer_text">{weikucms:$vo.price}</div></td>
+                  			<td  style="text-align:center;">{weikucms:$vo.order_user}</td>
+                    		<td  style="text-align:center;">{weikucms:$vo.order_user_tel}</td>
+                    		<td  style="text-align:center;">{weikucms:$vo.order_ok_time}</td>
+                    		<td  style="text-align:center;">{weikucms:$vo.name}</td>
+                    		<if condition="$vo.status eq 0">
+                    		<td  style="text-align:center;">未处理</td>
+                    		<elseif condition="$vo.status eq 1"/>
+                    		<td  style="text-align:center;">已处理</td>
+                    		<else/>
+                    		<td  style="text-align:center;">预约取消</td>
+                    		</if>
+                    		<if condition = "$type eq 0">
+                    		<td class="norightborder"  style="text-align:center;">
+                              <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Servicestore&amp;a=orderAllot&amp;token={weikucms:$token}&amp;orderId={weikucms:$vo.id}&amp;type=0" title="处理订单">处理</a>
+                          	</td>
+                          	<elseif condition="$type eq 1"/>
+                          	<td class="norightborder"  style="text-align:center;">
+                              <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Servicestore&amp;a=see&amp;token={weikucms:$token}&amp;orderId={weikucms:$vo.id}&amp;type=1" title="查看评价">查看评价</a>
+                          	</td>
+                          	<else/>                 		
+                    		</if>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+	</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+<include file="Public:footer"/>

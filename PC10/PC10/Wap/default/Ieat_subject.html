@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ieat体验</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+    <style>
+        .main { overflow-x: hidden; }
+        .listpic { width: 90%; }
+        .title.ieat { width: 70%; }
+    </style>
+</head>
+
+<body r='158' g='191' b='38'>
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+    <div class="c1">
+        <div class="c2">
+            <div class="c3 logo"></div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <volist name="articleList" id="vo">
+    <div class="listbox">
+        <div onclick="location.href='{weikucms::U('Ieat/subject_article',array('token'=>$token,'openid'=>$openid,'type'=>1,'t'=>$k,'article_id'=>$vo['article_id']))}'" class="listpic" style=" background-image:url({weikucms:$vo.article_pic});">
+
+        </div>
+        <div class="listtitlebox myul">
+            <div class="date">
+                <php>
+                    $b = explode(' ',$vo['add_time']);
+                    $c = explode('-',$b[0]);
+                    if($c[1] == 1){
+                        $c[1] = 'JAN.';
+                    }elseif($c[1] == 2){
+                        $c[1] = 'Feb.';
+                    }elseif($c[1] == 3){
+                        $c[1] = 'Mar.';
+                    }elseif($c[1] == 4){
+                        $c[1] = 'Apr.';
+                    }elseif($c[1] == 5){
+                        $c[1] = 'May.';
+                    }elseif($c[1] == 6){
+                        $c[1] = 'Jun.';
+                    }elseif($c[1] == 7){
+                        $c[1] = 'Jul.';
+                    }elseif($c[1] == 8){
+                        $c[1] = 'Aug.';
+                    }elseif($c[1] == 9){
+                        $c[1] = 'Sept.';
+                    }elseif($c[1] == 10){
+                        $c[1] = 'Oct.';
+                    }elseif($c[1] == 11){
+                        $c[1] = 'Nov.';
+                    }elseif($c[1] == 12){
+                        $c[1] = 'Dec.';
+                    }
+                    echo '<div class="dd" style="color:'.$vo['title_bg'].'">'.$c[2].'</div>';
+                    echo '<div class="mmyy"><span class="mm">'.$c[1].'</span><span class="yy">'.$c[0].'</span></div>';
+
+                </php>
+            </div>
+            <div class="titlebox" >
+                <!-- <div class="arrow"></div>-->
+               <!--  <div style="content:'';border-right: 5px solid #9EBF26;border-bottom: 5px solid rgba(0, 0, 0, 0);border-top: 5px solid rgba(0, 0, 0, 0);position: absolute;
+                left: -4px;
+                top: 4px;
+                }"></div> -->
+                <div style="border:1px solid {weikucms:$vo.title_bg};background-color:{weikucms:$vo.title_bg}" class="title ieat">
+                    <span class="titletext">{weikucms:$vo.article_title}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </volist>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.listpic').css('height', $('.listpic:first').width() + 'px');
+
+        var range = 50;
+        var _srollPos = 0;
+        var pageNum = 2;
+        var totalheight = 0;
+        var main = $(".main");
+        var js = 0;
+        var cat_id = "{weikucms:$cat_id}";
+        $(window).scroll(function() {
+            var srollPos = $(window).scrollTop();
+            if (srollPos < _srollPos) {
+                return
+            } else {
+                _srollPos = srollPos
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (($(document).height() - range) <= totalheight) {
+                $.ajax({
+                    url:
+                    "/index.php?g=Wap&m=Ieat&a=subject&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&type={weikucms:$_GET['type']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&cat_id=" + cat_id + "&is_ajax=1",
+                    //url: "/index.php?g=Wap&m=Ieat&a=subject&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&type={weikucms:$_GET['type']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&is_ajax=1",
+                    type: "get",
+                    data: "pageNum=" + pageNum,
+                    success: function(res) {
+                        if (res == 0) {
+                            if (js == 0) {
+                                $(".main").append('<article style="display:block" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多文章了</header></article>')
+                            }
+                            js = 1
+                        } else {
+                            main.append(res);
+                            $('.listpic').css('height', $('.listpic:first').width() + 'px');
+                            pageNum++
+                        }
+                    }
+                })
+            }
+        })
+    });
+</script>
+</body>
+</html>

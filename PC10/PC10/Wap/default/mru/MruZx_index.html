@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+   <title>鱼美人-最美资讯</title>  
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body class="professor" >
+<div id="list">
+
+    <volist id="vo" name="list" offset="0" length="1">
+    <if condition="$vo['url']" >
+    <div id="fristlist" onclick="window.location.href='{weikucms:$vo['url']}'"><img src="{weikucms:$vo.pic}" title="图片">
+    <else/>
+    <div id="fristlist" onclick="window.location.href='{weikucms::U('show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$vo['id'],'aid'=>$_GET['aid']))}'"><img src="{weikucms:$vo.pic}" title="图片">
+   </if>
+        <p>
+                                         <?php 
+    				          echo mb_substr($v['name'],0,20,'utf-8');
+    				       ?>
+        </p>
+
+    </div>
+    </volist>
+    <ul>
+
+        <volist id="vo" name="list" offset="1">
+        
+        <if condition="$vo['url']" >
+         <li class="listset" onclick="window.location.href='{weikucms:$vo['url']}'">
+        <else/>
+        <li class="listset" onclick="window.location.href='{weikucms::U('show',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id'],'aid'=>$_GET['aid']))}'">
+         </if>   
+            <div class="listsetleft" style="width:65%;" >
+                <h3>
+                
+                
+                                           <?php 
+    				          echo mb_substr($vo['name'],0,20,'utf-8');
+    				       ?>
+                
+                </h3>
+                <p>
+                     
+                <php>
+                
+                        if(strlen($vo['content']) > 37){
+                           echo (mb_substr(strip_tags($vo['content']), 0, 37, 'utf-8'))."......";
+                        }else{
+                           echo (mb_substr(strip_tags($vo['content']), 0, 37, 'utf-8'));
+                        }
+                </php>
+                </p>
+            </div>
+            <div class="listsetright" style="width:25%;height:auto;" >
+                <img src="{weikucms:$vo.pic}" title="图片">
+            </div>
+            <div style="clear:both;"></div>
+        </li>
+        </volist>
+    </ul>
+ <!-- 复制开始 -->
+<style>
+.f14 { font-size: 14px; }
+.professor .pro .bg { background-color: #000; opacity: 0.4;}
+.professor .pro {   height: 30px; width: 100%;text-align: center; color: #FFF; }
+.professor .body ul li.on { background-color: #8eab01; }
+.professor .pro .bg, 
+.professor .pro .page { position: absolute; top: 0; left: 0; width: 100%; height: 30px;
+line-height: 30px; }
+.fixBottom{
+	position: fixed;
+	bottom: 0;
+	left: 0;	
+}
+</style> 
+<!-- 把总页数>1删除在本地才能看到郊果 -->
+
+<if condition="$firstRow gt 1" >
+
+          <?php
+              //如果没有P p==1
+               if(!$_GET['p']){
+                       $_GET['p']=1;
+                 }
+          ?>
+    <div class='fixBottom pro f14 on' style="bottom: -30px;">
+        <div style="position: relative">
+            <div class='bg'></div>
+            <div class='page'>
+          
+          
+                          <if condition="($_GET['p'] eq 1) or ($_GET['p'] lt 1)" >
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Mruhd&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=1" >
+                <else/>
+                    <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Mruhd&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid'];?>&p=<?php echo $_GET['p']-1; ?>" >
+                </if>
+           
+                 上一页</a>，
+
+
+                <if condition="($_GET['p'] eq $firstRow) or ($_GET['p'] gt $firstRow)" >                          
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Mruhd&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $firstRow;?>">
+                <else/>
+                     <a href="<?php print_r(C('site_url')); ?>index.php?g=Wap&m=Mruhd&a=index&token=<?php echo $_GET
+
+['token'];?>&openid=<?php echo $_GET['openid']; ?>&p=<?php echo $_GET['p']+1; ?>">
+                </if>
+                  下一页</a>
+          
+          
+            </div>
+        </div>
+        
+    </div>
+</if>    
+    <script type="text/javascript">
+    var timeout = null;
+    $(window).scroll(function(){
+        if (timeout != null) {
+            return;
+        };
+        var $bottom = $('.fixBottom.pro');
+        timeout = setTimeout(function(){    
+            $bottom.animate({'bottom':'0px'});
+            setTimeout(function(){
+                $bottom.animate({'bottom':'-30px'});
+            }, 2500);
+            timeout = null;
+        }, 600);
+    });
+    </script>
+ <!-- 复制结束-->  
+</div>
+<include file="./tpl/Wap/default/mru_normal_fx.html" /> 
+</body>
+</html>

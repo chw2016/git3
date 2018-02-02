@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>热点应用</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+		<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+    	<!--
+		<header id="c-product-header">
+    		产品通报
+    	</header>
+		-->
+    	<!-- 搜索框 -->
+        <form name="form1" id="form1" action="" method="post">
+        	<div class="wrap-div">
+        		<div class="product-search-left"></div>
+        		<div class="product-search">
+                    
+            		<div class="product-in-search-left">
+            			<input name="search" id="c-product-search" placeholder="输入关键字进行搜索" />
+            		</div>
+            		<div class="product-in-search-right">
+                        <input type="image" name="find" id="find" src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/Search.png" width="20px" height="20px">
+            		</div>
+        		</div>
+        		<div class="product-search-right"></div>
+        	</div>
+        </form>
+    	<!-- 列表内容 -->
+    	<ul class="c-product-list-content">
+        <volist name="list" id="vo">
+            <li style="font-size: 12px;" class="c-product-list-content-in" onclick="location.href='{weikucms::U('Wap/Yanxiang/cdetail',array('id'=>$vo['id']))}'">
+                <div style="width: 30%; height: auto; margin-top: 10px;float: left;">
+                <img src="{weikucms:$vo.pic}" width="100%"  />
+                    </div>
+            <div style="width: 65%; margin-left: 35%">
+                <div class="timer">
+                    <span class="day"><php>$day = explode('-',$vo['times']);echo $day[0]</php></span>
+                    <span class="month">-<php>$day = explode('-',$vo['times']);echo $day[1]</php></span>
+                    <span class="year">-<php>$day = explode('-',$vo['times']);echo $day[2]</php></span>
+                </div>
+                <div class="title" style="  height: 18px; overflow: hidden;">
+                    {weikucms:$vo.title}
+                </div>
+                <div class="content" style="  height: 18px; overflow: hidden;">
+                    {weikucms:$vo.zt}
+                </div>
+                </div>
+            <div style="clear: both;"></div>
+            </li>
+        </volist>
+    	</ul>
+        <div style="margin-top:15px;text-align:center">{weikucms:$page}</div>
+    	<script type="text/javascript">
+    		$(document).ready(function() {
+    			// 首先初始化边框左边和右边的高度
+    			$('.product-search-left,.product-search-right').css('height', $('.product-search-left').width());
+    			$('.product-search-left').css('left', $('.product-search-left').width()/2+'px');
+    			$('.product-search-right').css('right', $('.product-search-right').width()/2+'px');
+    			// 设置搜索框的行高
+    			//$('#c-product-search').css({'height': $('.product-search').height()*0.8+'px','line-height':$('.product-search').height()*0.8+'px','margin-top':$('.product-search').height()*0.1+'px'});
+				 $('#c-product-search').css({'height': $('.product-search').height()+'px','line-height':$('.product-search').height()+'px'});
+    			// 搜素框图片的高度
+    			$('.product-search > .product-in-search-right > input').css('margin-top', ($('.product-search').height() - $('.product-search > .product-in-search-right > input').height())/2+'px');
+					var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+               
+    		});
+    	</script>
+    </body>
+</html>

@@ -1,0 +1,204 @@
+<html><head>
+    <title>个人中心</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/frozen.css">
+    <link rel="stylesheet" href="tpl/Wap/default/hn/css/mobi.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum- scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="Description" content="新带客通经纪人">
+    <meta name="Keywords" content="带客通经纪人，带客通，经纪人">
+</head>
+<style type="text/css">
+    .ucenter-data li {
+        float: left;
+        width: 50%;
+        height: 40px;
+        text-align: center;
+        line-height: 1;
+        font-size: 16px;
+        line-height:23px;
+    }
+.um-list li i:first-child {
+  position: absolute;
+  left: -4px;
+  top: 13px;
+  width: 25px;
+  height: 25px;
+}
+.icon-top{
+    top: 8px !important;
+}
+</style>
+<body>
+
+<header class="user-head">
+    <div class="img-titile tab-one">
+            <p class="img-1"><img src="tpl/Wap/default/hn/img/icon_1.png" /></p>
+            <p>排名：
+				<if condition="$pm eq null">1<else/>{weikucms:$pm+1}</if>
+			</p>
+    </div>
+    <div class="img-titile  tab-two">
+            <p class="img-1"><img src="tpl/Wap/default/hn/img/icon-2.png" /></p>
+            <p>
+				<?php if(0<=$yonjing&&$yonjing<200)
+				{
+					echo '菜鸟顾问';
+				}
+				else if(200<=$yonjing&&$yonjing<400)
+				{
+					echo '高级顾问';
+				}
+				else if(400<=$yonjing&&$yonjing<800)
+				{
+					echo '销售经理';
+				}
+				else if(800<=$yonjing&&$yonjing<1600)
+				{
+					echo '销售总监';
+				}
+				else if(1600<=$yonjing&&$yonjing<3200)
+				{
+					echo '区域总监';
+				}
+				else if(3200<=$yonjing&&$yonjing<6400)
+				{
+					echo '区域副总';
+				}
+				else if(6400<=$yonjing&&$yonjing<12800)
+				{
+					echo '区域老总';
+				}
+				else if(12800<=$yonjing&&$yonjing<25600)
+				{
+					echo '大区副总';
+				}
+				else if(25600<=$yonjing&&$yonjing<51200)
+				{
+					echo '大区老总';
+				}
+				else if(51200<=$yonjing&&$yonjing<102400)
+				{
+					echo '集团副总';
+				}
+				else if(102400<=$yonjing&&$yonjing<204800)
+				{
+					echo '集团总裁';
+				}
+				else if(204800<=$yonjing&&$yonjing<409600)
+				{
+					echo '执行董事';
+				}
+				else if(409600<=$yonjing&&$yonjing<819200)
+				{
+					echo '董事长';
+				}
+				else if(819200<=$yonjing&&$yonjing<1638400)
+				{
+					echo '马上离职';
+				}
+				else if($yonjing>=1638400)
+				{
+					echo '加入我们';
+				}
+				?>
+			</p>
+    </div>
+    <div class="user-img">
+        <img src="{weikucms:$img}" />
+    </div>
+    <div class="name-title" data-href="{weikucms::U('editname',array('token'=>$token,'openid'=>$openid))}">
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{weikucms:$c_name}</span>
+        <span><img src="tpl/Wap/default/hn/img/icon-3.png" style="width:13px"/></span>
+    </div>
+</header>
+<section class="ucenter-data line-title">
+    <ul>
+        <li data-href="{weikucms::U('jin',array('token'=>$token,'openid'=>$openid))}">{weikucms:$c_phone}<br><span class="mt5">推荐经纪人</span></li>
+        <li data-href="{weikucms::U('customer',array('token'=>$token,'openid'=>$openid))}">{weikucms:$iKufu}<br><span class="mt5">推荐客户</span></li>
+    </ul>
+</section>
+<section class="ucenter-main animated fadeInDown">
+    <div class="space-10"></div>
+    <ul class="um-list">
+        <li data-href="{weikucms::U('commission',array('token'=>$token,'openid'=>$openid))}"><i><img src="tpl/Wap/default/hn/img/icon-4.png" /></i>佣金余额：<span class="ul-rtxt">￥{weikucms:$y}        </span><i class="icon-arrow-gray"></i></li>
+            </ul>
+    <div class="space-10"></div>
+    <ul class="um-list">
+	<if condition="($brand eq null) and ($alipay eq null)">
+        <li id="tixian" data-href="{weikucms::U('bind',array('token'=>$token,'openid'=>$openid))}"><i class="icon-top"><img src="tpl/Wap/default/hn/img/icon-5.png" /></i>提现<i class="icon-arrow-gray"></i></li>
+    <else/>
+		<li id="tixian" data-href="{weikucms::U('balance',array('token'=>$token,'openid'=>$openid))}"><i class="icon-top"><img src="tpl/Wap/default/hn/img/icon-5.png" /></i>提现<i class="icon-arrow-gray"></i></li>
+	</if>
+	</ul>
+    <div class="space-10"></div>
+    <ul class="um-list">
+        <li data-href="{weikucms::U('shop',array('token'=>$token,'openid'=>$openid))}"><i><img src="tpl/Wap/default/hn/img/icon-6.png" /></i>潮堂<i class="icon-arrow-gray"></i></li>
+    </ul>
+    <div class="space-10"></div>
+    <ul class="um-list">
+        <li data-href="{weikucms::U('assin',array('token'=>$token,'openid'=>$openid))}"><i class="icon-top"><img src="tpl/Wap/default/hn/img/icon-7.png" /></i>意见反馈<i class="icon-arrow-gray"></i></li>
+    </ul>
+    <div class="space-10"></div>
+    <ul class="um-list">
+        <li data-href="{weikucms::U('contact',array('token'=>$token,'openid'=>$openid))}"><i><img src="tpl/Wap/default/hn/img/icon-8.png" /></i>联系我们<i class="icon-arrow-gray"></i></li>
+    </ul>
+
+    <!-- <a href="/Home/Usr/logout/waid/293/uid/1141259" class="link-logout">退出登录</a> -->
+</section>
+
+<div class="space-60"></div>
+<menu class="ucenter-menu">
+    <ul>
+        <li data-href="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}">
+        <i class="icon-home"></i><br>首页
+        </li>
+		<if condition="$usid neq null">
+        <li data-href="{weikucms::U('customer',array('token'=>$token,'openid'=>$openid))}">
+        <i class="icon-custom"></i><br>我的客户
+        </li>
+		<else />
+		<li data-href="{weikucms::U('zhuce',array('token'=>$token,'openid'=>$openid))}">
+        <i class="icon-custom"></i><br>我的客户
+        </li>
+		</if>
+        <li class="active" data-href="#">
+        <i class="icon-profile"></i><br>个人中心
+        </li>
+    </ul>
+</menu>
+<input type="hidden" id="idcrd_{weikucms:$brand}" value="{weikucms:$brand}">
+<input type="hidden" id="apl_{weikucms:$alipay}" value="{weikucms:$alipay}">
+<script src="tpl/Wap/default/hn/js/zepto.js"></script>
+<script src="tpl/Wap/default/hn/js/frozen.js"></script>
+<script src="tpl/Wap/default/hn/js/base.js"></script>
+<script src="tpl/Wap/default/hn/js/jweixin.js"></script>
+<script type="text/javascript">
+
+
+/*
+
+var brand = $('#idcrd_{weikucms:$brand}').val();//银行卡号
+var alipay = $('#apl_{weikucms:$alipay}').val();//支付宝卡号
+$('#tixian').click(function(){
+ //   alert(5);
+if(brand == ''&& alipay == '')
+{
+	window.location.href="{weikucms::U('bind',array('token'=>$token,'openid'=>$openid))}";
+}else{
+    window.location.href="{weikucms::U('balance',array('token'=>$token,'openid'=>$openid))}";
+}
+
+})*/
+$('.tab-one').click(function(){
+	window.location.href="{weikucms::U('randing',array('token'=>$token,'openid'=>$openid))}";
+})
+$('.tab-two').click(function(){
+	window.location.href="{weikucms::U('deng',array('token'=>$token,'openid'=>$openid))}";
+})
+</script>
+</body></html>

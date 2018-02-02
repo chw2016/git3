@@ -1,0 +1,56 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="content">
+
+<div class="cLineB">
+  <h4>支付宝配置 </h4>
+ </div>
+ <!--tab start-->
+
+<!--tab end-->        
+    <div class="msgWrap bgfc" style="margin-top:10px;">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+	  
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+			<tr>
+					<th>支付开关：</th>
+					<td><select name="open"><option value="0" <if condition="$config.open eq 0">selected</if>>关闭支付</option><option value="1" <if condition="$config.open eq 1"> selected</if>>开启支付宝手机端支付</option><option value="2" <if condition="$config.open eq 2"> selected</if>>开启财付通即时到帐支付</option><option value="3" <if condition="$config.open eq 3"> selected</if>>开启财付通担保支付</option></select> 开启支付后，商城等b2c功能将有支付功能</td>
+				</tr>
+				<tr>
+					<th width="120">支付宝帐号：</th>
+					<td><input type="text" name="name" value="{weikucms:$config.name}" class="px" style="width:550px;"></td>
+				</tr>
+				<tr>
+					<th width="120">支付宝PID：</th>
+					<td><input type="text" name="pid" value="{weikucms:$config.pid}" class="px" style="width:550px;"></td>
+				</tr>
+				<tr>
+					<th>支付宝KEY：</th>
+					<td><input type="text" name="key" value="{weikucms:$config.key}" class="px" style="width:550px;"></td>
+				</tr>
+                
+                	<tr>
+					<th width="120">财付通商户号：</th>
+					<td><input type="text" name="tenpaypartner" value="{weikucms:$config.tenpaypartner}" class="px" style="width:550px;"></td>
+				</tr>
+				<tr>
+					<th>财付通KEY：</th>
+					<td><input type="text" name="tenpaykey" value="{weikucms:$config.tenpaykey}" class="px" style="width:550px;"></td>
+				</tr>
+				
+				<th>&nbsp;</th>
+					<td>
+					<input type="hidden" name="token" value="{weikucms:$token}" />
+						<button type="submit" name="button" class="btnGreen">保存</button>
+						<a href="javascript:history.go(-1);" class="btnGray vm">取消</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+  </div> 
+ 
+  
+        </div>
+<include file="Public:footer"/>

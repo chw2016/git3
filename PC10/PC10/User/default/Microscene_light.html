@@ -1,0 +1,62 @@
+<include file="Public:head"/>
+
+
+
+      
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>
+            <ol>
+                <li>最具有展现力的lightapp,可用于活动产品宣传,形象展示</li>
+            </ol>
+        </div>
+        <div class="cLine">
+          <a href="{weikucms::U('Microscene/lightadd',array('token'=>$token))}" title='轻应用添加' class='btn btn-primary'>轻应用添加</a>
+
+        <div class="clr"></div>
+      </div>
+    <div class="msgWrap">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>lightAPP名称</th>
+                <th>开始时间</th>
+                <th>联系人</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$vo.lightname}</td>
+                    <td>{weikucms:$vo.stime}</td>
+                    <td>{weikucms:$vo.contact}</td>
+                    <td>
+                        <php>echo date("Y-m-d H:i:s",$vo['addtime']);</php>
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-sm" target="_blank" href="{weikucms::U('Wap/Microscene/index',array('pid'=>$vo['id'],'token'=>$token))}" title="预览">预览</a>
+                        <a class="btn btn-success btn-sm" href="{weikucms::U('Microscene/index',array('pid'=>$vo['id'],'token'=>$token))}" title="添加子应用">添加子应用</a>
+                        <a class="btn btn-success btn-sm" href="{weikucms::U('Microscene/editp',array('pid'=>$vo['id'],'token'=>$token))}" title="编辑">编辑</a>
+                        <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Microscene/delp',array('pid'=>$vo['id'],'token'=>$token))}')" href="#">删除</a>
+
+                    </td>
+                </tr>
+            </volist>
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+
+</div>
+<include file="Public:footer"/>

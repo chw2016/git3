@@ -1,0 +1,132 @@
+﻿</div>
+ 
+</div>
+<!--中间部分end!-->
+
+<!--底部start!-->
+<!--
+<div id="foot">
+</div>
+-->
+<!--底部end!-->
+
+<div id="feedback" onclick="pageScroll();">
+     ↑ 
+</div>
+
+
+<div id="top" style="  background-color: #FFF;padding: 10px;width: 12px;position: fixed;top:68%;left: 97.2%;border: 0px solid #D9DADC;border-left: 0px;">
+    <a href="{weikucms::STATICS}/helpbook.zip" style="text-decoration:none;">
+    <div id="f-titles" style="color:rgb(47,47,47);">帮助手册
+    </div>
+    </a>
+</div>
+
+       
+
+
+<!--
+<div id="alert-info">
+<div id="alert-close"></div>
+<div id="alert-text">
+<strong style=" position:relative; left:40%">公告</strong></br>
+<p id="alert-content">在这里您可以添加关键词回复信息,比如您添加"万普微盟"这个关键词以后，用户在微信输入"万普微盟"系统就会回复您所设置的回复内容，以文字的形式回复给用户。</p>
+<p id="alert-cop" style=" float:right;">万普信息科技有限公司</p>
+<p id="alert-date" style="float:right">2014-8-15 17:00</p>
+</div>
+</div>
+-->
+
+<div id="blur"></div>
+
+</body>
+
+<script>
+	function pageScroll() { 
+		window.scroll(0,0); 
+	} 
+
+ $(function(){
+	 var comLine = $("#contain-box").css("height");
+	 //$("#contain-box-l").css("height",comLine);
+	 //$("#contain-box-r").css("height",comLine);
+	
+	var leftday =parseInt($("#leftday").html());
+    if(leftday <=30){
+		$("#leftday").css("color","red");
+		$("#leftday").css("font-size","14px");
+		$("#leftday").css("font-weight","bold");
+		}
+	
+	 
+});
+	 
+$(function(){
+	$("#tips").css({top:'16%'});
+	$("#tips").show(50);
+	$("#tips-close").click(function(){
+		$("#tips").animate({top:'-100%'},50);
+	    $("#tips").fadeOut(200);
+		})	
+	})
+	
+	
+
+ 
+/*$(document).ready(function(){
+	
+	 var bh =$(document).height(); 
+	 var div=$("#alert-info");
+	 $("#blur").css("height",bh);
+	 div.show(50);
+	 $("#blur").show(50);
+	 $("#head,#contain,#foot,#tips,#feedback").addClass("blur");
+     div.animate({position:"absolute",top:'40%',opacity:'0.8'},400);
+		  
+$("#alert-close").click(function(){ 
+	 var div=$("#alert-info");
+     div.animate({top:'-40%',opacity:'0.0'},400);
+	 div.hide(50);
+	 $("#blur").hide(50);
+     $("#head,#contain,#foot,#tips,#feedback").removeClass("blur");});
+		  
+	
+	 });
+
+	 */
+
+$("#feedback").click(function(){
+		$("#feedback-box").show(500);
+		$("#feedback-box").fadeIn(200);
+		
+	})		
+
+	
+$("#balabala").click(function(){
+    if(!$("#feedback_box").val()){
+        notif({
+            msg: "您想吐槽点什么呢!",
+            type: "warning"
+        });
+        return false;
+    }else{
+        notif({
+            msg: "感谢您的吐槽,万普会继续努力的:-D!",
+            type: "success"
+        });
+        $("#feedback-box").hide(50);
+
+    }
+});
+
+$("#feedback-box-close").click(function(){
+	    $("#feedback-box").fadeOut(200);
+		$(this).animate({top:'815px'},500);
+		$("#feedback-box").hide(50);
+	
+		
+		})	
+	 
+</script>
+
+</html>

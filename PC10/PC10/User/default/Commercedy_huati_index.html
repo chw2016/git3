@@ -1,0 +1,137 @@
+<include file="Public:head"/> 
+
+
+
+
+
+
+<div class="cLine">
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="total">
+                <a href="{weikucms::U('Commercedy/postShow',array('token'=>$token))}" >帖子列表</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top " data-id="financial">
+                <a href="{weikucms::U('Commercedy/popular',array('token'=>$token))}" >人气排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/stars',array('token'=>$token))}" >星级排行</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/noticelist',array('token'=>$token))}" >公告添加</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/setScore',array('token'=>$token))}" >积分设置</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Commercedy/huati_index',array('token'=>$token))}" >话题管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--  <div class="cLineB">
+
+       <h4 class="left">帖子列表</h4>
+
+       <div class="clr"></div>
+
+   </div> -->
+</div>
+<div class="cLine">
+    <div class="pageNavigator e_left">
+        <a href="{weikucms::U('Commercedy/add_huati',array('token'=>$token))}" title="新增公告" class="btn btn-primary">新增话题</a>
+
+    </div>
+
+    <div class="clr"></div>
+</div>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里您可以添加查看用户发表的话题帖</li>
+    </ol>
+</div>
+
+<div class="msgWrap">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th width="10%">话题标题</th>
+            <th>会员昵称</th>
+            <th>会员头像</th>
+            <th>会员级别</th>
+            <th>发帖时间</th>
+            <th width="15%">发帖内容</th>
+            <th>发帖地址</th>
+            <th style="width: 200px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="info" id="vo">
+        <tr>
+            <td>{weikucms:$vo.title}</td>
+            <td>
+				<if condition="$vo['nickname'] eq ''">
+					暂无名称
+				<else/>
+					{weikucms:$vo.nickname}
+				</if>
+			</td>
+            <td>
+				<if condition="$vo['headimg'] eq ''">
+					暂无头像
+				<else/>
+					<img src="{weikucms:$vo.headimg}" width="80px" height="80px"/>
+				</if>
+			</td>
+            <td>{weikucms:$vo.lvl}</td>
+            <td>
+                <php>
+                    echo date("Y-m-d",strtotime($vo['add_time']));                
+                </php>
+            </td>
+            <td>
+
+                <?php echo html_entity_decode($vo['content']);?>
+            </td>
+            <td>
+                {weikucms:$vo.address}
+            </td>
+            <td>
+                <if condition="$vo['token'] eq $vo['openid']">
+                <a class="btn btn-success btn-sm" href="{weikucms::U('Commercedy/add_huati',array('id'=>$vo['id'],'token'=>$token))}" title="查看话题">修改查看话题</a>
+                <else />
+                    <a class="btn btn-success btn-sm" href="{weikucms::U('Commercedy/lookup',array('id'=>$vo['id'],'token'=>$token))}" title="查看话题">查看话题</a>
+
+                </if>
+
+               <a class="btn btn-success btn-sm" href="{weikucms::U('Commercedy/see_huati',array('id'=>$vo['id'],'token'=>$token))}" title="查看回复">查看回复</a>
+        	   <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Commercedy/dels',array('id'=>$vo['id'],'token'=>$token))}')" href="#">删除</a>
+			</td>
+        </tr>
+        </volist>
+
+        </tbody>
+
+    </table>
+
+
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+</div>
+
+<include file="Public:footer"/>

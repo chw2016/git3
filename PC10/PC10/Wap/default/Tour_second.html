@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+     <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/tour/css/tour.css">
+		<link rel="stylesheet" href="{weikucms::RES}/tour/css/islider.css">
+		<script src="{weikucms::RES}/tour/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/tour.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/islider.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/msg.js" ></script>
+		<style type="text/css">
+			.imgSlider{
+				width: 100%;
+				height: 100%;
+				position: relative;
+				background-size: cover;
+				background-position: 50%;
+				background-repeat: no-repeat;
+			}
+			.imgSlider{
+				display: block;
+			}
+			.imgSlider img{
+				height: 100%;
+			}
+			.imgSliderContent{
+				position:absolute;
+				bottom:0px;
+				width:100%;
+				background:rgba(0,0,0,0.5);
+				height:30px;
+				color:#fff;
+				text-align: left;
+				line-height: 30px;
+				text-indent: 20px;
+			}
+            .goWhere p.on{
+                background-color: #cccccc;
+            }
+            .jiage img { max-width: 100%;}
+		</style>
+    </head>
+    <body class="bodys">
+         <header class="header-blue">
+        	产品详情
+        	<div class="wrap-lan">
+	        	<div class="arrow"></div>
+	        </div>
+        </header>
+        <!-- 轮播图显示地址 -->
+        <section class="scrollImg">
+        	<div id="iSlider-wrapper"></div>
+        </section>
+        <section id="wrap">
+        	<!-- 内容显示页面 -->
+	        <section class="contentShow">{weikucms:$info.name}</section>
+	        <!-- 灰色的线条 -->
+	        <section class="gray-line"></section>
+	        <!-- 会员价格 -->
+	        <section class="vipprice">
+	        	<span>会员价：</span>
+	        	<span id="e_price">{weikucms:$info.vprice}</span>
+	        	<span>起</span>
+	        </section>
+	        <!-- 畅游价格 -->
+	        <section class="travel">
+	            <span class="trvalPrice">
+	            	<span>畅游价：</span>
+	        	    <span>{weikucms:$info.price}</span>
+	            </span>
+	          <!--  <span class="trvalPrice">
+	                <a href="javascript:void(0);">价格说明</a>
+	            </span>-->
+	        </section>
+	        <!-- 灰线 -->
+	        <section class="gray-line"></section>
+
+	        <!-- 出发地 -->
+	        <section class="goWhere">
+	        	出发地：<span class="whereGo">{weikucms:$info.chufadi}</span>
+	        </section>
+	        <section class="goWhere">
+	        	目的地：<span class="whereGo aim">{weikucms:$info.mudidi}</span>
+	        </section>
+	        <section class="goWhere">
+	        	发团日期：<br />
+                <if condition="$_GET['token'] neq '1d63eefb5dcb19cf48fff098c99781ce'">
+                <p class="on">
+                    <span class="date">{weikucms:$info.riqi|substr=0,10}</span>
+                    <span style="margin-left: 15px;">价格:
+                    <b style="color:red;">{weikucms:$info.vprice}</b>元</span>
+                   <input type="hidden" class="priceH" value="{weikucms:$info.vprice}">
+                </p>
+                </if>
+                <if condition="$info['extend']">
+                    <volist name="info['extend']" id="vo">
+                       <p>
+                           <span class="date">{weikucms:$key}</span>
+                           <span style="margin-left: 15px;">
+                                <if condition="$_GET['token'] eq '1d63eefb5dcb19cf48fff098c99781ce'">
+                                   成人价:<b style="color:red;"><php>echo (int)$vo[0]</php></b>元
+                                   儿童价:<b style="color:red;"><php>echo (int)$vo[1]</php></b>元
+                                   <input type="hidden" class="priceH" value="<php>echo implode('|',$vo)</php>">
+                                <else />
+                                   价格:<b style="color:red;">{weikucms:$vo[0]}</b>元
+                                   <input type="hidden" class="priceH" value="{weikucms:$vo}">
+                                </if>
+                           </span>
+                       </p>
+                    </volist>
+                </if>
+
+	        </section>
+            <script>
+                $(".goWhere p").click(function(){
+                    $(".goWhere p").removeClass('on');
+                    $(this).addClass('on');
+                    var price=$(this).find('b').html();
+                    $("#e_price").text(price);
+                  /*  $(".goWhere p").each(function(){
+                        $()
+                    });*/
+                });
+            </script>
+
+        </section>
+        <!-- 路线特色 -->
+        <section class="road-line">
+        	<!-- 存放图片 -->
+        	<section class="title">
+        		<div class="saveImg">
+    		        <img src="{weikucms::RES}/tour/imgs/love.jpg" />
+        		</div>
+        	    <div class="roadColor">线路特色</div>
+        	</section>
+
+        	<!-- 灰色线条 -->
+        	<div class="gray-line"></div>
+        	<!-- 说明 -->
+        	<p>{weikucms:$info.des}</p>
+        	<!-- 存放图片 -->
+            <div style="margin-top: 30px;"></div>
+        	<section class="title">
+        		<div class="saveImg">
+    		        <img src="{weikucms::RES}/tour/imgs/love.jpg" />
+        		</div>
+        	    <div class="roadColor">线路行程</div>
+        	</section>
+        	<!-- 灰色线条 -->
+        	<div class="gray-line"></div>
+
+            <!-- 价格说明 -->
+            <div class="jiage" >
+                {weikucms:$info.intro}
+            </div>
+        </section>
+
+        <!-- 设定一下高度 -->
+        <section style="height:34px;"></section>
+        <!-- 最底部的报名 -->
+        <section class="register">
+            <section class="submit">
+            	<!--<a class="left" href="javascrit:void(0);">在线咨询</a>-->
+                <a class="left" href="tel:0755-88321316">电话咨询</a>
+            	<section class="middle"></section>
+            	<a class="right yuding" >立即预定</a>
+            </section>
+        </section>
+        <script>
+            $(".yuding").click(function(){
+                if($('.goWhere p.on').length == 0){
+                    msg.alert('请选择发团日期');
+                    return false;
+                }
+                var price=$(".goWhere p.on .priceH").val();
+                var date=$(".goWhere p.on .date").html();
+
+                var url="{weikucms::U('Wap/Tour/yuding',array('token'=>$token,'openid'=>$openid,'id'=>$info['id']))}&price="+price+"&date="+date;
+
+                location.href=url;
+            });
+			var list = [
+					{weikucms:$imgshow}
+				];
+
+			var opts = {
+				type: 'dom',
+			    data: list,
+			    dom: document.getElementById("iSlider-wrapper"),
+			    isLooping: true,
+			    isAutoplay: true,
+			   	duration : 2000
+			};
+			var	islider = new iSlider(opts);
+			islider.addDot();
+	</script>
+    </body>
+</html>

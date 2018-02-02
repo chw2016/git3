@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    
+    <title>微商-任务中心</title>
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/base.css" rel="stylesheet">
+    <link href="{weikucms::STATICS}/wapweiui/medias/css/mession.css" rel="stylesheet">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        #nav .myteam .nav_title{
+            padding-left: 12%;
+        }
+    </style>
+</head>
+<body>
+<div id="showImg" class='relative'>
+    <img src="{weikucms:$tuanpic['pic']}" width="100%" style="height: 150px;  display: inherit;">
+    <div class='clock'>
+        <span class='wth20 inlineblock'><img src="{weikucms::STATICS}/wapweiui/medias/img/clock.png" width="100%" /></span>
+        <span class='topTip'><php>
+            echo date('m/d Y');
+        </php></span>
+    </div>
+    <div class='new'>
+        <span class='topTip'>公告栏</span>
+        <span  class='wth20 inlineblock'><img src="{weikucms::STATICS}/wapweiui/medias/img/new.png"  width="100%"  /></span>
+    </div>
+</div>
+<div id="nav">
+    <div class="nav_content myteam">
+        <ul>
+            <li class="nav_title">
+                <div>{weikucms:$itask}</div>
+                <div class="cgray1">总任务量</div>
+            </li>
+            <li class="nav_title">
+                <div>{weikucms:$iclick}</div>
+                <div class="cgray1">总点击量</div>
+            </li>
+             <li class="nav_title">
+                <div>{weikucms:$iDeal}</div>
+                <div class="cgray1">总成交量</div>
+            </li>
+             
+        </ul>
+    </div>
+</div>
+<!--<div class="team">
+    <div class="bggray">
+        <span class="row row1">2015.06.-绩效指数:106%</span>
+        <span class="row row2">了解绩效指数计算方法</span>
+    </div>
+    &lt;!&ndash;<div class="bgfen">
+        <span class="row row3">发布群公告</span>
+        <span class="row row4">群发短信</span>
+    </div>&ndash;&gt;
+</div>-->
+<div class='of'>
+    <div class="fl w30 bold f17 team-title">
+        <div>我的团队</div>
+        <div class="cfen f22">{weikucms:$iCount}</div>
+    </div>
+    <div class="fr w68 gray of">
+        <div class="mtb5 f16">团队列表</div>
+       <!-- <div class="mtb5 btb1gray">
+            <span class="team-list-type  mtb5 inlineblock ">直属团队</span>
+            &lt;!&ndash;<span class="team-list-type mtb5 inlineblock">FANS</span>&ndash;&gt;
+        </div>-->
+        <ul>
+        <volist name="info" id="vo">
+            <li class="team-list">
+                <span style="width: 65px;display: inline-block"><if condition="$vo['nickname'] eq ''">{weikucms:$vo.name}<else/></if>{weikucms:$vo.nickname}</span>
+                <span style="width: 98px;display: inline-block">{weikucms:$vo.phone}</span>
+            
+                <span style="display: inline-block">
+                <php>
+                    $daty =strtotime($vo['add_time']);
+                    echo date('m-d',$daty);
+                </php></span>
+            </li>
+        </volist>
+            <!--    <li class="team-list">
+                 <span>小逗比</span>
+                 <span>12344444444</span>
+                 <span>tnsefasdf</span>
+                 <span>3-25</span>
+                          </li>
+              <li class="team-list">
+                 <span>小逗比</span>
+                 <span>12344444444</span>
+                 <span>tnsefasdf</span>
+                 <span>3-25</span>
+                          </li>
+             <li class="team-list">
+                 <span>小逗比</span>
+                 <span>12344444444</span>
+                 <span>tnsefasdf</span>
+                 <span>3-25</span>
+                          </li>
+              <li class="team-list">
+                 <span>小逗比</span>
+                 <span>12344444444</span>
+                 <span>tnsefasdf</span>
+                 <span>3-25</span>
+                          </li> -->
+        </ul>
+    </div>
+    
+</div>
+<!--<div class='cl f18 tc mtb5 zhaomu'>
+    <div class='bold'>招募团队</div>
+    <ul class='f14 bgFFF of zhaomuway'>
+        <li class='fl w20'>QQ</li>
+        <li class='fl w20'>QQ</li>
+        <li class='fl w20'>QQ</li>
+        <li class='fl w20'>QQ</li>
+    </ul>
+</div>
+<div class='cl f18 tc mtb5'>
+    <ul class='f14 of tc padtb5'>
+        <li class='fl inlineblock w32'>团队培训QQ群</li>
+        <li class='fl inlineblock w32'>团队培训QQ群</li>
+        <li class='fl inlineblock w32'>团队招聘QQ群</li>
+    </ul>
+</div>-->
+<div class="zw"></div>
+<div id="footer">
+    <ul>
+        <a href="{weikucms::U('Media/taskcenter',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer1.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Media/myincome',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer2.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Media/message',array('token'=>$token,'openid'=>$openid,'type'=>1))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer3.png" width="35px" ></li>
+        </a>
+        <a href="{weikucms::U('Media/mybrother',array('token'=>$token,'openid'=>$openid))}">
+            <li><img src="{weikucms::STATICS}/wapweiui/medias/img/footer4.png" width="35px" ></li>
+        </a>        
+    </ul>
+</div>
+</body>
+</html>

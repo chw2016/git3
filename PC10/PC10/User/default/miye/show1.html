@@ -1,0 +1,751 @@
+<style>
+    tbody tr.on{
+        border: solid 1px #333;
+    }
+</style>
+<style>
+    .title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+    /*下面的是多选，全选*/
+    .selectAll,.select {
+        width: 18px;
+        height: 18px;
+        border: 1px solid #ccc;
+        position: relative;
+        z-index: 10;
+    }
+    .selectAll.on,.select.on {
+        text-align:center;
+        line-height:18px;
+        color: rgb(234, 85, 20);
+        border-color:rgb(234, 85, 20);
+    }
+    .selectAll.on:before,.select.on:before {
+        content:"√";
+    }
+
+
+</style>
+
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/font-awesome-4.3.0/css/font-awesome.min.css"  media="all">
+
+<!--为了多选功能引进的-->
+        <if condition="$duoxuan eq 1">
+<script src="/tpl/Wap/default/common/css/store/js/jquery-2.0.3.min.js"  type="text/javascript" ></script>
+            </if>
+<!--头部end!-->
+<style>
+	.table-striped td{max-width:160px;}
+</style>
+<!--中间部分start!-->
+<div id="contain">
+    <div id="contain-box" >
+        <!--中间部分_左侧start!-->
+        <div id="contain-box-l" style="<if condition="(($_GET['userid'] egt 0) and ($_GET['userid'] neq '')) or ($brand_id) or (session('zm_id'))">display:none</if>">
+        <div class="menu-box">
+
+            <div class="menu base">
+                <div class="menu-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/base.png" width="18" height="18"></i>基础功能
+                </div>
+                <div class="menu-item">
+                    <a  href="{weikucms::U('Home/index',array('token'=>$token,'id'=>session('wxid')))}">我的首页</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Areply/index',array('token'=>$token))}">首次关注</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Text/index',array('token'=>$token))}">文本回复</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Img/index',array('token'=>$token))}">图文回复</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Text/keywords',array('token'=>$token))}">关键词管理</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Diymen/index',array('token'=>$token))}">自定义菜单</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Company/index',array('token'=>$token))}">LBS智能回复</a>
+                </div>
+            </div>
+
+
+            <div class="menu myapp">
+                <div class="menu-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/app.png" width="18" height="18"></i>我的应用
+                </div>
+
+                <div onclick="window.location.href='{weikucms::U('App/index',array('token'=>$token,'cate_id'=>0))}'" class="appstore"><a>添加应用</a> </div>
+                <volist name="app_list" id="vo">
+                    <if condition="$vo['app_id'] eq 4">
+                        <div class="menu-item app" id="lightapp" >
+                            <a href="{weikucms::U($vo['enter_api'],array('token'=>$token,'dining'=>1))}"><i ><img src="<php>echo C('site_url');</php>{weikucms:$vo.pic}" width="18" height="18"></i>{weikucms:$vo.app_name}</a><div class="del-app"></div>
+                        </div>
+                        <else/>
+                        <div class="menu-item app" id="lightapp" >
+                            <a href="{weikucms::U($vo['enter_api'],array('token'=>$token))}"><i ><img src="<php>echo C('site_url');</php>{weikucms:$vo.pic}" width="18" height="18"></i>{weikucms:$vo.app_name}</a><div class="del-app" onclick="source_delete('{weikucms::U('User/App/dapp',array('token'=>session('token'),'id'=>$vo['id'],'app_id'=>$vo['app_id']))}');"></div>
+                        </div>
+                    </if>
+                </volist>
+            </div>
+
+
+            <div class="menu fans">
+                <div class="menu-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/fans.png" width="18" height="18"></i>粉丝管理
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Weixinfans/index',array('token'=>$token))}">微信粉丝</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{weikucms::U('Weixinfans/index',array('token'=>$token))}">消息管理</a>
+                </div>
+            </div>
+
+
+            <div class="menu diy">
+                <div class="menu-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/diy.png" width="18" height="18"></i>万普定制功能
+                </div>
+                <if condition="$Think.session.uid eq 129">
+                    <div class="menu-item">
+                        <a href="{weikucms::U('Scode/index',array('token'=>$token))}">产品防伪码</a>
+                    </div>
+                    <elseif condition="$Think.session.uid eq 183" />
+                    <div class="menu-item">
+                        <a href="{weikucms::U('Dingzhi/Baozhiyuan/index',array('token'=>$token))}">礼品券管理</a>
+                    </div>
+                    <elseif condition="$Think.session.uid eq 7" />
+                    <div class="menu-item">
+                        <a href="{weikucms::U('User/Reduce/index',array('token'=>$token))}">减肥数据</a>
+                    </div>
+                    <elseif condition="$Think.session.uid eq 1001" />
+                    <div class="menu-item">
+                        <a href="{weikucms::U('User/Yanxiang/index',array('token'=>$token))}">研祥管理</a>
+                    </div>
+                    <else/>
+                    <div class="menu-item">
+                        <a href="#">没有定制功能</a>
+                    </div>
+                </if>
+            </div>
+
+
+            <div class="menu set">
+                <div class="menu-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/setting.png" width="18" height="18"></i>设置
+                </div>
+                <!--<div class="menu-item">-->
+                <!--<a href="{weikucms::U('Bind/index',array('token'=>$token,'id'=>session('wxid')))}">账号绑定</a>-->
+                <!--</div>-->
+                <div class="menu-item">
+                    <a href="{weikucms::U('Index/useredit',array('token'=>$token,'id'=>session('wxid')))}">修改密码</a>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <!--中间部分_左侧end!-->
+    <div id="contain-box-r" style="<if condition="(($_GET['userid'] egt 0) and ($_GET['userid'] neq '')) or $brand_id">width:99%;max_width:auto;<elseif condition="$_GET['userid'] eq 'Supermanage'" /><else/></if>">
+    <div class="main-box">
+        <div id="main-box-index">
+
+            <!--中间部分_右侧end!-->
+
+
+
+
+
+            <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<!---头部1开始-->
+<style>
+    .title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+</style>
+<if condition="$Header">
+    <div class="cLineB">
+
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+                <volist name="Header" id="Head">
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms:$Head.url}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">{weikucms:$Head.name}</a>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+
+    </div>
+</if>
+<if condition="$Head_Opt">
+<div class="cLineC" style="line-height: 32px;">
+    <volist name="Head_Opt" id="Opt">
+        <!--<a  target="<if condition="!empty($Opt['target'])">{weikucms:$Opt.target}<else />_self</if>"
+        href="{weikucms:$Opt.url}" class="btn btn-primary {weikucms:$Opt.css} <if condition="$Opt.type eq 'daochu'">daochu</if>" >{weikucms:$Opt.name}</a>-->
+        <a style="margin-right: 10px;"  target="<if condition="!empty($Opt['target'])">{weikucms:$Opt.target}<else />_self</if>"
+            href="{weikucms:$Opt.url}" class="btn btn-primary {weikucms:$Opt.css} <if condition="$Opt['type'] eq 'yijin'"> yijin</if> <if condition="$Opt.type eq 'daochu'">daochu</if>" >{weikucms:$Opt.name}</a>
+    </volist>
+</div>
+        </if>
+            <script>
+                $(".daochu").click(function(){
+                   // alert(4);
+                    var url=$(this).attr('href');
+
+                    $("#seach").attr('action',url);
+
+                    $("#seach").submit();
+
+                    $("#seach").attr('action','');
+                    return false;
+                });
+            </script>
+<!--头部1结束-->
+
+            <link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<!---中部1开始-->
+<div class="msgWrap form">
+    <!--搜索开始-->
+    <if condition="$search">
+        <form action="" method="post" id="seach">
+            <!--搜索结束-->
+            <table>
+                <tbody>
+                <tr>
+
+                    <volist name="search" id="vo">
+                        <if condition="$vo['type'] eq 'between'">
+                            <td>{weikucms:$vo.title}：</td>
+
+                            <td>
+                                <input type="input" class="px" style="width: 186px;" id="statdate2" value="{weikucms:$_POST['be_add_time'][0]}" onclick="WdatePicker()" name="{weikucms:$vo.name}[0]" readonly>
+                            </td>
+                            <td>至</td>
+                            <td>
+                                <input type="input" class="px" style="width: 186px;  margin-left: -47px;" id="statdate3" value="{weikucms:$_POST['be_add_time'][1]}" onclick="WdatePicker()" name="{weikucms:$vo.name}[1]" readonly>
+                            </td>
+                        <elseif condition="$vo['type'] eq 1" />
+                            <td>{weikucms:$vo.title}:</td>
+                            <td> <select name="{weikucms:$vo.name}"><option value="10" <if condition="$paystatus eq 10">selected</if> >全部</option>
+                                <option value="0"  <if condition="$paystatus eq 0">selected</if> >未支付</option>
+                                <option value="11" <if condition="$paystatus eq 11">selected</if>>已支付未上传资料</option>
+                                <option value="1" <if condition="$paystatus eq 1">selected</if>>已支付且上传完整资料</option>
+                                <option value="5" <if condition="$paystatus eq 5">selected</if>>已支付且审核通过</option>
+                                <option value="2" <if condition="$paystatus eq 2">selected</if>>已支付但审核未通过</option>
+
+                                <option value="-1" <if condition="$paystatus eq -1">selected</if>>已取消</option>
+                                <option value="7" <if condition="$paystatus eq 7">selected</if>>申请退款订单</option>
+                                <option value="8" <if condition="$paystatus eq 8">selected</if>>退款成功</option>
+                                <option value="9" <if condition="$paystatus eq 9">selected</if>>退款失败</option>
+                                <option value="12" <if condition="$paystatus eq 12">selected</if>>已全额还款</option>
+                                <option value="13" <if condition="$paystatus eq 13">selected</if>>余期未还款</option>
+
+                            </select></td>
+                            <elseif condition="$vo['type'] eq 2" />
+                            <td>{weikucms:$vo.title}:</td>
+                            <td> <select name="{weikucms:$vo.name}"><option value="10" <if condition="$paystatus eq 10">selected</if> >全部</option>
+                                <option value="0"  <if condition="$paystatus eq 0">selected</if> >审核中</option>
+                                <option value="2" <if condition="$paystatus eq 2">selected</if>>审核失败</option>
+                                <option value="1" <if condition="$paystatus eq 1">selected</if>>审核通过</option>
+                                <option value="-1" <if condition="$paystatus eq -1">selected</if>>已取消</option>
+                                <option value="12" <if condition="$paystatus eq 12">selected</if>>已全额还款</option>
+                                <option value="13" <if condition="$paystatus eq 13">selected</if>>余期未还款</option>
+                            </select></td>
+                            <elseif condition="$vo['type'] eq 4" />
+                            <td>{weikucms:$vo.title}:</td>
+                            <td> <select name="{weikucms:$vo.name}"><option value="10" <if condition="$authentication eq 10">selected</if> >全部</option>
+                                <option value="0"  <if condition="$authentication eq 0">selected</if> >资料不完整</option>
+                                <option value="1" <if condition="$authentication eq 1">selected</if>>审核通过</option>
+                                <option value="-1" <if condition="$authentication eq -1">selected</if>>审核未通过</option>
+                                <option value="2" <if condition="$authentication eq 2">selected</if>>新用户申请(待审核)</option>
+
+                            </select></td>
+                            <elseif condition="$vo['type'] eq 'select'" />
+                            <td style="position: relative;top:-5px;">{weikucms:$vo.title}：</td>
+                            <td><select name="{weikucms:$vo.name}"><option value="">全部</option>
+                                <volist name="vo['many']" id="vo1">
+                                    <option value="{weikucms:$vo1.value}"  <?php if($_POST[$vo['name']]==$vo1['value']){echo selected;} ?> >{weikucms:$vo1.name}</option>
+                                </volist>
+                            </select></td>
+                            <elseif condition="$vo['type'] eq 'br'" />
+                                 </tr><tr>
+                            <else />
+                            <td style="position: relative; top: -5px;">{weikucms:$vo.title}：</td>
+                            <td><input type="text" style="width: 100px;" id="{weikucms:$vo.name}" value="<?php echo $_POST[$vo['name']];?>" name="{weikucms:$vo.name}"></td>
+                        </if>
+
+
+
+
+                    </volist>
+
+
+                    <td>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-success btn-sm" href="javascript:;" id="search" style="position: relative;top:-3px;">搜索</a>
+                    </td>
+                </tr>
+                </tbody></table>
+    <input type="hidden" name="paixu_form" value="">
+            <input type="hidden" name="__hash__" value="8fe64cbddd0f99adf1710b3eed3b8771_59ce64e1d0a671065ece69ea3d010c13">
+    </form>
+    </if>
+
+    <!---统计开始-->
+
+    <if condition="$tongji">
+    <div class="row-fluid" >
+        <ul id="custom_group_navigator_div1" class="qb_clearfix unstyled">
+            <volist name="tongji" id="vo">
+            <li class="list-box" style="width: 15%">
+                <div class="list-box__hd list-box__hd_bg_2">{weikucms:$vo.title}</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday3">{weikucms:$$vo.name}</strong>
+                    </div>
+                </div>
+            </li>
+
+            </volist>
+
+
+        </ul>
+    </div>
+    <!----统计结束--->
+</if>
+    <div class="bdrcontent">
+        <div id="div_ptype">
+
+            <table class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <thead>
+                <tr>
+                    <?php
+                   
+                  foreach($Head_Opt as $v){
+                    if($v['type']=='yijin'){
+                    echo     "<th ><div class='selectAll' style='margin-left: 3px;' ></div>全选</th>";
+                    }
+                  }
+                    ?>
+                    <volist name="Table_Header" id="H">
+                        <th class="<?php if(strstr($H,'|')){echo 'paixu';}?>"><?php  if(strstr($H,'|')){echo "<a style='color:#222;' href='".substr(strstr($H,'|'),1)."'>".str_replace(strstr($H,'|'),'',$H)."<i class='fa fa-long-arrow-down'></i></a>";}else{echo $H;};?></th>
+                    </volist>
+                </tr>
+                </thead>
+                <form action="" method="post" id="paixu_form">
+                    <input type="hidden" name="paixu_form" >
+                </form>
+
+                <!--tab start-->
+                <if condition="$tips">
+                    <div class="alert alert-info">
+                        <button type="button" class="tips close" data-dismiss="alert">×</button>
+                        <strong>提示信息!</strong>
+                        <ol>
+                            <volist name="tips" id="t">
+                                <li>{weikucms:$t}</li>
+                            </volist>
+                        </ol>
+                        <script type="text/javascript">
+                            $('.tips.close').click(function(){
+                                $(this).parents('.alert.alert-info').hide();
+                            });
+                        </script>
+                    </div>
+                </if>
+
+                <!--tab end-->
+                <volist name="aList" id="List">
+
+                    <?php
+                        foreach($Head_Opt as $v){
+                            if($v['type']=='yijin'){
+                            echo  "<td style='width: 24px;'><div class='select' yid='".$List['id']."'></div></td>";
+                        }
+                        }
+                        ?>
+                        <foreach name="List" key="K" item="Row">
+                            <td>
+                                <if condition="in_array($K, $aListImg['container'])">
+                                    <img src="{weikucms:$Row}" width="{weikucms:$aListImg['width']}" height="{weikucms:$aListImg['width']}">
+                                    <else />
+                                    {weikucms:$Row}
+                                </if>
+                            </td>
+                        </foreach>
+                        <td class="norightborder">
+                            <volist name="List_Opt" id="Opt">
+                                <!-- 如果主键不是id，则需要C设置id过来指定 -->
+                                <a target="_self"
+                                   <if condition="$Opt['name'] eq '删除'">
+                                       class="btn btn-danger btn-sm del22"
+                                       <else />
+                                       class="btn btn-success btn-sm"
+                                   </if>
+                                   href="{weikucms:$Opt.url}&id=<if condition='empty($id)'>{weikucms:$List.id}<else />{weikucms:$List.$id}</if>">{weikucms:$Opt.name}</a>
+                            </volist>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </div>
+    </div>
+    <div class="footactions" style="padding-left:10px">
+        <div class="pager" style="float: left;">{weikucms:$page}</div>
+        <if condition="$page">
+        <div style="float: right;  position: relative;  top: 12px;  right: 30px;">每页显示多少条<input type="text" id="set_page" value="{weikucms:$set_page}" name="set_page" style="width: 40px;" /> </div>
+        </if>
+    </div>
+</div>
+<script>
+    $("#search").click(function(){
+        $("#seach").submit();
+    });
+</script>
+<!--中部1结束-->
+
+
+
+
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+
+<!---以下是底部内容-->
+
+
+
+<!--中间部分end!-->
+
+<!--底部start!-->
+<!--
+<div id="foot">
+</div>
+-->
+<!--底部end!-->
+
+<div id="feedback">
+    <div id="f-title"><i><img src="{weikucms::STATICS}/newwapweiui/img/feedback.png" width="18" height="18"></i>反馈
+    </div>
+</div>
+
+<div id="feedback-box">
+    <div id="feedback-box-close"></div>
+    <div class="b-box">
+        <span>我要吐槽</span>
+        <textarea name="feedback" cols="" id="feedback_box" rows=""></textarea>
+        <div class="btn btn-success btn-sm" id="balabala">吐槽</div>
+    </div>
+</div>
+
+
+<!--
+<div id="alert-info">
+<div id="alert-close"></div>
+<div id="alert-text">
+<strong style=" position:relative; left:40%">公告</strong></br>
+<p id="alert-content">在这里您可以添加关键词回复信息,比如您添加"万普微盟"这个关键词以后，用户在微信输入"万普微盟"系统就会回复您所设置的回复内容，以文字的形式回复给用户。</p>
+<p id="alert-cop" style=" float:right;">万普信息科技有限公司</p>
+<p id="alert-date" style="float:right">2014-8-15 17:00</p>
+</div>
+</div>
+-->
+
+<div id="blur"></div>
+
+</body>
+<!--全选,多选-->
+<script type="text/javascript">
+
+    function mySelector(mySelect,Selected,only,mySelectAll_L){
+        var /*mySelect = $(".myselect"), //设置选择对象
+         Selected = "selected", //已选的Class Name
+         mySelectAll_L = $(".slectAll"), //全选按钮的位置
+         only = 3, //可选择的长度*/
+                SelectLength = mySelect.length, //选择对象的长度
+                SelectedLength = 0; //初始化已选择的长度
+        if(isNaN(only)){
+            mySelectAll_L = only;
+            only=0;
+        }else if(only==undefined||only>SelectLength){
+            only=0;
+        }
+//console.log(mySelectAll_L)
+        function OpenSelect(e){//开启功能
+            mySelect.on('click',SelectToggle);
+            if(mySelectAll_L!=undefined){mySelectAll_L.on('click',SelectAll);}
+            return true;
+        }
+        function CloseSelect(e){//关闭功能
+            mySelect.off('click');
+            mySelectAll_L.off('click');
+            return false;
+        };
+        OpenSelect();
+        function SelectToggle(){
+            var THIS = $(this);
+            if(!THIS.hasClass(Selected)){
+                if(SelectedLength<only ||only==0){
+                    THIS.addClass(Selected);
+                    SelectedLength+=1;
+                    if(SelectLength==SelectedLength&&only==0){
+//if(mySelectAll_L!=undefined){mySelectAll_L.html("全取消")};
+                    }
+//console.log(SelectedLength);
+                }else if(only==1){
+                    mySelect.removeClass(Selected);
+                    THIS.addClass(Selected);
+                }else {
+                    alert("超过了可选范围")
+                }
+            }else {
+                THIS.removeClass(Selected);
+                SelectedLength-=1;
+                if(mySelectAll_L!=undefined){
+//mySelectAll_L.html("全选")
+                    mySelectAll_L.removeClass(Selected);
+                };
+
+//console.log(SelectedLength);
+            }
+
+        }
+        function SelectAll(){
+            if(SelectedLength<=only&&only!=0){
+                alert("你还可以选择"+(only-SelectedLength)+"个！")
+            }else{
+                if(SelectedLength<SelectLength ){
+                    mySelectAll_L.addClass(Selected)
+                    mySelect.addClass(Selected);
+                    SelectedLength=SelectLength;
+//mySelectAll_L.html("全取消");
+//console.log(SelectedLength);
+                }else {
+                    mySelectAll_L.removeClass(Selected)
+                    mySelect.removeClass(Selected);
+                    SelectedLength=0;
+//mySelectAll_L.html("全选");
+//console.log(SelectedLength);
+                }
+            }
+        }
+    }
+    mySelector($(".select"),"on",0,$(".selectAll"))
+
+
+</script>
+
+<script>
+    //排序
+    $(".paixu").click(function(){
+        var a=$(this).find('a').attr('href');
+        $("input[name=paixu_form]").val(a);
+        if($("#seach").length>0){   //有搜索
+            $("#seach").submit();
+        }else{
+            $("#paixu_form").submit();
+        }
+
+        return false;
+    });
+    //多选全选
+    $(".yijin").click(function(){
+        var id=[];
+
+        $(".select.on").each(function(i,e){
+            id[i]=$(this).attr('yid');
+
+        })
+        id=id.join('-');
+        // alert(id);
+
+        //   return false;
+        var url=$(".yijin").attr('href');
+        // $(".yijin").removeAttr('href');
+        //  alert(url);
+        // return false;
+        $.post(url,{id:id},function(data){
+            if(data.status==1){
+                notif({
+                    msg: "操作成功!",
+                    type: "success"
+                });
+            }else{
+                notif({
+                    msg: "操作失败!",
+                    type: "error"
+                });
+            }
+        },'json');
+        return false;
+    })
+    //删除
+    $(".del22").click(function(){
+        var url=$(this).attr('href');
+        if(confirm('确定要删除吗？')){
+
+        }else{
+            return false;
+        }
+    })
+    $(function(){
+        //有新订单发铃声
+        //有新订单就发铃声
+        function  Play(sound){
+            if(navigator.appName == "Microsoft Internet Explorer")
+            {
+                var snd = document.createElement("bgsound");
+                document.getElementsByTagName("body")[0].appendChild(snd);
+                snd.src = sound;
+            }
+            else{
+                var obj = document.createElement("object");
+                obj.width="0px";
+                obj.height="0px";
+                obj.type = "audio/x-wav";
+                obj.data = sound;
+                var body = document.getElementsByTagName("body")[0];
+                body.appendChild(obj);
+            }
+
+        }
+
+        var ring="{weikucms:$ring}";
+        if(ring==1){
+            var lasttime = "{weikucms:$lasttime}";
+            var ring_model="{weikucms:$ring_model}";
+            var ring_url = "{weikucms::U('ring',array('token'=>$token))}";
+            var ring_ring="{weikucms:$ring_ring}";
+            setInterval(function(){
+                $.getJSON(ring_url,{lasttime:encodeURI(lasttime),ring_model:ring_model},function(data){
+                    if(data.code == 0){
+                            lasttime = data.lasttime;
+                            Play(ring_ring);
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'60000')
+                    }
+                });
+            },10000);
+        }
+
+
+
+
+        var comLine = $("#contain-box").css("height");
+        $("#contain-box-l").css("height",comLine);
+        $("#contain-box-r").css("height",comLine);
+
+        var leftday =parseInt($("#leftday").html());
+        if(leftday <=30){
+            $("#leftday").css("color","red");
+            $("#leftday").css("font-size","14px");
+            $("#leftday").css("font-weight","bold");
+        }
+        $(".menu-item.app").mouseenter(
+                function(){
+                    $(this).addClass("del");
+                    $(".del").mouseenter(function(){
+                        $(".del-app").show();
+                    })
+                    $(".del").mouseleave(function(){
+                        $(".del-app").hide();
+                    })
+                }
+        )
+
+        $(".menu-item.app").mouseleave(function(){
+                    $(this).removeClass("del");
+                }
+        );
+
+    });
+
+    $(function(){
+        $("#tips").css({top:'16%'});
+        $("#tips").show(50);
+        $("#tips-close").click(function(){
+            $("#tips").animate({top:'-100%'},50);
+            $("#tips").fadeOut(200);
+        })
+    })
+
+
+
+
+    /*$(document).ready(function(){
+
+     var bh =$(document).height();
+     var div=$("#alert-info");
+     $("#blur").css("height",bh);
+     div.show(50);
+     $("#blur").show(50);
+     $("#head,#contain,#foot,#tips,#feedback").addClass("blur");
+     div.animate({position:"absolute",top:'40%',opacity:'0.8'},400);
+
+     $("#alert-close").click(function(){
+     var div=$("#alert-info");
+     div.animate({top:'-40%',opacity:'0.0'},400);
+     div.hide(50);
+     $("#blur").hide(50);
+     $("#head,#contain,#foot,#tips,#feedback").removeClass("blur");});
+
+
+     });
+
+     */
+
+    $("#feedback").click(function(){
+        $("#feedback-box").show(500);
+        $("#feedback-box").fadeIn(200);
+
+    })
+
+
+    $("#balabala").click(function(){
+        if(!$("#feedback_box").val()){
+            notif({
+                msg: "您想吐槽点什么呢!",
+                type: "warning"
+            });
+            return false;
+        }else{
+            notif({
+                msg: "感谢您的吐槽,万普会继续努力的:-D!",
+                type: "success"
+            });
+            $("#feedback-box").hide(50);
+
+        }
+    });
+
+    $("#feedback-box-close").click(function(){
+        $("#feedback-box").fadeOut(200);
+        $(this).animate({top:'815px'},500);
+        $("#feedback-box").hide(50);
+
+
+    })
+
+</script>
+<script>
+    $(function(){
+        //设置每页显示多少条
+        $("#set_page").blur(function(){
+            var num=parseInt($("#set_page").val());
+           // alert(num);
+            var url="{weikucms::U('set_page')}"
+            $.post(url,{num:num},function(data){
+             //   location.reload();
+                if(data.status==1){
+                    location.reload();
+                }
+            },'json')
+        })
+
+    })
+</script>
+</html>

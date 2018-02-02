@@ -1,0 +1,193 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+	<div class="cLineB">
+		<h4 class="left">编辑等级</h4>
+
+		<div class="searchbar">
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody> 
+			       <tr> 
+				        <th>级别名称：</th>
+				        
+				        <td>
+				        	<input type="text" id="name" name="name" value="{weikucms:$data.name}" class="px require" style="width:400px;" />
+				        </td>
+			       </tr>
+
+                   <tr>
+                       <TH valign="top">图片：</TH>
+                       <TD>
+                           <input type="text" class="px" id="pic" name="pic" value="{weikucms:$data.pic}" style="width: 400px;" readonly/>
+                           <span class="ke-button-common" id="upload">上传图片</span>
+                       </TD>
+                   </tr>
+
+                   <tr>
+                       <th>级别描述</th>
+                       <td>
+                           <textarea name="info"  cols="30" rows="10" id="info">{weikucms:$data.info}</textarea>
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>积分范围</th>
+                       <td>
+                           <input type="text" value="{weikucms:$data.scope}" id="scope" placeholder="大于多少分" style="width:150px;"/>
+                           <br/>范围必须为数字
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>每次签到积分</th>
+                       <td>
+                           <input type="text" value="{weikucms:$data.sign_score}" id="sign_score" style="width:150px;"/>
+                           <br/>范围必须为数字
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>消费返币比例</th>
+                       <td>
+                           <input type="text" value="{weikucms:$data.bili}" id="bili" placeholder="例如填0.1代表10%" style="width:150px;" name="bili" />
+                           <br/>范围必须是小于1的1-2位小数
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>是否开启;</th>
+                       <td>
+                           <input type="radio" name="open" <if condition="$data[status] eq 1">checked=""</if> value="1"/>是
+                           <input type="radio" name="open" value="0" <if condition="$data[status] eq 0">checked=""</if> />否
+                       </td>
+                   </tr>
+
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+       			<button type="button" id="bsubmit" name="button" class="btn btn-primary">保存</td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var pic = $("#pic").val();
+            var open=$("input[name=open]");
+            var info=$("#info").val();
+            var scope=$("#scope").val();
+            var sign_score=$("#sign_score").val();
+            var status=0;
+            var bili=$("#bili").val();
+            $.each(open,function(i,o){
+                if($(o).attr("checked")){
+                    status=$(o).val();
+                }
+            })
+            if(!name){
+                notif({
+                    msg: "名称不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!scope){
+                notif({
+                    msg: "范围不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!sign_score){
+                notif({
+                    msg: "签到积分不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! pic){
+                notif({
+                    msg: "图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(bili>1){
+                notif({
+                    msg: "消费返回币比例不能大于1咯！",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('Shop/EditGrade',array('token'=>$token,'id'=>$id))}",{bili:bili,name:name,pic:pic,status:status,info:info,scope:scope,sign_score:sign_score},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        location.href="{weikucms::U('Shop/GradeList',array('token'=>$token))}";
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "warning"
+                        });
+                    }
+            },"json")
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

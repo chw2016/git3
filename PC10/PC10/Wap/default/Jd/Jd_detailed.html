@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<title>方案-{weikucms:$detail.title}</title>
+	<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{weikucms::RES}/Jd/css/index1.css">
+    <link rel="stylesheet" href="{weikucms::RES}/Jd/css/lication.css">
+    <link rel="stylesheet" href="{weikucms::RES}/Jd/css/icon/style.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/invite.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js" ></script>
+	<script type="text/javascript">
+        $(function(){
+            $(".data-btn").click(function(){
+			    This = $(this);
+                var data=$(this).html();
+                var figure= 0;
+                var id = parseInt({weikucms:$_GET['id']});
+                var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'plan'))}";
+                if($(this).hasClass('on')){
+                    figure--;
+                    $.post(url,{figure:figure,id:id},function(rel){
+                        if(rel.status==1){
+						   data--;
+						   This.removeClass('on');
+							This.html(data);
+                            //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                        }else{
+                            msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+
+                        }
+                    },'json')
+                }else{
+                    figure++;
+                    
+                    $.post(url,{figure:figure,id:id},function(rel){
+                        if(rel.status==1){
+							data++;
+                            This.addClass('on');
+							This.html(data);
+                            //location.href = "{weikucms::U('Jd/activelist',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                        }else{
+							msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+							});
+							
+                        }
+                    },'json')
+                }
+                
+            })
+        })
+	</script>
+</head>
+<body>
+    <img style="display:none;" src="{weikucms::RES}/Jd/images/login.png" alt="">
+<!--   头部 -->
+	<!--<div class="search" style="font-size:20px;">{weikucms:$detail['title']}</div>-->
+	<!-- 内容 -->
+	<div class="img">
+		<img src="{weikucms::RES}/Jd/images/1.png" alt="">
+        <div class="icon-abso">
+            <span class="praise icon-thumbs-up arrow-btn data-btn <if condition="$data['type'] eq 1">on</if>">{weikucms:$detail['praise']}</span>
+            <span class="praise icon-chat arrow-btn" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'plan'))}'"><if condition="$evacount">{weikucms:$evacount}<else/>0</if></span>
+        </div>
+	</div>
+	<div class="main">
+		<div class="mb10">名称：{weikucms:$detail['title']}</div>
+		<div class="mb10">作者：{weikucms:$detail['name']} <span style="display: inline-block;float: right;padding-right: 10px;"><?php echo date("Y-m-d h:i",$detail['add_time']) ?></span></div>
+		<div class="mb10">描述:{weikucms:$detail['content']}</div>
+        <div class="mb10">方案亮点：{weikucms:$detail['ld']}</div>
+		<div class="mb10">关键字：{weikucms:$detail['gjz']}</div>
+		<div class="mb10">
+
+            <style>
+               .pic { width: 30px; height: 30px; }
+            </style>
+           <!-- <img src="{weikucms::RES}/Jd/images/ppt.png" class="pic">-->
+            <if condition="($detail['hz'] eq 'doc') OR ($detail['hz'] eq 'docx')">
+                <img class="pic" alt="" src="{weikucms::RES}/Jd/images/doc.png" />
+                <elseif condition="($detail['hz'] eq 'ppt') OR ($detail['hz'] eq 'pptx')" />
+                <img class="pic" alt="" src="{weikucms::RES}/Jd/images/ppt.png" />
+                <elseif condition="$detail['hz'] eq 'txt'" />
+                <img class="pic"  alt="" src="{weikucms::RES}/Jd/images/txt.png" />
+                <elseif condition="($detail['hz'] eq 'xls') OR ($detail['hz'] eq 'xlsx')" />
+                <img class="pic" alt="" src="{weikucms::RES}/Jd/images/xls.png" />
+                <elseif condition="$detail['hz'] eq 'pdf'"/>
+                <img class="pic"  alt="" src="{weikucms::RES}/Jd/images/pdf.png" />
+                <elseif condition="$detail['hz'] eq 'html'" />
+                <img class="pic"  alt="" src="{weikucms::RES}/Jd/images/html.png" />
+
+            </if>
+
+            <i class="color3388df">
+            附件:{weikucms:$detail['title']}.{weikucms:$detail['hz']}
+            </i>
+        </div>
+		<div class="mb10"><i class="color3388df" style="word-break: break-all;"><if condition="$_GET['type'] neq '微文浏览'">方案链接：{weikucms:$detail['url']}</if></i></div>
+		<div class="mb10 btn goRead" data-href="{weikucms:$detail['url']}">在线阅读</div>
+        <div class="mb10">
+            {weikucms:$info['content']}
+        </div>
+	</div>
+	<div class="main-content">
+		<div class="main-content-title">
+			<span class="main-content-title-left">评论 <if condition="$evacount">({weikucms:$evacount})<else/>(0)</if></span>
+            <if condition="$evacount gt 4">
+			<span class="main-content-title-right" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'plan'))}'">更多...</span>
+		    </if>
+        </div>
+<!--<?php print_r($evaluate) ?>-->
+        <volist name="evaluate" id="so" offset="0" length="4">
+            <div class="p10" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$_GET['id'],'type'=>'plan'))}'" >
+                <div class="main-center">
+                    <div class="main-center-left">
+                        <if condition="$so['headpic']">
+                            <img src="{weikucms:$so.headpic}" alt="">
+                            <else/>
+                            <img src="{weikucms::RES}/Jd/images/login.png" alt="">
+                        </if>
+                    </div>
+                    <div class="main-center-right">
+                        <if condition="$so['upuname']">
+                            <div class="color737373">{weikucms:$so.upuname}回复{weikucms:$so.uname}</div>
+                            <else/>
+                            <div class="color737373">{weikucms:$so.uname}</div>
+                        </if>
+
+                        <div class="colora4a4a4">
+                            <php>
+                                $times = strtotime($so['add_time']);
+                                echo date('Y/m/d H:i',$times);
+                            </php>
+                        </div>
+                        <div class="color3d3d3d" style="word-break: break-all;" >{weikucms:$so.content}</div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+
+
+<div style="height:70px;"></div>
+<!-- 底部 -->
+<div class="foot">
+    <a href="{weikucms::U('ccc',get(id,token,openid))}"><span style="margin-left:10px;width:120px;float:left;">发送邮件</span></a>
+
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons" style="margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000">发送给朋友</p>
+        </div>
+    </a>
+    <a href="#">
+        <div style="float: right;margin-left: 10px;">
+            <p class="ons1" style=" margin-top: 13px;"></p>
+            <p style="font-size: 12px;color:#000000">分享到QQ</p>
+        </div>
+    </a>
+    <!--<a href="#">
+        <div style="float: right;">
+              <p class="ons2"></p>
+              <p style="font-size: 12px;color:#000000">朋友圈</p>
+        </div>
+    </a>-->
+
+    <a href="#">
+        <div style="float: right;">
+            <p class="ons2" style="width: 22px; margin-left: 15px; position: relative; top: 4px;"></p>
+            <p style="font-size: 12px;color:#000000">复制链接</p>
+        </div>
+    </a>
+</div>
+<script>
+    $(function(){
+        $('.ons').invite({"id":"ons","bg":'tpl/static/wapweiui/images/py.png'});
+        $('.ons1').invite({"id":"ons1","bg":'tpl/static/wapweiui/images/qq.png'});
+        $('.ons2').invite({"id":"ons2","bg":'tpl/static/wapweiui/images/lj.png'});
+    })
+
+</script>
+<script>
+    function isApple() {
+        var agent = navigator.userAgent.toLowerCase();
+        return agent.match(/iphone/i) || agent.match(/ipad/i);
+    }
+    $(function(){
+
+        $('.goRead').click(function(){
+            if(isApple()){
+                window.location.href = $(this).attr('data-href');
+            }else{
+                //安卓
+            <if condition="$detail['hz'] neq 'html'">
+                msg.alert('长按复制链接在浏览器中打开:<br /><br />'+$(this).attr('data-href'), '好，我知道了');
+            <else />
+                window.location.href = $(this).attr('data-href');
+            </if>
+            }
+
+        });
+    });
+    function shareConfig(){
+        return {
+            'imgUrl': '<?php echo C('site_url');?>./tpl/Wap/default/common/Jd/images/login.png'
+        };
+
+    }
+    function shareSuccess(type){//分亨成功回调
+        $.post('',{},function(data){
+
+        },'json')
+
+    }
+</script>
+</div>
+</body>
+</html>

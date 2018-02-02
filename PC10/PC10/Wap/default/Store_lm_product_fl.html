@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>商品分类</title>
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+		<script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/core.js"></script>
+		<script src="{weikucms:$staticFilePath}/lm/js/iscroll.js"></script>
+    </head>
+    <body>
+		<!--<header class="header textMiddle white h3">
+	    	<div class="setLeft icon-back"></div>
+	    	<span>商品分类</span>
+	    </header>-->
+		<section class="publicBox">
+            <include file="Store_lm:flash" />
+
+
+			<nav class="myul secondary">				
+				<div class="item textMiddle on goodsType hav">
+					商品分类
+				</div>
+				<div class="item textMiddle">
+					<span>搜索商品</span>
+					<span class="search_bg">
+						<form action="{weikucms::U('Store_lm/shop_search',array('openid'=>$openid,'token'=>$token))}" method="post" >
+						<input type="search" placeholder="请输入商品名称" name="name" />
+
+						</form>
+					</span>
+				</div>
+			</nav>
+		</section>
+		<!-- 品牌列表 -->
+		<section class="pinpai-body">
+			<div class="floatLeft pinpai-list">
+				<ul>
+                    <volist name="flist" id="vo">
+					<li <if condition="$i eq 1">class="on"</if> flag="{weikucms:$vo.id}">{weikucms:$vo.name}</li>
+                    </volist>
+					<li class="pinpai-T">微商品牌</li>
+				</ul>
+			</div>
+			<!--品牌-->
+            <div id="fl">
+            <if condition="$cat_two">
+            <volist name="cat_two" id="vo">
+			<div class="floatLeft pinpai-content">
+				<div class='pinpai-name'><a href="{weikucms::U('Store_lm/shop_fl',array('catid'=>$vo['id'],'openid'=>$openid,'token'=>$token))}">{weikucms:$vo.name}</a></div>
+				<ul class="sub-pinpai">
+                    <volist name="vo.cat_three" id="vo1">
+					<li><a href="{weikucms::U('Store_lm/shop_fl',array('catid'=>$vo1['id'],'openid'=>$openid,'token'=>$token))}">{weikucms:$vo1.name}</a></li>
+                    </volist>
+				</ul>
+			</div>
+            </volist>
+                <else />
+                没有子分类
+                </if>
+
+
+			<!--精选品牌-->
+			<div class="floatLeft pinpai-content pinpai-special">
+				<div class='pinpai-name'>精选品牌</div>
+				<ul class="sub-pinpai">
+                    <volist name="cBrand" id="vo">
+					<li><a href="{weikucms::U('Store_lm/brand_details',array('id'=>$vo['id'],'openid'=>$openid,'token'=>$token))}">
+                        <img src="{weikucms:$vo.logo_picmin}" width="100%"/></a></li>
+					</volist>
+				</ul>
+			</div>
+                </div>
+		</section>	
+		<!-- 占位符 -->
+		<div style="height:52px;"></div>
+		
+    </body>
+    <script type="text/javascript">    
+    	slider($(".sliderBox"),$(".sliderWrap"),$(".slider"))
+    </script>   
+    <script type="text/javascript">
+
+    	$(function(){
+            //分类AJAX
+            $(".pinpai-list ul li").click(function(){
+
+                var id=$(this).attr('flag');
+                $(".pinpai-list ul li").removeClass('on');
+                $(this).addClass('on');
+                var url="{weikucms::U('product_fl',array('token'=>$token,'openid'=>$openid))}";
+                $.post(url,{id:id},function(data){
+                    if(data.status==1){
+
+                        $("#fl").html(data.htmls);
+                    }
+                 },'json');
+            });
+
+
+
+    		$(".preSell.off a").click(function(e){
+    			e.preventDefault();
+    		});
+    		/*假如已经结束了的预售不需要点击跳转了，就可以使用以上点击事件的代码，如果还需要，就把上面的代码删了或注释掉。*/
+
+    		if($(".preSell").hasClass('off')){
+    			/*判断preSell里如果有off，就代表活动结束了，下面的代码就是改变按钮文字，若后台已改，此代码亦可删*/    			
+    			$(".preSell.off").find('.toPreBuy').html("已售罄");
+    		}
+    	});
+    </script>
+</html>

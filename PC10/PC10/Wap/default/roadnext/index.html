@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/index_1.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/new_211/css/common.css" />
+    <script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/mru/js/main.js"></script>
+    <script src="{weikucms::RES}/mru/js/msg.js"></script>
+    <script src="{weikucms::STATICS}/common/f.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    <style>
+        .wrapHeader {
+            width: 200px;
+            margin: 0 auto;
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrapHeader .title {
+            width: 123px;
+            left: 60px;
+            font-size: 16px;
+            /* color: rgb(140,171,5); */
+            font-weight: 600;
+        }
+        .icon_home {
+            left: 118px;
+        }
+        .shopListli{
+            padding: 10px 5px;
+            border-bottom: 1px solid #1BB59B;
+        }
+        .weizhi{
+             float: right;
+             font-size: 12px;
+        }
+        .top-index {
+            height: 35px;
+            background-color: #1BB59B;
+            box-shadow: 0 2px 1px #1BB59B;
+            margin-bottom: 4px;
+        }
+        .top-li.on {
+            color: #FFF;
+            background-color: #0C7C67;
+        }
+        .top-li{
+            border-left:1px solid #FFF;
+            height: 30px;
+            font-size: 14px!important;
+        }
+        .myul{
+            display: flex;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -moz-box;
+        }
+        .myli{
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            -ms-flex: 1;
+            flex:1;
+        }
+    </style>
+
+</head>
+<body class="shopNav" style="overflow-x:hidden" >
+<div class="top-index">
+    <ul class="myul">
+        <volist name="classify" id="vo">
+            <li style="font-size: 15px;" class="top-li myli classfiy tname_{weikucms:$vo.id}<if condition="$iTid eq $vo['id']">on</if>" data="{weikucms:$vo.id}">{weikucms:$vo.area}</li>
+        </volist>
+    </ul>
+</div>
+<script type="text/javascript">
+
+
+</script>
+
+<div class="shopListBox">
+   <ul style="  width: 95%;margin: 0 auto;">
+       <volist name="info" id="vo">
+           <li class="shopListli show_{weikucms:$vo.qid}">
+               <span style="padding: 5px 0;font-size: 16px;font-weight: 600;">{weikucms:$vo.sname}</span><span class="weizhi">距离计算中...</span>
+               <div>{weikucms:$vo.address}</div>
+           </li>
+       </volist>
+   </ul>
+
+</div>
+<div style=" width:100%; margin:0 auto;text-align:center;" > {weikucms:$page}</div>
+<!--<input type="hidden" class="shiid"  value="<?php print_r($_GET['shiid']); ?>" />
+<input type="hidden" class="position_x"  value="<?php print_r($_GET['position_x']); ?>" />
+<input type="hidden" class="position_y"  value="<?php print_r($_GET['position_y']); ?>" />-->
+<div style="clear: both"></div>
+<div style="height: 100px;"></div>
+<footer>
+    <div style="width: 20%" class="fl">
+        <div class="ds_ib "><a class="home_img" href="{weikucms::U('Wap/Index/index',array('token'=>$token))}"></a></div>
+    </div>
+    <div class="fl" style="width:80%">
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="tel:0769-83222111">一键联系</a></div>
+        <div class="home_xian  fl"></div>
+        <div class="ds_ib fl w33"><a href="#">使用帮助</a></div>
+        <div class="home_xian  ml15 fl"></div>
+        <div class="ds_ib  fl w33"><a href="{weikucms::U('Wap/Roadnext/jianyi',array('token'=>$token,'openid'=>$openid))}">投诉建议</a></div>
+    </div>
+</footer>
+
+
+</body>
+<script>
+    function getLngLat(callback){
+        var geolocation = new BMap.Geolocation(),
+                geoc = new BMap.Geocoder();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var pt = r.point;
+                if(typeof callback ==="function"){
+                    callback(pt);
+                }
+            }
+        })
+    }
+
+
+    getLngLat(function(r){
+        var lat = r.lat, lng = r.lng;
+        $('.shopListBox').empty();//清空
+        $.post("{weikucms::U('Roadnext/index',array('token'=>$token,'openid'=>$openid))}",
+                {"lat":lat,"lng":lng},function(data){
+                    if(data.status ==1){
+                        $('.shopListBox').append(data.fetch);
+                        var d = getCookie('data');
+                        if(d){
+                            var tid = d;
+                        }else{
+                            var tid = {weikucms:$type};
+                        }
+
+                        $('.shopListli').hide();
+                        $('.shopListli.show_'+tid).show();
+                        var cid = $.trim($('.classfiy').attr("data"));
+                        if(cid = tid){
+                            $('.tname_'+tid).addClass('on');
+                        }
+                        $('.shopListli:visible:last').css('border-bottom', 0);
+                    }else{
+                        alert('系统繁忙，请稍后！');
+                    }
+                },'json')
+    });
+
+    $(function(){
+        var tid = {weikucms:$type};
+        $('.shopListli').hide();
+        $('.shopListli.show_'+tid).show();
+        $('.tname_'+tid).addClass('on');
+        $(document).on('touchstart','.classfiy',function(){
+
+            $('.classfiy.on').removeClass('on');
+            $(this).addClass('on');
+            var cid = $.trim($(this).attr("data"));
+            setCookie('data',cid,1);
+           /* var type ="$('.show_"+cid+"')";*/
+            if(!cid){
+                $('.shopListli').show();
+            }else{
+                $('.shopListli').hide();
+                $('.shopListli.show_'+cid).show();
+            }
+            $('.shopListli:visible:last').css('border-bottom', 0);
+        })
+        var d = getCookie('data');
+        // console.log(d)
+        $(".classfiy[data='"+d+"']").trigger('touchstart');
+        $('.shopListli:visible:last').css('border-bottom', 0);
+    })
+
+    /*$(function(){
+        $(document).on('touchstart','.classfiy',function(){
+            $('.classfiy.on').removeClass('on');
+            $(this).addClass('on');
+            var cid = $.trim($(this).attr("data"));
+            //var type = $.trim($(this).attr('type'));
+            var url = "{weikucms::U('Roadnext/index',array('token'=>$token,'openid'=>$openid))}";
+            $('.shopListBox').empty();//清空
+            $.post(url,{cid:cid},function(data){
+                if(data.status ==1){
+                    $('.shopListBox').append(data.fetch);
+                    timeOut = null;
+                    iPage = 0;
+                }else{
+                    alert('系统繁忙，请稍后！');
+                }
+            },'json')
+        })
+    })*/
+
+
+
+</script>
+
+
+</html>

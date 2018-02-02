@@ -1,0 +1,121 @@
+<include file="Public:head"/>
+<style type="text/css">
+    .importclass{
+        position: relative;
+        left:-123px;
+    }
+   .a_button{display:inline-block; position:relative; overflow:hidden;}
+   #codefile{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);}
+</style>
+
+<script type="text/javascript">
+    $(function(){
+        var btn = $("#import_btn");
+        $("#import_btn").click(function(){
+            var v= $("#codefile").val();
+            if(!v){
+                alert('请选择防伪码文件');
+            }else{
+                $("#myform").ajaxSubmit({
+                    dataType:  'json',
+                    beforeSend: function() {
+                        btn.html("处理中..");
+                    },
+                    /*
+                    uploadProgress: function(event, position, total, percentComplete) {
+                        var percentVal = percentComplete + '%';
+                        btn.html("处理中..("+percentVal+")");
+                    },
+                    complete: function(xhr) {
+                     $(".files").html(xhr.responseText);
+                     },*/
+                    success: function(data) {
+                        btn.html(data.msg);
+                    },
+                    error:function(xhr){
+                        btn.html("处理失败");
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+      <div class="cLineB">
+        <h4>产品防伪码管理</h4>
+      </div>
+
+      <div class="cLine">
+          <div class="pageNavigator left">
+          <form id="myform" action="{weikucms::U('Scode/importcode')}" method="post" enctype="multipart/form-data">
+
+              <a href="#" class="a_button btn btn-primary">导入防伪码
+                  <input type="file" name="file" id="codefile" value="导入防伪码">
+              </a>
+          </form>
+          <button class='btn btn-success' id="import_btn">确定导入</button>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>
+            <ol>
+                <li>已指定格式的txt文本导入防伪码到系统</li>
+                <li>产看防伪码使用情况</li>
+            </ol>
+        </div>
+
+    <div class="msgWrap">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>明码</th>
+                <th>暗码</th>
+                <th>状态</th>
+                <th>添加时间</th>
+                <th>验证时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.m_code}</td>
+                <td>{weikucms:$vo.a_code}</td>
+                <td>
+                    <if condition="$vo.status eq 0">
+                    <span class="badge badge-inverse">未验证</span>
+                    </if>
+
+                    <if condition="$vo.status eq 1">
+                        <span class="badge badge-success">已验证</span>
+                    </if>
+                </td>
+                <td><php>echo date("Y-m-d H:i:s",$vo['add_time']);</php></td>
+                <td>
+                    <php>
+                        if($vo['status'] == 1){
+                            echo date("Y-m-d H:i:s",$vo['update_time']);
+                        }
+                    </php>
+
+                </td>
+            </tr>
+            </volist>
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+
+</div>
+<include file="Public:footer"/>

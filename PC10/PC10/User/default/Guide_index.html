@@ -1,0 +1,365 @@
+<include file="Public:head"/>
+
+
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0">
+
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Home/set',array('token'=>$token))}" <if condition="$hover1 eq 1">class="hover"</if>>首页回复配置</a>
+            </li>
+
+
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Classify/index',array('token'=>$token))}" <if condition="$hover2 eq 1">class="hover"</if>>分类管理</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Tmpls/index',array('token'=>$token))}" <if condition="$hover3 eq 1">class="hover"</if>>微官网风格</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Flash/index',array('token'=>$token))}" <if condition="$hover4 eq 1">class="hover"</if>>轮播图</a>
+            </li>
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('speeddial/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>导航与版权</a>
+            </li>
+
+             <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Article/index',array('token'=>$token))}" <if condition="$hover6 eq 1">class="hover"</if>>文章转发数据统计</a>
+            </li>
+            
+             <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Guide/index',array('token'=>$token))}" <if condition="$hover7 eq 1">class="hover"</if>>APP首次进入引导图</a>
+            </li>
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                <a href="#" onclick="window.open('{weikucms::U('Yulan/index',array('token'=>$token))}', 'bindweixin', 'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,title=0,height=1100,width=720');" class="nohover">微官网预览</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="msgWrap">
+
+	 <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <TBODY>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        是否开启引导层APP：
+                    </label>
+                </TH>
+                
+                <TD>
+                        <if condition="$sendInfo eq 1">
+                            <input type="checkbox" class="px" value="1" name="status" id="ifnot" checked/>
+                        <else />
+                            <input type="checkbox" class="px" value="1" name="status" id="ifnot"/>
+                        </if>        
+                </TD>
+                
+             </TR>
+
+            <if condition="$sendInfo eq 1">
+
+             <TR class="control">
+             	<TD colspan="2">
+					<div id="tagContent">
+						<div class="tagContent selectTag" id="tagContent0">
+							<fieldset>
+ 								<ul class="cateradio">
+
+ 								<li>
+ 								<label>
+                                    <img src="{weikucms:$findD.url_1}" />
+                                    上传图片(之一)
+ 								</label>
+    							</li>
+
+    							<li>
+ 								<label>
+     								<img src="{weikucms:$findD.url_2}" />
+     								上传图片(之二)
+ 								</label>
+    							</li>
+
+    							<li>
+ 								<label>
+     								<img src="{weikucms:$findD.url_3}" />
+     								上传图片(之三)
+ 								</label>
+    							</li>
+    							<li>
+ 								<label>
+     								<img src="{weikucms:$findD.url_4}" />
+     								上传图片(之四)
+ 								</label>
+    							</li>
+     							<!-- 上述为新增加的模板 -->
+								</ul>
+							</fieldset>
+						</div>
+				</div>
+             	</TD>
+             </TR>
+                <TR class="control">
+                	<TH valign="top">
+                    	<label for="keyword">
+                        	上传图片第一张：
+                    	</label>
+                	</TH>
+                	<TD>
+                    	<img style="display: none;width:128px;height:180px;" class="fenlei_img No1" src="{weikucms:$findD.url_1}">
+                    	<input type="hidden" class="px" id="img1" value="{weikucms:$findD.url_1}" name="img1" style="width:300px" readonly="readonly">
+                    	<span class="ke-button-common" id="upload">上传图片</span>
+                    	<span class="info_tip">建议图片尺寸 640X1136像素<b style="color:red;">(*此处必须上传)</b></span>
+
+                	</TD>
+                	<TD>
+                    &nbsp;
+                	</TD>
+            </TR>
+             <TR class="control">
+                	<TH valign="top">
+                    	<label for="keyword">
+                        	上传图片第二张：
+                    	</label>
+                	</TH>
+                	<TD>
+                    	<img style="display: none;width:128px;height:180px;" class="fenlei_img No2" src="{weikucms:$findD.url_2}">
+                    	<input type="hidden" class="px" id="img2" value="{weikucms:$findD.url_2}" name="img2" style="width:300px" readonly="readonly">
+                    	<span class="ke-button-common" id="upload_1">上传图片</span>
+                    	<span class="info_tip">建议图片尺寸 640X1136像素<b style="color:red;">(*此处必须上传)</b></span>
+
+                	</TD>
+                	<TD>
+                    &nbsp;
+                	</TD>
+            </TR>
+            <TR class="control">
+                	<TH valign="top">
+                    	<label for="keyword">
+                        	上传图片第三张：
+                    	</label>
+                	</TH>
+                	<TD>
+                    	<img style="display: none;width:128px;height:180px;" class="fenlei_img No3" src="{weikucms:$findD.url_3}">
+                    	<input type="hidden" class="px" id="img3" value="{weikucms:$findD.url_3}" name="img3" style="width:300px" readonly="readonly">
+                    	<span class="ke-button-common" id="upload_2">上传图片</span>
+                    	<span class="info_tip">建议图片尺寸 640X1136像素<b style="color:red;">(*此处必须上传)</b></span>
+
+                	</TD>
+                	<TD>
+                    &nbsp;
+                	</TD>
+            </TR>
+            <TR class="control">
+                	<TH valign="top">
+                    	<label for="keyword">
+                        	上传图片第四张：
+                    	</label>
+                	</TH>
+                	<TD>
+                    	<img style="display: none;width:128px;height:180px;" class="fenlei_img No4" src="{weikucms:$findD.url_4}">
+                    	<input type="hidden" class="px" id="img4" value="{weikucms:$findD.url_4}" name="img4" style="width:300px" readonly="readonly">
+                    	<span class="ke-button-common" id="upload_3">上传图片</span>
+                    	<span class="info_tip">建议图片尺寸 640X1136像素<b style="color:red;">(*此处必须上传)</b></span>
+
+                	</TD>
+                	<TD>
+                    &nbsp;
+                	</TD>
+            </TR>
+             <TR class="control">
+                <TH>
+                </TH>
+                <TD style="padding-top:20px">
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR> 
+            <else />
+            <TR>
+                <TD colspan="2">
+                    &nbsp;this is null!!!此处并不能显示所需要的数据
+                </TD>   
+            </TR>
+            </if>
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#ifnot').css({'position':'relative','top':'-5px','border':'1px solid #abcdef'});
+		$('#ifnot').bind('click',function(){
+			if($(this).is(':checked')){
+                 var myurl='index.php?g=User&m=Guide&a=changestatus&token='+'{weikucms:$token}'; 
+                 $.post(myurl,{decide:'1'},function(data){
+                    if(data){
+                       $('.control').fadeIn(1200);
+                    }   
+                 },'json');
+	
+			}else{
+                 var myurl='index.php?g=User&m=Guide&a=changestatus&token='+'{weikucms:$token}'; 
+                 $.post(myurl,{decide:'0'},function(data){
+                    if(data){
+                        $('.control').fadeOut(1200);
+                    }
+                },'json');
+
+			}
+		})
+		
+	})
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img1').val(),
+                    clickFn : function(url, title) {
+                        K('#img1').val(url);
+                        $(".No1").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+    });
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload_1').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img2').val(),
+                    clickFn : function(url, title) {
+                        K('#img2').val(url);
+                        $(".No2").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+    });
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload_2').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img3').val(),
+                    clickFn : function(url, title) {
+                        K('#img3').val(url);
+                        $(".No3").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+    });
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload_3').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img4').val(),
+                    clickFn : function(url, title) {
+                        K('#img4').val(url);
+                        $(".No4").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+
+        $('#bsubmit').click(function(){
+                    var img1=$('#img1').val();
+                    var img2=$('#img2').val();
+                    var img3=$('#img3').val();
+                    var img4=$('#img4').val();
+                    state= 1;
+                     if(! img1||! img2||! img3||! img4){
+                            notif({
+                            msg: "请确认是否全部已经上传",
+                            type: "warning"
+                            });
+                            return false;
+                    };
+                    $.post('{weikucms::U('Guide/getD')}',{img1:img1,img2:img2,img3:img3,img4:img4,state:state},function(data){
+                            if(data.status==1){
+                                notif({
+                                msg: data.info,
+                                type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },'1000');
+
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+
+                    },'json');
+                })
+    })
+</script>
+<include file="Public:footer"/>

@@ -1,0 +1,157 @@
+<include file="Public:head"/>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+
+
+<!--复制开始-->    
+ <div class="cLineB" id="uppict" style="display:none">
+
+ </div>
+ 
+ <!--复制结束--> 
+ 
+ <div class="cLineB">
+
+<div class="clr"></div>
+</div>
+
+ <div class="msgWrap form">
+           
+   <input type="hidden" name="formhash" value="7566c850">
+   <input type="hidden" name="wxid" value="gh_423dwjkewad">
+<div class="bdrcontent">
+<div id="div_ptype">
+<table class="table table-bordered">
+<form action="" method="post">
+<thead>
+	<tr>
+		<th >图片名称</th>
+		<th >显示顺序</th>
+		<th>上传图片</th>
+		<th>图片描述</th>
+		<th>显示</th>
+		<th>操作</th>
+	</tr>
+</thead>  
+<tr>
+	<td><input type="text" name="title" id="title" value=""  placeholder="图片标题可为空" class="px" /></td>
+	<td><input type="text" name="sort" id="sort" value="0"  class="px" style="width:50px;"  /></td>
+	<td>
+		<div class="cateimg">
+            <img style="display: none;margin-bottom: 5px;" id="image_show" class="indexs_img" src="">
+        </div>
+
+        <input type="hidden" class="text textMiddle inputQ"  name="picurl" id="pic" value="" style="width:300px;"   />
+        <span class="ke-button-common" id="upload" >上传图片</span>
+        <input type="hidden"   name="pid"  id="pid" value="{weikucms:$Think.get.id}"  />
+	</td>
+	<td><input class="px" type="text"  style="width:250px;"  name="info" id="info" value=""  placeholder="图片描述可为空" /></td>
+	<td><input class="checkbox" type="checkbox" name="status" value="1"  checked ></td>
+	<td class="norightborder">
+		<button type="button" id="bsubmit" class="btn btn-success btn-sm" >添加</button>　
+	</td>
+</tr> 
+</form>
+
+
+ <tr>
+	<td colspan="6"><div class="cLineB">
+  <h4>图片列表</h4>
+ </div></td>
+ </tr>
+ <thead>
+ 
+<tr>
+<th>图片名称</th>
+<th>显示顺序</th>
+<th>图片</th>
+<th>图片描述</th>
+<th >显示</th>
+<th>操作</th>
+</tr>
+</thead> 
+<volist name="photo" id="photo">
+ <form method="post" action="">
+<tr>
+	<td><input type="text" name="title" value="{weikucms:$photo.title}"  class="px"   onfocus="leave();"  /></td>
+	<td><input type="text" name="sort" value="{weikucms:$photo.sort}"  class="px" style="width:50px;" onfocus="leave();" /></td>
+	<td><div class="cateimg"></div>
+        <div class="cateimg"><img style="display: block;margin-bottom: 5px;border-radius: 5px;" width="80px" height="40px"  src="{weikucms:$photo.picurl}">
+
+	<td><input class="px" type="text"  style="width:250px;"  name="info" value="{weikucms:$photo.info}"  onfocus="leave();" /></td>
+	<td>
+		<input class="checkbox" type="checkbox" name="status" id="status"   <if condition="$photo['status'] eq 1"> checked </if> onclick="checkvalue(this);" >
+		<input type="hidden"   name="id" value="{weikucms:$photo.id}"  /></td>
+	<td class="norightborder">
+
+	<a class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Photo/list_del',array('id'=>$photo['id'],'token'=>session('token')))}')" href="#">删除</a>
+	</td>
+</tr>
+</form>
+</volist>
+  </table>
+</div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+ </div>
+  
+        </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var sort = $("#sort").val();
+            var title = $("#title").val();
+            var pid = $("#pid").val();
+            var picurl = $("#pic").val();
+            var info = $("#info").val();
+            var status =  $("input[name='status']:checked").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+
+            $.post("{weikucms::U('Photo/list_add')}",
+                    {sort:sort,title:title,pid:pid,picurl:picurl,info:info,status:status,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+    });
+
+</script>
+<include file="Public:footer"/>  
+ 

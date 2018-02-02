@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>美食专题</title>
+    <meta name="author" content="samphay@163.com">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css" />
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+</head>
+
+<body r='0' g='195' b='255'>
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+    <div class="c1">
+        <div class="c2">
+            <div class="c3 logo"></div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <volist name="mallList" id="vo">
+    <div class="shop listbox" onclick="location.href='{weikucms::U('Ieat/mallIntro',array('token'=>$token,'openid'=>$openid,'cat_id'=>$vo['cat_id']))}'">
+        <div class="shop listpic" style="background-image:url({weikucms:$vo.pic})"></div>
+        <div class="shop listtitlebox myul">
+            <!--<div class="date">
+               <div class="dd">28</div>
+               <div class="mmyy"><span class="mm">Oct.</span><span class="yy">2014</span></div>
+            </div>-->
+            <div class="shop titlebox" >
+                <!-- <div class="arrow"></div>-->
+                <div class="title shop"><span class="titletext">{weikucms:$vo.cat_name}</span></div>
+            </div>
+        </div>
+    </div>
+    </volist>
+</div>
+
+<div class="havbox">
+
+    <div class="hav myul" style="/*top:68%*/">
+        <volist name="List" id="vo" key="k">
+        <div data-tap="item" class="item tap opacity on" style="margin-left:9%;" onclick="location.href='{weikucms::U('Ieat/shoppingMall',array('token'=>$token,'openid'=>$openid,'type'=>2,'t'=>$k))}'">
+            <div class="item-logo l d">
+                <div class="item-logo m e" id="qq{weikucms:$k}">
+                    <div class="item-logo s f">
+                        {weikucms:$vo.cat_name}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </volist>
+
+    </div>
+
+</div>
+<script>
+    $(function(){
+        var t = "{weikucms:$get['t']}";
+        $("#qq"+t).css({'border':'1px solid rgb(0, 195, 255)','background-color':'rgba(194,1,22,0)'});
+
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var range = 50;
+        var _srollPos = 0;
+        var pageNum = 2;
+        var totalheight = 0;
+        var main = $(".main");
+        var js = 0;
+        var cat_id = "{weikucms:$cat_id}";
+        $(window).scroll(function() {
+            var srollPos = $(window).scrollTop();
+            if (srollPos < _srollPos) {
+                return
+            } else {
+                _srollPos = srollPos
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (($(document).height() - range) <= totalheight) {
+                $.ajax({
+                    url: "/index.php?g=Wap&m=Ieat&a=shoppingMall&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&type={weikucms:$_GET['type']}&t={weikucms:$_GET['t']}&p=" + pageNum + "&cat_id=" + cat_id,
+                    type: "post",
+                    data: "pageNum=" + pageNum,
+                    success: function(res) {
+                        if (res == 0) {
+                            if (js == 0) {
+                                $(".main").append('<article style="display:block" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多商家了</header></article>')
+                            }
+                            js = 1
+                        } else {
+                            main.append(res);
+                            pageNum++
+                        }
+                    }
+                })
+            }
+        })
+    });
+</script>
+</body>
+</html>

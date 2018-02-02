@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+
+
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        div,h1,h2,h3,h4,h5,h6,p,img{width:100%;}
+    </style>
+</head>
+<body>
+<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;text-align:center;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+<!--
+<div class="status-title">
+    {weikucms:$info.title}
+</div>
+<div class="status-time">
+    <php>
+        $times = date('Y-m-d',$info['addtime']);
+        echo $times;
+    </php>
+</div>
+-->
+<div class="status-img" style="font-size:12px;">
+    <php>echo html_entity_decode(htmlspecialchars_decode($info['content'],ENT_QUOTES))</php>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function(){
+
+        $('img').css('width',$(window).width()+'px');
+        $('#loading').children('img').css('width',($(window).width()/2)+'px');
+        var a = setTimeout(function(){
+            $("#loading").hide(0);
+        },1200);
+    }
+</script>
+</html>

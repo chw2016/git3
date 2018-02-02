@@ -1,0 +1,133 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/msg.css">
+
+<div class="cLineB">
+  <h4 class="left">微信粉丝互动信息<span class="FAQ">微信粉丝聊天信息</span></h4>
+ </div>
+<div class="msgWrap">
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>  在这里您可以轻松查看与粉丝的互动信息！
+
+    </div>
+
+    <div class="box-content">
+        <div class="tooltip-demo well span4" style="margin-bottom: 15px;padding-left: 0px;margin-left: 0px;">
+            <a href="#" >
+                    <img style="width: 80px;height: 80px;float: left;margin-left: 5px;" src="{weikucms:$userinfo.headimgurl}"></a>
+
+            <div style="float: right;width: 68%;">
+                <p>微信昵称  :  {weikucms:$userinfo.nickname} </p>
+                <p>微信ID   :  {weikucms:$userinfo.openid} </p>
+                <p>性别   :  <if condition="$userinfo.sex eq 1">男<else/>女</if> </p>
+                <p>省份  :   {weikucms:$userinfo.province}</p>
+                <p>城市  :   {weikucms:$userinfo.city}</p>
+                <p>关注时间  :<php>echo date("Y-m-d H:i:s",$userinfo['subscribe_time']);</php> </p>
+                <p>状态  :  <span class="label label-success">正常</span> </p>
+            </div>
+
+
+        </div>
+        <div class="span6">
+
+                <div class="tab-pane fade active in" id="home" >
+                    <volist name="msglist" id="vo">
+                     <if condition="$vo['from_openid'] neq $userinfo['openid']">
+                        <div class="rightd">
+                            <div class="rightimg">
+                                <img style="width: 30px;height: 30px;" src="{weikucms:$wxuser.headpicurl}"></a>
+                            </div>
+                            <div class="speech msg_right">
+                                <if condition="$vo.content eq null" >
+                                    {weikucms:$vo.type}
+                                    <else/>
+                                    {weikucms:$vo.content}
+                                </if>                                                                                            </div>
+                        </div>
+                         <else/>
+                         <div class="leftd">
+                             <div class="leftimg">
+                                 <img style="width: 30px;height: 30px;" src="{weikucms:$userinfo.headimgurl}" >
+                             </div>
+                             <div class="speech left">
+                                 <if condition="$vo.content eq null" >
+                                     {weikucms:$vo.type}
+                                    <else/>
+                                     {weikucms:$vo.content}
+                                 </if>
+                                                                                                                             </div>
+                         </div>
+                    </if>
+
+                    </volist>
+
+                </div>
+
+            <div style="float: left;width: 554px;">
+                <ul class="pager">
+                    {weikucms:$page}
+                </ul>
+            </div>
+
+                <textarea id="msgBox" style="width: 554px;height: 100px;margin-top:45px;float: left"></textarea>
+
+                <button openid="{weikucms:$userinfo.openid}" fakeid="{weikucms:$userinfo.fakeid}" id="send_btn" class="btn btn-primary" style="float: left;margin-top: 10px;margin-bottom: 10px;width: 100px;">发送</button>
+            </div>
+    </div>
+
+
+</div>
+
+
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+<script type="text/javascript">
+    $(function(){
+        $("#send_btn").click(function(){
+            var content = $("#msgBox").val();
+            var openid = $(this).attr('openid');
+            var fakeid = $(this).attr('fakeid');
+            if(!content){
+                notif({
+                    type: "warning",
+                    msg: '发送内容不能为空哦'
+                });
+                return false;
+            }
+
+            $.post("{weikucms::U('Weixinfans/sendmsg',array('token'=>$token))}",
+                    {content:content,openid:openid,fakeid:fakeid},
+                    function(data){
+                        if(data.base_resp ==0){
+                            notif({
+                                type: "success",
+                                msg: '消息发送成功',
+                                position: "center",
+                                width:"all",
+                                height:100,
+                                opacity: 1
+                            });
+                            window.location.reload();
+                        }else{
+                            notif({
+                                type: "warning",
+                                msg: '发送失败',
+                                position: "center",
+                                width:"all",
+                                height:100,
+                                opacity: 1
+                            });
+                            return false;
+                        }
+                    },'json');
+        });
+    });
+</script>
+
+<include file="Public:footer"/> 

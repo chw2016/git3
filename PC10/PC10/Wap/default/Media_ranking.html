@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>佣金排行榜</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+    <style type="text/css">
+        .leftf{
+            float: left;
+            font-size: 11px;
+            width: 16%;
+            text-align: center;
+            padding: 0;
+            line-height: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body style="background-color: #ECEDEE;">
+<div class="myul header h3 red-bg white">
+    <div class="arrowLeft white back"></div>
+    <div class="setMiddle textMiddle">
+        佣金排行榜
+    </div>
+</div>
+
+
+<div class="msgList h4 myul white-bg gray">
+    <div class="msg" style="width: 285px;">
+        <div class="msgTitle">
+            我的佣金总额：{weikucms:$aYongjin['yongjin']}元
+        </div>
+        <div class="msgTitle">
+            我的排名：第{weikucms:$irank}名
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="msgList h4 myul white-bg gray">
+    <div class="msg" style="width: 100%;">
+        <div class="msgTitle">
+            <div class="leftf" style="width: 10%;">头像</div>
+            <div class="leftf">昵称</div>
+            <div class="leftf">加入时间</div>
+            <div class="leftf" style="width: 45%;">佣金总额｜邀请人数</div>
+            <div class="leftf" style="width: 10%;">排名</div>
+        </div>
+
+    </div>
+
+</div>
+
+<if condition="$aUserlist">
+    <volist name="aUserlist" id="vo" key="i">
+    <div class="msgList h4 myul white-bg gray">
+        <div class="msg" style="width: 100%;">
+            <div class="msgTitle" >
+                <div class="leftf" style="width: 6%;"><img src="{weikucms:$vo.headimgurl}" alt="头像" style="display: block;height: 20px;padding: 0"/></div>
+                <div class="leftf" style="width: 25%;">{weikucms:$vo.name}</div>
+                <div class="leftf">{weikucms:$vo.dates} </div>
+                <div class="leftf" style="width: 40%;">{weikucms:$vo.yongjin}|{weikucms:$vo.number}</div>
+                <div class="leftf" style="width: 10%;">{weikucms:$i}</div>
+            </div>
+        </div>
+    </div>
+    </volist>
+    <else/>
+    <div class="msgList h4 myul white-bg gray">
+        暂无数据
+        </div>
+</if>
+
+
+<!--<div class="msgList h4 myul white-bg gray">
+    <div class="msg" style="width: 100%;">
+        <div class="msgTitle" >
+           <div class="leftf" style="width: 10%;"><img src="{weikucms::STATICS}/wapweiui/hengbo/img/people.png" alt="头像" style="display: block;height: 20px;padding: 0"/></div>
+            <div class="leftf">梦之翼</div>
+            <div class="leftf">2015/01/25 </div>
+            <div class="leftf" style="width: 45%;">5000|60</div>
+            <div class="leftf" style="width: 10%;">60</div>
+        </div>
+    </div>
+</div>-->
+
+
+
+</body>
+</html>

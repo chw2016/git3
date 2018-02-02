@@ -1,0 +1,178 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            {weikucms:$works.worksname}作品详情
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Works/match',array('token'=>$token,'mid'=>$works['mid']))}">
+                返回
+            </a>
+        </h4>
+    </div>
+    <div class="msgWrap">
+        <div>
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <th>
+                        比赛名：
+                    </th>
+                    <td>
+                        {weikucms:$match.name}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        参赛作品名：
+                    </th>
+                    <td>
+                        {weikucms:$works.worksname}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        设计者：
+                    </th>
+                    <td>
+                        {weikucms:$works.name}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        设计者年龄：
+                    </th>
+                    <td>
+                        {weikucms:$works.age}岁
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        微信号：
+                    </th>
+                    <td>
+                        {weikucms:$wx.nickname}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        设计图片：
+                    </th>
+                    <td>
+                        <img src="{weikucms:$works.img}" style="min-width:400px;height: 240px;width: 300px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        推荐理由：
+                    </th>
+                    <td>
+                        {weikucms:$works.reason}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        联系方式：
+                    </th>
+                    <td>
+                        {weikucms:$works.phone}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        所在城市：
+                    </th>
+                    <td>
+                        {weikucms:$works.addear}
+                    </td>
+                </tr>
+            </table>
+
+
+            <script>
+                var editor;
+                KindEditor.ready(function(K) {
+                    editor = K.create('#reasons', {
+                        resizeType : 1,
+                        allowPreviewEmoticons : false,
+                        allowImageUpload : true,
+                        uploadJson : '/index.php?g=User&m=Upyun&a=kindedtiropic',
+                        items : [
+                            'source','undo','clearhtml','hr',
+                            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                            'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut', 'music', 'video'],
+                        afterBlur: function(){this.sync();}
+                    });
+                });
+            </script>
+
+            <form class="form" method="post" id="form" action="">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <th><span class="red">*</span>状态：</th>
+                    <td>
+                        <select name="state" id="state">
+                            <option value="0" <if condition="$works.state eq 0">selected</if>>审核中</option>
+                            <option value="1" <if condition="$works.state eq 1">selected</if>>通过</option>
+                            <option value="2" <if condition="$works.state eq 2">selected</if>>未通过</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>未通过的原因：</th>
+                    <td valign="top">
+                        <textarea id="reasons" class="px" name="reasons" style="width: 590px; height: 120px;">{weikucms:$works.reasons}</textarea>
+                    </td>
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <input type="hidden" id="id" name="id" value="{weikucms:$works.id}" />
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            </form>
+
+        </div>
+
+    </div>
+    </div>
+    <include file="Public:footer"/>
+
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var state = $("#state").val();
+            var reasons  = editor.html();
+
+            var posturl = "{weikucms::U('Works/explain',array('token'=>$token,'id'=>$_GET['id'],'mid'=>$_GET['mid']))}";
+            $.post(posturl,
+                    {id:id,state:state,reasons:reasons},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+        <script>
+			$(function(){
+				$(document).on('click','.btn',function(){
+					var name=$("[name=name]").val();
+					var phone=$("[name=phone]").val();
+                    if(name==''){
+                        show_error_tip('请填写被保险人及备注信息');
+                        $("[name=name]").focus();
+                        return false;
+                    }
+                    if(phone==''||phone.length!=11){
+                        show_error_tip('请填写正确的联系电话');
+                        $("[name=phone]").focus();
+                        return false;
+                    }
+					$("#form").submit();
+				})
+			})
+		</script>
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">提交信息</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant ">
+            <form action="" method="post" id="form">
+		<div class="shadow40 mb10">
+			<p class="f14">被保险人及备注信息</p>
+			<div class="Fill_name"><input type="text" value="{weikucms:$info.name}" placeholder="请填写被保险人及备注信息" name="name" style="width: 85%"></div>
+		</div>
+		<div class="shadow40 mb10">
+			<p class="f14">联系电话</p>
+			<div class="Fill_name"><input type="tel" value="{weikucms:$info.phone}" placeholder="请填写您的手机号码" style="width: 85%" name="phone" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+		</div>
+	<div class="mt20 ">
+				<span class="btn type_btn">下一步</span>
+			</div>
+                </form>
+		</section>
+		
+	</body>
+</html>

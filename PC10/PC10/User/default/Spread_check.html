@@ -1,0 +1,55 @@
+<include file="Public:head" />
+
+
+
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>当前可以查看参加本次活动的人</li>
+    </ol>
+</div>
+<div class="msgWrap">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="50px">编号</th>
+                <th width="100px">用户名</th>
+                <th width="100px">电话号码</th>
+                <th width="70px">参加活动时间</th>
+                <th width="70px">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="info" id="vo">
+            <tr>
+
+                <td>{weikucms:$vo.Id}</td>
+                <td>{weikucms:$vo.username}</td>
+                <td>{weikucms:$vo.phone}</td>
+                <td>{weikucms:$vo.jointime}</td>
+                <td>
+                    <if condition="$vo['ifprize'] eq 0">
+                    <a href="{weikucms::U('Spread/pubprize',array('id'=>$vo['Id'],'token'=>$token,'ifprize'=>1,'cid'=>$cid))}" class="btn btn-success btn-sm">发奖</a>
+                    <else/>
+                    <a href="{weikucms::U('Spread/pubprize',array('id'=>$vo['Id'],'token'=>$token,'ifprize'=>0,'cid'=>$cid))}" class="btn btn-danger btn-sm">取消发奖</a>
+                    </if>
+                </td>
+            </tr>
+            </volist>
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pager">
+            <if condition="$page eq 0">没有参加该活动的人<else />总共{weikucms:$page}</if>
+        </ul>
+    </div>
+
+
+</div>
+<include file="Public:footer" />
+
+</div>

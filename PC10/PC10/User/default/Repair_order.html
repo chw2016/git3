@@ -1,0 +1,378 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>0))}" <if condition="$hover4 eq 1">class="hover"</if>>所有订单</a>
+            </li>
+           
+           	<li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>1))}" <if condition="$hover5 eq 1">class="hover"</if>>待确认订单</a>
+            </li>
+           
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>2))}" <if condition="$hover5 eq 1">class="hover"</if>>服务中订单</a>
+            </li>
+                                            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>5))}" <if condition="$hover4 eq 1">class="hover"</if>>保修中订单</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/order',array('token'=>$token, 'type'=>7))}" <if condition="$hover4 eq 1">class="hover"</if>>已完成订单</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                <a href="{weikucms::U('Repair/export',array('token'=>$token, 'type'=>$type, 'status'=>$status, 'area'=>$area,'op'=>0))}" <if condition="$hover4 eq 1">class="hover"</if>>导出数据表</a>
+            </li>
+            
+            <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #B098FB;line-height: 40px;">
+                <a style="text-decoration:none;" href="{weikucms::U('Repair/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>返回上一层</a>
+            </li>
+                       
+        </ul>                
+    </div>  
+	<div class="clr"></div>
+</div>
+<div>
+	<select id="addarea" class="select" style="width:150px;">
+     <option selected="selected" value="0">选择省</option>
+     <volist name="province" id="vo">
+        <option value="{weikucms:$vo.code}" id="pp_{weikucms:$vo.code}">{weikucms:$vo.name}</option>			                
+    </volist>
+	</select>
+	<select id="city" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="county" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="town" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<a class="btn btn-danger btn-sm" id="finda" href="/index.php?g=User&amp;m=Repair&amp;a=order&amp;status=1&amp;type={weikucms:$type}&amp;token={weikucms:$token}" href="javascript:void(0);" style="float:right;margin-right:300px;">搜索</a>
+</div>
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered" >
+                  <thead>
+                  <tr>
+                      <th style="text-align:center;">订单编号</th>
+                      <th style="width:100px; text-align:center;">订单号</th>
+                      <th style="width:100px; text-align:center;">订单类型</th>
+                      <if condition="$isShow neq 1">
+                      	<th style="text-align:center;">订单价格</th>
+                      <else/>
+                      
+                      </if>
+                      <th style="text-align:center;">下单用户</th>
+                      <th style="text-align:center;">联系电话</th>
+                      <th style="text-align:center;">匹配技师以及电话</th>
+
+                      <th style="text-align:center;">下单时间</th>
+                      <th style="text-align:center;">接单时间</th>
+                      <th style="text-align:center;">完成时间</th>
+                      <th style="text-align:center;">下单超时</th>
+                      <th style="text-align:center;">完成超时</th>
+                      <th style="text-align:center;">订单状态</th>
+                      <th style="text-align:center;">电话通知</th>
+                      <th style="text-align:center;">操作</th>                       
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" id="vo" key="i">
+                  		<tr>
+        					<td style="text-align:center;">{weikucms:$i}</td>
+                  			<td style="text-align:center;">{weikucms:$vo.order_nid}</td>
+                  			<td style="text-align:center;">
+                        <if condition="$vo['type'] neq 2">保外单<else/><font color="red">保内单</font></if>
+                        </td>
+                  			<if condition="$isShow neq 1">
+	                      		<td style="text-align:center;"><div class="answer_text">{weikucms:$vo.money}</div></td>
+	                      	<else/>
+	                      
+	                      	</if>
+                  			<td style="text-align:center;">{weikucms:$vo.order_name}</td>
+                    		<td style="text-align:center;">{weikucms:$vo.order_tel}</td>
+                    		<td style="text-align:center;">
+                        
+                           <volist name="vo['staff_users']" id="users">
+                           <if condition="$users['staff_is_now'] eq 1"> 
+                           <font color="red">{weikucms:$users.staff_name}[{weikucms:$users.staff_telphone}]</font><br>
+                           <else/>
+                           </if>
+                           </volist>
+                           <form id="form_{weikucms:$vo.id}" method="post" action="{weikucms::U('User/Repair/zhuandan',array('token'=>$token))}">
+                            <input type="hidden" value="{weikucms:$vo.id}">
+                            <select name="agent_id" onchange="zhuandan(this,{weikucms:$vo.id})">
+                               <option value="">请选择技师</option> 
+  	                    		<volist name="vo['staff_users']" id="users">
+  	                    		   <if condition="$users['staff_is_now'] neq 1">
+  	                    		     <option value="{weikucms:$users.agent_id}">{weikucms:$users.staff_name}[{weikucms:$users.staff_telphone}]</option>
+  	                    		   </if>
+  	                    		</volist>
+                            </select>
+                            </form> 
+                    		</td>
+
+                    		<td style="text-align:center;">{weikucms:$vo.order_time|date='Y-m-d H:i:s',###}</td>
+                    		<td style="text-align:center;"><if condition="$vo['grab_time'] neq null">{weikucms:$vo.grab_time|date='Y-m-d H:i:s',###}<else/>未接</if></td>
+                    		<td style="text-align:center;"><if condition="$vo['finish_time'] neq 0">{weikucms:$vo.finish_time|date='Y-m-d H:i:s',###}<else/>未完成</if></td>
+                    		<td style="text-align:center;"><php>if($vo['grab_time'] == null){ echo round(((time()-$vo['order_time'])/60),1).'min';}else{ echo round((($vo['grab_time']-$vo['order_time'])/60),1).'min'; }</php></td>
+                    		<td style="text-align:center;"><php>if($vo['finish_time'] == 0){ echo round(((time()-$vo['order_time'])/60),1).'min';}else if($vo['finish_time'] != null){ echo round((($vo['finish_time']-$vo['order_time'])/60),1).'min'; }</php></td>
+                    		<if condition="$vo.status eq 1">
+                    		<td style="text-align:center;">待确认</td>
+                    		<elseif condition="$vo.status eq 2"/>
+                    		<td style="text-align:center;">已分配</td>
+                    		<elseif condition="$vo.status eq 3"/>
+                    		<td style="text-align:center;">维修中</td>
+                    		<elseif condition="$vo.status eq 4"/>
+							  <if condition="$vo.period neq 0">
+                    		     <td style="text-align:center;">修理完成</td>
+								 <else/>
+								 <td style="text-align:center;">关闭</td>
+							  </if>
+							<elseif condition="$vo.status eq 6"/>
+                    		<td style="text-align:center;">返修中</td>
+                    		<else/>
+                    		<td style="text-align:center;">关闭</td>
+                    		</if>
+                        <if condition="$vo.is_tel eq 1">
+                          <td style="text-align:center;"><font color="green">已通知</font></td>
+                        <else/>
+                          <td style="text-align:center;"><font color="red">未通知</font></td>
+                        </if>
+                    		
+                    		<td class="norightborder" style="text-align:center;">
+                              <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=detail&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="查看">查看</a>
+                          	<a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Repair&amp;a=del_order&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="javascript:void(0);">删除</a>
+							</td>
+                    		
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+
+
+<script>
+	$(function(){
+		
+		$("#addarea").change(function(){
+			
+			if($("#addarea").val() == 0){
+				alert('请选择省');
+			} else {
+				var id = $("#addarea").val();
+				
+				var div = document.getElementById("city");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var urla = "/index.php?g=User&m=Repair&a=order&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				urla = urla + "&area=" + pptxt;
+				$("#finda").attr("href", urla);	
+				
+                
+				var city = '<option selected="selected" value="0">选择市</option>';
+                var url="index.php?g=User&m=Repair&a=findCity&token={weikucms:$token}";
+               
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		city += '<option value="'+data.data[index].code+'" id="cc_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                  	$("#city").append(city);
+                  }
+              },'json');
+                
+			}
+			
+		});
+		
+		$("#city").change(function(){
+			
+			if($("#city").val() == 0){
+				alert('请选择市');
+			} else {
+				
+				var id = $("#city").val();
+				
+				var div = document.getElementById("county");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+                
+				var txt1=  pptxt + cctxt;
+				
+				var urla = "/index.php?g=User&m=Repair&a=order&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				urla = urla + "&area=" + txt1;
+				$("#finda").attr("href", urla);
+                
+                
+				var county = '<option selected="selected" value="0">选择区/县</option>';
+                var url="index.php?g=User&m=Repair&a=findCounty&token={weikucms:$token}";
+               
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="xx_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                  	$("#county").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		$("#county").change(function(){
+			
+			if($("#county").val() == 0){
+				alert('请选择区/县');
+			} else {
+				
+				var id = $("#county").val();
+				
+				var div = document.getElementById("town");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var obj = document.getElementById("county");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +txt;
+				var url = "/index.php?g=User&m=Repair&a=order&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				url = url + "&area=" + txt;
+				$("#finda").attr("href", url);	
+                
+				var county = '<option selected="selected" value="0">选择镇</option>';
+                var url="index.php?g=Wap&m=Repair&a=findTown&token={weikucms:$token}&openid={weikucms:$openid}";
+			   
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="tt_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#town").show();
+                  	$("#town").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		
+		
+		
+		var smallarea = new Array();
+		$("#town").change(function(){
+			
+			if($("#town").val() == 0){
+				alert('请选择镇');
+			} else {
+				
+				var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var ttobj = document.getElementById("county");
+				var tttxt = ttobj.options[ttobj.selectedIndex].text;
+				
+				var obj = document.getElementById("town");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +tttxt + txt;
+				var url = "/index.php?g=User&m=Repair&a=order&status=1&type={weikucms:$type}&token={weikucms:$token}";
+				url = url + "&area=" + txt;
+				$("#finda").attr("href", url);				
+			}
+			
+		});
+
+
+		
+		
+	});
+
+	function zhuandan(obj,id){
+		var agent_id = $(obj).val();
+		var id = id;
+		if(confirm('您确定转单吗?')){
+			$.post('{weikucms::U('User/Repair/zhuandan',array('token'=>$token))}',{agent_id:agent_id,id:id},function(data){
+				if(data.code == 0){
+					notif({
+                        msg: data.msg,
+                        type: "success"
+
+                    });
+                    setTimeout(function(){
+                    	window.location.reload();
+                    },'2000');
+				}else{
+					notif({
+                        msg: data.msg,
+                        type: "error"
+                    });
+				}
+			},'json');
+		}else{
+			return;
+		}
+	}
+
+</script>
+<include file="Public:footer"/>

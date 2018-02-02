@@ -1,0 +1,117 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+    th,td{
+        text-align:center !important;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        showLocation();
+
+    });
+</script>
+<div class="" style="">
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+                <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #ff69b4;line-height: 40px;"><a style="text-decoration:none;" href="{weikucms::U('Ieat/category',array('token'=>$token))}">返回上一页</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--tab start-->
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里可以查看Ieat联盟特色食物出售记录。</li>
+        </ol>
+    </div>
+    <!--tab end-->
+
+    <div class="box-content">
+        <div class="msgWrap">
+            <form method="post"  action="###" id="info" >
+                <input name="delall"  type="hidden" value="" />
+                <input name="wxid"  type="hidden" value="" />
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="text-align:center">微信号</th>
+                        <th style="text-align:center">商品</th>
+                        <th style="text-align:center">商品价格</th>
+                        <th style="text-align:center">数量</th>
+                        <th style="text-align:center">用户姓名</th>
+                        <th style="text-align:center">手机号</th>
+                        <th style="text-align:center">地址</th>
+                        <th style="text-align:center">购买时间</th>
+                        <th style="text-align:center">是否过期</th>
+                        <th style="text-align:center">是否支持过期退款</th>
+                        <th style="text-align:center">是否支持随时退款</th>
+                        <th style="text-align:center">是否使用</th>
+                        <th style="text-align:center">使用时间</th>
+                        <th style="text-align:center;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td>
+                                <php>
+                                    $info = M('Wxusers')->where(array('uid'=>$tpl['id'],'openid'=>$vo['openid']))->find();
+                                    echo $info['nickname'];
+                                </php>
+                            </td>
+
+                            <php>
+                                $food = M('Ieat_mall_food')->where(array('token'=>$token,'food_id'=>$vo['food_id']))->find();
+                                echo "<td>".$food['food_name']."</td>";
+                                echo "<td>".floatval($food['food_price'])."元</td>";
+                                echo "<td>".$vo['num']."</td>";
+                                echo "<td>".$vo['username']."</td>";
+                                echo "<td>".$vo['mobile']."</td>";
+                                echo "<td>".$vo['address']."</td>";
+                                echo "<td>".$vo['buy_time']."</td>";
+                                if(strtotime($food['end_date'])>time()){
+                                    echo "<td>未过期</td>";
+                                }else{
+                                    echo "<td>已过期</td>";
+                                }
+                                $otherset = json_decode($food['other_set'],true);
+                                if($otherset['sstk'] == 1){
+                                    echo "<td>支持</td>";
+                                }else{
+                                    echo "<td>不支持</td>";
+                                }
+                                if($otherset['gqtk'] == 1){
+                                    echo "<td>支持</td>";
+                                }else{
+                                    echo "<td>不支持</td>";
+                                }
+                            </php>
+                            <td>
+                                <if condition="$vo['is_used'] eq 1"><span style="color: red;">已使用</span><else />未使用</if>
+                            </td>
+                            <td>{weikucms:$vo.use_time}</td>
+                            <td class="norightborder" style="text-align:center;">
+                                <if condition="$vo['is_used'] eq 0">
+                                <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Ieat&amp;a=deal&amp;token={weikucms:$token}&amp;food_id={weikucms:$vo.food_id}" title="处理">处理</a>
+                                <else />
+                                    <a class="btn btn-success btn-sm"  title="处理" style="background-color: #808080;">处理</a>
+                                </if>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />

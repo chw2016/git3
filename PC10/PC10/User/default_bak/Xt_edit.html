@@ -1,0 +1,365 @@
+<include file="Public:head"/>
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/style_2_common.css" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/xt/style.css" />
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<div class="content">
+<div class="cLineB">
+  <h4>编辑微喜帖</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a>
+ </div>
+                
+<!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+<script> 
+ function current(text){    
+   document.getElementById("uppict").style.display="block";
+	var kjname = document.getElementById("kjname");
+	kjname.value=text;    
+}
+ function leave(){    
+   document.getElementById("uppict").style.display="none";
+   
+}  
+//回调    
+function stopUpload(responseText,text){    
+    var spanObj = document.getElementById(text);   
+    spanObj.value = "上传成功";    
+    spanObj.value = responseText;    
+}
+</script>
+<form id="upForm" action="uppict.php" method="post" enctype="multipart/form-data" target="upload_target" >    
+图片上传区:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图片：<input type="file" name="myfile" id="myfile" />  
+ <input type="hidden" name="kjname" id="kjname"/>   
+<input type="submit" name="submitBtn" value="上传" />    
+</form>
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe> 
+ </div> 
+ 
+ <!--复制结束--> 
+         
+         <div class="msgWrap bgfc">
+  <form action="{weikucms::U('Xt/upsave')}" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                             
+                           <input type="hidden" name ="token" value="{weikucms:$_SESSION['token']}">
+                           <input type="hidden" name="id" value="{weikucms:$info.id}"/>
+                            <div class="control-group">
+                                <label for="title" class="control-label">喜帖标题：</label>
+                                <div class="controls">
+                                    <input type="text" name="title" id="title" maxlength="10" class="span4" value="{weikucms:$info.title}" data-rule-required="true" onfocus="leave();"><span class="maroon">*</span><span class="help-inline">喜帖标题限制在十个字以内</span>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="keyword" class="control-label">触发关键词：</label>
+                                <div class="controls">
+                                    <input type="text" name="keyword" id="keyword" class="span4" data-rule-required="true" value="{weikucms:$info.keyword}" onfocus="leave();"><span class="maroon">*</span><span class="help-inline">只能设置一个关键字</span>
+                                </div>
+                            </div>
+
+                         <div class="control-group">
+                                <label for="fmurl" class="control-label">喜帖封面：</label>
+                              <div class="controls"> 
+                                    <input type="text" name="fmurl" id="fmurl" class="span4" style="width:480px" value="{weikucms:$info.fmurl}" onfocus="current('fmurl');">
+                                 </div>
+                            </div>
+                            
+                              <div class="control-group">                                 
+                                <label for="openurl" class="control-label">缩略图：</label>
+                               <div class="controls">
+                                    <input  type="text" name="openurl" id="openurl" class="span4" style="width:480px"  value="{weikucms:$info.openurl}" onfocus="current('openurl');">
+                                 </div>
+                            </div>                                   
+
+                            <div class="control-group">
+                                <label for="boyname" class="control-label">新郎名字：</label>
+                                <div class="controls">
+                                    <input type="text" name="boyname" id="man" class="span4" value="{weikucms:$info.boyname}" data-rule-required="true" onfocus="leave();"><span class="maroon">*</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="girlname" class="control-label">新娘名字：</label>
+                                <div class="controls">
+                                    <input type="text" name="girlname" id="woman" class="span4" value="{weikucms:$info.girlname}" data-rule-required="true" onfocus="leave();"><span class="maroon">*</span>
+                                </div> 
+                            </div>
+                            <div class="control-group">
+                                <label for="typename" class="control-label"></label>
+                                <div class="controls">
+                                    <label class="radio inline">
+                                        <input type="radio" name="status" <if condition="($info.status eq 1)">checked="checked" </if> value="1" ><span class="help-inline">新郎名字在前</span>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" name="status"  <if condition="($info.status eq 2)">checked="checked" </if> value="2"><span class="help-inline">新娘名字在前</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="phone" class="control-label">联系电话：</label>
+                                <div class="controls">
+                                    <input type="text" name="phone" id="phone" class="span4" value="{weikucms:$info.phone}" data-rule-required="true" data-rule-phone="true" onfocus="leave();"><span class="maroon">*</span><span class="help-inline">如021-88888888 </span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="mdate" class="control-label">婚宴日期：</label>
+                                <div class="controls"> 
+                                    <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-calendar"></i></span>
+                                <input type="input" class="px" id="date"  value="{weikucms:$info.mdate}" onClick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" name="mdate"> <span class="maroon">*</span> 
+                                </div></div>
+                            </div>
+                            <div class="control-group">
+                                <label for="address" class="control-label">宴席地址：</label>
+                                <div class="controls"> 
+                                    <div class="input-prepend">
+                                    <input type="text" name="address"   class="span4" value="{weikucms:$info.address}" onblur="loadmap()"  id="suggestId"  data-rule-required="true" onfocus="leave();"> <span class="maroon">*</span> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="suggestId">经纬地址</label>
+                                <div class="controls">
+                                   <div id="l-map"  style="width:605px; height:320px;">
+                  
+                  
+</div>
+<div id="r-result">
+  <input type="input" class="px" id="lng" value="{weikucms:$info.lng}"  name="lng" style="width:80px;"><input type="input" class="px" id="lat" value="{weikucms:$info.lat}"  name="lat" style="width:80px;"><input  type="hidden"  name="city" class="px" id="city" size="20" value=""/> </div>
+
+
+
+<script src="{weikucms::RES}/js/baidu.js" type="text/javascript" type="text/javascript" ></script><script type="text/javascript">
+var map = new BMap.Map("l-map");
+var myGeo = new BMap.Geocoder();  
+//map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]}));     //2D图，卫星图
+
+//map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT}));    //左上角，默认地图控件
+
+//alert(city);
+var currentPoint ;
+var marker1;
+var marker2;
+map.enableScrollWheelZoom(); 
+//var point = new BMap.Point(116.331398,39.897445);  
+
+map.enableDragging();   
+map.enableContinuousZoom();
+map.addControl(new BMap.NavigationControl());  
+map.addControl(new BMap.ScaleControl());  
+map.addControl(new BMap.OverviewMapControl());
+
+var point = new BMap.Point(116.331398,39.897445);
+doit(point);
+window.setTimeout(function(){
+auto();
+},100);
+
+ function auto(){
+ var geolocation = new BMap.Geolocation();  
+geolocation.getCurrentPosition(function(r){  
+if(this.getStatus() == BMAP_STATUS_SUCCESS){  
+//var mk = new BMap.Marker(r.point);  
+//map.addOverlay(mk);  
+ // point = r.point;  
+//map.panTo(r.point); 
+
+var point = new BMap.Point(r.point.lng,r.point.lat);  
+marker1 = new BMap.Marker(point);        // 创建标注
+map.addOverlay(marker1);
+var opts = {
+width : 220,     // 信息窗口宽度 220-730
+height: 60,     // 信息窗口高度 60-650
+title : ""  // 信息窗口标题
+}
+var infoWindow = new BMap.InfoWindow("定位成功这是你当前的位置!,移动红点标注目标位置，你也可以直接修改上方位置,系统自动定位!", opts);  // 创建信息窗口对象
+marker1.openInfoWindow(infoWindow);      // 打开信息窗口
+doit(point);
+
+}else {  
+ 
+}  
+})
+ }
+function  doit(point){
+
+//map.centerAndZoom(point,12);  
+ 
+
+//myGeo.getPoint(city, function(point){ 
+if (point) {
+//window.external.setlngandlat(point.lng,point.lat);
+//alert(point.lng + "  ddd " + point.lat);
+
+ document.getElementById('lat').value = point.lat;
+  document.getElementById('lng').value =point.lng;
+map.setCenter(point);
+map.centerAndZoom(point, 15);
+map.panTo(point);
+
+var cp = map.getCenter();		
+myGeo.getLocation(point, function(result){  
+/*if (result){
+ document.getElementById('suggestId').value = result.address;
+}	*/		
+});	
+
+
+
+
+
+
+marker2 = new BMap.Marker(point);        // 创建标注  
+var opts = {
+width : 220,     // 信息窗口宽度 220-730
+height: 60,     // 信息窗口高度 60-650
+title : ""  // 信息窗口标题
+}
+var infoWindow = new BMap.InfoWindow("拖拽地图或红点，在地图上用红点标注您的店铺位置。", opts);  // 创建信息窗口对象
+marker2.openInfoWindow(infoWindow);      // 打开信息窗口
+
+map.addOverlay(marker2);                     // 将标注添加到地图中
+
+marker2.enableDragging();
+marker2.addEventListener("dragend", function(e){
+ document.getElementById('lat').value =e.point.lat;
+   document.getElementById('lng').value =e.point.lng;
+myGeo.getLocation(new BMap.Point(e.point.lng,e.point.lat), function(result){  
+if (result){
+//$('suggestId').value = result.address;
+//$('city').value = result.city;
+//			alert(result.address)				
+//	window.external.setaddress(result.address);//setarrea(result.address);//
+//marker1.setPoint(new BMap.Point(e.point.lng,e.point.lat));        // 移动标注
+marker2.setPoint(new BMap.Point(e.point.lng,e.point.lat));     
+map.panTo(new BMap.Point(e.point.lng,e.point.lat));
+//window.external.setlngandlat(e.point.lng,e.point.lat);
+}			
+});	
+});	
+
+map.addEventListener("dragend", function showInfo(){
+var cp = map.getCenter();		
+myGeo.getLocation(new BMap.Point(cp.lng,cp.lat), function(result){  
+if (result){
+ //document.getElementById('suggestId').value = result.address;
+ document.getElementById('lat').value =cp.lat;
+   document.getElementById('lng').value =cp.lng;
+//	window.external.setaddress(result.address);//setarrea(result.address);//
+//alert(point.lng + "  ddd " + point.lat);
+//marker1.setPoint(new BMap.Point(cp.lng,cp.lat));        // 移动标注
+marker2.setPoint(new BMap.Point(cp.lng,cp.lat));     
+map.panTo(new BMap.Point(cp.lng,cp.lat));
+//window.external.setlngandlat(cp.lng,cp.lat);
+}			
+});	
+});	
+
+map.addEventListener("dragging", function showInfo(){
+var cp = map.getCenter();
+//marker1.setPoint(new BMap.Point(cp.lng,cp.lat));        // 移动标注
+marker2.setPoint(new BMap.Point(cp.lng,cp.lat)); 
+map.panTo(new BMap.Point(cp.lng,cp.lat));
+map.centerAndZoom(marker2.getPoint(), map.getZoom());
+});	
+
+
+}
+
+
+//}, province);
+
+
+}
+
+
+function loadmap() {
+var province =  document.getElementById('city').value;
+var city =   document.getElementById('suggestId').value ;
+// 将结果显示在地图上，并调整地图视野  
+myGeo.getPoint(city, function(point){  
+if (point) {
+//marker1.setPoint(new BMap.Point(point.lng,point.lat));        // 移动标注
+marker2.setPoint(new BMap.Point(point.lng,point.lat));  
+//window.external.setlngandlat(marker2.getPoint().lng,marker2.getPoint().lat);
+//alert(point.lng + "  ddd " + point.lat);
+ document.getElementById('lat').value =point.lat;
+   document.getElementById('lng').value =point.lng;
+map.panTo(new BMap.Point(marker2.getPoint().lng,marker2.getPoint().lat));
+map.centerAndZoom(marker2.getPoint(), map.getZoom());
+}}, province);
+} 
+
+function setarrea(address,city) {
+//$('suggestId').value = address;
+//$('city').value=city;
+window.setTimeout(function(){
+loadmap();
+},2000);
+}
+
+function initarreawithpoint(lng,lat){
+window.setTimeout(function(){
+//marker1.setPoint(new BMap.Point(lng,lat));        // 移动标注
+marker2.setPoint(new BMap.Point(lng,lat));  
+//window.external.setlngandlat(lng,lat);
+map.panTo(new BMap.Point(lng,lat));
+map.centerAndZoom(marker2.getPoint(), map.getZoom());
+}, 2000);	
+}
+
+
+
+
+
+</script>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="videourl" class="control-label">喜帖视频：</label>
+                                <div class="controls"> 
+                                     <input type="text" name="videourl" id="video" class="span4" style="width:480px" value="{weikucms:$info.videourl}" onfocus="leave();"><p>支持优酷视频地址如;http://v.youku.com/v_show/id_XNjI4ODk5NDQ4.html <br /> 腾讯fash视频地址：如http://static.video.qq.com/TPout.swf?vid=v0119s27wd5&auto=0 <br /> 也支持mp4和ogg 格式地址 http://www.w3school.com.cn/example/html5/mov_bbb.mp4 </p>
+                                   
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="mp3url">背景音乐</label>
+                                <div class="controls">
+                                     
+                                    <input class="px"  name="musicurl" value="{weikucms:$info.musicurl}"   id="suicai4"  style="width:300px" onfocus="leave();">
+                                </div>
+                            </div>
+
+                            
+                            <div class="control-group">
+                                <label for="tel" class="control-label">想要给朋友说的话：</label>
+                                <div class="controls">
+                                    <textarea rows="5" name="content" id="word" class="px" data-rule-required="true" data-rule-maxlength="200" style=" width:450px; height:60px" onfocus="leave();"> {weikucms:$info.content}  </textarea>
+                                    <span class="maroon">*</span><span class="help-inline">喜帖文字限制在200字以内</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="qr_code" class="control-label">二维码图片地址：</label>
+                                <div class="controls">
+                                                                        <input  type="text" name="ewmurl" id="ewmurl" class="span4"  value="{weikucms:$info.ewmurl}" onfocus="current('ewmurl');">
+                                    <span class="help-inline">
+                                        </span><span class="help-inline"><span class="maroon">*</span>默认100x100,显示在喜帖底部</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="copr" class="control-label">底部版权：</label>
+                                <div class="controls">
+                                <textarea  name="copyright" id="copyrite"  class="px"  rows="5" style=" width:450px; height:60px" onfocus="leave();">{weikucms:$info.copyright}</textarea>
+                                    
+                                   
+                                </div>
+                            </div>
+                           <div class="form-actions">
+                                    <button id="bsubmit" type="submit" data-loading-text="提交中..." class="btnGreen">保存</button>　<button type="button" class="btnGray vm">取消</button>
+                                </div>
+                        </form>
+  </div> 
+ 
+  
+        </div>
+
+<include file="Public:footer"/>

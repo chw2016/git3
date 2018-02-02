@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)http://trade.koudaitong.com/wxpay/pay?order_no=E20141125220141517232&forbid_wxpay=1 -->
+<html class="no-js " lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<link rel="stylesheet" href="tpl/Wap/default/common/shop/css/base_1728f7a531.css" onerror="_cdnFallback(this)">    
+<link rel="stylesheet" href="tpl/Wap/default/common/shop/css/trade_8c1bc19b80.css" onerror="_cdnFallback(this)">
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            height: 15px;
+            width: 86px;
+            margin: 15px auto 0 auto;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+</head>
+
+<body class=" ">
+        <!-- container -->
+    <div class="container js-page-content wap-page-order">
+                <div class="content confirm-container">
+    <div class="app app-order">
+        <div class="app-inner inner-order" id="js-page-content">
+                        <!-- 通知 -->
+                        <!-- 商品列表 -->
+            <div class="block block-order block-border-top-none">
+    <hr class="margin-0 left-10">
+
+<volist name="data" id="vo">
+
+    <div class="block block-list block-border-top-none block-border-bottom-none abc">
+        
+        <div class="block-item name-card name-card-3col clearfix">
+            <a href="{weikucms::U('Store_lm/product',array('token'=>$token,'wecha_id'=>$wecha_id,'id'=>$vo[pid],'openid'=>$openid))}" class="thumb"><img class="js-view-image" src="{weikucms:$vo[gpic]}" ></a>
+            <div class="detail">
+                <a href="{weikucms::U('Store_lm/product',array('token'=>$token,'wecha_id'=>$wecha_id,'id'=>$vo[pid],'openid'=>$openid))}"><h3>{weikucms:$vo['gname']}</h3></a>
+
+            </div>
+            <div class="price-num">
+                <div class="price">¥&nbsp;<span>
+                    {weikucms:$vo[price]}
+                </span></div>
+                <div class="num">×<span class="num-txt">{weikucms:$vo[num]}</span></div>
+                            </div>
+                    </div>
+            </div>
+
+</volist>
+
+                <hr class="margin-0 left-10">
+
+</div>            <!-- 物流 -->
+                        <div class="block express" id="js-logistics-container">
+                
+                <div class="js-logistics-content logistics-content js-express"><div class=""><div class="block block-form block-border-top-none block-border-bottom-none">
+    <div class="js-order-address block-item-express-panel" style="padding-left:0;">
+        <div class="opt-wrapper"><a href="{weikucms::U('Store_lm/edit',array('wecha_id'=>$data[wecha_id],'token'=>$token,'uid'=>$openid,'openid'=>$openid,'pid'=>$_GET['pid']))}" class="btn btn-xxsmall btn-grayeee butn-edit-address js-butn-edit-address">修改</a></div>
+        <ul>
+            <li><span>
+                    姓名:{weikucms:$address[truename]}
+            </span>
+                <br/>
+                电话:{weikucms:$address[tel]}</li>
+            <li>地址:{weikucms:$address[address]} </li>
+            <!--<li>sa dfddfs</li>-->
+        </ul>
+    </div>
+
+
+
+</div>
+                    <div class="block express" id="js-logistics-container">
+                <div class="js-logistics-content logistics-content js-express"><div class=""><div class="block block-form block-border-top-none block-border-bottom-none">
+    <div class="js-order-address block-item-express-panel" style="padding-left:0;">
+        <ul>
+            <?php if(!empty($coupon)):?>
+            <li>
+                <input type="checkbox"  id="coupon">优惠券:
+                <select style="width: 200px;border: 1px solid #ccc;border-radius: 5px;" id="con">
+                    <volist name="coupon" id="cou">
+                        <option value="{weikucms:$cou.amount}" style="width: 200px;" sid="{weikucms:$cou.id}">{weikucms:$cou.sn}</option>
+                    </volist>
+                </select>
+            </li>
+            <?php endif;?>
+            <br/>
+            <?php if(!empty($change) && !empty($user) &&$change['score']!=0):?>
+            <li>
+                <input type="checkbox" id="score" >积分:
+                &nbsp;&nbsp;&nbsp;<input type="text" value="0" id="usescore" style="width: 100px;border: 1px solid #ccc;border-radius: 5px;"/>您当前积分<span id="youscore">{weikucms:$user.score}</span>
+            </li>
+
+            <br/>
+            <li>
+               &nbsp;注:积分兑换比例 &nbsp;{weikucms:$change.score}积分=1元
+            </li>
+            <?php endif;?>
+            <!--<li>sa dfddfs</li>-->
+        </ul>
+    </div>
+
+
+
+</div>
+ 
+
+
+</div></div>
+                <div class="js-logistics-content logistics-content js-self-fetch hide"></div>
+            </div>
+                        <!-- 支付 -->
+            <div class="js-step-topay">
+
+                <div class="js-used-coupon block" style="display: none;">
+                </div>
+
+                <div class="block">
+                    <div class="js-order-total block-module order-total animated">
+<strong class="js-real-pay c-orange js-real-pay-temp">
+    需付：￥<span id="paytotal">
+
+    </span>
+</strong></div>
+                </div>
+                <div class="action-container" id="confirm-pay-way-opts"><div style="margin-bottom: 10px;">
+                    <!--<button type="button" class="btn btn-block btn-large  btn-green"  onclick="return pay()">安全支付</button></div><div style="margin-bottom: 10px;">-->
+                    <?php if($data['paid']==0):?>
+                    <button type="button" data-pay-type="baiduwap" class="btn btn-block btn-large btn-green" id="wxpay" paytype="Weixin" onclick="return wxpay()">微信支付</button>
+                    <?php else:?>
+                    <button type="button" data-pay-type="baiduwap" class="btn btn-block btn-large btn-green">该订单已经支付</button>
+                    <?php endif;?>
+                </div>
+                </div>
+                <!--<div class="center action-tip js-pay-tip">支付完成后，如需退换货请及时联系卖家</div>-->
+            </div>
+        </div>
+        <div class="app-inner inner-order peerpay-gift" style="display:none;" id="sku-message-poppage">
+</div>
+    </div>
+</div>
+
+    <form id="myweipayform" method="post" action="<php>echo C('JS_API_CALL_URL').$token.'/';</php>">
+        <input type="hidden" name="order_money" value="">
+        <input type="hidden" name="order_text" value="">
+        <input type="hidden" name="orderid" value="{weikucms:$orderid}">
+
+        <input type="hidden" name="openid" value="{weikucms:$openid}">
+        <input type="hidden" name="returnurl" value="<php>echo C('site_url');</php>index.php?g=Wap&m=Store_lm&a=product&openid={weikucms:$openid}">
+        <input type="hidden" name="type" value="Store_new_goods_order">
+
+    </form>
+
+<div id="js-self-fetch-modal" class="modal order-modal"></div>
+
+
+
+</div>
+    </div>            </div>
+
+    <!-- JS -->
+    <script type="text/javascript" src="tpl/Wap/default/common/shop/js/jquery-1[1].2.6.js"></script>
+      <script type="text/javascript">
+          /**
+           * 得总金额
+           */
+        $(function(){
+            var totalprice=0;
+            $('.abc').each(function(){
+                totalprice=(totalprice)*1+($(this).find('.price').find('span').text())*($(this).find('.num-txt').text());
+            });
+            $("#paytotal").text(totalprice);
+            $("input[name='order_money']").val(totalprice);
+
+        })
+          /**
+           * 提交支付表单
+           */
+          function wxpay(){
+            $("#myweipayform").submit();
+          }
+      </script>
+        <div class="wx_footer">
+            <div class="wapwei_logo"></div>
+        </div>
+</body></html>

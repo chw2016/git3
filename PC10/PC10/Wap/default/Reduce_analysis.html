@@ -1,0 +1,404 @@
+<html>
+	<head>
+		<title>找出我肥胖的原因</title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!--头部  -->
+		<!-- s<div id="header">
+			<span style="padding-right:0;">找出我肥胖的原因</span>
+		</div> -->
+
+		<!-- 内容部1 -->
+		<div id="middle1">
+			<div class="choice">
+				下面哪些描述符合你的日常饮食？（多选）
+			</div>
+			<div class="_line"></div>
+			<ul>
+				<li>（1）经常不吃早餐或吃得很少
+					<input type="checkbox" name="check1" value="11" id="ques11"/>
+				</li>
+				<li>（2）晚餐吃得过多<input type="checkbox" name="check1" value="12"/ id="ques12"></li>
+				<li>（3）饮食无规律，暴饮暴食<input type="checkbox" name="check1" value="13" id="ques13"/></li>
+				<li>（4）挑食偏食<input type="checkbox" name="check1" value="14" id="ques14"/></li>
+				<li>（5）没有符合我的<input type="checkbox" name="check1" value="15" id="ques15"/></li>
+			</ul>
+		</div>
+		<!-- 内容部2 -->
+		<div id="middle2">
+			<div class="choice">
+				下面哪些是你经常吃的？（多选）
+			</div>
+			<div class="_line"></div>
+			<ul>
+				<li>（1）膨化食品，各种包装零食
+					<input type="checkbox" name="check1" value="16" id="ques16"/>
+				</li>
+				<li>（2）冷冻甜品，巧克力、糖果
+					<input type="checkbox" name="check1" value="17" id="ques17"/>
+				</li>
+				<li>（3）肉类食品
+					<input type="checkbox" name="check1" value="18" id="ques18"/>
+				</li>
+				<li>（4）酒类，碳酸饮料
+					<input type="checkbox" name="check1" value="19" id="ques19"/>
+				</li>
+				<li>（5）没有符合我的
+					<input type="checkbox" name="check1" value="20" id="ques20"/>
+				</li>
+			</ul>
+		</div>
+		<!-- 内容部3 -->
+		<div id="middle2">
+			<div class="choice">
+				下面哪些比较符合你的生活作息？（多选）
+			</div>
+			<div class="_line"></div>
+			<ul>
+				<li>（1）吃饭很快
+					<input type="checkbox" name="check1" value="22" id="ques22"/>
+				</li>
+				<li>（2）睡眠不规律，经常吃宵夜
+					<input type="checkbox" name="check1" value="23" id="ques23"/>
+				</li>
+				<li>（3）吃得多动得少
+					<input type="checkbox" name="check1" value="24" id="ques24"/>
+				</li>
+				<li>（4）长时间上网、看电视
+					<input type="checkbox" name="check1" value="25" id="ques25"/>
+				</li>
+				<li>（5）没有符合我的
+					<input type="checkbox" name="check1" value="26" id="ques26"/>
+				</li>
+			</ul>
+		</div>
+		<!-- 内容部4 -->
+		<div id="middle2">
+			<div class="choice">
+				下面哪些符合你的运动情况？（多选）
+			</div>
+			<div class="_line"></div>
+			<ul>
+				<li>（1）缺少日常活动
+					<input type="checkbox" name="check1" value="27" id="ques27"/>
+				</li>
+				<li>（2）很少参加运动锻炼
+					<input type="checkbox" name="check1" value="28" id="ques28"/>
+				</li>
+				<li>（3）没有符合我的
+					<input type="checkbox" name="check1" value="29" id="ques29"/>
+				</li>
+			</ul>
+		</div>
+		<div style="height:50px;"></div>
+		<!-- 底部固定 -->
+		<div id="footer"></div>
+		<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/subBtn.png" width="90px" height="48px" class="adjust" id="adjust"/> 
+		<script type="text/javascript">
+			$(function(){
+				// 定义收集的数据
+				
+				var str = "";
+
+                $('#ques15').click(function(){
+                    if($('#ques15').is(":checked")){
+                        if($('#ques11').is(":checked") || $('#ques12').is(":checked") || $('#ques13').is(":checked") || $('#ques14').is(":checked")){
+                            show_error_tip("不可以再选择这个了哦！");
+                            return false;
+                        }
+                    }
+                });
+
+                $('#ques20').click(function(){
+                    if($('#ques20').is(":checked")) {
+                        if ($('#ques16').is(":checked") || $('#ques17').is(":checked") || $('#ques18').is(":checked") || $('#ques19').is(":checked")) {
+                            show_error_tip("不可以再选择这个了哦！");
+                            return false;
+                        }
+                    }
+                });
+
+                $('#ques26').click(function(){
+                    if($('#ques26').is(":checked")) {
+                        if ($('#ques21').is(":checked") || $('#ques22').is(":checked") || $('#ques23').is(":checked") || $('#ques24').is(":checked") || $('#ques25').is(":checked")) {
+                            show_error_tip("不可以再选择这个了哦！");
+                            return false;
+                        }
+                    }
+                });
+
+                $('#ques29').click(function(){
+                    if($('#ques29').is(":checked")) {
+                        if ($('#ques27').is(":checked") || $('#ques28').is(":checked")) {
+                            show_error_tip("不可以再选择这个了哦！");
+                            return false;
+                        }
+                    }
+                });
+
+                $("#ques11").click(function(){
+                    if($('#ques15').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques12").click(function(){
+                    if($('#ques15').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques13").click(function(){
+                    if($('#ques15').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques14").click(function(){
+                    if($('#ques15').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques16").click(function(){
+                    if($('#ques20').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques17").click(function(){
+                    if($('#ques20').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques18").click(function(){
+                    if($('#ques20').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques19").click(function(){
+                    if($('#ques20').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques21").click(function(){
+                    if($('#ques26').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques22").click(function(){
+                    if($('#ques2').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques23").click(function(){
+                    if($('#ques26').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques24").click(function(){
+                    if($('#ques26').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques25").click(function(){
+                    if($('#ques26').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+
+                $("#ques27").click(function(){
+                    if($('#ques29').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+                $("#ques28").click(function(){
+                    if($('#ques29').is(":checked")){
+                        show_error_tip("不可以同时选择这些选项！");
+                        return false;
+                    }
+
+                });
+
+				// 点击提交
+				$('#adjust').click(function(){
+					str = "[{";
+					if ($('#ques11').is(":checked")) {
+		
+						str += "\"ques11\""+ ":" + "\"" + $('#ques11').val() + "\",";
+						
+					};
+					if ($('#ques12').is(":checked")) {
+						str += "\"ques12\""+ ":" + "\"" + $('#ques12').val() + "\",";
+			
+					};
+					if ($('#ques13').is(":checked")) {
+						str += "\"ques13\""+ ":" + "\"" + $('#ques13').val() + "\",";
+					};
+					if ($('#ques14').is(":checked")) {
+						str += "\"ques14\""+ ":" + "\"" + $('#ques14').val() + "\",";
+					};
+					if ($('#ques15').is(":checked")) {
+						str += "\"ques15\""+ ":" + "\"" + $('#ques15').val() + "\",";
+					};
+					if ($('#ques16').is(":checked")) {
+						str += "\"ques16\""+ ":" + "\"" + $('#ques16').val() + "\",";
+					};
+					if ($('#ques17').is(":checked")) {
+						str += "\"ques17\""+ ":" + "\"" + $('#ques17').val() + "\",";
+					};
+					
+					if ($('#ques18').is(":checked")) {
+						str += "\"ques18\""+ ":" + "\"" + $('#ques18').val() + "\",";
+					};
+					if ($('#ques19').is(":checked")) {
+						str += "\"ques19\""+ ":" + "\"" + $('#ques19').val() + "\",";
+					};
+					if ($('#ques20').is(":checked")) {
+						str += "\"ques20\""+ ":" + "\"" + $('#ques20').val() + "\",";
+					};
+					if ($('#ques22').is(":checked")) {
+						str += "\"ques22\""+ ":" + "\"" + $('#ques22').val() + "\",";
+					};
+					if ($('#ques23').is(":checked")) {
+						str += "\"ques23\""+ ":" + "\"" + $('#ques23').val() + "\",";
+					};
+					if ($('#ques24').is(":checked")) {
+						str += "\"ques24\""+ ":" + "\"" + $('#ques24').val() + "\",";
+					};
+					if ($('#ques25').is(":checked")) {
+						str += "\"ques25\""+ ":" + "\"" + $('#ques25').val() + "\",";
+					};
+					if ($('#ques26').is(":checked")) {
+						str += "\"ques26\""+ ":" + "\"" + $('#ques26').val() + "\",";
+					};
+					if ($('#ques27').is(":checked")) {
+						str += "\"ques27\""+ ":" + "\"" + $('#ques27').val() + "\",";
+					};
+					if ($('#ques28').is(":checked")) {
+						str += "\"ques28\""+ ":" + "\"" + $('#ques28').val() + "\",";
+					};
+					if ($('#ques29').is(":checked")) {
+						str += "\"ques29\""+ ":" + "\"" + $('#ques29').val() + "\"";
+					};
+					str += "}]";
+					/*if (str.length <= 4) {
+						show_error_tip("请至少选择一项");
+						return false;
+					}*/
+					// 第一到第五
+					if (!$('#ques11').is(":checked") && !$('#ques12').is(":checked") && !$('#ques13').is(":checked") && !$('#ques14').is(":checked") && !$('#ques15').is(":checked")) {
+						// alert($('#ques11').val());
+						show_error_tip("哪些描述符合你至少选择一项！");
+						return false;
+					};
+					// 第六到第十
+					if (!$('#ques16').is(":checked") && !$('#ques17').is(":checked") && !$('#ques18').is(":checked") && !$('#ques19').is(":checked") && !$('#ques20').is(":checked")) {
+						show_error_tip("哪些是你经常吃的至少选择一项！");
+						return false;
+					};
+					// 第十一到第十五
+					if (!$('#ques22').is(":checked") && !$('#ques23').is(":checked") && !$('#ques24').is(":checked") && !$('#ques25').is(":checked") && !$('#ques26').is(":checked")) {
+						show_error_tip("哪些描述符合你的日常饮食习惯至少选择一项！");
+						return false;
+					};
+					// 第十六到第十八
+					if (!$('#ques27').is(":checked") && !$('#ques28').is(":checked") && !$('#ques29').is(":checked")) {
+						show_error_tip("运动情况至少选择一项！");
+						return false;
+					};
+
+                    if ($('#ques15').is(":checked") && ($('#ques11').is(":checked") || $('#ques12').is(":checked") || $('#ques13').is(":checked") || $('#ques14').is(":checked"))) {
+                        // alert($('#ques11').val());
+                        show_error_tip("哪些描述符合你不能同时选择以上都没有了哦！");
+                        return false;
+                    };
+
+                    if ($('#ques20').is(":checked") && ($('#ques16').is(":checked") || $('#ques17').is(":checked") || $('#ques18').is(":checked") || $('#ques19').is(":checked"))) {
+                        // alert($('#ques11').val());
+                        show_error_tip("哪些是你经常吃的不能同时选择都不经常吃！");
+                        return false;
+                    };
+
+                    if ($('#ques26').is(":checked") && ($('#ques21').is(":checked") || $('#ques22').is(":checked") || $('#ques23').is(":checked") || $('#ques24').is(":checked") || $('#ques25').is(":checked"))) {
+                        // alert($('#ques11').val());
+                        show_error_tip("哪些描述符合你的日常饮食习惯不能同时选择以上都不符合！");
+                        return false;
+                    };
+
+                    if ($('#ques29').is(":checked") && ($('#ques27').is(":checked") || $('#ques28').is(":checked") || $('#ques23').is(":checked") || $('#ques24').is(":checked"))) {
+                        // alert($('#ques11').val());
+                        show_error_tip("我们聊聊你的运动情况不能同时选择以上都不符合！");
+                        return false;
+                    };
+					// 每个里面都要选择
+					
+					var url = "{weikucms::U('Wap/Reduce/receiveAna',array('token'=>$token,'openid'=>$openid))}";
+					 $.post(url,{question:str}, function(data){
+	                            if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                            }else{
+	                               show_error_tip(data.info);
+	                            }
+	                  },'json');
+					
+					});
+				
+
+			})
+		</script>
+	</body>
+</html>

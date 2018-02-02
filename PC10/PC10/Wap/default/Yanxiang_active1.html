@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+    	<title>产品列表</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+	    <!--
+		<header class="xinpin-banner">
+    		<div class="right">
+    		</div>
+    		<div class="middle">
+    			专题活动
+    		</div>
+    		<div class="left">
+    			
+    		</div>
+    	</header>
+		-->
+    	 <form name="form1" id="form1" action="" method="post">
+           
+	    	<!-- 搜索框 -->
+	        <div class="wrap-div">
+	            <div class="product-search-left"></div>
+	            <div class="product-search">
+	                <div class="product-in-search-left">
+	                    <input name="search" id="c-product-search" placeholder="输入关键字进行搜索" />
+	                </div>
+	                <div class="product-in-search-right">
+	                     <input type="image" name="find" id="find" src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/Search.png" width="20px" height="20px">
+	                </div>
+	                
+	            </div>
+	            <div class="product-search-right"></div>
+	        </div>
+	    </form>
+        <ul class="article-list">
+	         <volist name="info" id="vo">
+		        <a href="{weikucms::U('Wap/Yanxiang/pactive',array('id'=>$vo['id'],'token'=>$token))}">
+			         	<li>
+			    			<div class="left">
+			    				<div class="circle no-circle">
+			    					<img src="{weikucms:$vo.img_path}" />
+			    				</div>
+			    			</div>
+			    			<div class="middle">
+			    				<div class="title">{weikucms:$vo.title}</div>
+			    				<div class="content Introduction">
+			    					<php>
+			    						echo date("Y-m-d",$vo['addtime']);
+			    					</php>
+			    				</div>
+			    			</div>
+			    			<div class="right">
+			    				<div class="jianjiao"></div>
+			    			</div>
+			    		</li>
+		        </a>
+	        </volist>
+	          
+         </ul>
+         <div style="height:10px;"></div>
+        <script type="text/javascript">
+        	window.onload = function(){
+        		 // 首先初始化边框左边和右边的高度
+                $('.product-search-left,.product-search-right').css('height', $('.product-search-left').width());
+                $('.product-search-left').css('left', $('.product-search-left').width()/2+'px');
+                $('.product-search-right').css('right', $('.product-search-right').width()/2+'px');
+                // 设置搜索框的行高
+                $('#c-product-search').css({'height': $('.product-search').height()*0.8+'px','line-height':$('.product-search').height()*0.8+'px','margin-top':$('.product-search').height()*0.1+'px'});
+                // 搜素框图片的高度
+                $('.product-search > .product-in-search-right > input').css('margin-top', ($('.product-search').height() - $('.product-search > .product-in-search-right > input').height())/2+'px');
+                // 列表显示 
+                $('.circle').css('height', $('.circle').width()+'px');
+    			
+    			$('.day,.month,.year').css('top', ($('.circle').height()-$('.day').height()-$('.year').height())/2+'px');
+
+    			//$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height())/2+'px');
+    			// 里面的图片
+    			$('.circle>img').css({'width': $('.circle').width()+'px','max-height':'45px'});
+    			// li的高度
+    			$('.article-list>a>li').css('height', Number($('.title').height())+Number($('.content').height())+Number(5)+'px');
+    			// 隐藏框的长度
+                $('.hideProduct').css('width',$(window).width()*0.3+'px');
+                $('.hideProduct>a>li').css({'padding':'5px','line-height':'18px'});
+				var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+                // 点击右边的弹出来
+                $('#productSearch').bind('click',function(){
+                    if ($('.hideProduct').hasClass('flag')) {
+                       $('.hideProduct').removeClass('flag').show();
+                    }else{
+                        $('.hideProduct').addClass('flag').hide();
+                    }
+                    
+                })
+        	}
+        </script>
+    </body>
+</html>

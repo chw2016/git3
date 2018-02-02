@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+        {weikucms:$info.title}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/js/jquery.mgs.js"></script>
+    <style>
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; }
+        #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+    </style>
+	<script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.Invitation').each(function(i,o){
+                $(this).click(function(){
+                    $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                    $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+                });
+            })
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                // $(this).children('img').hide();
+            })
+        })
+    </script>
+
+
+</head>
+
+<body id="activity-detail">
+    <include file="Public:audio"/>
+<eq name="res.showpic" value="1">
+<img width="12px" style="position: absolute;top:-1000px;" src="{weikucms:$res.pic}">
+</eq>
+   <!-- <if condition="$redinfo">
+    <div style="  text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      position: fixed;
+      top: 94%;
+      width: 100%;
+      background-color: rgba(255, 0, 0, 0.7);
+      color: #FFF;">
+        {weikucms:$redinfo}
+    </div>
+	</if>
+	-->
+<div class="page-bizinfo">
+    <div class="header">
+        <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:20px;">{weikucms:$info.title}
+        </h1>
+        <p class="activity-info">
+                    <span id="post-date" class="activity-meta no-extra">
+                        {weikucms:$info.times}
+                    </span>
+                    <span class="activity-meta">
+                        研详
+                    </span>
+
+        </p>
+    </div>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+<div id="img-content">
+<div class="media" id="media">
+                <eq name="res.showpic" value="1">
+                <img onerror="this.parentNode.removeChild(this)" src="{weikucms:$res.pic}" />
+                </eq>
+</div>
+<div class="text">
+   {weikucms:$info.content}
+</div>
+<if condition="$redinfo eq '下载APP即可领取微信现金红包！'">
+	<script type="text/javascript">
+            setTimeout(function(){
+				var url = "{weikucms::U('Wap/Index/sendmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+	            $.post(url,function(data){
+	                
+	            },'json');
+				
+			},8000); 
+	            
+	
+	</script>
+</if>
+
+    <style type="text/css">
+        button.btn {
+            width: 100%;
+            border: 0;
+            outline: 0;
+            -webkit-appearance: none;
+        }
+        .btn {
+            margin-bottom: 15px;
+        }
+        .btn_primary {
+            background-color: #04be02;
+        }
+        .btn {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 14px;
+            padding-right: 14px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            overflow: visible;
+            height: 50px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            color: #ffffff;
+            line-height: 35px;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        }
+    </style>
+    <button class="btn btn_primary Invitation">我也要分享</button>
+
+    <div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+        <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+    </div>
+    <div id="mcover" style="background-position:50%;background-size:contain;background-repeat:no-repeat;background-image:url({weikucms::STATICS}/wapweiui/media/img/guide.png);position: fixed;  z-index: 999999999;background-color: rgba(0, 0, 0, 0.8);width:100% !important;left: 0;">
+
+        <!--<img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="320px" height="504px" />-->
+
+    </div>
+
+
+
+<!-- 
+</if> -->
+
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
+<title>万普wapwei.com</title>
+<meta name="Keywords" content="万普wapwei.com" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+</head>
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+//var json_company_phone = '{"logo":"http:\/\/img20.16888.com\/company\/49\/160x160-logo.jpg?t=1407062518","name":"\u8f66\u5546\u901a\u4f53\u9a8c\u8d26\u53f7","address":"\u6df1\u5733\u5e02\u8054\u5408\u5e7f\u573a","service":"0755-83512494","rescue":"0755-83512494","new_sale":"0755-83512495","insurance":"0755-83512494","insurance_name":"\u5ba2\u670d","traffic":"122","long":"114.075254","lat":"22.535617"}';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<body>
+<div class="publicList wml65">
+	<input type="hidden" id= "token" name="token" value="{weikucms:$token}"/>
+  	<input type="hidden" id= "openid" name="openid" value="{weikucms:$openid}"/>
+    <ul>
+    	<li class="noAfter">
+        	<div class="noAfter" style="text-align:center;"><h4>添加车辆</h4></div>
+		</li>
+        <li class="noAfter">
+        	<div class="li-l">输入车型</div>
+        	<div class="li-r">
+				<input id="model_id" value="车型" placeholder="不对外公开" class="input">
+			</div>
+		</li>
+        <li class="noAfter"><div class="li-l">车牌号码</div><div class="li-r">
+			<input id="cpnum" value="粤B" placeholder="不对外公开" class="input"></div></li>
+        <li class="noAfter"><div class="li-l">车主姓名</div><div class="li-r">
+			<input id="name" value="" placeholder="行使证上的车主名" class="input" maxlength='20'/></div>
+		</li>
+    </ul>
+</div>
+<div id="all">
+	<div class="button clearfix" id="sure"><a href="#">确定提交</a></div>
+</div>
+<div class="tips" style="font-size:14px;clear:both;">
+	<div class="tit">温馨提示: 绑定后有啥好处？</div>
+	<p>1.车辆违章主动提醒</p>
+	<p>2.保养、保险、年检到期提醒</p>
+	<p>3.24小时预约，服务不打烊</p>
+	<p>4.一键救援，出行无忧</p>
+	<p>5.在线服务点评，关心您的诉求</p>
+	<p>6.1对1专属养车顾问24小时在线服务</p>
+</div>
+<input type="hidden" value="{weikucms:$token}" id="token" />
+<input type="hidden" value="{weikucms:$openid}" id="openid"/>
+</body>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+<script>
+$(function(){
+    $("#sure").click(function(){
+    	var carname	= $('#model_id').val();
+    	var cpnum  	= $('#cpnum').val();
+    	var name  	= $('#name').val();
+    	var token = $("#token").val();
+    	var openid = $("#openid").val();
+    	if(!carname){
+    		show_error_tip('请输入车型'); return false;
+    	}
+    	
+    	if( !cpnum ){
+    		show_error_tip('请输入车牌号码');return false;
+    	}
+    	
+    	if( !name ){
+    		show_error_tip('请输入联系人');  return false;
+    	}else if ( !checkName( name ) ){
+    		show_error_tip('姓名请输入<br />至少2位中文字符'); return false;
+    	} 
+    	var url = 'index.php?g=Wap&m=Service&a=addCar&token='+$("#token").val()+"&openid="+$("#openid").val();
+        $.post(url,{carname:carname,cpnum:cpnum,name:name,token:token,openid:openid},
+                function(data){  
+                    if(data.status == 1){                   	
+                        setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 2 ){
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    }else if(data.status == 3 ){
+                    	setTimeout(function(){                       	
+                            window.location.href = data.url;
+                        },'1000');
+                    } 
+                },'json');
+
+    });
+});
+</script>
+</html>

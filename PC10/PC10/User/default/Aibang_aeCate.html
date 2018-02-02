@@ -1,0 +1,234 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+  
+           <div class="cLineB">
+            <if condition="$hover eq 1">
+              <h4 class="left">修改分类</h4>    
+            <else/>
+              <h4 class="left">新增分类</h4> 
+            </if>
+              
+              <!-- <div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+                <a href="{weikucms::U('Yanxiang/industy',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+              </div> -->
+              <div class="searchbar"> 
+              </div>
+              <div class="cLine">
+
+              <div class="clr"></div>
+              </div>
+          </div>
+         
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post" action="" enctype="multipart/form-data" >
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+
+
+                <TR>
+                  <TH valign="top"><label for="picurl">分类图片：</label></TH>
+
+                  <TD>
+                    <if condition="$hover eq 1">
+                      <img id="image_show" class="indexs_img" src="{weikucms:$info.cate_img}">
+                    <else/>
+                      <img id="image_show" class="indexs_img" src="">
+                    </if>
+                  </TD>
+                </TR>
+                
+                 <TR>
+                  <TH valign="top"><label for="pic">分类图片：</label></TH>
+                  <TD>
+                   <if condition="$hover eq 1">
+                      <input type="hidden" class="text textMiddle inputQ"  name="img" id="img" value="{weikucms:$info.cate_img}" style="width:300px;"   />
+                      <span class="ke-button-common" id="upload">分类图片</span><span style="color:#f00;">*建议大小80×80</span>
+                   <else/>
+                      <input type="hidden" class="text textMiddle inputQ"  name="img" id="img" value="" style="width:300px;"   />
+                      <span class="ke-button-common" id="upload">分类图片</span><span style="color:#f00;">*建议大小80×80</span>
+                   </if>
+                </TD>
+                </TR>
+
+                   <TR>
+                  <TH valign="top"><label for="pic">分类名称：</label></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <input type="input" class="px" id="catename" value="{weikucms:$info.cate}" name="activetitle" placeholder="请填写分类名称">
+                     <else/>
+                        <input type="input" class="px" id="catename" value="" name="activetitle" placeholder="请填写分类名称">
+                     </if>
+                 </TD>
+                 </TR>
+				 <TR>
+                  <TH valign="top"><label for="pic">所属分类：</label></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                         <select name="pid" id="pid">
+                            <option value="0">根分类</option>
+                       		<volist name="data" id="vo">
+                        	<!-- 将父类级别的提交到 -->
+                       		<if condition="$vo['id'] eq $res"> 
+                          		<option style="text-indent:{weikucms:$vo['Count']*20}px;" value="{weikucms:$vo.id}" selected="selected"><php>echo str_repeat('&nbsp;',$vo['Count']*6);</php><neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.cate} </option>
+                        	<else />
+								<option style="text-indent:{weikucms:$vo['Count']*20}px;" value="{weikucms:$vo.id}"><php>echo str_repeat('&nbsp;',$vo['Count']*6);</php><neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.cate} </option>
+                        	</if>
+                       		</volist>
+                    	 </select> 
+                     <else/>
+                     	<select name="pid" id="pid">
+	                        <option value="0">根分类</option>
+	                   		<volist name="data" id="vo">
+	                    <!-- 将父类级别的提交到 -->
+	                      		<option style="text-indent:{weikucms:$vo['Count']*20}px;" value="{weikucms:$vo.id}"><php>echo str_repeat('&nbsp;',$vo['Count']*6);</php><neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.cate} </option>
+	                   		</volist>
+                   		</select>
+                     </if>
+                 </TD>
+                 </TR>
+                 <TR>
+                  <TH></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">修改</button>
+                     <else/>
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button>
+                     </if>
+                  </TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var img = $("#img").val();
+            // 分类名称
+            var catename = $("#catename").val();
+            
+
+            var __hash__ =  $("input[name='__hash__']").val();
+            // 接收父ID的
+            var pid = $('#pid').val();
+           // 非强制需要图片
+           if (Number(pid) == 0) {
+           		 if(!img){
+	                notif({
+	                    msg: "根目录需要上传分类图片哦",
+	                    type: "warning"
+	                });
+	                return false;
+            	}
+           }
+
+            if(!catename){
+                notif({
+                    msg: "请填写分类名称",
+                    type: "warning"
+                });
+                return false;
+            }
+
+           
+           
+            if("{weikucms:$hover}" == 1){
+                  $.post("{weikucms::U('Aibang/aeCate',array('token'=>$token,'id'=>$info['id']))}",
+                      {img:img,catename:catename,__hash__:__hash__,pid:pid},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+              return;
+            }
+                 // 添加页面
+                 $.post("{weikucms::U('Aibang/aeCate',array('token'=>$token))}",
+                      {img:img,catename:catename,__hash__:__hash__,types:1,pid:pid},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

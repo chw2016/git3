@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+        <script>
+			$(function(){
+				$(document).on('click','.btn',function(){
+					var name=$("[name=name]").val();
+					var sex=$(".gta_sex").text();
+					var age=$("[name=age]").val();
+                    var year=$("input[name=year]").val();
+                    var phone=$("input[name=phone]").val();
+                    if(!name||!sex||!age||!year||!phone){
+                        show_error_tip('请把资料填写完整');
+                        return false;
+                    }
+                    if(age>200){
+                        show_error_tip('有这么大的年龄吗？');
+                        $("input[name=age]").focus();
+                        return false;
+                    }
+                    if(phone.length!=11){
+                        show_error_tip('手机号码位数不对');
+                        $("input[name=phone]").focus();
+                        return false;
+                    }
+
+                    $("#form").submit();
+
+				})
+				$(document).on('click','.is',function(){
+				    $(".File").toggle();
+				})
+				$(document).on('click','.no',function(){
+					$(".sex").toggle();
+				})
+				$(document).on("touchstart",".sex ul li",function(event){
+					
+					event.preventDefault();
+					$(".sex").css("display","none");
+					$(".gta_sex").html($(this).html());
+                    $("input[name=sex]").val($(this).html());
+				})
+				$(document).on("click",".File",function(event){
+					event.preventDefault();
+					$(this).css("display","none");
+			//		$(".year").val($(".File ul li").html());
+                //    $(".year").val($(this).html());
+					
+				})
+                $(document).on("click",".File ul li",function(event){
+
+                    event.preventDefault();
+                    $(".sex").css("display","none");
+                    $(".year").val($(this).html());
+                    $(".File").css("display","none");
+                    $("input[name=year]").val($(this).html());
+                })
+			})
+		</script>
+		<style>
+            *{
+                cursor:pointer
+            }
+            .File ul {
+                padding: 9px;
+            }
+            .File {
+                right: 7px;
+            }
+			.shadow40{
+				-webkit-box-shadow:0px 3px 5px rgba(192, 192, 192, 0.6);
+				-moz-box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+				box-shadow: 0px 3px 5px rgba(192, 192, 192, 0.6);
+				background-color: white;
+				padding-bottom: 10px;
+			}
+			.Fill_name{
+				width: 95%;
+				background: rgba(227,240,227,1);
+				border-radius: 5px;
+				margin: 0 auto;
+				line-height: 35px;
+				border: solid 1px #d2e1d3;
+				margin-top: 10px;
+				position: relative;
+				}
+			.Fill_name input{
+				border: 0;
+				background-color: rgba(227,240,227,1);
+				padding-left: 10px;
+				 outline: none;
+			}
+			.shadow40 p{
+				padding-top: 10px;
+				margin-left: 10px;
+			}
+			.Down_list{
+				width: 10px;
+				height: 10px;
+				border-right:solid 2px green;
+				border-bottom: solid 2px green;
+				-webkit-transform:rotate(45deg);
+				float: right;
+				margin-right:10px;
+				margin-top: 7px;
+
+			}
+			.Fill_name select{
+				width: 20%;
+				text-align: center;
+			}
+		</style>
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>					
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant ">
+            <form action="" method="post" id="form">
+                <input type="hidden" name="sex">
+                <input type="hidden" name="year" >
+		<div class="shadow40 mb10">
+			<p class="f14">姓名</p>
+			<div class="Fill_name"><input style="width: 90%" type="text" placeholder="请填写您的姓名" name="name" value="{weikucms:$info.name}"></div>
+		</div>
+		<div class="shadow40 mb10">
+			<p class="f14">性别</p>
+			<div class="Fill_name no">
+				<span class="gta_sex">请选择性别</span>
+				<div class="sex">
+					<ul>
+						<li>男</li>
+						<li>女</li>
+					</ul>
+				</div>
+		</div>
+			</div>
+		<div class="shadow40 mb10">
+			<p class="f14">年龄</p>
+			<div class="Fill_name"><input style="width: 90%" type="tel" placeholder="请填写您的年龄" name="age"   onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+		</div>
+                <div class="shadow40 mb10">
+                    <p class="f14">手机号码</p>
+                    <div class="Fill_name"><input style="width: 90%" type="tel" placeholder="请填写您的手机号码" name="phone" value="{weikucms:$info.phone}" onkeyup="this.value=this.value.replace(/\D/g,'')" ></div>
+                </div>
+		<div class="shadow40 mb10">
+			<p class="f14">缴费年期</p>
+			<div class="Fill_name is">
+				<input type="text" style="width: 80%" placeholder="请填写您的缴费年期"  readonly class="year" name="year">
+				<div class="Down_list">
+				</div>
+			</div>
+			<div class="File">
+				<ul>
+					<li>趸交</li>
+					<li>三年</li>
+					<li>五年</li>
+					<li>八年</li>
+					<li>十年</li>
+                    <li>十五年</li>
+                    <li>二十年</li>
+				</ul>
+			</div>
+		</div>
+	<div class="mt20 pt20 b0">
+				<span class="btn type_btn">下一步</span>
+			</div>
+                </form>
+		</section>		
+	</body>
+</html>

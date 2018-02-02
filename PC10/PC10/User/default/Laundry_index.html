@@ -1,0 +1,377 @@
+<include file="Public:head" />
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<div class="" style="<if condition="$brand_id">left:0px<else /></if>">
+        <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">洗衣店管理主页</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>" style="<if condition="$brand_id">display:none<else /></if>">员工管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/employees',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">员工列表</a>
+                        </dd>
+                        <dd>
+                            <a href="{weikucms::U('Laundry/employeesmanage',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">添加员工</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">洗客管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/customers',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">洗客列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">订单管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/order',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">订单列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total" style="<if condition="$brand_id">display:none<else /></if>" >
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}">洗衣袋管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/bag',array('token'=>$token))}">洗衣袋列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">品牌服务商管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/brand',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">品牌服务商列表</a>
+                        </dd>
+                        <dd style="<if condition="$brand_id">display:none<else /></if>">
+                            <a href="{weikucms::U('Laundry/brandmanage',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">添加品牌务商</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">加盟商管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/franchisee',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else /></if>">加盟商列表</a>
+                        </dd>
+                        <dd style="<if condition="$brand_id"><else />display:none</if>">
+                            <a href="{weikucms::U('Laundry/franchiseemanage',array('token'=>$token))}&brand_id={weikucms:$brand_id}">添加在线加盟商</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Laundry/index',array('token'=>$token))}" style="<if condition="$brand_id">display:none<else /></if>">商城管理</a>
+                    <dl class="dl">
+                        <dd>
+                            <a href="{weikucms::U('Laundry/columns',array('token'=>$token))}">商品分类</a>
+                        </dd>
+                        <dd>
+                            <a href="{weikucms::U('Laundry/goods',array('token'=>$token))}">商品管理</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <if condition="$brand_id">
+    <else />
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="echartspie" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{ 
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/pie' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('echartspie')); 
+                var option = {
+                    title : {
+                        text: '96洗衣店洗客分布饼状图',
+                        subtext: '统计图表',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:{weikucms:$arr}
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    series : [
+                        {
+                            name:'洗客数量',
+                            type:'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:{weikucms:$result}
+                        }
+                    ]
+                   };
+                myChart.setOption(option); 
+            }
+        );
+    </script>
+    <div id="main1" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{ 
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/line' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+        [
+            'echarts',
+            'echarts/chart/line'
+        ],
+        function(ec) {
+            var myChart = ec.init(document.getElementById('main1'));
+            var option = {
+                title : {
+                    text: '96洗衣店订单折线图',
+                    subtext: '今年总订单量：'+{weikucms:$orders},
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:['订单总量','已确认订单','未确认订单']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        splitArea : {show : true}
+                    }
+                ],
+                series : [
+                    {
+                        name:'订单总量',
+                        type:'line',
+                        data:{weikucms:$all}
+                    },
+                    {
+                        name:'已确认订单',
+                        type:'line',
+                        data:{weikucms:$done}
+                    },
+                    {
+                        name:'未确认订单',
+                        type:'line',
+                        data:{weikucms:$outstanding}
+                    }
+                ]
+            };
+                                              
+            myChart.setOption(option);
+        }
+    );
+    </script>
+    <div id="main2" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+        <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{ 
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/line' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+        [
+            'echarts',
+            'echarts/chart/line'
+        ],
+        function(ec) {
+            var myChart = ec.init(document.getElementById('main2'));
+            var option = {
+                    title : {
+                        x: 'center',
+                        text: '品牌服务商收益图标',
+                        subtext: '标准面积图'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        orient : 'horizontal',
+                        x: 'left',
+                        data:{weikucms:$b}
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : {weikucms:$a}
+                };
+                                    
+                                              
+            myChart.setOption(option);
+        }
+    );
+    </script>
+    <div id="main3" style="height:400px; width:1000px;margin:0 auto;margin-top:20px"></div>
+        <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths:{ 
+                'echarts' : '{weikucms::RES}/laundry/statistics/js/echarts',
+                'echarts/chart/line' : '{weikucms::RES}/laundry/statistics/js/echarts'
+            }
+        });
+        // 使用
+        require(
+        [
+            'echarts',
+            'echarts/chart/line'
+        ],
+        function(ec) {
+            var myChart = ec.init(document.getElementById('main3'));
+            var option = option = {
+                    title : {
+                        x: 'center',
+                        text: '在线加盟商收益图表',
+                        subtext: '标准面积图'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        orient : 'horizontal',
+                        x: 'center',
+                        y: 'bottom',
+                        data:{weikucms:$c}
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : {weikucms:$o}
+                };
+                                    
+                                    
+                                              
+            myChart.setOption(option);
+        }
+    );
+    </script>
+    </if>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        var today = new Date();//获得当前日期
+        $(".dl").hide();
+        $("li.tab_nav").hover(function() {
+            $(this).find(".dl").stop(true, true);
+            $(this).find(".dl").slideDown();
+        }, function(){
+            $(this).find(".dl").stop(true, true);
+            $(this).find(".dl").slideUp();
+        });
+    });
+    $(".dl").css({'position':'absolute','z-index':'1000','background-color':'#e7e7eb'});
+    $(".li").css('position','relative');
+    
+</script>
+<style>
+.title_tab .tab_nav a:hover{
+    border:none;
+}
+dd {
+    margin-left:0px
+}
+dl {
+    top:146px
+}
+</style>
+<include file="Public:footer" />

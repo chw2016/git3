@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+        <style type="text/css">
+            .shareimg p {
+                text-align: center;
+                padding-top: 20px;
+                padding: 20px;
+                line-height: 34px;
+                text-indent: 2em;
+                font-size: 16px;
+            }
+            .lianjie{
+                border-bottom: 1px solid #B3ADAD;;
+            }
+        </style>
+
+    </head>
+    <body>
+    	<div class="shareimg">
+         <img src="{weikucms::STATICS}/course/img/465651.png" title="分享">
+         <p class="shareimgp">对不起，您的积分不足！您可以选择<a href="{weikucms::U('Wap/Course/index',array('token'=>$token,'openid'=>$openid))}" class="lianjie">报名学习</a>
+             来获得积分，当然还可以通过我们的<a href="{weikucms::U('Wap/Course/zhuanlist',array('token'=>$token,'openid'=>$openid))}" class="lianjie">文章转发</a>来获得积分</p>
+         <!--<if condition="$_GET['type'] neq 1">
+            <p class="shareimgpt">您此次分享获得金财币 <span>{weikucms:$info['score']}</span> 个！</p>
+             <else/>
+         </if>-->
+        </div>
+        <div class="navBox myul">
+            <div class="nav myli" onclick="window.location.href='{weikucms::U("Wap/Course/index",array("token"=>$token,"openid"=>$openid))}'">我要报名</div>
+            <div class="nav myli" onclick="window.location.href='{weikucms::U('Wap/Course/zhuanlist',array('token'=>$token,'openid'=>$openid))}'">我要转发</div>
+        </div>
+
+    </body>
+</html>

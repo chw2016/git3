@@ -1,0 +1,191 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/laundry/css/laundry.css">
+<div class="c_detail">
+	<div style="height: 33px; background-color: #F781D8"></div>
+	<a href="javascript::" class="close"></a>
+	<div class="col-sm-6">
+		<section class="panel">
+			<table class="table">
+				<thead>
+					<tr style="width: 800px">
+						<th>洗客信息详情</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="height: 64px">
+						<td>姓名：</td>
+						<td id="c_name"></td>
+						<td>联系电话：</td>
+						<td id="c_tel"></td>
+					</tr>
+					<tr style="height: 64px">
+						<td>城市：</td>
+						<td id="c_city"></td>
+						<td>所在区域：</td>
+						<td id="c_zone"></td>
+					</tr>
+					<tr style="height: 64px">
+						<td colspan="1">配送地址：</td>
+						<td colspan="3" id="c_address"></td>
+					</tr>
+					<tr style="height: 64px">
+						<td>洗客来源：</td>
+						<td id="c_source"></td>
+						<td>所属在线加盟商id：</td>
+						<td id="online_id"></td>
+					</tr>
+					<tr style="height: 64px">
+						<td>微信号：</td>
+						<td id="nickname"></td>
+						<td>账户余额：</td>
+						<td id="balance"></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</div>
+</div>
+<div class="" style="<if condition="$brand_id">left:0px<else/></if>">
+	<div class="cLineB">
+		<div class="title_tab" id="topTab">
+			<ul class="tab_navs title_tab" data-index="0">
+				<li data-index="0" class="tab_nav first js_top " data-id="total">
+					<a href="{weikucms::U('Laundry/index',array('token'=>$token))}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else/>
+                    </if>">洗衣店管理主页</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以添加/删除/查看洗客信息。</li>
+		</ol>
+	</div>
+	<div class="box-content">
+		<div class="cLineB">
+			<h4>所有洗客</h4>
+		</div>
+		<form method="post" action="<if condition="$brand_id">{weikucms::U('Laundry/customers',array('token'=>$token))}&brand_id={weikucms:$brand_id}<else/>{weikucms::U('Laundry/customers',array('token'=>$token))}</if>">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" style="display: inline; margin-left: 5px">洗客姓名：</label>
+				<input value="{weikucms:$arr['c_name']}" type="text" id="c_name" name="c_name" style="margin-top:10px;width:100px" placeholder="在这里输入洗客姓名~">
+				<label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">洗客联系电话：</label>
+				<input value="{weikucms:$arr['c_tel']}" type="text" id="c_tel" name="c_tel" style="margin-top:10px;width:131px" placeholder="在这里输入洗客联系电话~">
+				<label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">洗客所属区域：</label>
+				<input value="{weikucms:$arr['c_zone']}" type="text" id="c_zone" name="c_zone" style="margin-top:10px;width:100px" placeholder="在这里输入洗客所属区域~">
+                <label class="col-sm-2 control-label" style="display: inline; margin-left: 20px">洗客状态：</label>
+                <select name="status" id="status">
+                    <option value="" >请选择</option>
+                    <option value="1" <if condition="$arr['status'] eq 1">selected</if>>激活</option>
+                    <option value="2" <if condition="$arr['status'] eq 2">selected</if>>未激活</option>
+                </select>
+				<button type="submit" class="search btn btn-round btn-success">点击搜索</button>
+			</div>
+        </form>
+        <div class="msgWrap">
+			<form method="post" action="###" id="info">
+				<input name="delall" type="hidden" value=""/>
+				<input name="wxid" type="hidden" value=""/>
+				<if condition="$brand_id"> <input id="brand_id" type="hidden" value="{weikucms:$brand_id}"/> <input id="key" type="hidden" value="1"/> <else/> <input id="key" type="hidden" value="0"/> </if>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="text-align: center">姓名</th>
+							<th style="text-align: center">联系电话</th>
+							<th style="text-align: center">送货地址</th>
+							<th style="text-align: center">地区</th>
+							<th style="text-align: center">账户余额</th>
+							<th style="text-align: center">激活状态</th>
+							<th style="text-align: center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="customers" id="vo">
+						<tr>
+							<td style="text-align: center">{weikucms:$vo.c_name}</td>
+							<td style="text-align: center">{weikucms:$vo.c_tel}</td>
+							<td style="text-align: center">{weikucms:$vo.c_province}{weikucms:$vo.c_city}{weikucms:$vo.c_town}{weikucms:$vo.c_address}</td>
+							<td style="text-align: center">{weikucms:$vo.c_town}</td>
+							<td style="text-align: center">{weikucms:$vo.balance}</td>
+							<td style="text-align: center"><if condition="$vo['c_openid'] neq null"><font color="green"> 已激活</font><else/><font color="red"> 未激活</font></if></td>
+							<td class="norightborder" style="text-align: center">
+								<a class="Detail btn btn-success btn-sm" title="洗客信息详情" id="{weikucms:$vo.id}">信息详情</a>
+								<a class="Bill btn btn-success btn-sm" title="洗客账单" href="/index.php?g=User&amp;m=Laundry&amp;a=bill&amp;token={weikucms:$token}&amp;customer_id={weikucms:$vo.id}<if condition="$brand_id">&brand_id={weikucms:$brand_id}<else/>
+                                </if>">洗客账单</a>
+                                <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Laundry&amp;a=recharge&amp;token={weikucms:$token}<if condition="$brand_id">&amp;brand_id={weikucms:$brand_id}&amp;customer_id={weikucms:$vo.id}<else/>&amp;customer_id={weikucms:$vo.id}</if>" title="充值">充值</a>
+                                <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Laundry/delcustomers',array('id'=>$vo['id']))}')" href="#">删除</a></td>
+                            </td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+			</form>
+			<script type="text/javascript">
+    $(function() {
+        $(".Detail").each(function(i, o) {
+            $(o).click(function() {
+                var c_id = $(o).attr('id');
+                var brand_id = $("#brand_id").val();
+                var key = $("#key").val();
+                if (key == 1) {
+                    var url = "{weikucms::U('Laundry/customer',array('token'=>$token))}&brand_id=" + brand_id;
+                } else {
+                    var url = "{weikucms::U('Laundry/customer',array('token'=>$token))}";
+                }
+
+                $.post(url, {
+                            c_id: c_id
+                        },
+                        function(data) {
+                            if (data.status == 1) {
+                                $("#c_name").text(data.data.c_name);
+                                $("#c_tel").text(data.data.c_tel);
+                                $("#c_city").text(data.data.c_city);
+                                $("#c_zone").text(data.data.c_town);
+                                $("#c_address").text(data.data.c_address);
+                                if (data.data.online_id == 0) {
+                                    $("#online_id").text('非在线加盟商名下用户');
+                                } else {
+                                    $("#online_id").text(data.data.online_id);
+                                }
+                                if (data.data.c_source == 0) {
+                                    $("#c_source").text('自己在商城下单的用户');
+                                } else {
+                                    $("#c_source").text('在线加盟商名下的 用户');
+                                }
+                                $("#nickname").text(data.data.nickname);
+                                $("#balance").text(data.data.balance);
+                            }
+
+                        },
+                        'json');
+
+                $('#blur').fadeIn();
+                $('.c_detail').css({
+                    'left': ($(document).width() - $('.c_detail').width()) / 2,
+                    'top': "180px"
+                }).show();
+
+            });
+        });
+
+        $('.close').click(function() {
+            $('#blur').fadeOut();
+            $('.c_detail').fadeOut();
+        });
+    });
+</script>
+		</div>
+		<div>
+			<ul class="pager">{weikucms:$page}
+			</ul>
+		</div>
+	</div>
+	<include file="Public:footer"/>

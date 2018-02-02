@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <style type="text/css">
+        .light-gray{
+            padding-left: 10px;
+        }
+
+        .tags{
+           text-align: center;
+        }
+        .butgx{
+            border:1px solid #E0E0E0;;
+            width: 50%;
+            text-align: center;
+        }
+        .butgxjl{
+            border:1px solid  #E0E0E0;;
+            width: 50%;
+            text-align: center;
+        }
+        .on{
+            border-bottom: 2px solid #ff0000;
+        }
+        .fdjk{
+            width: 100%;
+            min-height: 50px;
+            margin-top: 6px;padding-top: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="light-gray h4 butgxjl" onclick="window.location.href='{weikucms::U('Wap/Media/withdrawals',array('token'=>$token,'openid'=>$openid))}'">我要提现</div>
+        <div class="settingItemName butgx on" onclick="javascript(0)">提现记录</div>
+    </div>
+</div>
+
+<if condition="$list eq ''">
+    <div class="white-bg settingItem h5 gray tags">
+        暂时还没有提现的记录
+    </div>
+    <else/>
+    <volist name="list" id="vo">
+        <div class="white-bg fdjk h5 gray">
+            <div class="light-gray h5">
+                您于{weikucms:$vo.add_time} 提取{weikucms:$vo.number}元 状态：<if condition="$vo['status'] eq 1">正在审核<elseif condition="$vo['status'] eq 2"/>打款中<elseif condition="$vo['status'] eq 3"/>已打款<else/>审核未通过</if>
+            </div>
+        </div>
+    </volist>
+    <div style="clear: both;"></div>
+</if>
+</body>
+</html>

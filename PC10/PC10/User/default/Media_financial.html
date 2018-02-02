@@ -1,0 +1,109 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+		float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+		
+    }.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" >任务中心</a>
+            </li>
+			 <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Media/marketing',array('token'=>$token))}" >营销中心</a>
+            </li>
+			<li data-index="0" class="tab_nav first js_top borderColor" data-id="financial">
+				<a href="{weikucms::U('Media/financial',array('token'=>$token))}" >财务管理</a>
+			</li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" >用户中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/setCenter',array('token'=>$token))}" >配置中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >统计报表</a>
+            </li>
+            <if condition="$token eq $teToken">
+                <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                    <a href="{weikucms::U('Media/guanggao',array('token'=>$token))}" >广告位设置</a>
+                </li>
+            </if>
+        </ul>
+    </div>
+</div>
+<!--添加按钮-->
+<!-- <div>
+    <ul>
+        <li><div class="addstyle" style="margin-left: 0px;background: #1576ad;" onclick="window.location.href='{weikucms::U('Media/payment',array('token'=>$token))}'">支付绑定</div></li>
+        <li><div class="addstyle" onclick="window.location.href='{weikucms::U('Media/classification',array('token'=>$token))}'">账户管理</div></li>
+        <li><div class="addstyle" onclick="window.location.href='{weikucms::U('Media/label',array('token'=>$token))}'">佣金结算</div></li>
+    </ul>
+    <div style="clear:both;"></div>
+</div> -->
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在这里可以你可以查看你的支付绑定，账户管理以及佣金结算的一些详细信息</li>
+    </ol>
+</div>
+
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>姓名</th>
+                <th>余额</th>
+                <th>推广金额</th>
+                <th>邀请金额</th>
+                <th>红包金额</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="info" key="i">
+            <tr>
+                <td>{weikucms:$vo.nickname}</td>
+                <td>{weikucms:$vo.money}</td>
+                <td>{weikucms:$vo.extension}元/<a href="{weikucms::U('Media/details',array('token'=>$token,'openid'=>$vo['openid'],'type'=>'extension'))}">明细</a></td>
+                <td>{weikucms:$vo.invitation}元/<a href="{weikucms::U('Media/details',array('token'=>$token,'openid'=>$vo['openid'],type=>'invitation'))}">明细</a></td>
+                <td>0元/<a href="javascript:void(0)">明细</a></td>
+                <td >
+                    <a href="{weikucms::U('Media/accounts',array('token'=>$token,'tid'=>$vo['id']))}" title="结算" class="btn btn-success btn-sm">结算</a>
+                    <a href="{weikucms::U('Media/setRecord',array('token'=>$token,'tid'=>$vo['id']))}" title="结算" class="btn btn-success btn-sm">结算记录</a>
+                </td>
+            </tr>
+            </volist>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

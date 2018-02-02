@@ -1,0 +1,322 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<meta content="Author" name="samphay@163.com">
+<title>{weikucms:$tpl['name']}</title>
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/forum.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/dialog.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/other.css" />
+<script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/star/js/index.js"></script>
+<script src="{weikucms::STATICS}/star/js/foot.js"></script>
+<script src="{weikucms::STATICS}/star/js/fatie.js"></script>
+<script src="{weikucms::STATICS}/star/js/main.js"></script>
+<script src="{weikucms::STATICS}/star/js/dialog_min.js" ></script>
+<!--webuploader-->
+<link type="text/css" rel="stylesheet"  href="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.css">
+<script type="text/javascript" charset="utf-8" src="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.js"> </script>
+<!--/webuploader-->
+<!--emotion-->
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.css" />
+<script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.js"></script>
+<!--!emotion-->
+</head>
+<body>
+<div class="forumlistbox" id="forumlistbox">
+<script type="text/javascript">
+    window.onload = function(){
+        $(".forumcontent").each(function(i,o){
+            var inputText = $(o).text();
+            $(o).html(AnalyticEmotion(inputText));
+        });
+    }
+</script>
+<style>
+    .loadingBox{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        background-color: rgba(0,0,0,0.2);
+        background-image: url({weikucms::STATICS}/star/img/5-121204193R5-50.gif);
+        background-size: 5%;
+        background-position: 50%;
+        background-repeat: no-repeat;
+    }
+</style>
+<volist name="list" id="vo">
+  <div class="forumlist">
+  <div class="forumtop"></div>
+  <div class="forumuser forum-ul">
+      <img class="forumuserlogo " src="{weikucms:$vo.uinfo.headimgurl}" onerror="{weikucms:$vo.uinfo.hearimgurl}" onClick="window.location.href='{weikucms::U('Forum/otherUser',array('token'=>$token,'openid'=>$openid,'uid'=>$vo['uid']))}'">
+      <div class="forumusername " onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">{weikucms:$vo.uinfo.nickname}</div>
+  </div>
+
+  <div class="allpics" onClick="window.location.href='{weikucms::U('Forum/comment',array('token'=>$token,'openid'=>$openid,'tid'=>$vo['id']))}'">
+      <if condition="$vo['photoArr'] neq ''">
+          <figure data-count="{weikucms:$vo.photoArr|count}张图片">
+              <div>
+                  <for start="0" end="count($vo['photoArr'])">
+                      <img src="{weikucms:$vo['photoArr'][$i]}" data-src="{weikucms:$vo['photoArr'][$i]}" data-gid="g7" onload="preViewImg(this, event);"/>
+                  </for>
+              </div>
+          </figure>
+      </if>
+    <div class="forumtitle">{weikucms:$vo.title}</div>
+    <div class="forumtime"><php>echo date('Y-m-d H:i:s',$vo['createtime']);</php></div>
+    <div class="forumcontent">{weikucms:$vo.content}</div>
+  </div>
+  
+  <div class="forumlistfoot forum-ul">
+      <div class="forumhotbox myli myul " > 
+        <div class="forumhot  forumico">
+          <div class="hothit" style="height: 3px; ">
+              <div id="redpoint"></div>
+          </div>          
+        </div>
+        <div id="datacount">12°</div>
+        
+      </div>
+      <!--喜欢-->
+      <div class="forumtagbox myli myul" onClick="collectTrends({weikucms:$vo.id},'{weikucms:$openid}','{weikucms:$_GET['token']}')">
+        <div class="forumtag"><span class="icon-heart" style="<php>if(in_array($openid,explode(',',$vo['likeid']))){echo 'color:#d42020';}else{echo 'color:#666';}</php>"></span></div>
+        <div id="datacount">
+            <if condition="empty($vo['likeid'])">0
+                <else />
+                {weikucms::count(explode(',',$list['likeid']))}
+            </if>
+        </div>
+      </div>
+      <!--评论-->
+      <div class="forumreplybox myli myul" > 
+        <div class="forumreply"><span class="icon-chat"></span></div>
+        <div id="datacount">{weikucms:$vo.cnum}</div>
+      </div>
+      <!--赞-->
+      <div class="forumlikebox myli myul" onClick="praiseTrends({weikucms:$vo.id},'{weikucms:$openid}','{weikucms:$_GET['token']}')">
+        <div class="forumlike"><span class="icon-thumbs-up"  style="<php>if(in_array($openid,explode(',',$vo['favourid']))){echo 'color:#d42020';}else{echo 'color:#666';}</php>"></span></div>
+        <div id="datacount">
+            <if condition="empty($vo['favourid'])">0
+                <else />
+                {weikucms::count(explode(',',$list['favourid']))}
+            </if>
+            </label>
+        </div>
+      </div>
+
+  </div>
+
+  </div>
+
+      
+  </volist>
+</div>
+
+
+
+<footer class="myul">
+    <div data-foot="home" class="myli tapfoot home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="myli tapfoot more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="myli tapfoot user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="circle">
+            <if condition="($messageNum neq '0') or ($messageNum neq 0)">
+            <span data-tip="{weikucms:$messageNum}" class="icons_my"></span>
+            </if>
+            <span class="icon-user"></span>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<div class="fmore">
+    <!--<div class="onlyu moreli"><div><span class="icon-eye"></span>只看Hi<span class="icon-uniE638 arrowright"></span></div></div>-->
+    <div class="iwrite moreli" onClick="window.location.href='{weikucms::U('Forum/add',array('token'=>$token,'openid'=>$openid))}'" ><div><span class="icon-pencil"></span>发帖<span class="icon-uniE638 arrowright"></span></div></div>
+    <div class="gotop moreli"><div><span class="icon-arrow-up"></span>回到顶部<span class="icon-uniE638 arrowright"></span></div></div>
+    <div class="helpcenter moreli" onclick="window.location.href='http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&id=5304&token=8d6c5f62afee2198ce8e95e518282478&openid={weikucms:$openid}'"><div><span class="icon-question"></span>帮助中心<span class="icon-uniE638 arrowright"></span></div></div>
+</div>
+<div id="shade"></div>
+
+<!--<div class="writebox" style="position: fixed;">
+    <div class="writeboxtop myul">
+        <div class="cancel">取消</div>
+        <div class="postit" onclick="javascript:submit()">发帖</div>
+    </div>
+    <div class="wtitleinputbox">
+        <input type="text" placeholder="标题"  id="title"/>
+        <input type="hidden" id="token"  value="{weikucms:$token}"/>
+        <input type="hidden" id="openid"  value="{weikucms:$openid}"/>
+    </div>
+    <div class="wtaginputbox">
+            <input type="text" placeholder="标签，多个标签请使用逗号隔开。"/>
+    </div>
+    <div class="wcontentinputbox">
+        <textarea placeholder="禁止发布广告，色情，谩骂等违反相关法律的内容。" id="content"></textarea>
+
+        <div class="contentbottom myul">
+
+            <div id="filePicker"></div>
+
+            <div class="inputface">
+                <span class="icon-happy"></span>
+            </div>
+        </div>
+
+        <div id="fileList" class="uploader-list"></div>
+    </div>
+
+</div>-->
+
+
+<!--<script>
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: false,
+        // swf文件路径
+        swf: "{weikucms::STATICS}/star/webuploader-0.1.5/Uploader.swf",
+        // 文件接收服务端。
+        server: 'http://webuploader.duapp.com/server/fileupload.php',
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: {
+            id:'#filePicker',
+            label:'图'
+        },
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        var $li = $(
+                        '<div id="' + file.id + '" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="info">' + file.name + '</div>' +
+                        '</div>'
+                ),
+                $img = $li.find('img');
+
+        var $list = $("#fileList");
+        // $list为容器jQuery实例
+        $list.append( $li );
+
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        var thumbnailWidth = 70;
+        var thumbnailHeight = 70;
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+
+
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress span');
+
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo( $li )
+                    .find('span');
+        }
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).addClass('upload-state-done');
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+
+        $error.text('上传失败');
+    });
+
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+</script>-->
+
+
+
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var range = 50;
+        var _srollPos = 0;
+        var pageNum = 2;
+        var totalheight = 0;
+        var main = $("#forumlistbox");
+        var js = 0;
+        $(window).scroll(function() {
+            var srollPos = $(window).scrollTop();
+            if (srollPos < _srollPos) {
+                return
+            } else {
+                _srollPos = srollPos
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (($(document).height() - range) <= totalheight) {
+                $.ajax({
+                    url: "/index.php?g=Wap&m=Forum&a=moreList&token={weikucms:$_GET['token']}&openid={weikucms:$_GET['openid']}&p=" + pageNum,
+                    type: "post",
+                    data: "pageNum=" + pageNum,
+                    success: function(res) {
+                        if (res == 0) {
+                            if (js == 0) {
+                                $('#forumlistbox').append('<article style="display:block" id="noMore"><header style="margin:0px;text-align:center;color:#828282;">没有更多帖子了</header></article>')
+                            }
+                            js = 1
+                        } else {
+                            main.append(res);
+                            pageNum++
+                        }
+                    }
+                })
+            }
+        })
+    });
+</script>
+<script>
+    $(function(){
+        $(".delfastreply").click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        $("figure").click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    });
+</script>
+</html>

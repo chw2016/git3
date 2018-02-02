@@ -1,0 +1,28 @@
+<style>
+.title_tab .tab_nav.first a.hover { border-bottom: 3px solid rgb(140, 124, 255); }
+</style>
+<div class="cLineB"  style="position:relative;padding-bottom: 7px;" >
+<!--
+    <div class="title_tab" id="topTab"><a  class="btn btn-primary"  style="position:absolute; <?php if($aid){ ?> left:1100px; <?php }else{ ?>  left:900px;  <?php } ?> top:5px;" href="{weikucms::U($aaa/$bbb,array('token'=>$token,'expor'=>1))}"  >导出</a>
+
+-->
+
+
+        <ul class="tab_navs title_tab" data-index="0"  >
+
+            <volist name="Header" id="Head">
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms:$Head.url}" class="<if condition='$Head.url eq $HeadHover'>hover</if>">{weikucms:$Head.name}</a>
+            </li>
+            </volist>
+        </ul>
+
+    </div>
+</div>
+
+<div class="cLineC" style="line-height: 32px; <if condition="$aid" >width:90%;margin: 0 auto;</if> ">
+    <volist name="Head_Opt" id="Opt">
+    <a target="<if condition="!empty($Opt['target'])">{weikucms:$Opt.target}<else />_self</if>"
+    href="{weikucms:$Opt.url}" class="btn btn-primary {weikucms:$Opt.css}" >{weikucms:$Opt.name}</a>
+    </volist>
+</div>

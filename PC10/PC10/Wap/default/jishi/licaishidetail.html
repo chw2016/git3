@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+	<style>
+	.licaishiAction {
+	    position: relative;
+	    width: 60%;
+		margin:4px 0;
+	}
+
+	.licaishiColect.licaishiBooking {
+	    right: 0;
+	    top: -2px;
+        background-image:url({weikucms::STATICS}/wapweiui/jishi/img/booking.png);
+        background-size: contain;
+        background-position: 50%;
+        background-repeat: no-repeat;
+	}
+	</style>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    理财师-{weikucms:$Planner.name}
+</div>
+<div class="produceLicaishiBox top20 white-bg lisheng-text-color myul boxShadow">
+    <div class="produceLicaishiLogowrap">
+        <div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$Planner.image})"></div>
+    </div>
+    <div class="produceLicaishiInfoBox">
+        <input type="hidden" id='planner_id' value="{weikucms:$Planner.id}">
+        <div class="pLicaishiName">{weikucms:$Planner.name}</div>
+
+        <div class="licaishipriceBox hide">
+            均价：￥<php>echo round($iAvgPrice, 2)</php>
+        </div>
+
+        <div class="licaishiDengJiBox">
+            <div class="licaishiDengJiWrap  myul" data-zhuanshi="{weikucms:$Planner.stars}">
+                <!-- data-zhuanshi的值是星星个数，后台只需循环遍历出这个值即可 -->
+            </div>
+        </div>
+        <div class="licaishiAction">
+            <div class='licaishiColect <if condition="$bCollect">on</if> icon icon-colect'>
+                收藏
+            </div>
+            <a href="{weikucms::U('Wap/Jishi/licaishiyuyue',array('token'=>$token,'openid'=>$openid,'id'=>$Planner['id']))}"><div class='licaishiColect licaishiBooking icon icon-colect setRight'>
+
+            </div></a>
+        </div>
+        <div class="myul">
+            <div class="myli h7 noWrap">
+                专业：{weikucms:$Planner.specialty_level}
+            </div>
+            <div class="myli h7 noWrap">
+                沟通：{weikucms:$Planner.communication_level}
+            </div>
+            <div class="myli h7 noWrap">
+                服务：{weikucms:$Planner.service_level}
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class=" produceListBox">
+    <!-- 循环体开始 -->
+    <foreach name="Product" item="product">
+    <div class="produceListItem boxShadow floatLeft" onclick="window.location.href='{weikucms::U('Wap/Jishi/licaichanpinjieshao',array('pid'=>$Planner['id'],'token'=>$token,'openid'=>$openid,'id'=>$product['id']))}'">
+        <div class="PLIImg fixBg" style="background-image:url({weikucms:$product.image})"></div>
+        <div class="myul PLIHav">
+            <div class="PLIName white">
+            {weikucms:$product.title}
+            </div>
+            <div class="RMB white">
+            {weikucms:$product.price}万
+            </div>
+        </div>
+    </div>
+    </foreach>
+    <!-- 循环体结束 -->
+    <div class="clearBoth"></div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".licaishiDengJiWrap").each(function(i,o){
+            var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi'))  ,
+                    di = 0,
+                    zhuanshi = '<div class="zhuanshi fixBg"></div>';
+            for(di; di < d ; di++){
+                $(this).append(zhuanshi);
+            }
+        })
+        $(".licaishiColect").click(function(){
+            var planner_id = $('#planner_id').val();
+            var _this      = $(this);
+            if(_this.hasClass('on')){  //有类名“on”为已收藏，点击取消收藏，Ajax成功后则可以使用以下代码，else同理；
+                $.ajax({
+                    url: "{weikucms::U('Jishi/collect',array('token'=>$token,'openid'=>$openid, 'type' => 1))}",
+                    type:"POST",
+                    data:{"id":planner_id},
+                    dataType:"json",
+                    success: function(res){
+                        if(res.status == 0){
+                            _this.removeClass('on').text("收藏");
+                            /*$("<div class='noWrap' style='color: rgb(118,121,117);position: relative;top: -46px;right: 20px;opacity:1;'>取消成功！</div>").appendTo('.licaishiColect').animate({
+                                "top":"0",
+                                "opacity":"0"}, 0);*/
+                        }
+                    }
+                });
+            }else{
+                $.ajax({
+                    url: "{weikucms::U('Jishi/collect',array('token'=>$token,'openid'=>$openid, 'type' => 0))}",
+                    type:"POST",
+                    data:{"id":planner_id},
+                    dataType:"json",
+                    success: function(res){
+                        if(res.status == 0){
+                            _this.addClass('on').text("已藏");
+                           /* $("<div class='noWrap' style='color: rgb(255,0,0);position: relative;top: -46px;right: 20px;opacity:1;'>收藏成功！</div>").appendTo('.licaishiColect').animate({
+                                "top":"0",
+                                "opacity":"0"}, 0);*/
+                        }
+                    }
+                });
+
+
+            }
+        })
+    })
+</script>
+</html>

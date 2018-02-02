@@ -1,0 +1,73 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+        float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+    }
+
+</style>
+<div class="cLineB">
+    <h4 style="position:relative;">
+        任务领取详情
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;background: #19b593;" href="{weikucms::U('Media/task',array('token'=>$token))}">
+            返回
+        </a>
+    </h4>
+</div>
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>在此页面可以查看每个任务下面的领取人的详情！</li>
+    </ol>
+</div>
+
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th >序号</th>
+                <th >任务名称</th>
+                <th >领取人</th>
+                <th >领取时间</th>
+                <th >任务点击量</th>
+                <th >任务转发量</th>
+            </tr>
+            </thead>
+            <volist id="vo" name="users" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$vo.task_name}</td>
+                    <td><if condition="$vo['name'] eq ''">{weikucms:$vo.nickname}<else/>{weikucms:$vo.name}</if></td>
+                    <td>{weikucms:$vo.add_time}</td>
+                    <td>{weikucms:$vo.clicks}</td>
+                    <td>{weikucms:$vo.report_times}</td>
+
+                </tr>
+            </volist>
+
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

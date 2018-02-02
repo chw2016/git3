@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+    <style type="text/css">
+        .light-gray{
+            padding-left: 10px;
+        }
+        .icon-tixian {
+            background-position: 0 -113px;
+        }
+        .tMoney{
+            border-radius: 5px;
+            padding: 8px 5px;
+            border: 1px solid #ccc;
+        }
+        .butgx{
+            border:1px solid #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .butgxjl{
+            border:1px solid  #E0E0E0;;
+            /*width: 49%;*/
+            text-align: center;
+        }
+        .save{
+            background-color: #5cb85c;
+            margin-top: 20px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            color: #FFF;
+        }
+        .on{
+            border-bottom: 2px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="light-gray h4 butgxjl myli on" onclick="location.href='{weikucms::U('user_tixian',array('token'=>$token,'openid'=>$openid))}'">我要提现</div>
+        <div class="settingItemName butgx myli" onclick="window.location.href='{weikucms::U('user_tixianjl',array('token'=>$token,'openid'=>$openid))}'">提现记录</div>
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName" style="margin-right: 18px;">提现种类</div>
+        <input type="radio" name="type" value="1" >余额<input type="radio" name="type" value="2" style="margin-left: 20px;" >推荐奖励
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">银行卡</div>
+        <input class="light-gray h5" value="{weikucms:$info['bank_num']}" name="bank_num" style="width: 100%">
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户银行</div>
+        <input class="light-gray h5" value="{weikucms:$info['bank_name']}"  name="bank_name" style="margin-left: 10px;width: 100%">
+    </div>
+</div>
+<div class="white-bg settingItem h4 gray">
+    <div class="myul">
+        <div class="settingItemIco fixBg icon icon-card"></div>
+        <div class="settingItemName">开户人姓名</div>
+        <input class="light-gray h5" value="{weikucms:$info['name']}" style="margin-left: 10px;" name="name" >
+    </div>
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-phone"></div>
+    <div class="settingItemName">联系方式</div>
+    <input class="light-gray h5" value="{weikucms:$info['phone']}" style="margin-left: 10px;" name="phone">
+</div>
+
+<div class="white-bg settingItem h4 gray myul">
+    <div class="settingItemIco fixBg  icon icon-tixian"></div>
+    <div class="settingItemName">提现金额</div>
+
+    <div class="light-gray h5"><input type="tel" value="" name="money" class="tMoney" placeholder="如：100" onkeyup="this.value=this.value.replace(/\D/g,'')"/></div>
+
+</div>
+
+<div style="  margin-top: 5px;padding: 5px;">您目前可提推荐奖励为：<?php echo ($info['jifeng']-$olo_money);?>元 </div>
+<div style="  margin-top: 5px;padding: 5px;">您目前可余额为：<?php echo ($info['money']-$yu_money);?>元 </div>
+<div style="  margin-top: 5px;padding: 5px;">佣金提现周期：{weikucms:$gc_time}天 </div>
+
+
+
+
+<div class="save">
+    提&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp现
+</div>
+
+<div style="height: 65px;"></div>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('.save').on('click',function(){
+            var type=$("input[name=type]:checked").val();
+            var money = $('input[name="money"]').val();
+            var bank_name = $('input[name="bank_name"]').val();
+            var bank_num = $('input[name="bank_num"]').val();
+            var phone = $('input[name="phone"]').val();
+            //alert(phone);return false;
+            var name = $('input[name="name"]').val();
+              var jifeng = <?php echo ($info['jifeng']-$olo_money);?>;
+            var y_money=<?php echo ($info['money']-$yu_money);?>;
+            var time="{weikucms:$time}";
+           // alert(jifeng);return false;
+            if(!type){
+                msg.alert('请选择您想提现的种类');
+                return false;
+            }
+            if(!name){
+                msg.alert('请填写开户人姓名');
+                return false;
+            }
+            if(!bank_name){
+                show_error_tip('请输入开户银行名称');
+                return false;
+            }
+            if(!bank_num){
+                show_error_tip('请输入开户行帐号');
+                return false;
+            }
+            if(phone.length!=11){
+                show_error_tip('请输入正确的手机号码');
+                return false;
+            }
+            if(!money){
+                show_error_tip('请输入您要提现的金额');
+                return false;
+            }
+
+            if(type==1){//余额
+                if(money > y_money){
+                    show_error_tip('您没有这么多余额');
+                    return false;
+                }
+            }
+            if(type==2){//佣金
+                if(money > jifeng){
+                    show_error_tip('您没有这么多佣金');
+                    return false;
+                }
+                if(time!=1){
+                    show_error_tip('您的提现太频繁了');
+                    return false;
+                }
+            }
+
+            var url = "{weikucms::U('user_tixian',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,{type:type,money:money,bank_name:bank_name,bank_num:bank_num,phone:phone,name:name},function(data){
+                if(data.status==1){
+                      show_success_tip('提现申请成功');
+                        window.location.href="{weikucms::U('user_tixianjl',array('token'=>$token,'openid'=>$openid))}";
+                }else{
+                    show_error_tip('提现申请失败');
+                    return false;
+
+                }
+            },'json')
+        })
+    })
+</script>
+</body>
+</html>

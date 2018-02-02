@@ -1,0 +1,838 @@
+<include file="Public:head" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+
+<div class="cLineB">
+    <h4 style="position:relative;">
+        添加微场景
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Microscene/index',array('token'=>$token,'pid'=>$pid))}">
+            返回
+        </a>
+    </h4>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+    editor = K.create('#info', {
+    resizeType : 1,
+    allowPreviewEmoticons : false,
+    allowImageUpload : true,
+    allowFileManager:true,
+    items : [
+    'source','undo','redo','copy','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr',
+    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+    'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+    });
+
+    });
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        //#upload上传图片的ID
+        //#img隐藏域的ID
+        //fenlei_img图片上传后的地址
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+
+    });
+    //添加地图的设置
+    function setlatlng(longitude,latitude){
+        art.dialog.data('longitude', longitude);
+        art.dialog.data('latitude', latitude);
+        // 此时 iframeA.html 页面可以使用 art.dialog.data('test') 获取到数据，如：
+        // document.getElementById('aInput').value = art.dialog.data('test');
+        art.dialog.open('{weikucms::U('Map/setLatLng',array('token'=>$token,'id'=>$id))}',{lock:false,title:'设置经纬度',width:800,height:600,yesText:'关闭',background: '#fff',opacity: 1});
+    }
+   
+
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            fileManagerJson : '<php>echo C('site_url');</php>/tpl/static/kindeditor/php/file_manager_json2.php'
+        });
+        K('#upload2').click(function() {
+            editor.loadPlugin('filemanager', function() {
+                editor.plugin.filemanagerDialog({
+                    viewType : 'VIEW',
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $(".fenlei_img").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+        //背景音乐
+       /* K('#gt_image_nusic').click(function() {
+            editor.loadPlugin('insertfile', function() {
+                editor.plugin.fileDialog({
+                    fileUrl : K('#musicurl').val(),
+                    clickFn : function(url, title) {
+                        K('#musicurl').val(url);
+                        $("#audio").attr('src',url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });*/
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#click_icon").click(function(e){
+            $('#icon_btn').css({
+                top:e.pageY - 370,
+                left:e.pageX- 330
+            }).show();
+           $('#icon_btn').css({'position':'absolute','left':'76px','top':'50px'}).show();
+        
+        })
+        $(".tile-themed i").each(function(){
+            $(this).click(function(){
+                var thisclass = $(this).attr('class');
+                $(".ico_bg i").attr("class",thisclass);
+                $("#icon").val(thisclass);
+                $('#icon_btn').hide();
+            });
+        });
+    });
+</script>
+<style type="text/css">
+    .upimg{
+        margin-bottom: 15px;
+    }
+    .upimg img{
+        width: 80px;
+        height: 70px;
+    }
+</style>
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+</div>
+<!--复制结束-->
+<script type="text/javascript">
+    $(function(){
+        $('#round').hide();
+        $('#pic').hide();
+        $('#picText').hide();
+        $('#map').hide();
+        $('#appoint').hide();
+        $('#cknums').change(function(){
+            if ($(this).val() == 1) {
+                $('.video').show();
+                $('#round').hide();
+                $('#pic').hide();
+                $('#picText').hide();
+                $('#map').hide();
+                $('#appoint').hide();
+            };
+             if ($(this).val() == 2) {
+                $('.video').hide();
+                $('#round').show();
+                $('#pic').hide();
+                $('#picText').hide();
+                $('#map').hide();
+                $('#appoint').hide();
+            };
+             if ($(this).val() == 3) {
+                $('.video').hide();
+                $('#round').hide();
+                $('#pic').show();
+                $('#picText').hide();
+                $('#map').hide();
+                $('#appoint').hide();
+            };
+             if ($(this).val() == 4) {
+                $('.video').hide();
+                $('#round').hide();
+                $('#pic').hide();
+                $('#picText').show();
+                $('#map').hide();
+                $('#appoint').hide();
+            };
+            if ($(this).val() == 5) {
+                $('.video').hide();
+                $('#round').hide();
+                $('#pic').hide();
+                $('#picText').hide();
+                $('#map').show();
+                $('#appoint').hide();
+            };
+            if ($(this).val() == 6) {
+                $('.video').hide();
+                $('#round').hide();
+                $('#pic').hide();
+                $('#picText').hide();
+                $('#map').hide();
+                $('#appoint').show();
+            };
+        })
+    })
+</script>
+<div class="msgWrap">
+    <form class="form" method="post" action=""
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        微信场景类型：
+                    </label>
+                </TH>
+                <TD>
+                    <select name="cknums" class="input-medium" id="cknums">
+                        <option value="1" selected="selected">视频链接</option>
+                        <option value="3">图片</option>
+                        <option value="4">图文搭配</option>
+                        <option value="5">地理位置及联系方式</option>
+                        <option value="6">预约提交</option>
+                    </select>
+                </TD>
+            </TR>
+             <TR class="video">
+                <TH valign="top">
+                    <label for="title">
+                       视频链接
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="video_url" value="" name="video_url" style="width:300px" placeholder="此处视频链接url">
+                </TD>
+            </TR>
+            <TR class="video">
+                <TH valign="top">
+                    <label for="name">
+                        视频简介：
+                    </label>
+                </TH>
+                <TD>
+                    <textarea class="px" id="names" name="names" style="width:420px;height:150px;" placeholder="请填写视频简介" /></textarea>
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             <TR id="round">
+                <TH valign="top">
+                    <label for="title">
+                       轮播图
+                    </label>
+                </TH>
+                <TD id="addPic" width="200px">
+                     <div class="upimg">
+                       <img style="display: none;" id="1_img" src="">
+                       <input type="hidden" class="px" id="img_1" value="" name="img_1" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_1">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div>
+                    <div class="upimg">
+                       <img style="display: none;" id="2_img" src="">
+                       <input type="hidden" class="px" id="img_2" value="" name="img_2" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_2">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div> 
+                    <div class="upimg">
+                       <img style="display: none;" id="3_img" src="">
+                       <input type="hidden" class="px" id="img_3" value="" name="img_3" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_3">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div> 
+                    <div class="upimg">
+                       <img style="display: none;" id="4_img" src="">
+                       <input type="hidden" class="px" id="img_4" value="" name="img_4" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_4">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div> 
+                    <div class="upimg">
+                       <img style="display: none;" id="5_img" src="">
+                       <input type="hidden" class="px" id="img_5" value="" name="img_5" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_5">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div> 
+                    <div class="upimg">
+                       <img style="display: none;" id="6_img" src="">
+                       <input type="hidden" class="px" id="img_6" value="" name="img_6" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_6">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div>  
+                </TD>
+               
+               
+            </TR>
+             <TR id="pic">
+                <TH valign="top">
+                    <label for="title">
+                       图片
+                    </label>
+                </TH>
+                <TD>
+                    <div class="upimg">
+                       <img style="display: none;" id="7_img" src="">
+                       <input type="hidden" class="px" id="img_7" value="" name="img_7" style="width:300px" readonly="readonly">
+                       <span class="ke-button-common" id="upload_7">上传图片</span>
+                       <span class="info_tip">建议图片大小720x400</span>
+                    </div> 
+                </TD>
+            </TR>
+             <TR id="picText">
+                <TH valign="top">
+                    <label for="title">
+                       图文搭配
+                    </label>
+                </TH>
+                <TD>
+                    <textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();"></textarea>
+                </TD>
+            </TR>
+            <!--实际的地理位置-->
+            <TR id="map">
+                <TH valign="top">
+                    <label for="map">
+                        地理位置及联系方式
+                    </label>
+                </TH>
+                <TD>经度 <input type="text" id="longitude"  name="longitude" size="8" class="px" value="{weikucms:$set.longitude}" /><br />
+                    纬度 <input type="text"  name="latitude" size="8" id="latitude" class="px" value="{weikucms:$set.latitude}" />
+                    <a href="###" class="btn btn-primary btn-success" onclick="setlatlng($('#longitude').val(),$('#latitude').val())" style="position: relative;top:-4px;">地图设置</a></td>
+                </TD>
+                <TD>
+                    地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：<input type="text" id="address"  name="address" size="8" class="px" value="" /><br />
+                    联系电话：<input type="text" id="relation"  name="relation" size="8" class="px" value="" /><br />
+                    上班时间：<input type="text" id="worktime"  name="worktime" size="8" class="px" value="" />
+                </TD>
+            </TR>
+            <!-- 预约 -->
+             <TR id="appoint">
+                <TH valign="top">
+                    <label for="map">
+                        添加预约提交
+                    </label>
+                </TH>
+                <TD>
+                    <input type="checkbox" id="appointment"  name="appointment" size="8" class="px" value="" style="position:relative;bottom:5px;width:15px;height:15px;"/>
+                </TD>
+                <TD>
+                   &nbsp;
+                </TD>
+
+                 <TH valign="top">
+                     <label for="map">
+                         参与人数
+                     </label>
+                 </TH>
+                 <TD>
+                     <input type="text" id="appointment_nums"  name="appointment_nums" class="px" value="" />
+                 </TD>
+                 <TD>
+                     &nbsp;
+                 </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            
+            <!-- <TR>
+                <TH valign="top">
+                    <label for="bgmusic">
+                        背景音乐
+                    </label>
+                </TH>
+                <TD>
+                    <div class="controls">
+                        <div id="image_upload_music" class="">
+                            <audio src="" loop id="audio" controls="controls" style="display:block;
+                            margin-bottom: 20px;">您的浏览器不支持该控件</audio>
+                            <input type="hidden" value="" name="musicurl" id="musicurl">
+                            <span class="help-inline">
+                            <button name="button" id="gt_image_nusic" class="btn btn-primary" type="button">选择背景音乐</button>
+                            <span class="help-inline">格式为mp3,大小不超过2M</span></span></div>
+            
+                    </div>
+                </TD>
+                 <TD>
+                    &nbsp;
+                </TD>
+            </TR> -->
+
+
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        排列顺序：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="sorts" value=""  name="sorts" style="width:300px;" placeholder="只能是数字，数字越小排序越靠前" />
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+              
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+                   
+                    //第一张图片上传（轮播图的上传）
+                      KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_1').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_1').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_1').val(url);
+                                                $('#1_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+                 
+                    //第二张图片上传
+
+                       KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_2').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_2').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_2').val(url);
+                                                $('#2_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+
+                       // 第三张图片上传
+                          KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_3').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_3').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_3').val(url);
+                                                $('#3_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+
+                          // 第四张图片上传
+                            KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_4').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_4').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_4').val(url);
+                                                $('#4_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+
+                            // 第五张图片上传
+                              KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_5').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_5').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_5').val(url);
+                                                $('#5_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+
+                              // 第六张图片上传
+                              KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_6').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_6').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_6').val(url);
+                                                $('#6_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+
+                        // 图片上传
+                      
+                              KindEditor.ready(function(K){
+                                var editor = K.editor({
+                                    allowFileManager:true
+                                });
+        
+                                K('#upload_7').click(function() {
+                                    editor.loadPlugin('image', function() {
+                                        editor.plugin.imageDialog({
+                                            fileUrl : K('#img_7').val(),
+                                            clickFn : function(url, title) {
+                                                K('#img_7').val(url);
+                                                $('#7_img').attr('src',url).show();
+                                                editor.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            // 微场景的类型
+            var cknums = $("#cknums").val();
+            //视频链接地址
+            var video = $('#video_url').val();
+            //六张图片上传的地址(轮播图)
+            var img_1 = $('#img_1').val();
+            var img_2 = $('#img_2').val();
+            var img_3 = $('#img_3').val();
+            var img_4 = $('#img_4').val();
+            var img_5 = $('#img_5').val();
+            var img_6 = $('#img_6').val();
+            //图片上传地址
+            var img_7 = $('#img_7').val();
+            // 背景音乐
+            // var musicurl = $('#musicurl').val();
+            //图文信息
+            var txt_img = editor.html();
+            // 排序
+            var sorts = $('#sorts').val();
+            
+            //                接受经度
+            var longitude = $("#longitude").val();
+//                接收维度
+            var latitude = $("#latitude").val();
+            // 联系方式
+            var relation = $('#relation').val();
+            // 上班时间
+            var worktime = $('#worktime').val();
+            // 接受复选框的值
+            var appoint = $('#appointment').val();
+            // 接受地址
+            var address = $('#address').val();
+            var appoint_nums = $('#appointment_nums').val();
+
+            if(!sorts){
+                notif({
+                    msg: "排列顺序不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(isNaN(sorts)){
+                notif({
+                    msg: "排列顺序必须为数字",
+                    type: "warning"
+                });
+                return false;
+            }
+            var Img_json = "[{";
+            if(cknums == 1){
+                //视频简介名称
+                var name = $('#names').val();
+                 if(!video){
+                    notif({
+                        msg: "视频链接地址不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                //视频链接地址
+                 $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                    {type:cknums,video_url:video,sorts:sorts,name:name},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            }else if(cknums == 2){
+                if(!img_1 || !img_2){
+                    notif({
+                        msg: "至少选择前面两张上传图片",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                Img_json = Img_json + "\""+"img_1"+"\""+":"+"\""+img_1+"\""+","+"\""+"img_2"+"\":"+"\""+img_2+"\"";
+                //接收所有图片
+                if (img_3) {
+                    Img_json = Img_json + ",\""+"img_3"+"\":"+"\""+img_3+"\"";
+                }
+                if (img_4) {
+                     Img_json = Img_json + ",\""+"img_4"+"\":"+"\""+img_4+"\"";
+                }
+                if (img_5) {
+                     Img_json = Img_json + ",\""+"img_5"+"\":"+"\""+img_5+"\"";
+                }
+                if (img_6) {
+                     Img_json = Img_json + ",\""+"img_6"+"\":"+"\""+img_6+"\"";
+                }
+                Img_json = Img_json + "}]";
+                 alert(Img_json);
+                // 传送数据
+                $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                    {type:cknums,scroll_url:Img_json,sorts:sorts},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            }else if(cknums == 3){
+                if(!img_7){
+                        notif({
+                            msg: "请选择上传的图片",
+                            type: "warning"
+                        });
+                        return false;
+                    }
+                $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                    {type:cknums,img_url:img_7,sorts:sorts},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                },'json');
+            }else if(cknums == 4){
+                if(!txt_img){
+                    notif({
+                        msg: "图文内容不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                 $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                    {type:cknums,txt_img:txt_img,sorts:sorts},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                },'json');
+            }else if(cknums == 5){
+
+                if(!longitude){
+                    notif({
+                        msg: "经度不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!latitude){
+                    notif({
+                        msg: "纬度不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!relation){
+                    notif({
+                        msg: "联系方式不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!worktime){
+                    notif({
+                        msg: "上班时间不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if(!address){
+                    notif({
+                        msg: "地址不能为空",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                        {type:cknums,longitude:longitude,latitude:latitude,sorts:sorts,relation:relation,worktime:worktime,address:address},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                  },'json');
+            }else{
+                if($('#appointment').is(":checked")){
+                    appoint = 1;
+                }else{
+                    appoint = "";
+                }
+                if(!appoint){
+                    notif({
+                        msg: "预约提交必须选择",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                
+                $.post("{weikucms::U('Microscene/inserts',array('token'=>$token,'pid'=>$pid))}",
+                        {type:cknums,sorts:sorts,appoint_nums:appoint_nums,appoint:appoint},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                  },'json');
+            }
+        });
+    });
+
+</script>
+<include file="Public:footer" />

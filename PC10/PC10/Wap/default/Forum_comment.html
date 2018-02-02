@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<meta content="samphay@163.com" name="Author">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>{weikucms:$wxusers['nickname']}</title>
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/forum.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/dialog.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/other.css" />
+<script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/star/js/index.js"></script>
+<script src="{weikucms::STATICS}/star/js/foot.js"></script>
+<script src="{weikucms::STATICS}/star/js/fatie.js"></script>
+<script src="{weikucms::STATICS}/star/js/dialog_min.js" ></script>
+<script src="{weikucms::STATICS}/star/js/main.js"></script>
+<!--emotion-->
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.css" />
+<script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/star/sinaemotion/jquery.sinaEmotion.js"></script>
+<!--!emotion-->
+</head>
+<body>
+<style>
+    .loadingBox{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        background-color: rgba(0,0,0,0.2);
+        background-image: url({weikucms::STATICS}/star/img/5-121204193R5-50.gif);
+        background-size: 5%;
+        background-position: 50%;
+        background-repeat: no-repeat;
+    }
+    span.ReplyTimeStamp {
+        display: run-in;
+        font-size: 12px;
+        color: #bfbfbf;
+    }
+
+    span.ReplyLike {
+        color: #bfbfbf;
+    }
+    #emotions{
+        top:500px !important;
+        left: 12.6875px !important;
+        width:91% !important;
+        z-index:2000;
+
+    }
+</style>
+<div id="blur" ></div>
+<div id="AlertBox"></div>
+
+<style>
+    div#blur {
+        display:none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 998;
+        background-color: RGBA(0,0,0,0.6);
+    }
+    div#AlertBox {
+        display:none;
+        width: 50%;
+        /* height: 50%; */
+        /* border: 1px solid; */
+        position: absolute;
+        margin-top: 50%;
+        margin-left: 25%;
+        color: #fff;
+        z-index: 999;
+        text-align: center;
+    }
+
+
+</style>
+
+
+<div class="index">
+
+<div class="detailbox">
+<div class="detail">
+    <div class="detailtitle">{weikucms:$topics.title}</div>
+    <div class="detailuser" onClick="window.location.href='../izone/user.html'">{weikucms:$topics.uname}</div>
+    <div class="detailtime">{weikucms::date('Y-m-d H:i:s',$topics['createtime'])}</div>
+    <div class="detailcontent">
+        <if condition="$topics['photos'] neq ''">
+        <div class="allpics">
+            <php>
+            if(!empty($topics['photos'])){
+                  $count = count(explode('|',$topics['photos']));
+                  echo '<figure data-count="'.$count.'张图片"><div>';
+                  $photos = explode('|',$topics['photos']);
+                  for($i=0;$i<count($photos);$i++){
+                    echo '<img src="'.$photos[$i].'" id="img'.$i.'" data-src="'.$photos[$i].'" data-gid="g7" onload="preViewImg(this, event);"/>';
+                  }
+                  echo '</div></figure>';
+            }
+        </php>
+        </div>
+        </if>
+        <p>{weikucms::htmlspecialchars_decode($topics['content'],ENT_QUOTES)}</p>
+    </div>
+</div>
+
+<div class="replybox">
+    
+    <div class="replytopbox">
+        <div class="replytop forum-ul">
+            <!--评论-->
+            <div class="relpybox">{weikucms:$cnum}<span class="reply icon-chat"></span></div>
+            <!--/评论-->
+
+            <!--赞-->
+            <div class="likebox" onclick="praiseTrends({weikucms:$topics['id']},'{weikucms:$openid}','{weikucms:$_GET['token']}')">
+                <span class="icon-thumbs-up like" style="<php>if(in_array($openid,explode(',',$topics['favourid']))){echo 'color:rgb(231, 200, 26)';}else{echo 'color:#f4f4f4';}</php>">
+                    <if condition="empty($topics['favourid'])">0
+                    <else />
+                    {weikucms::count(explode(',',$topics['favourid']))}
+                    </if>
+            <div class='liketips'>
+                <span class="icon-thumbs-up like">
+                     <if condition="empty($topics['favourid'])">+1
+                    <else />-1
+                    </if>
+                </span>
+            </div>
+            </div>
+            <!--/赞-->
+
+            <!--收藏或叫做喜欢-->
+            <div class="colect" onclick="collectTrends({weikucms:$topics['id']},'{weikucms:$openid}','{weikucms:$_GET['token']}')">
+                <span class="icon-heart"style="<php>if(in_array($openid,explode(',',$topics['likeid']))){echo 'color:rgb(231, 200, 26)';}else{echo 'color:#f4f4f4';}</php>"><if condition="empty($topics['likeid'])">0<else />{weikucms::count(explode(',',$topics['likeid']))}</if></span>
+                <div class='colecttips'>取消收藏！</div>
+            </div>
+            <!--/收藏或叫做喜欢-->
+
+            <!--隐藏表单-->
+            <input id="token" value="{weikucms:$token}" type="hidden" />
+            <input id="openid" value="{weikucms:$openid}" type="hidden" />
+            <!--/隐藏表单-->
+        </div>
+
+        <!--箭头-->
+        <div class="arrowbox"><div class="arrowdown"></div></div>
+    </div>
+        <!--/箭头-->
+
+    <!--楼层-->
+    <volist name="comment" id="vo" key="k">
+    <div class="replylist forum-ul">
+        <div class="reply-l ">
+            <div class="replysuerlogo" style="background-image: url({weikucms:$vo.uinfo.headimgurl});background-repeat: no-repeat;background-size: cover;background-position: 50%"></div>
+        </div>
+        <div class="reply-r ">
+            <div class="reply-r-top forum-ul">
+                <div class="replyusername " onClick="window.location.href='../izone/user.html'">{weikucms:$vo.uname}</div>
+                <div class="replyfloor ">{weikucms:$k}楼</div>
+            </div>
+            <div class="replycontent fastreplythis" cid="{weikucms:$vo.id}" tid="{weikucms:$topics['id']}" reid="{weikucms:$vo.uid}" uname="{weikucms:$vo.uname}" token="{weikucms:$token}" openid="{weikucms:$openid}"><span class="lc">{weikucms:$vo.content}</span>
+                <span style="<php>if(in_array($openid,explode(',',$vo['favourid']))){echo 'color:rgb(231, 200, 26)';}else{echo 'color:#8f8f8f';}</php>" class="zz icon-thumbs-up" onclick="commentPraise({weikucms:$vo['id']},'{weikucms:$openid}','{weikucms:$token}')">
+                    <if condition="empty($vo['favourid'])">0
+                        <else />{weikucms::count(explode(',',$vo['favourid']))}
+                    </if>
+                </span>
+            </div>
+            <div class="forum-ul reply-r-bottom">
+                <div class="replytime ">{weikucms::date('Y-m-d H:i:s',$vo['createtime'])}</div>
+                <if condition="$vo['uid'] eq $openid">
+                <div class="delbtn" onclick="delComment(this,{weikucms:$vo.id},'{weikucms:$token}','{weikucms:$openid}',1)">删除</div>
+                <else />
+                </if>
+                <div class="replybtn  fastreplythis" cid="{weikucms:$vo.id}" tid="{weikucms:$topics['id']}" reid="{weikucms:$vo.uid}" uname="{weikucms:$vo.uname}" token="{weikucms:$token}" openid="{weikucms:$openid}">回复</div>
+            </div>
+
+
+            <!--楼中楼-->
+           <div class="replythis-box">
+               <div class="arrowup"></div>
+               <volist name="a" id="v">
+               <if condition="$v['cid'] eq $vo['id']">
+               <div class="x replythis">
+                   <div class="replythislist  fastreplythis"  cid="{weikucms:$vo.id}" tid="{weikucms:$topics['id']}" reid="{weikucms:$v.uid}" uname="{weikucms:$v.uname}" token="{weikucms:$token}" openid="{weikucms:$openid}">
+                       <span class="replyusername" onClick="window.location.href=''">
+                           <if condition="$vo['uname'] eq $v['touname']">
+                               {weikucms:$v.uname}
+                               <else />
+                               {weikucms:$v.uname} 回复：{weikucms:$v.touname}
+                           </if>
+                       </span >
+                       <span class="replycontent"><span class="lzl">{weikucms:$v.content}</span></span>
+                       <if condition="$v['uid'] eq $openid">
+                       <span class="delfastreply icon-remove" onclick="delComment(this,{weikucms:$v.id},'{weikucms:$token}','{weikucms:$openid}',2)"></span>
+                       <else />
+                       </if>
+                       <div class="myul">
+                           <span class="ReplyTimeStamp">{weikucms::date('Y-m-d H:i:s',$v['createtime'])}</span>
+                           <span  style="<php>if(in_array($openid,explode(',',$v['favourid']))){echo 'color:rgb(231, 200, 26)';}else{echo 'color:#8f8f8f';}</php>" class="zz icon-thumbs-up" onclick="commentPraise({weikucms:$v['id']},'{weikucms:$openid}','{weikucms:$token}')">
+                               <if condition="empty($v['favourid'])">0
+                                   <else />{weikucms::count(explode(',',$v['favourid']))}
+                               </if>
+                           </span>
+                       </div>
+                   </div>
+               </div>
+               </if>
+               </volist>
+            </div>
+            <!--/楼中楼-->
+
+        </div>
+    </div>
+    </volist>
+    <!--/楼层-->
+    
+    <!--楼层评论-->
+    <div class="replyinputbox">
+    <div class="inputtips">评论</div>
+    <textarea class="forumtextarea" placeholder="禁止发布广告、色情、谩骂等相关评论！" id="Content"></textarea>
+    <div class="inputbottom forum-ul">
+     <input type="file" style="display:none" class="uploadpic" />
+        <div class="inputface" id="lcinputface"><span class="co icon-happy"></span></div>
+        <div class="inputcomfirm  btn" onclick="submitComment({weikucms:$topics['id']},'{weikucms:$openid}','{weikucms:$token}')">发布</div>
+    </div>
+    </div>
+    <!--/楼层评论-->
+</div>
+</div>
+
+<!--楼中楼评论-->
+<div class="replythisinputbox forum-ul">
+    <div class="inputlabel">
+        <input class="fastinput" placeholder="" type="text" />
+        <span class="inputface co icon-happy" id="lzlinputface"></span>
+    </div>
+    <div class="fastsend">发送</div>
+</div>
+<!--楼中楼评论-->
+
+<!--底部-->
+<footer class="myul">
+    <div data-foot="home" class="tapfoot myli home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="tapfoot myli more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="tapfoot myli user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="circle">
+            <if condition="($messageNum neq '0') or ($messageNum neq 0)">
+                <span data-tip="{weikucms:$messageNum}" class="icons_my"></span>
+            </if>
+            <span class="icon-user"></span>
+        </div>
+    </div>
+</footer>
+<!--/底部-->
+
+<!--发帖-->
+<div class="fmore">
+<div class="onlyu moreli"><div><span class="icon-eye"></span>只看Hi<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="iwrite moreli" onClick="window.location.href='{weikucms::U('Forum/add',array('token'=>$token,'openid'=>$openid))}'" ><div><span class="icon-pencil"></span>发帖<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="gotop moreli"><div><span class="icon-arrow-up"></span>回到顶部<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="helpcenter moreli"><div><span class="icon-question"></span>帮助中心<span class="icon-uniE638 arrowright"></span></div></div>
+</div>
+<div id="shade"></div>
+<div id="replyshade"></div>
+
+
+<!--/发帖-->
+
+</div>
+</body>
+<script>
+    $(function(){
+      $(".zz").click(function(e){
+          e.preventDefault();
+          e.stopPropagation();
+      })
+    })
+</script>
+<script type="text/javascript">
+    // 绑定表情
+    $('#lcinputface').SinaEmotion($('.forumtextarea'));
+    // 绑定表情
+    $('#lzlinputface').SinaEmotion($('.fastinput'));
+    //解析表情
+    window.onload = function(){
+        var inputText = $("p").text();
+        $("p").html(AnalyticEmotion(inputText));
+        $(".lc").each(function(i,o){
+            var lcinputface = $(o).text();
+            $(o).html(AnalyticEmotion(lcinputface));
+        });
+        $(".lzl").each(function(i,o){
+            var lzlinputface = $(o).text();
+            $(o).html(AnalyticEmotion(lzlinputface));
+        });
+    }
+
+</script>
+</html>

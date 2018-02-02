@@ -1,0 +1,97 @@
+ <volist name="comment" id="vo">
+    <div class="bbsBox white-bg">
+        <div class="bbsUserInfo myul">
+        <if condition="$vo['openid'] eq $openid">
+            <a href="{weikucms::U('Wap/Commercedyb/userCenter/',array('token'=>$token,'openid'=>$openid))}">
+        <else />
+            <a href="javascript:void(0);">
+        </if>
+            <div class="circle bbsuserLogo fixBg" style="background-image:url({weikucms:$vo['headimg']})">
+            </div>
+            </a>
+            <div class="bbsUserMoreInfo">
+                <div class="bbsUserName">
+                    {weikucms:$vo['nickname']}
+                </div>
+                <div class="bbsGrade myul">
+                    <div class="icon icon-grade">
+                        
+                    </div>
+                    <div class="bbsGradeDetail crown-yellow-bg white">{weikucms:$vo.lvl}</div>
+                </div>
+            </div>
+            <if condition="$vo['openid'] eq $openid">
+                <div class="deletes">
+                    <a href="javascript:void(0);" data-url="{weikucms::U('Wap/Commercedyb/deletes',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'did'=>$vo['id']))}">删除</a>
+                </div>
+            <else/>
+            </if>
+        </div>
+        <a  href="{weikucms::U('Wap/Commercedyb/lookUpDetails',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['id']}">
+        <div class="bbsContent">
+                {weikucms:$vo.content}
+        </div>
+        <if condition="$vo['img_url'] eq ''">
+        <else/>
+            <div class="bbsPic fixBg" style="background-image:url({weikucms:$vo.img_url})" data-url="{weikucms:$vo.img_url}"></div>
+        </if>
+        </a>
+        <div class="postAddress">{weikucms:$vo.address}</div>
+        <div class=" bbsAction myul">
+			<div class="timeshows">
+            <php>
+                if(intval(time()-strtotime($vo['add_time'])>3600))
+                {
+                    echo date("Y-m-d H:i",strtotime($vo['add_time']));
+                }elseif(intval(time()-strtotime($vo['add_time'])<60)){
+                    echo intval(time()-strtotime($vo['add_time']))."秒前";
+                }else{
+                    echo intval(intval((time()-strtotime($vo['add_time']))/60))."分钟前";
+                }
+            </php>
+            </div>
+            <div class=" border-20 bbsBtn bbsLike <if condition='$vo["zan"] eq 1'>on<else/></if>">
+            <!-- 显示是否是以及帖子的ID号码 -->
+                <input type="hidden" value="{weikucms:$vo['zan']}-{weikucms:$vo['id']}" />
+                <div class="icon icon-like "></div>
+                <div class="likeCount">{weikucms:$vo.dianzan}</div>
+            </div>
+            <div class=" border-20 bbsBtn bbsReply">
+                <div class="icon icon-reply "></div>
+                <div id="replyCount">{weikucms:$vo.pinglun}</div>
+            </div>
+        </div>
+        <div class="replyInputBox">
+            <volist name="vo.comments" id="so">
+                <if condition="$so['comment'] neq ''">
+                     <div class="RPBItem myul">
+                        <div class="circle reUserlogo fixBg" style="background-image:url({weikucms:$so['headimg']})"></div>
+                        <div class="reContent" data-id="{weikucms:$so['id']}" data-openid="{weikucms:$so['openid']}">
+                            {weikucms:$so['nickname']}：{weikucms:$so.comment}
+                        <input type="hidden" name="replayId" class="replayId" />
+                        </div>
+                        <if condition="$openid eq $so['openid']">
+                            <div class="delYouComment" data-openid="{weikucms:$openid}" data-url="{weikucms::U('Wap/Commercedyb/delComment',array('token'=>$token,'openid'=>$openid,'id'=>$so['id']))}">
+                            删除
+                            </div>
+                        <else/>
+                        </if>
+                    </div>
+                 <else/>
+                 </if>
+            </volist>
+            <if condition="$vo['totalCount'] gt 3">
+                <a class="lookUpMore" href="{weikucms::U('Wap/Commercedyb/lookUpDetails',array('token'=>$_GET['token'],'openid'=>$openid))}&articleId={weikucms:$vo['id']}">查看全部{weikucms:$vo.totalCount}条回复</a>
+            <else />
+            </if>
+            <div class="reInputReply myul hide">
+                <div class="inputReplyBox">
+                    <input type="text" placeholder="请输入回复内容" />
+                </div>
+                <span class="replayBtn" data-replay="{weikucms:$vo.openid}" data-id="{weikucms:$vo.id}">
+                    回复
+                </span>
+            </div>
+        </div>
+    </div>
+</volist>

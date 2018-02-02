@@ -1,0 +1,342 @@
+<include file="Public:head"/>
+<div class="">
+    <div class="cLineB">
+        <h4 style="position:relative;">
+            修改活动
+            <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('ServicestoreNew/index',array('token'=>$token))}">
+                返回
+            </a>
+        </h4>
+    </div>
+
+
+    <script>
+
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('#explain', {
+                resizeType : 1,
+                allowPreviewEmoticons : false,
+                allowImageUpload : true,
+                uploadJson : '/index.php?g=User&m=Upyun&a=kindedtiropic',
+                items : [
+                    'source','undo','plainpaste','wordpaste','clearhtml','quickformat','selectall','fullscreen','fontname', 'fontsize','subscript','superscript','indent','outdent','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline','hr']
+            });
+        });
+    </script>
+
+
+
+    <script>
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#pic').val(),
+                        clickFn : function(url, title) {
+                            K('#pic').val(url);
+                            $("#image_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#supload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#spic').val(),
+                        clickFn : function(url, title) {
+                            K('#spic').val(url);
+                            $("#simage_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#eupload').click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#epic').val(),
+                        clickFn : function(url, title) {
+                            K('#epic').val(url);
+                            $("#eimage_show").attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!--复制开始-->
+    <div class="cLineB" id="uppict" style="display:none">
+        <script>
+            function selurl() {
+
+                var url = document.getElementById("url");
+                var select1 = document.getElementById("select");
+                url.value = select1.value;
+            }
+        </script>
+    </div>
+    <!--复制结束-->
+    <div class="msgWrap">
+        <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+            <table class="userinfoArea" style="ma" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <tr>
+                    <th valign="top">活动主题</th>
+                    <td>
+                        <input type="input" class="px" id="title" value="{weikucms:$data.title}" name="title" style="width:300px" placeholder="此处填写活动主题">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">礼品类型</th>
+                    <td>
+                        <select class="px" id="is_lock"  name="is_lock">
+                            <option >请选择礼品类型</option>
+                            <option value="0"<if condition="$data['is_lock'] eq 0">selected</if>>普通类型</option>
+                            <option value="1"<if condition="$data['is_lock'] eq 1">selected</if>>设锁类型</option>
+                            <option value="2"<if condition="$data['is_lock'] eq 2">selected</if>>红包类型</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">礼品编号</th>
+                    <td>
+                        <input type="input" class="px" id="giftkey" value="{weikucms:$data.giftkey}" name="giftkey" style="width:300px" readonly="readonly">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">礼品名字</th>
+                    <td>
+                        <input type="input" class="px" id="giftname" value="{weikucms:$data.giftname}" name="giftname" style="width:300px" placeholder="此处填写礼品名字，例如“电脑”">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">所需积分</th>
+                    <td>
+                        <input type="input" class="px" id="integral" value="{weikucms:$data.integral}" name="integral" style="width:180px" placeholder="此处填写兑换礼品所需的积分”">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">礼品总库存</th>
+                    <td>
+                        <input type="number" class="px" id="number" value="{weikucms:$data.num}" name="number" style="width:180px" placeholder="此处填写兑换礼品的总库存”">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">适用范围</th>
+                    <td>
+
+                        <select class="px" id="extent"  name="extent">
+                            <option value="0">所有人</option>
+                            <volist name="result" id="vo">
+                                <option value="{weikucms:$vo.id}">{weikucms:$vo.name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top"> 礼品图片：</th>
+                    <td>
+                        <img style="display: none;" id="image_show" class="indexs_img" src="{weikucms:$data.pic}">
+                        <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$data.pic}" style="width:300px;"   />
+                        <span class="ke-button-common" id="upload" style="margin-left: 5px;">上传礼品图片</span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>截至时间：</th>
+                    <td><input type="input" class="px" id="starttime" value="{weikucms:$data.starttime}" onClick="WdatePicker()" name="starttime" style="width:175px;"/>
+                        到
+                        <input type="input" class="px" id="endtime" value="{weikucms:$data.endtime}" name="endtime" onClick="WdatePicker()" style="width:175px;"></td>
+                </tr>
+                <tr>
+                    <th valign="top">可兑换次数</th>
+                    <td>
+                        <input type="input" class="px" id="degree" value="{weikucms:$data.degree}" name="degree" style="width:100px" placeholder="">
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">礼品兑换说明：</th>
+                    <td valign="top"><textarea class="px" id="explain" name="explain" style="width: 560px; height: 120px;">{weikucms:$data.explain}</textarea></td>
+                </tr>
+                <!--<tr>
+                    <th valign="top">是否上架</th>
+                    <td>
+                        <input type="radio" class="px"  value="1" name="is_up" <if condition="$data['is_up'] eq 1">checked</if>>上架
+                        <input type="radio" class="px"  value="2" name="is_up" <if condition="$data['is_up'] eq 2">checked</if>>下架
+                    </td>
+                </tr>-->
+
+                <tr>
+                    <th>
+                    </th>
+                    <td>
+                        <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                            保存
+                        </button>
+                        <div class="clr">
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+
+    <div class="clr">
+    </div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+
+            var title = $("#title").val();
+            var giftname = $("#giftname").val();
+            var integral = $("#integral").val();
+            var extent = $("#extent").val();
+            var is_lock = $("#is_lock").val();
+            var pic = $("#pic").val();
+            var starttime = $("#starttime").val();
+            var endtime =$("#endtime").val();
+            var degree =$("#degree").val();
+            var explain = editor.html();
+            var num = $("#number").val();
+            var is_up = $("input[name='is_up']:checked").val();
+
+
+            if(! title){
+                notif({
+                    msg: "活动主题不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! giftname){
+                notif({
+                    msg: "礼品名称不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! integral){
+                notif({
+                    msg: "所需积分不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! num){
+                notif({
+                    msg: "库存不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! extent){
+                notif({
+                    msg: "适用范围不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! pic){
+                notif({
+                    msg: "还没上传分类图片",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! starttime){
+                notif({
+                    msg: "开始日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! endtime){
+                notif({
+                    msg: "结束日期不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! degree){
+                notif({
+                    msg: "可兑换次数不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! explain){
+                notif({
+                    msg: "礼品兑换说明不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+           /* if(! is_up){
+                notif({
+                    msg: "请选择是否上下架",
+                    type: "warning"
+                });
+                return false;
+            }*/
+            var posturl = "{weikucms::U('ServicestoreNew/save',array('token'=>$token,'id'=>$data['id']))}";
+            $.post(posturl,
+                    {title:title,num:num,is_up:is_up,is_lock:is_lock,giftname:giftname,integral:integral,extent:extent,pic:pic,starttime:starttime,endtime:endtime,degree:degree,explain:explain},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+
+
+        $('#extent').find('option').eq($('#extent').val("{weikucms:$data.extent}").index()).setAttribute('selected','selected');
+
+    });
+
+</script>
+
+<include file="Public:footer" />
+

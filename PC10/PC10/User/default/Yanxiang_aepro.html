@@ -1,0 +1,249 @@
+<include file="Public:head"/>
+
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#info', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+allowFileManager:true
+});
+
+});
+</script>
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#img').val(),
+                    clickFn : function(url, title) {
+                        K('#img').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+  
+           <div class="cLineB">
+            <if condition="$hover eq 1">
+              <h4 class="left">修改产品</h4>    
+            <else/>
+              <h4 class="left">新增产品</h4> 
+            </if>
+              
+              <div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+                <a href="{weikucms::U('Yanxiang/cSearch',array('token'=>$token,'uid'=>$uid))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+              </div>
+              <div class="searchbar"> 
+              </div>
+              <div class="cLine">
+
+              <div class="clr"></div>
+              </div>
+          </div>
+         
+         
+          
+          <!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">
+ </div> 
+ 
+ <!--复制结束--> 
+ <form method="post"   action=""  enctype="multipart/form-data" >
+          <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <TBODY>
+
+
+                <TR>
+                  <TH valign="top"><label for="picurl">产品图片：</label></TH>
+
+                  <TD>
+                    <if condition="$hover eq 1">
+                      <img id="image_show" class="indexs_img" src="{weikucms:$info.img_path}">
+                    <else/>
+                      <img id="image_show" class="indexs_img" src="">
+                    </if>
+                  </TD>
+                </TR>
+                
+                 <TR>
+                  <TH valign="top"><label for="pic">上传产品图片：</label></TH>
+                  <TD>
+                   <if condition="$hover eq 1">
+                      <input type="hidden" class="text textMiddle inputQ"  name="img" id="img" value="{weikucms:$info.img_path}" style="width:300px;"   />
+                      <span class="ke-button-common" id="upload">上传产品图片</span>
+                   <else/>
+                      <input type="hidden" class="text textMiddle inputQ"  name="img" id="img" value="" style="width:300px;"   />
+                      <span class="ke-button-common" id="upload">上传产品图片</span>
+                   </if>
+                </TD>
+                </TR>
+
+                   <TR>
+                  <TH valign="top"><label for="pic">产品型号：</label></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <input type="input" class="px" id="proType" value="{weikucms:$info.type}" name="proType" placeholder="请填写产品型号">
+                     <else/>
+                        <input type="input" class="px" id="proType" value="" name="proType" placeholder="请填写产品型号">
+                     </if>
+                 </TD>
+                 </TR>
+                  
+                  <TR>
+                      <TH valign="top"><label for="pic">产品名称：</label></TH>
+                      <TD>
+                        <if condition="$hover eq 1">
+                           <input type="input" class="px" id="proName" value="{weikucms:$info.name}" name="proName" placeholder="请填写产品名称">
+                        <else/>
+                            <input type="input" class="px" id="proName" value="" name="proName" placeholder="请填写产品名称">
+                        </if>
+                     </TD>
+                 </TR>
+
+                  <TR>
+                      <TH valign="top"><label for="pic">产品描述：</label></TH>
+                      <TD>
+                        <if condition="$hover eq 1">
+                           <textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();" placeholder="请填写产品描述">
+                              <php>echo html_entity_decode(htmlspecialchars_decode($info['content'],ENT_QUOTES))</php>
+                          </textarea>
+                        <else/>
+                            <textarea name="info" id="info"  rows="5" style="width:590px;height:360px"  onfocus="leave();" placeholder="请填写产品描述"></textarea>
+                        </if>
+                     </TD>
+                 </TR>
+                 
+
+                
+                <TR>
+                  <TH></TH>
+                  <TD>
+                     <if condition="$hover eq 1">
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">修改</button>
+                     <else/>
+                        <button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button>
+                     </if>
+                  </TD>
+                </TR>
+               <TR style="height: 150px;">
+
+               </TR>
+              </TBODY>
+            </TABLE>
+            
+          </div>
+          </form>
+          
+        </div>     
+ 
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+<!--底部-->
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var img = $("#img").val();
+            // 产品类型
+            var proType = $("#proType").val();
+            // 产品名称
+            var proName = $("#proName").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            var uid = "{weikucms:$uid}";
+            var content = editor.html();
+
+            if(!img){
+                notif({
+                    msg: "您还没上传产品图片哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!proType){
+                notif({
+                    msg: "请填写产品型号",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(!proName){
+                notif({
+                    msg: "请填写产品名称",
+                    type: "warning"
+                });
+                return false;
+            }
+
+             if(!content){
+                notif({
+                    msg: "请填写产品描述",
+                    type: "warning"
+                });
+                return false;
+            }
+            
+              // 修改页面
+            if("{weikucms:$hover}" == 1){
+                  $.post("{weikucms::U('Yanxiang/aeproacc',array('token'=>$token,'id'=>$info['id']))}",
+                      {img:img,proType:proType,__hash__:__hash__,proName:proName,uid:uid,content:content},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+              return;
+            }
+
+                 // 添加页面
+                 $.post("{weikucms::U('Yanxiang/aeproacc',array('token'=>$token))}",
+                      {img:img,proType:proType,__hash__:__hash__,proName:proName,type:1,uid:uid,content:content},
+                      function(data){
+                  if(data.status == 1){
+                      notif({
+                          msg: data.info,
+                          type: "success"
+                      });
+                      setTimeout(function(){
+                          window.location.href = data.url;
+                      },'1000');
+                  }else{
+                      notif({
+                          msg: data.info,
+                          type: "error"
+                      });
+                  }
+              },'json');
+        });
+
+    });
+
+</script>
+<include file="Public:footer"/>

@@ -1,0 +1,124 @@
+<include file="Public:head"/>
+
+<script src="{weikucms::RES}/js/card/jquery.js"  type="text/javascript" ></script>
+
+
+    <div class="cLineB">
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0">
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Sms/index',array('token'=>$token))}" <if condition="$hover eq 1" >class="hover"</if>>短信配置</a>
+                </li>
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('Sms/record',array('token'=>$token))}" <if condition="$hover eq 2" >class="hover"</if>>验证码发送记录</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>配置短信内容,查看短信验证记录,目前仅支持云信http://www.sms.cn/</li>
+
+        </ol>
+    </div>
+
+
+    <div class="msgWrap">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>手机号码</th>
+                <th style="width: 500px;">验证码</th>
+                <th>时间</th>
+                <th>是否验证</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+                <tr>
+                    <td>{weikucms:$vo.id}</td>
+                    <td>{weikucms:$vo.phone}</td>
+                    <td>{weikucms:$vo.content}</td>
+                    <td><php>echo date("Y-m-d H:i:s",$vo['add_time']);</php></td>
+                    <td>
+                        <if condition="$vo['is_ok'] eq 0">
+                            <span class="badge badge-info">未验证</span>
+                            <elseif condition="$vo['is_ok'] eq 1"/>
+                            <span class="badge badge-success">已验证</span>
+                        </if>
+                    </td>
+
+                </tr>
+            </volist>
+
+            </tbody>
+        </table>
+
+    </div>
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+
+    <include file="Public:footer"/>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#bsubmit").click(function(){
+                var account = $("#account").val();
+                var pwd = $("#pwd").val();
+                var status = $("#status").val();
+                var __hash__ =  $("input[name='__hash__']").val();
+
+                if(!account){
+                    notif({
+                        msg: "请输入短信账号",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                if(!pwd){
+                    notif({
+                        msg: "请输入短信密码",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
+                $.post("{weikucms::U('Sms/index',array('token'=>$token))}",
+                        {account:account,pwd:pwd,status:status,__hash__:__hash__},
+                        function(data){
+                            if(data.status == 1){
+                                notif({
+                                    msg: data.info,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    window.location.href = data.url;
+                                },'1000');
+                            }else{
+                                notif({
+                                    msg: data.info,
+                                    type: "error"
+                                });
+                            }
+                        },'json');
+
+            });
+        });
+
+    </script>
+
+
+</div>

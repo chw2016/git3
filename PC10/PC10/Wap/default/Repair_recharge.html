@@ -1,0 +1,140 @@
+
+<!-- saved from url=(0126)http://wx.rongchain.com/mobile.php?act=module&do=wapindex&user_type=1&from_user=oMWhZt_kOO8jsIU7RL3dw4QvfBYM&name=icard&weid=5 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/service/css/card.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/service/css/datepicker.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/service/css/default.css" media="all">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/charge.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/zepto_1.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/card_share.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jQuery_1.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/bootstrap_datepicker_card.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.flip.min.js"></script>
+   <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/card.js"></script>
+	<style>
+	.masklayer{display:none;position:fixed;top:0;left:0;z-index:2000;width:100%;height:100%;background-color:rgba(0,0,0,0.5);text-align:right;}
+	.masklayer.on{display:block;}
+	.masklayer img{margin-top:10px;margin-right:30px;width:160px;}
+	</style>
+    <title>充值</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body id="card" ondragstart="return false;" onselectstart="return false;" style="background:#fff;">
+    <div class="pageTitle" style="font-size:15px;">
+        <i style="background:#f15151;"></i>
+        <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+        <a href="{weikucms::U('Wap/Repair/home',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">服务商首页</a>&nbsp;>>&nbsp;充值
+    </div>
+    <div class="publicList wml100">
+            <ul>
+                <li class="noAfter">
+                    <div class="li-l">充值方式</div>
+                    <div class="li-r" style="position:static;">
+                        <span class="bcqtxx" style="right:1px;top:8px;">
+                            <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:0px;top:0px;border-left:1px solid #cfcbcb"/>
+                        </span>
+                        <select id="charge" class="select">
+                            <option value="0" selected></option>
+                            <option value="微信支付">微信支付</option>
+                            <option value="卡充值">卡充值</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="noAfter">
+                    <div class="li-l">充值金额</div>
+                    <div class="li-r" style="position:relative;">
+                        <input id="money" placeholder="请输入充值金额" value="" class="input" maxlength="20">
+                    </div>  
+                </li>   
+                <!--<li class="noAfter">
+                    <div class="li-l">快速充值</div>
+                    <div class="li-r" style="position:static;">
+                         <span class="bcqtxx" style="right:1px;top:8px;">
+                            <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="51px" height="51px" style="position:absolute;right:0px;top:0px;border-left:1px solid #cfcbcb"/>
+                         </span>
+                        <select id="quickly" class="select">
+                            <option value="0" selected></option>
+                            <option value="50元">50元</option>
+                            <option value="150元">150元</option>
+                            <option value="200元">200元</option>
+                            <option value="250元">250元</option>
+                            <option value="300元">300元</option>
+                            <option value="350元">350元</option>
+                            <option value="400元">400元</option>
+                        </select>
+                    </div>
+                </li>            -->
+            </ul>
+    </div>
+
+    <div class="button clearfix">
+        <div style="width:100%;">
+            <a href="javascript::" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" class="gray flag" id="charge">充值</a>
+        </div>
+    </div>
+    <div style="padding: 5px 12px;border:1px solid #cfcbcb;border-radius:6px;margin:0 auto;width: 88%">
+
+    <div style="font-size:12px;font-weight:800;margin-top:10px;line-height:24px;">
+            说明：
+        </div>
+        <ul>
+            <li style="line-height:24px;">1.微信支付和充值卡功能暂未开通。</li>
+            <li style="line-height:24px;">2.目前仅能能过银行汇款进行充值，详情参见：<a href="http://www.yihaofuwu.cn/wap/aspcms/about/about-130.html" target="_blank">
+                http://www.yihaofuwu.cn/
+                wap/aspcms/about/about-130.html</a>
+            </li>
+
+
+        </ul>
+    </div>
+
+    <footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=home&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                        <span class="home-index-active">首页</span>
+                    </a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=myOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}&type=1"><span class="Order-index">订单</span></a>
+                    <a href="index.php?g=Wap&amp;m=Repair&amp;a=recharge&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}"><span class="My-index">充值</span></a>
+                    
+              </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">
+    $(function(){
+        $('.flag').mousedown(function(){
+            $(this).addClass('red').removeClass('gray');
+        });
+        $('.flag').mouseup(function(){
+            $(this).addClass('gray').removeClass('red');
+        });
+    })
+</script>
+ <style type="text/css">
+            .gray{
+                border-top:2px solid #ddd !important;
+                border-left:2px solid #ddd !important;
+                border-right:2px solid #888 !important;
+                border-bottom:2px solid #888 !important;
+            }.red{
+                border-top:2px solid #888 !important;
+                border-left:2px solid #888 !important;
+                border-right:2px solid #ddd !important;
+                border-bottom:2px solid #ddd !important;
+            }.indexMenu a span{
+                color: #fff;
+            }
+</style>
+
+</body>
+</html>

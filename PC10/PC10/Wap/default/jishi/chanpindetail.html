@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+</head>
+<body>
+<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+    产品介绍
+</div>
+
+<div class="produceImg setMiddle boxShadow fixBg" style="background-image:url({weikucms:$Product.image})"></div>
+<div class="produceNameBox lisheng-red-bg setMiddle lisheng-text-color h3 myul">
+    <div class="produceName white-bg myli">
+    {weikucms:$Product.title}
+    </div>
+    <div class="RMB white myli">
+    {weikucms:$Product.price}
+    </div>
+</div>
+<div class="lisheng-text-color h4 setMiddle textMiddle oldPrice">
+    实体价：<span class="RMB">{weikucms:$Product.entity_price}</span>
+</div>
+<div class="produceInfoBox setMiddle boxShadow white-bg lisheng-text-color">
+    <div class="PIBTitle h4">
+        {weikucms:$Product.title}
+    </div>
+    <div class="produceInfo h5">
+    <php>echo htmlspecialchars_decode($Product['desc'])</php>
+    </div>
+</div>
+
+</body>
+</html>

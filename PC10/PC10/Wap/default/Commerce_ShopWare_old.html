@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>{weikucms:$tpl['name']}</title>
+		<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/commerce/css/style_old.css" />
+		
+		<script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+	<!-- sdd	<script src="http://zeptojs.com/zepto.js"></script> -->
+		<script src="tpl/Wap/default/common/commerce/js/core.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/iscroll.js"></script>
+		<script src="tpl/Wap/default/common/commerce/js/ShopCart.js"></script>
+        <link href="{weikucms::STATICS}/wapweiui/service/css/default2.css" rel="stylesheet" type="text/css">
+        <script src="{weikucms::STATICS}/wapweiui/service/js/cst_index.js" type="text/javascript"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/Smaty.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+
+        <style>
+
+            .title{
+                line-height: 50px;
+            }
+            .cateclass {
+                position: fixed;
+                width: 100%;
+                background-color: rgba(0,0,0,0.6);
+                color: #fff;
+                z-index: 2;
+                text-align: center;
+                display: none;
+            }
+
+            /*.cateclass .myli:nth-last-of-type(3n) {*/
+                /*border-bottom: 1px solid rgb(77,208,200);*/
+                /*float: left;*/
+                /*width: 33%;*/
+            /*}*/
+
+            .cateclass .myli {
+                border-bottom: 1px solid rgb(77,208,200);
+                border-right: 1px solid rgb(77,208,200);
+                float: left;
+                width: 33%;
+                line-height: 30px;
+                font-size: 13px;
+                background: #ffffff;
+                color: rgb(77,208,200);
+            }
+						div#tagName:after {
+			    content: "";
+			    position: absolute;
+			    top: 28px;
+			    color:rgb(77, 208, 200);
+			    left: 25px;
+			    border-bottom: 8px solid transparent;
+			    border-top: 8px solid transparent;
+			    border-left: 8px solid rgb(77, 208, 200);
+			}
+			#tagName{
+				height: 58px;
+				border-radius: 5px;
+				line-height: 14px;
+				color: white;
+				position: fixed;
+				left: -5px;
+				top: 25%;
+				opacity: 1;
+				z-index: 9;
+				width: 6px;
+				padding: 10px;
+				background-color: rgb(77, 208, 200);
+			}
+        </style>
+		<script type="text/javascript">
+            var GoodsDatas={weikucms:$warejson};
+            var goodsshopid = {weikucms:$shopinfo.id};
+		</script>
+        <script type="text/javascript">
+            $(function(){
+               $("#catebtn").click(function(){
+                   if($(".cateclass").is(":hidden")) {
+                       $(".cateclass").show();
+                       $("#tagName").hide();
+                   }else{
+                       $(".cateclass").hide();
+                       $("#tagName").show();
+                   }
+               })
+            });
+        </script>
+		
+    </head>
+    <body class="white-bg" style="width:100%;height:100%">
+    		<!-- 顶部DIV -->
+		    <div class="top myul light-green-bg topFixed">
+		    	<div class="homeBox left">
+		    		<div class="icon person home  white" onclick="window.location.href='{weikucms::U('Commerce/index',array('token'=>$token,'openid'=>$openid))}'"></div>
+		    	</div>
+		    	<div class="titleBox middle">
+		    		<div class="white" style="font-size: 13px;">
+                        {weikucms:$shopinfo.username}
+                        <span onclick="return collect()" style="margin-left: 10px;">收藏</span>
+		    		</div>
+		    	</div>
+		    	<div class="PersonBox right myul">
+                    <div class="icon person getSort circle white noneBG " id="catebtn" style="line-height: 60px;">
+		    			分类
+                    </div>
+		    	</div>
+		    </div>
+            <div class="top"></div>
+            <div class="cateclass">
+                <div class="myli" onclick="window.location.href='{weikucms::U('Commerce/ShopWare',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['wareid']))}'">全部</div>
+                <volist name="carts" id="cart">
+                    <div class="myli" onclick="window.location.href='{weikucms::U('Commerce/ShopWare',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['wareid'],'cid'=>$cart[id]))}'">{weikucms:$cart.tname}</div>
+                </volist>
+            </div>
+			<!---->
+
+			<!-- Banner DIV -->
+			<div class="bannerBox">
+				<div class="bannerBoxSwrap myul">
+                    <volist name="flashes" id="flash">
+                        <div class="banner light-yellow-bg" style="background-image: url('{weikucms:$flash.pic}')" onclick="window.location.href='{weikucms:$flash.url}'"></div>
+                    </volist>
+				</div>
+			</div>
+			<!---->
+			<!-- 滚动字幕 -->
+			<marquee class="marqueeBox"  direction="left" align="absmiddle" scrollamount="3px">
+				{weikucms:$shopinfo['des']}
+			</marquee>
+
+            <div style="height: 50px;width:100%;font-size:16px;text-align: center;line-height: 25px;background-color: rgb(249, 72, 72);color: white;">
+                <p>亲！点击商品图片即可添加商品哦</p>
+                点击左下角可以删除商品哦
+            </div>
+			<!---->
+			<!-- loading -->
+			<div class="loadingBox">
+				<div class="loading"></div>
+			</div>
+			<!---->
+            <php>if($shopinfo['yingye_status'] == 1 && ( date("H:i:s") > $shopinfo['start_time'] && date("H:i:s") < $shopinfo['end_time'])){</php>
+                <!-- 商品 DIV -->
+                <div class="waresBox hide">
+                    <div  class="waresBoxSwrap">
+                        <div id="tagName">所有产品</div>
+                        <volist name="wareinfo" id="shopinfo" key="k">
+                            <div class="waresItem floatLeft"  tagName="{weikucms:$shopinfo.tname}">
+                                <div class="circle light-yellow waresCircleSwrap addOne" key="{weikucms:$k-1}" data-count="0" goodsId="{weikucms:$shopinfo.id}" id="index_{weikucms:$shopinfo.id}">
+                                    <div class="circle light-green waresCircle" style="background-image:url('{weikucms:$shopinfo.pic}')"></div>
+                                    <div class="countBuy dark-red-bg circle white">0</div>
+                                </div>
+                                <div class="priceTag">
+                                    <span class="priceNow dark-red" id="RMB">{weikucms:$shopinfo.vprice}</span>
+                                    <span class="priceOld dark-gray" id="RMB">{weikucms:$shopinfo.price}</span>
+                                </div>
+                                <div class="waresDescrib dark-gray">{weikucms:$shopinfo.name}</div>
+                            </div>
+                        </volist>
+                    </div>
+                    <div>
+                        
+                    </div>
+                    <div style="height:100px;float:left; padding-top: 100px;"></div>
+                </div>
+
+
+                <!---->
+
+
+                <!-- 购物车 -->
+                <div class="shopCart light-gray-bg footer hide">
+                    <!-- 购物车为空 -->
+                        <div class="shopCartIsNullBox myul  ">
+                            <div class="circle warming light-yellow">!</div>
+                            <div class="shopCartIsNull dark-black">
+                                购物袋里还没有东西呢~
+                            </div>
+                        </div>
+                    <!---->
+
+                    <!-- 购物车不为空 -->
+                        <div class="shopCartHasGoods myul hide">
+                            <div class="circle arrowCricleSwrap darker-green-30 ">
+                                <div class="circle arrowCricle darker-green"></div>
+                            </div>
+                            <div class="totalCount dark-black">
+                                <span id="num" class="dark-red">0</span>份商品，共
+                                <span id="price" class="dark-red">0</span>元
+                            </div>
+                            <div class="white light-green-bg border5 goOrder" onclick="return Buy(this)" flag=1>好了，去买单</div>
+
+                            <div class="shopCartContent white-bg" id="wrap">
+                                <div id="scroller" class="Cartlist">
+
+                                </div>
+                            </div>
+                        </div>
+                    <!---->
+
+
+                </div>
+                <!---->
+            <php>}else{</php>
+                <div class="shopCartIsNullBox myul" style="margin-top:80px;">
+                    <div class="circle warming light-yellow">!</div>
+                    <div class="shopCartIsNull dark-black">
+                        店铺打烊中营业时间段<br>&nbsp;&nbsp;{weikucms:$shopinfo['start_time']} - {weikucms:$shopinfo['end_time']}
+                    </div>
+                </div>
+            <php>}</php>
+            <div id="kkb" style="    position: fixed;    margin: 0 auto;    margin-top: 25%;    left: calc(50% - 14px);    zindex: 999999;    z-index: 9999999;
+"></div>
+			
+    </body>
+
+    <script>
+        function Buy(obj){
+            var orderinfo=localStorage['CartJson_'+goodsshopid];
+            var flag=$(obj).attr("flag");
+            var url="{weikucms::U('Commerce/BuyOrder',array('token'=>$token,'openid'=>$openid))}";
+            if(flag==1){
+                $(obj).html("正在下单....");
+                $.post(url,{orderinfo:orderinfo},function(data){
+                    if(data.status==1){
+                        $(obj).attr("flag",2);
+                        localStorage['CartJson_'+goodsshopid]="";
+                        localStorage['CartList_'+goodsshopid]="";
+                        location.href="{weikucms::U('Commerce/account',array('token'=>$token,'openid'=>$openid))}"+"&oid="+data.oid;
+                    }else{
+                        $(obj).attr("flag",1);
+                        show_error_tip(data.info);
+                        $(obj).html("好的，去买单");
+                    }
+                },"json")
+            }else{
+                show_error_tip("订单正在生成中，请稍后!");
+            }
+        }
+
+        //收藏
+        function collect(){
+            url="{weikucms::U('Commerce/collect',array('token'=>$token,'openid'=>$openid,'wareid'=>$wareid))}";
+            $.post(url,function(data){
+                if(data.status==1){
+                    alert(data.info);
+                }else{
+                    alert(data.info);
+                }
+            },"json")
+        }
+
+        //           function getinfo(obj){
+        //               var cid=$(obj).attr("cid");
+        //               var url="{weikucms::U('Commerce/ShopAjax',array('token'=>$token,'openid'=>$openid))}";
+        //               $.post(url,{cid:cid},function(data){
+        //                   GoodsDatas=data.ware;
+        //                   var html="";
+        //                   $.each(data.ware,function(i,o){
+        //                      html+='<div class="waresItem floatLeft"> <div class="circle light-yellow waresCircleSwrap" key="'+i+'" data-count="0" goodsId="'+o.sid+'" id="index_'+o.sid+'"> <div class="circle light-green waresCircle" style="background-image:url('+o.pic+')"></div> <div class="countBuy dark-red-bg circle white">0</div> </div> <div class="priceTag"> <span class="priceNow dark-red" id="RMB">'+o.vprice+'</span> <span class="priceOld dark-gray" id="RMB">'+o.price+'</span> </div> <div class="waresDescrib dark-gray">'+o.name+'</div> </div>';
+        //                       square($(".waresCircleSwrap"));
+        //                   })
+        //                   $(".waresBoxSwrap").html(html);
+        //                   $(".blur").hide();
+        //               },"json")
+        //           }
+    </script>
+
+    <script type="text/javascript">
+        $("#loadMore").click(function(){
+            var btn = $(this);
+            var count = parseInt(btn.attr("count"));
+            var url = "{weikucms::U('Wap/Commerce/ShopWareajax',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['wareid'],'cid'=>$_GET['cid']))}";
+            	btn.text('小二正在拼命加载...');
+	            $.post(url,{count:count},function(data){
+	    			var html = "";
+                    if(data.length != 0) {
+                        $.each(data, function (i, o) {
+                            html += "<div class='waresItem floatLeft' tagName='" + data[i].tname + "'>" +
+                            "<div class='circle light-yellow waresCircleSwrap addOne' key='" + (count * 21 + i) + "' data-count='0' goodsId='" + data[i].id + "' id='index_" + data[i].id + "'>" +
+                            "<div class='circle light-green waresCircle' style='background-image:url(" + data[i].pic + ")'></div>" +
+                            "<div class='countBuy dark-red-bg circle white'>0</div>" +
+                            "</div>" +
+                            "<div class='priceTag'>" +
+                            "<span class='priceNow dark-red' id='RMB'>" + data[i].vprice + "</span>" +
+                            "<span class='priceOld dark-gray' id='RMB'>" + data[i].price + "</span>" +
+                            "</div>" +
+                            "<div class='waresDescrib dark-gray'>" + data[i].name + "</div>" +
+                            "</div>";
+                        });
+                        $(".waresBoxSwrap").append(html);
+                        
+                        var TotalCountL = $("#num");                                    //初始化总数量位置
+                        var TotalPriceL = $("#price");                                  //初始化总价格位置
+                        var TotalCount  = 0;                                            //初始化总数量
+                        var TotalPrice  = 0;
+                        var Cart        = {};   
+                        var goods_list  = {};
+                        
+                        if(localStorage['CartJson_'+goodsshopid]){
+                            Cart = JSON.parse(localStorage['CartJson_'+goodsshopid]);
+                            goods_list=Cart["goods_list"];
+                        }else{
+                            localStorage['CartJson_'+goodsshopid]="";
+                            //console.log(localStorage.CartJson);
+                        }
+                            
+
+                        //console.log(locart["TotalPrice"]);
+                        //
+                        if(Cart["TotalCount"]>0){
+                            $(".shopCartHasGoods").removeClass('hide');
+                            $(".shopCartIsNullBox").addClass('hide');
+                            TotalCount  = Cart["TotalCount"];                                           //初始化总数量
+                            TotalPrice  = Cart["TotalPrice"];                                           //初始化总价格
+                            TotalCountL.html(TotalCount);
+                            TotalPriceL.html(TotalPrice);
+
+                            $.each(Cart["goods_list"],function(index, el) {
+                                $("#index_"+index).data('count',$(el)[0].count);
+                                $("#delete_"+index).data('count',$(el)[0].count);
+                                if($(el)[0].count > 0){
+                                    $("#index_"+index).children('.countBuy').fadeIn(0).html($(el)[0].count);
+                                    $("#delete_"+index).removeClass('hide');    
+                                }
+                            });
+
+                        }else{
+                            $(".shopCartHasGoods").addClass('hide');
+                            $(".shopCartIsNullBox").removeClass('hide');
+                        }
+
+
+
+                        btn.text('点击显示更多商品');
+
+                        //square($(".waresCircleSwrap"));
+                        btn.attr("count", parseInt(btn.attr("count")) + 1);
+                    }else{
+                        btn.text('木有了哦');
+                    }
+	            },'json');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            var t  = $("#tagName").offset().top,
+                    t2 = 0;
+            $(window).scroll(function(event) {
+                t = $("#tagName").offset().top;
+                $(".waresItem").each(function(i,o){
+                    t2 = $(this).position().top;
+                    if(t2 < t){
+                        $("#tagName").html($(this).attr("tagName"));
+                    }
+                })
+            });
+        })
+    </script>
+
+
+    <script type="text/javascript">
+    myFadeIn();
+    	window.onload=function(){
+		var at = setTimeout(function(){
+			$(".waresBox").removeClass('hide');
+			$(".loadingBox").addClass('hide');
+			$(".footer").removeClass('hide') },1000)
+
+            //square($(".waresCircleSwrap"));
+			Panel($(".shopCartHasGoods"),$(".arrowCricleSwrap"),$(".shopCartContent"));
+
+		}
+    slider($(".bannerBox"),$(".bannerBoxSwrap"),$(".banner"));
+    
+	
+    document.body.addEventListener('touchmove', function(e) {                  //阻止冒泡事件
+                e.stopPropagation();
+				});
+    $(document).on("touchstart",".shopCartContent",function(){
+    	var myScroll = new iScroll( document.getElementById('scroller') );
+    })
+    
+    </script>
+    <!-- 分类筛选 -->
+	<script type="text/javascript">
+	$(function(){
+		if($(".sortPanelBox").length >6){
+			$(".sortPanelThirdContent").eq(-1).css("padding-bottom","30px");
+			$(".sortPanelBox").eq(-1).css({"padding-bottom":"60px"});
+		}
+		var hh = $(".top").height()+$(".bannerBox").height()+$(".footer").height();
+			hh -=$(window).height();
+			hh  =-hh;
+			hh -=$(".waresBox").height();
+		if((hh)/2 >50){
+		//	$(".loadMoreBox").css('padding-top', (hh)/2+70);
+			//$(".loadMoreBox").css('padding-bottom', (hh)/2+70);
+		}else {
+		//	$(".loadMoreBox").css('padding-top', "50px");
+			//$(".loadMoreBox").css('padding-bottom', "50px");
+		}
+		
+	})
+
+	// 筛选面板
+	// 一级菜单
+	Panel($(".sortPanelBox"),$(".sortPanelFirst"),$(".sortPanelFirstContent"),true);
+	// 二级菜单
+	Panel($(".sortPanelSecondBox"),$(".sortPanelSecond"),$(".sortPanelSecondContent"),true);
+	
+		
+	
+
+	</script>
+    <script>
+       //
+     //  $("#kkb").waiting(function(){},16);
+        var n=0;
+        var a=0;
+        if(a==0){
+          //  $("#now_add").find(".a").waiting(function(){},16);
+            //
+        }
+        var timeOut = null;
+
+        // alert(url);
+        $(document).scroll(function(){
+            if(a==1){
+                return false;
+            }
+            var url1="{weikucms::U('Wap/Commerce/scroll',array('token'=>$token,'openid'=>$openid,'wareid'=>$_GET['wareid'],'wecha_id'=>$_GET['wecha_id']))}";
+            //滚动条顶部的偏移==总个文档的高度-窗口的高度
+            var diff = Number($(window).height()) + Number(20);
+
+            if($(document).height() - $(window).scrollTop() < diff){//判断是否加载
+
+                if(timeOut != null) {
+                    return false;
+                }  //判断容器timeOut 是否在运行！
+                n++;
+
+
+                //   $("#now_add").find(".a").waiting(function(){},16);
+               // $("#now_add").show();
+                $("#kkb").waiting(function(){},16);
+                timeOut = setTimeout(function(){//1秒加载一次
+
+                    //alert(5);
+                    $.post('',{"n": n},function(html){
+                        //alert(html);
+                        if(html){
+                            //console.log(html);
+                           // $("#now_add").hide();
+                            $("#kkb").waitingDone();
+                            $(html).appendTo('.waresBoxSwrap');//第五步：拿到class="limitShoppingBox"看效果
+                            // $("#now_add").find('.a').waitingDone();
+                            timeOut=null;
+                        }else{
+                            a=1;
+                            $(".footer").waitingDone();
+                         //   $("#now_add").find(".b").text("已加截全部");
+                            //   $("#now_add").hide();
+                        }
+                    },'html');
+                },100);
+            }
+
+        })
+
+    </script>
+
+    <!---->
+<script>
+    //进入页面弹出
+    $(function(){
+        var bbk="{weikucms:$bbk}";
+        if(bbk){
+            msg.confirm(bbk,'ok');
+        }
+
+    })
+
+</script>
+</html>

@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head/><meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
+<title>{weikucms:$tpl.name}</title>
+<meta name="keywords" content="牛轧糖、手信、凤梨酥、钟姐食品">
+<meta name="description" content="广州市钟姐食品有限公司官方微店。">
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a.css">
+<link rel="stylesheet" href="{weikucms:$staticFilePath}/shop/a_add.css">
+
+<style type="text/css" media="screen">
+body { overflow-x: hidden; }
+.container { padding-left: 0; padding-right: 0;}
+
+</style>
+
+
+
+<!--[if lt IE 9]>
+
+<![endif]-->
+</head>
+<body class="">
+
+
+<div class="maincontainer">
+    <div class="container mini-innner">
+        <div class="row">
+            <div class="col-md-12 p0">
+                <div class="wx_bar">
+                    <div class="wx_bar_back"><a id="indexBack" href="javascript:history.back();"></a></div>
+                    <div class="wx_bar_tit">{weikucms:$thisCat.name}</div><!--显示具体的栏目名称-->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 p10">
+
+            <div class="cat_goods" style="  position: relative; top: -10px;">
+                <ul class='rowUl'>
+            <volist name="products" id="goods">
+                    <li class='rowLi'>
+                        <a href="{weikucms::U('Store_shop/product',array('token' => $_GET['token'], 'id' => $goods['id'], 'wecha_id' => $_GET['openid'],'openid'=>$_GET['openid']))}" class='rowList'>
+                            <div class="goods_img"><img src="{weikucms:$goods.logourl}" style="max-height: 235px;" width="100%" height="100%" pagespeed_url_hash="1541764222" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+                            <div class="googds_item">
+                                <div class="name">{weikucms:$goods.name}</div>
+                                <div class="price" style="color: red;">¥{weikucms:$goods.price}</div>
+                            </div>
+                        </a>
+                    </li>
+            </volist>
+                </ul>
+            </div>
+            <div style="height: 40px;">
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footnav mini-innner">
+        <if condition="$fix_nav eq 1">
+        <include file="Store:shop_foot_add"/>
+        <else />
+        <include file="Store:shop_foot"/>
+        </if>
+    </div>
+</div

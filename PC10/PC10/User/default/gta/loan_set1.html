@@ -1,0 +1,59 @@
+<include file="Public:head"/>
+
+
+<div class="cLineB">
+    <h4 style="position:relative;">
+        类型资料设置
+        <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="/index.php?g=User&amp;m=Gta_touzi&amp;a=index&amp;token=5d8a87bab30de695954b17fc835b9d12">
+            返回
+        </a>
+    </h4>
+</div>
+
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>您可以在这里设置不同种类型贷款上传不同的资料</li>
+
+    </ol>
+</div>
+
+<div class="msgWrap">
+    <form class="form" method="post" action="" target="_top">
+    <input type="hidden" name="token" value="{weikucms::$_GET['token']}">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <volist name="info" id="vo">
+            <tr>
+                <th>{weikucms:$vo.name}：</th>
+                <td>
+                    <textarea class="px" name="content<?php echo ($i-1);?>" placeholder="多个请用英文逗号隔开,例如:身份证,房产证">{weikucms:$vo.content}</textarea>
+                </td>
+            </tr>
+                </volist>
+
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                    <button type="submit" name="button" class="btn btn-primary">
+                        修改
+                    </button>
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+
+
+ </div>
+<script src="{weikucms::RES}/js/cart/jscolor.js" type="text/javascript"></script>
+<include file="Public:footer"/>

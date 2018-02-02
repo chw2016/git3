@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css" />
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="UTF-8" />
+<title>万普wapwei</title>
+<meta name="Keywords" content="万普wapwei" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+</head>
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$data['id']};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+</head>
+<body>
+<div class="navigation clearfix">
+    <div class="m-3 clearfix">
+        <ul>
+        	<li>
+            	<div>
+            		<a href="index.php?g=Wap&amp;m=Service&amp;a=staffInfo&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+	            		<ol>
+	            			<i>
+	            				<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png" />
+	            			</i>
+	            			<p>个人中心</p>
+	            		</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href="index.php?g=Wap&amp;m=Service&amp;a=staffMan&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+	            		<ol>
+	            			<i>
+	            				<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_01.png" />
+	            			</i>
+	            			<p>预约安排</p>
+	            		</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            	<a href='index.php?g=Wap&amp;m=Service&amp;a=staffCode&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}'>
+            		<!-- <a href="javascript:void(0);"> -->
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/navigation_03.png" />
+            				</i>
+            				<p>生成二维码</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            <li>
+            	<div>
+            		<a href='index.php?g=Wap&amp;m=Service&amp;a=staffEdit&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}'>
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_01.png" />
+            				</i>
+            				<p>修改密码</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+
+            <!-- 
+            <li>
+            	<div>
+            		<a href="javascript:void(0);" url="index.php?g=Wap&amp;m=Service&amp;a=complain&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+            			<ol>
+            				<i>
+            					<img src="{weikucms::STATICS}/wapweiui/service/images/tell_01.png" />
+            				</i>
+            				<p>我要投诉</p>
+            			</ol>
+            		</a>
+            	</div>
+            </li>
+            -->
+        </ul>
+    </div>
+</div>
+<!--- copyright Start --->
+<div class="coyright clearfix"><div class="coyrLine"><strong>版权所有：万普微信</strong></div></div>
+<!--- copyright End --->
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_uid', UID]);
+	var timestamp = Date.parse(new Date())/1000;
+	_maq.push(['_regtime', timestamp]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+</body>
+</html>

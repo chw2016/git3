@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name} - 我的订单</title>
+		<link rel="stylesheet" href="{weikucms::RES}/tour/css/tour.css">
+		<script src="{weikucms::RES}/tour/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/tour.js"></script>
+		<script type="text/javascript" src="{weikucms::RES}/tour/js/msg.js" ></script>
+		<script type="text/javascript">
+		   var urlpay = "{weikucms::U('Wap/Tour/cancel',array('token'=>$token,'openid'=>$openid))}";
+		</script>
+    </head>
+    <body class="bodys">
+         <header class="header-blue">
+        	我的订单
+        	<div class="wrap-lan">
+	        	<div class="arrow"></div>
+	        </div>	
+        </header>
+        <ul class="wraps order-wraps">
+	        <volist name="info" id="vo">
+	        	<li>
+	    			<figure class="title">
+	    				<span class="order-no">订单编号：{weikucms:$vo.orderid}</span>
+	    				<span class="absort">
+	    				    <a href="javascript:void(0)" data-id="{weikucms:$vo.id}" class="cancelOrder">取消</a>
+	    				</span>
+	    			</figure>
+	    			<figure class="gray-line"></figure>
+	    			<figure class="order-body">
+	    				<figure class="left">
+	    					<img src="{weikucms:$vo.logourl}" alt="{weikucms:$vo.name}" />
+	    				</figure>
+	    				<figure class="right">
+	    					<figure class="title">{weikucms:$vo.name}</figure>
+	    					<figure class="date">出发时间：{weikucms:$vo.date}</figure>
+	    					<figure class="prices">价格：<span class="prices">{weikucms:$vo.price}</span></figure>
+	    				</figure>
+	    			</figure>
+	    		</li>
+	        </volist>
+        </ul>
+    </body>
+</html>

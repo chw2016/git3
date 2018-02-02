@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/common.css">
+
+    <link rel="stylesheet" href="{weikucms::STATICS}/common/css/icon/style.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/index.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gjlog/css/calendar.css">
+    <script src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gjlog/js/lanrenzhijia.js"></script>
+    <script type="text/javascript"  src="{weikucms::STATICS}/common/invite.js"></script>
+</head>
+<body class="bj" onload="initial();">
+<div class="header">
+</div>
+    <center>
+            <table width="300px">
+                <tr>
+                        <td>时间</td> <td>对应节气</td>
+                </tr>
+                    <foreach name="quanbujq" item="quanbujq">
+                <tr>
+                        <td>{weikucms:$quanbujq.date}</td>  <td>{weikucms:$quanbujq.jq}</td>
+                </tr>
+                </foreach>
+            </table>
+        </center>
+<script type="text/javascript">
+    wx.hideMenuItems({
+        menuList: ["menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook"]; // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+    });
+
+</script>
+<script type="text/javascript">
+		function wxready(){
+			 wx.hideMenuItems({
+	            menuList: ["menuItem:share:appMessage","menuItem:share:timeline","menuItem:share:qq","menuItem:share:weiboApp","menuItem:favorite","menuItem:share:facebook"]
+	        });
+		}
+       
+    </script>
+</body>
+</html>

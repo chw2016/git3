@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet"  href="{weikucms::STATICS}/wapweiui/gta/css/purchase.css" />
+	</head>
+	<style>
+.Financial_nav div>span{display:block;float: left;margin-right: 5px;}
+.Financial_icon{border:1px solid #999999 ;height: 24px;width: 24px;border-radius: 50%;text-align: center;position: relative;box-sizing: border-box;}
+.Financial_icon em{position: absolute;background-color: #999999;font-style: normal;font-size: 14px;color: white;width: 18px;height: 18px;line-height:18px;border-radius: 50%;top: 2px;left: 2px;}
+.titlecolor{font-size: 14px;}
+.me,.jian{width: 16px;height: 16px;margin-top: 4px;line-height: 16px;font-size: 10px !important;text-align: center;}
+.me{background-color:#d4ab72 ; color: white;}
+.jian{background-color:#bf2f20 ;color: white;}
+.mr45 {margin-right: 20%;}
+	</style>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title"></h1>
+			<!--<div>注册</div>
+			<div>登录</div>-->
+		</header>
+		<!--内容模块-->
+		<section class="contant">
+            <volist name="list" id="vo">
+		<div class="Financial">
+      	<div class="Financial_nav">
+      			<div class="mt10 clearfix ">
+      				<div class="fl">
+      				<span class="Financial_icon"><em>抵</em></span>
+      				<span class="titlecolor">{weikucms:$vo.title}</span>
+      				</div>
+      				<div class="fr mr45">
+      				<span class="me">自</span>
+      			 	<span class="jian">荐</span>
+      			 	</div>
+      			</div>
+      	<div class="Profit">
+      		<ul>
+      			<li>年化收益率</li>
+      			<li>期限</li>
+      			<li>剩余</li>
+      			<li class="Profit_icon" style="text-align: center;" onclick="location.href='{weikucms::U('p2p_info',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">
+                    <if condition="$vo['money']-$vo['omoney'] lt $vo['start_price']">
+                        融资完成
+                        <else />
+                    申购
+                        </if>
+                </li>
+      			<li style="color: #bf2f20;font-weight: bold;"><?php echo $vo['rate']*100;?>%</li>
+      			<li style="color: #323333; font-weight: bold;">{weikucms:$vo.time_limit}个月</li>
+      			<li style=" color: #323333; font-weight: bold;"><?php echo $vo['money']-$vo['omoney'];?>元</li>
+      			<li>&nbsp;</li>
+      		</ul>
+      	</div>
+      </div>
+    </div>
+   </volist>
+	   </section>
+		<!--脚部模块-->
+		<footer>
+			<ul clas="footertab">
+				<li class="footselect" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+					<a href="{weikucms::U('p2p_index',array('token'=>$token,'openid'=>$openid))}">
+						<p class="sprites-foot_home"></p>
+						<p class="tab-title">首页</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('p2p_list',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_money_select"></p>
+						<p class="tab-title">投资</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_user"></p>
+						<p class="tab-title">账户</p>
+					</a>
+				</li>
+				<li>
+					<a href="{weikucms::U('index',array('token'=>$token,'openid'=>$openid))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+						<p class="sprites-foot_more"></p>
+						<p class="tab-title">更多</p>
+					</a>
+				</li>
+
+			</ul>
+			</section>
+		</footer>
+	</body>
+</html>

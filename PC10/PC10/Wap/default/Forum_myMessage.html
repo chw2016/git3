@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<meta content="samphay@163.com" name="Author">
+<title>{weikucms:$wxusers['nickname']}</title>
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/style.css?v=1.0" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/izone.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/font/icofont.css" />
+<link type="text/css" rel="stylesheet" href="{weikucms::STATICS}/star/css/forum.css?v=1.0" />
+<script src="{weikucms::STATICS}/star/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/star/js/index.js"></script>
+<script src="{weikucms::STATICS}/star/js/foot.js"></script>
+
+
+
+</head>
+<body>
+<div class="index">
+
+<div class="itop">
+    <div class="ibg" style="background-image:url(../common/img/1.jpg)"></div>
+    <div class="bgsetting"><span class="icon-settings"></span></div>
+    <div class="userlogobox"><div class="userlogo" style=" background-image:url({weikucms:$wxusers['headimgurl']})"></div></div>
+    <div class="username">{weikucms:$wxusers['nickname']}</div>
+</div>
+<div class="ihav myul">
+    <!--订单-->
+    <div data-list="myorder" class="ihav item myli">我的订单</div>
+    <!--帖子-->
+    <div data-list="myforum" class="ihav item myli" onClick="window.location.href='{weikucms::U('Forum/myContent',array('token'=>$token,'openid'=>$openid))}'">我的帖子
+        <span>{weikucms:$mytopicsnum}</span>
+    </div>
+    <!--消息-->
+    <div data-list="mymassage" class="ihav item myli" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">我的消息
+        <span>{weikucms::count($list)}</span>
+    </div>
+    <!--收藏-->
+    <div data-list="myrss" class="ihav item myli" onClick="window.location.href='{weikucms::U('Forum/myLike',array('token'=>$token,'openid'=>$openid))}'">我的收藏
+        <span>{weikucms:$mylikenum}</span>
+    </div>
+</div>
+
+<!--消息-->
+<div class="imain" style="top:171px;">
+
+    <volist name="list" id="vo">
+        <div class="list">
+            <div class="texttitle" onClick="window.location.href='{weikucms::U('Forum/comment',array('token'=>$token,'openid'=>$openid,'tid'=>$vo['id']))}'">{weikucms:$vo.title}</div>
+            <div class="myul listbottom">
+                <!--头像-->
+                <div style="border-radius:50%;width: 45px;height: 45px;margin-left: 20px;margin-top: -20px;">
+                    <img src="{weikucms:$vo.uinfo.headimgurl}" onerror="{weikucms:$vo.uinfo.hearimgurl}" style="border-radius:50%;width: 45px;height: 45px;">
+                </div>
+                <!--！头像-->
+                <div class="infoB">
+                    <!--微信号-->
+                    <div style="display: block">{weikucms:$vo.fromuname}</div>
+                    <!--！微信号-->
+                    <!--回复-->
+                    <div class="texttime">{weikucms::date('Y-m-d H:i:s',$vo['createtime'])}</div>
+                    <!--！回复-->
+                </div>
+            </div>
+            <div class="rpl" style="text-decoration: none">{weikucms:$vo.content}</div>
+        </div>
+    </volist>
+</div>
+<!--/消息-->
+
+<footer class="myul">
+    <div data-foot="home" class="myli tapfoot home" onClick="window.location.href='{weikucms::U('Forum/star',array('token'=>$token,'openid'=>$openid))}'"><div class="circle"><span class="icon-home"></span></div></div>
+    <div data-foot="more" class="myli tapfoot more"><div class="circle"><span class=" icon-plus"></span></div></div>
+    <div data-foot="user" class="myli tapfoot user" onClick="window.location.href='{weikucms::U('Forum/myMessage',array('token'=>$token,'openid'=>$openid))}'">
+        <div class="circle">
+            <if condition="($messageNum neq '0') or ($messageNum neq 0)">
+                <span data-tip="{weikucms:$messageNum}" class="icons_my"></span>
+            </if>
+            <span class="icon-user"></span>
+        </div>
+    </div>
+</footer>
+
+
+
+<div class="fmore">
+<div class="onlyu moreli"><div><span class="icon-eye"></span>只看Hi<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="iwrite moreli" onClick="window.location.href='{weikucms::U('Forum/add',array('token'=>$token,'openid'=>$openid))}'" ><div><span class="icon-pencil"></span>发帖<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="gotop moreli"><div><span class="icon-arrow-up"></span>回到顶部<span class="icon-uniE638 arrowright"></span></div></div>
+<div class="helpcenter moreli"><div><span class="icon-question"></span>帮助中心<span class="icon-uniE638 arrowright"></span></div></div>
+</div>
+<div id="shade"></div>
+
+
+
+
+<div class="postcheckinbox">
+<div class="writeboxtop myul">
+        <div class="cancel">取消</div><div class="postit">发表</div>
+    </div>
+<div class="facebox">这是一大串表情</div>
+<div class="inputfeeling">
+<textarea placeholder="请输入心情签到。" ></textarea>
+</div>
+</div>
+
+</div>
+
+
+
+
+</body>
+</html>

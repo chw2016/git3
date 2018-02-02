@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>我的二维码</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+        <script type="text/javascript" src="{weikucms::STATICS}/common/jquery-1.11.2.min.js"></script>
+        <script src="{weikucms::STATICS}/common/msg.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                var userinfo = "{weikucms:$info['status']}";
+                if(2 !=userinfo){
+                    msg.alert('您现在还没有成为正式会员，暂无个人二维码！',function(){
+                        location.href = "{weikucms::U('usercontent',array('token'=>$token,'openid'=>$openid))}";
+                    });
+                }
+            })
+        </script>
+    </head>
+    <body>
+                <div class="top-details">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                                    我的二维码
+                        </div>
+                </div>
+                <div class="code-main animated fadeInDown">
+                	   <div>
+                	   	<div class="user-img code-img">
+                            <if condition="$wxuser['headimgurl']">
+                                <img src="{weikucms:$wxuser['headimgurl']}"/>
+                                <else/>
+                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/1.jpg"/>
+                            </if>
+                        </div>
+                	   </div>
+                	   <div class="code-user">
+                	   {weikucms:$info['uname']}
+                	   </div>
+                	   <div class="code">
+
+                           <if condition="$info['erimg']">
+                               <img src="{weikucms:$info['erimg']}" />
+                               <else/>
+                               <img src="{weikucms::STATICS}/wapweiui/ynd/images/code.png" />
+                           </if>
+
+                	   </div>
+                </div>
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

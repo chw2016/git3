@@ -1,0 +1,106 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Gjlog/xiang_cha',array('token'=>$token))}" >详情查看</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style type="text/css">
+    .user_content{
+        width: 99%;
+        border: 1px solid #f1f3f3;
+        border-radius: 5px;
+        padding: 10px 0;
+        margin: 3px 0;
+        font-size: 14px;
+    }
+    .user_taitle{
+        font-size: 15px;
+        font-weight: 600;
+        padding: 5px 0;
+    }
+    .ortitle{
+        display: -webkit-box;
+    }
+    .ortitleclass{
+        display: block; /* float: left; */  text-align: center;  width: 25%;
+    }
+    .fangdanlist{
+        display: block; /* float: left; */  text-align: center;  width: 22%;
+    }
+    .fangdan{
+        display: -webkit-box;
+    }
+    .btuselect{
+        border-radius: 5px;
+        background-color: #1576AD;
+        color: #FFF;
+        padding: 5px 8px;
+    }
+     .user_taitl_img{
+                    width:150px;
+                    height:150px;
+                    float:left;
+                    margin-left:20px;
+                     border: 2px solid #f1f3f3;
+                }
+
+</style>
+<!--<div style="background-color: #F0F5F5;padding: 10px 0;font-size: 13px;">用户管理 ->个人资料</div>-->
+<div>
+    <div class="user_content">
+        <foreach name="gjl" item="vo">
+            <div class="user_taitle">基本详情</div>
+        <div class="certer">
+            <div>
+                <span>天气：</span>
+                <span>  {weikucms:$vo.weather}</span>
+            </div>
+            <div>
+                <span>编写人：</span>
+                <span>{weikucms:$vo.name}</span>
+            </div>
+            <div>
+                <span>添加时间：</span>
+                <span>{weikucms:$vo.data_tima}</span>
+            </div>
+            <div>
+                <span>地址：</span>
+                <span>{weikucms:$vo.address}</span>
+            </div>
+
+            <!-- <div>
+                 <span>性别：</span>
+                 <span>
+                     <php>
+                         if($user['sex'] ==0){
+                         echo "男";
+                         }elseif($user['sex'] ==1){
+                         echo "女";
+                         }
+                     </php>
+                 </span>
+             </div>-->
+
+        </div>
+    </div>
+    <div class="user_content">
+        <div class="user_taitle">内容详情</div>
+            <span>{weikucms:$vo.content}</span>
+        </div>
+            <div class="user_content">
+            <div class="user_taitle">图片预览</div>
+
+        </div>
+              <img src="{weikucms:$vo.pic1}" style='width:150px; height:150px' class="user_taitl_img">
+               <img src="{weikucms:$vo.pic2}" style='width:150px; height:150px;' class="user_taitl_img">
+                <img src="{weikucms:$vo.pic3}" style='widht:150px; height:150px;' class="user_taitl_img">
+
+
+    </foreach>

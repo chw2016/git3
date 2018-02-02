@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/media/css/style.css">
+    <script src="{weikucms::STATICS}/wapweiui/media/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/media/js/main.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+	    var shareTitle="";
+	    var imgUrl="";
+	    var descContent="";
+	    var shareUrl="";
+
+	    $(function() {
+	        shareTitle = "{weikucms:$task['title']}";
+	        imgUrl = "<php>echo C('site_url');</php>{weikucms:$task['pic']}";//主题图片
+	        descContent = "{weikucms:$task['abstract']}";
+	        shareUrl = $("#shareUrl").text();
+	    });
+
+	    wx.config({
+	        appId: '{weikucms:$signPackage.appId}',
+	        timestamp: {weikucms:$signPackage.timestamp},
+	        nonceStr: '{weikucms:$signPackage.nonceStr}',
+	        signature: '{weikucms:$signPackage.signature}',
+	        jsApiList: [
+	            'onMenuShareTimeline',
+	            'onMenuShareAppMessage'// 所有要调用的 API 都要加到这个列表中
+	        ]
+	    });
+	    wx.ready(function () {
+	        // 在这里调用 API
+	        wx.onMenuShareTimeline({
+	            title: shareTitle, // 分享标题
+	            link: shareUrl, // 分享链接
+	            imgUrl: imgUrl, // 分享图标
+	            success: function () {
+	                // 用户确认分享后执行的回调函数
+	                var tid = {weikucms:$task['id']};
+	                var url = "{weikucms::U('Medias/sharecount',array('token'=>$token,'openid'=>$openid))}";
+	                $.post(url,{tid:tid},function(data){
+	                    if(data.code == 0){
+	                        alert('分享成功！');
+	                    }else{
+	                        alert(data.mgs);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },2000);
+	                    }
+	                },'json');
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+	            }
+	        });
+
+	        wx.onMenuShareAppMessage({
+	            title: shareTitle, // 分享标题
+	            desc: descContent, // 分享描述
+	            link: shareUrl, // 分享链接
+	            imgUrl: imgUrl, // 分享图标
+	            type: '', // 分享类型,music、video或link，不填默认为link
+	            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	            success: function () {
+	                // 用户确认分享后执行的回调函数
+	                var tid = {weikucms:$task['id']};
+	                var url = "{weikucms::U('Medias/sharecount',array('token'=>$token,'openid'=>$openid))}";
+	                $.post(url,{tid:tid},function(data){
+	                    if(data.code == 0){
+                            alert('分享成功！');
+	                    }else{
+	                        alert(data.mgs);
+	                        setTimeout(function(){
+	                            window.location.href = data.url;
+	                        },2000)
+	                    }
+	                },'json');
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+	            }
+	        });
+	    });
+
+	</script>
+    <script type="text/javascript">
+        $(function(){
+            $('#mcover').css({'display':'none','width':$(window).width(),'height':$(window).height(),'top':0});
+            $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            // 遮罩分享
+            $('.RWShare').click(function(){
+                //
+                $('#mcover').css({'display':'block','width':$(window).width(),'height':$(window).height(),'top':0});
+                $('#mcover').children('img').css({'left':($(window).width()-$('#mcover').children('img').width())/2,'top':'20px','display':'block'});
+            });
+            // 遮罩消失
+            $('#mcover').click(function(){
+                $(this).hide();
+                $(this).children('img').hide();
+            })
+
+        })
+    </script>
+</head>
+<body class="paper">
+<!--分享罩罩-->
+<div id="mcover" style="width:100%;left: 0;position: absolute;position: absolute;  z-index: 9999;background-color: rgba(0, 0, 0, 0.8);">
+    <img src="{weikucms::STATICS}/wapweiui/media/img/guide.png" width="100%" height="504px" />
+</div>
+<!--分享罩罩-->
+<div class="h3 darker-gray title bold">
+    {weikucms:$task['title']}
+</div>
+<div class="myul h6 light-gray smallTitle">
+    <div class="paperTime">{weikucms:$task['addtime']|date='Y-m-d H:i:s',###}</div>
+   <!-- <div class="author">作者：ling枚美</div>-->
+</div>
+<div class="paperArticle">
+    <!-- 文章内容在这里开始（包括图片） 文章段落使用p标签-->
+
+    {weikucms:$task['content']}
+
+    <!-- 文章结束 -->
+</div>
+<if condition="$task['pid'] neq 0">
+    <div style="height: 50px;"></div>
+    <a href="{weikucms::U('Store_new/product',array('token'=>$token,'openid'=>$openid,'id'=>$task['pid'],'dopenid'=>$_GET['from_openid']))}"><!--商品链接-->
+        <div style="line-height: 55px; width: 100%;font-size: 20px;color:white;background-color: rgb(222,35,31);text-align: center;position: fixed;bottom: 0;margin-left: -10px;">购买商品</div>
+    </a>
+    <else/>
+    <div style="border-radius: 5px;border: none;height: auto;position: relative;bottom: 5px;width: 94%;">
+        <span style="width:100%;line-height:30px;">推荐文章:</span>
+		<volist name="aProduct" id="product">
+            <a href="{weikucms::U('Media/taskdetail',array('token'=>$token,'openid'=>$openid,'tid'=>$product['id'],'from_openid'=>$_GET['from_openid']))}"><!--文章链接-->
+                <div style="padding:13px 2px;border-bottom:1px solid #dddddd;color:rgb(116, 104, 104);">{weikucms:$i} {weikucms:$product.title}</div>
+            </a>
+        </volist>
+
+    </div>
+    <div style="height: 5px;"></div>
+</if>
+
+<!--<div class="RWShareWrap white-bg circle setRight">
+    <div class="RWShare circle red-bg setMiddle fixBg icon icon-RWShare"></div>
+</div>-->
+<!--<div class="RWShareContent border-4 hide" id="Invitation">-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_tencentqzone">-->
+
+    <!--</div>-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_sinaweibo">-->
+
+    <!--</div>-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_renren">-->
+
+    <!--</div>-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_baidutieba">-->
+
+    <!--</div>-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_baidu">-->
+
+    <!--</div>-->
+    <!--<div class="floatLeft iconWrap textMiddle setMiddle icon-CN_doubanB">-->
+
+    <!--</div>-->
+<!--</div>-->
+<div class="blur hide fixTop" style="width:100%;height:100%;z-index:9999998"></div>
+
+<if condition="$tpl['is_auth'] eq 1">
+   <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$tpl['authorizer_appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/tid/{weikucms:$task['id']}/openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1&component_appid=wxe7be6810523b9ea2#wechat_redirect</span>
+<else/>
+   <span style="display:none ;" id="shareUrl">https://open.weixin.qq.com/connect/oauth2/authorize?appid={weikucms:$appidInfo['appid']}&redirect_uri=http://v.wapwei.com/index.php/Home/Auth/taskshare/token/{weikucms:$token}/tid/{weikucms:$task['id']}/openid/{weikucms:$openid}&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect</span>
+</if>
+
+
+
+</body>
+</html>

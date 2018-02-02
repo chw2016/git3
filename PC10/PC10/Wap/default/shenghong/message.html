@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/common.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/index.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style1.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/main.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/font-awesome.min.css" />
+    <script src="{weikucms::STATICS}/wapweiui/shenghong/js/jquery-1.11.2.min.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+    <script>
+        $(function(){
+            $(".input_data_center").each(function(){
+                $(this).next().width($(".input_data_nav_name").width()-$(this).width()-2);
+            })
+            $(".input_data_nav_name").click(function(){
+//		var This = $(this);z
+                if($(this).find(".data_sex").length>0){
+                    if(!$(this).hasClass('onInputting')){
+                        $(this).addClass('onInputting');
+                        $(this).find(".data_sex").show()
+                    }else{
+                        $(this).removeClass('onInputting');
+                        $(this).find('.data_sex').hide()
+                    }
+                }
+            })
+
+            $('._sel').click(function(e){
+                $(".onInputting").find("input").val($(this).html())
+            })
+
+        })
+    </script>
+</head>
+<style>
+    body{
+        background-color: #f0f0f0;
+        color: #4c4b4c;
+        letter-spacing: 3px;
+    }
+    .data_nav span {
+        white-space: inherit !important;
+    }
+
+</style>
+<body>
+<div>
+    <if condition="$phone3">
+        <img src="{weikucms:$phone3[pic]}" />
+        <else/>
+        <img src="{weikucms::STATICS}/wapweiui/shenghong/img/arrow_img.png" />
+    </if>
+
+</div>
+<div class="data_people">
+    <div class="main_user recruit ">{weikucms:$office['oname']}</div>
+</div>
+<div class="data_post">
+    <div class="data_nav">
+        {weikucms:$info['info']}
+        <!--<div class="data_post_want mb5">岗位需求：</div>
+        <div class="data_post_pay">
+            <ul>
+                <li>1、学历：大专</li>
+                <li>2、经验：1~2年</li>
+                <li>3、薪酬：大专</li>
+            </ul>
+        </div>
+    </div>
+    <div class="data_nav">
+        <div class="data_post_want mb5">职责描述：</div>
+        <div class="data_post_pay">
+            <ul>
+                <li>1.工作认真负责</li>
+                <li>2.有相关的专业知识技能</li>
+                <li>3.有相关的工作经验者优先录取</li>
+            </ul>
+        </div>-->
+    </div>
+    <div class="data_home">
+        <p>联系人：{weikucms:$information['name']}</p>
+        <p>联系方式：{weikucms:$information['tel']}</p>
+        <p>公司地址：{weikucms:$information['address']}</p>
+    </div>
+</div>
+<div class="data_people">
+    <div class="main_user f16">填写资料</div>
+</div>
+<div class="data_post">
+    <div class="input_data clearfix mb5">
+        <div class="input_data_nav fl">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">姓名：</div>
+                <div class="input_data_center1"><input type="text" value="{weikucms:$aInfo['name']}" name="name" id="name"/></div>
+            </div>
+        </div>
+        <div class="input_data_nav fr">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">性别：</div>
+                <div class="input_data_center1">
+                    <if condition="$aInfo eq 0">
+                        <input type="text" value="男"  readonly="readonly" id="sex"/>
+                        <elseif condition="$aInfo eq 1"/>
+                        <input type="text" value="女"  readonly="readonly" id="sex"/>
+                    </if>
+
+                </div>
+                <i class="fa fa-angle-down fa_size" ></i>
+                <div class="data_sex">
+                    <ul>
+                        <li class="_sel">男</li>
+                        <li class="_sel">女</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input_data clearfix mb5">
+        <div class="input_data_nav fl">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">出生年月：</div>
+                <div class="input_data_center1"><input type="text" value="{weikucms:$aInfo['barthday']}" name="barthday"/></div>
+            </div>
+        </div>
+        <div class="input_data_nav fr">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">联系方式：</div>
+                <div class="input_data_center1"><input type="text" value="{weikucms:$aInfo['tel']}" name="tel" id="tel" /></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input_data clearfix mb5">
+        <div class="input_data_nav fl">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">籍贯：</div>
+                <div class="input_data_center1"><input type="text" value="{weikucms:$aInfo['address']}" name="address" id="address"/></div>
+            </div>
+        </div>
+        <div class="input_data_nav fr">
+            <div class="input_data_nav_name">
+                <div class="input_data_center">学历：</div>
+                <div class="input_data_center1" ><input type="text" value="{weikucms:$aInfo['educational']}"  readonly="readonly" id="xue"/></div>
+                <i class="fa fa-angle-down fa_size" ></i>
+                <div class="data_sex">
+                    <ul>
+                        <li class="_sel">小学</li>
+                        <li class="_sel">初中</li>
+                        <li class="_sel">高中</li>
+                        <li class="_sel">中专</li>
+                        <li class="_sel">大专</li>
+                        <li class="_sel">本科</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input_data_nav_name mb5 " id="email">
+        <div class="input_data_center2">邮箱：</div>
+        <div class="input_data_center3"><input type="text" value="{weikucms:$aInfo['email']}"  name="email" /></div>
+    </div>
+    <div class="input_data_nav_name">
+        <div style="font-size: 12px;">工作经历：</div>
+        <div class="data_textarea">
+            <textarea id="winfo"></textarea>
+        </div>
+    </div>
+</div>
+<div class="footer_data_btn">
+    <div class="data_btn">提交简历</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $(".data_btn").click(function(){
+            //alert(5);
+            var name= $("#name").val();
+            var sexs= $("#sex").val();
+            if(sexs == '男'){
+                var sex = 0;
+            }else{
+                var sex = 1;
+            }
+            var barthday = $("input[name='barthday']").val();
+            var email = $("input[name='email']").val();
+            var educational=$("#xue").val();
+            var tel=$('#tel').val();
+            var address=$('#address').val();
+            var winfo=$("#winfo").val();
+            var oid = "{weikucms:$_GET['oid']}";
+            var aid = "{weikucms:$_GET['cid']}";
+            var posturl = "{weikucms::U('Shenghong/ajaxmessage',array('token'=>$token,'openid'=>$openid))}";
+            $.post(posturl,
+                    {name:name,sex:sex,barthday:barthday,email:email,educational:educational,tel:tel,address:address,winfo:winfo,oid:oid,aid:aid},
+                    function(data){
+                        if(data.status == 1){
+                            msg.alert(data.info);
+                            window.location.href = "{weikucms::U('Shenghong/alist',array('token'=>$token,'openid'=>$openid))}";
+                        }else{
+                            msg.alert("系统繁忙...");
+                            window.location.href = data.url;
+                        }
+                    },
+                    'json');
+        })
+
+    });
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weipayapp/css/common.css">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/weipayapp/css/index.css">
+    <script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weipayapp/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/weipayapp/js/msg.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".shengesure").touch(function(){
+                $(this).removeClass('shengesure');
+                var code =$(".codes").val();
+                if(code <= 0){
+                    return msg.alert('请输入验证码');
+                }else{
+                    ajax(
+                            "{weikucms::U('yanzheng', array('token' => $token, 'openid' => $openid,'wecha_id'=>$openid))}",
+                            {code:code},
+                            function(ret){
+                                if(ret && ret.status == 1){
+                                    msg.alert(ret.info);
+                                    $('.closes').trigger('click');
+                                    $('.verify_btn').addClass('shengesure');
+                                    //location.href = "{weikucms::U('Guajiang/index',array('token' => $token, 'openid' => $openid,'wecha_id'=>$openid,'type'=>2,'id'=>$info['id']))}";
+                                }else{
+                                    return msg.alert(ret.info);
+                                }
+                            }
+                    );
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+<div>
+    <img src="{weikucms:$phone4['pic']}" alt="">
+</div>
+<div class="pay">
+    <div class="pay_money">
+        <input type="text" value="" name="codes" class="codes" placeholder="请输入您的验证码">
+        <!--<span class="moeny">元</span>-->
+    </div>
+    <div class="verify_btn shengesure">
+        <a href="javascript:void(0)" style="color: #FFF;">确认</a>
+    </div>
+    <div class="closes"></div>
+</div>
+<style type="text/css" media="screen">
+    .demo-footer { color: #000; text-align: center; margin-top: 20px; position: fixed; bottom: 20px; margin: 0 auto; width: 100%; }
+</style>
+<footer class="demo-footer">@万普微信全方位技术支持</footer>
+
+</body>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script>
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'scanQRCode'
+        ]
+    });
+    wx.ready(function () {
+
+        $(".closes").click(function() {
+            wx.closeWindow();
+        })
+    })
+</script>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <title>绑定实体卡-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <style type="text/css">
+        .btn-pay {
+            padding: 10px 6px 40px 6px;
+        }
+        .btn-green {
+            color: #FFFFFF;
+            background-color: #04BE02;
+        }
+        .btn-pay .btn {
+            display: block;
+            width: 100%;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            font-size: 18px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<div class="container integral integral_record">
+    <div class="body">
+        <section class="p_10">
+
+
+
+
+
+
+
+            <div class="btn-pay">
+                <if condition="$shitidata">
+                    <form id="myweipayform" method="post">
+                        <input type="hidden" name="openid" id="openid" value="{weikucms:$openid}">
+                        <input type="hidden" name="sid" id="sid" value="{weikucms:$shitidata.id}">
+                        <input type="hidden" name="id" id="id" value="{weikucms:$usercenterdata.id}">
+                        <input type="hidden" name="token" id="token" value="{weikucms:$token}">
+                    <span><input value="{weikucms:$shitidata.member_phone}" readonly placeholder="请输入手机号" type="text" id="money" name="order_money" style="height: 30px;width: 100%;line-height: 30px;
+                    padding: 5px 0px;margin-bottom: 15px;border-radius: 5px;border: 1px solid #C0C0C0;font-size: 14px;text-indent: 10px;"> </span>
+                    <span><input value="{weikucms:$shitidata.member_name}" readonly placeholder="请输入手机号" type="text" id="money" name="order_money" style="height: 30px;width: 100%;line-height: 30px;
+                    padding: 5px 0px;margin-bottom: 15px;border-radius: 5px;border: 1px solid #C0C0C0;font-size: 14px;text-indent: 10px;"> </span>
+                        <span><input value="{weikucms:$shitidata.member_sn}" readonly placeholder="请输入手机号" type="text" id="money" name="order_money" style="height: 30px;width: 100%;line-height: 30px;
+                    padding: 5px 0px;margin-bottom: 15px;border-radius: 5px;border: 1px solid #C0C0C0;font-size: 14px;text-indent: 10px;"> </span>
+                <if condition="$shitidata['status'] eq 1">
+                    <a href="javascript:void(0)" class="btn btn-green">您已绑定成功</a>
+                    <else />
+                    <a href="javascript:void(0)" class="btn btn-green a11">我要绑定</a>
+
+                </if>
+                    </form>
+                <else/>
+                    <p style="padding: 16px 0px;font-size: 15px;text-align: center;color: #ff4500;line-height: 25px;">还未找到您的实体会员信息哦,请确认个人中心手机号与实体会员手机号一致</p>
+                    <a href="{weikucms::U('Usercenter/joinusercenter',array('token'=>$token,'openid'=>$openid))}" class="btn btn-green">我要修改</a>
+                </if>
+            </div>
+
+
+        </section>
+    </div>
+
+</div>
+<script type="text/javascript">
+      $(function(){
+          $(".a11").click(function(){
+              var openid = $("#openid").val();
+              var sid = $("#sid").val();;
+              var id = $("#id").val();;
+              var token = $("#token").val();;
+
+              var btn = $(this);
+
+              btn.text('正在绑定...');
+              $.ajax({
+                  type: "post",
+                  url: "{weikucms::U('Usercenter/bindcard',array('token'=>$token,'openid'=>$openid))}",
+                  dataType: "json",
+                  data:{sid:sid,id:id},
+                  success: function(html){
+                      if (html.code == 0) {
+                          btn.text(html.msg);
+                          setTimeout(function(){
+                              window.location.href= "{weikucms::U('Usercenter/index',array('token'=>$token,'openid'=>$openid))}"
+                          },'1000');
+                      } else if(html.code == -1) {
+                          alert(html.msg);
+
+                      }else{
+                          alert(html.msg);
+                      }
+                      btn.text(btntext);
+                  }
+          });
+        });
+      });
+</script>
+</body>
+
+</html>

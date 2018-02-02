@@ -1,0 +1,191 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+<div class="content right">
+	<div class="cLineB">
+		<h4 class="left">积分规则设置</h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Service/index',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		  <tr>
+			<th valign="top">预约活动提示信息：</th>
+			<td>
+				<input type="input" class="px" id="title" value="{weikucms:$data['preferential']}" name="title" style="width:400px" maxlength="30"/>
+			  	<br>
+			  	请不要多于30字!<span class="red" style="padding-left:10px;">比如：预约可享受9折优惠</span>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">成为VIP送积分值：</th>
+			<td>
+				<input type="input" class="px" id="start_score" value="{weikucms:$data['start_score']}" name="start_score" style="width:100px" maxlength="30"/>
+			  	<span class="red" style="padding-left:27px;">*</span><span style="padding-left:5px;" class="red">第一次绑定会员，给会员的积分数值</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">预约活动折扣比例：</th>
+			<td>
+				<input type="input" class="px" id="pre_score" value="{weikucms:$data['pre_score']}" name="pre_score" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">折扣比例为实际付款金额除与订单总金额</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">充钱送积分比值：</th>
+			<td>
+				<input type="input" class="px" id="charge_score" value="{weikucms:$data['charge_score']}" name="charge_score" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">充钱送积分比例可以是充一百元送1000个积分，也可以是其他的，按积分数除与100元来进行计算</span>				
+			</td>
+  		 </tr>
+  		 <!-- 
+  		 <tr>
+			<th valign="top">付款提供固定积分：</th>
+			<td>
+				<input type="input" class="px" id="payment_score" value="" name="payment_score" style="width:100px" maxlength="30"/>
+			  	<span class="red" style="padding-left:27px;">*</span><span style="padding-left:5px;" class="red">如果您想给固定积分，请填写在该项</span>
+				
+			</td>
+  		 </tr>
+  		 -->
+  		 <tr>
+			<th valign="top">买车付款送积分比值：</th>
+			<td>
+				<input type="input" class="px" id="buy_score" value="{weikucms:$data['buy_score']}" name="buy_score" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">买车付款送积分比例可以是充一百元送50个积分，也可以是其他的，按积分数除与100元来进行计算</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">售后消费送积分比值：</th>
+			<td>
+				<input type="input" class="px" id="float_score" value="{weikucms:$data['pay_float_score']}" name="float_score" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">售后消费付款送积分比例可以是充一百元送50个积分，也可以是其他的，按积分数除与100元来进行计算</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">文字描述积分数：</th>
+			<td>
+				<input type="input" class="px" id="appraise_score" value="{weikucms:$data['depict_score']}" name="appraise_score" style="width:100px" maxlength="30"/>
+			  	<span class="red" style="padding-left:27px;">*</span><span style="padding-left:5px;" class="red">用户在填写评价文字描述，给一定的积分数。</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">评价送积分数值：</th>
+			<td>
+				<input type="input" class="px" id="appraise" value="{weikucms:$data['appraise_score']}" name="appraise" style="width:100px" maxlength="30"/>
+			  	<span class="red" style="padding-left:27px;">*</span><span style="padding-left:5px;" class="red">提供评价积分，可提高用户的参与，同时也便于了解员工</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">签到送积分数值：</th>
+			<td>
+				<input type="input" class="px" id="sign_min" value="{weikucms:$data['sign_min']}" name="sign_min" style="width:100px" maxlength="30"/>&nbsp;到&nbsp;
+				<input type="input" class="px" id="sign_max" value="{weikucms:$data['sign_max']}" name="sign_max" style="width:100px" maxlength="30"/>
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">每日签到送一定范围内的随机数字积分</span>
+				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">积分抵换金钱比值：</th>
+			<td>
+				<input type="input" class="px" id="score_to_money" value="{weikucms:$data['score_to_mon']}" name="score_to_money" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">用户维修结账付款时用积分抵换金钱的比例，比如：100个积分抵换10元，比例值为10%</span>				
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">积分抵换金钱比值：</th>
+			<td>
+				<input type="input" class="px" id="score_buy_money" value="{weikucms:$data['score_to_money']}" name="score_to_money" style="width:100px" maxlength="30"/>&nbsp;%
+			  	<span class="red" style="padding-left:10px;">*</span><span style="padding-left:5px;" class="red">用户买车结账付款时用积分抵换金钱的比例，比如：100个积分抵换10元，比例值为10%</span>				
+			</td>
+  		 </tr>
+  		 <tr>
+  		 	<td colspan="2"><div class="cLineB"><h4 class="left">礼品兑换设置</h4></div></td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">礼品名称1：</th>
+			<td>
+				<input type="input" class="px" id="gift_1" value="{weikucms:$data['gift_name_1']}" name="gift_1" style="width:200px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">礼品数量：</th>
+			<td>
+				<input type="input" class="px" id="num_1" value="{weikucms:$data['gift_num_1']}" name="num_1" style="width:100px" maxlength="30"/>&nbsp;个
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">兑换的积分值：</th>
+			<td>
+				<input type="input" class="px" id="gift_score_1" value="{weikucms:$data['gift_score_1']}" name="gift_score_1" style="width:100px" maxlength="30"/>
+			  	<br/>
+			  	填写礼品所要兑换的积分值				
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">礼品名称2：</th>
+			<td>
+				<input type="input" class="px" id="gift_2" value="{weikucms:$data['gift_name_2']}" name="gift_2" style="width:200px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">礼品数量：</th>
+			<td>
+				<input type="input" class="px" id="num_2" value="{weikucms:$data['gift_num_2']}" name="num_2" style="width:100px" maxlength="30"/>&nbsp;个
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">兑换的积分值：</th>
+			<td>
+				<input type="input" class="px" id="gift_score_2" value="{weikucms:$data['gift_score_2']}" name="gift_score_2" style="width:100px" maxlength="30"/>
+			  	<br/>
+			  	填写礼品所要兑换的积分值				
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">礼品名称3：</th>
+			<td>
+				<input type="input" class="px" id="gift_3" value="{weikucms:$data['gift_name_3']}" name="gift_3" style="width:200px" maxlength="30"/>
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">礼品数量：</th>
+			<td>
+				<input type="input" class="px" id="num_3" value="{weikucms:$data['gift_num_3']}" name="num_3" style="width:100px" maxlength="30"/>&nbsp;个
+			</td>
+  		 </tr>
+  		 <tr>
+			<th valign="top">兑换的积分值：</th>
+			<td>
+				<input type="input" class="px" id="gift_score_3" value="{weikucms:$data['gift_score_3']}" name="gift_score_3" style="width:100px" maxlength="30"/>
+			  	<br/>
+			  	填写礼品所要兑换的积分值				
+			</td>
+  		 </tr>
+  		   		 
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="button" class="btn btn-primary">保存</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<script>
+
+</script>
+<include file="Public:footer"/> 

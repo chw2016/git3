@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+</head>
+
+<body>
+	<div class="pageTitle"><i></i><span class="arrow-r"></span>添加保养记录</div>
+	<div class="publicList wml65">
+	    <ul>
+	        <li class="">
+	        	<div class="li-l">保养日期</div>
+	        	<div class="li-r"><input id="bytime" placeholder="选择上次保养日期" max="2014-08-03" class="input" readonly=""></div>
+	        	
+	        	<input id="oldByTime" value="" type="hidden">
+				<input id="isBy" value="" type="hidden">
+	        </li>
+	        <li class="noAfter">
+	       		<div class="li-l">保养里程</div>
+	        	<div class="li-r"><input id="bykm" name="bykm" placeholder="输入上次保养里程(公里)" class="input" pattern="[0-9]*" type="tel" maxlength="7"></div>
+	        	<input id="oldByKm" value="0" type="hidden">
+	        </li>
+	        <li class="noAfter">
+		        <div class="li-l">保养金额</div>
+		        <div class="li-r"><input id="byMoney" placeholder="输入上次保养金额" class="input" pattern="[0-9]*" type="tel"></div>
+	        </li>
+	    </ul>
+	</div>
+	<div class="button clearfix"><a href="javascript:void(0);" onclick="show_success_box();">确定提交</a></div>
+	<div id="back">
+		<a href="javascript:window.history.back(-1);">
+			<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+		</a>
+	</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_setAccount', 1]);
+	_maq.push(['_areaid', 49]);
+	_maq.push(['_typeid', 2]);
+	_maq.push(['_uid', 100047]);
+	_maq.push(['_regtime', 1407047043]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery.mobile-1.2.0.min.js"></script>
+<link href="{weikucms::STATICS}/wapweiui/service/css/mobiscroll.custom-2.4.5.min.css" rel="stylesheet" type="text/css">
+<script src="{weikucms::STATICS}/wapweiui/service/js/mobiscroll.custom-2.4.5.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var options = {
+		'preset':'date',
+		'theme':'ios',
+		'mode':'scroller',
+		'display':'bottom',
+		'lang':'en'
+	};;
+	$('#bytime').scroller('destroy').scroller(options);
+	$('#bytime').next().click(function(){$('#bytime').focus();});
+});
+
+var loading_submit = 0;
+var show_success_box=function(){
+	if(loading_submit){
+		return false;
+	}
+	var bytime  = $('#bytime').val();
+	var oldByTime = $('#oldByTime').val();
+	var tmp     = bytime.replace('年','');
+	var tmp     = tmp.replace('月', '');
+	var tmp     = tmp.replace('日', '');
+	var bykm 	= $('#bykm').val();
+	var byMoney = $('#byMoney').val();
+	var oldByKm = parseInt( $('#oldByKm').val() );
+	var isBy 	= parseInt( $('#isBy').val() );
+	if( !bytime ){
+		show_error_tip('请选择上次保养时间');
+		return false;
+	}
+	else if (isBy &&　parseInt(oldByTime) >= parseInt(tmp))
+	{
+		show_error_tip('不能小于上次保养时间');
+		return false;
+	}
+	if( !bykm ){
+		show_error_tip('请输入上次保养里程');
+		return false;
+	}else if ( !checkNum( bykm ) ){
+		show_error_tip('上次保养里程输入格式不正确');                                   
+		return false;
+	}
+	else if(oldByKm && parseInt(bykm) < oldByKm)
+	{
+		show_error_tip('不能小于上次保养里程');
+		return false;
+	}
+	else if(oldByKm && parseInt(bykm) - oldByKm < 5000){
+		showAlert2('提示','亲,两次保养间隔里程小于5000公里,您确定?', {'sureFun':'modiBaoYang', 'cancelFun':'cancelAlert'});
+	}
+	else if(parseInt(bykm) > 500000){
+		showAlert2('提示','NB，都跑了超过50万公里了，你确定？', {'sureFun':'modiBaoYang', 'cancelFun':'cancelAlert'});
+	}else{
+		modiBaoYang(bytime, bykm, byMoney);
+	}
+};
+
+var modiBaoYang=function(bytime, bykm, byMoney){
+	bytime = bytime ? bytime : $('#bytime').val();
+	bykm = bykm ? bykm : $('#bykm').val();
+	byMoney = byMoney ? byMoney : $('#byMoney').val();
+	var brandId = '57230';
+	var modelId = '125815';
+	loading_submit=1;
+	var url = 'ajax.php?mod=set&code=baoyang';
+	$.post(url, {'bytime':bytime, 'bykm':bykm, 'byMoney':byMoney, 'uid':'100047', 'chepai':'粤B12345', 'brandId':brandId, 'modelId':modelId, 'uname':'多了'}, function(d){
+		if(d.ret==true){
+			window.location.href='index.php?mod=baoyang';
+		}else{
+			loading_submit=0;
+            show_error_tip('出错了，保存失败');
+			//showAlert('提示','错误操作');
+		}
+	}, 'json');
+};
+var cancelAlert=function(){
+	$('#Pop_tel_box').remove();
+	$('#bykm').select();
+};
+</script></body></html>

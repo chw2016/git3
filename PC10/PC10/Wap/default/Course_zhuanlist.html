@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>我要学习</title>
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/course/style.css" />
+    <script src="tpl/Wap/default/common/commerce/js/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+<div id="list">
+    <volist id="vo" name="zhuanfa" offset="0" length="1">
+        <!--http://v.wapwei.com/index.php?g=Wap&m=Index&a=content&id=4925&token=ec60f633808334ace70cabce58e50b6f-->
+        <div id="fristlist" onclick="window.location.href='{weikucms::U('Index/content',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'"><img src="{weikucms:$vo.pic}" title="图片">
+            <p>{weikucms:$vo.title}</p>
+
+        </div>
+    </volist>
+    <ul>
+        <volist id="vo" name="zhuanfa" offset="1">
+            <li class="listset" onclick="window.location.href='{weikucms::U('Index/content',array('token'=>$token,'openid'=>$openid,'id'=>$vo['id']))}'">
+                <div class="listsetleft">
+                    <h3>{weikucms:$vo.title}</h3>
+                    <p>
+                        <php>
+                            if(strlen($vo['text']) > 50){
+                            echo htmlspecialchars_decode(mb_substr($vo['text'],0,50,'utf-8'))."...";
+                            }else{
+                            echo htmlspecialchars_decode($vo['text']);
+                            }
+
+                        </php>
+                    </p>
+                </div>
+                <div class="listsetright">
+                    <img src="{weikucms:$vo.pic}" title="图片">
+                </div>
+                <div style="clear:both;"></div>
+            </li>
+        </volist>
+    </ul>
+
+</div>
+</body>
+</html>

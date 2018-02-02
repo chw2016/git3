@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/dialog.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/usercenter/resource/main.css" media="all" />
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/aSelect.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/aLocation.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/dater_min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/dialog_min.js"></script>
+
+    <title>完善资料-{weikucms:$wxuser.name}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<script>
+$().ready(function(){
+    new dater({
+        selectYear:document.getElementById("selectYear"),
+        selectMonth:document.getElementById("selectMonth"),
+        selectDate:document.getElementById("selectDate"),
+        minDat: new Date("1950/1/1"),
+        maxDat: new Date(),
+        curDat: new Date("{weikucms:$birth_day[0]}/{weikucms:$birth_day[1]}/{weikucms:$birth_day[2]}")
+    }).init();
+});
+
+
+function bd1(){
+    var d = new iDialog();
+    d.open({
+        classList: "valid_phone pay",
+        title:"",
+        close:"",
+        content:'<ul class="list_ul_card">\
+				<form id="form2" action="javascript:;" method="post">\
+					<li data-card>\
+						<table>\
+							<tr class="input wrapInput">\
+								<td style="width:70%;"><input type="text" id="code" name="code" placeholder="验证码：" maxlength="30" class="input"></td>\
+								<td>\
+									<input type="button" onclick="getReceiveMemberCardVCode(this,event);" class="button vcode" value="获取验证码" />\
+								</td>\
+							</tr>\
+						</table>\
+					</li>\
+				</form>\
+			</ul>',
+        btns:[
+            {id:"", name:"确定", onclick:"fn.call();", fn: function(self){
+                var form2 = document.getElementById("form2");
+                var form1 = document.getElementById("form1");
+                var getcode = form2.code.value;
+                var obj = {
+                    code: form2.code.value,
+                    phone: $("#phone").val(),
+                    type: 1
+                }
+                if(!getcode){
+                    alert("请输入验证码", 1500);
+                    return;
+                }
+                $.ajax({
+                    url: "{weikucms::U('Wap/Sms/sms_valid',array('token'=>$token))}",
+                    type:"POST",
+                    data:obj,
+                    dataType:"JSON",
+                    success: function(res){
+                        if(res.code == 0){
+                            $("#is_bind").val(1);
+                            alert(res.msg);
+
+                            self.die();
+                        }else{
+                            alert(res.msg, 1500);
+                        }
+                    }
+                });
+            }},
+            {id:"", name:"取消", onclick:"fn.call();", fn: function(self){
+                self.die();
+            }}
+        ]
+    });
+}
+
+function setbind(){
+    alert($("#is_bind"));
+}
+
+function submit1(){
+    var form = $("#form1"),
+            province,city,area;
+    $("#selectProvince").find('option').each(function(){
+        if($(this).is(":selected")){
+            province = $(this).text();
+        }
+    })
+    $("#selectCity").find('option').each(function(){
+        if($(this).is(":selected")){
+            city = $(this).text();
+        }
+    })
+    $("#selectArea").find('option').each(function(){
+        if($(this).is(":selected")){
+            area = $(this).text();
+        }
+    })
+    var obj = {
+        username: $("#username").val(),
+        is_bind: $("#is_bind").val(),
+        openid: $("#openid").val(),
+        phone: $("#phone").val(),
+        birthday: [$("#birth_year").val(), $("#birth_month").val(), $("#selectDate").val()].join("/"),
+        address:[province,city,area,$("#Js-address").val()].join("")
+        //address:[province,city,area,$("#Js-address").val()]
+
+    };
+
+    //alert(obj.address);return;
+    if(obj.username.length<=0){
+        alert("请输入姓名");
+        return;
+    }
+    if($("#need_bind").val() == 'need'){
+        if($("#is_bind").val() == 0){
+            alert("手机号还未绑定成功哦");
+            return;
+        }
+    }
+    var partten = /^1[3,5,8]\d{9}$/;
+    if(!partten.test(obj.phone)){
+        alert("请输入正确的号码");
+        return;
+    }
+
+
+    //loading(true);
+    var btn = $('#btnbaocun');
+    btn.text('保存信息中...');
+    //console.log($("#form1").serialize());return;
+    var sendData = $("#form1").serialize()+"&stradd="+obj.address;
+    //console.log(sendData);return;
+    $.ajax({
+        url: "{weikucms::U('Usercenter/joinusercenter',array('token'=>$token,'openid'=>$openid))}",
+        type:"POST",
+        data:sendData,
+        dataType:"json",
+        success: function(res){
+            //loading(false);
+            if(res.code == 0){
+                btn.text(res.msg);
+                setInterval(function(){
+                    window.location.href= res.url;
+                },'2000')
+            }else{
+                btn.text(res.msg);
+            }
+        }
+    });
+
+}
+
+var intervalId,buttonObj,intervalId2,buttonObj2;
+//发送下一条短信需要间隔的秒数
+var seconds = 300;
+var seconds2 = 300;
+function getReceiveMemberCardVCode(clickObj, evt){
+    var req = {
+        phone: $("#phone").val(),
+        type:1
+    }
+    if(!req.phone){
+        alert("请输入手机号", 1000);return;
+    }
+    clickObj.setAttribute("disabled", "disabled");
+    clickObj.value = "正在发送，请稍候...";
+    $.ajax({
+        url: "{weikucms::U('Wap/Sms/send_sms',array('token'=>$token))}",
+        type:"post",
+        data:req,
+        dataType:"JSON",
+        success: function(res){
+            if(0 == res.code){
+                clickObj.value = '验证码发送成功';
+                buttonObj = clickObj;
+                intervalId = setInterval("ticker()",1000);
+            }else{
+                alert(res.error, 1500);
+                clickObj.value = '获取验证码';
+                clickObj.removeAttribute("disabled");
+            }
+        }
+    });
+}
+
+function ticker(){
+    seconds --;
+    if(seconds>0){
+        buttonObj.value = seconds + "秒后可重新获取";
+    }else{
+        clearInterval(intervalId);
+        buttonObj.removeAttribute("disabled");
+        buttonObj.value = "获取验证码";
+        seconds = 300;
+        buttonObj = null;
+    }
+}
+
+
+
+
+
+$(function () {
+    var sel = aSelect({data: aLocation});
+    sel.bind('#selectProvince', '{weikucms:$address[0]}');
+    sel.bind('#selectCity', '{weikucms:$address[1]}');
+    sel.bind('#selectArea', '{weikucms:$address[2]}');
+})
+</script>
+<div class="container info_tx">
+    <div class="body pt_10">
+        <ul class="list_ul_card">
+            <form id="form1" action="javascript:;" method="post">
+                <input type="hidden" name="openid" value="{weikucms:$userdata.openid}"/>
+                <input type="hidden" id="is_bind" name="is_bind" value="{weikucms:$memberdata.is_bind}"/>
+                <if condition="$usercenterdata['is_openphone'] eq 1">
+                   <input type="hidden" id="need_bind" name="need_bind" value="need"/>
+                   <else/>
+                    <input type="hidden" id="need_bind" name="need_bind" value="noneed"/>
+                </if>
+                <li data-card>
+                    <header class="center">
+                        <label style="display:inline-block;"><span>&nbsp;</span>完善会员卡资料</label>
+                    </header>
+                    <div class="forms">
+                        <dl>
+                            <dt>姓 名： </dt>
+                            <dd>
+                                <input type="text" name="name" id="username"  value="{weikucms:$memberdata.name}" placeholder="请输入姓名" maxlength="30"  class="input"/>
+                            </dd>
+
+                        </dl>
+
+                        <dl>
+                            <dt>手 机： </dt>
+                            <dd>
+
+                                <div class="group_input input">
+                                    <table>
+                                        <tbody><tr>
+                                            <td><input type="tel" name="phone" id="phone" placeholder="请输入手机号" maxlength="30" class="input" style="line-height: 25px;" value="{weikucms:$memberdata.phone}"></td>
+                                            <if condition="$usercenterdata['is_openphone'] eq 1 and $memberdata['is_bind'] neq 1">
+                                            <td style="width:100px;">
+                                                <a href="javascript:bd1();" class="button">绑定</a>
+                                            </td>
+                                            </if>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </dd>
+
+                        </dl>
+
+                        <!-- 系统字段性别是否可修改-->
+						<if condition="$token eq 'bd70f29e952a7a8e31193d1ae6e77e36' or $token eq 'b1e591201cd2db6dc1893da4bacc8f4f'">
+                        <else/>
+						<dl>
+                            <dt>生 日：</dt>
+                            <dd>
+                                <div class="box select_box">
+                                    <div>
+                                        <select name="birth_year" readonly="readonly"  class="select" id="selectYear" value="1970"><!--auth Eric_wu--></select>
+                                    </div>
+                                    <div>
+                                        <select name="birth_month" readonly="readonly"  class="select" id="selectMonth" value="01"><!--auth Eric_wu--></select>
+                                    </div>
+                                    <div>
+                                        <select name="birth_date" readonly="readonly"  class="select" id="selectDate" value="01"><!--auth Eric_wu--></select>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <!-- 系统字段性别可修改-->
+                        <dl>
+                            <dt>地区:</dt>
+                            <dd>
+                                <div class="box select_box">
+                                    <div>
+                                        <select name="addr_prov" class="select" id="selectProvince"></select>
+                                    </div>
+                                    <div>
+                                        <select name="addr_city" class="select" id="selectCity"></select>
+                                    </div>
+                                    <div>
+                                        <select name="addr_area" class="select" id="selectArea"></select>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>详细地址:</dt>
+                            <dd><input type="text" name="address" id="Js-address" value="{weikucms:$address[3]}" placeholder="请输入详细地址" maxlength="100"  class="input"/></dd>
+                        </dl>
+
+                        </if>
+
+                </li>
+                <div class="pt_10 pb_10">
+                    <a href="javascript:submit1();" id="btnbaocun" class="button">保&nbsp;&nbsp;&nbsp;存</a>
+                </div>
+                <!--<div class="pt_10 pb_10">
+                    <a href="javascript:bd();" class="link">绑定已有实体卡</a>
+                </div>-->
+            </form>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>

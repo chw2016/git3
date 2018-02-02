@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-x: hidden;">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes"/><!-- 页面以应用风格显示 ios -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 页面以应用风格显示 ios -->
+<meta name="format-detection" content="telephone=no"/><!-- 不将数字识别为电话号码 -->
+<meta name="format-detection" content="email=no" /><!-- 不识别邮件地址 -->
+<title><?php echo $_GET['type']; ?></title>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/lication.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/Jd/css/font-awesome.min.css">
+<script src="{weikucms::RES}/Jd/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="{weikucms::RES}/Jd/js/main.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+</head>
+<style>
+	.poab{
+		position: absolute;
+		left: 138px;
+		top: 68px;
+		color: #747474;
+	}
+	.poab1{
+		position: absolute;
+		top: 68px;
+		right: 10px;
+		color: #747474;
+	}
+select,
+textarea,
+input{
+          -webkit-user-select: auto;
+          -webkit-box-shadow: none;
+          box-shadow: none ;
+          -webkit-appearance: none;
+          border-radius:0;
+          -webkit-border-radius:0;
+}
+.fff{
+          background-color: #fff;
+}
+.search_one{
+          width: 100%;
+          height: 40px;
+          border-top: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+}
+span.comment-btn {
+          padding: 5px 10px;
+          background-color: #fff;
+          color: #000;
+          border:1px  solid #ccc;
+          border-radius: 5px;
+          display:inline-block;
+          letter-spacing:5px;
+}
+ .assist-right{
+          display:inline-block;
+          float:right;
+          margin-right: 10px;
+  }
+.ml20{
+          margin-left:20px;
+}
+.love-praise{
+          font-size: 20px;
+          color: #828282;
+}
+.assist{
+          display:inline-block;
+}
+.assist.color .love-praise{
+          color:red ;
+          }
+.clearfix {
+          *zoom: 1;
+          clear: both;
+}
+.clearfix::after,.clearfix::before{
+          content: " ";
+          display: table;
+}
+.clearfix::after{
+          clear: both;
+}
+.figure{
+          color:#575556;
+}
+.comment-center{
+          background-color:#EDECEC;
+          font-size:14px;
+          margin-top:15px;
+}
+.comment-center .reply-btn{
+          padding: 3px 7px;
+          background-color: #FFF;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+          width: 10%;
+          color: #0C0C0C;
+          text-align: center;
+          float: right;
+          margin: 5px;
+}
+.ml10{
+          margin-left:10px;
+}
+.mt10{
+          margin-top:10px;
+}
+.padding10{
+    font-size: 12px;
+          padding: 10px;
+          border-bottom: 1px solid #D9D9D9;
+}
+.padding15{
+          padding: 5px 10px 5px 30px;
+          border-bottom: 1px solid #D9D9D9;
+}
+.comment{
+          text-align:center;
+}
+.comment-right{
+          float:right;
+}
+.color1979dc{
+          color:#1979dc;
+}
+.comment-day{
+          text-align: right;
+          color: #b4b4b4;
+          font-size: 11px;
+}
+.more{
+          font-size: 14px;
+          color: #1979dc;
+          text-align:right;
+          margin: 5px 10px;
+}
+.mt5{
+        margin-top:5px;
+}
+.reply-font{
+        padding: 0 3px;
+        font-size: 12px;
+        font-size: 12px;
+        font-weight: bold;
+}
+.color33{
+         color:#333;
+}
+.twitch{
+          margin-right: 10px;
+          color: #828282;
+}
+</style>
+<body style="overflow-x: hidden">
+
+<div class="top_search">
+    <div class="search">
+    <form action="{weikucms::U('so2',get(token,hy,tags,openid,type))}" method="post" id="form" >
+        <div class="search_input">
+            <input type="text" id="search" name="searchs" value="<?php echo $_GET['search'] ?>" placeholder="请输入关键字或作者进行搜索">
+            <a href="#" id="goSearch" ><span class="fa_i" id="so"><!-- goSearch --><i class="fa fa-search" style="  position: absolute;
+  right: 21px;
+  top: 22px;
+"></i></span></a>
+        </div>
+    </form>
+    <script>
+       $("#so").click(function(){
+    	   $("#form").submit();
+       })
+    </script>
+    <script type="text/javascript">
+    $(function(){
+        $(document).on('touchstart',".assist",function(){
+            var thises = $(this);
+            var number = $(this).find(".figure").html();
+              var figure= 0;
+              var id = parseInt($(this).find(".figure").attr('data'));
+                var url = "{weikucms::U('Jd/praise',array('token'=>$token,'openid'=>$openid,'type'=>'plan'))}";
+              if($(this).hasClass('color')){
+                    figure--;
+                  
+                  $.post(url,{figure:figure,id:id},function(rel){
+                      if(rel.status==1){
+                          thises.removeClass('color');
+						  thises.find(".figure").css("color","#575536");
+						  number--;
+                          thises.find(".figure").html(number);
+                          //location.href = "{weikucms::U('Jd/search',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                      }else{
+                          msg.alert(rel.info,function(){
+								location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+						  });
+                      }
+                  },'json')
+
+              }else{
+                    figure++;
+                  
+                  $.post(url,{figure:figure,id:id},function(rel){
+                      console.log(rel);
+                      if(rel.status==1){
+					     thises.addClass('color');
+                         thises.find(".figure").css("color","red");
+                         number++;
+                         thises.find(".figure").html(number);
+
+                          //location.href = "{weikucms::U('Jd/search',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+                      }else{
+                          msg.alert(rel.info,function(){
+							location.href = "{weikucms::U('Jd/login',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+						  });
+                      }
+                  },'json')
+
+              }
+              // $(".figure").html(figure);
+       })
+    })
+
+    </script>
+    </div>
+    <div class="search_one">
+        <select class="form_control4 fff" id="hy" ><!-- hy -->
+            <option value="">请选择行业</option>
+            <volist name="hy" id="v">
+            <option <if condition="$_GET['hy'] eq $v['industry']" >selected=selected</if> value="{weikucms:$v.industry}">{weikucms:$v.industry}</option>
+            </volist>
+             <!-- <i class="fa fa-sort-desc poab"></i>-->
+        </select>
+        <i class="fa fa-sort-desc poab"></i>
+        <select class="form_control4 fff" id="tags" > <!-- tags -->
+            <option value="">请选择标签</option>
+            <volist name="tags" id="v">
+            <option <if condition="$_GET['tags'] eq $v['id']" >selected=selected</if>  value="{weikucms:$v.id}">{weikucms:$v.name}</option>
+            </volist>
+        </select>
+        <i class="fa fa-sort-desc poab1"></i>
+    </div>
+</div>
+<ul class="lica_ul limitShoppingBox on" id="searchList">
+  <if condition="$list" >
+    <foreach name="list" item="v">
+	<a class="helist" data-id="{weikucms:$v.id}" href="javascript: void(0)" data-href="{weikucms::U('Wap/Jd/detailed',array('token'=>$token,'openid'=>$openid,'id'=>$v['id'],'type'=>$_GET['type']))}">
+    <li class="he" style="margin-top: 10px;padding-top: 5px; padding-bottom: 5px;">
+    <div style="width:90%;margin-left:10px;float:left;">
+        <span class="name" >{weikucms:$v['title']}</span>
+<!--         <span class="tel" style="float: left;margin-left: 10px;">作者：{weikucms:$v.name|mb_substr=###,0,3,'utf-8'}</span>
+        <span class="lx">行业：{weikucms:$v.hy|mb_substr=###,0,1,'utf-8'}</span> -->
+    </div>
+    <div class="bz color" style="width:90%;margin-left: 10px;  color:#B2C5DA;">
+      <div style="width:50%;float:left;" >作者：{weikucms:$v.name}</div>
+      <div style="width:50%;float:left;" >行业：{weikucms:$v.hy}</div>
+    </div>
+    <div class="bz color" style="width:90%;margin-left: 10px;">
+       <?php echo str_substr($v['content'],40,'...') ?>
+    </div>
+    <div class="tb" style="margin-left:6px;">
+        <foreach name="v.tag" item="vo">
+        <span style="border-radius: 4px;" class="color{weikucms:$vo.color}">{weikucms:$vo.name}</span>
+        </foreach>
+
+    </div>
+        <if condition="$v.type eq '微文浏览'">
+            <span style=" color: #F5772D; position: relative; top: -10px; display: inline-block;float: right;padding-right: 5%;text-decoration:underline;"onclick="window.location.href='{weikucms:$v.url}'">阅读</span>
+        </if>
+      </a>
+    <div class="praise clearfix">
+              <span style="color: #CCCCCC;margin-left: 10px;font-size: 12px;vertical-align: -webkit-baseline-middle;"><?php echo date("Y-m-d  H:i:s",$v['add_time']) ?></span>
+            <div class="assist-right">
+              <div class="assist <if condition="$v['praisetype'] eq 1">color</if>">
+                        <span class="love-praise fa fa-thumbs-up"></span>
+                 <!-- <?php echo $v['id']; ?>-->
+                        <span class="figure" data="{weikucms:$v.id}">{weikucms:$v.praise}</span>
+              </div>
+              <span class="fa fa-twitch ml20 twitch" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$v['id'],'type'=>'plan'))}'">{weikucms:$v['count']}</span>
+            </div>
+    </div>
+    <!--<if condition="$v['evaluate']">
+    <div class="comment-center clearfix">
+            <volist name="v['evaluate']" id="so"  offset="0" length="3">
+                <if condition="$so['upuname'] eq ''">
+                  <div class="padding10 clearfix mt5">
+                            <span class="color1979dc">{weikucms:$so.uname}:</span>
+                            <span class="color33">{weikucms:$so.content}</span>
+                            <div class="comment-day mt5">
+                                <php>
+                                    $times = strtotime($so['add_time']);
+                                    echo date('Y/m/d H:i',$times);
+                                </php>
+                            </div>
+                  </div>
+                    <else/>
+                   <div class="padding10 clearfix mt5">
+                            <span class="color1979dc">{weikucms:$so.upuname}<span class="reply-font">回复</span>{weikucms:$so.uname}:</span>
+                            <span class="color33">{weikucms:$so.content}</span>
+                            <div class="comment-day mt5">
+                                <php>
+                                    $times = strtotime($so['add_time']);
+                                    echo date('Y/m/d H:i',$times);
+                                </php>
+                            </div>
+                  </div>
+                    </if>
+            </volist>
+
+           &lt;!&ndash; <div style="text-align: center;">该主题暂时还没有评价哦！ </div>&ndash;&gt;
+
+          &lt;!&ndash;<div class="padding10 clearfix mt5">
+                    <span class="color1979dc">TheSmile___<span class="reply-font">回复</span>The:</span>
+                    <span class="color33">呵呵哒</span>
+                    <div class="comment-day mt5">2014/09/10&nbsp;12:30:12</div>
+          </div>&ndash;&gt;
+        <if condition="$v['count'] gt 3">
+          <div class="more" onclick="window.location.href='{weikucms::U('Jd/evaluate',array('token'=>$token,'openid'=>$openid,'tid'=>$v['id'],'type'=>'plan'))}'">更多...</div>
+        </if>
+          </div>
+    </if>-->
+    </div>
+    </li>
+    </foreach>
+ <else/>
+    <li style=" width:100%; margin:0 auto;text-align:center;" >暂无记录</li>
+ </if>
+   </ul>
+   <!-- 异步搜索逻辑 -->
+<script type="text/javascript">
+var searchUrl="{weikucms::U('Wap/Jd/search',array('token'=>$token,'openid'=>$openid,'type'=>$_GET['type']))}";
+</script>
+
+<script>
+   var n=0;
+   var a=0;
+   var timeOut = null;
+   $(document).scroll(function(){
+	     //滚动条顶部的偏移==总个文档的高度-窗口的高度
+    	 if($(window).scrollTop()==$(document).height()-$(window).height()){//获取低部
+         if(a!=10){//显示
+        	$("#aaa").show();
+         }
+		 if(timeOut != null){return;}
+		 	msg.alert('正在加载数据...', 1000000);
+      	 n++;
+      	 timeOut = setTimeout(function(){//1秒加载一次
+           $.post("{weikucms::U('',array('token'=>$token,'search'=>$_GET['search'],'openid'=>$openid,'type'=>$_GET['type']))}",{"n": n},function(html){
+		   		$('#msgBlur').remove();
+				if($.trim(html) == ''){
+					return false;
+				}
+				timeOut = null;
+
+        	   $(html).appendTo('.limitShoppingBox');//第五步：拿到class="limitShoppingBox"看效果
+
+/*          	    if(!data.str){//隐藏
+        	    	    a=10;
+        	    		$("#aaa").hide();
+        	    } */
+        	},'html');
+      	},1000);
+     }
+    })
+</script>
+<script type="text/javascript">
+$("#tags").change(function(){
+	var tags = $(this).val();
+	location.href = "{weikucms::U('search',get1(tags,'"+tags+"',hy,token,search,type,openid))}";
+})
+
+$("#hy").change(function(){
+	var hy = $(this).val();
+	location.href = "{weikucms::U('search',get1(hy,'"+hy+"',tags,token,search,type,openid))}";
+})
+
+$('.helist').click(function(){
+		var THIS = $(this);
+    $.post("{weikucms::U('Jd/check_detailed',array('token'=>$token,'openid'=>$openid))}", {id:$(this).attr('data-id')}, function(ret){
+        if(ret.code == 0){
+            window.location.href = THIS.attr('data-href');
+        }else{
+            if(ret.url && ret.url.length > 0){
+                msg.alert(ret.msg, function(){
+                    if(ret.code == 1){
+                        window.location.href = ret.url;
+                    }
+                });
+            }else{
+                alert('参数错误，请刷新重试');
+            }
+        }
+    }, 'json');
+});
+
+
+</script>
+
+</body>
+</html>

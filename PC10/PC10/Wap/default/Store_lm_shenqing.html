@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/samphay.css">
+    <link rel="stylesheet" href="{weikucms:$staticFilePath}/lm/css/style.css">
+    <script src="{weikucms:$staticFilePath}/lm/js/jquery-1.11.1.min.js"></script>
+    <script src="{weikucms:$staticFilePath}/lm/js/main.js"></script>
+    <style type="text/css">
+        .inputsty{
+            margin: 10px auto;
+            width: 90%;
+            border: 1px solid #DBDDDD;
+            border-radius:5px;
+            height: 30px;
+            line-height: 30px;
+        }
+        .inputsty.te{
+            height: 80px;
+            line-height: 80px;
+        }
+        .inputsty input{
+            width: 95%;
+            border: 0;
+            margin: 3px;
+            padding: 5px;
+        }
+        #sucth{
+            width: 90%;
+            margin-left: 5%;
+            margin-right: auto;
+            border-radius: 6px;
+            height: 45px;
+            line-height: 45px;
+            background-color: #FB405F;
+            color: #FFF;
+            text-align: center;
+            position: absolute;
+            bottom: 200px;
+            font-size: 20px;
+        }
+        .titles{
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+            /* text-align: center; */
+            background: #CACACA;
+            font-size: 16px;
+            color: #595959;
+        }
+    </style>
+</head>
+<body>
+<div class="titles">入住申请</div>
+    <div>
+        <form action="" method="">
+            <div class="inputsty">
+                <input name="name" id="name" placeholder="请填写您的姓名" type="text"/>
+            </div>
+            <div class="inputsty">
+                <input name="tel" id="tel" placeholder="请填写您的联系方式" type="tel"/>
+            </div>
+            <div class="inputsty">
+                <input name="weixin" id="weixin" placeholder="请填写您的微信号" type="text"/>
+            </div>
+            <div class="inputsty">
+                <input name="shopclassfiy" id="shopclassfiy" placeholder="请填写您所经营的品类" type="text"/>
+            </div>
+            <div class="inputsty te">
+                <textarea rows="4" style="width: 95%;border: 0;padding: 5px;" id="message" placeholder="请填写您想对我说的话"></textarea>
+            </div>
+
+            <div id="sucth">提&nbsp&nbsp&nbsp&nbsp交</div>
+        </form>
+    </div>
+    <div style="height:52px;"></div>
+    <include file="Store_lm:foot" />
+<script type="text/javascript">
+    $(function(){
+        $('#sucth').click(function(){
+            var url = "{weikucms::U('Store_lm/shenqing',array('token'=>$token,'openid'=>$openid))}";
+            var name = $('#name').val();
+            var tel = $('#tel').val();
+            var weixin = $('#weixin').val();
+            var shopclassfiy = $('#shopclassfiy').val();
+            var message = $('#message').val();
+            if(!name){
+                alert('姓名不能为空');
+                return false;
+            }
+            if(tel){
+                if(!isPhone(tel)){
+                    alert('联系方式格式不正确');
+                    return false;
+                }
+            }else{
+                alert('联系方式不能为空');
+                return false;
+            }
+            if(!weixin){
+                alert('微信号不能为空');
+                return false;
+            }
+            if(!shopclassfiy){
+                alert('经营品类不能为空');
+                return false;
+            }
+            if(!message){
+                alert('留言不能为空');
+                return false;
+            }
+            $.post(url,{name:name,tel:tel,weixin:weixin,shopclassfiy:shopclassfiy,message:message},function(data){
+                if(data.status ==1){
+                    alert(data.info);
+                    window.location.href = "{weikucms::U('Store_lm/index',array('token'=>$token,'openid'=>$openid))}";
+                }else{
+                    alert(data.info);
+                }
+            },'json')
+
+        })
+    })
+    //是否手机号
+    function isPhone(aPhone) {
+        var bValidate = RegExp(/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/).test(aPhone);
+        if (bValidate) {
+            return true;
+        }
+        else
+            return false;
+        }
+</script>
+</body>
+</html>

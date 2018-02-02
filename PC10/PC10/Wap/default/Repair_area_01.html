@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcore.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/lhgcalendar.js"></script>
+
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/jquery.form.js"></script>
+
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="Keywords" content="万普微信">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+.demo{width:100%;}
+.demo p{line-height:32px}
+.btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 5px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;cursor:pointer;background-color:#5bb75b;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+.btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+.progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+.bar {background-color: green; display:block; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+.files{height:22px; line-height:22px; margin:5px 0}
+.delimg{margin-left:20px; color:#090; cursor:pointer}
+</style>
+<style type="text/css">
+    .gray_1{
+        background: #ccc;
+        /*border: 1px solid #ccc;*/
+        font-size: 14px;
+       
+    }.red{
+        background: #f00 !important;
+        /*border: 1px solid #f00;*/
+       
+        color: #fff;
+        font-size: 14px;
+    }
+    
+    .bcqtxx{
+	
+	position: absolute;
+	right: 10px;
+	top: 7px;
+}
+    
+</style>
+</head>
+<body>
+<div class="pageTitle" style="color:#fff;font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="{weikucms::U('Wap/Repair/home',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">首页</a>&nbsp;>>&nbsp;服务范围修改
+</div>
+<input type="hidden" id="token" value="{weikucms:$token}"/>
+<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+<div class="publicList wml100">
+    <ul>
+    	<li class="noAfter">
+        	<div class="li-l">添加区域</div>
+        	<div class="li-r">          		
+            	<select id="addarea" class="select">
+            		<option selected="selected" value="0">选择省</option>
+            		<volist name="province" id="vo">
+			            <option value="{weikucms:$vo.code}" id="pp_{weikucms:$vo.code}">{weikucms:$vo.name}</option>			                
+			        </volist>
+				</select>
+				<br/>
+				<select id="city" class="select" style="margin-top:3px;display:none;">
+				</select>
+				<br/>
+				<select id="county" class="select" style="margin-top:3px;display:none;">
+				</select>
+				<br/>
+				<select id="town" class="select" style="margin-top:3px;display:none;">
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">服务区域</div>
+            <div class="li-r">
+                <div>    
+                    <ul class="label" style="float:left;" id="area"></ul>
+                </div>
+            </div>
+        </li>  
+        
+        <li class="noAfter">
+        	<div class="li-l">添加大类</div>
+        	<div class="li-r">
+        		<span class="bcqtxx" style="right:1px;top:8px;">
+                    <img src="{weikucms::STATICS}/wapweiui/service/images/down_2.gif" width="20px" height="20px"/>
+                </span>  
+        		<select id="wxtype" class="select">
+            		<option selected="selected" value="0">请选择分类</option>
+            		<volist name="bigClass" id="vo">
+			            <option value="{weikucms:$vo.id}">{weikucms:$vo.name}</option>			                
+			        </volist>
+				</select>
+        	</div>
+        </li>
+        
+        <li class="noAfter">
+            <div class="li-l">服务大类</div>
+            <div class="li-r">
+            	<div>    
+                    <ul class="label1" style="float:left;" id="bigclass"></ul>
+                </div>
+           </div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">服务小类</div>
+            <div class="li-r" id="scate"></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">具体服务</div>
+            <div class="li-r"><input id="specific" placeholder="输入具体服务" value="" class="input" ></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">服务内容</div>
+            <div class="li-r" id="content">
+                <input id="debug" value="调试" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>调试
+                <input id="clean" value="清洗" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>清洗
+                <br/>
+                <input id="care" value="保养" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>保养
+                <input id="install" value="安装" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>安装
+                <br/>
+                <input id="repair" value="维修" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>维修
+                <input id="Disassemble" value="拆卸" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>拆卸
+                <br/>
+                <input id="Demolition" value="拆除" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>拆除
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="button clearfix">
+    <div style="width:100%;">
+       <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="submit">确定修改</a>
+   </div>
+</div>
+<!-- <div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div> -->
+
+
+<script type="text/javascript">
+  $(function(){
+	  
+	  var total = new Array();
+	  var jsonstr = "[{";
+	  var bigclass = new Array();
+	  var area = new Array();
+	  var smallarea = new Array();
+	  
+	  
+	  $('#back').mousedown(function(){
+            $(this).css({'border-left':'2px solid #555','border-right':'2px solid #aaa','border-top':'2px solid #555','border-bottom':'2px solid #aaa'})
+       });
+       $('#back').mouseup(function(){
+            $(this).css({'border-left':'2px solid #ccc','border-right':'2px solid #555','border-top':'2px solid #ccc','border-bottom':'2px solid #555'})
+       });
+	  
+	   
+	    
+	    
+	  	/*提交数据*/
+        $('#submit').click(function(){
+            var area ='';
+            $("#area").find("li").each(function(){        	
+            	if($(this).find("input")){
+            		area += $(this).find("input").val()+',';
+            	}        	
+            });
+           
+            var bigclass = '';
+            $("#bigclass").find("li").each(function(){        	
+            	if($(this).find("input")){
+            		bigclass += $(this).find("input").val()+',';
+            	}        	
+            });
+          
+            if( !area ){
+  	            show_error_tip('服务区域不能为空！'); 
+  	            return false;
+  	        }else{
+				total['area'] = area;
+			}
+            
+        	if( !bigclass ){
+                  show_error_tip('服务大类不能为空！'); 
+                  return false;
+            }else{
+				total['bigclass'] = bigclass;
+			}
+			var smallclass='';
+			$("#scate div").each(function(){
+			
+				if($(this).find("input").attr('type') == "checkbox" && $(this).find("input").prop("checked")){
+						
+					smallclass = smallclass + $(this).find("input").val() +',';
+				}
+			});
+			if( !smallclass ){
+  	            show_error_tip('服务小类不能为空！'); 
+  	            return false;
+  	        }else{
+				total['smallclass'] = smallclass;
+			}
+        	total['specific'] = $("#specific").val();
+			
+			var scontent ='';
+			$("#content input").each(function(){
+				if($(this).attr('type') == "checkbox" && $(this).prop("checked")){
+					scontent = scontent + $(this).val() +',';
+				}
+			});
+			if( !scontent){
+  	            show_error_tip('请选择服务内容！'); 
+  	            return false;
+  	        }else{
+				total['scontent'] = scontent;
+			}
+			
+            var jsonstr = "[{";
+  			for(var key in total) {
+  				jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\","; 				
+  			}
+  			jsonstr += "\"idd\":\"1\"}]";
+
+            var url="index.php?g=Wap&m=Repair&a=area&type=1&token={weikucms:$token}&openid={weikucms:$openid}";
+            $.post(url,{jsonstr:jsonstr},
+              function(data){ 
+                if(data.status == 100){ 
+              	  show_success_tip(data.info);
+                    setTimeout(function(){                            
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                  show_error_tip(data.info);
+                }else if(data.status == 2 ){
+                  show_error_tip(data.info);
+                }
+            },'json');
+      });
+        
+  });
+</script>
+
+<script>
+	$(function(){
+		$("#wxtype").change(function(){
+			//var id = $("#wxtype").attr('txt');
+			var id = $("#wxtype").val();
+			var obj = document.getElementById("wxtype");
+			var txt = obj.options[obj.selectedIndex].text;
+			
+			for(var key in bigclass) {
+				if( !bigclass[id] ) {
+					bigclass[id] = id;
+					var li_id = $(".label1 li:last-child").attr('id');
+	                if (li_id != undefined) {
+	                    li_id = li_id.split('_');
+	                    li_id = parseInt(li_id[1]) + 1;
+	                } else {
+	                    li_id = 0;
+	                }
+					var text = "<li class='noAfter' id='li_" + li_id + "'><a href='javascript:;' onclick='deletes(" + li_id +','+ id +");' >" + txt + "<img src='{weikucms::STATICS}/wapweiui/service/images/label_03.png' class='label1-pic'></a><input type='hidden' name='label1[" + li_id + "].name' value='" + txt + "'></li>";
+	                $(".label1").append(text);
+	                
+	                var tet = '';
+	                var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+	               
+	                $.post(url,{id:id},
+	                function(data){ 
+	                  if(data.status == 100){
+	                  	var length = data.data.length;
+	                  	var i = 1;
+	                  	
+	                  	for(i; i<=length; i++){
+	                  		var index = i-1;
+	                  
+	                  		if(i/2 == 0){
+	                  			tet += '<div style="height:15px;position:relative;top:-2px;margin-top:5px;" id="ty_'+data.data[index].id+'"><input value="'+data.data[index].name+'" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>'+data.data[index].name + '</div>';
+	                  		} else {
+	                  			tet += '<div style="height:15px;position:relative;top:-2px;margin-top:5px;" id="ty_'+data.data[index].id+'"><input value="'+data.data[index].name+'" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>'+data.data[index].name + '</div>';
+		                  	}    		
+	                  	}
+	                	//alert(data.data[0].id)
+	                  	//alert(tet);
+	                  	$("#scate").append(tet);
+	                  }
+	              },'json');
+	               
+	               break;
+				}
+			}
+		
+		});
+		
+$("#addarea").change(function(){
+			
+			if($("#addarea").val() == 0){
+				alert('请选择省');
+			} else {
+				
+				var id = $("#addarea").val();
+				
+				var div = document.getElementById("city");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+				var city = '<option selected="selected" value="0">选择市</option>';
+                var url="index.php?g=Wap&m=Repair&a=findCity&token="+$("#token").val()+"&openid="+$("#openid").val();
+               
+                
+                
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		city += '<option value="'+data.data[index].code+'" id="cc_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#city").show();
+                  	$("#city").append(city);
+                  }
+              },'json');
+                
+			}
+			
+		});
+		
+		$("#city").change(function(){
+			
+			if($("#city").val() == 0){
+				alert('请选择市');
+			} else {
+				
+				var id = $("#city").val();
+				
+				var div = document.getElementById("county");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+				var county = '<option selected="selected" value="0">选择区/县</option>';
+                var url="index.php?g=Wap&m=Repair&a=findCounty&token="+$("#token").val()+"&openid="+$("#openid").val();
+			   
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="xx_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#county").show();
+                  	$("#county").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		$("#county").change(function(){
+			
+			if($("#county").val() == 0){
+				alert('请选择镇');
+			} else {
+				
+				var id = $("#county").val();
+				
+				var div = document.getElementById("town");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+				var county = '<option selected="selected" value="0">选择镇</option>';
+                var url="index.php?g=Wap&m=Repair&a=findTown&token="+$("#token").val()+"&openid="+$("#openid").val();
+			   
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="tt_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#town").show();
+                  	$("#town").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		var smallarea = new Array();
+		$("#town").change(function(){
+			
+			if($("#county").val() == 0){
+				alert('请选择区/县');
+			} else {
+				
+				var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var ttobj = document.getElementById("county");
+				var tttxt = ttobj.options[ttobj.selectedIndex].text;
+				
+				var obj = document.getElementById("town");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +tttxt + txt;
+				id = $("#town").val();
+				if(!smallarea[id]){
+					smallarea[id] = txt;
+					var li_id = $(".label li:last-child").attr('id');
+					if (li_id != undefined) {
+						li_id = li_id.split('_');
+						li_id = parseInt(li_id[1]) + 1;
+					} else {
+						li_id = 0;
+					}
+					
+					var text = "<li class='noAfter' id='li_" + li_id + "'><a href='javascript:;' onclick='deletes(" + li_id +','+ id +");' >" + txt + "<img src='{weikucms::STATICS}/wapweiui/service/images/label_03.png' class='label1-pic'></a><input type='hidden' name='label1[" + li_id + "].name' value='" + txt + "'></li>";
+					$(".label").append(text);
+				}				
+			}
+			
+		});
+		
+		
+	});
+
+</script>
+
+<script type="text/javascript">
+function deletes(id,offset) {
+	
+    $("#li_" + id).remove();
+    
+    bigclass[offset] = null;
+    
+    var url="index.php?g=Wap&m=Repair&a=smallClass&token="+$("#token").val()+"&openid="+$("#openid").val();
+    
+    $.post(url,{id:offset},
+    function(data){ 
+      if(data.status == 100){
+      	var length = data.data.length;
+      	var i = 1;     	
+      	for(i; i<=length; i++){
+      		var index = i-1;
+      		var exist= $('#ty_'+data.data[index].id).find('input').val();
+      		if(exist){
+      			
+      		    var div = document.getElementById('#ty_'+data.data[index].id);
+                $('#ty_'+data.data[index].id).remove();
+      			//var div = document.getElementById("scate");
+      			//var node =  document.getElementById('#ty_'+data.data[index].id);
+      			//div.removeChild(node);
+      		}
+      		   		
+      	}
+      }
+  	},'json');
+    var li_id = $(".label1 li:last-child").attr('id');
+    if (li_id == undefined) {
+        $(".label1_box").css("display", "none");
+    }
+}
+
+</script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/service/js/upfile.js"></script>
+
+
+
+<script type="text/javascript">
+$(function(){
+	$('#thisadd').click(function(){
+		//点击保存
+			var zone=$('#zone').val();
+            var bcate=$('#bcate').val();
+            var scate=$('#scate').val();
+            var specific=$('#specific').val();
+            var content=$('#content').val();
+            var agree=$('#agree').val();
+            //判断数据是否为空
+            if( !zone ){
+                show_error_tip('服务区域不能为空！'); 
+                return false;
+            }
+            if( !bcate ){
+                show_error_tip('服务大类不能为空！'); 
+                return false;
+            }
+            if( !scate ){
+                show_error_tip('服务小类不能为空！'); 
+                return false;
+            }
+            if( !specific ){
+                show_error_tip('具体服务不能为空！'); 
+                return false;
+            }
+            if( !content ){
+                show_error_tip('服务内容不能为空！'); 
+                return false;
+            }
+            if( !content ){
+                show_error_tip('需要同意相关协议！'); 
+                return false;
+            }
+            var url=""
+             $.post(url,{zone:zone,bcate:bcate,scate:scate,specific:specific,content:content,agree:agree},
+            function(data){ 
+              if(data.status == 100){                   
+                  setTimeout(function(){                            
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 1 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 2 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }
+          },'json');
+	})
+	$('#thisnext').click(function(){
+		//提交审核
+		window.location.href="";
+	})
+	 		
+})
+</script>
+</body>
+</html>

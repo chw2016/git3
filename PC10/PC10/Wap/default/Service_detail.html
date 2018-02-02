@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+</head>
+<body>
+<div class="iconText clearfix">
+    <ul>
+        <li class="avatar">
+            <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/navigation_03.png"></div>
+            <div class="li-r">订单号：{weikucms:$data['order_id']}</div>
+        </li>
+        <li class="cutover" >
+        	<strong>订单状态</strong>
+           	<if condition="$status eq 2">
+           		<div id="switch">
+					<a href="javascript:void(0);">已取消</a>
+				</div>
+			<elseif condition="$status eq 1"/>
+				<div id="switch" style="background-color:#83cf51;">
+					<a href="javascript:void(0);">已完成</a>
+				</div>
+			<else/>
+			</if>						
+        </li>		
+    </ul>
+</div>
+<if condition="$status eq 2">
+	<div class="iconText">
+	    <ul>
+	    	<li class="noAfter">	           
+		        <div class="notContentTips">
+		          <img src="{weikucms::STATICS}/wapweiui/service/images/notContent.png">
+		          <p>订单被取消，目前没有任何相关信息!!!</p>
+		        </div> 
+	     	</li> 	           
+	    </ul>
+	</div>
+<else/>
+<div class="iconText">
+    <ul>
+        <li class="noAfter">
+           <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_11.png"></div>
+           <div class="li-r">订单信息：</div>
+        </li>
+        <li class="noAfter">
+            <div class="li-r">
+            	尊敬的{weikucms:$data['order_user']}用户，您好！<br/>
+				您预约在{weikucms:$data['appoint_time']}来我们的店面进行售后服务。
+				您的售后服务的车牌号：{weikucms:$data['server_car_no']}。<br/>
+				您的售后服务相关信息：{weikucms:$data['server_info']}。
+            </div>
+        </li>
+        <li class="noAfter">
+           <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_11.png"></div>
+           <div class="li-r">订单价格：<span style="padding-left:6px;">{weikucms:$data['price']}元</span></div>
+        </li>
+    </ul>
+</div>
+<div class="iconText clearfix">
+    <ul>
+        <li class="cutover" >
+	       	<span style="font-size:16px;">
+	       		<img src="{weikucms::STATICS}/wapweiui/service/images/icon_40_04.png" width="20px;" height="20px;">
+	       		<span style="padding-left:16px;">服务员工：</span>
+	       	</span>
+	       	<span style="font-size:16px;">{weikucms:$data['server_staff_id']}</span>
+	       	<if condition="$data['order_is_appraise'] eq 0">
+	        <div id="switch" style="background-color:#83cf51;">
+				<a href="index.php?g=Wap&m=Service&a=appraise&token={weikucms:$token}&openid={weikucms:$openid}&staffId={weikucms:$data['server_staff_id']}&orderId={weikucms:$data['order_id']}">评价</a>
+				<!--  <a href="javascript:void(0);" onClick="appraise({weikucms:$data['server_staff_id']})">评价</a>-->			
+			</div>
+			<else/>
+				<div id="switch">订单已评价</div>
+			</if>
+			<input type="hidden" id="orderId" value="{weikucms:$data['order_id']}"/>
+			<input type="hidden" id="openid" value="{weikucms:$openid}"/>
+			<input type="hidden" id="token" value="{weikucms:$token}"/>
+		</li>		
+    </ul>
+</div>
+</if>
+<div class="iconText">
+    <ul>
+    	<li>
+            <a href="javascript:window.location.href='index.php?g=Wap&amp;m=Service&amp;a=appoint&amp;type=3&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}';">
+            <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/tell_01.png"></div>
+            <div class="li-r">我要预约</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:window.location.href='index.php?g=Wap&amp;m=Service&amp;a=complain&amp;type=1&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}';">
+            <div class="li-l"><img src="{weikucms::STATICS}/wapweiui/service/images/icon_07.png"></div>
+            <div class="li-r"><strong>我要投诉</strong></div>
+            </a>
+        </li>
+   </ul>
+</div>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+function appraise(id){
+	var staffId = id;
+	var orderId = $("#orderId").val();
+	var url = 'index.php?g=Wap&m=Service&a=appraise&token='+$("#token").val()+"&openid="+$("#openid").val();
+	$.post(url,{id:id},
+            function(data){ 
+                if(data.status == 100){                 	
+                	show_success_tip(data.info);
+                    setTimeout(function(){                        	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 1 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }else if(data.status == 2 ){
+                	show_error_tip(data.info);
+                	setTimeout(function(){                       	
+                        window.location.href = data.url;
+                    },'1000');
+                }
+            },'json');
+	
+}
+</script>
+</body>
+</html>

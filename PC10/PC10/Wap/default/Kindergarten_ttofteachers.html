@@ -1,0 +1,46 @@
+<html lang="zh-CN">
+<head>
+<title>教师团队</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8"
+    http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent">
+<!-- Mobile Devices Support @end -->
+<link type="text/css" rel="stylesheet"
+    href="{weikucms::RES}/kindergarten/css/style.css">
+</head>
+<body>
+    <div class="ui-refresh">
+        <div id="list" class="container">
+            <volist name="data" id="vo"> <a class="row"
+                href="{weikucms::U('Wap/Kindergarten/teacherdetail',array('token'=>$token,'openid'=>$openid,'kgid'=>$_GET['kgid'],'teacher_id'=>$vo['id']))}">
+                <div class="col-sm-3">
+                    <img src="{weikucms:$vo.pic}" class="img-responsive">
+                </div>
+                <div class="col-sm-9 padding-left-10">
+                    <h4 class="title-light">{weikucms:$vo.name}</h4>
+                    <p class="text-complex">职务：{weikucms:$vo.post}&nbsp;&nbsp;&nbsp;服务宣言:{weikucms:$vo.declaration}</p>
+
+                </div>
+                <div class="clearfix"></div>
+            </a>
+            <hr>
+            </volist>
+            <div style="text-align: center;">
+                <span class="ui-refresh-icon"></span>
+                <span class="ui-refresh-label">上拉加载更多</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

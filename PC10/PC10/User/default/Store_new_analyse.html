@@ -1,0 +1,388 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<script src="{weikucms::RES}/js/build/dist/echarts.js"></script>
+
+<div class="" >
+
+
+    <div class="cLineB">
+
+        <div class="cLine">
+
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+
+
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/index',array('token'=>$token))}" >商品分类管理</a>
+                    </li>
+
+                    <!--<if condition="empty($catid) neq true">-->
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        <a href="{weikucms::U('Store_new/product',array('token'=>$token))}">商品管理</a>
+                    </li>
+                    <!--</if>-->
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/orders',array('token'=>$token))}">订单管理</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/setting',array('token'=>$token))}">商城设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Shoptmpls/index',array('token'=>$token))}">商城模版选择</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/articleindex',array('token'=>$token))}">商城文章</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/flashindex',array('token'=>$token))}">广告轮播</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/sn',array('token'=>$token))}">商城优惠券</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Weipay/index',array('token'=>$token))}">在线支付设置</a>
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                        <a href="{weikucms::U('Store_new/analyse',array('token'=>$token))}">数据分析</a>
+
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!--店铺浏览访客量折线图-->
+<div id="main" style="height:400px"></div>
+<!-- ECharts单文件引入 -->
+<script src="./build/dist/echarts.js"></script>
+<script type="text/javascript">
+
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: '{weikucms::RES}/js/build/dist'
+        }
+    });
+
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+                    title : {
+                        text: '访问数据分析',
+                        subtext: '半个月内'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['浏览量','访客']
+                    },
+                    toolbox: {
+                        show : true
+                        /*feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }*/
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : {weikucms:$test}
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            axisLabel : {
+                                formatter: '{value} '
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'浏览量',
+                            type:'line',
+                            data:{weikucms:$text},
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        },
+                        {
+                            name:'访客',
+                            type:'line',
+                            data:{weikucms:$texts},
+                            markPoint : {
+                                data : [
+                                   /* {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}*/
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+</script>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!--店铺进入方式饼图-->
+    <div id="mains" style="height:500px; width: 480px; border: 1px solid #f0efed;"></div>
+    <!-- ECharts单文件引入 -->
+
+    <script type="text/javascript">
+        // 路径配置
+      /* require.config({
+            paths: {
+                echarts: '{weikucms::RES}/js/build/dist'
+            }
+        });*/
+
+        // 使用
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/pie' // 使用柱状图就加载pie模块，按需加载
+                ],
+                function (ec) {
+//                    alert(1);
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('mains'));
+
+                    var option = {
+                        //标题
+                        title : {
+                            text: '访客来源',
+                            subtext: '最近7天内的',
+                            x:'center'
+                        },
+                        //提示框
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        //图例
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:['自主访问','分享访问']
+                        },
+                        //工具箱
+                        /*toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {
+                                    show: true,
+                                    type: ['pie'],
+                                    option: {
+                                        funnel: {
+                                         x: '25%',
+                                         width: '50%',
+                                         funnelAlign: 'left',
+                                         max: 1548
+                                         }
+                                    }
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },*/
+                        //是否启用拖拽重计算特性，默认关闭
+                        calculable : true,
+                        //驱动图表生成的数据内容
+                        series : [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:{weikucms:$resulet}, name:'自主访问'},
+                                    {value:{weikucms:$resule}, name:'分享访问'},
+                                ]
+                            }
+                        ]
+                    };
+
+                    // 为echarts对象加载数据
+                    myChart.setOption(option);
+                }
+        );
+    </script>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!--店铺进入方式饼图-->
+    <div id="maines" style="height:500px; width: 460px;display: block; border: 1px solid rgb(240, 239, 237); margin-left: 500px; margin-top: -500px;"></div>
+    <!-- ECharts单文件引入 -->
+
+    <script type="text/javascript">
+        // 路径配置
+        /* require.config({
+         paths: {
+         echarts: '{weikucms::RES}/js/build/dist'
+         }
+         });*/
+
+        // 使用
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/pie' // 使用柱状图就加载pie模块，按需加载
+                ],
+                function (ec) {
+//                    alert(1);
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('maines'));
+
+                    var option = {
+                        //标题
+                        title : {
+                            text: '访客地区',
+                            subtext: '最近7天内的',
+                            x:'center'
+                        },
+                        //提示框
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        //图例
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:{weikucms:$home}
+                        },
+                        //工具箱
+                        /*toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {
+                                    show: true,
+                                    type: ['pie'],
+                                    option: {
+                                        funnel: {
+                                         x: '25%',
+                                         width: '50%',
+                                         funnelAlign: 'left',
+                                         max: 1548
+                                         }
+                                    }
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },*/
+                        //是否启用拖拽重计算特性，默认关闭
+                        calculable : true,
+                        //驱动图表生成的数据内容
+                        series : [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:{weikucms:$homes}
+                            }
+                        ]
+                    };
+
+                    // 为echarts对象加载数据
+                    myChart.setOption(option);
+                }
+        );
+    </script>
+    <div style="height: 20px;"></div>
+    <div >
+        <h4>实时访客</h4>
+        <div class="msgWrap">
+            <form method="post"  action="###" id="info" >
+                <input name="delall"  type="hidden" value="" />
+                <input name="wxid"  type="hidden" value="" />
+                <table class="table table-bordered">
+                    <thead>
+
+                    <tr>
+                        <th>编号</th>
+                        <th>微信昵称</th>
+                        <th>时间</th>
+                        <th>地区</th>
+                        <th>商品</th>
+                        <th style="width: 30%">URL</th>
+                    </tr>
+                    </thead>
+                    <volist name="set" id="vo" key="i">
+
+                        <tr>
+                            <td>{weikucms:$i}</td>
+                            <td>{weikucms:$vo.nickname}</td>
+                            <td>{weikucms:$vo.time|date='Y-m-d H:i:s',###}</td>
+                            <td>{weikucms:$vo.address}</td>
+                            <td>{weikucms:$vo.cate}<if condition="$vo.product neq '' ">|{weikucms:$vo.product}<else/></if></td>
+                            <td><a href="{weikucms:$vo.url}" target="_blank" title="点击" class="btn btn-success btn-sm">点击查看</a></td>
+
+                            <!--<td><if condition="$vo.state eq 1"><span style="color:green">已授权</span><else/><span style="color:red">未授权</span></if></td>-->
+
+
+
+                        </tr>
+
+                    </volist>
+                </table>
+            </form>
+            <div>
+                <ul class="pager">
+                    {weikucms:$page}
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <include file="Public:footer"/>

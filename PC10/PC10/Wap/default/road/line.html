@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>东莞控股</title>
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/road/css/press.css">
+<script src="{weikucms::STATICS}/wapweiui/road/js/jquery-1.11.1.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/road/js/iscroll.js"></script>
+<script>
+	$(function(){
+        $(document).on('touchstart','#close-span',function(event){
+			$(".wrapper").css('height', '0');
+		});
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        $(document).on('touchstart','.nr-body',function(){
+
+            $('.nr-body.on').removeClass('on');
+            $(this).addClass('on');
+            $(".wrapper").css('height', '80%');
+            var myScroll;
+            myScroll = new IScroll('.close-nr', { mouseWheel: true, click: true});
+            var lid = $.trim($(this).attr("lid"));
+            var url = "{weikucms::U('Road/ajaxline',array('token'=>$token,'openid'=>$openid))}";
+            $('.wrapper').empty();//清空
+            $.post(url,{lid:lid},function(data){
+                if(data.status ==1){
+                    $('.wrapper').append(data.fetch);
+                }else{
+                    alert('系统繁忙，请稍后！');
+                }
+            },'json')
+        });
+        $(document).on('touchstart','.event',function(){
+            $('.event.on').removeClass('on');
+            $(this).addClass('on');
+            var lid = $.trim($(this).attr("lid"));
+            var type = $.trim($(this).attr("type"));
+            var url = "{weikucms::U('Road/ajaxline',array('token'=>$token,'openid'=>$openid))}";
+            $('._show1_ul2').empty();//清空
+            $.post(url,{lid:lid,type:type},function(data){
+                if(data.status ==1){
+                    $('._show1_ul2').append(data.fetchs);
+                }else{
+                    alert('系统繁忙，请稍后！');
+                }
+            },'json')
+        });
+	})
+</script>
+    <style>
+        .high-top .fc{
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="high-top">
+	<ul>
+        <volist name="area" id="vo">
+            <a href="{weikucms::U('Road/line',array('token'=>$token,'aid'=>$vo['id']))}">
+                <li class="area <if condition="$_GET['aid'] eq $vo['id']">fc</if>">{weikucms:$vo.aname}</li>
+            </a>
+        </volist>
+
+	</ul>
+</div>
+<volist name="line" id="so">
+	<div class="nr-body" lid="{weikucms:$so.id}">
+		<div class="nr-img">
+			<span class="ones">{weikucms:$so.jname}</span>
+			<span class="twos">{weikucms:$so.bname}</span>
+			<span class="threes">{weikucms:$so.qname}</span>
+		</div>
+		<div class="nr-text">
+			<span class="firsts">{weikucms:$so.lname}</span>
+			<span class="lasts">{weikucms:$so.position}</span>
+		</div>
+        <if condition="$so['evert'] eq 0 and $so['barricade'] eq 0">
+            <div class="nr-bz on">
+                <span>暂无事件</span>
+            </div>
+            <else/>
+            <div class="nr-bz">
+                <span class="bz">
+                    <if condition="$so['evert'] neq 0">
+                        <span class="imgs-6"></span>
+                        <span>{weikucms:$so.evert}</span>
+                    </if>
+                    <if condition="$so['barricade'] neq 0">
+                        <span class="imgs-1"></span>
+                        <span>{weikucms:$so.barricade}</span>
+                    </if>
+
+
+                </span>
+            </div>
+
+        </if>
+
+	</div>
+
+</volist>
+
+
+
+
+<!--出现内容-->
+	<div class="wrapper">
+		<div class="close-btn">
+			<span id="close-span"></span><!--关闭按钮-->
+		</div>
+		<div class="close-nr">
+			<div  class="_show1">
+				<ul class="_show1_ul1">
+                    <li class="on" type="2" lid="{}">高速事件</li>
+					<div style="float:left;line-height:40px;">|</div>
+					<li class="on" type="1">施工信息</li>
+					<div style="float:left;line-height:40px;">|</div>
+					<li>高速预览</li>
+				</ul>
+				<ul class="_show1_ul2">
+					<li>
+						2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，
+						2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，
+						2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，2015年广东奥运会申奥成功，
+					</li>
+
+				</ul>
+			</div>
+			
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,324 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<div class="cLineB">
+	<div class="title_tab" id="topTab">
+       <ul class="tab_navs title_tab" data-index="0" >
+
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+               <a href="{weikucms::U('Repair/agent',array('token'=>$token, 'type'=>0))}" <if condition="$hover4 eq 1">class="hover"</if>>所有服务商</a>
+           </li>
+          
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+               <a href="{weikucms::U('Repair/agent',array('token'=>$token, 'type'=>1))}" <if condition="$hover5 eq 1">class="hover"</if>>待核服务商</a>
+           </li>
+                                           
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+               <a href="{weikucms::U('Repair/agent',array('token'=>$token, 'type'=>2))}" <if condition="$hover4 eq 1">class="hover"</if>>已审核服务商</a>
+           </li>
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+               <a href="{weikucms::U('Repair/agent',array('token'=>$token, 'type'=>3))}" <if condition="$hover4 eq 1">class="hover"</if>>未通过服务商</a>
+           </li>
+           
+           <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+               <a href="{weikucms::U('Repair/agent',array('token'=>$token, 'type'=>4))}" <if condition="$hover4 eq 1">class="hover"</if>>禁用的服务商</a>
+           </li>
+           
+           <!-- 
+         <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+             <a href="{weikucms::U('Repair/access',array('token'=>$token))}" <if condition="$hover4 eq 1">class="hover"</if>>服务商权限管理</a>
+         </li>
+          -->
+          <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+             <a href="{weikucms::U('Repair/export',array('token'=>$token, 'type'=>$type, 'status'=>$status, 'area'=>$area, 'op'=>1))}" <if condition="$hover4 eq 1">class="hover"</if>>导出数据表</a>
+         </li>
+         <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today" style="background-color: #B098FB;line-height: 40px;">
+             <a style="text-decoration:none;" href="{weikucms::U('Repair/index',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>返回上一层</a>
+           </li>
+                      
+       </ul>                
+   </div>  
+<div class="clr"></div>
+
+<div style="padding: 10px;">
+<form action="" method="post">
+    <input type="hidden" name="status" value="{weikucms::$_GET['type']}" />
+    <input type="hidden" id="area" name="area" value="" />
+	<select id="addarea" class="select" style="width:150px;">
+     <option selected="selected" value="0">选择省</option>
+     <volist name="province" id="vo">
+        <option value="{weikucms:$vo.code}" id="pp_{weikucms:$vo.code}">{weikucms:$vo.name}</option>			                
+    </volist>
+	</select>
+	<select id="city" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="county" class="select" style="margin-top:3px;width:150px;">
+	</select>
+	<select id="town" class="select" style="margin-top:3px;width:150px;">
+	</select>
+    <br>
+    开始时间：
+    <input style="width:172px;" type="text" name="start_date" readonly="" id="start_date" onClick="WdatePicker()" class="daterangepick input-large" data-rule-required="true" value="{weikucms:$start_date}">
+    结束时间
+    <input style="width:172px;" type="text" name="end_date" readonly="" id="end_date" onClick="WdatePicker()" class="daterangepick input-large" data-rule-required="true" value="{weikucms:$end_date}">
+	<button type="submit" style="float:right;margin-right: 300px;" class="btn btn-success">搜索</button>
+</form>
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered" >
+                  <thead>
+                  <tr>
+                      <th style="text-align:center;">序列号</th>
+                    <!--  <th style="text-align:center;">编码</th> --> 
+                      <!--<th style="text-align:center;">门店名称</th>-->
+                      <th style="text-align:center;">技师姓名</th>
+                      <th style="text-align:center;">微信昵称</th>
+                      <th style="text-align:center;">技师电话</th>
+                      <th style="text-align:center;">提交时间</th>
+                      <th style="text-align:center;width:150px;">驻店地址</th>
+                      <th style="text-align:center;">操作原因</th>
+                      <th style="text-align:center;">操作</th>                       
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="list" key="i" id="vo">
+                  		<tr>
+        					<td style="text-align:center;">{weikucms:$i}</td>
+                  		<!-- 	<td style="text-align:center;">{weikucms:$vo.agent_no}</td> -->
+                  			<td style="text-align:center;"><div class="answer_text">{weikucms:$vo.sname}</div></td>
+                            <td style="text-align:center;"><div class="answer_text">{weikucms:$vo.nickname}</div></td>
+                  			<td style="text-align:center;">{weikucms:$vo.telephone}</td>
+                    		<td style="text-align:center;">
+                                <if condition="$vo['add_time']">
+                                    <php>echo date("Y-m-d H:i:s",$vo['add_time']);</php>
+                                <else/>
+
+                                </if>
+
+                            </td>
+                    		<td><div  style="width:150px;word-wrap:break-word;">{weikucms:$vo.agent_address}</div></td>
+                    		<td style="text-align:center;">{weikucms:$vo.op_reason}</td>
+                    		
+                    		<if condition="$vo.is_forbidden eq 1">
+                    			<td class="norightborder" style="text-align:center;">
+	                              <a class="btn btn-danger btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=forbidden&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" href="javascript:void(0);">启用</a>
+	                          	</td>
+	                        <else/>
+	                    		<if condition="$vo.is_review eq 1 ">
+		                    		<td class="norightborder" style="text-align:center;">
+		                              <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=review&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="审核">审核</a>
+		                          	</td>
+                                <elseif condition="$vo.is_review eq 3" />
+                                    <td class="norightborder" style="text-align:center;">
+                                    <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=review&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="修改">修改</a>
+                                    </td>
+                                <else/>
+	                          		<td class="norightborder" style="text-align:center;">
+	                          		<a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=access&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="权限管理">权限管理</a>
+	                          		  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=review&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" title="修改">查看</a>
+   									  <if condition="$vo.is_forbidden eq 1">
+	                              		   <a class="btn btn-danger btn-sm"  href="/index.php?g=User&amp;m=Repair&amp;a=forbidden&amp;type=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" href="javascript:void(0);">允接单</a>
+	                              	  <else/>
+	                              		  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=forbidden&amp;type=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" href="javascript:void(0);">禁接单</a>
+	                              	 </if>
+                              	 	  <a class="btn btn-success btn-sm" href="/index.php?g=User&amp;m=Repair&amp;a=forbidden&amp;type=2&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}" href="javascript:void(0);">禁用</a>
+                              		  <a class="btn btn-danger btn-sm" onclick="source_delete('/index.php?g=User&amp;m=Repair&amp;a=del&amp;type=1&amp;token={weikucms:$token}&amp;id={weikucms:$vo.id}')" href="javascript:void(0);">删除</a>
+	                          	   </td>  
+		                        </if>	                              
+	                        </if>               	
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+
+<script>
+	$(function(){
+        function cDayFunc(){
+            alert(123);
+        }
+		$("#addarea").change(function(){
+			
+			if($("#addarea").val() == 0){
+				alert('请选择省');
+			} else {
+				var id = $("#addarea").val();
+				
+				var div = document.getElementById("city");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+
+				$("#area").val(pptxt);
+				
+                
+				var city = '<option selected="selected" value="0">选择市</option>';
+                var url="index.php?g=User&m=Repair&a=findCity&token={weikucms:$token}";
+
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		city += '<option value="'+data.data[index].code+'" id="cc_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                  	$("#city").append(city);
+                  }
+              },'json');
+                
+			}
+			
+		});
+		
+		$("#city").change(function(){
+			
+			if($("#city").val() == 0){
+				alert('请选择市');
+			} else {
+				
+				var id = $("#city").val();
+				
+				var div = document.getElementById("county");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+                
+				var txt1=  pptxt + cctxt;
+
+                $("#area").val(txt1);
+
+                var county = '<option selected="selected" value="0">选择区/县</option>';
+                var url="index.php?g=User&m=Repair&a=findCounty&token={weikucms:$token}";
+               
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="xx_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                  	$("#county").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		$("#county").change(function(){
+			
+			if($("#county").val() == 0){
+				alert('请选择区/县');
+			} else {
+				
+				var id = $("#county").val();
+				
+				var div = document.getElementById("town");
+                while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+				
+                var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var obj = document.getElementById("county");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +txt;
+                $("#area").val(txt);
+                
+				var county = '<option selected="selected" value="0">选择镇</option>';
+                var url="index.php?g=Wap&m=Repair&a=findTown&token={weikucms:$token}&openid={weikucms:$openid}";
+                $.post(url,{id:id},
+                function(data){ 
+                  if(data.status == 100){
+                  	var length = data.data.length;
+                  	var i = 1;
+                  	
+                  	for(i; i<=length; i++){
+                  		var index = i-1;
+                  		county += '<option value="'+data.data[index].code+'" id="tt_'+data.data[index].code+'">'+data.data[index].name +'</option>"';
+                  		  		
+                  	}
+                	//alert(data.data[0].id)
+                  	//alert(tet);
+                	$("#town").show();
+                  	$("#town").append(county);
+                  }
+              },'json');
+			}
+			
+		});
+		
+		
+		
+		
+		var smallarea = new Array();
+		$("#town").change(function(){
+			
+			if($("#town").val() == 0){
+				alert('请选择镇');
+			} else {
+				
+				var ppobj = document.getElementById("addarea");
+				var pptxt = ppobj.options[ppobj.selectedIndex].text;
+				
+				var ccobj = document.getElementById("city");
+				var cctxt = ccobj.options[ccobj.selectedIndex].text;
+				
+				var ttobj = document.getElementById("county");
+				var tttxt = ttobj.options[ttobj.selectedIndex].text;
+				
+				var obj = document.getElementById("town");
+				var txt = obj.options[obj.selectedIndex].text;
+				
+				txt =  pptxt + cctxt +tttxt + txt;
+                $("#area").val(txt);
+			}
+			
+		});
+		
+		
+	});
+
+</script>
+<include file="Public:footer"/>

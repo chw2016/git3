@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<title>劳动局</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/labor/css/index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/msg.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/labor/js/prompt.js"></script>
+	</head>	
+	<style>
+		body{
+			background-color: #f2f0ee;
+		}
+	</style>
+	<body>
+    <if condition="$info['type'] eq 2">
+        <script type="text/javascript">
+            $(function(){
+                msg.alert("提交资料审核成功",function(){
+                    var urls = "{weikucms::U('Labor/typechangs',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(urls,{type:0,id:"{weikucms:$info['id']}"},function(data){
+                        window.location.href = "{weikucms::U('Labor/company',array('token'=>$token,'openid'=>$openid))}";
+                    },'json');
+                });
+            })
+
+        </script>
+        <elseif condition="$info['type'] eq 3"/>
+        <script type="text/javascript">
+            $(function(){
+                msg.alert("提交资料审核失败，请重新提交",function(){
+                    var urls = "{weikucms::U('Labor/typechangs',array('token'=>$token,'openid'=>$openid))}";
+                    $.post(urls,{type:0,id:"{weikucms:$info['id']}"},function(data){
+                        window.location.href = "{weikucms::U('Labor/company',array('token'=>$token,'openid'=>$openid))}";
+                    },'json');
+                });
+            })
+        </script>
+    </if>
+	<div class="user_header clearfix">	
+		<div class="user">
+			<div class="user_one">
+				<div class="user_two">
+                <if condition="$user['headimgurl']">
+                    <img src="{weikucms:$user['headimgurl']}"  />
+                    <else/>
+                    <img src="{weikucms::STATICS}/wapweiui/labor/images/User.png"  />
+                </if>
+
+                </div>
+                </div>
+    
+             </div>
+          <div class="user_header_name">
+              <if condition="$user['nickname']">
+                  {weikucms:$user['nickname']}
+                  <else/>
+                  名字
+              </if>
+          </div>
+
+          <div class="user_header_edit ">
+              <a href="{weikucms::U('Labor/setcompany',array('token'=>$token,'openid'=>$openid))}">
+          	    <span style="color: #ED8D81;">编辑</span>
+              </a>
+          </div>
+
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>用人单位机构</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">用人单位：{weikucms:$info['company']}</div>
+		
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">组织机构代码：{weikucms:$info['code']}</div>
+		
+		</div>
+        <div class="mb10 user_name" >
+            <div class="black">单位地址：{weikucms:$info['address']}</div>
+
+        </div>
+		<div class="mb10 user_name" >
+			<div class="black">注册资金：{weikucms:$info['capital']}</div>
+			
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">行业类型：{weikucms:$info['industry']}</div>
+	
+		</div>
+		<div class=" user_name" >
+			<div class="black">单位类型：{weikucms:$info['unit_type']}</div>
+		
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>法定代表</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">负责人：{weikucms:$info['legal_person']}</div>
+			
+		</div>
+		<div class="mb10 user_name" >
+			<div class="black">联系方式：{weikucms:$info['legal_phone']}</div>
+		
+		</div>
+		<div class="user_name" >
+			<div class="black">身份证号码：{weikucms:$info['identity_id']}</div>
+		
+		</div>
+	</div>
+	</div>
+	<div class="user_top">
+	<div class="p10 user_nav">
+		<p>单位信息</p>
+	</div>
+	<div class="shadow user_center">
+		<div class="mb10 user_name" >
+			<div class="black">联系人：{weikucms:$info['company_person']}</div>
+		
+		</div>
+		<div class=" user_name" >
+			<div class="black">联系方式：{weikucms:$info['legal_phone']}</div>
+
+		</div>
+	</div>
+	</div>
+	</body>
+</html>

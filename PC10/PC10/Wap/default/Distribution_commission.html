@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+
+<title>我的佣金 - {weikucms:$tpl.name}</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<meta name="Description" content="{weikucms:$tpl.name}" />
+
+<meta name="Keywords" content="{weikucms:$tpl.name}" />
+
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/distribution/mod.broker.css"/>
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/distribution/table.css"/>
+</head>
+
+<body style="background:#e7e7e7 url(none);">
+
+<section class="main animated fadeInDown">
+  <div class="main-box">
+    <div class="commission-header fn-clear">
+      <div class="commission-box border-box" style="width: 100%">
+        <p>已结佣</p>
+        <p class="commission-text"><if condition="($allMycommission eq '0') or ($allMycommission eq 0) ">0<else />{weikucms:$allMycommission}</if><span>元</span></p>
+
+          <span onclick="window.location.href='{weikucms::U('Distribution/bankcard',array('token'=>$token,'openid'=>$openid))}'" style="float:right;margin-bottom: 10px;position:relative;top:-5px;">我的银行卡</span>
+      </div>
+
+    </div>
+    <!--<if condition="$userInfo">-->
+    <!--<a href="" class="rb-row bank-card fn-clear">-->
+        <!--<i class="icon-credit-card"></i>-->
+        <!--<span>卡号&nbsp;&nbsp;&nbsp;{weikucms:$userInfo['bank_card_number']}</span>-->
+        <!--<i class="icon-angle-right"></i>-->
+    <!--</a>-->
+    <!--<else />-->
+    <!--<a href="{weikucms::U('Distribution/bankcard',array('token'=>$token,'openid'=>$openid))}" class="rb-row bank-card fn-clear">-->
+        <!--<i class="icon-credit-card"></i>-->
+        <!--<span>请绑定您的银行卡号</span>-->
+        <!--<i class="icon-angle-right"></i>-->
+    <!--</a>-->
+    <!--</if>-->
+      <div style="margin-top: 20px;display: flex;">
+          <div style="flex: 1;">已兑现：<if condition="($havpay eq '0') or ($havpay eq 0)">0<else />{weikucms:$havpay}</if>元</div>
+          <div style="flex: 1;">未兑现：<if condition="($haventpay eq '0') or ($haventpay eq 0)">0<else />{weikucms:$haventpay}</if>元</div>
+      </div>
+      <form action="{weikucms::U('Distribution/commission',array('token'=>$token,'openid'=>$openid))}" method="post">
+      <div style="margin-top: 20px;display: -webkit-box;height: 50px;">
+          <select style="height: 33px;border-radius: 5px;width: 74%;display: -webkit-box;background-color: white;" name="ispay">
+              <option value="3" <if condition="$post['ispay'] eq 3">selected</if>>请选择佣金的兑现状态</option>
+              <option value="1" <if condition="$post['ispay'] eq 1">selected</if>>已兑换</option>
+              <option value="2" <if condition="$post['ispay'] eq 2">selected</if>>未兑换</option>
+          </select>
+          <input type="submit" value="搜索" style=";width: 60px;height: 33px;margin-left: 26%;color: rgba(0,0,0,0.5);">
+      </div>
+      </form>
+      <div class="main-box">
+      <div class="client my-client-title">
+          <ul class="rb-row fn-clear">
+              <li>金额</li>
+              <li>结算日</li>
+              <li>兑现</li>
+              <li>兑现日</li>
+          </ul>
+      </div>
+      <div class="client my-client-list" style="width: 330px;margin-left: -15px;">
+          <if condition="$mycommission">
+              <volist name="mycommission" id="vo">
+                  <a href="javascript:void(0)" class="rb-row my-client" style="height: 50px;">
+                      <ul class="fn-clear">
+                          <li style="margin-top: 12px;">{weikucms::$vo['single_price']*$vo['attribution']*$vo['commission_proportion']}元</li>
+                          <li>{weikucms:$vo.commission_time}</li>
+                          <li style="width: 55px;margin-top: 12px;"><if condition="$vo['ispay'] eq 2">未兑现<elseif condition="$vo['ispay'] eq 1" />已兑现</if></li>
+                          <li style="width: 70px;">{weikucms:$vo.pay_time}</li>
+                      </ul>
+                  </a>
+              </volist>
+              <else />
+              暂无数据
+          </if>
+      </div>
+
+    </div>
+
+
+  </div>
+</section>
+<footer class="foot"><a>&copy; Powered by <a href="http://www.wapwei.com/">万普</a></a></footer>
+<script src="{weikucms::STATICS}/wapweiui/distribution/seed.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/distribution/mod.jjr.js"></script>
+<script>
+	function onBridgeReady(){
+        WeixinJSBridge.call('hideOptionMenu');
+    }
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }
+</script>
+</body>
+</html>

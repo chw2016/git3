@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/area.js"></script>
+
+<meta charset="UTF-8">
+<title>{weikucms:$tpl['name']}</title>
+<meta name="Keywords" content="家电报障">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script>
+<style type="text/css">
+	td a{
+		color: #fff;
+		display: block;
+		background: #f00;
+	}
+</style>
+</head>
+
+
+
+<body style="background:#fff;">
+<script type="text/javascript">
+	$(function(){
+		
+	})
+</script>
+<div style="margin-top:10px;">
+	<img src="{weikucms::STATICS}/wapweiui/service/images/logo.png"/>
+	<span style="font-size:24px;color:#637e49;position:relative;z-index:10;left:-35px;top:26px;">家电返修</span>
+</div>
+<div id="main">
+<div class="publicList wml100">
+    <ul>
+         <li class="noAfter">
+            <div class="li-l">个人信息<span style="color:#f00">*</span></div>
+            <div class="li-r">
+            	<a href="javascript:void(0);">
+					<ul id="userInfo">
+						<li class="noAfter" style="border:none;">姓名:<span id="uname">{wekucms:$orderInfo.order_name}</span></li>
+						<li class="noAfter" style="border:none;">电话：<span id="utel">{wekucms:$orderInfo.order_tel}</span></li>
+						<li class="noAfter" style="border:none;">详细地址：<span id="uaddress">{wekucms:$orderInfo.order_address}</span></li>
+					</ul>
+				</a>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul>
+         <li class="noAfter">
+            <div class="li-l">预约日期</div>
+            <div class="li-r">
+				<input id="AppointmentD" value="{wekucms:$orderInfo.appoint_time}" class="input"   type="date"/>
+            </div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">预约时间</div>
+            <div class="li-r">
+            	<input id="AppointmentT" value="{wekucms:$orderInfo.AppointmentT}" class="input"   type="date"/>
+            </div>
+   
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul>
+         <li class="noAfter">
+            <div class="li-l">类别</div>
+            <div class="li-r">          		
+            	<select id="wxtype" class="select">
+            		<option selected="selected" value="0">请选择分类</option>
+            		<volist name="data" id="vo">
+			            <option value="{weikucms:$vo.id}" style="text-indent:{weikucms:$vo['Count']*20}px;">
+			            <?php 
+			            	for($i = 0; $i < ($vo['Count']*3); $i++) {
+								echo "&nbsp;";
+							}
+			             ?>
+			            <neq name="vo.Count" value="1">|---</neq>{weikucms:$vo.name}</option>			                
+			        </volist>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">电器</div>
+            <div class="li-r">
+            	<input id="electric" placeholder="请输入电器" value="{wekucms:$orderInfo.repair_ele}" class="input"   type="text"/>
+            </div>
+        </li>
+        <li class="noAfter">
+        	<div class="li-l">服务内容</div>
+            <div class="li-r" id="cont">
+            	<input id="debug" value="调试" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>调试
+            	<input id="clean" value="清洗" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>清洗
+            	<input id="care" value="保养" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>保养
+            	<input id="install" value="安装" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>安装
+            	<input id="repair" value="维修" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>维修
+            	<input id="Disassemble" value="拆卸" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>拆卸
+            	<input id="Demolition" value="拆除" class="input"   type="checkbox" style="-webkit-appearance: checkbox;width:15px;height:15px;position:relative;top:-2px;margin-left:20px;"/>拆除
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul>
+        <li class="noAfter">
+            <div class="li-l">高空作业</div>
+            <div class="li-r">
+            	<select id="airjob" class="select">
+					<option value="0">否</option>
+					<option value="1" selected>是</option>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">故障说明</div>
+            <div class="li-r">
+            	<textarea id="Fault" placeholder="描述一下故障现象" ></textarea>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul>
+        <li class="noAfter">
+            <div class="li-l">是否保修</div>
+            <div class="li-r">
+            	<select id="ifbx" class="select">
+					<option value="0">否</option>
+					<option value="1" selected>是</option>
+				</select>
+            </div>
+        </li>
+        <li class="noAfter">
+        	<div class="li-l">保修开始日期</div>
+            <div class="li-r">
+            	<input id="bxbegindate" placeholder="请输入保修开始日期" value="{wekucms:$orderInfo.warranty_time}" class="input"   type="date"/>
+            </div>
+        </li>
+        <li class="noAfter">
+        	<div class="li-l">保修期(月)</div>
+            <div class="li-r">
+            	<input id="bxTime" placeholder="请输入保修期" value="3" class="input"   type="number" value="{wekucms:$orderInfo.warranty_day}"/>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul>
+        <li class="noAfter">
+        	<div class="li-l">支付方式</div>
+            <div class="li-r">
+            	<select id="Payment" class="select">
+					<option value="0" selected>现金支付</option>
+				</select>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="publicList wml100">
+	<ul id="Coupons">
+        <li class="noAfter">
+        	<div class="li-l">优惠券</div>
+            <div class="li-r"><span id="mycoup">{wekucms:$orderInfo.coupon_cn}</span></div>
+        </li>
+    </ul>
+</div>
+<div style="padding:10px;">
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;">说明</div>
+    <ul margin-top>
+        <li style="margin-bottom:10px;line-height:20px;">
+            1.费用不得高于统一收费标准，在公众号中回复“1”可查看费用标准。
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            2.根据国家法律规定凡在坠落高度基准面2m以上(含2m)有可能坠落的高处进行的作业均称高处作业，需收取高空作业费。
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            3.以下情况免保：所有调试，空调清洗，拆装，客户要求不见楼情况加氟，电脑等办公软件维护。
+        </li>
+         <li style="margin-bottom:10px;line-height:20px;">
+            4.该单据点击完成服务后，作为保修依据。
+        </li>
+    </ul>
+</div>
+<div class="button clearfix">
+	<div style="width:100%;">
+  		<a href="javascript:void(0);"  style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="thisadd">提&nbsp;&nbsp;&nbsp;&nbsp;交</a>
+     </div>
+</div>
+</div>
+<div id="info" style="display:none;">
+<div class="publicList wml100">
+    <ul>
+        <li class="noAfter">
+            <div class="li-l">姓名</div>
+            <div class="li-r"><input id="yname" placeholder="输入姓名" value="{wekucms:$orderInfo.order_name}" class="input" type="text" ></div>
+        </li>
+         <li class="noAfter">
+            <div class="li-l">手机号码</div>
+            <div class="li-r"><input id="phoneNo" placeholder="输入手机号码" value="{wekucms:$orderInfo.order_tel}" class="input" type="tel" ></div>
+        </li>
+        
+         <li class="noAfter">
+            <div class="li-l">微信号</div>
+            <div class="li-r"><input id="MicroMsgNo" placeholder="输入微信号" value="{weikucms:$orderInfo.order_no}" class="input" type="text"  disabled /></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">区域选择</div>
+            <div class="li-r"> 
+              <select id="s_province" name="s_province" style="border:1px solid #ddd;"></select><br/>
+              <select id="s_city" name="s_city" style="border:1px solid #ddd;"></select><br/>
+              <select id="s_county" name="s_county" style="border:1px solid #ddd;"></select>
+              <script type="text/javascript">_init_area();</script></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">详细地址</div>
+            <div class="li-r"><input id="address" placeholder="输入详细地址" value="{wekucms:$orderInfo.order_address}" class="input" type="text" ></div>
+        </li>
+    </ul>
+</div>
+<div class="button clearfix">
+	<a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="saveinfo">保存</a>
+</div>
+</div>
+<div id="coupon" style="display:none;">
+	<div class="publicList wml100">
+	<ul>
+		<li class="noAfter">
+            <div class="li-l">优惠券</div>
+            <div class="li-r">
+            	<select id="coup">
+            		<option disabled value="0">-选择优惠券-</option>
+					<volist name="couponInfo" id="value">
+						<option value="{weikucms:$value.coupon_no}">{wekucms:$orderInfo.coupon_cn}</option>
+					</volist>
+				</select>
+            </div>
+        </li>
+		
+	</ul>
+	</div>
+	<input type="hidden" id="id" value="{weikucms:$orderInfo.id}">
+	<div class="button clearfix">
+		<a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="savecoup">确定</a>
+	</div>
+</div>
+<!--<div id="back"><a href="javascript:window.history.back(-1);"><img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png"></a></div>-->
+
+<script type="text/javascript">
+    $(function(){
+    	
+    	var total = new Array();
+  	  	var jsonstr = "[{";
+    	$("#saveinfo").click(function(){
+    		total['yname'] = $("#yname").val();
+    		total['phoneNo'] = $("#phoneNo").val();
+    		total['MicroMsgNo'] = $("#MicroMsgNo").val();
+    		total['s_province'] = $("#s_province").val();
+    		total['s_city'] = $("#s_city").val();
+    		total['s_county'] = $("#s_county").val();
+    		total['address'] = $("#address").val();
+    		
+    		if(!total['yname']) {
+    			show_error_tip('用户名不能为空！'); 
+                return false;
+    		}
+    		
+    		if(!total['phoneNo']) {
+    			show_error_tip('手机号码不能为空！'); 
+                return false;
+    		}
+    		
+    		if(!total['address']) {
+    			show_error_tip('地址不能为空！'); 
+                return false;
+    		}
+    		
+    		$("#uname").text(total['yname']);
+    		$("#utel").text(total['phoneNo']);
+    		$("#uaddress").text(total['address']);
+    		$("#info").hide();
+			$("#main").show();
+    		
+    	});
+    	
+    	$("#savecoup").click(function(){
+    		
+    		total['coup'] = $("#coup").val();
+    		if(total['coup'] != 0) {
+    			$("#mycoup").text(total['coup']);
+    		}
+    		
+    		$("#coupon").hide();
+			$("#main").show();   		
+    	});
+    	
+    	$('#userInfo').bind('click', function(){
+			$("#info").show();
+			$("#main").hide();
+		});
+		$('#Coupons').click(function(){
+			$("#coupon").show();
+			$("#main").hide();
+		});
+    	
+        $('#thisadd').click(function(){
+            
+            
+        	total['AppointmentD'] = $('#AppointmentD').val();
+        	total['AppointmentT'] = $('#AppointmentT').val();
+        	total['wxtype'] = $('#wxtype').val();
+        	total['electric'] = $('#electric').val();
+        	
+        	
+        	total['yname'] = $("#uname").text();
+    		total['phoneNo'] = $("#utel").text();
+    		total['address'] = $("#uaddress").text();
+        	
+    		if(!total['yname']) {
+    			show_error_tip('用户名不能为空！'); 
+                return false;
+    		}
+    		
+    		if(!total['phoneNo']) {
+    			show_error_tip('手机号码不能为空！'); 
+                return false;
+    		}
+    		
+    		if(!total['address']) {
+    			show_error_tip('地址不能为空！'); 
+                return false;
+    		}
+    		
+            //复选框选择
+            if($('#debug').is(":checked")){
+            	total['debug'] = $('#debug').val();
+            }if($('#clean').is(":checked")){
+            	total['clean'] = $('#clean').val();
+            }if($('#care').is(":checked")){
+            	total['care'] = $('#care').val();
+            }if($('#install').is(":checked")){
+            	total['install'] = $('#install').val();
+            }if($('#repair').is(":checked")){
+            	total['repair'] = $('#repair').val();
+            }if($('#Disassemble').is(":checked")){
+            	total['Disassemble'] = $('#Disassemble').val();
+            }if($('#Demolition').is(":checked")){
+            	total['Demolition'] = $('#Demolition').val();
+            }
+
+            total['airjob'] = $('#airjob').val();
+            total['Fault'] = $('#Fault').val();
+            total['ifbx'] = $('#ifbx').val();
+            total['bxbegindate'] = $('#bxbegindate').val();
+            total['bxTime'] = $('#bxTime').val();
+            total['Payment'] = $('#Payment').val();
+			
+            total['id'] = $("#id").val();
+            
+            if( !total['AppointmentD'] ){
+                show_error_tip('预约日期不能为空！'); 
+                return false;
+            }
+            if( !total['AppointmentT'] ){
+                show_error_tip('预约时间不能为空！'); 
+                return false;
+            }
+            if( !total['electric'] ){
+                show_error_tip('电器不能为空！'); 
+                return false;
+            }
+            if( !total['Fault'] ){
+                show_error_tip('故障说明不能为空！'); 
+                return false;
+            }
+            if( !total['bxbegindate'] ){
+                show_error_tip('保修开始日期不能为空！'); 
+                return false;
+            }
+            if( !total['bxTime']){
+                show_error_tip('保修期不能为空！'); 
+                return false;
+            }
+
+            var jsonstr = "[{";
+			for(var key in total) {
+				jsonstr += "\"" + key + "\""+ ":" + "\"" + total[key] + "\","; 				
+			}
+			jsonstr += "\"idd\":\"1\"}]";
+            
+            
+            alert(jsonstr);
+             var url="index.php?g=Wap&m=Repair&a=wxWarn&token={weikucms:$token}&openid={weikucms:$openid}";
+             $.post(url,{jsonstr:jsonstr},
+            function(data){ 
+              if(data.status == 100){ 
+            	  show_success_tip(data.info);
+                  setTimeout(function(){                            
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 1 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }else if(data.status == 2 ){
+                show_error_tip(data.info);
+                setTimeout(function(){                          
+                      window.location.href = data.url;
+                  },'1000');
+              }
+          },'json');
+        })
+    })
+
+</script>
+</body>
+</html>

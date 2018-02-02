@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- 微信投票打分界面 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet"
+          href="{weikucms::RES}/wechatconferencemarking/css/default.css"
+          type="text/css">
+    <link href="{weikucms::RES}/wechatconferencemarking/css/mobiscroll.css"
+          rel="stylesheet" type="text/css">
+    <script type="text/javascript" async=""
+            src="{weikucms::RES}/wechatconferencemarking/js/ga.js"></script>
+    <script
+            src="{weikucms::RES}/wechatconferencemarking/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::RES}/wechatconferencemarking/js/common.js"></script>
+    <meta charset="UTF-8">
+    <title>{weikucms:$tpl['name']}</title>
+    <meta name="Keywords" content="微信演讲打分">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <style>
+        .deploy_ctype_tip {
+            z-index: 1001;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            margin-top: -130px;
+            left: 0;
+        }
+
+        .deploy_ctype_tip p {
+            display: inline-block;
+            padding: 13px 24px;
+            border: solid #d6d482 1px;
+            background: #000000;
+            font-size: 16px;
+            color: #FFD700;
+            line-height: 18px;
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+        .button  {
+            display: block;
+            text-align: center;
+            padding: 9px 0;
+            color: #fff;
+            font-size: 16px;
+            line-height: 22px;
+            background: #83cf51;
+            border: 1px solid #83cf51;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="bookingTips" style="line-height: 25px;">
+    <strong style="background: #F00F21; border: 1px solid #F00A24;">活动主题</strong>
+    <div style="line-height: 20px;">{weikucms:$info['name']}</div>
+</div>
+<div style="text-align: center">时间：{weikucms:$info['starttime']}--{weikucms:$info['endtime']}</div>
+<div id="baoyangYuyue1">
+    <div class="iconText">
+        <div class="col-sm-6">
+            <form action="" method="post">
+            <section class="panel">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>姓名</th>
+                        <th>头像</th>
+                        <th>选择</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="data" id="vo">
+                        <tr class="tr">
+                            <td style="" id="lecturername">{weikucms:$vo.key}</td>
+                            <td style="">
+                                {weikucms:$vo.name}
+                            </td>
+                            <td style="padding: 1px; " class="add">
+                                <img src="{weikucms:$vo.head_pic}" style="width: 45px; height:60px;;" >
+                            </td>
+
+                            <td >
+                                <if condition="$is_vote eq 2">
+                                <input name="vote_box" class="select" type="checkbox" value="{weikucms:$vo.id}" style="-webkit-appearance:checkbox">
+                                    <else/>
+                                </if>
+                            </td>
+
+                        </tr>
+                    </volist>
+
+                    </tbody>
+                    <tr><td colspan="4">
+                        <div class="button clearfix" style="background: #F70719; border: 1px solid #F90B2F;" >
+                        投票
+                        </div>
+                    </td>
+                    </tr>
+                </table>
+            </section>
+            </form>
+        </div>
+    </div>
+   <!-- <div class="button clearfix">
+        <a href="{weikucms::U('WechatConferencemarking/score',array('token'=>$token,'openid'=>$openid))}&actid={weikucms:$w['actid']}">投票</a>
+    </div>-->
+</div>
+<div style="margin-top: 20px; margin-left: 20px; background: #000">
+
+</div>
+<input type="hidden" value="{weikucms:$w['token']}" id="token">
+<input type="hidden" value="{weikucms:$w['actid']}" id="actid">
+<input type="hidden" value="{weikucms:$w['openid']}" id="openid">
+<input type="hidden" value="{weikucms:$a['name']}" id="name">
+</body>
+
+<style>
+    .btn {
+        width: 100%;
+        height: 98%;
+        margin-top: 0px;
+        background-color: #83cf51
+    }
+</style>
+
+<script type="text/javascript">
+    var counts = {weikucms:$info['max_num']};
+    var type = {weikucms:$type};
+    var base_ver_code = "{weikucms:$base_ver_code}";
+    var is_vote = {weikucms:$is_vote};
+    $(".button").click(function(){
+        if(is_vote == 1){
+            alert('你已投过票了');
+            return false;
+        }
+        var selects=$(".select");
+        var info="";
+        $.each(selects,function(){
+            if($(this).is(":checked")){
+                info+=$(this).val()+",";
+            }
+        })
+
+        if(info.split(',').length - 1 > counts ){
+            alert('超过投票数限制了');
+            return false;
+        }
+        if(info.split(',').length - 1 < counts ){
+            alert('必须要投'+counts+"项");
+            return false;
+        }
+        if(!info){
+            alert('请先选择投票');
+            return false;
+        }
+
+        var url="{weikucms::U('WechatConferencemarking/score',array('token'=>$token,'openid'=>$openid,'actid'=>$_GET['actid']))}";
+        $.ajax({
+            url: url,
+            type:"POST",
+            data:{info:info,type:type,base_ver_code:base_ver_code},
+            dataType:"json",
+            success: function(data){
+                if(data.status==1){
+                    window.location.href = data.url;
+                }else{
+                    alert(data.info);
+                }
+            }
+        });
+
+
+    });
+
+
+
+</script>
+</html>

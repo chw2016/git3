@@ -1,0 +1,191 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+		float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+		
+    }.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+            <li data-index="0" class="tab_nav first js_top " data-id="total">
+                <a href="{weikucms::U('Media/task',array('token'=>$token))}" >任务中心</a>
+            </li>
+			 <li data-index="0" class="tab_nav first js_top " data-id="marketing">
+                <a href="{weikucms::U('Media/marketing',array('token'=>$token))}" >营销中心</a>
+            </li>
+			<li data-index="0" class="tab_nav first js_top" data-id="financial">
+				<a href="{weikucms::U('Media/addInfo',array('token'=>$token))}" >消息中心</a>
+			</li>
+			<li data-index="0" class="tab_nav first js_top" data-id="financial">
+				<a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" >用户中心</a>
+			</li>
+            <li data-index="0" class="tab_nav first js_top borderColor" data-id="financial">
+                <a href="{weikucms::U('Media/setCenter',array('token'=>$token))}" >配置中心</a>
+            </li>
+            <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                <a href="{weikucms::U('Media/report',array('token'=>$token))}" >统计报表</a>
+            </li>
+            <if condition="$token eq $teToken">
+                <li data-index="0" class="tab_nav first js_top" data-id="financial">
+                    <a href="{weikucms::U('Media/guanggao',array('token'=>$token))}" >广告位设置</a>
+                </li>
+            </if>
+        </ul>
+    </div>
+</div>
+<!--添加按钮-->
+<!-- <div>
+    <ul>
+        <li><div class="addstyle" style="margin-left: 0px;background: #1576ad;" onclick="window.location.href='{weikucms::U('Media/payment',array('token'=>$token))}'">支付绑定</div></li>
+        <li><div class="addstyle" onclick="window.location.href='{weikucms::U('Media/classification',array('token'=>$token))}'">账户管理</div></li>
+        <li><div class="addstyle" onclick="window.location.href='{weikucms::U('Media/label',array('token'=>$token))}'">佣金结算</div></li>
+    </ul>
+    <div style="clear:both;"></div>
+</div> -->
+
+<div class="alert alert-info" style="margin-top: 20px;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>这里是用户的配置中心</li>
+
+    </ol>
+</div>
+
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <!--<tr>
+                <th valign="top"><label for="redFirst">一级邀请奖励积分</label></th>
+                <td>
+                    <input type="input" class="px" id="redFirst" value="{weikucms:$info.redfirst}" name="redFirst" style="width:300px" placeholder="此处填写一级邀请奖励积分"  />
+                </td>
+            </tr>
+             <tr>
+                <th valign="top"><label for="redSecond">二级邀请奖励积分</label></th>
+                <td>
+                    <input type="input" class="px" id="redSecond" value="{weikucms:$info.redsecond}" name="redSecond" style="width:300px" placeholder="此处填写二级邀请奖励积分"  />
+                </td>
+            </tr>
+            <tr>
+                <th valign="top"><label for="redThere">三级邀请奖励积分</label></th>
+                <td>
+                    <input type="input" class="px" id="redThere" value="{weikucms:$info.redThere}" name="redThere" style="width:300px" placeholder="此处填写三级邀请奖励积分"  />
+                </td>
+            </tr>-->
+             <tr>
+                <th valign="top"><label for="inviteAmount">进入平台所得积分</label></th>
+                <td>
+                    <input type="input" class="px" id="inviteAmount" value="{weikucms:$info.invite}" name="inviteAmount" style="width:300px" placeholder="此处填写每个进入平台所得积分"  />
+                </td>
+            </tr>
+            <tr>
+                <th valign="top"><label for="money">提现最低金额</label></th>
+                <td>
+                    <input type="input" class="px" id="money" value="{weikucms:$info.money}" name="money" style="width:300px" placeholder="此处填写提现最低金额"  />
+                </td>
+            </tr>
+            <tr>
+            	<th></th>
+            	<td>
+            		 <button type="button" id="bsubmit" name="button" class="btn btn-primary">配置</button>
+            	</td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</div>
+<include file="Public:footer"/>
+<script type="text/javascript">
+	$(function(){
+		$('#bsubmit').bind('click',function(){
+			   var redFirst = $('#redFirst').val();
+	           var redSecond = $('#redSecond').val();
+               var redThere = $('#redThere').val();
+	           var inviteAmount = $('#inviteAmount').val();
+               var money = $('#money').val();
+	           /*
+	            if(!redFirst){
+	                notif({
+	                    msg: "请填写一级邀请奖励积分",
+	                    type: "warning"
+	                });
+	                return false;
+	            }
+	            if(!redSecond){
+	                notif({
+	                    msg: "请填写二级邀请奖励积分",
+	                    type: "warning"
+	                });
+	                return false;
+	            }
+            if(!redThere){
+                notif({
+                    msg: "请填写三级邀请奖励积分",
+                    type: "warning"
+                });
+                return false;
+            }*/
+	            if(!inviteAmount){
+	                notif({
+	                    msg: "请填写每个进入平台所得的积分",
+	                    type: "warning"
+	                });
+	                return false;
+	            }
+            if(!money){
+                notif({
+                    msg: "请填写提现的最少金额",
+                    type: "warning"
+                });
+                return false;
+            }
+	            if(/*isNaN(redFirst) || isNaN(redSecond) ||*/ isNaN(inviteAmount) || isNaN(money)/* || isNaN(redThere)*/){
+	                notif({
+	                    msg: "填写框内必须为数字",
+	                    type: "warning"
+	                });
+	                return false;
+	            }
+	            var posturl = "{weikucms::U('Media/setCenterData',array('token'=>$token))}";
+		            $.post(posturl,
+	                    {/*redFirst:redFirst,redSecond:redSecond,*/inviteAmount:inviteAmount,money:money/*,redThere:redThere*/},
+	                    function(data){
+	                        if(data.status == 1){
+	                            notif({
+	                                msg: data.info,
+	                                type: "success"
+	                            });
+	                            setTimeout(function(){
+	                                window.location.href = data.url;
+	                            },'1000');
+	                        }else{
+	                            notif({
+	                                msg: data.info,
+	                                type: "error"
+	                            });
+	                        }
+	                    },'json');
+		})
+	})
+</script>

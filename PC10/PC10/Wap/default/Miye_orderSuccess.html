@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="银波米业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::RES}/miye/css/style.css">
+        <script src="{weikucms::RES}/miye/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::RES}/miye/js/main.js"></script>
+        <script src="{weikucms::RES}/miye/js/core.js"></script>
+        <script src="{weikucms::RES}/miye/js/iscroll.js"></script>
+		<script src="{weikucms::RES}/miye/js/time.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+    </head>
+    <body>
+      	<div class="waiteTime">
+    		<span>已等候</span>
+    		<span class="time">
+    			<span id="h">00</span>
+    			<span class="point">:</span>
+    			<span id="m">00</span>
+    		</span>
+    	</div>
+    	<div class="text">
+    		您的订单需求已发送
+    	</div>
+    	<div class="text">
+    		请耐心等候点击响应
+    	</div>
+    	<div class="redNotice">
+    		注：夜间配送商店会收取额外配送费用
+    	</div>
+    	<div class="myul orderAction">
+    		<div class="cencelOrder">
+    			取消订单
+    		</div>
+    		<div class="continueOrder">
+    			继续下单
+    		</div>
+    	</div>
+	<if condition="$logo">
+        <div class="order logo" style="background:url('{weikucms::$logo}')"></div>
+        </if>
+        <div class="blur">
+            <section class="tips">
+                <header></header>
+                <div class="tipsContent"></div>
+                <footer class="myul">
+                    <div class="myli cancelTips">
+                        取消
+                    </div>
+                    <div class="myli confirmTips">
+                        确认
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </body>    
+ 	<script type="text/javascript">
+ 		    var setTime = {weikucms:$times}*1000;
+			setInterval(function(){
+				var now = NowTime();
+			var C = TimeLeft(setTime,now),
+				H = C.h,
+				M = C.m;
+				// S = C.s>59?0:C.s;
+				$("#h").html(H);
+				$("#m").html(M);
+				// $("#s").html(S);
+			},1000);
+			var p = setInterval(function(){
+				if($(".point").hasClass('op0')){
+					$(".point").removeClass('op0');
+				}else{
+					$(".point").addClass('op0');
+				}
+			},500) 			
+            // 取消订单
+            $(document).on('click','.confirmCancelOrder',function(){               
+                var urls = "{weikucms::U('Wap/Miye/cancelOrder',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}",
+                    _this = $(this);
+                $.post(urls,{},function(data){
+                    if(data.status == 0){
+                        _this.html(data.info);
+                        setTimeout(function(){
+                            window.location.href = "{weikucms::U('Wap/Miye/index',array('token'=>$token,'openid'=>$openid))}";
+                        },100);
+                    }else{
+
+                    }
+                },'json');               
+		return false;
+            })
+            // 继续下单
+            $(document).bind('click','.continueOrdering',function(){                
+                window.location.href = "{weikucms::U('Wap/Miye/index',array('token'=>$token,'openid'=>$openid))}";               
+            })		
+	</script>
+</html>

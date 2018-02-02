@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>鱼美人-限时抢购</title>  
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css/style.css">
+		<script src="{weikucms::RES}/mru/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js/main.js"></script>
+		<script src="{weikucms::RES}/mru/js/msg.js"></script>
+    </head>
+    <body class="limiting"  style="overflow-x:hidden" >
+	    <div class="banner"> 
+			<img style="width:100%;height:100%" <if condition="$list['pic']" >src="{weikucms:$list.pic}"<else/> src="{weikucms::RES}/mru/img/shop.png"</if>alt="">
+		</div>
+		<div class="content">
+			<div class="item gPrice">
+				<span class="RMB nowPrice">{weikucms:$list['price3']}</span>
+				<span class="RMB oldPrice">{weikucms:$list['price2']}</span>
+				      <if condition="$list['state']  eq 1 ">
+                       
+                      <a href="{weikucms::U('zf',array('id'=>$list['id'],'token'=>$_GET['token'],'openid'=>$_GET['openid'],'dopenid'=>$_GET['dopenid']))}" > 
+                      <else/>
+                      <a href="#" >
+                      </if>
+				
+				<div class="setRight border-4 textMiddle buyNow">
+					 {weikucms:$list['state']?'立即抢购':'已结束'} 
+				</div>
+				       </a>
+			</div>
+			<div class="item detail">
+				<div class="title">
+				   {weikucms:$mdian}
+				</div>
+<style>
+#aaa2 img{
+	width:100%;
+}
+</style>				
+				<div id="aaa2" class="longContent">
+				 {weikucms::$list['content']}
+									
+				</div>
+				<div class="textRight">
+					<span class="num"><if condition="$list['num']" >{weikucms:$list.num}<else/>0</if></span>人抢购
+				</div>
+			</div>
+			<a  href="{weikucms::U('fx',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid']))}"  >
+			<div class="item share">
+				<span class="text">
+					分享
+				</span>
+				<div class="arrowRight setRight"></div>
+			</div>
+			</a>
+			<a  href="{weikucms::U('fx',array('token'=>$_GET['token'],'id'=>$list['id'],'openid'=>$_GET['openid'],'hy'=>'1'))}"  >
+			<div class="item invite">
+				<span class="text">
+					邀请好友购买
+				</span>
+				<div class="arrowRight setRight"></div>
+			</div>
+			</a>
+		</div>
+<include file="./tpl/Wap/default/mrufx.html" />  		
+		
+    </body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>研祥网点查询</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+			.list_div{
+				width: auto;
+			}
+			ul,a{
+				outline: none;
+				text-decoration: none;
+			}
+			.list_div_ul_li{
+                margin-top: 10px;
+                height: 95px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+			}
+			.list_li_div1{
+				display: inline-block;
+				width: 110px;
+				height: 72px;
+				float: left;
+				
+			}
+			.list_li_div2{
+				display: inline-block;
+				overflow: hidden;
+				height: 72px;
+			}
+			.list_li_div2 ul li{
+                display: inline-table;
+                width: 56px;
+                height: 23px;
+                line-height: 23px;
+                /* background-color: #79F8DA; */
+                margin: 4px;
+                border: 1px solid #94BCE0;
+                border-radius: 12px;
+                font-size: 12px;
+                margin-top: 0px;
+                float: left;
+                color: #91D3FD;
+			}
+			.list_li_div1 div{
+                width: 100px;
+                height: 85px;
+                background-color: #43B6FC;
+                margin: 5px;
+                line-height: 85px;
+                color: #FFF;
+                font-size: 18px;
+                margin-top: 0;
+                border-radius: 5px;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function(){
+				$(".list_li_div2").width($(window).width()-$(".list_li_div1").width());
+			})
+		</script>
+    </head>
+    <body>
+
+		<div class="list_div">
+			<ul class="list_div_ul">
+
+            <volist name="fengqu" id="vo">
+				<li class="list_div_ul_li">
+					<div class="list_li_div1" onclick="location.href='{weikucms::U('netSearchInner',array('token'=>$token,'openid'=>$openid,'provinceId'=>$vo['id']))}'">
+						<div><span>{weikucms:$vo.name}</span></div>
+					</div>
+					<div class="list_li_div2">
+						<ul>
+							<volist name="vo['sheng']" id="vo1">
+                                <li>{weikucms:$vo1.province}</li>
+                            </volist>
+						</ul>
+					</div>
+				</li>
+            </volist>
+			</ul>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- <div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+		<header id="c-product-header">
+		    		研祥网点查询
+		    	</header>
+		    	标注位置
+		    	<div class="net-position">
+		    		<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/position.png" /><span class="net-pos-font">请选择省份</span>
+		    	</div>
+		    	<ul class="province">
+		    		<volist name="province" id="vo">
+		    	<a href="{weikucms::U('Yanxiang/netSearchInner',array('token'=>$token,'provinceId'=>$vo['id'],'openid'=>$openid))}">
+		    		<li>
+		    			<div class="left">{weikucms:$vo.province}</div>
+		    			<div class="middle"></div>
+		    			<div class="right">
+		    				<div class="square"></div>
+		    			</div>
+		    		</li>
+				</a>
+			</volist>
+			<div style="height:100px"></div>
+		    	</ul>
+		    	底部
+		    	<div class="net-footer">
+		    		<div class="net-footer-wrap">
+		    			<div class="left">
+				<a href="tel:4008809666">
+		    				<div class="img">
+		    					<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/telphone.png" />
+		    				</div>
+		    				<p class="hot-line">热线电话</p>
+				</a>
+		    			</div>
+		    			<div class="right">
+		    				<div class="img">
+		    					<img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/kefu1.png" style="position:relative;bottom:5px;" />
+		    				</div>
+		    				<p class="hot-line">客服中心</p>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	<script type="text/javascript">
+		    		window.onload = function(){
+		    			// 图片高度
+		    			$('.net-position>img').css('height', (Number($('.net-pos-font').height())+Number(5))+'px');
+		    			$('.net-left-img').css('height', $('.net-left-img').width()+'px');
+			    		$('.net-left-img>img').css({'width': $('.net-left-img').width()+'px','height': $('.net-left-img').width()+'px'});
+			    		$('.net-says').css('height', $('.net-says').width()+'px');
+			    		$('.all-text').css('top', ($('.net-says').height()-$('.all-text').height())/2);
+			    		$('.net-footer-wrap .left .img,.net-footer-wrap .right .img').css('height', $('.net-footer-wrap .left .img').width()+'px');
+		    			// 头像控制
+			    		$('.img img').css('width',$('.img').width()*0.5+'px');
+			    		$('.img img').css('margin-top',($('.img').height()-$('.img img').height()-2)/2+'px');
+			    		$('.net-position').css('height', (Number($('.net-pos-font').height())+Number(15))+'px');
+				var a = setTimeout(function(){	
+		                    $("#loading").hide(0).remove();
+		                },1200);
+				$('.net-footer>.net-footer-wrap>.right').bind('click',function(){
+					 var url = "{weikucms::U('Wap/Duokf/sendkfmsg',array('token'=>$token,'openid'=>$openid,'dopenid'=>$_GET['dopenid']))}";
+		            $.post(url,{},function(data){
+		                if(data.code == 0){
+		                    $(".motify-inner").text(data.msg);
+		                    $(".motify").show();
+		                    setTimeout(function(){
+		                        WeixinJSBridge.invoke('closeWindow',{},function(res){
+		
+		                        });
+		                    },'2000');
+		
+		                }else{
+		                    $(".motify-inner").text(data.msg);
+		                    $(".motify").show();
+		                    setTimeout(function(){
+		                        $(".motify").hide();
+		                    },'2000');
+		                    return false;
+		                }
+		            },'json');
+				})
+		    		}
+		    	</script> -->
+    </body>
+</html>

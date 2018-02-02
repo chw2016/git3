@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/samphay.css">
+    <link rel="stylesheet" href="tpl/Wap/default/common/commerce/dyb/css/style.css">
+
+    <script src="tpl/Wap/default/common/commerce/dyb/js/jquery-1.11.1.min.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/main.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/core.js"></script>
+    <script src="tpl/Wap/default/common/commerce/dyb/js/iscroll.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/main.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/dialog.css" media="all" />
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/main.js"></script>
+    <script type="text/javascript" src="http://v.wapwei.com/./tpl/static/wapweiui/usercenter/integral/dialog_min.js"></script>
+    <style type="text/css">
+        body{
+            background-color: rgb(240,240,240);
+        }
+    </style>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+		    wx.config({
+		        appId: '{weikucms:$signPackage.appId}',
+		        timestamp: {weikucms:$signPackage.timestamp},
+		        nonceStr: '{weikucms:$signPackage.nonceStr}',
+		        signature: '{weikucms:$signPackage.signature}',
+		        jsApiList: [
+		            'hideOptionMenu'// 所有要调用的 API 都要加到这个列表中
+		        ]
+		    });
+		    wx.ready(function () {
+		        // 在这里调用 API
+		        wx.hideOptionMenu();
+		    });
+
+		</script>
+</head>
+<body >
+<div class="header textMiddle header-green-bg white h3">
+    <div class="setLeft icon-back" onclick="javascript:history.go(-1);"></div>
+    <span>积分兑换</span>
+</div>
+
+
+<if condition="$data">
+    <volist name="data" id="vo">
+<div class="eventBox jifenItem white-bg setMiddle myul" onclick="exchange({weikucms:$vo.id},{weikucms:$vo.integral},{weikucms:$vo.num});">
+    <div class="jifenLogo fixBg" style="background-image: url({weikucms:$vo['pic']})"></div>
+    <div class="jifenGoods">
+        <div class="jifenTitle">
+            {weikucms:$vo.giftname}
+        </div>
+        <div class="jifenItemLeft">
+            剩余：{weikucms:$vo.num}件
+        </div>
+        <div class="needJiFen">
+            需要积分：{weikucms:$vo.integral}
+        </div>
+    </div>
+</div>
+    </volist>
+        <else/>
+    <div class="eventBox jifenItem white-bg setMiddle myul">
+            还没有设置积分兑换活动哦
+
+    </div>
+</if>
+
+
+
+</body>
+<script>
+
+    function exchange(exc_id,point,num){
+
+        confirm('<label>扣除积分：<span>'+point+'</span></lael>', function(){
+            loading(true);
+            var num1=num;
+            if(num1>1) {
+                $.ajax({
+                    url: "{weikucms::U('Wap/Commercedyb/exchange',array('token'=>$token,'uid'=>$data['id'],'openid'=>$openid))}",
+                    type: "post",
+                    data: {exc_id: exc_id, point: point},
+                    dataType: "JSON",
+                    success: function (res) {
+                        loading(false);
+                        if (0 == res.status) {
+                            alert(res.info);
+                            setTimeout(function () {
+                                window.location.href = res.url;
+                            }, '1000');
+
+                        } else {
+                            alert(res.info);
+                            setTimeout(function () {
+                                window.location.href = res.url;
+                            }, '3000');
+
+                        }
+                    }
+                });
+            }else{
+                alert("库存不足");
+                window.location.href="";
+            }
+        });
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default1.css" type="text/css">
+    <script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+    <script src="{weikucms::STATICS}/wapweiui/service/js/area.js"></script>
+    <link href="{weikucms::STATICS}/wapweiui/service/css/index.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/box.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/usercenter.css" rel="stylesheet" type="text/css">
+    <link href="{weikucms::STATICS}/wapweiui/service/css/usercenter_bg.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>{weikucms:$tpl['name']}</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+    <script type="text/javascript">
+        var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+        var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+        var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+        var browser={
+            versions:function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    trident: u.indexOf('Trident') > -1,
+                    presto: u.indexOf('Presto') > -1,
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(),
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+    </script>
+    <style type="text/css">
+        td a{
+            color: #f00;
+            display: block;
+        }
+    </style>
+    <style type="text/css">
+        #bottom td a{
+            color: #fff;
+            display: block;
+            font-size: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            if(document.body.scrollHeight > $(window).height()){
+                $('#bottom').css({'width':$(window).width(),'left':0,'bottom':-(document.body.scrollHeight-$(window).height())});
+            }else{
+                $('#bottom').css({'width':$(window).width(),'left':0});
+            }
+
+        })
+    </script>
+</head>
+<body>
+<div class="pageTitle" style="font-size:15px;">
+    <i style="background:#f15151;"></i>
+    <span class="arrow-r" style="border-left:10px solid #f15151;"></span>
+    <a href="{weikucms::U('Wap/Repair/wxCenter',array('token'=>$token,'openid'=>$openid))}" style="color:#fff;">个人中心</a>&nbsp;>>&nbsp;用户维权
+</div>
+
+
+<div style="padding:10px;background:#f5f4f4;margin:15px auto;width:90%;border-radius:6px;">
+
+    <div style="margin-bottom:10px;font-weight:800;font-size:16px;">投诉流程说明</div>
+    <ul margin-top>
+        <li style="margin-bottom:10px;line-height:20px;">
+            第一步：填写并提交投诉单
+        </li>
+        <li style="margin-bottom:10px;line-height:20px;">
+            第二步：技师和管理员收到投诉消息
+        </li>
+
+        <li style="margin-bottom:10px;line-height:20px;">
+            第三步：技师联系用户处理投诉
+        </li>
+
+        <li style="margin-bottom:10px;line-height:20px;">
+            第四步：结果<br/>
+            结果1：技师在7天内就投诉事宜和用户达成一致，用户关闭投诉单，1号服务不会对技师做任何处罚。<br/>
+            结果2：技师在7天内就投诉事宜未和用户达成一致，1号服务介入处理，并将该技师的被投诉次数加1，累计到3次，技师将永久禁用。<br/>
+
+        </li>
+
+    </ul>
+</div>
+
+<div class="publicList wml100">
+    <ul>
+
+        <li class="noAfter">
+            <div class="li-l">投诉订单号</div>
+            <div class="li-r"><input id="weiquan_order" placeholder="请填写被投诉订单号" value="{weikucms:$repair_user.username}" class="input" type="text" ></div>
+        </li>
+        <li class="noAfter">
+            <div class="li-l">投诉事由</div>
+            <div class="li-r" style="height: 150px;"><textarea id="weiquan_content" class="input" type="tel">{weikucms:$repair_user.user_tel}</textarea></div>
+        </li>
+
+
+    </ul>
+</div>
+
+<input type="hidden" id="id" value="{weikucms:$agentId}"/>
+
+<div class="button clearfix">
+    <a href="javascript:void(0);" style="background:#f00;text-align:center;color:#fff;font-weight:400;border-radius:6px;line-height:2em;font-size:16px;border:1px solid #f00;padding:0;" id="thissave">
+        提交
+    </a>
+</div>
+
+
+
+<div style="height:100px;">
+</div>
+<footer>
+    <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxhome&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                    <span class="home-index-active">首页</span>
+                </a>
+                <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxOrder&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                    <span class="Order-index">订单</span>
+                </a>
+                <a href="index.php?g=Wap&amp;m=Repair&amp;a=wxCenter&amp;token={weikucms:$token}&amp;openid={weikucms:$openid}">
+                    <span class="My-index">个人中心</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<style type="text/css">
+    .gray{
+        border-top:2px solid #ddd;
+        border-left:2px solid #ddd;
+        border-right:2px solid #888;
+        border-bottom:2px solid #888;
+    }
+    .red{
+        border-top:2px solid #888;
+        border-left:2px solid #888;
+        border-right:2px solid #ddd;
+        border-bottom:2px solid #ddd;
+    }.indexMenu a span{
+         color: #fff;
+     }
+</style>
+
+<script type="text/javascript">
+    $(function(){
+        $('.flag').mousedown(function(){
+            $(this).removeClass('gray').addClass('red');
+
+        })
+        $('.flag').mouseup(function(){
+            $(this).addClass('gray').removeClass('red');
+
+        })
+
+
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        var flag = true;
+        $('#thissave').click(function(){
+            //修改
+            var btn = $(this);
+            var weiquan_order=$('#weiquan_order').val();
+            var weiquan_content=$('#weiquan_content').val();
+
+            if( !weiquan_order ){
+                show_error_tip('投诉订单号不能为空！');
+                return false;
+            }
+
+            if( !weiquan_content ){
+                show_error_tip('投诉内容不能为空！');
+                return false;
+            }
+
+
+            var url="index.php?g=Wap&m=Repair&a=wxWeiquan&token={weikucms:$token}&openid={weikucms:$openid}";
+            if(flag ==  true) {
+                flag = false;
+                btn.text('正在提交..');
+                $.post(url, {weiquan_order: weiquan_order, weiquan_content: weiquan_content},
+                        function (data) {
+                            if (data.status == 100) {
+                                show_success_tip(data.info);
+                                setTimeout(function () {
+                                    window.location.href = data.url;
+                                }, '1000');
+                            } else if (data.status == 1) {
+                                show_error_tip(data.info);
+                                return false;
+                            }
+                            btn.text("提交");
+                            flag = true;
+                        }, 'json');
+            }
+        });
+
+    })
+</script>
+</body>
+</html>

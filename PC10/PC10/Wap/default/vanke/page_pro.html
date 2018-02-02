@@ -1,0 +1,42 @@
+<volist name="product" id="pro">
+<div class="item boxShadow">
+    <div class="img">
+        <img style="max-width: 100%;" src="{weikucms:$pro.headpic}" data-original="{weikucms:$pro.headpic}" alt=""/>
+    </div>
+    <div class="textBox movieDetail">
+        <div class="title f20">
+            {weikucms:$pro.name}
+        </div>
+        <div class="text f14">
+            {weikucms:$pro.content}
+        </div>
+        <div class="groupDetail">
+            <ul class="groupByLine">
+                <foreach name="pro['groupmsg']" item="gm" key="k">
+                <li class="groupMoneyBox">
+                    <div class="groupMoney RMB">{weikucms:$gm}</div>
+                    <div class="groupPeople">{weikucms:$k}人</div>
+                </li>
+                </foreach>
+            </ul>
+            <a href="{weikucms::U('detail', array('id' => $pro['id']))}">
+            <div class="groupBtnWrap">
+                <div class="groupByBtn">
+                    <div class="circle icon">
+                       <span class="icon-yonghu"></span>
+                    </div>
+                    <div class="wrap">
+                        <span class="f12">最低价</span>
+                        <span class="price f16 RMB">{weikucms:$pro.min_price}</span>
+                    </div>
+                </div>
+                <div class="groupBuyBtn" style="background-color: #D4D4D4;">
+                    已结束
+                </div>
+            </div>
+            </a>
+            <div class="marketPrice">市场价：<span class="text lineThrough">{weikucms:$pro.market_price}</span></div>
+        </div>
+    </div>
+</div>
+</volist>

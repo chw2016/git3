@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{weikucms:$tpl.name}</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Aibang/css/aibang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/GetLocation.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/api"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/getscript"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Aibang/js/convertor.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/jquery.form.js" type="text/javascript"></script>
+	    <script src="{weikucms::STATICS}/wapweiui/weiweb/sellcar/js/upfile.js" type="text/javascript"></script>
+		<style type="text/css">
+    		
+    		*:focus{outline:none;}
+			.Business-name,.zone{
+				margin:0 auto;margin-top: 30px;text-align: left;width: 90%
+			}
+			.zone{margin-top: 10px;display: -webkit-box;display: flex;}
+			.zone .left{
+				width: 75%
+			}.zone .right{
+				width: 25%;
+			}
+			.name{
+				display: block;font-size: 18px;
+			}.parts{margin-left: 10px;margin-top: 4px;}
+			.channel{color: #919191;}
+			.business{
+				display: block;margin:0 auto;border: 1px solid #838383;width: 100%;margin-top: 10px;height: 30px;border-radius: 6px;-webkit-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;-moz-border-radius: 6px;background: #fff;
+			}input::-webkit-input-placeholder{color: #919191;}
+			input::-moz-placeholder{color: #919191;}
+			.arrow{border-top: 3px solid #878787;border-right: 3px solid #878787;-webkit-transform:rotate(45deg);width: 10px;height: 10px;margin-top: 25%;margin-left: 75%;}
+			  .collect{width: 90%;border-radius: 6px;-moz-border-radius: 6px;-ms-border-radius: 6px;-o-border-radius: 6px;-webkit-border-radius: 6px;background: #3cc332;letter-spacing: 5px;margin: 10px auto 6px;}
+            .collect{margin-top: 30px;}
+            .collect a{color: #fff;font-size: 18px;padding: 6px 0;display: block;}
+            .online{position: fixed;bottom: 0px;width: 100%;background: #493C3C;text-align: center;color:#fff;height:36px;line-height:36px;}
+            .Mask{position: fixed;z-index: 100;background: rgba(0,0,0,0.8);top: 0;width: 100%;height: 100%}
+            .selects,.newzone,.channels{position: fixed;width: 90%;z-index: 200;margin-left: 5px;background: #979797;text-align: left}
+            .please{color: #fff;padding: 8px 0;padding-left: 5px;border-bottom: 1px solid #111;background: #000;font-size: 16px;}
+            .selects ul li,.channels ul li{padding: 8px 0;border-bottom: 1px solid #e6e6e6;padding-left:5px;background: #fff;color: #000;}
+            .selects ul li:nth-last-child(1),.channels ul li:nth-last-child(1){border: 0;}
+            #new{width: 100%;height: 30px;}
+            button:nth-of-type(1){width:46%;height: 20px;float:left;margin:5px 0 5px 5px;}
+			button:nth-of-type(2){width:46%;height: 20px;float:right;margin:5px 5px 5px 0;}
+            /*这是上传图片的样式*/
+            .demo{width:100%;}
+            .demo p{line-height:32px}
+            .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 5px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;cursor:pointer;background-color:#3CC332;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+            .btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+            .progress { position:relative; margin-top:-24px; width:100px;text-align:center;padding: 1px; border-radius:3px; display:none}
+            .bar {background-color: #FF8000; display:block; width:0%; height:20px; border-radius: 3px; }
+            .percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+            .files{height:22px; line-height:22px; margin:5px 0}
+            .delimg{margin-left:20px; color:#090; cursor:pointer}
+		</style>
+         <script>
+            $(function(){
+                var getLocation_Loading = 0;
+                var locationAddress = '';//存储定位后的地址详情字符串
+                baiduGetLocaltion();
+            });
+        </script>
+    </head>
+    <body class="body">
+        <!-- 遮罩产生 -->
+        <div class="Mask" style="display:none"></div>
+        <!-- 选择不同的区域 -->
+        <div class="selects" style="display:none">
+            <div class="please">请选择商圈</div>
+            <ul id="buy">
+                <li>添加新地区</li>
+            </ul>
+        </div>
+        <!-- 选择不同的频道 -->
+        <div class="channels" style="display:none">
+            <div class="please">请选择类型</div>
+            <ul id="type">
+                <volist name="info" id="vo">
+                    <li class="1_channel">{weikucms:$vo.cate}</li>
+                </volist>
+            </ul>
+        </div>
+       <!-- 输入新地区的地方 -->
+        <div class="newzone" style="display:none">
+            <div class="please">请输入新地区</div>
+            <input type="text" name="new" id="new" placeholder="请输入新地区"/>
+            <button name="sure" id="sure">确定</button>
+            <button name="cancel" id="cancel">取消</button>
+        </div>
+    	<div class="Business-name">
+    		<span class="name">商户名</span>
+            <if condition="$flag eq 1">
+                <input type="text" name="b-n" class="business" placeholder="请填写商户名" id="Bus_name" value="{weikucms:$infos.name}">
+            <else />
+                <input type="text" name="b-n" class="business" placeholder="请填写商户名" id="Bus_name">
+            </if>
+    	</div>
+    	<!-- 地区 -->
+    	<div class="zone" id="zone">
+    		<div class="left">
+    			<span class="name">地区</span>
+                <if condition="$flag eq 1">
+    			     <span class="name parts grammer">{weikucms:$infos.zone}</span>
+                <else/>
+                     <span class="name parts grammer">中心广场</span>
+                </if>
+    		</div>
+    		<div class="right">
+    			<div class="arrow"></div>
+    		</div>
+    	</div>
+    	<!-- 频道 -->
+    	<div class="zone" id="channel">
+    		<div class="left">
+    			<span class="name">分类</span>
+                <if condition="$flag eq 1">
+        			<span class="name parts channel">{weikucms:$infos.channel}</span>
+                <else />
+                    <span class="name parts channel">购物></span>
+                </if>
+    		</div>
+    		<div class="right">
+    			<div class="arrow"></div>
+    		</div>
+    	</div>
+    	<!-- 地址 -->
+    	<div class="Business-name">
+    		<span class="name">地址</span>
+            <if condition="$flag eq 1">
+                <input type="text" name="b-n" class="business" placeholder="如:宝安大道100号" id="address" value="{weikucms:$infos.address}">
+            <else/>
+                <input type="text" name="b-n" class="business" placeholder="如:宝安大道100号" id="address" >
+            </if>
+    	</div>
+		<div class="Business-name">
+    		<span class="name">商家简介</span>
+            <if condition="$flag eq 1">
+			    <textarea name="b-n" id="desc" style="width:100%;height:30px;">{weikucms:$infos.desc}</textarea>
+               
+            <else/>
+                <textarea name="b-n" id="desc" style="width:100%;height:60px;"></textarea>
+            </if>
+    	</div>
+    	<!-- 电话 -->
+    	<div class="Business-name">
+    		<span class="name">电话号码</span>
+            <if condition="$flag eq 1">
+                <input type="text" name="b-n" class="business" placeholder="如：88123456789" id="tel" value="{weikucms:$infos.telphone}">
+            <else/>
+                <input type="text" name="b-n" class="business" placeholder="如：88123456789" id="tel">
+            </if>
+    		
+    	</div>
+        <!-- 商圈图片上传 -->
+         <form id="myupload" action="/index.php?g=Wap&m=Aibang&a=uploadT&token={weikucms:$token}" method="post" enctype="multipart/form-data">
+            <div class="demo">
+                <span id="bar" style="padding-left:20px;font-size: 12px;">上传店铺图片</span>
+                <div id="showimg" style="margin-left:50px;">
+                    <if condition="$flag eq 1">
+                        <a href="{weikucms:$infos.pic}">
+                            <img src="http://v.wapwei.com/{weikucms:$infos.pic}" width="100px;" height="80px;" style="position:relative;left:-12px;">
+                        </a>
+                    <else/>
+                    </if>
+                </div>
+                <div class="btn" style="margin-left:30px; width:100px;">
+                    <span>上传图片</span>
+                    <input id="fileupload" type="file" name="mypic" style="height:30px; margin-left: auto;">
+                </div>
+                <p>提示：1.只允许上传gif/jpg格式的图片。<br/>2.图片大小不能超过1M。<br/>3.图片比列为5:4最佳。</p>
+                <input type="hidden" value="" id='url' />
+            </div>
+        </form>
+        <div class="online"></div>
+    	 <div class="collect"><a href="javascript:void(0)" id="t-sub">提交</a></div>
+		 <div style="height:40px"></div>
+         <script type="text/javascript">
+            $(function(){
+                // 控制选择的大小// 新增商户圈的选择
+                $('.selects,.newzone,.channels').css({'left':($(window).width()-$('.selects').width())/2+'px','top':'20px'});
+                // 选择框的大小
+                $('#new').css('width',($('.selects').width()-4)+'px')
+                // 点击显示选择商圈
+                $('#zone').bind('click',function(){
+                    $('.Mask').show();
+                    $('.selects').show();
+                })
+                // 点击选择频道
+                 $('#channel').bind('click',function(){
+                    $('.Mask').show();
+                    $('.channels').show();
+                })
+                // 点击确定产生的商圈
+                 $('#sure').each(function(){
+                    $(this).click(function(){
+                        if (!$('#new').val()) {
+                            alert("不能为空！");
+                            return false;
+                        }else{
+                            $('.grammer').text($('#new').val());
+                            $('.Mask').hide();
+                            $('.newzone').hide();
+                        }
+                       
+                    })
+                })
+                // 点击取消的关闭
+                  $('#cancel').each(function(){
+                    $(this).click(function(){
+                        $('.Mask').hide();
+                        $('.newzone').hide();
+                    })
+                })
+                // 点击频道获取数据
+                    $(document).on("click",".2_channel",function(){
+                        $('.channel').text($(this).text());
+                    })
+                // 获取城市
+                var a = setInterval(function(){
+                    if ($(".online").text() == "正在定位，请稍后…") {
+                        // 不做任何事情
+                    }else{
+						clearInterval(a);
+                        // 请求Ajax
+                        var url = "{weikucms::U('Wap/Aibang/regAcc',array('token'=>$token))}";
+                        $.post(url,{city:$(".online").text()},function(data){
+                            $('#buy>li').before(data.city);
+                            // 点击选择不同的商圈名称
+                            $('#buy>li').click(function(){
+                                if($(this).text() != "添加新地区"){
+                                    $('.grammer').text($(this).text());
+                                    $('.Mask').hide();
+                                    $('.selects').hide();
+                                }else{
+                                    $('.selects').hide();
+                                    $('.newzone').show()
+                                }
+                            })
+                        },'json');
+                    }
+                },'2000');
+                //根据不同的数据添加进去的东西
+                $('#type>li').click(function(){
+                    var url = "{weikucms::U('Wap/Aibang/regsAcc',array('token'=>$token))}";
+					var _This = $(this).text();
+                     $.post(url,{cate: _This},function(data){
+					 		
+					       if(data.catename == 'kong'){
+                                $('#type').find("li[class='2_channel']").remove();
+						   		$('.Mask').hide();
+                                $('.channels').hide();
+                                $('#type').find("li[class='1_channel']").show();
+                                $('.channel').text( _This);
+							
+						   }else{
+						   		var channel = $('.channel').text();
+                                $('#type').children('li').hide();
+                                $('#type').append(data.catename);
+                                $('.2_channel').click(function(){
+                                    // 下面是获取的数据
+									var _This1 = $(this).text();
+                                    $.post(url,{cate3:_This1},function(data){
+                                        if(data.cate3 == 'kong'){
+                                            $('#type').find("li[class='2_channel']").remove();
+                                            $('#type').find("li[class='3_channel']").remove();
+                                            $('.Mask').hide();
+                                            $('.channels').hide();
+                                            $('#type').find("li[class='1_channel']").show();
+											$('.channel').text( _This+">"+_This1);
+                                        }else{
+                                            $('#type').find("li[class='2_channel']").remove();
+                                            $('#type').append(data.cate3);
+                                            $('.3_channel').click(function(){
+												var _This2 = $(this).text(); 
+                                                 $('#type').find("li[class='3_channel']").remove();
+                                                 $('#type').find("li[class='1_channel']").show();
+                                                 $('.Mask').hide();
+                                                 $('.channels').hide();
+												 $('.channel').text( _This+">"+_This1+">"+_This2);
+                                            })
+                                        }
+                                       
+                                    },'json');
+                                    
+                                   
+                                })
+                               // 清除掉数据
+						   }
+                           
+                        },'json');
+                }) 
+                // 通过地址获取到的经纬度
+                $('#address').bind('blur',function(){
+                    
+                })
+                //提交注册的数据 
+               $('#t-sub').on('click',function(){
+                    // console.log(lng+" "+lat);return;
+
+                // 商户名称
+                    var shm = $('#Bus_name').val();
+                //地区
+                    var zone = $('.grammer').text();
+                 // 频道
+                    var channel = $('.channel').text();
+                 // 地址
+                    var address = $('#address').val();
+					
+					if (address != undefined && address != '') {
+
+                         var url = 'http://api.map.baidu.com/geocoder/v2/?ak=ft9tCNRzY3LkR1z1hRAwyIC4&output=json&address=' + encodeURIComponent(address);
+
+                         //根据地点名称获取经纬度信息
+
+                         $.ajax({
+                             type: 'POST',
+                             url: url,
+                             dataType: 'JSONP',
+                             success: function (data) {
+                                 if (parseInt(data.status) == 0) {
+                                     // 获取到经纬度,先纬度后经度
+                                     // 全局变量
+                                     lng = data.result.location.lng;
+                                     lat = data.result.location.lat;
+                                 }
+
+                            }
+
+                         });
+
+                     }
+					
+					var desc = $('#desc').val();
+                 // 电话
+                    var tel = $('#tel').val();
+                 //显示图片
+                    var pic = $('#showimg').find("a").attr('href');
+                    
+                    if(!shm){
+                        confirm('商户名称不能为空');
+                        shm.focus();
+                        shm.selected();
+                        return false;
+                    }
+                    if(!zone){
+                        confirm('地区不能为空');
+                    }
+                    if(!channel){
+                        confirm('频道不能为空');
+                    }
+                    if(!address){
+                        confirm('地址不能为空');
+                        address.focus();
+                        address.selected();
+                        return false;
+                    }
+                    if(!tel){
+                        confirm('电话不能为空');
+                        tel.focus();
+                        tel.selected();
+                        return false;
+                    }else{
+                        if(isNaN(tel)){
+                            confirm('电话号码必须为数字！');
+                            return false;
+                        }
+                    }
+                    if (typeof(pic) == "undefined") {
+                        confirm('请上传店铺图片');
+						return false;
+                    }
+                    $.post("{weikucms::U('Wap/Aibang/sign',array('token'=>$token,'openid'=>$openid))}",{shm:shm,zone:zone,channel:channel,address:address,desc:desc,tel:tel,pic:pic,lng:lng,lat:lat},function(data){
+                                if (data.status == 1) {
+                                    confirm(data.info);
+									setTimeout(function(){
+										window.location.href = data.url
+									},1000)
+                                }
+                                if (data.status == 0) {
+                                    confirm(data.info);
+                                }
+                    },'json');
+               })
+            })
+         </script>
+		
+    </body>
+</html>

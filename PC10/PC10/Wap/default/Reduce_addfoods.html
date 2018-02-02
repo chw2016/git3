@@ -1,0 +1,468 @@
+<html>
+	<head>
+		<title><if condition="$know eq 'yun'">运动<else/><if condition="$types eq 5">运动<else/>食物</if></if></title>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/1.css" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Reduce/css/11.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Reduce/js/adjust.js"></script>
+		<script type="text/javascript">
+			var alerts = "{weikucms::STATICS}/wapweiui/Reduce/";
+		</script>
+	</head>
+	<body>
+		<!-- 创建遮罩 -->
+		<if condition="$types eq 1">
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请添加
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 头部  -->
+		<!-- <div id="header">
+			<span style="padding-right:0;">修改食物</span>
+		</div> -->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$getResult.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames">{weikucms:$getResult.food_name}</span><br /><span>{weikucms:$getResult.calorie}千卡/{weikucms:$getResult.weight}克</span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left">添加</div>
+				<div class="add_right">
+					<span id="addweight1">{weikucms:$values}</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot1">添加</div>
+		<elseif condition="$types eq 2"/>
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请择添
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 头部  
+		<div id="header">
+			<span style="padding-right:0;">修改食物</span>
+		</div>
+		-->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$getResults.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames">{weikucms:$getResults.food_name}</span><br /><span>{weikucms:$getResults.calorie}千卡/{weikucms:$getResults.weight}克</span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left">添加</div>
+				<div class="add_right">
+					<span id="addweight2">{weikucms:$valuess}</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot2">添加</div>
+		<elseif condition="$types eq 3" />
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请添加
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 头部  
+		<div id="header">
+			<span style="padding-right:0;">修改食物</span>
+		</div>
+		-->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$getResultss.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames">{weikucms:$getResultss.food_name}</span><br /><span>{weikucms:$getResultss.calorie}千卡/{weikucms:$getResultss.weight}克</span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left">添加</div>
+				<div class="add_right">
+					<span id="addweight3">{weikucms:$valuesss}</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot3">添加</div>
+		<elseif condition="$types eq 4"/>
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请添加
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 头部  
+		<div id="header">
+			<span style="padding-right:0;">修改食物</span>
+		</div>
+		-->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$getResultsss.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames">{weikucms:$getResultsss.food_name}</span><br /><span>{weikucms:$getResultsss.calorie}千卡/{weikucms:$getResultsss.weight}克</span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left">添加</div>
+				<div class="add_right">
+					<span id="addweight4">{weikucms:$valuessss}</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot4">添加</div>
+
+
+
+
+
+
+
+
+<!-- 修改运动 -->
+		<elseif condition="$types eq 5" />
+			
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请择添
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="yunsure">确定</div>
+			<div class="yuncancel">取消</div>
+		</div>
+		<!-- 头部 
+		<div id="header">
+			<span style="padding-right:0;">修改运动</span>
+		</div>
+		 -->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$getResultsss.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames">{weikucms:$getResultsss.sport_name}</span><br /><span>{weikucms:$getResultsss.calorie}千卡/60分钟</span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left">分钟</div>
+				<div class="add_right">
+					<span id="addweight5">{weikucms:$vsport}min</span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot5">添加</div>
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- 新增 -->
+		<else />
+			<div id="Mask"></div>
+		<!-- 体重 -->
+		<div id="yweight">
+			<div class="choice">
+				请添加
+			</div>
+			<div class="downlist">
+				<div class="Eject">
+					<span>属性</span>
+					<select id="weight">
+						
+					</select>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+			</div>
+			<!-- 确定以及取消按钮 -->
+			<div class="wsure">确定</div>
+			<div class="wcancel">取消</div>
+		</div>
+		<!-- 头部  
+		<div id="header">
+			<span style="padding-right:0;">添加食物</span>
+		</div>
+		-->
+		<!-- 食物内容名称 -->
+		<div class="foodname">
+			<div class="foodimg">
+				<img src="{weikucms:$result.img_path}" width="100px" height="75px"/>
+			</div>
+			<p><span class="foodnames"><if condition="$know eq 'yun'">{weikucms:$result.sport_name}<else/>{weikucms:$result.food_name}</if></span><br /><span>{weikucms:$result.calorie}千卡/<if condition="$know eq 'yun'">60分钟<else/>{weikucms:$result.weight}克</if></span></p>
+			<!-- 清除浮动 -->
+			<div class="clear"></div>
+		</div>
+		<!-- 重量选择 -->
+		<div class="heft">
+			<div class="add">
+				<div class="add_left"><if condition="$know eq 'yun'">添加时间<else/>添加重量</if></div>
+				<div class="add_right">
+					<span id="addweight"><if condition="$know eq 'yun'">100min<else/>100g</if></span>
+					<img src="{weikucms::STATICS}/wapweiui/Reduce/imgs/downArrow.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div class="bot" id="bot">添加</div>
+		</if>
+		
+		<script type="text/javascript">
+			$(function(){
+				// 体重
+				var yweight = document.getElementById('weight');
+				var yweightO;
+				// 添加体重
+				for (var i = 0; i <= 800; i+=5) {
+					yweightO = document.createElement('option');
+					yweightO.setAttribute('value',Number("5")+Number(i));
+					yweightO.innerHTML = Number("5")+Number(i);
+					if (yweightO.innerHTML == Number(110)) {
+						yweightO.setAttribute('selected','selected');
+					};
+					yweight.appendChild(yweightO);
+				}
+				// 体重
+				$('.add_right').click(function(){
+					$('#Mask').css({"width":$(window).width()+"px","height":$(window).height()+"px"}).show();
+					$('#yweight').css({'left':($(window).width()-300)/2+'px','top':($(window).height()-$('#yweight').height())/2+'px'}).show();
+				})
+				// 点击体重那里的确定
+				
+				$('.wsure').click(function(){
+					$('#Mask').hide();
+					$('#yweight').hide();
+					$('.add_right').children('span').html($('#weight').val());
+				})
+
+				$('.yunsure').click(function(){
+					$('#Mask').hide();
+					$('#yweight').hide();
+					$('.add_right').children('span').html($('#weight').val() + "min");
+				})
+				// 点击体重那里的取消
+				$('.wcancel').click(function(){
+					$('#Mask').hide();
+					$('#yweight').hide();
+				})
+				$('.yuncancel').click(function(){
+					$('#Mask').hide();
+					$('#yweight').hide();
+				})
+				// 点击添加按钮
+				$('#bot').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{weight:weight,calorie:"{weikucms:$result.calorie}",diff:"{weikucms:$know}",foodnames:foodnames,date:"{weikucms:$date}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+				// 修改早餐
+				$('#bot1').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:1,name:"{weikucms:$getResult.food_name}",weight:$('#addweight1').text(),zid:"{weikucms:$zid}",time:"{weikucms:$time}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+				// 修改午餐
+				$('#bot2').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:2,name:"{weikucms:$getResults.food_name}",weight:$('#addweight2').text(),wid:"{weikucms:$wid}",time:"{weikucms:$time}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+				// 修改加餐
+				$('#bot3').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:3,name:"{weikucms:$getResultss.food_name}",weight:$('#addweight3').text(),jid:"{weikucms:$jid}",time:"{weikucms:$time}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+				// 修改晚餐
+				$('#bot4').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:4,name:"{weikucms:$getResultsss.food_name}",weight:$('#addweight4').text(),did:"{weikucms:$did}",time:"{weikucms:$time}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+				// 修改运动
+				$('#bot5').click(function(){
+					var weight = $('#addweight').text();
+					var foodnames = $('.foodnames').text();
+					var url = "{weikucms::U('Wap/Reduce/addappect',array('token'=>$token,'openid'=>$openid))}";
+					$.post(url,{type:5,name:"{weikucms:$getResultsss.sport_name}",weight:$('#addweight5').text(),yid:"{weikucms:$yid}",diff:"{weikucms:$know}",time:"{weikucms:$time}"},function(data){
+							 if(data.status == 1){
+	                                //show_error_tip(data.info);
+	                                setTimeout(function(){
+	                                    window.location.href = data.url;
+	                                },'1000');
+	                          }else{
+	                               show_error_tip(data.info);
+	                          }
+					},'json');
+				});
+			})
+		</script>
+	</body>
+</html>

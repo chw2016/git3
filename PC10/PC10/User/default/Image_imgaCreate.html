@@ -1,0 +1,120 @@
+<include file="Public:public"/>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;margin-top: 20px;padding-top: 15px;">
+    <div style="width: 90%;margin: 0 auto;">
+        <div class="cLineB">
+            <h4 style="position:relative;">
+                图片管理
+            </h4>
+        </div>
+        <div class="msgWrap">
+            <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">
+                <table class="userinfoArea"  border="0" cellSpacing="0" cellPadding="0" width="100%">
+                    <input type="hidden" class="px" id="id" value="{weikucms:$data['id']}" name="id" />
+                    <input type="hidden" class="px" id="token" value="{weikucms:$_GET['token']}" name="token">
+                    <input type="hidden" class="px" id="app" value="{weikucms:$_GET['app']}" name="app">
+                    <input type="hidden" class="px" id="type" value="{weikucms:$_GET['type']}" name="type">
+                    <input type="hidden" class="px" id="sUrl" value="{weikucms::base64_decode($_GET['surl'])}" name="sUrl">
+                    <tr>
+                        <th valign="top"><label for="pic">图片</label></th>
+                        <td>
+                            <img <if condition="$data['pic'] neq '' ">style="display: block;"<else/>style="display: none;"</if> id="image_show" class="indexs_img" src="{weikucms:$data['pic']}">
+                            <input type="hidden" class="text textMiddle inputQ"  name="pic" id="pic" value="{weikucms:$data['pic']}" style="width:300px;"   />
+                            <span class="ke-button-common" id="upload" style="margin-left: 5px;margin-top: 10px;">上传图片</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="url">图片外链</label></th>
+                        <td>
+                            <input type="input" class="px" id="url" value="{weikucms:$data['url']}" name="url" style="width:300px" placeholder="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th valign="top"><label for="info">图片备注</label></th>
+                        <td>
+                            <input type="input" class="px" id="info" value="{weikucms:$data['info']}" name="info" style="width:300px" placeholder="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <button type="button" id="bsubmit" name="button" class="btn btn-primary">保存
+                        </td>
+                    </tr>
+                    </table>
+                </form>
+            </div>
+        <div class="cLine">
+            <div class="clr"></div>
+        </div>
+    </div>
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var pic = $("#pic").val();
+            var urls = $("#url").val();
+            var info = $("#info").val();
+            var id = $("#id").val();
+            var token = $("#token").val();
+            var app = $("#app").val();
+            var type = $("#type").val();
+            var surl = $("#sUrl").val();
+            if(pic ==''){
+                notif({
+                    msg: "请上传图片",
+                    type: "warning"
+                });
+                return false;
+            }
+            var url = "{weikucms::U('Image/imgaCreate',array('token'=>$token))}";
+            $.post(url,{
+                        pic:pic,
+                        url:urls,
+                        info:info,
+                        id:id,
+                        token:token,
+                        app:app,
+                        type:type
+                    },
+                    function(data){
+                        if(data.status==1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            location.href= surl;
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "warning"
+                            });
+                        }
+                    },"json")
+        })
+    })
+</script>

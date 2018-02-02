@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/Intel/css/paipai.css">
+    <script src="{weikucms::STATICS}/wapweiui/Intel/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/f.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Intel/js/paipai.js"></script>
+    <script type="text/javascript" src="{weikucms::STATICS}/common/msg.js"></script>
+</head>
+<body class="bodys">
+<include file="./tpl/Wap/default/Intel_select.html" />
+</body>
+<script type="text/javascript">
+    $(function(){
+       $('.save').on('click',function(){
+           var phone = $("input[name='phone']").val();
+           var models = $("input.car_models").val();
+           var imei = $("input[name='imei']").val();
+           if(!phone){
+               msg.alert('请输入手机号码')
+               return false;
+           }else if(isNaN(phone)){
+               msg.alert('请输入正确的手机号码')
+               return false;
+           }else if (!isPhone(phone)){
+               msg.alert('请输入正确的手机号码')
+               return false;
+           }
+           //if(!models){msg.alert('请输入汽车型号'); return false;}
+           var url = "{weikucms::U('Wap/Intel/bind',array('token'=>$token,'openid'=>$openid))}";
+           var data = {
+               token:"{weikucms:$token}",
+               openid:"{weikucms:$openid}",
+               phone:phone,
+               models:models,
+               imei:imei
+           };
+           $.post(url,data,function(json){
+               if(json.code == 0){
+                    window.location.href = "{weikucms::U('Intel/setcenter', array('token' => $token, 'openid' => $openid))}";
+               }else{
+                   msg.alert(json.msg);
+                   return false;
+               }
+           }, 'json')
+       })
+
+
+        // 删除绑定设备
+        $('.deleteDevice').click(function(){
+           var url = "{weikucms::U('Wap/Intel/delBindDevice',array('token'=>$token,'openid'=>$openid))}";
+           var data = {
+               'imei' : $(this).parents('.bindno').find('.imeiSpan').text()
+           }
+           var $this = $(this)
+           $.post(url,data,function(json){
+               if(json.code == 0){
+                   $this.parent('.bindno').fadeOut();
+               }else{
+                   msg.alert('系统繁忙，请稍后再试')
+                   return false;
+               }
+           }, 'json');
+        });
+    })
+
+    $(function(){
+        $.each($('.ui-input-text.ui-shadow-inset.ui-corner-all.ui-btn-shadow.ui-body-c'), function(){
+            $(this).replaceWith($(this).html());
+        });
+        $('.ui-link').removeClass('ui-link')
+    })
+</script>
+<include file="./tpl/Wap/default/Intel_fx.html" />
+</html>

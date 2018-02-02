@@ -1,0 +1,85 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+<div class="" >
+    <div class="cLineB">
+        <div class="cLine">
+            <div class="title_tab" id="topTab">
+                <ul class="tab_navs title_tab" data-index="0">
+                    <li data-index="0" class="tab_nav first js_top " data-id="total">
+                        添加/修改系统公告
+                    </li>
+
+                    <li data-index="1" class="tab_nav  js_top sub yulan" data-id="today">
+                        <a href="{weikucms::U('Store_new/systeminfo',array('token'=>$token))}" class="nohover">返回</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--复制开始-->
+
+    <div class="cLineB" id="uppict" style="display:none"></div>
+    <!--复制结束-->
+    <form method="post"   action=""  enctype="multipart/form-data" >
+        <div class="msgWrap form">
+            <TABLE class="userinfoArea" border="0" cellSpacing="0" cellPadding="0" width="100%">
+                <TBODY>
+                <TR>
+                    <TH valign="top"><label for="contents">系统公告内容：</label></TH>
+                    <TD>
+                        <textarea class="input-large" name="content" id="contents" rows="10"  style="width: 400px;height: 500px;">{weikucms:$info['content']}</textarea>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <TH></TH>
+                    <TD><button type="button" id="bsubmit" name="sbmt" class="btn btn-primary">保存</button></TD>
+                </TR>
+                <TR style="height: 150px;">
+                </TR>
+                </TBODY>
+            </TABLE>
+        </div>
+    </form>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var content = $("#contents").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(!content){
+                notif({
+                    msg: "您编辑什么内容哦！",
+                    type: "warning"
+                });
+                return false;
+            }
+            $.post("{weikucms::U('Store_new/insetsystem',array('token'=>$token))}",
+                    {content:content,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });}
+                    },'json');
+        });
+    });
+</script>
+<include file="Public:footer"/>

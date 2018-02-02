@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>
+        {weikucms:$res.name}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/css/client-content.css" />
+    <style>
+        body{ -webkit-touch-callout: none; -webkit-text-size-adjust: none; }
+    </style>
+    <style>
+        #nickname{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90%;}
+        ol,ul{list-style-position:inside;} #activity-detail .page-content .text{font-size:16px;}
+    </style>
+</head>
+
+<body id="activity-detail">
+<include file="Public:audio"/>
+<eq name="res.showpic" value="1">
+    <img width="12px" style="position: absolute;top:-1000px;" src="{weikucms:$res.pic}">
+</eq>
+<div class="page-bizinfo">
+    <div class="header">
+        <h1 id="activity-name" style="margin-left:0;width:100%;display:block;padding-top:28px;">{weikucms:$res.title}
+        </h1>
+        <p class="activity-info">
+                    <span id="post-date" class="activity-meta no-extra">
+                        <php> echo date('Y-m-d',$res['createtime']);</php>
+                    </span>
+                    <span class="activity-meta">
+                        {weikucms:$tpl.name}
+                    </span>
+
+        </p>
+    </div>
+</div>
+<div id="page-content" class="page-content" lang="en" style="margin:4px auto;">
+    <div id="img-content">
+        <div class="media" id="media">
+            <eq name="res.showpic" value="1">
+                <img onerror="this.parentNode.removeChild(this)" src="{weikucms:$res.pic}" />
+            </eq>
+        </div>
+        <div class="text">
+            {weikucms:$res.info|htmlspecialchars_decode}
+        </div>
+
+
+
+    </div>
+
+    <style type="text/css">
+        .wx_footer {
+            margin: 45px 0 60px 0;
+        }
+        .wx_footer .wapwei_logo {
+            height: 15px;
+            width: 86px;
+            margin: 15px auto 0 auto;
+            background: url("http://mall.wapwei.com/resource/logo_min.png");
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+
+    <div class="wx_footer">
+        <div class="wapwei_logo"></div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

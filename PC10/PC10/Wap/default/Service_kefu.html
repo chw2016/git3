@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/service/css/default.css" type="text/css">
+<script type="text/javascript" async="" src="{weikucms::STATICS}/wapweiui/service/js/ga.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/jquery-1.8.2.min.js"></script>
+<script src="{weikucms::STATICS}/wapweiui/service/js/common.js"></script>
+
+<meta charset="UTF-8">
+<title>万普微盟</title>
+<meta name="Keywords" content="万普微盟">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+<script type="text/javascript">
+var img_site_url = '{weikucms::STATICS}/wapweiui/service/css/';
+var js_site_url  = '{weikucms::STATICS}/wapweiui/service/js/';
+var imgSiteUrl   = '{weikucms::STATICS}/wapweiui/service/images/';
+var UID = {weikucms:$cid};
+UID = parseInt(UID);
+var browser={
+    versions:function(){
+           var u = navigator.userAgent, app = navigator.appVersion;
+           return {
+                trident: u.indexOf('Trident') > -1,
+                presto: u.indexOf('Presto') > -1,
+                webKit: u.indexOf('AppleWebKit') > -1,
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                iPad: u.indexOf('iPad') > -1,
+                webApp: u.indexOf('Safari') == -1
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+</script> 
+</head>
+<body>
+<div class="pageTitle"><i></i><span class="arrow-r"></span>选择我的服务顾问</div>
+	<div class="customerServiceList">
+		<ul>
+			<volist name="serviceInfo" id="value">
+				<li id="list_{weikucms:$value.id}">
+					<ol>
+						<a href="javascript:void(0);" onclick="select_advisor(&#39;{weikucms:$value.id}&#39;,this)">
+							<i class="status"><img src="{weikucms::STATICS}/wapweiui/service/images/people_tick.png"></i>
+						<div class="avatar"><img src="{weikucms:$value.staff_logo}"></div>
+						<p>{weikucms:$value.name}</p>
+						</a>
+					</ol>
+				</li>
+			</volist>
+			<li id="list_16752">
+				<ol>
+					<a href="javascript:void(0);" onclick="select_advisor(&#39;16752&#39;,this)">
+						<i class="status"><img src="{weikucms::STATICS}/wapweiui/service/images/people_tick.png"></i>
+						<div class="avatar"><img src="{weikucms::STATICS}/wapweiui/service/images/1395972375.jpg"></div>
+						<p>熊宝</p>
+					</a>
+				</ol>
+			</li>
+		</ul>
+	</div>
+<div id="back">
+	<a href="javascript:window.history.back(-1);">
+		<img src="{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png">
+	</a>
+</div>
+<script type="text/javascript">
+$(function(){
+	if( browser.versions.iPhone )
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_ios.png');
+	}
+	else
+	{
+		$('#back a').attr('href',"javascript:window.history.back(-1);");
+		$('#back a img').attr('src','{weikucms::STATICS}/wapweiui/service/images/foot_back_android.png');
+	}
+});
+</script>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	//WeixinJSBridge.call('hideOptionMenu');
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript">
+var _maq = _maq || [];
+	_maq.push(['_setAccount', 1]);
+	_maq.push(['_areaid', 49]);
+	_maq.push(['_typeid', 2]);
+	_maq.push(['_uid', 100047]);
+	_maq.push(['_regtime', 1407047043]);
+(function() {
+	var ga = document.createElement('script');
+	ga.type = 'text/javascript';
+	ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://log') + '.autoeo.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+</script>
+
+<script type="text/javascript">
+$(function(){
+	
+});
+var params = {'uid':UID};
+	var load=0;
+	var select_advisor = function(id,dom){
+		
+		if(load) return false;
+		$(dom).parents('li').addClass('select');
+		currentName = $(dom).find('p').html();
+		if(confirm('您确定要选择"'+currentName+'"为您的服务顾问吗？') ){
+			var id = parseInt(id);
+			if (!id)
+			{
+				show_error_tip('选择失败，请重试');
+				return false;
+			}
+			
+			params.aid = id;
+			
+			load = 1;
+			var url = 'ajax.php?mod=user&code=choosea';
+			$.post(url, params, function(d){
+				if(d.ret == 100){
+					content = '服务顾问选择成功，返回微信可直接与TA对话';
+					options = {'sureFun':'go_back_weixin', 'cancelFun':'sure_box','cancelTitle':'留在这里','sureTitle':'返回微信'};
+					showAlert2('提示',content, options);
+				}
+				else{
+					show_error_tip('选择失败，请重试');
+					load = 0;
+				}
+			}, 'json');
+		}
+		else{
+			$(dom).parents('li').removeClass('select');
+		}
+	}
+	var sure_box=function(){
+		window.location.href=window.location.href;
+	};
+	
+	var go_back_weixin = function()
+	{
+		WeixinJSBridge.call('closeWindow');
+		return false;
+	}
+</script>
+</body>
+</html>

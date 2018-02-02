@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+           <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/default.css">
+           <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/TouchSlide.1.1.source.js"></script>
+           <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+           <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/Smaty.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/msg.js"></script>
+           <script type="text/javascript">
+           $(function(){
+                $(".jia").touch(function(){
+                    var n=$(".count_input").html();
+                    var num=parseInt(n)+1;
+                    $(".count_input").html(num);
+                });
+                $(".jian").touch(function(){
+                    var n=$(".count_input").html();
+                    var num=parseInt(n)-1;
+                    if(num==0){alert("不能为0!"); return}
+                    $(".count_input").html(num);
+            })
+                $(".details-tab-ul-li").touch(function(){
+                    $(this).addClass('active').siblings().removeClass('active');
+                    var index=$(this).index();
+                    $(".details-tab-ul-down>li").eq(index).show().siblings().hide();
+                })
+            var is_use = "{weikucms:$info['status']}";
+           $('.buyshop').click(function(){
+               if(is_use==1 || is_use==2){
+                   var num = $('.count_input').html();
+                    window.location.href = "{weikucms::U('Ynd/buy_shop',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id'],'type'=>1))}"+"&num="+num;
+
+               }else{
+                   msg.alert('你现在还没有权限购买！');
+               }
+
+           })
+           $('.fangdan').click(function(){
+               if(is_use==1 || is_use==2){
+                   var num = $('.count_input').html();
+                   window.location.href = "{weikucms::U('Ynd/buy_shop',array('token'=>$token,'openid'=>$openid,'pro_id'=>$_GET['pro_id'],'type'=>2))}"+"&num="+num;
+               }else{
+                   msg.alert('你现在还没有权限放单！');
+               }
+           })
+           $('.shoping').click(function(){
+               if(is_use==1 || is_use==2){
+                   var num = $('.count_input').html();
+                   var pro_id = {weikucms:$_GET['pro_id']};
+                   var url = "{weikucms::U('Ynd/inshoping',array('token'=>$token,'openid'=>$openid))}";
+                   $.post(url,{num:num,pro_id:pro_id},function(rel){
+                       if(rel.status == 1){
+                            msg.alert(rel.info,function(){
+                                window.location.href = "{weikucms::U('Ynd/index',array('token'=>$token,'openid'=>$openid,'cat_id'=>$_GET['cat_id'],'pro_id'=>$_GET['pro_id']))}";
+                            })
+                       }else{
+                           msg.alert(rel.info);
+                       }
+                   },'json')
+               }else{
+                   msg.alert('你现在还没有权限放单！');
+               }
+           })
+
+
+        })
+           </script>
+    </head>
+    <style type="text/css">
+            body{
+                  font: normal 16px/200% "微软雅黑", helvetica, arial;
+            }
+            .text-spacing{
+                padding:10px;
+            }
+    </style>
+    <body>
+    	<div class="top-details">
+    		<div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+    		<div class="details-center">
+    				宝贝详情
+    		</div>
+    	</div>
+<div class="content">
+        <div id="slideBox" class="slideBox line-bottom">
+                <div class="bd">
+                    <div class="tempWrap carousel">
+                    <ul  class="carousel-ul">
+                            <li class="carousel-ul-li">
+                                <a class="pic" href="#"><img src="{weikucms:$product['img1']}"></a>
+                            </li>
+                            <li class="carousel-ul-li">
+                                <a class="pic" href="#"><img src="{weikucms:$product['img2']}"></a>
+                            </li>
+                            <li class="carousel-ul-li">
+                                <a class="pic" href="#"><img src="{weikucms:$product['img3']}"></a>
+                            </li>
+                            <li class="carousel-ul-li">
+                                <a class="pic" href="#"><img src="{weikucms:$product['img4']}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="hd">
+                    <ul><li class="">1</li><li class="">2</li><li class="">3</li><li class="on">4</li></ul>
+                </div>
+            </div>
+            <div class="details-content">
+                    <p>商品名称：{weikucms:$product['name']}</p>
+                    <p>商品产地：{weikucms:$product['p_area']}</p>
+
+                    <p>
+                        参考零售价：
+                        <span class="cost">￥{weikucms:$product['price']}</span>
+                        <span class="model">（LQ{weikucms:$product['LQ']}+CQ{weikucms:$product['CQ']}）</span>
+                    </p>
+                    <p>规格（粒/袋/ml/g）：{weikucms:$product['norms']}</p>
+                    <p>
+                        数量：
+                        <span class="jian" id="jian">－</span>
+                        <span class="count_input">1</span>
+                        <span class="jia"  id="add">＋</span>
+                    </p>
+            </div>
+            <div class="details-tab">
+                        <ul class="details-tab-ul">
+                                <li class="details-tab-ul-li ">用户评论</li>
+                                <li class="details-tab-ul-li active">商品详情</li>
+                        </ul>
+            </div>
+            <div class="details-down">
+                <ul class="details-tab-ul-down">
+                        <li class="hide">
+                            <div class="tab-comment">
+                                <volist name="evaluate" id="el">
+                                    <div class="tab-main">
+                                        <div class="tab-main-left">
+                                            <if condition="$el['userinfo']['headimgurl']">
+                                                <img src="{weikucms:$el['userinfo']['headimgurl']}" alt="">
+                                                <else/>
+                                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/4.png" alt="">
+                                            </if>
+
+                                        </div>
+                                        <div class="tab-main-right">
+                                            <div class="tab-main-right-title">
+                                                <if condition="$el['userinfo']['nickname']">
+                                                    {weikucms:$el['userinfo']['nickname']}
+                                                    <else/>
+                                                    只是路过..
+                                                </if>
+                                            </div>
+                                            <div class="tab-main-right-size">
+                                                <div>{weikucms:$el.content}</div>
+												<div style="font-size: 12px;display: inline-block;float: right;">{weikucms:$el.add_time}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </volist>
+
+                                <!--<div class="tab-main">
+                                        <div class="tab-main-left">
+                                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/4.png" alt="">
+                                        </div>
+                                        <div class="tab-main-right">
+                                                <div class="tab-main-right-title">
+                                                        只是路过..
+                                                </div>
+                                                <div class="tab-main-right-size">
+                                                        忙了，都忘记了，不好意思&nbsp;不想说太多~~有生之年能碰到老板这个店,够幸福的。。
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="tab-main">
+                                        <div class="tab-main-left">
+                                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/4.png" alt="">
+                                        </div>
+                                        <div class="tab-main-right">
+                                                <div class="tab-main-right-title">
+                                                        只是路过..
+                                                </div>
+                                                <div class="tab-main-right-size">
+                                                        忙了，都忘记了，不好意思&nbsp;不想说太多~~有生之年能碰到老板这个店,够幸福的。。
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="tab-main">
+                                        <div class="tab-main-left">
+                                                <img src="{weikucms::STATICS}/wapweiui/ynd/images/4.png" alt="">
+                                        </div>
+                                        <div class="tab-main-right">
+                                                <div class="tab-main-right-title">
+                                                        只是路过..
+                                                </div>
+                                                <div class="tab-main-right-size">
+                                                        忙了，都忘记了，不好意思&nbsp;不想说太多~~有生之年能碰到老板这个店,够幸福的。。
+                                                </div>
+                                        </div>
+                                </div>-->
+                            </div>
+                        </li>
+                        <li >
+                                <div class="tab-main-product line-bottom">
+                                        <div>
+                                            {weikucms:$product['abstract']}
+                                        </div>
+                                </div>
+                              
+                                    <div class="text-spacing">{weikucms:$product['content']}</div>
+                              
+                                <!--<div class="line-height-initial">
+                                    <img src="{weikucms::STATICS}/wapweiui/ynd/images/img2.png" />
+                                </div>-->
+                        </li>
+                </ul>
+            </div>
+    </div>
+    <div class="loadingLogoWrap" style="width: 30px; height: 30px; position: fixed; top: 48%; left: 48%;"></div>
+            <!--脚部模块-->
+        <footer>
+            <ul class="footertab footer-tab-height">
+                <li class="footselect">
+                    <a class="shoping">
+                        <p class="icon-uniE624 colorf57789"></p>
+                    </a>
+                </li>
+                <if condition="$info['type'] eq 1">
+                    <li class="footer-tab">
+                        <a class="fangdan">
+                            <p class="tab-title colorfff">我要放单</p>
+                        </a>
+                    </li>
+                </if>
+                <li class="footer-tab1">
+                    <a  class="buyshop">
+                        <p class="tab-title colorfff">立即购买</p>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+<script type="text/javascript">
+    TouchSlide({
+        slideCell:"#slideBox",
+        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+        mainCell:".bd ul",
+        effect:"leftLoop",
+        autoPage:true,//自动分页
+        autoPlay:true //自动播放
+    });
+</script>
+    </body>
+</html>

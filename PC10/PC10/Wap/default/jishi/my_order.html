@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>{weikucms:$tpl.name}</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/samphay.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/jishi/css/style.css">
+		<script src="{weikucms::STATICS}/wapweiui/jishi/js/jquery-1.11.1.min.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/main.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/core.js"></script>
+        <script src="{weikucms::STATICS}/wapweiui/jishi/js/iscroll.js"></script>
+    </head>
+    <body>
+    	<div class="header lishengGoldBg textMiddle lisheng-text-color h4">
+	    	我的订单
+	    </div>
+        <if condition="count($order) gt 0">
+	    <div class="lisheng-text-color h2 hasBookedBox boxShadow white-bg top20">
+	    	<div class="myul">
+	    		<div class="circle bb">
+	    			<div class="circle ss"></div>
+	    		</div>
+	    		已预约的订单
+	    	</div>
+	    	<!-- 收藏循环体开始 -->
+            <foreach name="order" item="item">
+	    	<div class="colectLicaishiBox top20 white-bg lisheng-text-color h4 myul ">
+	    		<div class="colectTimeBox">
+	    			预约时间
+	    			<div class="colectDate bold">
+                    <php>echo date('m-d', strtotime($item['time']));</php>
+	    			</div>
+	    			<div class="colectTime">
+                    <php>echo date('H:i', strtotime($item['time']));</php>
+	    			</div>
+	    		</div>
+				<div class="produceLicaishiLogowrap ">
+					<div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$item['finances_planner_image']})"></div>
+				</div>
+				<div class="produceLicaishiInfoBox bookingOrderCenter">
+					<div class="pLicaishiName">{weikucms:$item['finances_planner_name']}</div>
+					<div class="licaishiIFColect on icon icon-IFcolect setRight" data-id="{weikucms:$item['id']}">
+						取消预约
+					</div>
+				</div>
+			</div>
+            </foreach>
+			<!-- 结束 -->
+	    </div>
+        </if>
+
+        <if condition="count($cancel) gt 0">
+	     <div class="lisheng-text-color h2 hasBookedBox boxShadow white-bg top20">
+	    	<div class="myul">
+	    		<div class="circle bb">
+	    			<div class="circle ss"></div>
+	    		</div>
+	    		已取消的订单
+	    	</div>
+	    	<!-- 收藏循环体开始 -->
+            <foreach name="cancel" item="item">
+	    	<div class="colectLicaishiBox top20 white-bg lisheng-text-color h4 myul ">
+	    		<div class="colectTimeBox">
+	    			预约时间
+	    			<div class="colectDate bold">
+                    <php>echo date('m-d', strtotime($item['time']));</php>
+	    			</div>
+	    			<div class="colectTime">
+                    <php>echo date('H-i', strtotime($item['time']));</php>
+	    			</div>
+	    		</div>
+				<div class="produceLicaishiLogowrap ">
+					<div class="produceLicaishiLogo circle fixBg" style="background-image:url({weikucms:$item.finances_planner_image})"></div>
+				</div>
+				<div class="produceLicaishiInfoBox bookingOrderCenter">
+					<div class="pLicaishiName">{weikucms:$item.finances_planner_name}</div>
+					<div class="licaishiIFColect icon icon-IFcolect setRight bookAgain" data-id="{weikucms:$item['id']}">
+						再次预约
+					</div>
+				</div>
+			</div>
+            </foreach>
+			<!-- 结束 -->
+	    </div>
+        </if>
+
+
+    </body>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".licaishiDengJiWrap").each(function(i,o){
+	     		var d = Number($(this).data('zhuanshi')) > 5 ? 5 : Number($(this).data('zhuanshi'))  ,
+	     			di = 0,
+	     			zhuanshi = '<div class="zhuanshi fixBg"></div>';
+	     		for(di; di < d ; di++){
+	     			$(this).append(zhuanshi);
+	     		}
+	     	})
+	     	$(".licaishiIFColect").click(function(){
+                var _this   = $(this);
+                var bCancel = _this.hasClass('on');
+                var id      = _this.attr('data-id');
+	     		if(bCancel){
+                    //取消预约
+                    $.ajax({
+                        url: "{weikucms::U('Jishi/order_yuyue',array('token'=>$token,'openid'=>$openid))}",
+                        type:"POST",
+                        data:{"status":0, "id" : id},
+                        dataType:"json",
+                        success: function(res){
+                            if(res.status == 0){
+                                _this.removeClass('on').text("再次预约");
+                                $("<div class='noWrap' style='color: rgb(118,121,117);position: relative;top: -46px;right: 20px;opacity:1;'>取消成功！</div>").appendTo(_this).animate({
+                                    "top":"-60px",
+                                    "opacity":"0"}, 300);
+                            }else{
+                                alert(res.info);
+                            }
+							window.location.reload();
+                        }
+                    });
+	     		}else{
+                    $.ajax({
+                        url: "{weikucms::U('Jishi/order_yuyue',array('token'=>$token,'openid'=>$openid))}",
+                        type:"POST",
+                        data:{"status":1, "id" : id},
+                        dataType:"json",
+                        success: function(res){
+                            if(res.status == 0){
+                                _this.addClass('on').text("取消预约");
+                                $("<div class='noWrap' style='color: rgb(255,0,0);position: relative;top: -46px;right: 20px;opacity:1;'>收藏成功！</div>").appendTo(_this).animate({
+                                    "top":"-60px",
+                                    "opacity":"0"}, 300);
+                            }else{
+                                alert(res.info);
+                            }
+							window.location.reload();
+                        }
+                    });
+	     		}
+
+	     	});
+    	})
+    </script>
+</html>

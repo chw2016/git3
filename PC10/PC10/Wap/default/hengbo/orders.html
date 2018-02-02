@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="银波米业">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+		<title>报修信息</title>
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/style.css">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/hengbo/css/baoxiu.css">
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/core.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/iscroll.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/msg.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/jquery.validate_helper.js"></script>
+		<script src="{weikucms::STATICS}/wapweiui/hengbo/js/baoxiu.js"></script>
+        <script type="text/javascript">
+            var url = "{weikucms::U('Hengbo/orders',array('token'=>$token,'openid'=>$openid,'aid'=>$_GET['aid']))}";
+        </script>
+    </head>
+    <body>
+		<div class="h-title">报修信息</div>
+		<form id="form">
+		<div class="form bx-message">
+			<div class="inputBox">
+				<div class="icon icon-bx-floor"></div>
+				<div class="input uname">
+					<input type="text" name="floor" placeholder="请输入楼栋，如：8栋">
+				</div>
+			</div>
+			<div class="inputBox ">
+				<div class="icon icon-bx-union"></div>
+				<div class="input">
+					<input type="text" name="union" placeholder="请输入单元，如：A单元">
+				</div>
+			</div>
+
+			<div class="inputBox ">
+				<div class="icon icon-bx-home"></div>
+				<div class="input">
+					<input type="text" name="home" placeholder="请输入房间号，如：606室">
+				</div>
+			</div>
+
+			<div class="inputBox">
+				<div class="icon icon-bx-detail"></div>
+				<div class="input">
+					<textarea type="text" class="icon-bx-detail-input" name="detail" placeholder="请输入要维修信息"></textarea>
+				</div>
+			</div>
+            <input type="hidden" name="aid" value="{weikucms:$_GET['aid']}"/>
+		</div>
+		<div class="zhanwei"></div>
+		</form>
+		<div class="inputBox submit fixBottom" submit='1'>
+			提交
+		</div>
+    </body>
+</html>

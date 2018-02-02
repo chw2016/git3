@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="samphay@163.com">
+<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+<title>{weikucms:$tpl.name}</title>
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/style.css" />
+<link rel="stylesheet" type="text/css" href="tpl/Wap/default/common/health/css/font/style.css" />
+<script src="tpl/Wap/default/common/health/js/jquery-1.11.1.min.js"></script>
+<script src="tpl/Wap/default/common/health/js/core.js"></script>
+    <script src="{weikucms::RES}/ieat/js/api"></script>
+
+<script src="tpl/Wap/default/common/health/js/jquery.easing.1.3.js"></script>
+    <style>
+        .ShopMap img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="top">
+	<div class="circleBorder"><div class="homeBtn"><span class="icon-home" onclick="window.location.href='{weikucms::U('Health/index',array('token'=>$token,'openid'=>$openid))}'"></span></div></div>
+</div>
+<div class="Box">
+	<div class="BoxHead">分店导航</div>
+	<div class="havSliderBox">
+        <div class="left Arrow"><span class="icon-leftarrow"></span></div>
+        <div class="right Arrow"><span class="icon-rightarrow"></span></div>
+		<div class="havSliderSwrap myul">
+
+            <volist name="branch" id="b">
+
+			<div class="havSlider" onclick="window.location.href='http://api.map.baidu.com/marker?location={weikucms:$b.latitude},{weikucms:$b.longitude}&title={weikucms:$b.address}&name={weikucms:$b.address}&content={weikucms:$b.address}&output=html&src=weiba|weiweb'">
+
+                <div class="ShopName" onclick="window.location.href='http://api.map.baidu.com/marker?location={weikucms:$b.latitude},{weikucms:$b.longitude}&title={weikucms:$b.address}&name={weikucms:$b.address}&content={weikucms:$b.address}&output=html&src=weiba|weiweb'">{weikucms:$b.name}</div>
+
+                <div class="ShopMap" id="shop_{weikucms:$b.longitude}" address="{weikucms:$b.address}" long="{weikucms:$b.longitude}" lat="{weikucms:$b.latitude}" ></div>
+
+                <div class="ShopAddress">
+                <span>电话：{weikucms:$b.tel} </span>
+                <span>地址：{weikucms:$b.address}</span>
+                <!--<span>公交站台：火星&*……*5*……7 </span>-->
+                <!--<span>公交线路：^&#^%9& </span>-->
+                </div>
+                
+            </div>
+            </volist>
+		</div>
+	</div>
+</div>
+
+</body>
+<script>
+    $(function(){
+        $(".ShopMap").each(function(i,o){
+            var long = $(o).attr("long");
+            var lat = $(o).attr("lat");
+            var address = $(o).attr("address");
+            var clas = $(o).attr("id");
+//            alert(clas);return false;
+            // 百度地图API功能
+            var map = new BMap.Map(clas);
+            var point = new BMap.Point(long,lat);
+            map.centerAndZoom(point,12);
+            // 创建地址解析器实例
+            var myGeo = new BMap.Geocoder();
+            // 将地址解析结果显示在地图上,并调整地图视野
+            myGeo.getPoint(address, function(point){
+                if (point) {
+                    map.centerAndZoom(point, 16);
+                    map.addOverlay(new BMap.Marker(point));
+                }
+            }, "深圳市");
+        });
+    });
+</script>
+<script type="text/javascript">
+	slider($(".havSliderBox"),$(".havSliderSwrap"),$(".havSlider"))
+</script>
+</html>

@@ -1,0 +1,88 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{weikucms:$info.from}给{weikucms:$info.to}的贺卡</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/tpl/static/Gcard/css/weiba.ui.css">
+    <link rel="stylesheet" type="text/css" href="/tpl/static/Gcard/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/tpl/static/Gcard/css/com.css">
+    <link rel="stylesheet" type="text/css" href="/tpl/static/Gcard/css/n{weikucms:$gid}.css">
+    <script type="text/javascript" src="/tpl/static/Gcard/js/jquery-2.0.3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/tpl/static/Gcard/js/common.js" charset="utf-8"></script>
+</head>
+<body subid="{weikucms:$gid}" class="weiba-easycallround">
+<div id="n{weikucms:$gid}" class="wrap">
+    <audio id="audio" loop autoplay="autoplay" preload="preload" src="/tpl/static/Gcard/mp3/{weikucms:$gid}.mp3"></audio>
+    <div class="word" style="display: block;">
+        <div class="to">{weikucms:$info.to}</div>
+        <div class="say">{weikucms:$info.say}</div>
+        <div class="from">{weikucms:$info.from}</div>
+    </div>
+<if condition="$lock eq '1'">
+    <div class="send"><a href="{weikucms::C('site_url')}/index.php?g=Wap&m=Index&token={weikucms:$token}"><i class="icon-export"></i>去首页看看</a></div>	
+<else/>	
+	<div class="send" onClick="send();"><i class="icon-export"></i>我要发贺卡</div>
+</if>
+<if condition="$lock eq '1'">
+    <div class="cardNum">关注  <a href="javascript:;" id="post-user"><span>{weikucms:$wecha.wxname}</span></a>  获取更多贺卡<br><a class="support" style="color:#639639;">{weikucms:$copy.copyright}&nbsp;&nbsp;技术支持：weikucms</a></div>
+<else/>	
+    <div class="cardNum">回复  <span>{weikucms:$key.keyword}</span>  获取此贺卡<br><a class="support" style="color:#639639;">{weikucms:$copy.copyright}&nbsp;&nbsp;技术支持：weikucms</a></div>
+</if>
+</div>
+<div class="arr" style="display: block; -webkit-transform: translateY(10px);"></div>
+<div class="weiba-layer-sharehelper" style="z-index: 999991" onClick="sendh();"></div>
+<div class="gift" style="display: block; -webkit-transform: rotate(30deg);"><a href="{weikucms:$url}"></a></div>
+<script type="text/javascript">
+ 	    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        window.shareData = {  
+            "imgUrl": "{weikucms:$picurl['picurl']}", 
+            "timeLineLink": "{weikucms::C('site_url')}/index.php?g=Wap&m=Gcard&a=index&token={weikucms:$token}&gid={weikucms:$gid}&pid={weikucms:$pid}&wecha_id={weikucms:$wecha_id}&share=true",
+            "sendFriendLink": "{weikucms::C('site_url')}/index.php?g=Wap&m=Gcard&a=index&token={weikucms:$token}&gid={weikucms:$gid}&pid={weikucms:$pid}&wecha_id={weikucms:$wecha_id}&share=true",
+            "weiboLink": "{weikucms::C('site_url')}/index.php?g=Wap&m=Gcard&a=index&token={weikucms:$token}&gid={weikucms:$gid}&pid={weikucms:$pid}&wecha_id={weikucms:$wecha_id}&share=true",
+            "tTitle": "{weikucms:$info.from}给{weikucms:$info.to}的贺卡",
+            "tContent": "{weikucms:$info.say}",
+            "fTitle": "{weikucms:$info.from}给{weikucms:$info.to}的贺卡",
+            "fContent": "{weikucms:$info.say}",
+            "wContent": "{weikucms:$info.say}" 
+        };
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', { 
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.fContent,
+                "title": window.shareData.fTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function (argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.wContent,
+                "url": window.shareData.weiboLink,
+            }, function (res) {
+                _report('weibo', res.err_msg);
+            });
+        });	
+        }, false)	
+    </script>
+</body>
+</html>

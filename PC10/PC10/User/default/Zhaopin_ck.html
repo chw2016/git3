@@ -1,0 +1,203 @@
+ <include file="Public:head" /> 
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script>
+
+var editor;
+KindEditor.ready(function(K) {
+editor = K.create('#intro', {
+resizeType : 1,
+allowPreviewEmoticons : false,
+allowImageUpload : true,
+items : [
+'source','undo','clearhtml','hr',
+'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+'insertunorderedlist', '|', 'emoticons', 'image','link', 'unlink','baidumap','lineheight','table','anchor','preview','print','template','code','cut']
+});
+
+});
+</script>
+
+<script>
+function showChildCats(value){
+	$("#catid").html('<option value="0">请选择...</option>');
+	if(value==0){
+		document.getElementById('catid').disabled=true;
+	}else{
+		$.ajax({
+			url: $('#catUrl').attr("value")+'&parentid='+value,
+			success: function( data ) {
+				document.getElementById('catid').disabled=false;
+				$("#catid").html($("#catid").html()+data);
+			}
+		});
+	}
+}
+function toDecimal(x) {  
+            var f = parseFloat(x);  
+            if (isNaN(f)) {  
+                return;  
+            }  
+            f = Math.round(x*10)/10;  
+            return f;  
+        }  
+function calDiscount(){
+	var price=$('#price').attr('value');
+	var oprice=$('#oprice').attr('value');
+	if(oprice!=0&&oprice!=''){
+		var dis=oprice-price;
+		var discount=10-toDecimal((dis/oprice)*10);
+	}else{
+		discount=10;
+	}
+	$('#discount').attr('value',discount);
+}
+</script>
+ <script>
+     KindEditor.ready(function(K){
+         var editor = K.editor({
+             allowFileManager:true
+         });
+         K('#upload').click(function() {
+             editor.loadPlugin('image', function() {
+                 editor.plugin.imageDialog({
+                     fileUrl : K('#pic').val(),
+                     clickFn : function(url, title) {
+                         K('#pic').val(url);
+                         $("#image_show").attr('src',url).show();
+                         editor.hideDialog();
+                     }
+                 });
+             });
+         });
+     });
+
+
+ </script>
+<input type="hidden" id="catUrl" value="{weikucms::U('Product/ajaxCatOptions',array('token'=>$token))}" />
+
+         
+<!--复制开始-->    
+      <div class="cLineB" id="uppict" style="display:none">    
+
+ </div> 
+ 
+ <!--复制结束--> 
+   <div class="cLineB"> 
+    <h4><if condition="$isDining neq 1">商品<else/>菜品</if>设置</h4> 
+
+   </div> 
+   
+<if condition="$isUpdate eq 1">
+<input type="hidden" name="id" value="{weikucms:$set.id}" />
+</if>
+<input type="hidden" name="discount" id="discount" value="{weikucms:$set.discount}" />
+    <div class="msgWrap bgfc"> 
+     <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      <tbody> 
+       <tr> 
+        <th>申请人：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['name']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+                <tr> 
+        <th>性别：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['age']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+       
+                       <tr> 
+        <th>年龄：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['sex']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+  
+              <tr> 
+        <th>学历：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['xl']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>电话：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['dh']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>邮箱：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['yx']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>从事职业：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['zy']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>加盟合作区域：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['qy']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>现有投资规模：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['xtz']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+              <tr> 
+        <th>拟投资规模：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['ytz']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+       
+        <tr> 
+        <th>是否自有资金：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['jfzj']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+       
+                     <tr> 
+        <th>现经营项目：</th> 
+        <td><input type="text" name="name" value="{weikucms:$list['xm']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+       
+               <tr> 
+        <th>店面面积：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['mj']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+ 
+       
+                      <tr> 
+        <th>店面团队人数：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['num']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+       
+                      <tr> 
+        <th>是否整体项目合作：</th>
+        <td><input type="text" id="price" onchange="calDiscount();"   readonly="readonly" name="price" value="{weikucms:$list['hz']}" class="px" style="width:100px;" onfocus="leave();" /> </td> 
+       </tr>
+
+                     <tr> 
+        <th>联系地址：</th> 
+        <td><input type="text" name="name"  style="width:500px;"  value="{weikucms:$list['dz']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+       
+       
+                     <tr> 
+        <th>加盟需求说明：</th> 
+        <td><input type="text" name="name"  style="width:700px;"  value="{weikucms:$list['content']}" readonly="readonly" class="px" style="width:300px;" onfocus="leave();" /></td>
+       </tr> 
+
+<!--         <TR>
+                  <TH valign="top"><label for="info">图文详细页内容：</label></TH>
+                  <TD><textarea name="intro" id="intro"  rows="5" style="width:590px;height:360px" onfocus="leave();" >{weikucms:$set.intro}</textarea></TD>
+                </TR>   -->
+       <tr>         
+       <th>&nbsp;</th>
+       <td>
+       <if condition="$isDining neq 1"><input type="hidden" value="0" name="dining" /><else/><input type="hidden" value="1" name="dining" /></if>
+       <a href="{weikucms::U('index2')}"   ><button type="" id="" name="" class="btn btn-primary"  >返回</button></a> &nbsp; </td>
+       </tr>
+       <TR style="height: 150px;">
+
+       </TR>
+      </tbody> 
+     </table> 
+     </div>
+    
+
+  </div>
+
+  <include file="Public:footer" />

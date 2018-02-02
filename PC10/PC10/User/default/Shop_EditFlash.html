@@ -1,0 +1,158 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+ <link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+<script src="{weikucms::STATICS}/kindeditor/kindeditor.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/lang/zh_CN.js" type="text/javascript"></script>
+<script src="{weikucms::STATICS}/kindeditor/plugins/code/prettify.js" type="text/javascript"></script>
+<script type="text/javascript" src="{weikucms::RES}/js/formCheck/formcheck.js"> </script>
+
+	<div class="cLineB">
+		<h4 class="left">修改轮播图</h4>
+
+		<div class="searchbar">
+
+<script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#pic').val(),
+                    clickFn : function(url, title) {
+                        K('#pic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+</div>
+<div class="clr"></div>
+</div>
+
+<!--tab start-->
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>提示信息!</strong>
+		<ol>
+			<li>在这里可以了解微门店今日的订单数、订单总数、会员总数，还可以添加分店、编辑分店、删除分店，最后还可以根据分店名称进入后台管理。</li>
+		</ol>
+	</div>
+<!--tab end-->
+	<div class="msgWrap">
+ 		<form class="form" method="post" id="form" action="">
+    		<div class="msgWrap bgfc"> 
+     			<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%"> 
+      			<tbody> 
+			       <tr> 
+				        <th>图片标题：</th>
+				        
+				        <td>
+				        	<input type="text" id="title" name="title" value="{weikucms:$img.title}" class="px require" style="width:400px;" />
+				        </td>
+			       </tr>
+
+                   <tr>
+                       <th>链接地址：</th>
+
+                       <td>
+                           <input type="text" id="url" name="url" value="{weikucms:$img.url}" class="px require" style="width:400px;" />
+                           <input type="hidden" id="id" name="id" value="{weikucms:$img.id}" class="px require" style="width:400px;" />
+                       </td>
+                   </tr>
+
+                   <tr>
+                       <th>轮播图类型：</th>
+                       <td>
+                           <select name="type" id="type" style="width: 415px;">
+                               <option value="0">请选择类型</option>
+                               <option value="1" <if condition="$img[type] eq 1">selected=''</if>>首页轮播图</option>
+                               <option value="2" <if condition="$img[type] eq 2">selected=''</if>>列表轮播图</option>
+                           </select>
+                       </td>
+                   </tr>
+
+                   <tr>
+				       <TR>
+				           <TH valign="top">轮播图片：</TH>
+				           <TD>
+                               <input type="text" class="px" value="{weikucms:$img.pic}" id="pic" name="pic" style="width: 400px;" readonly/>
+                               <span class="ke-button-common" id="upload">上传图片</span>
+                               <span style="font-size: 12px; color:#9FA39D;">建议图片大小为：640px*155px。</span>
+				           </TD>
+				       </TR>
+			</tr>
+
+       		<tr>
+       			<th>&nbsp;</th>
+		       <td>
+       			<button type="button" id="bsubmit" name="button" class="btn btn-primary">修改图片</td>
+       		</tr>
+      	</tbody> 
+     	</table> 
+ 	</div>
+ </form> 
+</div>
+<div class="cLine">
+
+<div class="clr"></div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var title = $("#title").val();
+            var pic = $("#pic").val();
+            var url = $("#url").val();
+            var type = $("#type").val();
+            var id=$("#id").val();
+            if(!title){
+                notif({
+                    msg: "标题不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(type==0){
+                notif({
+                    msg: "类型不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! pic){
+                notif({
+                    msg: "图片不能为空",
+                    type: "warning"
+                });
+                return false;
+            }
+            $.post("{weikucms::U('Shop/EditFlash',array('token'=>$token))}",{id:id,title:title,pic:pic,url:url,type:type},function(data){
+                    if(data.status==1){
+                        notif({
+                            msg: data.info,
+                            type: "success"
+                        });
+                        location.href="{weikucms::U('Shop/flash',array('token'=>$token,'status'=>0))}";
+                    }else{
+                        notif({
+                            msg: data.info,
+                            type: "warning"
+                        });
+                    }
+            },"json")
+        });
+    });
+
+</script>
+<include file="Public:footer"/>

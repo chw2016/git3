@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+        <script>
+     $(function(){
+     	$(document).on('click','.btn',function(){
+     		var money=$('.money').val();
+            var ymoney="<?php echo session('p2p_ymoney');?>";
+            var omoney="{weikucms:$omoney}";
+            var flag=$(this).attr('flag');
+            var m_money="{weikucms:$m_money}";
+            if(Number(money)>Number(omoney)){
+                show_error_tip('您的余额不够！');
+                $('.money').focus();
+                return false;
+            }
+     		if(Number(money)>Number(ymoney)){
+                show_error_tip('投资金额超了！');
+                $('.money').focus();
+                return false;
+            }
+            if(Number(money)<Number(m_money)){
+                show_error_tip('没超过最低投资额！');
+                $('.money').focus();
+                return false;
+            }
+            if(flag==0){
+            //    alert(4);
+                return false;
+            }
+            $(this).attr('flag','0');
+            var url="{weikucms::U('p2p_touzi',array('token'=>$token,'openid'=>$openid,'id'=>$_GET['id']))}";
+            $.post(url,{money:money},function(data){
+                if(data.status==1){
+                    show_success_tip('投资成功');
+                    setTimeout(function(){
+                        location.href="{weikucms::U('user_index',array('token'=>$token,'openid'=>$openid))}";
+                    },2000);
+                }else{
+                    show_error_tip('投资失败');
+                }
+            },'json')
+
+     	})
+     })
+     </script>
+     <style>
+     input::-webkit-input-placeholder{
+     	color:#adc8ad ;
+     }
+     .shadow25 input{
+     	border: 0;
+		background: rgb(229, 242, 229);
+		width: 100%;
+     }
+     .money_one{
+		color: #000;
+		font-size: 14px;
+     }
+     </style>
+	</head>
+	<body>
+		<!--头部模块-->
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">立即投资</h1>		
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section style="padding-top: 48px;">
+			<div class="shadow">
+				<div class="money_one mb10">您的余额：{weikucms:$omoney}元</div>
+				<div class="money_one mt10">购买金额：</div>
+				<div class="shadow25">
+					<input type="tel" placeholder="请填写购买金额,投资最大额<?php echo session('p2p_ymoney');?>元" name="money" class="money" onkeyup="value=this.value.replace(/\D+/g,'')" />
+				</div>
+                <p style="font-size: 10px; color: #61c19e;" onclick="location.href='{weikucms::U('user_chongzhi',array('token'=>$token,'openid'=>$openid))}'">(如果您余额不足，请点击这去冲值)</p>
+			</div>
+			<div class="mt40">
+				<span class="btn add_btn1" flag="1">立即投资</span>
+			</div>
+		</section>
+	</body>
+</html>

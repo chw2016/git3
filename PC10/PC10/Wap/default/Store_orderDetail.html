@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="author" content=""/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="{weikucms::STATICS}/wapweiui/es/css/xmapp140707.css" rel="stylesheet" type="text/css" />
+	<title>订单详细信息</title>
+</head>
+<body style="background-color: rgb(235, 236, 237); background-position: initial initial; background-repeat: initial initial;">
+    <div id="Cheader" style="">
+        <div id="header" class="header_03">
+            <div class="back">
+                <a href="/index.php?g=Wap&amp;m=Store&amp;a=classList&amp;token={weikucms:$token}&amp;wecha_id={weikucms:$wecha_id}&amp;id={weikucms:$storeId}" class="arrow">首页</a>
+            </div>
+            <div class="tit" style="">
+                <h3>订单详情</h3>
+            </div>
+        </div>
+    </div>
+	<div id="wrapper" class="xm_app">
+		<div id="viewport" class="viewport" style="background-color: transparent; display: block; background-position: initial initial; background-repeat: initial initial;">           
+			<div class="order_view mlr20 mb40 has_bottom_panel">             
+				<div class="envelope_paper">                 
+					<div class="envelope_paper_bd">                     
+						<div class="envelope_paper_content">                                                  
+							<div class="box box_01 order_tit">                             
+								<ul>                  
+									<li>
+										<strong>订单状态</strong>
+										<span class="order_status ">
+										              
+										              
+										               			<if condition="$orderDetailData['order_status'] eq 0">
+									                    		<td>未发货</td>
+									                    		<elseif condition="$orderDetailData['order_status'] eq 1" />
+									                    		<td>已发货</td>
+									                    		<elseif condition="$orderDetailData['order_status'] eq 2" />
+									                    		<td>已取消</td>
+									                    		</if>
+										
+										</span>
+									</li>                                 
+									<li>
+										<strong>商品总价</strong>
+										<span class="order_status">¥{weikucms:$orderDetailData['order_price']}</span>&nbsp;
+										<strong>优惠</strong><span class="order_status">¥0</span>&nbsp;
+										<strong>运费</strong><span class="order_status">¥0</span>
+									</li>                                 
+									<li>
+										<strong>应付总额</strong><span class="goods_amount">¥{weikucms:$orderDetailData['order_price']}</span>
+									</li>                             
+								</ul>                                                                                                                                                                              
+							</div>                                                                           
+							<div class="box box_04 express_info" style="display:none;">                             
+								<div class="itmes">
+									<a href="###" class="lnk">                                 
+										<ul>                                     
+											<li>
+												<strong>物流信息</strong><span>EMS(上海)</span>
+											</li>                                     
+											<li>
+												<strong>快递单号</strong><span>EX383028245CS</span>
+											</li>                                 
+										</ul>
+									</a>                             
+								</div>                         
+							</div>                                                                           
+							<div class="box box_02 order_info">                             
+								<ul>                                 
+									<li>
+										<strong>下单日期</strong><span class="add_time">{weikucms:$orderDetailData['order_ok_time']}</span>
+									</li>                                 
+									<li>
+										<strong>订单编号</strong><span class="order_id">{weikucms:$orderDetailData['order_id']}</span>
+									</li>                                       
+									<li>
+										<strong>收货地址</strong>
+										<span class="address">{weikucms:$orderDetailData['order_adress']}</span>
+									</li>
+									<li>
+										<strong>收货人</strong>
+										<span class="best_time">{weikucms:$orderDetailData['order_user']}</span>
+									</li>  
+									<li>
+										<strong>联系电话</strong>
+										<span class="best_time">{weikucms:$orderDetailData['order_user_phone']}</span>
+									</li>            
+
+
+
+								</ul>                         
+							</div>                         
+							<div class="box box_03">                             
+								<div class="list_order_tmp">                                 
+									<ul>
+									
+									<volist name="orderData" id="value">                                                                         
+										<li>                                         
+											<div class="items h_box">                                             
+
+
+												<div class="info">                                                 
+													<p class="name">{weikucms:$value['name']}</p>                                                 
+													<div class="order_items">                                                     
+														<div class="price_info">               
+															<span class="sale_price">售价：¥ {weikucms:$value['price']}</span><span class="num">数量：{weikucms:$value['num']}</span>
+															<span class="subtotal">小计：¥ {weikucms:$value['subtotal']}</span>              
+														</div>                                                 
+													</div>                                             
+												</div>                                         
+											</div>                                         
+											<div class="btns" style="display:none">                                                                                      
+											</div>                                     
+										</li>
+									</volist>                                                                                                                                          
+									</ul>                             
+								</div>                         
+							</div>                     
+						</div>                 
+					</div>             
+				</div>                              
+				<div class="bottom_panel">                 
+					<div class="settle_panel">                     
+						<div class="goods_amount">                         
+							<div class="price">
+								<span>应付总额:</span>
+								<strong>¥{weikucms:$orderDetailData['order_price']}</strong>
+							</div>    
+<style>
+#aaa{
+	
+line-height: 32px;
+height: 32px;
+ text-align: center;
+ font-weight: bold; 
+ color: #FFF; 
+ font-size: 18px; 
+ background: -webkit-gradient(linear, left top, left bottom, from(#f05448), to(#e64c40),color-stop(0.9,#eb4538));
+border-radius: 3px;
+box-shadow: 0 0 3px rgba(0,0,0,0.2);
+ border: 1px solid #ef574c; 
+	
+}
+
+
+</style>				
+								<div id="aaa" onclick='location.href="{weikucms::U('qx',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id'],'order_id'=>$orderDetailData['order_id'],'id'=>$_GET['id']))}"'  >取消订单</div>                  
+						</div>                                                                                
+					</div>             
+				</div>                      
+			</div>
+		</div>
+	</div>
+</body>
+</html>

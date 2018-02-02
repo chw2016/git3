@@ -1,0 +1,125 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+
+    <div class="cLine">
+        <div class="pageNavigator e_left">
+            <a  href="javascript:history.go(-1);" class="btn btn-primary">返回</a>
+
+        </div>
+
+        <div class="clr"></div>
+    </div>
+
+
+    <div class="alert alert-info">
+        <span>还款记录</span>
+    </div>
+
+
+
+    <div class="msgWrap">
+        <if condition="($info['paystatus'] eq 1)AND($info['type'] eq 2)">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th >期数</th>
+                    <th >本期还款时间段</th>
+                    <th >还款金额</th>
+                    <th >支付方式</th>
+
+                    <th >还款时间</th>
+
+                </tr>
+                </thead>
+                <volist name="arr" id="vo">
+                <tr>
+
+
+                    <td>{weikucms:$key}</td>
+                    <td>{weikucms:$vo.start_time}-{weikucms:$vo.end_time}</td>
+                    <if condition="$vo['hk_jl']">
+
+
+                   <td>{weikucms:$vo.hk_jl.money}</td>
+                    <td><if condition="$vo['hk_jl']['paytype'] eq 1">微信支付
+                    <elseif condition="$vo['hk_jl']['paytype'] eq 2" />
+                        支付宝支付
+                        <else />
+                    </if></td>
+
+                    <td>{weikucms:$vo.hk_jl.add_time|date="Y-m-d H:i:s",###}</td>
+                        <elseif condition="$vo['yuqi']" />
+                        <td colspan="3" style="text-align: center;">未还已余期</td>
+                            <else />
+                        <td colspan="3" style="text-align: center;">待还款</td>
+                    </if>
+
+                </tr>
+                </volist>
+            </table>
+        </form>
+            <elseif condition="($info['type'] eq 1)AND($info['paystatus'] eq 5)" />
+            <form method="post"  action="###" id="info" >
+                <input name="delall"  type="hidden" value="" />
+                <input name="wxid"  type="hidden" value="" />
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+
+                        <th >期数</th>
+                        <th >本期还款时间段</th>
+                        <th >还款金额</th>
+                        <th >支付方式</th>
+
+                        <th >还款时间</th>
+
+                    </tr>
+                    </thead>
+                    <volist name="arr" id="vo">
+                        <tr>
+
+
+                            <td>{weikucms:$key}</td>
+                            <td>{weikucms:$vo.start_time}-{weikucms:$vo.end_time}</td>
+                            <if condition="$vo['hk_jl']">
+
+
+                                <td>{weikucms:$vo.hk_jl.money}</td>
+                                <td><if condition="$vo['hk_jl']['paytype'] eq 1">微信支付
+                                    <elseif condition="$vo['hk_jl']['paytype'] eq 2" />
+                                    支付宝支付
+                                    <else />
+                                </if></td>
+
+                                <td>{weikucms:$vo.hk_jl.add_time|date="Y-m-d H:i:s",###}</td>
+                                <elseif condition="$vo['yuqi']" />
+                                <td colspan="3" style="text-align: center;">  未还款已余期</td>
+                                    <else />
+                                <td colspan="3" style="text-align: center;"> 待还款</td>
+                            </if>
+
+                        </tr>
+                    </volist>
+                </table>
+            </form>
+            <else />
+            此订单暂时不需要还款咯！！！
+        </if>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+

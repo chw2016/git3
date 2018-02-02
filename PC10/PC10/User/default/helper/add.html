@@ -1,0 +1,346 @@
+<?php $aid=$_GET['aid']; ?>
+<?php if($aid){ ?>
+<include file="Public:Public"/>
+<?php }else{ ?>
+<include file="Public:head"/>
+
+<?php } ?>
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{weikucms::STATICS}/kindeditor/plugins/code/prettify.css" />
+
+<script src="{weikucms::RES}/js/card/jquery-1.11.1.min.js"  type="text/javascript" ></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/map.js"></script>
+<script src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&v=1.1&services=true" type="text/javascript"></script>
+
+<?php if($aid){ ?>
+<div  style="background-color:white;" >
+<div  style=" width: 90%; margin: 0 auto;" >
+<?php }?>
+  <div class="cLineB"  style=" " >
+ 
+    <h4> <if condition="$baoc" >查看 <else/>{weikucms:$PZ?'修改':'添加'}</if></h4><!-- 张湘南 -->
+  </div>
+  <div class="cLineB" id="uppict" style="display:none">
+  </div>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="aaa" >提示信息!</strong>
+        <ol>
+            <li> <if condition="$baoc" >查看 <else/>智能{weikucms:$PZ?'修改':'添加'}</if></li>
+        </ol>
+    </div>
+
+  <div class="msgWrap">
+  
+
+    <form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" id="form">
+      <table class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+        <TBODY>
+
+          <input type="hidden" class="px" id="id" value="{weikucms:$id}" name="id" >
+            <input type="hidden" class="px" id="token" value="{weikucms:$_SESSION['token']}" name="token">
+
+            <volist name="input" id="vo">
+            
+               <!-- 图片 -->
+                <if condition="$vo['type'] eq 'img'">
+                    <volist name="vo['many']" id="vo">
+                    <tr>
+                        <th valign="top">
+                            <label for="keyword">
+                                {weikucms:$vo.title}：
+                            </label>
+                        </th>
+                        <td>
+                            <img  id="fenlei_img{weikucms:$i}" class="fenlei_img" src="<?php  print_r($PZ[$vo['value']]) ?>">
+                            <input type="hidden" class="px" id="image{weikucms:$i}" value="<?php  print_r($PZ[$vo['value']]) ?>" imageid="" msg="{weikucms:$vo.msg}" name="{weikucms:$vo.name}" style="width:300px" readonly="readonly">
+                            <span style="margin-top:20px;" class="ke-button-common" id="upload{weikucms:$i}">上传图片</span>
+                            <span class="info_tip">建议图片大小{weikucms:$vo.width}×{weikucms:$vo.height}</span> &nbsp&nbsp请选择{weikucms:$vo.title}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                        </volist>
+                  <!-- 文本框 --> 
+                    <elseif condition="$vo['type'] eq 'textarea'" />
+                    <TR>
+                        <TH valign="top"><label for="info">{weikucms:$vo.title}：</label></TH>
+                        <TD><textarea name="{weikucms:$vo.name}" id="info"  rows="5" style="width:790px;height:360px"  onfocus="leave();"><?php  print_r($PZ[$vo['value']]) ?></textarea></TD>
+                    </TR>
+                    <script>
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#info', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+            allowFileManager:true
+        });
+
+    });
+</script>
+                   <!-- 地图 --> 
+                    <elseif condition="$vo['type'] eq 'map'" />
+                    
+                    <tr  class="img" >
+                    
+                        <th valign="top"><label >{weikucms:$vo.title}：</label></th>
+                        <td>
+                                                  <div class="control-group" >
+                      
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" id="suggestId" class="input-xlarge" name="{weikucms:$vo.name}" value="<?php  print_r($PZ[$vo['value']]) ?>"data-rule-required="true">
+                                <button class="btn" type="button" id="positioning">搜索</button>
+                            </div>
+
+                            <span class="maroon">注意：这个只是模糊定位，准确位置请地图上标注!</span>
+                            <div id="l-map" style="overflow: hidden; position: relative; z-index: 0; background-image: url(http://api.map.baidu.com/images/bg.png); color: rgb(0, 0, 0); text-align: left;">
+                            <div id="platform" style="overflow: visible; position: absolute; z-index: 0; left: -98px; top: 37px; cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;">
+                                <div id="mask" class=" BMap_mask" style="position: absolute; left: 98px; top: -37px; z-index: 9; overflow: hidden; -webkit-user-select: none; width: 605px; height: 320px;"></div>
+                                <div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 800;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 700;">
+                                    <span class="BMap_Marker BMap_noprint" unselectable="on" "="" style="position: absolute; padding: 0px; margin: 0px; border: 0px; cursor: pointer; background-image: url(http://api.map.baidu.com/images/blank.gif); width: 23px; height: 25px; left: 391px; top: 98px; z-index: -7979488; background-position: initial initial; background-repeat: initial initial;" title=""></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 600;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 500;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 400;"><span class="BMap_Marker" unselectable="on" style="position: absolute; padding: 0px; margin: 0px; border: 0px; width: 0px; height: 0px; left: 401px; top: 123px; z-index: -7979488;">
+                                    <div style="position: absolute; margin: 0px; padding: 0px; width: 23px; height: 25px; left: -10px; top: -25px; overflow: hidden;"><img src="http://api.map.baidu.com/images/marker_red.png" style="border:none;left:0px; top:0px; position:absolute;"></div></span></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"></div></div><div style="position: absolute; z-index: -1; left: 401px; top: 123px;">
+                                    <img src="http://online3.map.bdimg.com/tile/?qt=tile&amp;x=6323&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -74px; top: -213px;"><img src="http://online3.map.bdimg.com/tile/?qt=tile&amp;x=6324&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: 182px; top: 43px;"><img src="http://online2.map.bdimg.com/tile/?qt=tile&amp;x=6322&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -330px; top: -213px;">
+                                    <img src="http://online2.map.bdimg.com/tile/?qt=tile&amp;x=6323&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -74px; top: 43px;"><img src="http://online4.map.bdimg.com/tile/?qt=tile&amp;x=6324&amp;y=2355&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: 182px; top: -213px;"><img src="http://online1.map.bdimg.com/tile/?qt=tile&amp;x=6322&amp;y=2354&amp;z=15&amp;styles=pl&amp;udt=30130712" style="position: absolute; border: none; width: 256px; height: 256px; left: -330px; top: 43px;"></div></div>
+                                    <div id="zoomer" style="position:absolute;z-index:0;top:0px;left:0px;overflow:hidden;visibility:hidden;cursor:url(http://api.map.baidu.com/images/openhand.cur) 8 8,default"><div class="BMap_zoomer" style="top:0;left:0;"></div><div class="BMap_zoomer" style="top:0;right:0;"></div><div class="BMap_zoomer" style="bottom:0;left:0;"></div><div class="BMap_zoomer" style="bottom:0;right:0;"></div></div><div class=" anchorBL" style="height: 32px; position: absolute; z-index: 10; bottom: 0px; right: auto; top: auto; left: 1px;"><a title="到百度地图首页" target="_blank" href="http://map.baidu.com/?sr=1" style="outline: none;"><img style="border:none;width:77px;height:32px" src="http://api.map.baidu.com/images/copyright_logo.png"></a></div>
+                                    <div unselectable="on" class=" BMap_cpyCtrl anchorBL" style="cursor: default; white-space: nowrap; bottom: 2px; right: auto; top: auto; left: 81px; position: absolute; z-index: 10;"><span style="color: rgb(0, 0, 0); background-image: none; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-family: arial, simsun; display: inline; background-position: initial initial; background-repeat: initial initial;" _cid="1">? 2014 Baidu</span></div>
+                                    <div unselectable="on" class=" BMap_stdMpCtrl BMap_stdMpType0 BMap_noprint anchorTL" style="width: 52px; height: 226px; bottom: auto; right: auto; top: 10px; left: 10px; position: absolute; z-index: 1100;">
+                                    <div class="BMap_stdMpPan"><div class="BMap_button BMap_panN" title="向上平移"></div>
+                                    <div class="BMap_button BMap_panW" title="向左平移"></div>
+                                    <div class="BMap_button BMap_panE" title="向右平移"></div><div class="BMap_button BMap_panS" title="向下平移"></div><div class="BMap_stdMpPanBg BMap_smcbg"></div></div><div class="BMap_stdMpZoom" style="height: 167px; width: 52px;"><div style="height: 167px; width: 37px;"><div class="BMap_button BMap_stdMpZoomIn" title="放大一级"><div class="BMap_smcbg"></div></div><div class="BMap_button BMap_stdMpZoomOut" title="缩小一级"><div class="BMap_smcbg"></div></div></div><div class="BMap_stdMpSlider" style="height: 133px;"><div class="BMap_stdMpSliderBgTop" style="height: 124px;"><div class="BMap_smcbg"></div></div>
+                                    <div class="BMap_stdMpSliderBgBot" style="top: 124px;"><div class="BMap_smcbg"></div></div><div class="BMap_stdMpSliderMask" title="放置到此级别"></div><div class="BMap_stdMpSliderBar" title="拖动缩放" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default; top: 22px;"><div class="BMap_smcbg"></div></div></div><div class="BMap_zlHolder"><div class="BMap_zlSt"><div class="BMap_smcbg"></div></div>
+                                    <div class="BMap_zlCity"><div class="BMap_smcbg"></div></div><div class="BMap_zlProv"><div class="BMap_smcbg"></div></div><div class="BMap_zlCountry"><div class="BMap_smcbg"></div></div></div></div></div><div unselectable="on" class=" BMap_scaleCtrl BMap_noprint anchorBL" style="bottom: 18px; right: auto; top: auto; left: 81px; width: 88px; position: absolute; z-index: 10;"><div class="BMap_scaleTxt" unselectable="on">500&nbsp;米</div><div class="BMap_scaleBar BMap_scaleHBar">
+                                    <img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleLBar"><img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div><div class="BMap_scaleBar BMap_scaleRBar"><img style="border:none" src="http://api.map.baidu.com/images/mapctrls11.png"></div></div><div unselectable="on" class=" BMap_omCtrl BMap_noprint anchorBR quad4" style="width: 15px; height: 15px; bottom: 0px; right: 0px; top: auto; left: auto; position: absolute; z-index: 10;"><div class="BMap_omOutFrame" style="width: 149px; height: 149px;"><div class="BMap_omInnFrame" style="bottom: auto; right: auto; top: 8px; left: 8px; width: 139px; height: 139px;">
+                                    <div class="BMap_omMapContainer"></div>
+                                    <div class="BMap_omViewMv" style="cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div class="BMap_omViewInnFrame"><div></div></div></div></div></div><div class="BMap_omBtn BMap_omBtnClosed" style="bottom: 0px; right: 0px; top: auto; left: auto;"></div></div></div>
+                            <div id="r-result">
+                            
+						                                纬度<input type="text" value="<?php  print_r($PZ[$vo['value2']]) ?>" id="lng" name="{weikucms:$vo.lng}">
+						                                经度<input type="text" value="<?php  print_r($PZ[$vo['value3']]) ?>" id="lat" name="{weikucms:$vo.lat}">
+                            </div>
+
+                        </div>
+                    </div>
+                        </td>
+                    </tr>
+
+                   <!-- 隐藏 --> 
+                     <elseif condition="$vo['type'] eq 'hidden'" />
+                    <input type="hidden" name="{weikucms:$vo.name}" value="">
+                  <!-- 时间 -->
+					<elseif condition="$vo['type'] eq 'time'" />
+
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+                            <input type="input" class="px" id="statdate" value="<?php  print_r($PZ[$vo['value']]) ?>" onclick="WdatePicker()" name="{weikucms:$vo.name}">  &nbsp&nbsp请选择{weikucms:$vo.title}
+                        </td>
+                    </tr>
+                    <!-- 点选框 -->
+                    <elseif condition="$vo['type'] eq 'radio'" />
+
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+
+                            <volist  name="vo['many']"  id="voo" >
+
+                            <input type="radio" class="px"  <if condition="$PZ[$vo['value']] eq $voo['value']" >  checked="checked"</if>   value="{weikucms:$voo.value}"  name="{weikucms:$vo.name}">{weikucms:$voo.content}&nbsp&nbsp
+                            </volist> &nbsp&nbsp请选择{weikucms:$vo.title}
+                        </td>
+                    </tr>
+                    <!-- 下拉列表 -->
+                    <elseif condition="$vo['type'] eq 'select'" />
+
+                        <tr>
+                            <th>{weikucms:$vo.title}：</th>
+                            <td>
+                                <select name="{weikucms:$vo.name}" >
+                                    <volist   name="vo['many']"  id="voo" >
+                                    <option  value="{weikucms:$voo.value}"  <if condition="$PZ[$vo['value']] eq $voo['value']" >  selected="selected"</if>      >{weikucms:$voo.content}</option>
+                                    </volist>
+                                </select>&nbsp&nbsp请选择{weikucms:$vo.title}
+                            </td>
+                        </tr>
+                   <!-- 复选框 -->     
+                   <elseif condition="$vo['type'] eq 'checkbox'" />
+
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+
+                            <volist  name="vo['many']"  id="voo" >
+                            <input type="checkbox" class="px checkbox" name="{weikucms:$vo['name']}[]" 
+                             <?php
+                                     $values=explode(',',$PZ[$vo['value']]);
+                                     if(in_array($voo['value'],$values)){
+                              ?>
+                                      checked="checked"
+                              <?php } ?>
+                             value="{weikucms:$voo.value}"    ">{weikucms:$voo.content}&nbsp&nbsp
+                            </volist> &nbsp&nbsp请选择{weikucms:$vo.title}
+                        	<div class="class"></div>
+                        </td>
+                    </tr>
+                    <script>
+                        $(function(){
+                        	$(".checkbox").click(function(){
+                            	var check = 0;
+                            	$(".checkbox").each(function(i,o){
+                            		if($(this).is(":checked")){
+                            			check++;
+                            		}
+                            	});
+                            	if(check==0){
+                            		$(".class").html("<input type='hidden' value='' name='{weikucms:$vo.name}' />");
+                            	}else{
+                            		$(".class").html("");
+                            	}
+                            })
+                        })
+                   </script>
+              <!-- 数量 -->
+                 <elseif condition="$vo['type'] eq 'number'" />
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+							<input style="width:60px;" type="text" class="px"    value="<?php  print_r($PZ[$vo['value']]) ?>"  name="{weikucms:$vo.name}">&nbsp&nbsp请选择{weikucms:$vo.title}
+                        </td>
+                    </tr>
+                <!-- 较长的input框 -->
+                <elseif condition="$vo['type'] eq 'longinput'" />
+                    <tr>
+                        <th>{weikucms:$vo.title}：</th>
+                        <td>
+							<input style="width:600px;" type="text" class="px"    value="<?php  print_r($PZ[$vo['value']]) ?>"  name="{weikucms:$vo.name}">&nbsp&nbsp请选择{weikucms:$vo.title}
+                        </td>
+                    </tr>
+               <!-- 较小的复文本框 -->
+                <elseif condition="$vo['type'] eq 'textarea2'" />
+                    <tr>
+                        <th valign="top" style=""  >{weikucms:$vo.title}：</th>
+                        <td  >
+							  <textarea style="margin-top:2px; width:400px; height:30px;" name="{weikucms:$vo.name}"  value="<?php  print_r($PZ[$vo['value']]) ?>"  ><?php  print_r($PZ[$vo['value']]) ?></textarea>&nbsp&nbsp{weikucms:$vo.msg}
+                        </td>
+                </tr>    
+                    
+                 <!-- input框 -->
+                    <else />
+
+
+
+          <tr>
+            <th valign="top"><label for="keyword">{weikucms:$vo.title}</label></th>
+            <td>
+           
+                <input type="{weikucms:$vo.type}" class="px" id="pinzhong" msg="{weikucms:$vo.msg}" value="<?php  print_r($PZ[$vo['value']]) ?>" name="{weikucms:$vo.name}" style="width:300px"> &nbsp&nbsp {weikucms:$vo.title}输入不能为空
+            </td>
+            
+          </tr>
+
+                    </if>
+                </volist>
+
+
+
+
+
+        <tr>
+          <th></th>
+          
+          <td>
+          <if condition="!$baoc" >
+            <button type="button" id="savebtn" name="button"  class="btn btn-primary" >保存</button>
+          </if>
+              <include file="./tpl/User/default/helper/list_btn.html"/>
+            <div class="clr"></div></td>
+        </tr>
+        </TBODY>
+      </table>
+    </form>
+  </div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<?php if($aid){ ?>
+</div>
+</div>
+<?php } ?>
+<!--底部-->
+</div>
+<div>
+<include file="Public:footer"/>
+<script>
+	
+	$(function(){
+		
+	    if($("tr").hasClass('img')){
+	    	baidu_map();
+	    }
+	
+	    var a=$("tr img").length;
+	    for(i=1;i<=a;i++){
+	        jj(i);
+	    }
+	
+	
+	})
+
+    function jj(i){
+        KindEditor.ready(function(K){
+            var editor = K.editor({
+                allowFileManager:true
+            });
+            K('#upload'+i).click(function() {
+                editor.loadPlugin('image', function() {
+                    editor.plugin.imageDialog({
+                        fileUrl : K('#image'+i).val(),
+                        clickFn : function(url, title) {
+                            K('#image'+i).val(url);
+                            $('#fenlei_img'+i).attr('src',url).show();
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+        });
+    }
+   /**
+    * 提交
+    */
+   $("#savebtn").click(function(){
+     //  $("#info").val(editor.html());
+       if($("#info").length>0){
+           $("#info").val(editor.html());
+       }
+       var status=1;
+        $('input').each(function(i,e){
+           if($(e).attr('msg')){
+               if(!$(e).val()){
+                   var msg=$(e).attr('msg');
+                   notif({
+                       msg: msg,
+                       type: "warning"
+                   });
+                   status=0;
+                   return false;
+               }
+           }
+        });
+       if(status==1){
+           $("#form").submit();
+       }
+
+    });
+</script>
+
+
+
+
+
+

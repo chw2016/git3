@@ -1,0 +1,83 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+<script src="{weikucms::RES}/js/date/WdatePicker.js"></script>
+
+<div class="" >
+        <div class="cLineB">
+            <h4 style="position:relative;">
+                参赛作品管理
+                <a type="button" name="button" class="btn btn-primary" style="position:absolute;right:0px;top:-10px;height:185%;padding:0 40px;line-height:35px;" href="{weikucms::U('Works/index',array('token'=>$token))}">
+                    返回
+                </a>
+            </h4>
+        </div>
+
+    <div class="msgWrap">
+        <form method="post"  action="###" id="info" >
+            <input name="delall"  type="hidden" value="" />
+            <input name="wxid"  type="hidden" value="" />
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th >作品名</th>
+                    <th >参赛作品名</th>
+                    <th >作品图片</th>
+                    <th >设计师名字</th>
+                    <th >设计师年龄</th>
+                    <th >联系方式</th>
+                    <th >所在城市</th>
+                    <th >投票数</th>
+                    <th >状态 </th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+                <volist name="works" id="vo" key="i">
+                <tr>
+                    <td>{weikucms:$i}</td>
+                    <td>{weikucms:$vo.worksname}</td>
+                    <td>{weikucms:$list.name}</td>
+                    <td><img src="{weikucms:$vo.img}" style="width: 100px;height: 80px;"></td>
+                    <td>{weikucms:$vo.name}</td>
+                    <td>{weikucms:$vo.age}</td>
+                    <td>{weikucms:$vo.phone}</td>
+                    <td>{weikucms:$vo.addear}</td>
+                    <td>{weikucms:$vo.poll}</td>
+                    <td><if condition="$vo.state eq 1"><span style="color:green">通过</span><elseif condition="$vo.state eq 0"/><span style="color:red">审核中</span><else/><span style="color:red">未通过</span></if></td>
+
+
+                <td>
+                    <a href="{weikucms::U('Works/explain',array('token'=>$token,'mid'=>$vo['mid'],'id'=>$vo['id'],'openid'=>$vo['openid']))}" title="详情" class="btn btn-success btn-sm">详情</a>
+                    <a href="{weikucms::U('Works/poll',array('token'=>$token,'mid'=>$vo['mid'],'wid'=>$vo['id']))}" title="查看投票者" class="btn btn-success btn-sm">查看投票者</a>
+                    <a class="btn btn-danger btn-sm" href="#" onclick="source_delete('{weikucms::U('Works/madel',array('token'=>$token,'mid'=>$vo['mid'],'id'=>$vo['id']))}')">删除</a>
+
+                <!--<a href="#" onclick="source_delete('#')" title="删除" class="btn btn-danger btn-sm">删除</a>-->
+                </td>
+                </tr>
+                </volist>
+                </table>
+                </form>
+                <div>
+                <ul class="pager">
+                {weikucms:$page}
+                </ul>
+                </div>
+
+    </div>
+
+
+</div>
+
+<include file="Public:footer"/>
+
+
+
+
+
+
+
+
+
+

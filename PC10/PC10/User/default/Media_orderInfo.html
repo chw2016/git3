@@ -1,0 +1,68 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<div class="">
+	<div class="cLineB">
+    <if condition="$flag eq 1">
+      <h4 class="left">销售总额详情</h4>
+    <else/>
+      <h4 class="left">订单总数详情</h4>
+    </if>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #98FB98;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Media/report',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一页</h4></a>
+		</div>
+	<div class="clr"></div>
+</div>
+
+
+<div class="box-content">       		 
+    <div class="msgWrap">
+	<form method="post"  action="###" id="info" >
+		<input name="delall"  type="hidden" value="" />
+		<input name="wxid"  type="hidden" value="" />			
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>订单编号</th>
+                      <th>订单价格</th>
+                      <th>下单用户</th>
+                      <th>联系方式</th>
+                      <th>下单时间</th>
+                      <th>发送地址</th>
+					           <th>产品数量</th>
+                      <th>订单状态</th>                      
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                  		<tr>
+        					<td>{weikucms:$vo.orderid}</td>
+                  			<td><div class="answer_text">{weikucms:$vo.price}</div></td>
+                  			<td>{weikucms:$vo.truename}</td>
+                    		<td>{weikucms:$vo.tel}</td>
+                    		<td>
+                    			<php>echo date("Y-m-d H:i:s",$vo['time']);</php>
+                    		</td>
+                    		<td>{weikucms:$vo.address}</td>
+							<td>{weikucms:$vo.total}</td>
+                    		<td>
+                    			<if condition="$vo['paid'] eq 1">
+									已支付
+                    			<else/>
+									未支付
+                    			</if>
+                    		</td>
+                      </tr>                     
+                  </volist>
+                  </tbody>
+              </table>			
+		</form>
+</div>
+	<div>
+		<ul class="pager">
+			{weikucms:$page}
+		</ul>
+	</div>      
+</div>
+</div>
+<include file="Public:footer"/>

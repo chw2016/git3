@@ -1,0 +1,81 @@
+<include file="Public:head"/> 
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+
+<div class="cLineB">
+
+<h4 class="left">预约类型信息</h4>
+
+
+<div class="clr"></div>
+
+</div>
+
+
+
+<div class="cLine">
+
+<div style="margin-bottom: 5px;">
+
+<a href="{weikucms::U($type.'/addcin',array('id'=>$id,'token'=>$token))}" title="添加" class="btn btn-primary" style="padding: 5px 45px;">添加预约类型</a>
+
+
+</div>
+
+<div class="clr"></div>
+
+</div>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>在这里您可以添加此次预约的类型</li>
+        </ol>
+    </div>
+
+<div class="msgWrap">
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>类型</th>
+            <th>原价(元)</th>
+            <th>优惠价(元)</th>
+            <th>简要说明</th>
+            <th style="width: 200px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="data" id="item">
+        <tr>
+                <td>{weikucms:$item.name}</td>
+                <td><span class="badge badge-info">{weikucms:$item.yuanjia}</span></td>
+                <td><span class="badge badge-success">{weikucms:$item.youhui}</span></td>
+                <td>{weikucms:$item.memo}</td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U($type.'/updatecin',array('aid'=>$item['pid'],'id'=>$item['id'],'token'=>$token))}">编辑</a>
+                    <a  class="btn btn-danger btn-sm"  href="{weikucms::U($type.'/delcin',array('aid'=>$item['pid'],'id'=>$item['id'],'token'=>$token))}">删除</a></td>
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<include file="Public:footer"/>

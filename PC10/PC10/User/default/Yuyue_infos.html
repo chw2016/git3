@@ -1,0 +1,104 @@
+<include file="Public:head"/> 
+
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+
+
+
+<div class="cLineB">
+
+<h4 class="left">预约列表 </h4>
+
+
+<div class="clr"></div>
+
+</div>
+
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>提示信息!</strong>
+    <ol>
+        <li>这里显示的您的预约用户列表,您可以更改他们的预约状态</li>
+    </ol>
+</div>
+
+<div class="msgWrap">
+
+
+    <!--<a href="{weikucms::U($type.'/setType',array('id'=>$item['id'],'pid'=>$item['pid'],'token'=>$token, 'type'=>0 ))}">-->
+
+        <!--<input type="radio" name="type" <?php if($item['type'] == 0 ) echo 'checked="checked"';?> /><span style="background:#999; color:#fff;">等待</span>-->
+
+    <!--</a>-->
+
+    <!--<a href="{weikucms::U($type.'/setType',array('id'=>$item['id'],'pid'=>$item['pid'],'token'=>$token, 'type'=>1 ))}">-->
+
+        <!--<input type="radio" name="type" <?php if($item['type'] == 1 ) echo 'checked="checked"';?> /><span style="background:#360; color:#fff;">确定</span>-->
+
+    <!--</a>-->
+
+    <!--<a href="{weikucms::U($type.'/setType',array('id'=>$item['id'],'pid'=>$item['pid'],'token'=>$token, 'type'=>2 ))}">-->
+
+        <!--<input type="radio" name="type" <?php if($item['type'] == 2 ) echo 'checked="checked"';?> /><span style="background:red; color:#fff;">拒绝</span>-->
+
+    <!--</a>-->
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>时间</th>
+            <th>状态</th>
+            <th style="width:300px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="data" id="item">
+            <tr>
+                <td>{weikucms:$item.id}</td>
+                <td>{weikucms:$item.name}</td>
+                <td>{weikucms:$item.phone}</td>
+                <td>{weikucms:$item.date} {weikucms:$item.add_time|default=time()|date='Y-m-d H:i:s',###}</td>
+                <td>
+                    <if condition="$item.type eq 0">
+                    <span class="badge badge-info">等待</span>
+                    </if>
+                    <if condition="$item.type eq 1">
+                        <span class="badge badge-success">确定</span>
+                    </if>
+                    <if condition="$item.type eq 2">
+                        <span class="badge badge-danger">拒绝</span>
+                    </if>
+                </td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U($type.'/setType',array('id'=>$item['id'],'pid'=>$item['pid'],'token'=>$token, 'type'=>1 ))}">确定</a>
+                    <a class="btn btn-danger btn-sm" href="{weikucms::U($type.'/setType',array('id'=>$item['id'],'pid'=>$item['pid'],'token'=>$token, 'type'=>2 ))}">拒绝</a>
+                    <a class="btn btn-success btn-sm" href="{weikucms::U($type.'/infos_detail',array('id'=>$item['id'],'token'=>$token,'inid'=>$_GET['id']))}">查看详细信息 </a>&nbsp;&nbsp;
+
+
+                   <a class="btn btn-danger btn-sm" href="{weikucms::U($type.'/delinfos',array('id'=>$item['id'],'token'=>$token))}">删除 </a>
+                </td>
+            </tr>
+        </volist>
+
+        </tbody>
+    </table>
+
+
+
+
+
+</div>
+
+    <div>
+        <ul class="pager">
+            {weikucms:$page}
+        </ul>
+    </div>
+
+</div>
+
+</div>
+
+<include file="Public:footer"/>

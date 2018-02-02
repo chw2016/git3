@@ -1,0 +1,16 @@
+<volist name="photo" id="v">
+	<div class="main" dateid="{weikucms:$v.id}">
+		<div class="main-img" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">
+			<img src="{weikucms:$v.local_pic}" id="show"/>
+			<div id="picToLike">
+			</div>
+		</div>
+		<div class="main-title">
+			<div class="main-titile-left"></div>
+			<div class="main-titile-right">
+				<span class="icon-thumbs-up" dataid="{weikucms:$v.id}" id="{weikucms:$v.id}">{weikucms:$v.click_num}</span>
+				<span class="icon-chat" onclick="location.href='{weikucms::U('comment',array('token'=>$token,'openid'=>$openid,'pid'=>$v['id']))}'">{weikucms:$v.comment_num}</span>
+			</div>
+		</div>
+	</div>
+</volist>

@@ -1,0 +1,15 @@
+<volist name="list" id="vo">
+    <div class="search_nav ">
+        <div class="search_nav_left ">
+            <div class="search_nav_left_img " style="background: url({weikucms:$vo.logourl});background-size: 100% 100%;"></div>
+        </div>
+        <div class="search_nav_right ">
+            <p>产品名称：{weikucms:$vo.name}</p>
+            <if condition="$vo['long']"><p>长：{weikucms:$vo.long}米</p></if>
+            <if condition="$vo['wide']"><p>宽：{weikucms:$vo.wide}米</p></if>
+            <if condition="$vo['high']"><p>高：{weikucms:$vo.high}米</p></if>
+            <p style="color:red">价格：<?php echo $vo['vprice']?$vo['vprice']:$vo['price'];?>元</p>
+            <div class="search_btn" onclick="location.href='{weikucms::U('Store_shop/product',array('token'=>$token,'id'=>$vo['id'],'openid'=>$openid))}'">购买</div>
+        </div>
+    </div>
+</volist>

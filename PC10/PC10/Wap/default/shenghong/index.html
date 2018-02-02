@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{weikucms:$tpl.name}</title>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/common.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/index.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/style1.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/main.css" />
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/shenghong/css/font-awesome.min.css" />
+</head>
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+</style>
+<body>
+<div style="border-bottom: 1px solid #d5d5d5;">
+    <if condition="$phone">
+        <img src="{weikucms:$phone[pic]}" />
+        <else/>
+        <img src="{weikucms::STATICS}/wapweiui/shenghong/img/logo.png"  />
+    </if>
+</div>
+<div class="mt10 main_center" style="padding-bottom:50px">
+    <volist name="alist" id="vo">
+        <div class="main_user" onclick="window.location.href='{weikucms::U('Shenghong/classify',array('token'=>$token,'openid'=>$openid,'cid'=>$vo['id']))}'"><span class="ml5">{weikucms:$vo.username}</span><i class="fr fa fa-angle-right" style="font-size: 20px;" ></i></div>
+    </volist>
+      <!--  <div class="main_user"><span class="ml5">技术</span><i class="fr fa fa-angle-right" style="font-size: 20px;" ></i></div>
+    <div class="main_user"><span class="ml5">客服</span><i class="fr fa fa-angle-right" style="font-size: 20px;" ></i></div>
+    <div class="main_user"><span class="ml5">行政</span><i class="fr fa fa-angle-right" style="font-size: 20px;" ></i></div>-->
+</div>
+<div class="footer_main">
+    <div class="footer_main_user" onclick="window.location.href='{weikucms::U('Shenghong/alist',array('token'=>$token,'openid'=>$openid))}'"><i class="fa fa-user" style="font-size:19px"></i><span>我的应聘</span></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/msg.css">
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/jquery_min.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/aSelect.js"></script>
+<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/usercenter/resource/aLocation.js"></script>
+
+    <div class="cLineB">
+        <h4 class="left">会员信息<span class="FAQ">查看会员信息</span></h4>
+    </div>
+    <div class="msgWrap">
+
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>提示信息!</strong>  查看会员所有信息！
+
+        </div>
+
+        <div class="box-content">
+            <div class="tooltip-demo well span5" style="margin-bottom: 15px;padding-left: 0px;margin-left: 0px;">
+                <a href="#" >
+                    <if condition="$userinfo.fakeid neq null">
+                        <img style="width: 80px;height: 80px;float: left;margin-left: 5px;" src="/upload/weixin_headimg/{weikucms:$userinfo.fakeid}.png"></a>
+                <else/>
+                <img style="width: 80px;height: 80px;float: left;margin-left: 5px;" src="/upload/w_client.jpg"></a>
+                </if>
+
+                <div style="float: right">
+                    <p>微信昵称  :  {weikucms:$userinfo.nickname} </p>
+                    <p>会员名称  :  {weikucms:$userinfo.name} </p>
+                    <p>微信ID   :  {weikucms:$userinfo.openid} </p>
+                    <p>性别   :  <if condition="$userinfo.sex eq 1">男<else/>女</if> </p>
+                    <p>省份  :   {weikucms:$userinfo.province}</p>
+                    <p>城市  :   {weikucms:$userinfo.city}</p>
+                    <p>时间  : <php>echo date("Y-m-d H:i:s",$userinfo['update_time']);</php> </p>
+                    <p>生日  : {weikucms:$userinfo.birth_day}</p>
+                    <p>手机  : {weikucms:$userinfo.phone}</p>
+                    <p>积分  : {weikucms:$userinfo.score}</p>
+                    <p>余额  : {weikucms:$userinfo.money}元</p>
+                    <p>地址  : <select style="width: 100px;" id="selectProvince"></select> <select style="width: 100px;" id="selectCity"></select> <select style="width: 100px;" id="selectArea"></select>{weikucms:$address[3]} </p>
+                </div>
+
+
+            </div>
+
+            <div class="tooltip-demo well span7">
+
+                <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                    <input type="hidden" name="id" id="id" value="{weikucms:$userinfo.id} ">
+                    <input type="hidden" name="openid" id="openid" value="{weikucms:$userinfo.openid} ">
+
+                    <div class="control-group">
+                        <label for="title" class="control-label">手动修改积分：</label>
+                        <div class="controls">
+                            <select name="do_update_score" id="do_update_score" style="width:100px;">
+                                <option value="1" >增加</option>
+                                <option value="2" >减少</option>
+                            </select>
+                            <input type="text" name="update_score" value="" id="update_score" placeholder="输入数字" class="input-small" data-rule-required="true">&nbsp;&nbsp; 分
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button id="bsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+
+            <div class="tooltip-demo well span7">
+
+                <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                    <input type="hidden" name="id" id="eid" value="{weikucms:$userinfo.id} ">
+                    <input type="hidden" name="openid" id="eopenid" value="{weikucms:$userinfo.openid} ">
+
+                    <div class="control-group">
+                        <label for="title" class="control-label">积分错误更正：</label>
+                        <div class="controls">
+                            <select name="edo_update_score" id="edo_update_score" style="width:100px;">
+                                <option value="1" >增加</option>
+                                <option value="2" >减少</option>
+                            </select>
+                            <input type="text" name="update_score" value="" id="eupdate_score" placeholder="输入数字" class="input-small" data-rule-required="true">&nbsp;&nbsp; 分
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button id="ebsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+
+            <div class="tooltip-demo well span7">
+
+                <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+                    <input type="hidden" name="id" id="mid" value="{weikucms:$userinfo.id} ">
+                    <input type="hidden" name="openid" id="mopenid" value="{weikucms:$userinfo.openid} ">
+
+                    <div class="control-group">
+                        <label for="title" class="control-label">手动修改金额：</label>
+                        <div class="controls">
+                            <select name="mdo_update_score" id="mdo_update_score" style="width:100px;">
+                                <option value="1" >增加</option>
+                                <option value="2" >减少</option>
+                            </select>
+                            <input type="text" name="update_score" value="" id="mupdate_score" placeholder="输入数字" class="input-small" data-rule-required="true">&nbsp;&nbsp; 元
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button id="mbsubmit" type="button" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+
+
+    </div>
+
+
+
+    <div class="clr"></div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        var sel = aSelect({data: aLocation});
+        sel.bind('#selectProvince', '{weikucms:$address[0]}');
+        sel.bind('#selectCity', '{weikucms:$address[1]}');
+        sel.bind('#selectArea', '{weikucms:$address[2]}');
+
+
+        $("#bsubmit").click(function(){
+            var id = $("#id").val();
+            var openid = $("#openid").val();
+            var update_score = $("#update_score").val();
+            var do_update_score = $("#do_update_score").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(!id || !openid){
+                notif({
+                    msg:"非法操作",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            var patter =  /^[0-9]+.?[0-9]*$/;
+
+            if(update_score != 0){
+                if(!patter.test(update_score)){
+                    notif({
+                        msg:"请输入积分合法数字",
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }else{
+                notif({
+                    msg:"积分数字不能为0",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Usercenter/updatescoreandmoney',array('token'=>$token))}",
+                    {id:id,openid:openid,update_score:update_score,do_update_score:do_update_score,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+
+        $("#ebsubmit").click(function(){
+            var id = $("#eid").val();
+            var openid = $("#eopenid").val();
+            var update_score = $("#eupdate_score").val();
+            var do_update_score = $("#edo_update_score").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(!id || !openid){
+                notif({
+                    msg:"非法操作",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            var patter =  /^[0-9]+.?[0-9]*$/;
+
+            if(update_score != 0){
+                if(!patter.test(update_score)){
+                    notif({
+                        msg:"请输入积分合法数字",
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }else{
+                notif({
+                    msg:"积分数字不能为0",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Usercenter/eupdatescoreandmoney',array('token'=>$token))}",
+                    {id:id,openid:openid,update_score:update_score,do_update_score:do_update_score,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+
+        $("#mbsubmit").click(function(){
+            var id = $("#mid").val();
+            var openid = $("#mopenid").val();
+            var update_score = $("#mupdate_score").val();
+            var do_update_score = $("#mdo_update_score").val();
+            var __hash__ =  $("input[name='__hash__']").val();
+            if(!id || !openid){
+                notif({
+                    msg:"非法操作",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            var patter =  /^[0-9]+.?[0-9]*$/;
+
+            if(update_score != 0){
+                if(!patter.test(update_score)){
+                    notif({
+                        msg:"请输入合法金额",
+                        type: "warning"
+                    });
+                    return false;
+                }
+            }else{
+                notif({
+                    msg:"金额数字不能为0",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            $.post("{weikucms::U('Usercenter/updatemoney',array('token'=>$token))}",
+                    {id:id,openid:openid,update_score:update_score,do_update_score:do_update_score,__hash__:__hash__},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+
+        });
+
+
+    });
+</script>
+
+<include file="Public:footer"/> 

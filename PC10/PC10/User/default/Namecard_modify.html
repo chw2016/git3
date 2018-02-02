@@ -1,0 +1,292 @@
+<include file="Public:head" />
+
+
+
+
+<!--复制开始-->
+<div class="cLineB" id="uppict" style="display:none">
+    <script>
+        function selurl() {
+
+            var url = document.getElementById("url");
+            var select1 = document.getElementById("select");
+            url.value = select1.value;
+        }
+    </script>
+        <script>
+    KindEditor.ready(function(K){
+        var editor = K.editor({
+            allowFileManager:true
+        });
+        K('#upload').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    fileUrl : K('#headerpic').val(),
+                    clickFn : function(url, title) {
+                        K('#headerpic').val(url);
+                        $("#image_show").attr('src',url).show();
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>
+</div>
+<!--复制结束-->
+<div class="msgWrap">
+    <form class="form" method="post" action="{weikucms::U('Namecard/update')}"
+          target="_top" enctype="multipart/form-data">
+        <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0"
+               cellPadding="0" width="100%">
+            <THEAD>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        姓名：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="name" value="{weikucms:$data.name}" name="name" style="width:300px" placeholder="此处填写个人名称">
+                </TD>
+            </TR>
+            </THEAD>
+            <TBODY>
+            
+            <TR>
+                <TH valign="top"><label for="picurl">封面图片：</label></TH>
+
+                <TD><img id="image_show" src=""></TD>
+            </TR>
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        头像：
+                    </label>
+                </TH>
+                <TD>
+                    <img style="display: none;" class="fenlei_img" src="">
+                    <input type="hidden" class="px" id="headerpic" value="{weikucms:$data.headerpic}" name="headerpic" style="width:300px" readonly="readonly">
+                    <span class="ke-button-common" id="upload">上传头像</span>
+                    <span class="info_tip">建议图片尺寸 100X100像素</span>
+
+                </TD>
+                <TD>
+                    &nbsp;
+                </TD>
+            </TR>
+             
+            <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        城市：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="city" value="{weikucms:$data.city}" name="city" style="width:300px" placeholder="此处填写现所在城市">
+                </TD>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        职业：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="profession" value="{weikucms:$data.profession}" name="profession" style="width:300px" placeholder="此处填写个人职业">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        手机号：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="cellphone" value="{weikucms:$data.cellphone}" name="cellphone" style="width:300px" placeholder="此处填写个人手机号">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        邮箱：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="email" value="{weikucms:$data.email}" name="email" style="width:300px" placeholder="此处填写个人邮箱">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        QQ：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="qq" value="{weikucms:$data.qq}" name="qq" style="width:300px" placeholder="此处填写个人QQ号">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        微信：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="weixin" value="{weikucms:$data.weixin}" name="weixin" style="width:300px" placeholder="此处填写个人微信号">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        网址：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="url" value="{weikucms:$data.url}" name="url" style="width:300px" placeholder="此处填写网址">
+                </TD>
+            </TR>
+            </TR>
+                <TR>
+                <TH valign="top">
+                    <label for="keyword">
+                        地址：
+                    </label>
+                </TH>
+                <TD>
+                    <input type="input" class="px" id="address" value="{weikucms:$data.address}" name="address" style="width:300px" placeholder="此处填写个人所住地址">
+                </TD>
+            </TR>
+            
+            
+            <TR>
+                <TH>
+                </TH>
+                <TD>
+                   
+                    <button type="button" id="bsubmit" name="button" class="btn btn-primary">
+                        保存
+                    </button>
+                    
+                    <div class="clr">
+                    </div>
+                </TD>
+            </TR>
+            </TBODY>
+        </TABLE>
+    </form>
+</div>
+</div>
+<div class="clr">
+</div>
+</div>
+</div>
+</div>
+<!--底部-->
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#bsubmit").click(function(){
+            var name = $("#name").val();
+            var city = $("#city").val();
+            var headerpic = $("#headerpic").val();
+            var profession = $("#profession").val();
+            var cellphone = $("#cellphone").val();
+            var email =$("#email").val();
+            var qq =$("#qq").val();
+            var weixin =$("#weixin").val();        
+            var url = $("#url").val(); 
+            var address =$("#address").val();          
+        
+            if(! name){
+                notif({
+                    msg: "姓名不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            if(! city){
+                notif({
+                    msg: "所在城市不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+
+
+            if(! profession){
+                notif({
+                    msg: "职业不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+            if(! cellphone){
+                notif({
+                    msg: "手机不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! email){
+                notif({
+                    msg: "邮箱不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! qq ){
+                notif({
+                    msg: "QQ不能为空哦",
+                    type: "warning"
+                });
+                return false;
+            }
+             if(! weixin){
+                notif({
+                    msg: "微信",
+                    type: "warning"
+                });
+                return false;
+            }
+        
+
+           /* if(! pid){
+                notif({
+                    msg: "请填写分类层次",
+                    type: "warning"
+                });
+                return false;
+            }*/
+           $.post("{weikucms::U('Namecard/update',array(token=>$token,id=>$data['id']))}",
+                    {name:name,city:city,headerpic:headerpic,profession:profession,cellphone:cellphone,email:email,qq:qq,weixin:weixin,url:url,address:address},
+                    function(data){
+                        if(data.status == 1){
+                            notif({
+                                msg: data.info,
+                                type: "success"
+                            });
+                            setTimeout(function(){
+                                window.location.href = data.url;
+                            },'1000');
+                        }else{
+                            notif({
+                                msg: data.info,
+                                type: "error"
+                            });
+                        }
+                    },'json');
+            // window.location.href="{weikucms::U('Classify/insert',array(token=>$token))}";
+        });
+    });
+
+</script>
+<include file="Public:footer" />

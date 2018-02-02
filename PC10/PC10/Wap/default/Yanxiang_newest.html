@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+    	<title>最新产品</title>
+        <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/Yanxiang/css/yanxiang.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/Yanxiang/js/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+	<div id="loading" style="top:0;position:fixed;width:100%;height:100%;background:#efefef;z-index:10000;line-height:30em;"><img src="{weikucms::STATICS}/wapweiui/Yanxiang/imgs/loading3.gif" style="width:50%"></div>
+		<header class="xinpin-banner">
+    		<div class="right">
+    		</div>
+    		<div class="middle">
+    			最新产品
+    		</div>
+    		<div class="left">
+    			
+    		</div>
+    	</header>
+    	
+        <ul class="article-list">
+	         <volist name="info" id="vo">
+		        <a href="{weikucms::U('Wap/Yanxiang/psearch',array('id'=>$vo['id'],'token'=>$token))}">
+			         	<li>
+			    			<div class="left">
+			    				<div class="circle no-circle">
+			    					<img src="{weikucms:$vo.img_path}" />
+			    				</div>
+			    			</div>
+			    			<div class="middle">
+			    				<div class="title">{weikucms:$vo.type}</div>
+			    				<div class="content Introduction">
+			    					{weikucms:$vo.name}
+			    				</div>
+			    			</div>
+			    			<div class="right">
+			    				<div class="jianjiao"></div>
+			    			</div>
+			    		</li>
+		        </a>
+	        </volist>
+	          
+         </ul>
+         <div style="height:10px;"></div>
+        <script type="text/javascript">
+        	window.onload = function(){
+        	
+                // 列表显示 
+                $('.circle').css('height', $('.circle').width()+'px');
+    			
+    			$('.day,.month,.year').css('top', ($('.circle').height()-$('.day').height()-$('.year').height())/2+'px');
+
+    			$('.jianjiao').css('top',($('.right').height()-$('.jianjiao').height()-11)/2+'px');
+				
+    			// 里面的图片
+    			$('.circle>img').css({'width': $('.circle').width()+'px','max-height':'45px'});
+    			// li的高度
+    			$('.article-list>a>li').css('height', Number($('.title').height())+Number($('.content').height())+Number(5)+'px');
+    			// 隐藏框的长度
+                $('.hideProduct').css('width',$(window).width()*0.3+'px');
+                $('.hideProduct>a>li').css({'padding':'5px','line-height':'18px'});
+                // 点击右边的弹出来
+                $('#productSearch').bind('click',function(){
+                    if ($('.hideProduct').hasClass('flag')) {
+                       $('.hideProduct').removeClass('flag').show();
+                    }else{
+                        $('.hideProduct').addClass('flag').hide();
+                    }
+                    
+                })
+					var a = setTimeout(function(){	
+                    $("#loading").hide(0).remove();
+                },1200);
+        	}
+        </script>
+    </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <meta name="author" content="WAPWEI,Manning,Samphay@163.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="robots" content="all">
+    <meta name="Copyright" content="WAPWEI">
+    <meta name="format-detection" content="telphone=no, email=no"/>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/wapwei.css"/>
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/vanke.css"/>
+    <link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+    <title>添加收货地址</title>
+    <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+	<script src="{weikucms::STATICS}/wapweiui/ynd/js/region_select.js"></script>
+    <script src="{weikucms::STATICS}/common/msg.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2WQAlmlNeRT29pY8vTqCN7kO"></script>
+	<script>
+		function getCity(){
+	        var geolocation = new BMap.Geolocation();
+	        var geoc = new BMap.Geocoder();    
+	              geolocation.getCurrentPosition(function(r){
+	                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+	                  var mk = new BMap.Marker(r.point);
+	                  geoc.getLocation(r.point, function(rs){
+	                    var addComp = rs.addressComponents;
+	                    new PCAS('location_p', 'location_c', 'location_a', addComp.province, addComp.city,addComp.district);
+//	                    alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+	                  });  
+//	                  alert('您的位置：'+r.point.lng+','+r.point.lat);
+	                }
+	                else {
+	                  alert('failed'+this.getStatus());
+	                }        
+	              },{enableHighAccuracy: true})
+	  }
+	  getCity()
+	</script>
+	<script type="text/javascript">
+	$(function(){
+		$(".circle").touch(function(){
+//			$(this).toggleClass('up');
+            if($(this).hasClass('up')){
+                $(this).removeClass('up');
+                $(this).attr("data-title",'0');
+            }else{
+                $(this).addClass('up');
+               $(this).attr("data-title",'1');
+            }
+		})
+        $(".sures").click(function(){
+            var address = $("#location_p").val() + $("#location_c").val() +$("#location_a").val() + $("#addressDetail").val();
+            var data = {
+                name :  $('#userName').val(),
+                phone :  $('#telPhone').val(),
+                address: address,
+                type :  $('#addressType').val(),
+                sign :  $('.checkCircle').attr("data-title")
+            }
+            console.log(data);
+            var url = "{weikucms::U('Ynd/addressbind',array('token'=>$token,'openid'=>$openid))}";
+            $.post(url,data,function(rel){
+                if(rel.status==1){
+                    msg.alert(rel.info,function(){
+                        window.location.href = rel.url;
+                    });
+                }else{
+                    msg.alert(rel.info);
+                }
+            },'json')
+        })
+	})
+	</script>
+</head>
+<body class="addAddress">
+<div class="top-details">
+    <div class="arrow-left-details" onclick="window.location.href='{weikucms::U('Ynd/addressselect',array('token'=>$token,'openid'=>$openid))}'"></div>
+    <div class="details-center">
+        添加收货地址
+    </div>
+</div>
+
+    <div class="content animated fadeInDown" style="background-color: #FFF;">
+        <div class="inputBox">
+            <input type="text" class="input" id="userName" name="userName" placeholder="请填写您的姓名"/>
+        </div>
+        <div class="inputBox">
+            <input type="tel" class="input" id="telPhone" name="telPhone" placeholder="请填写您的联系方式"/>
+        </div>
+        <div class="inputBox selectBox marginTop32">
+            <select name="location_p" id="location_p"></select>
+        </div>
+        <div class="inputBox selectBox">
+            <select name="location_c" id="location_c"></select>
+        </div>
+        <div class="inputBox selectBox">
+           <select name="location_a" id="location_a"></select>
+        </div>
+        <div class="inputBox selectBox">
+            <select name="addressType" id="addressType">
+                <option value="0">请选择地址类型（公司/家庭）</option>
+                <option value="1">公司</option>
+                <option value="2">家庭</option>
+            </select>
+        </div>
+        <div class="inputBox">
+            <input type="text" class="input" id="addressDetail" name="addressDetail" placeholder="请填写详细地址"/>
+        </div>
+        <div class="setDefaultAddress f14">
+            <span class="circle checkCircle" data-title="0"></span>
+            设为默认收货地址
+        </div>
+        <div class="submitAddAddress border-4 f18 sures">
+            确认添加
+        </div>
+    </div>
+
+    <script>
+        seajs.use("helper",function(h){
+            h.area('province', 'city', 'area',true);
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<include file="Public:head"/>
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>提示信息!</strong>
+        <ol>
+            <li>所有预约信息全部在这里了哦</li>
+
+        </ol>
+    </div>
+
+          
+            <div class="clr"></div>
+          </div>
+
+          <div class="msgWrap">
+
+              <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th>姓名</th>
+                      <th style="width: 400px;">电话</th>
+                      <th>出生年月</th>
+                      <th>分院名字</th>
+                      <th>预约时间</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <volist name="info" id="vo">
+                      <tr>
+                          <td>{weikucms:$vo.name}</td>
+                          <td>{weikucms:$vo.tel}</td>
+                          <td>{weikucms:$vo.birth}</td>
+                          <td>{weikucms:$vo.otherName}</td>
+                          <td>{weikucms:$vo.atime}</td>
+                          <td>
+                              <a  class="btn btn-danger btn-sm" onclick="source_delete('{weikucms::U('Hospital/delyuyue',array('id'=>$vo['id']))}')" href="#">删除</a></td>
+                          </td>
+                      </tr>
+                  </volist>
+
+                  </tbody>
+              </table>
+
+          </div>
+        <div>
+            <ul class="pager">
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+
+
+</div>
+<include file="Public:footer"/>

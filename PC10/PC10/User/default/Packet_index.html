@@ -1,0 +1,91 @@
+<include file="Public:head"/>  
+
+<div class="cLineB">
+    <h4 class="left">微信红包活动</span></h4>
+    <div class="clr"></div>
+</div>
+<div class="cLine">
+    <div class="pageNavigator left">
+        <a href='{weikucms::U("Packet/action",array("token"=>$token,"act"=>"add"))}' title='新增全网通缉活动' class='btn btn-primary'>新增微信红包活动</a>
+    </div>
+    <div class="clr"></div>
+</div>
+<div class="msgWrap">
+    <form method="post"  action="" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <TABLE class="table table-striped" border="0" cellSpacing="0" cellPadding="0" width="100%">
+            <THEAD>
+                <TR>
+                    <TH>活动名称</TH>
+                    <TH>关键字</TH>
+                    <TH>点击数</TH>
+                    <TH>有效参与人数</TH>
+                    <TH>开始日期</TH>
+                    <TH>截止日期</TH>
+                    <TH>状态</TH>
+                    <TH class="norightborder">操作</TH>
+                </TR>
+            </THEAD>
+            <TBODY>
+                <TR></TR>
+            <volist id="data" name="data">
+                <TR>
+                    <TD>{weikucms:$data.title}</TD>
+                    <TD>{weikucms:$data.keyword}</TD>
+                    <TD>{weikucms:$data.click}</TD>
+                    <TD>{weikucms:$data.join}</TD>
+                    <TD>{weikucms:$data.statdate|date='Y-m-d',###}</TD>
+                    <TD>{weikucms:$data.enddate|date="Y-m-d",###}</TD>                  
+                    <TD>
+                <if condition="$data['status'] eq 0">未开始<elseif condition="$data['status'] eq 1"/>已经开始<else/>已经结束</if>
+
+                </TD>
+
+                <if condition="$data['status'] eq 0">
+                    <TD class="norightborder">
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/rank",array("id"=>$data["id"]))}'>排行榜</a>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/action",array("id"=>$data["id"],"token"=>$token,"act"=>"edit"))}'>编辑</a>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Present/index",array("id"=>$data["id"]))}'>奖品设置</a>
+                        <br/>
+                        <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/start",array("id"=>$data["id"],"token"=>$token))}'>开始</a>
+                        <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+                        <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/reset",array("id"=>$data["id"],"token"=>$token))}'>密码设置</a>
+                    </TD>
+                    <elseif condition="$data['status'] eq 1"/>
+                    <TD class="norightborder">
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/rank",array("id"=>$data["id"]))}'>排行榜</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/action",array("id"=>$data["id"],"token"=>$token,"act"=>"edit"))}'>编辑</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Present/index",array("id"=>$data["id"]))}'>奖品设置</a>
+                    <br/>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/end",array("id"=>$data["id"],"token"=>$token))}'>结束</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/reset",array("id"=>$data["id"],"token"=>$token))}'>密码设置</a>
+					<a class="btn btn-success btn-sm" target="_blank" href='{weikucms::U("Wap/Packet/index",array("lid"=>$data["id"],"token"=>$token))}'>预览</a>
+                    </TD>
+                    <else/>
+                    <TD class="norightborder">
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/sn",array("id"=>$data["id"]))}'>SN码管理</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/rank",array("id"=>$data["id"]))}'>排行榜</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/action",array("id"=>$data["id"],"token"=>$token,"act"=>"edit"))}'>编辑</a>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Present/index",array("id"=>$data["id"]))}'>奖品设置</a>
+                    <br/>
+                    <a class="btn btn-success btn-sm" href='{weikucms::U("Packet/start",array("id"=>$data["id"],"token"=>$token))}'>开始</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/del",array("id"=>$data["id"],"token"=>$token))}'>删除</a>
+                    <a class="btn btn-danger btn-sm" href='{weikucms::U("Packet/reset",array("id"=>$data["id"],"token"=>$token))}'>密码设置</a>
+					<a class="btn btn-success btn-sm" target="_blank" href='{weikucms::U("Wap/Packet/index",array("lid"=>$data["id"],"token"=>$token))}'>预览</a>
+                    </TD>
+                </if>
+
+			    </TR>
+            </volist>
+            </TBODY>
+        </TABLE>
+    </form> 
+</div>
+<div>
+    <ul class="pager">{weikucms:$page}</ul>
+</div>
+<include file="Public:footer"/>

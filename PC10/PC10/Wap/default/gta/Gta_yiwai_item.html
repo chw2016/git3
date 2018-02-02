@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{weikucms:$tpl.name}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/normalize.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/common.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/sprites.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insurance_index.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/gta/css/Insure.css" />
+		<script type="text/javascript" src="{weikucms::STATICS}/wapweiui/gta/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="{weikucms::STATICS}/lm/js/prompt.js"></script>
+
+        <script>
+			$(function(){
+				$(document).on('click','.btn',function(){
+					var name=$("[name=name]").val();
+					var zhiye=$("[name=zhiye1]").val();
+					//var age=$("[name=age]").val();
+				//	btn=[name,sex,age];
+                    if(!name){
+                        show_error_tip('请填写投保人数')
+                        $("[name=name]").focus();
+                        return false;
+                    }
+                    if(!zhiye){
+                        show_error_tip('请选择职业')
+                        $("[name=zhiye1]").focus();
+                        return false;
+                    }
+					//alert(zhiye);
+                    var money=[];
+                    var pname=[];
+                    var a=1;
+                    $(".bx .bbc").each(function(e,t){
+
+                        if($(t).val()){
+                            money[e]=$(t).val();
+                            pname[e]=$(t).attr('tname');
+                            a=0;
+                        }
+
+                    })
+                    if(a==1){
+                        show_error_tip('请选择保险项目');
+                        return false;
+                    }
+                    money.join(',');
+                    pname.join(',');
+                    $("input[name=people_num]").val(name);
+                    $("input[name=zhiye]").val(zhiye);
+                    $("input[name=money]").val(money);
+                    $("input[name=pname]").val(pname);
+                    $("#form").submit();
+
+
+
+				})
+				$(document).on('click','.a1',function(){
+				    $(".File").toggle();
+				})
+                $(document).on('click','.File ul li',function(){
+                    $(".File").css("display","none");
+                    $(".text_data").val($(this).html());
+                })
+                //input丢失事件
+                $("input").blur(function(){
+                    if($(this).val()>0){
+                        $(this).addClass('bbc');
+                    }else{
+                        $(this).removeClass('bbc');
+                    }
+                })
+			})
+		</script>
+        <style>
+            .File ul li{
+                padding-left: 17px;
+                padding-right: 17px;
+            }
+            .people ul{
+            	display: -webkit-box;
+            }
+            .people ul li{
+            	-webkit-box-flex: 1;
+            	font-size: 14px;
+            text-align: left;
+            }
+            .money_kx p{
+                font-size: 10px;
+            }
+            .money_kx{
+                padding-left: 7px;
+                padding-top: 2px;
+            }
+            .moneyex1 {
+                position: absolute;
+                right: 3px;
+                top: 8px;
+            }
+            .moneyxi1 {
+                position: absolute;
+                right: 18px;
+                top: 7px;
+                color: #c5d0c5;
+            }
+            .money_people {
+                border: 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                height: 30px;
+                padding-left: 5px;
+                width: 55%;
+                padding-right: 21px;
+            }
+            .money_new {
+                position: relative;
+                display: inline-block;
+                margin-top: 3px;
+                text-align: right;
+            }
+        </style>
+<body>
+    <form action="" method="post" id="form" >
+        <input type="hidden" name="people_num" >
+        <input type="hidden" name="zhiye" >
+        <input type="hidden" name="money" >
+        <input type="hidden" name="pname" >
+
+    </form>
+		<header>
+			<a href="#" onclick="javascript:history.back();return false " class="sprites-icon_logo"></a>
+			<h1 id="h1_title" style="color: #FFFFFF;">投保选择</h1>
+			<div>&nbsp;</div>
+		</header>
+		<!--内容模块-->
+		<section class="contant ">
+		<div class="shadow40 mb10">
+			<p class="f14">投保人数</p>
+			<div class="Fill_name"><input type="tel" placeholder="请填写您需要投保的人员数量" name="name" style="width: 85%;" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+		</div>
+		<div class="shadow40 mb10">
+			<p class="f14">职业类别</p>
+			<div class="Fill_name a1">
+				<input type="text" placeholder="请填写您的职业类别" style="width: 85%;" readonly class="text_data" name="zhiye1">
+				<div class="Down_list">
+				</div>
+			</div>
+			<div class="File">
+				<ul style=" margin-right: 7px;">
+                    <volist name="zhiyes" id="vo">
+                        <li  style="">{weikucms:$vo}</li>
+                    </volist>
+
+				</ul>
+			</div>
+		</div>
+		<div style="height: 80px;"></div>
+		<div class="shadow people" >
+			<!--<span>保险项目</span>
+			<span>投保金额</span>-->
+			<ul>
+				<li>保险项目</li>
+				<li>投保金额</li>
+			</ul>
+		</div>
+            <volist name="list" id="vo">
+		<div class="shadow clearfix bx <if condition="$i eq 1"> mt5</if>">
+			<div class="fl new">
+			<span>
+				<p style="margin-top: 7px;">
+                    <?php echo str_substr($vo['name'],6,'');?>
+                </p>
+
+			</span>
+			</div>
+			<div class="fr">
+				<div class="money_new">
+					<input type="tel" placeholder="请填写投保金额"  class="money_people" tname="{weikucms:$vo.name}" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					 <span class="moneyex1">元</span>
+		    	  	<span class="moneyxi1">|</span>
+				</div>
+				<span class="money_kx" >
+					<p>可选范围：</p>
+				    <p><?php echo str_substr($vo['money_range'],6,'');?></p>
+				</span>
+			</div>
+		</div>
+                </volist>
+
+
+
+
+		 <div class="mt20 pt201"><span class="btn type_btn">我要投保</span></div>
+		</section>		
+	</body>
+</html>

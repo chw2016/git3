@@ -1,0 +1,517 @@
+﻿<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>填写评论</title>
+
+    <meta name="author" content="samphay@163.com">
+
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+
+    <link type="text/css" rel="stylesheet" href="{weikucms::RES}/ieat/css/style.css?v=1" />
+
+    <script src="{weikucms::RES}/ieat/js/jquery-1.11.1.min.js"></script>
+
+    <script src="{weikucms::RES}/ieat/js/main.js?v=1"></script>
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    <!--webuploader-->
+
+    <link type="text/css" rel="stylesheet"  href="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.css">
+
+    <!--<script type="text/javascript" charset="utf-8" src="{weikucms::STATICS}/star/webuploader-0.1.5/webuploader.js"> </script>-->
+
+    <!--/webuploader-->
+
+    <script type="text/javascript" charset="utf-8" src="{weikucms::STATICS}/jquery.form.js"> </script>
+
+    <style type="text/css">
+
+        .picToLike {
+            width: 100%;
+            height: auto;
+            position: relative;
+            top: -20px;
+            min-height: 200px;
+            background-color: #789;
+            margin: 0 auto;
+            background-position: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .rePick { height: 30px; width: 30px; position: relative; bottom: 0; position: absolute; right: 0; }
+
+        .userInput {
+
+            width: 90%;
+
+            margin: 10% auto;
+
+            height: 70px;
+
+            position: relative;
+
+        }
+
+        .progress {   top: -113px; left: 25%; position: relative; color: #FFF; width: 200px; }
+
+        .userLogo {
+
+            width: 70px;
+
+            height: 70px;
+
+            background-color: rgb(250,234,190);
+
+            border-radius: 50%;
+
+            -webkit-border-radius: 50%;
+
+            margin-right: 18px;
+
+            background-position: 50%;
+
+            background-size: cover;
+
+            background-repeat: no-repeat;
+
+        }
+
+
+
+        .InputBoxSaysomething {
+
+            width: 70%;
+
+            background-color: rgb(141,195,97);
+
+            height: 100%;
+
+            border-radius: 10px;
+
+            -webkit-border-radius: 10px;
+
+        }
+
+        .InputBoxSaysomething:before{
+
+            content:"";
+
+            border-right: 10px solid rgb(141,195,97);
+
+            border-bottom: 10px solid transparent;
+
+            border-top: 10px solid transparent;
+
+            width: 0;
+
+            position: absolute;
+
+            left: 78px;
+
+            top: 30%;
+
+            height: 0;
+
+            display: inline-block;
+
+        }
+
+        .InputBoxSaysomething input[type="text"] {
+
+            border: 0;
+
+            background: none;
+
+            color: #fff;
+
+            width: 93%;
+
+            height: 100%;
+
+            font-size: 20px;
+
+            margin: 0 auto;
+
+            display: block;
+
+        }
+
+        .InputBoxSaysomething input::-webkit-input-placeholder{
+
+            color:#fff;
+
+        }
+
+        .btn.Publish {
+
+            width: 150px;
+
+            height: 60px;
+
+            border: 1px solid rgb(206,206,206);
+
+            border-radius: 10px;
+
+            -webkit-border-radius: 10px;
+
+            margin: 15% auto;
+
+            background-color: rgb(246,246,246);
+
+            text-align: center;
+
+            font-family: "微软雅黑";
+
+            line-height: 62px;
+
+            color: rgb(130,130,130);
+
+            font-size: 20px;
+
+        }
+
+        .webuploader-container {
+
+            position: relative;
+
+            margin-left: 25%;
+
+            top: -183px;
+
+        }
+
+        .webuploader-pick {
+
+            position: relative;
+
+            display: inline-block;
+
+            cursor: pointer;
+
+            background: #00b7ee;
+
+            padding: 10px 15px;
+
+            color: #fff;
+
+            text-align: center;
+
+            border-radius: 3px;
+
+            overflow: hidden;
+
+        }
+
+	.webuploader-pick { background-color: transparent;   top: -204px; left: 25%; }
+    #fileupload { height: 100%; width: 100%; opacity: 0; }
+
+	.webuploader-pick { background-image: url("tpl/Wap/default/common/ieat/img/upload.png"); height: 150px; width: 141px;}
+
+	#customer_msg{background: transparent; color: #FFF; border: 0px; padding: 5px; height: 70px; width: 100%; }
+
+
+    </style>
+
+</head>
+
+<body style="overflow-x: hidden; width: 100%;">
+
+<div class="Home" onclick="window.location.href='{weikucms::U('Ieat/index',array('token'=>$token,'openid'=>$openid))}'">
+
+    <div class="c1">
+
+        <div class="c2">
+
+            <div class="c3 logo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="picToLike" id="picToLike" style="">
+    <div class="rePick" style="display: none;"><img src="{weikucms::RES}/ieat/img/upload.png" width="100%" height="100%" /></div>
+</div>
+
+<span id="url" name=""></span>
+
+<div id="uploader-demo" style="visible: hidden; height: 0px;">
+
+    <!--用来存放item-->
+
+    <div id="fileList" class="uploader-list"></div>
+
+    <!--<div class="progress" style="display: none;">正在上传，请耐心等候...</div>-->
+    <div id="filePicker">
+        <!--<form id="myupload" action="{weikucms::U('Wap/Sellcar/uploadsT',array('token'=>$token))}" method="post" enctype="multipart/form-data">-->
+        <div class="webuploader-pick prcimg">
+        <!--<input id="fileupload" type="file" name="mypic">-->
+        </div>
+        <!--</form>-->
+    </div>
+
+
+</div>
+
+
+<!--<script type="text/javascript">
+$(function(){
+    var $File     = $('#fileupload');
+    var $FileForm = $('#myupload');
+    var $Progress = $('.progress');
+    var $rePick   = $('.rePick');
+    var $list = $(".picToLike");
+    $File.change(function(){
+        $FileForm.ajaxSubmit({
+            dataType:'json',
+            beforeSend:function(){
+                $('#filePicker').hide();
+                $Progress.show();
+                $list.css("background-image","");
+            },
+            success:function(data){
+                var img=data.pic;
+                var url = 'http://v.wapwei.com/'+img;
+                $Progress.hide();
+                $list.css("background-image","url('"+url+"')");
+                $("#url").attr('name',url);
+                $rePick.show();
+            },
+            error:function(xhr){
+                $Progress.text('上传失败，请重新再试').show();
+                window.location.reload();
+            }
+        });
+    });
+    $rePick.click(function(){
+        $File.trigger('click');
+    });
+});
+</script>-->
+
+
+
+
+<div class="userInput myul">
+
+    <div class="userLogo" style="background-image: url({weikucms:$info['headimgurl']})"></div>
+
+    <div class="InputBoxSaysomething">
+
+	<textarea id="customer_msg">说点什么把....</textarea>
+
+        <input type="hidden" name="picimage" id="picimage" value=""/>
+
+    </div>
+
+</div>
+
+
+
+<div class="btn Publish ieatsure " >
+
+    发表评论
+
+</div>
+
+<script>
+
+    // 初始化Web Uploader
+
+/*
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+
+        auto: true,
+
+        // 文件接收服务端。
+
+        server:"{weikucms::U('Ieat/uploadPic',array('token'=>$token,'openid'=>$openid))}&cat_id={weikucms:$get['cat_id']}",
+
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+
+        pick: '#filePicker',
+
+        // 只允许选择图片文件。
+
+        accept: {
+
+            title: 'Images',
+
+            extensions: 'gif,jpg,jpeg,bmp,png',
+
+            mimeTypes: 'image/*'
+
+        }
+
+    });
+
+    uploader.on( 'uploadSuccess', function(file, response) {
+
+        $('#filePicker').hide();
+
+        var $list = $(".picToLike");
+
+        var url = "/upload/{weikucms:$token}/image/{weikucms::date('Ymd')}/"+response[0].savename;
+
+        $list.css("background-image","url("+url+")");
+
+        $("#url").attr('name',url);
+
+    });
+
+    */
+
+
+    var sDefault = '说点什么把....';
+    $('#customer_msg').focus(function(){
+        var $this = $(this);
+        var sVal = $this.val();
+        if(sDefault == sVal){
+            $this.val('');
+        }
+        }).blur(function(){
+            var $this = $(this);
+            var sVal = $this.val();
+            if($.trim(sVal) == ''){
+                $this.val(sDefault);
+            }
+        });
+
+    $(function(){
+        $('.ieatsure').click(function() {
+        //$('.ieatsure').one('click',function() {
+            var url = $("#picimage").val();
+            var url1 = "{weikucms::U('Ieat/ajaxcon',array('token'=>$token,'openid'=>$openid,'cat_id'=>$get['cat_id']))}&cat_id={weikucms:$get['cat_id']}";
+            var customer_msg = $("#customer_msg").val();
+            if (!url) {
+                alert("没有上传图片");
+                return false;
+            }
+            if (!customer_msg || customer_msg == sDefault) {
+                alert("没有填写内容");
+                return false;
+            }
+
+            if (customer_msg.length > 80) {
+                alert("内容字数不得超过80个字符");
+                return false;
+            }
+            $('.ieatsure').html('发表进行中...')
+            $.post(url1,{url:url,customer_msg:customer_msg},function(rel){
+                if(rel.status==1){
+                    alert("发表成功");
+                    window.location.href = "{weikucms::U('Ieat/msgWall',array('token'=>$token,'openid'=>$openid,'cat_id'=>$_GET['cat_id']))}";
+                }else{
+                    alert("发表失败");
+                }
+            },'json')
+        })
+    })
+
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'chooseImage',
+
+            'uploadImage',
+            'downloadImage',
+        ]
+    });
+    wx.ready(function () {
+        var images = {
+            localId: [],    //
+            serverId: []
+        };
+        //chooseImage
+
+        $(".prcimg").click(function() {    //拍照、本地选图
+
+            wx.chooseImage({
+                count: 1,
+                success: function (res) {
+                    images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片45
+                    $('#myupload .uploadtxt').removeClass('nonepic').html('<span style="color: #2cb763">正在上传中</span>');
+                    // alert('已选择 ' + res.localIds.length + ' 张图片');
+                    //  alert(localIds);
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                i++;
+                                // alert('已上传：' + i + '/' + length);
+                                images.serverId.push(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }else{
+                                    var  url="{weikucms::U('Roadnext/weixin_img',array('token'=>$token,'openid'=>$openid))}";
+                                    $.post(url,{imgs:encodeURIComponent(images.serverId)},function(data){
+                                        var leng=data.imgs.length;
+                                        $.each(data.imgs, function(e,t){
+                                            //    alert(item)
+                                            $("#picimage").val(t);
+                                            if($('#imges').attr('src')){
+                                                $('.webuploader-pick').css('display','none');
+                                                $('#imges').attr('src',t);
+
+                                            }else{
+                                                $('.webuploader-pick').css('display','none');
+                                                $("#picToLike").append("<img src='"+t+"' id='imges' />").find('img').css({
+                                                    'max-width': '100%',
+                                                    'max-height': '196px',
+                                                    'margin': '0 auto',
+                                                    'display': 'block',
+                                                });
+
+                                            }
+
+
+                                        })
+                                    },'json');
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    }
+                    upload();//上传
+
+                }
+            });
+        })
+    })
+
+    $(".body_img_left,.body_img_right").on('click',function(){
+        $(".span_btn").trigger('click');
+        $("#chooseImage").trigger('click');
+    })
+	
+	$(document).on('click', '#imges', function(){
+	$(".prcimg").trigger('click');
+	})
+
+</script>
+
+</body>
+
+</html>
+

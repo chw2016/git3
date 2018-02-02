@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title>由你定</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/css/common.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/icon/style.css">
+	<link rel="stylesheet" href="{weikucms::STATICS}/wapweiui/ynd/css/user.css">
+            <script type="text/javascript" src="{weikucms::STATICS}/wapweiui/ynd/js/jquery-1.11.2.min.js"></script>
+
+    <body>
+                <div class="top-details">
+                        <div class="arrow-left-details" onclick="javascript:history.back(-1);"></div>
+                        <div class="details-center">
+                                    我的放单
+                        </div>
+                </div>
+                <div class="order-tab-top">
+                        <ul class="order-tab-top-ul clearfix    ">
+                                <li class="order-tab-top-ul-li <if condition="$_GET[type] eq ''">tab-top-active</if> " onclick="location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid))}'">全部</li>
+                                <li class="order-tab-top-ul-li <if condition="$_GET[type] eq 1">tab-top-active</if>" onclick="location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid,'type'=>1))}'">正在放单</li>
+                                <li class="order-tab-top-ul-li <if condition="$_GET[type] eq 2">tab-top-active</if>" onclick="location.href='{weikucms::U('Ynd/fRecord',array('token'=>$token,'openid'=>$openid,'type'=>2))}'">历史放单</li>
+                        </ul>
+                </div>
+                <div class="order-tab-main">
+
+                    <if condition="$list">
+                        <volist name="list" id="vo">
+                            <div class="order-tab-main-content">
+                                <if condition="($vo['num'] eq 0) OR ($vo['num'] eq '')">
+                                    <div class="order-tab-main-content-count color595959">已售完</div>
+                                    <else/>
+                                    <div class="order-tab-main-content-count">剩余{weikucms:$vo.num}件</div>
+                                </if>
+
+                                <div class="order-tab-main-content-img">
+                                    <div class="order-tab-main-content-left">
+                                        <img src="{weikucms:$vo['info']['pic']}" />
+                                    </div>
+                                    <div class="order-tab-main-content-right">
+                                        <div class="order-tab-main-content-right-size">
+                                            {weikucms:$vo['info']['name']}
+                                        </div>
+                                        <div class="order-tab-main-content-right-money">
+                                            参考零售价：￥{weikucms:$vo['info']['price']}
+                                        </div>
+                                        <div class="order-tab-main-content-right-size">
+                                            (LQ{weikucms:$vo['info']['LQ']} + CQ{weikucms:$vo['info']['CQ']})
+                                        </div>
+                                        <div class="order-tab-main-content-right-size">
+                                            放单指数：{weikucms:$vo.exponent}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-tab-main-content-title line-bottom">放单数量：{weikucms:$vo.sumnum}件</div>
+                                <div class="order-tab-main-content-title line-bottom">购买金额：{weikucms:$vo.money}元</div>
+                                <div class="clearfix order-tab-main-content-title line-bottom">
+                                    放单单价：{weikucms:$vo['fprice']}元/件
+                                    <!--  <span class="arrow-right fr gap"></span>-->
+                                </div>
+                                <div class="order-tab-main-content-title line-bottom">放单时间：{weikucms:$vo.add_time}</div>
+                                <div class="order-tab-main-content-title ">赚取金额：<php> echo ($vo['fprice']*$vo['sumnum'])-$vo['money']</php>元</div>
+                            </div>
+                        </volist>
+                        <else/>
+                        <div style="text-align: center;padding: 20px;">
+                            <if condition="$_GET['type'] eq 1">
+                                您现在暂无正在的放单！
+                                <elseif condition="$_GET['type'] eq 2"/>
+                                您还没有历史放单记录
+                                <else/>
+                                您还没有历史放单记录
+                            </if>
+
+                        </div>
+
+
+                    </if>
+                </div>
+                <div style="height: 75px;"></div>
+                <include file="./tpl/Wap/default/ynd/jiaobenban.html" />
+    </body>
+</html>

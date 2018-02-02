@@ -1,0 +1,74 @@
+<include file="Public:head"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style type="text/css">
+    div ul li{
+        list-style-type:none;
+		float: left;
+    }
+    .addstyle{
+        background: #19b593;
+        color: white;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px;
+        cursor: pointer;
+		
+    }.borderColor{
+		border-bottom:3px solid #1576AD;
+	}
+
+</style>
+<div class="cLineB">
+    <div class="title_tab" id="topTab">
+        <ul class="tab_navs title_tab" data-index="0" >
+
+
+			<li data-index="0" class="tab_nav first js_top borderColor" data-id="financial" style="padding-left: 10px;">
+				邀请记录
+			</li>
+            <li style="background-color: #1576AD;color: white;float: right;width:10%;font-size: 15px">
+                <a href="{weikucms::U('Media/userCenter',array('token'=>$token))}" style="color: white;text-decoration:none;">返&nbsp&nbsp回</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="msgWrap">
+    <form method="post"  action="###" id="info" >
+        <input name="delall"  type="hidden" value="" />
+        <input name="wxid"  type="hidden" value="" />
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>昵称</th>
+                <th>会员名</th>
+                <th>时间</th>
+                <th>下属级别</th>
+
+            </tr>
+            </thead>
+            <volist id="vo" name="info" key="i">
+            <tr>
+                <td>{weikucms:$vo.id}</td>
+                <td>{weikucms:$vo.openid}</td>
+                <td>{weikucms:$vo.nickname}</td>
+                <td>{weikucms:$vo.date}</td>
+                <td>
+                    <if condition="$vo['message'] eq 2">二级<elseif condition="$vo['message'] eq 3"/>三级<else/>一级</if>
+                </td>
+
+            </tr>
+            </volist>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul class="pager">
+        {weikucms:$page}
+    </ul>
+</div>
+</div>
+<include file="Public:footer"/>

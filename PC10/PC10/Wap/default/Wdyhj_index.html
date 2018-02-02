@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Wapwei,Manning,Samphay@163.com">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+	<title>鱼美人-我的优惠卷</title> 
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/samphay.css">
+		<link rel="stylesheet" href="{weikucms::RES}/mru/css2/style.css">
+		<script src="{weikucms::RES}/mru/js2/jquery-1.11.1.min.js"></script>
+		<script src="{weikucms::RES}/mru/js2/main.js"></script>
+		<script src="{weikucms::RES}/mru/js2/msg.js"></script>
+        <style type="text/css">
+            .orderBooking:before{
+                content: "我要报名";
+            }
+            .limitShoppingBoxWrap.off .orderBooking:before{
+                content: "已结束";
+            }
+        </style>
+    </head>
+    <body class="freeFelt" style="overflow-x:hidden">
+        <div class="youhuiquanmain">
+        <if condition="$list" >
+         <volist name="list" id="v" >
+           <a href="{weikucms::U('show',array('token'=>$_GET['token'],'openid'=>$_GET['openid'],'id'=>$v['id']))}" >
+            <div class="diyongquan" style="background-image: url({weikucms:$v['pic']});" >
+                <div class="jine"><span class="money">{weikucms:$v['price']}</span>元</div>
+                <div class="card">{weikucms:$v['yzm']}</div>
+            </div>
+           </a> 
+        </volist>
+        <else/>
+                抱歉你还没有优惠卷！
+             
+        </if>
+        </div>
+<include file="./tpl/Wap/default/mrufx.html" />     
+    </body>
+</html>

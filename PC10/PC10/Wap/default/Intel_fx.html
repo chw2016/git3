@@ -1,0 +1,70 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var shareTitle="信则立车联网";//标题
+    var imgUrl="http://wx.qlogo.cn/mmopen/hIz3ylFIYSibic6zX0IVqRIRZfLceHD6icWK46WQicia3P4UmJ01LxiawyH1CefD8Io8ux6lC6Rdu67hTlGEQjPQKs3smboMoFQDAq/0";//图片
+    var desc = location.href;
+    shareUrl = location.href;
+    wx.config({
+        appId: '{weikucms:$signPackage.appId}',
+        timestamp: {weikucms:$signPackage.timestamp},
+        nonceStr: '{weikucms:$signPackage.nonceStr}',
+        signature: '{weikucms:$signPackage.signature}',
+        jsApiList: [
+            'onMenuShareTimeline',//朋友圈
+            'onMenuShareAppMessage',// 朋友
+            'onMenuShareQQ',//QQ
+            'onMenuShareWeibo'//微博
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            desc : desc,
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+        	title: shareTitle, // 分享标题
+            desc : desc,
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+
+
+        wx.onMenuShareQQ({
+        	title: shareTitle, // 分享标题
+            link: shareUrl, // 分享链接
+            desc : desc,
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareWeibo({
+        	title: shareTitle, // 分享标题
+            desc : desc,
+            link: shareUrl, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>

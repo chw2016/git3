@@ -1,0 +1,90 @@
+<include file="Public:head"/>
+<form class="form" method="post" action=""  target="_top" enctype="multipart/form-data" >
+	<div class="cLineB">
+		
+		<h4 class="left"><if condition="$type eq 1">添加推广员<elseif condition="$type eq 2"/>编辑业务推广员</if></h4>
+		<div style="float:right;margin-right:0px;padding-right:15px;background-color: #B098FB;line-height: 40px; border-radius:5px;" >
+			<a href="{weikucms::U('Repair/saler',array('token'=>$token))}" style="text-decoration:none;"><h4>返回上一层</h4></a>
+		</div>
+	</div>
+	<div class="msgWrap bgfc">
+	<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		 <tr>
+			<th valign="top">推广员的名字：</th>
+			<td>
+				<input type="input" class="px" id="name"  name="name" style="width:208px" maxlength="16" value="{weikucms:$salerDatas['saler_name']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">推广员的工号：</th>
+			<td>
+				<input type="input" class="px" id="saler_no"  name="saler_no" style="width:208px" maxlength="16" value="{weikucms:$salerDatas['saler_nid']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">推广员的密码：</th>
+			<td>
+				<input type="input" class="px" id="saler_pass"  name="saler_no" style="width:208px" maxlength="16" value=""/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">联系方式：</th>
+			<td>
+				<input type="input" class="px" id="phone" name="phone" style="width:208px" maxlength="16" value="{weikucms:$salerDatas['saler_tel']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr> 
+	        <th valign="top">推广员的性别：</th>				        
+	        <td>
+	        	<select name="sex" id="sex">
+	        		 <option value="0" disabled="true">请选择</option>
+		        	 <option value="女">女</option>
+		        	 <option value="男">男</option>
+	        	</select>
+	        </td>
+	     </tr>
+  		 
+  		 <tr>
+			<th valign="top">推广员的年纪：</th>
+			<td>
+				<input type="input" class="px" id="age" name="age" style="width:208px" maxlength="16" value="{weikucms:$salerDatas['saler_age']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">业务工作经验：</th>
+			<td>
+				<input type="input" class="px" id="experience" name="experience" style="width:208px" maxlength="16" value="{weikucms:$salerDatas['saler_day']}"/>
+			</td>
+  		 </tr>
+  		 
+  		 <tr>
+			<th valign="top">推广员的工作职位：</th>
+			<td>
+	        	<select name="place" id="place">
+	        		 <option value="0" disabled="true">请选择</option>
+		        	 <option value="普通">普通</option>
+		        	 <option value="业务经理">业务经理</option>
+	        	</select>
+	        </td>			
+  		 </tr>
+  		 
+  		 <tr>
+			<th>&nbsp;</th>
+			<td>
+				<button type="submit" name="sure" class="btn btn-primary">确定</button>　
+				<a href="" class="btn btn-primary">取消</a>　
+			</td>
+         </tr>
+		 <TR style="height: 150px;"></TR>
+  		 
+		</tbody>
+	</table>
+ </div> 
+</form>
+<include file="Public:footer"/> 

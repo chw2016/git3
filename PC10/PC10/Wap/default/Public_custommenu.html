@@ -1,0 +1,56 @@
+<link rel="stylesheet" type="text/css" href="{weikucms::STATICS}/wapweiui/weiweb/custommenu/css/style_1.css" media="all" />
+<div data-role="widget" data-widget="nav4" class="nav4">
+			<link href="{weikucms::STATICS}/wapweiui/weiweb/custommenu/css/style.css" rel="stylesheet" />
+			<nav>
+				<div id="nav4_ul" class="nav_4">
+					<ul class="box">
+						<?php
+							foreach ($diymens as $key => $value) {
+								echo "
+								<li>
+								<a href=\"javascript:void(0);\" ><span>".$value['title']."</span></a>
+								<dl>";
+								foreach ($dataArray[$value['id']] as $k => $val) {
+									echo "<dd>".$val['title']."</dd>";
+								}
+								echo "</dl></li>";
+							}
+						?>		
+					</ul>
+				</div>
+			</nav>
+			<div id="nav4_masklayer" class="masklayer_div">&nbsp;</div>
+			<script type="text/javascript">
+				var nav4 =(function(){
+				bindClick = function(els, mask){
+				if(!els || !els.length){return;}
+				var isMobile = "ontouchstart" in window;
+				for(var i=0,ci; ci = els[i]; i++){
+					ci.addEventListener("click", evtFn, false);
+				}
+
+				function evtFn(evt, ci){
+					ci =this;
+					for(var j=0,cj; cj = els[j]; j++){
+				if(cj != ci){
+					console.log(cj);
+					cj.classList.remove("on");
+				}
+			}
+			if(ci == mask){mask.classList.remove("on");return;}
+			switch(evt.type){
+				case "click":
+					var on = ci.classList.toggle("on");
+					mask.classList[on?"add":"remove"]("on");
+				break;
+				}
+			}
+			mask.addEventListener(isMobile?"touchstart":"click", evtFn, false);
+		}
+			return {"bindClick":bindClick};
+		})();
+			</script>
+			<script type="text/javascript">
+				nav4.bindClick(document.getElementById("nav4_ul").querySelectorAll("li>a"), document.getElementById("nav4_masklayer"));
+			</script>
+		</div>

@@ -1,0 +1,871 @@
+<include file="Public:public"/>
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/wapwei/victor-client.css">
+<link rel="stylesheet" type="text/css" href="{weikucms::RES}/css/cymain.css" />
+<style>
+    .selectAll,.select {
+        width: 18px;
+        height: 18px;
+        border: 1px solid #ccc;
+        position: relative;
+        z-index: 10;
+    }
+    .selectAll.on,.select.on {
+        text-align:center;
+        line-height:18px;
+        color: rgb(234, 85, 20);
+        border-color:rgb(234, 85, 20);
+    }
+    .selectAll.on:before,.select.on:before {
+        content:"√";
+    }
+</style>
+
+
+
+<script>
+    $(function(){
+        var height=$(document).height();
+        $("#con").css({"height":height});
+    })
+</script>
+<div id="con" style="width: 100%;height: 100%;background-color: white;padding-top:15px;">
+<div style="width: 90%;margin: 0 auto;">
+    <div class="cLineB">
+
+        <div class="title_tab" id="topTab">
+            <ul class="tab_navs title_tab" data-index="0" >
+
+                <li data-index="0" class="tab_nav first js_top " data-id="total">
+                    <a href="{weikucms::U('ShopBranch/account',array('token'=>$token,'branch_id'=>$branch_id))}">我的账户</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'branch_id'=>$branch_id))}">所有订单</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'branch_id'=>$branch_id,'type'=>1))}">今日订单</a>
+                </li>
+
+                <!--<li data-index="1" class="tab_nav  js_top sub" data-id="today">-->
+                    <!--<a href="">未处理订单</a>-->
+                <!--</li>-->
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopBranch/classify',array('token'=>$token,'branch_id'=>$branch_id))}">类目设置</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopBranch/ware',array('token'=>$token,'branch_id'=>$branch_id))}">商品上架</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopBranch/Flash',array('token'=>$token,'branch_id'=>$branch_id))}">轮播图管理</a>
+                </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopBranch/writing',array('token'=>$token,'branch_id'=>$branch_id))}">店铺设置</a>
+                </li>
+				
+               <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                   <a href="{weikucms::U('ShopBranch/activitise',array('token'=>$token,'branch_id'=>$branch_id))}">活动</a>
+               </li>
+
+                <li data-index="1" class="tab_nav  js_top sub" data-id="today">
+                    <a href="{weikucms::U('ShopBranch/changepwd',array('token'=>$token,'branch_id'=>$branch_id))}"> 修改密码</a>
+                </li>
+
+            </ul>
+        </div>
+    <!-- <div class="title_tab" id="topTab" style="float:right;height:40px;margin-left:100px;margin-right:100px;padding-left:36px;padding-right:36px;line-height:40px;border-radius:6px;background-color:#98FB98;font-size:16px;widht:120px;">
+    	<a style="text-decoration:none;"href="{weikucms::U('Store/login',array('token'=>$token))}" <if condition="$hover5 eq 1">class="hover"</if>>进入分店</a>
+    </div>   -->    
+</div>
+    
+<div class="alert alert-info" style="margin-top: 20px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>提示信息!</strong>
+	<ol>
+		<li>在这里可以了解万普微门店(所有分店)的订单总数、今日的订单量、会员总数和未处理订单，未处理订单将会展示各分店订单的处理情况，有利于了解和管理分店。</li>
+		<li>在这里还可以添加分店、编辑分店、删除分店。</li>
+        <li>因每天序号清0，所以序号只有在今日订单的时候才是跟订单号对应的</li>
+	</ol>
+</div>
+
+<div class="box-content">
+<if condition="$type neq 1">
+    <div class="row-fluid">
+        <ul id="custom_group_navigator_div" class="qb_clearfix unstyled">
+
+            <li class="list-box" style="width: 12%">
+                <div class="list-box__hd list-box__hd_bg_1">订单总数</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total">{weikucms:$totalorder}</strong>
+                        <div class="list-box__trend" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 12%">
+                <div class="list-box__hd list-box__hd_bg_1">成交率</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$buyrate}</strong>
+                        <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 12%">
+                <div class="list-box__hd list-box__hd_bg_2">总收入</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$totalmoney}元</strong>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 12%">
+                <div class="list-box__hd list-box__hd_bg_1">客单</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$singlerate}</strong>
+                        <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 13%">
+                <div class="list-box__hd list-box__hd_bg_1">未确认</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$unsure}</strong>
+                        <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+
+                    <div class="list-box__links"><a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'type'=>2,'branch_id'=>$branch_id))}">详情</a></div>
+
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 13%">
+                <div class="list-box__hd list-box__hd_bg_1">配送中</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$send}</strong>
+                        <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+
+                    <div class="list-box__links"><a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'type'=>3,'branch_id'=>$branch_id))}">详情</a></div>
+
+                </div>
+            </li>
+
+            <li class="list-box" style="width: 13%">
+                <div class="list-box__hd list-box__hd_bg_1">已收货</div>
+                <div class="list-box__bd">
+                    <div class="list-box__count">
+                        <strong class="list-box__total" id="NewToday">{weikucms:$accept}</strong>
+                        <div class="list-box__trend" id="NewToday1" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                    </div>
+
+                    <div class="list-box__links"><a href="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'type'=>4,'branch_id'=>$branch_id))}">详情</a></div>
+
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</if>
+
+    <div class="cLineB">
+        <h4 style="width:150px; float: left;">订单列表  <span id="unorders" style="font-size: 18px;color: #ff2117;padding: 0px 0px 0px 50px;line-height: 30px;font-weight: bold;display: none;">有新订单啦！！</span></h4>
+        <!--<h4   onclick="dongchu()">导出</h4>-->
+    </div>
+<script>
+    function dongchu(){
+        location.href="{weikucms::U('ShopOrder/export_order1',array('token'=>$token))}";
+    }
+</script>
+    <div class="msgWrap">
+        <if condition="$mtype eq 1">
+            <form action="">
+                <table>
+                    <tr>
+                        <td>联系人：</td>
+                        <td><input type="text" style="width: 120px;" id="buyname"  value="{weikucms:$buyname}"/></td>
+                        <td>电话：</td>
+                        <td><input type="text" style="width: 120px;" id="tel" value="{weikucms:$tel}"/></td>
+                        <td>地址：</td>
+                        <td><input type="text" style="width: 120px;" id="address" value="{weikucms:$address}"/></td>
+                        <td>订单号：</td>
+                        <td><input type="text" style="width: 120px;" id="ordernumber" value="{weikucms:$ordernumber}"/></td>
+                        <td>日期：</td>
+                        <td>
+                            <input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="statdate" name="statdate" value="{weikucms:$start}" readonly/>
+                            到
+                            <input type="input" class="px"   onClick="WdatePicker()"  style="width: 150px;" id="enddate" name="enddate" value="{weikucms:$end}" readonly/>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-success btn-sm" href="javascript:;" id="search">搜索</a>
+                        </td>
+                        </tr>
+                    <tr>
+                        <td>订单状态</td>
+                        <td>
+                            <select name="paystatus" id="paystatus">
+                                <option value="2">全部</option>
+                                <option value="0" <if condition="0 eq $paystatus">selected</if>>未支付</option>
+                                <option value="1" <if condition="1 eq $paystatus">selected</if>>已付款</option>
+                                <option value="-1" <if condition="-1 eq $paystatus">selected</if>>取消订单</option>
+
+                            </select>
+                        </td>
+                        <td>付款方式</td>
+                        <td>
+                            <select name="paytype" id="paytype">
+                                <option value="0">全部</option>
+                                 <option value="1" <php> if(1 == $_GET['paytype']){ echo 'selected'; }</php>>微信支付</option>
+                                <option value="3" <php> if(3 == $_GET['paytype']){ echo 'selected'; }</php>>线下支付</option>
+                                <option value="5" <php> if(5 == $_GET['paytype']){ echo 'selected'; }</php>>余额支付</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </if>
+        <div class="row-fluid" >
+            <ul id="custom_group_navigator_div1" class="qb_clearfix unstyled">
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_2">订单总数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday3"><if condition="$count">{weikucms:$count}<else />0</if></strong>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">消费总金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday2"><if condition="$f_totalmoney">{weikucms:$f_totalmoney}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday13" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">余额支付订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday72">{weikucms:$y_total}</strong>
+                            <div class="list-box__trend" id="NewToday182" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">余额支付总金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday4"><if condition="$y_totalmoney">{weikucms:$y_totalmoney}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday15" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">线下支付订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday71">{weikucms:$x_total}</strong>
+                            <div class="list-box__trend" id="NewToday181" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">线下支付总金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday7"><if condition="$x_totalmoney">{weikucms:$x_totalmoney}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday18" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+                
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">微信支付订单数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday73">{weikucms:$w_total}</strong>
+                            <div class="list-box__trend" id="NewToday183" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">微信支付总金额</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total" id="NewToday5"><if condition="$w_totalmoney">{weikucms:$w_totalmoney}元<else />0</if></strong>
+                            <div class="list-box__trend" id="NewToday16" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+
+
+                    </div>
+                </li>
+
+
+
+
+
+
+
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1"> <if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">
+                        得意币
+                        <else />
+                        消费币
+                    </if>抵扣总数</div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total"><if condition="$dyb_total">{weikucms:$dyb_total}元<else />0</if></strong>
+                            <div class="list-box__trend" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-box" style="width: 15%">
+                    <div class="list-box__hd list-box__hd_bg_1">
+                       外卖总费用
+                    </div>
+                    <div class="list-box__bd">
+                        <div class="list-box__count">
+                            <strong class="list-box__total"><if condition="$dyb_total">{weikucms:$wm_total}元<else />0</if></strong>
+                            <div class="list-box__trend" style="display:none;"><i class="icon icon-arrow-down"></i>个</div>
+                        </div>
+                    </div>
+                </li>
+
+
+
+            </ul>
+        </div>
+	<form method="post"  action="###" id="info" >
+			<table class="table table-bordered">
+                  <thead>
+                  <tr>
+                      <th width="50px;"><div class="selectAll" ></div>全选</th>
+                      <if condition="$_GET['type'] eq 1">
+                      <th style="width: 50px;">序号</th>
+                      </if>   
+                      <th>订单号</th>
+
+                      <th>订单详情</th>
+                      <th>商品总量</th>
+                      <th>订单总额</th>
+                      <th>收货人</th>
+                      <th>电话</th>
+                      <th>地址</th>
+                      <th>下单时间</th>
+                      <th>备注</th>
+                      <th>付款状态</th>
+                      <th>付款方式</th>
+                      <th>收货状态</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php $a=count($list);?>
+
+                  <volist name="list" id="vo">
+                        <div style="display: none;" id="order_{weikucms:$vo.ordernumber}">
+                            <h5 style="font-family:microsoft yahei">{weikucms:$tpl.name}商品订单</h5>
+                            <if condition="$_GET['type'] eq 1">
+                            <span style="font-size: 10px;font-family:microsoft yahei;line-height: 12px;">订单序号 ：<?php echo $a;?></span><br>
+                            </if>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">订单号 ：{weikucms:$vo.ordernumber}<if condition="$vo.is_print eq 1 and $token eq '3db7fee419649f8be761dfc4f6b42ecc'">(此订单是补打订单)</if></span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">下单时间：{weikucms:$vo.buytime}</span><br>
+							<span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">支付方式：<if condition="$vo.paytype eq 3">线下支付<elseif condition="$vo.paytype eq 1" />微信支付<elseif condition="$vo.paytype eq 5" />余额支付<else/>线下支付</if></span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">打单时间：<php>echo date("Y-m-d H:i:s");</php></span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">收货人：{weikucms:$vo.buyname}
+                                <if condition="$vo['wm'] eq 1">
+                                    (堂吃)
+                                    <elseif condition="$vo['wm'] eq 2" />
+                                    (打包)
+                                    <else />
+                                    (外卖)
+                                </if>
+                            </span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">联系电话：{weikucms:$vo.tel}</span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;">收货地址：{weikucms:$vo.address}</span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 12px;"> <if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">到店时间<else/>备注信息</if>：{weikucms:$vo.instruct}</span><br>
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 15px;">订单详情：<br/>
+                                <volist name="vo[detail]" id="d" key="k">
+                                {weikucms:$k}、{weikucms:$d.gname}X{weikucms:$d.num}={weikucms:$d.total}元
+                                <br/>
+                                </volist>
+                                <if condition="$vo.noget_money neq 0">跑腿费:+{weikucms:$vo.noget_money}元<br></if>
+                                <if condition="$vo.score_money neq 0">兑换金额:-{weikucms:$vo.score_money}元<br></if>
+                                <if condition="$vo.score neq 0">积分:{weikucms:$vo.score}分<br></if>
+                                <if condition="$vo['xianjin_b'] neq 0">
+                                        <if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">
+                                            返回得意币
+                                            <else/>
+                                            返现
+                                        </if>:{weikucms:$vo.xianjin_b}<br>
+                                </if>
+                            </span><br>
+                            <if condition="$token eq 'a5114ab1a60c81d04e86447a0bd123be'">
+                            <span style="font-size: 8px;font-family:microsoft yahei;line-height: 15px;">客服电话：15766946755(惠大短号676755)</span><br/>
+                            </if>
+                            <span style="font-size:15px;font-family:microsoft yahei">订总额 ：<php>echo round(($vo['totalprice']+$vo['noget_money']-$vo['score_money']),2);</php>元</span>
+
+                        </div>
+                  		<tr>
+                            <td><div class="select" yid="{weikucms:$vo.mid}"></div></td>
+                            <if condition="$_GET['type'] eq 1">
+                            <td><?php echo $a;?></td>
+                            </if>
+        					<td>{weikucms:$vo.ordernumber}</td>
+                  			<td style="text-indent:{weikucms:$vo['Count']*6}px;">
+                                    <volist name="vo[detail]" id="d" >
+                                        {weikucms:$d.gname}×{weikucms:$d.num}={weikucms:$d.total}
+                                        <br/>
+
+                                    </volist>
+                                <if condition="$vo.noget_money neq 0"><font color="gray"> 跑腿费:+{weikucms:$vo.noget_money}元<br></font></if>
+                                <if condition="$vo.score_money neq 0"><font color="gray"> 兑换金额:-{weikucms:$vo.score_money}元<br></font></if>
+                                <if condition="$vo.score neq 0"><font color="gray"> 所得
+
+                                    <if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">
+                                        积分
+                                    </if>
+
+
+                                    :{weikucms:$vo.score}分</font><br></if>
+                                    <if condition="$vo['xianjin_b'] neq 0">
+                                    <font color="gray">
+                                        <if condition="$token eq '3db7fee419649f8be761dfc4f6b42ecc'">
+                                            返回得意币
+                                            <else/>
+                                            返现
+                                        </if>
+                                    :{weikucms:$vo.xianjin_b}</font>
+                                </if>
+                            </td>
+                            <td>{weikucms:$vo.totalnum}</td>
+                            <td><php>echo round(($vo['totalprice']+$vo['noget_money']-$vo['score_money']),2);</php>元</td>
+                            <td>{weikucms:$vo.buyname}
+                                <if condition="$vo['wm'] eq 1">
+                                    (堂吃)
+                                    <elseif condition="$vo['wm'] eq 2" />
+                                    (打包)
+                                    <else />
+                                    (外卖)
+                                </if>
+                            </td>
+                            <td>{weikucms:$vo.tel}</td>
+                            <td>{weikucms:$vo.address}</td>
+                            <td>
+                                {weikucms:$vo.buytime}
+                                <br/>
+                                {weikucms:$vo.diff}
+                            </td>
+                            <td>
+                                {weikucms:$vo.instruct}
+                            </td>
+                            
+                            <td>
+                                <if condition="$vo.paytype eq 1">
+                                        <?php if(strtotime($vo['buytime'])+10*60 < time()){ ?>
+                                              <?php if($vo['paystatus'] == 1){ ?>
+                                              <font color="green"> 已付款</font>
+                                              <?php }else{ ?>
+                                                    <font color="#8b0000"> 未付款(自动取消)</font>
+                                              <?php } ?>
+                                                
+                                        <?php }else{ ?>
+                                              <?php if($vo['paystatus'] == 1){ ?>
+                                              <font color="green"> 已付款</font>
+                                              <?php }else{ ?>
+                                              <font color="red"> 未付款</font>
+                                              <?php } ?>
+                                        <?php } ?>
+                                        <else/>
+                                        <if condition="$vo.paystatus eq 0"><font color="red"> 未付款</font></if>
+                                        <if condition="$vo.paystatus eq 1"><font color="green"> 已付款</font></if>
+                                        <if condition="$vo.paystatus eq -1"><font color="#8b0000"> 已取消</font></if>
+                                </if>
+                            </td>
+                            <td>
+                                <if condition="$vo.paytype eq 3"><font color="gray"> 线下付款</font></if>
+                                <if condition="$vo.paytype eq 2"><font color="gray"> 支付宝支付</font></if>
+                                <if condition="$vo.paytype eq 5"><font color="gray"> 余额付款</font></if>
+                                <if condition="$vo.paytype eq 1"><font color="#006400"> 微信支付</font></if>
+                            </td>
+                            <td>
+                                <if condition="$vo.sendstatus eq '' or $vo.sendstatus eq 0"><font color="gray"> 未收货</font></if>
+                                <if condition="$vo.sendstatus eq 1"><font color="gray"> 已发货</font></if>
+                                <if condition="$vo.sendstatus eq 2"><font color="#006400"> 已收货</font></if>
+                            </td>
+                            <if condition="$token neq '3db7fee419649f8be761dfc4f6b42ecc'">
+                              	<td class="norightborder">
+
+                                    <if condition="$vo[sendstatus] eq 1">
+                                        <a class="btn btn-primary btn-sm"  href="{weikucms::U('ShopOrder/changeStatus',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id,'status'=>2))}">取消发货</a>
+                                    </if>
+
+                                    <if condition="$vo.paystatus neq -1">
+                                        <if condition="($vo[sendstatus] eq 0)AND($token neq 'a5114ab1a60c81d04e86447a0bd123be')">
+                                            <a class="btn btn-primary btn-sm"  href="{weikucms::U('ShopOrder/changeStatus',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id,'status'=>1))}">发货</a>
+                                        </if>
+                                        <if condition="$vo[sendstatus] neq 2">
+                                            <a class="btn btn-danger btn-sm"  href="{weikucms::U('ShopOrder/DelSon',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id))}">取消订单</a>
+
+                                            <a class="btn btn-danger btn-sm"  href="{weikucms::U('ShopOrder/getSon',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id))}">确认收货</a>
+                                        </if>
+                                        <if condition="$vo.is_print eq 1">
+                                            <a class="btn btn-success btn-sm" style="background-color: #6333B5;" onclick="startPrints('{weikucms:$vo.ordernumber}')">重打订单</a>
+                                            <elseif condition="$vo.paytype eq 3" />
+                                            <a class="btn btn-success btn-sm" onclick="startPrint('{weikucms:$vo.ordernumber}','{weikucms:$vo.mid}')">打印订单</a>
+                                            <else />
+                                            <a class="btn btn-success btn-sm" onclick="startPrint('{weikucms:$vo.ordernumber}','{weikucms:$vo.mid}')">打印订单</a>
+                                            </if>
+                                    </if>
+
+                                </td>
+                            <else/>
+                                <td class="norightborder">
+                                    <if condition="$vo.is_print neq 1">
+                                       <if condition="$vo.paytype eq 1">
+                                            <if condition="$vo.paystatus eq 1">
+                                               <a class="btn btn-success btn-sm" onclick="startPrint('{weikucms:$vo.ordernumber}','{weikucms:$vo.mid}')">打印订单</a>
+                                               <else/>
+                                            </if>
+                                            <else/>
+                                              <if condition="$vo[paystatus] eq -1">
+                                              <else/>
+                                                <a class="btn btn-success btn-sm" onclick="startPrint('{weikucms:$vo.ordernumber}','{weikucms:$vo.mid}')">打印订单</a>
+                                              </if>
+                                       </if>
+
+                                       <else/>
+                                       <if condition="$vo[sendstatus] neq 2">
+                                               <if condition="$vo[paystatus] neq -1">
+                                                   <a class="btn btn-success btn-sm"  href="{weikucms::U('ShopOrder/getSon',array('id'=>$vo[id],'token'=>$token,'branch_id'=>$branch_id))}">完成订单</a>
+                                                   <else/>
+                                               </if>
+                                           <else/>
+                                            <if condition="$vo.is_print eq 1">
+                                               <a class="btn btn-success btn-sm" onclick="startPrints('{weikucms:$vo.ordernumber}')">补打订单</a>
+                                            </if>
+                                        </if>
+                                    </if>   
+
+
+                                </td>
+
+                            </if>
+
+
+
+                      </tr>
+                      <?php $a--;?>
+                  </volist>
+                  </tbody>
+              </table>			
+	</form>
+
+            <a class="btn btn-success btn-sm" onclick="jiesu(3)" style="margin-top:15px;">批量发货</a>
+        <a class="btn btn-success btn-sm" onclick="jiesu(4)" style="margin-top:15px;">批量确认收货</a>
+
+        <div class="pager">
+            <ul>
+                {weikucms:$page}
+            </ul>
+        </div>
+
+  </div>
+    </div>
+    <script type="text/javascript">
+        function startPrint(str,id)
+        {
+            /**
+             * 打印了订单，更新数据
+             * @type {*|jQuery}
+             */
+                 //   alert(6);
+			var oWin=window.open();
+            var url="{weikucms::U('ShopOrder/is_print',array('token'=>$token))}";
+            $.post(url,{id:id},function(data){
+                if(data.status==1){
+                    //下面值行打印操作
+                                //下面值行打印操作
+                    if(data.new==1){//新订单
+                        $('#order_'+str).append("<p style='font-size:15px;font-family:microsoft yahei'>新用户</p>");
+                    }
+    	             var obj = $('#order_'+str).html();
+    	             oWin.document.write(obj);
+    	             oWin.focus();
+    	             oWin.document.close();
+    	             oWin.print();
+    	             oWin.close();
+                     window.location.reload();
+                }else{
+                    alert("失败");
+                }
+            },'json')
+
+        }
+		
+        function startPrints(str)
+        {
+            /**
+             * 打印了订单，更新数据
+             * @type {*|jQuery}
+             */
+
+            //下面值行打印操作
+             var obj = $('#order_'+str).html();
+             var oWin=window.open();
+             oWin.document.write(obj);
+             oWin.focus();
+             oWin.document.close();
+             oWin.print();
+             oWin.close();
+
+             window.location.reload();
+
+
+        }
+
+    </script>
+    <script>
+        $(function(){
+            $("#search").click(function(){
+                var buyname=$("#buyname").val();
+                var tel=$("#tel").val();
+                var ordernumber=$("#ordernumber").val();
+                var start=$("#statdate").val();
+                var end=$("#enddate").val();
+                var address=$("#address").val();
+                var url="{weikucms::U('ShopOrder/BranchAll',array('token'=>$token,'type'=>5,'branch_id'=>$branch_id))}";
+                var paystatus=$("#paystatus").val().trim();
+                var paytype=$("#paytype").val().trim();
+
+
+                if(buyname){
+                    url+="&buyname="+buyname;
+                }
+
+                if(tel){
+                    url+="&tel="+tel;
+                }
+
+                if(ordernumber){
+                    url+="&ordernumber="+ordernumber;
+                }
+
+                if(start){
+                    url+="&start="+start;
+                }
+
+                if(end){
+                    url+="&end="+end;
+                }
+                if(paytype&&paytype!=0){
+                    url+="&paytype="+paytype;
+                }
+                if(paystatus==0||paystatus==1||paystatus==-1){
+                    url+="&paystatus="+paystatus;
+                }
+                if(address){
+                    url+="&address="+address;
+                }
+
+                location.href=url;
+            })
+        })
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+
+            function  Play(sound){
+                if(navigator.appName == "Microsoft Internet Explorer")
+                {
+                    var snd = document.createElement("bgsound");
+                    document.getElementsByTagName("body")[0].appendChild(snd);
+                    snd.src = sound;
+                }
+                else{
+                    var obj = document.createElement("object");
+                    obj.width="0px";
+                    obj.height="0px";
+                    obj.type = "audio/x-wav";
+                    obj.data = sound;
+                    var body = document.getElementsByTagName("body")[0];
+                    body.appendChild(obj);
+                }
+
+            }
+
+
+
+            var lasttime = "{weikucms:$lasttime}";
+            var url = "{weikucms::U('ShopOrder/gettimeorder',array('token'=>$token,'branch_id'=>$branch_id))}";
+            setInterval(function(){
+                $.getJSON(url,{lasttime:encodeURI(lasttime)},function(data){
+                    if(data.code == 0){
+                        if(data.data > 0){
+                            var old = parseInt($("#unorders").text());
+                            $("#unorders").show();
+                            lasttime = data.lasttime;
+                            Play('/upload/order-reminder.mp3');
+                            setTimeout(function(){
+                                window.location.reload();
+                            },'60000')
+                        }
+
+                    }
+                });
+            },10000);
+        });
+    </script>
+    <script src="/tpl/Wap/default/common/css/store/shop/js/jquery-1.11.1.min.js"></script>
+
+    <script type="text/javascript">
+
+        function mySelector(mySelect,Selected,only,mySelectAll_L){
+            var /*mySelect = $(".myselect"), //设置选择对象
+             Selected = "selected", //已选的Class Name
+             mySelectAll_L = $(".slectAll"), //全选按钮的位置
+             only = 3, //可选择的长度*/
+                    SelectLength = mySelect.length, //选择对象的长度
+                    SelectedLength = 0; //初始化已选择的长度
+            if(isNaN(only)){
+                mySelectAll_L = only;
+                only=0;
+            }else if(only==undefined||only>SelectLength){
+                only=0;
+            }
+//console.log(mySelectAll_L)
+            function OpenSelect(e){//开启功能
+                mySelect.on('click',SelectToggle);
+                if(mySelectAll_L!=undefined){mySelectAll_L.on('click',SelectAll);}
+                return true;
+            }
+            function CloseSelect(e){//关闭功能
+                mySelect.off('click');
+                mySelectAll_L.off('click');
+                return false;
+            };
+            OpenSelect();
+            function SelectToggle(){
+                var THIS = $(this);
+                if(!THIS.hasClass(Selected)){
+                    if(SelectedLength<only ||only==0){
+                        THIS.addClass(Selected);
+                        SelectedLength+=1;
+                        if(SelectLength==SelectedLength&&only==0){
+//if(mySelectAll_L!=undefined){mySelectAll_L.html("全取消")};
+                        }
+//console.log(SelectedLength);
+                    }else if(only==1){
+                        mySelect.removeClass(Selected);
+                        THIS.addClass(Selected);
+                    }else {
+                        alert("超过了可选范围")
+                    }
+                }else {
+                    THIS.removeClass(Selected);
+                    SelectedLength-=1;
+                    if(mySelectAll_L!=undefined){
+//mySelectAll_L.html("全选")
+                        mySelectAll_L.removeClass(Selected);
+                    };
+
+//console.log(SelectedLength);
+                }
+
+            }
+            function SelectAll(){
+                if(SelectedLength<=only&&only!=0){
+                    alert("你还可以选择"+(only-SelectedLength)+"个！")
+                }else{
+                    if(SelectedLength<SelectLength ){
+                        mySelectAll_L.addClass(Selected)
+                        mySelect.addClass(Selected);
+                        SelectedLength=SelectLength;
+//mySelectAll_L.html("全取消");
+                        //console.log(SelectedLength);
+                    }else {
+                        mySelectAll_L.removeClass(Selected)
+                        mySelect.removeClass(Selected);
+                        SelectedLength=0;
+//mySelectAll_L.html("全选");
+                        //console.log(SelectedLength);
+                    }
+                }
+            }
+        }
+        mySelector($(".select"),"on",0,$(".selectAll"))
+
+
+    </script>
+
+    <script>
+        function jiesu(a){
+            var id=[];
+            if(!$(".select").hasClass("on")){
+                alert("您没有选择任何一个订单咯！");
+                return false;
+            }
+            $(".select").each(function(i,e){
+                if($(this).hasClass('on')){
+                    id[i]=$(this).attr('yid');
+                }
+            })
+            id=id.join('-');
+
+            var url="{weikucms::U('ShopOrder/changeStatus',array('token'=>$token,'branch_id'=>$branch_id))}&id="+id+'&status='+a;
+            location.href=url;
+
+
+        }
+
+
+
+
+    </script>
+
+
+
+
+
+
